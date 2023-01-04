@@ -467,6 +467,35 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
+    public static List<Servicio> getCampaings(){
+
+        List<Servicio>listCampaigns = new List<Servicio>();
+
+        for(Campaign item: [Select Id, Name from Campaign where IsActive = true])
+    {
+        Servicio b = new Servicio();
+        b.label= item.Name;
+        b.value= item.Id;
+       
+
+        listCampaigns.add(b);
+    }  
+        return listCampaigns;
+    }
+
+    @AuraEnabled
+    public static void updateCampaigns(String allData, String idProducto){
+        List<String> objetoCampaings = (List<String>) JSON.deserialize(allData, List<String>.class);
+        List<DSALES_AsociacionCampanias__c> listCampanasSelected= new List<DSALES_AsociacionCampanias__c>();
+        system.debug(objetoCampaings);
+         for(Integer i=0; objetoCampaings.size()>i; i++)
+        {
+            listCampanasSelected.add(new DSALES_AsociacionCampanias__c(DSALES_Campania__c = objetoCampaings[i], DSALES_Producto__c=idProducto));
+        }
+        insert listCampanasSelected; 
+    }
+
+    @AuraEnabled
     public static void insertListaPrecios(String idproductoservicio, String opcion, String JSON2){
         system.debug(JSON2);
         List<Servicio> listaPreciosSelected = (List<Servicio>) JSON.deserialize(JSON2, List<Servicio>.class);
