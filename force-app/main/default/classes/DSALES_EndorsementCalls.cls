@@ -36,9 +36,10 @@ public class DSALES_EndorsementCalls {
                     if(obj.Estatus== 'Rechazado'){
                         String poli = consulta[i].DSALES_Poliza__r.Name;
                         consulta[i].DSALES_MotivoRechazo__c = obj.ComentarioEstatus; 
-                        //InsurancePolicy updateEstatu = [SELECT Name, DSALES_Estatusdepliza__c FROM InsurancePolicy WHERE Name=:poli LIMIT 1];
-                        //updateEstatu.DSALES_Estatusdepliza__c = 'Cancelada';
-                        //updatepoli.add(updateEstatu);
+                        //no se debe cancelar la póliza
+                        //InsurancePolicy estatusUpdate = [SELECT Name, DSALES_Estatusdepliza__c FROM InsurancePolicy WHERE Name=:poli LIMIT 1];
+                        //estatusUpdate.DSALES_Estatusdepliza__c = 'Cancelada';
+                        //updatepoli.add(estatusUpdate);
                     }
                     
                 }
