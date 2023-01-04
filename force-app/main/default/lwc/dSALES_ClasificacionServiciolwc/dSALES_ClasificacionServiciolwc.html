@@ -95,10 +95,10 @@
                                                 class="slds-m-bottom_x-small" onchange={handleInputChangeNameSS}
                                                 placeholder="Escribe aquí"></lightning-input>
                             
-                                            <lightning-input value={pickList.Description} required  label={label.labelDescripcion}
+                                            <lightning-textarea value={pickList.Description} required  label={label.labelDescripcion}
                                                 type="text" onchange={handleInputChangeDescription} class="slds-m-bottom_x-small"
                                                 placeholder="Escribe aquí">
-                                            </lightning-input>
+                                            </lightning-textarea>
                                         
                                             <template if:true={data.showServicio}>
                                                 <lightning-input class="lgc-bg " type="checkbox" onchange={openPorcentajeCobro} value={pickList.aplicaCobro}
@@ -911,6 +911,9 @@
                                         onchange={onchangeAllNoAplica} label="No Aplica"></lightning-input>
                                 </div>
                             </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Campaña">Campañas</div>
+                            </th>
 
                         </tr>
                     </thead>
@@ -971,10 +974,80 @@
                                             onchange={onchangeNoAplica}></lightning-input>
                                     </div>
                                 </td>
+                                <td data-label={record.sku} style="text-align: middle;">
+                                    
+                                    <div if:true ={record.servicio} class="slds-p-bottom_x-small slds-p-left_small" style="width:50px">
+                                        <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                        value={record.sku} data-id={record.sku}  onclick={openFormCampaigns}>
+                                
+                                            <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                            </lightning-icon>
+                                        </button>
+                                    </div>
+                                    <div if:true ={record.seguro} class="slds-p-bottom_x-small slds-p-left_small" style="width:50px">
+                                        <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                        value={record.sku} data-id={record.sku}  onclick={openFormCampaigns}>
+                                
+                                            <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                            </lightning-icon>
+                                        </button>
+                                    </div>
+                                    <div if:true ={record.noAplica} class="slds-p-bottom_x-small slds-p-left_small" style="width:50px">
+                                        <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                        value={record.sku} data-id={record.sku}  onclick={openFormCampaigns}>
+                                
+                                            <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                            </lightning-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                                
                             </tr>
                         </template>
                     </tbody>
+
                 </table>
+                
+                <template if:true={data.showCampaigns}>
+                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-067"
+                        class="slds-modal slds-fade-in-open slds-modal_small" style="width: 700px; margin: 0 auto;">
+                        <div class="slds-modal__container">
+                            <button
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
+                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                                </svg>
+                                <span class="slds-assistive-text">Cancelar y cerrar</span>
+                            </button>
+                            <div class="slds-modal__header">
+                                <h1 id="modal-heading-5756" class="slds-modal__title slds-hyphenate">Gestionar Campañas
+                                </h1>
+                            </div>
+                            <div class="slds-modal__content slds-p-around_large" id="modal-content-id-466">
+                                <lightning-dual-listbox 
+                                name="Campañas"
+                                label="Seleccione las Campañas que apliquen"
+                                source-label="Disponible"
+                                selected-label="Seleccionado"
+                                field-level-help="Selecciona las campañas que apliquen"
+                                options={data.listaCampanas}
+                                onchange={onchangeCampana}>
+                            </lightning-dual-listbox>
+                            </div>
+                            <div class="slds-modal__footer">
+                                <button class="slds-button slds-button_neutral" onclick={closeformCampaigns}
+                                    aria-label="Cancel and close">Cancelar</button>
+                                <button onclick={getSkuforCampaings} class="slds-button slds-button_brand">Guardar</button>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                </template>
+
+
+
+               
+
                 <footer class="slds-modal__footer">
                     <lightning-button label="Guardar" onclick={guardar} variant="brand" class="slds-m-left_x-small">
                     </lightning-button>
