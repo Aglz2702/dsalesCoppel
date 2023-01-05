@@ -24,7 +24,7 @@ public class DSALES_QuoteGexWrapperRequestTest{
         Product2 prod = new Product2(Name ='test', StockKeepingUnit='0000',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Producto');
 		insert prod;
         
-        Product2 prodGEX = new Product2(Name ='testGEX', StockKeepingUnit='123444',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Servicio',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40);
+        Product2 prodGEX = new Product2(Name ='testGEX', StockKeepingUnit='123444',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Servicio',DSales_Aplicaporcentajecobro__c=true);
 		insert prodGEX;
         
         Id pricebookId = Test.getStandardPricebookId();
@@ -89,6 +89,42 @@ public class DSALES_QuoteGexWrapperRequestTest{
         matItem.DSALES_Rango_Superior_GEX__c = 8500;
         matItem.DSALES_Tiempo_de_Garantia_Extendida_GEX__c = '2 años';
         insert matItem;
+        
+        DASALES_Porcentajedecobro__c percent = new DASALES_Porcentajedecobro__c();
+        percent.DSALES_Anios__c = 1;
+        percent.DSALES_Porcentaje__c = 10;
+        percent.DSALES_Product__c = prodGEX.Id;
+        insert percent;
+        
+        DASALES_Porcentajedecobro__c percent2 = new DASALES_Porcentajedecobro__c();
+        percent2.DSALES_Anios__c = 2;
+        percent2.DSALES_Porcentaje__c = 15;
+        percent2.DSALES_Product__c = prodGEX.Id;
+        insert percent2;
+        
+        DASALES_Porcentajedecobro__c percent3 = new DASALES_Porcentajedecobro__c();
+        percent3.DSALES_Anios__c = 3;
+        percent3.DSALES_Porcentaje__c = 20;
+        percent3.DSALES_Product__c = prodGEX.Id;
+        insert percent3;
+        
+        DASALES_Porcentajedecobro__c percent4 = new DASALES_Porcentajedecobro__c();
+        percent4.DSALES_Anios__c = 4;
+        percent4.DSALES_Porcentaje__c = 15;
+        percent4.DSALES_Product__c = prodGEX.Id;
+        insert percent4;
+        
+        DASALES_Porcentajedecobro__c percent5 = new DASALES_Porcentajedecobro__c();
+        percent5.DSALES_Anios__c = 5;
+        percent5.DSALES_Porcentaje__c = 15;
+        percent5.DSALES_Product__c = prodGEX.Id;
+        insert percent5;
+        
+        DASALES_Porcentajedecobro__c percent6 = new DASALES_Porcentajedecobro__c();
+        percent6.DSALES_Anios__c = 6;
+        percent6.DSALES_Porcentaje__c = 15;
+        percent6.DSALES_Product__c = prodGEX.Id;
+        insert percent6;
         
         Account acc = new Account();
         acc.Name='test';
