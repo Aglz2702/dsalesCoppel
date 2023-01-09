@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-	
-	
+	<types>
+		<members>DSALES_CertificadoWrapper</members>
+		<members>DSALES_CertificadoWrapperRequest</members>
+		<members>DSALES_CertificadoWrapperTest</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>Asset.DSales_Informacion_pago__c</members>
+		<members>Asset.DSales_Motivo__c</members>
+		<members>DSALES_Certificado__c.DSales_Motivo__c</members>
+		<name>CustomField</name>
+	</types>
 	<version>55.0</version>
 </Package>
