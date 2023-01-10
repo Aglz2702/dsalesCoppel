@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-	
-	
+	<types>
+		<members>DSALES_MockHttpResponseSiniestro</members>
+		<members>DSALES_QuoteSmWrapper</members>
+		<members>DSALES_QuoteSmWrapperRequest</members>
+		<members>DSALES_QuoteSmWrapperRequestTest</members>
+		<members>DSALES_QuoteSmWrapperTest</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>Plazo__c.DSALES_FormatoompactoSM</members>
+		<name>CompactLayout</name>
+	</types>
+	<types>
+		<members>Campaign.DSALES_Tipodecapana__c</members>
+		<members>DSALES_AsociacionCampanias__c.DSALES_Activo__c</members>
+		<members>DSALES_AsociacionCampanias__c.DSALES_Campania__c</members>
+		<members>DSALES_AsociacionCampanias__c.DSALES_Producto__c</members>
+		<members>Plazo__c.DSALES_Descripcin__c</members>
+		<members>Plazo__c.DSALES_Seguro__c</members>
+		<members>Plazo__c.Dsales_Plazo__c</members>
+		<members>Quote.DSALES_Plazoacotizar__c</members>
+		<members>QuoteLineItem.DSALES_Comision__c</members>
+		<members>QuoteLineItem.DSALES_Descripcion__c</members>
+		<members>QuoteLineItem.DSALES_Plazo__c</members>
+		<members>QuoteLineItem.DSALES_Recargos__c</members>
+		<members>QuoteLineItem.DSALES_Segurogratis__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
+		<members>DSALES_AsociacionCampanias__c</members>
+		<members>Plazo__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>Asociaci_n_de_campa_as_Record_Page</members>
+		<members>Plazo_Record_Page1</members>
+		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>DSALES_AsociacionCampanias__c.All</members>
+		<members>DSALES_AsociacionCampanias__c.DSALES_Misasociacionesdecampanas</members>
+		<members>Plazo__c.All</members>
+		<members>Plazo__c.DSALES_Misplazos</members>
+		<name>ListView</name>
+	</types>
 	<version>55.0</version>
 </Package>
