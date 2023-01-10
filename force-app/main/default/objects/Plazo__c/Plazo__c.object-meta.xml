@@ -129,7 +129,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Asociaci_n_de_campa_as_Record_Page</content>
+        <content>Plazo_Record_Page1</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -137,7 +137,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Asociaci_n_de_campa_as_Record_Page</content>
+        <content>Plazo_Record_Page1</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -147,27 +147,27 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>DSALES_FormatoompactoSM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Objeto para relacionar productos a varias campañas</description>
+    <description>Objeto para activar o desactivar los plazos de seguros</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
-    <gender>Feminine</gender>
-    <label>Asociación de campañas</label>
+    <externalSharingModel>Private</externalSharingModel>
+    <gender>Masculine</gender>
+    <label>Plazo</label>
     <nameField>
-        <displayFormat>{000000}</displayFormat>
-        <label>Nombre de Asignación de campañas</label>
-        <type>AutoNumber</type>
+        <label>Número de plazo</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
     </nameField>
-    <pluralLabel>Asociación de campañas</pluralLabel>
+    <pluralLabel>Plazos</pluralLabel>
     <searchLayouts>
         <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
         <excludedStandardButtons>NewFromDocument</excludedStandardButtons>

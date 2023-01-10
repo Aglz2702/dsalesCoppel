@@ -59,7 +59,7 @@ public class DSALES_QuoteSmWrapperTest {
         
         DSALES_QuoteSmWrapper.respuestaDelProveedor response = new DSALES_QuoteSmWrapper.respuestaDelProveedor();
         response.code = 12;
-        response.data = new DSALES_QuoteSmWrapper.Data();
+        response.plazos = new List<DSALES_QuoteSmWrapper.ArmadoMuleSoft>();
         response.success = true;
         
         
@@ -69,17 +69,6 @@ public class DSALES_QuoteSmWrapperTest {
         responseNpv.Cliente= 'dads';
         responseNpv.oppor ='dads';
         responseNpv.cotiza ='dads';
-        responseNpv.rc = new DSALES_QuoteSmWrapper.Receipt();
-        responseNpv.rc.numbere = 23;
-        responseNpv.rc.start_date = '23';
-        responseNpv.rc.end_date = '23';
-        responseNpv.rc.net_premium = '23';
-        responseNpv.rc.total_premium = '23';
-        responseNpv.rc.right = '23';
-        responseNpv.rc.recharge = '23';
-        responseNpv.rc.tax = '23';
-        responseNpv.rc.commission = '23';
-        responseNpv.amp = new DSALES_QuoteSmWrapper.Receipt();
         
         DSALES_QuoteSmWrapper.Data dat = new DSALES_QuoteSmWrapper.Data();
         dat.coverages_array = new List<DSALES_QuoteSmWrapper.CoveragesArray>();
@@ -107,7 +96,17 @@ public class DSALES_QuoteSmWrapperTest {
         dat.police_id ='123';
         dat.company_logo = 'qweq';
         
-
+        DSALES_QuoteSmWrapper.Receipt recep = new DSALES_QuoteSmWrapper.Receipt();
+        recep.numbere=1;
+        recep.commission='12';
+        recep.end_date='10-12';
+        recep.net_premium='12';
+        recep.recharge='12';
+        recep.recharge='12';
+        recep.right='12';
+        recep.start_date='12-12';
+        recep.tax='12';
+        recep.total_premium='12';
     }
 
 }
