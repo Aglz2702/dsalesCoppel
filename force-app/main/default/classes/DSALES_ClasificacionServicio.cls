@@ -267,7 +267,7 @@ public without sharing class DSALES_ClasificacionServicio {
         List<Product2> listProductos= new List<Product2>();
         for(Servicio item: objeto){
             listProductos.add(new Product2(Id = item.id, DSALES_Servicio__c = item.servicio, 
-                                           DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica));
+                                           DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, DSALES_IsClasified__c=true));
         }
         upsert listProductos;
     }
@@ -468,33 +468,131 @@ public without sharing class DSALES_ClasificacionServicio {
 
     @AuraEnabled
     public static List<Servicio> getCampaings(){
-
         List<Servicio>listCampaigns = new List<Servicio>();
-
         for(Campaign item: [Select Id, Name from Campaign where IsActive = true])
     {
         Servicio b = new Servicio();
         b.label= item.Name;
         b.value= item.Id;
-       
-
         listCampaigns.add(b);
     }  
         return listCampaigns;
     }
 
     @AuraEnabled
-    public static void updateCampaigns(String allData, String idProducto){
-        List<String> objetoCampaings = (List<String>) JSON.deserialize(allData, List<String>.class);
-        List<DSALES_AsociacionCampanias__c> listCampanasSelected= new List<DSALES_AsociacionCampanias__c>();
-        system.debug(objetoCampaings);
-         for(Integer i=0; objetoCampaings.size()>i; i++)
-        {
-            listCampanasSelected.add(new DSALES_AsociacionCampanias__c(DSALES_Campania__c = objetoCampaings[i], DSALES_Producto__c=idProducto));
-        }
-        insert listCampanasSelected; 
+    public static List<Servicio> getTipoUso(){
+        List<Servicio>listTipoUso = new List<Servicio>();
+        for(DSALES_TipodeUso__c item: [Select Id, Name from DSALES_TipodeUso__c where DSALES_Activo__c = true])
+    {
+        Servicio b = new Servicio();
+        b.label= item.Name;
+        b.value= item.Id;
+        listTipoUso.add(b);
+    }  
+        return listTipoUso;
     }
 
+    @AuraEnabled
+    public static void updateCampaigns(String allData, String idProducto){
+        List<String> objetoCampaings = (List<String>) JSON.deserialize(allData, List<String>.class);
+        List<String> listCampanasSelected= new List<String>();
+        List<Servicio> listCampanasSelectedidvalue= new List<Servicio>();
+        List<DSALES_AsociacionCampanias__c> listCampanasSeleccion= new List<DSALES_AsociacionCampanias__c>();
+        for(DSALES_AsociacionCampanias__c item: [Select id, DSALES_Campania__c  from DSALES_AsociacionCampanias__c where DSALES_Producto__c= :idProducto ])
+        {
+            listCampanasSelected.add(item.DSALES_Campania__c);
+            Servicio b= new Servicio();
+            b.id=item.id;
+            b.value=item.DSALES_Campania__c ;
+            listCampanasSelectedidvalue.add(b);
+
+        }  
+        List<String> newList= new List<String>();
+        for (String element : objetoCampaings) { 
+            if (!listCampanasSelected.contains(element)) { 
+                newList.add(element); 
+            } 
+        }   
+        for(Integer i=0; newList.size()>i; i++)
+        {
+            listCampanasSeleccion.add(new DSALES_AsociacionCampanias__c(DSALES_Campania__c = newList[i], DSALES_Producto__c=idProducto, DSALES_Activo__c=true));
+        }
+       for(Servicio item: listCampanasSelectedidvalue){
+            if(objetoCampaings.contains(item.value))
+            {
+                listCampanasSeleccion.add(new DSALES_AsociacionCampanias__c(id=item.id, DSALES_Campania__c = item.value, DSALES_Producto__c=idProducto, DSALES_Activo__c=true));
+            }
+            else
+            {
+                listCampanasSeleccion.add(new DSALES_AsociacionCampanias__c(id=item.id, DSALES_Campania__c = item.value, DSALES_Producto__c=idProducto, DSALES_Activo__c=false));
+            }
+        }
+        upsert listCampanasSeleccion; 
+    }
+
+    @AuraEnabled
+    public static void updateTipoUso(String allData, String idProducto){
+        List<String> objetoTipoUso = (List<String>) JSON.deserialize(allData, List<String>.class);
+        List<String> listTipoUsoSelected= new List<String>();
+        List<Servicio> listTipoUsoSelectedidvalue= new List<Servicio>();
+        List<DSALES_AsociacionTiposUso__c> listTipoUsoSeleccion= new List<DSALES_AsociacionTiposUso__c>();
+        for(DSALES_AsociacionTiposUso__c item: [Select id, DSALES_TipodeUso__c from DSALES_AsociacionTiposUso__c where DSALES_Producto__c= :idProducto])
+        {
+            listTipoUsoSelected.add(item.DSALES_TipodeUso__c);
+            Servicio b= new Servicio();
+            b.id=item.id;
+            b.value=item.DSALES_TipodeUso__c;
+            listTipoUsoSelectedidvalue.add(b);
+
+        }  
+        List<String> newList= new List<String>();
+        for (String element : objetoTipoUso) { 
+            if (!listTipoUsoSelected.contains(element)) { 
+                newList.add(element); 
+            } 
+        }   
+        for(Integer i=0; newList.size()>i; i++)
+        {
+            listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(DSALES_TipodeUso__c = newList[i], DSALES_Producto__c=idProducto, DSALES_Activo__c=true));
+        }
+       for(Servicio item: listTipoUsoSelectedidvalue){
+            if(objetoTipoUso.contains(item.value))
+            {
+                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, DSALES_TipodeUso__c = item.value, DSALES_Producto__c=idProducto, DSALES_Activo__c=true));
+            }
+            else
+            {
+                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, DSALES_TipodeUso__c = item.value, DSALES_Producto__c=idProducto, DSALES_Activo__c=false));
+            }
+        }
+        upsert listTipoUsoSeleccion; 
+    }
+
+
+    @AuraEnabled
+    public static List<String> getTiposUsoUsed(String idProducto){
+
+        List<String> listTipoUsoUsed = new List<String>();
+
+        for(DSALES_AsociacionTiposUso__c item: [Select DSALES_TipodeUso__c from DSALES_AsociacionTiposUso__c where DSALES_Producto__c=:idProducto and DSALES_Activo__c=true])
+    {
+        listTipoUsoUsed.add(item.DSALES_TipodeUso__c);
+    }  
+        return listTipoUsoUsed;
+    }
+
+    @AuraEnabled
+    public static List<String> getCampanasUsed(String idProducto){
+
+        List<String> listCampanasUsed = new List<String>();
+
+        for(DSALES_AsociacionCampanias__c item: [Select DSALES_Campania__c from DSALES_AsociacionCampanias__c where DSALES_Producto__c=:idProducto and DSALES_Activo__c=true])
+    {
+        listCampanasUsed.add(item.DSALES_Campania__c);
+    }  
+        return listCampanasUsed;
+    }
+ 
     @AuraEnabled
     public static void insertListaPrecios(String idproductoservicio, String opcion, String JSON2){
         system.debug(JSON2);
