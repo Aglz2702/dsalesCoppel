@@ -192,6 +192,7 @@
 		<members>Account.Tipo_de_Cliente__c</members>
 		<members>Account.sumar__c</members>
 		<members>Account.DSALES_DeseaserContactado__c</members>
+		<members>Asset.DSales_Informacion_pago__c</members>
 		<members>Asset.DSALES_CategoriaBuscar__c</members>
 		<members>Asset.DSALES_Certificado__c</members>
 		<members>Asset.DSALES_ClaseBuscar__c</members>
@@ -201,6 +202,7 @@
 		<members>Asset.DSALES_Oportunidad__c</members>
 		<members>Asset.DSALES_PrecioSINIVA__c</members>
 		<members>Asset.DSALES_Precio_con_descuento_con_IVA__c</members>
+		<members>Asset.DSales_Motivo__c</members>
 		<members>Asset.DSALES_Precio_con_descuento_sin_IVA__c</members>
 		<members>Asset.DSALES_SKU__c</members>
 		<members>Asset.DSALES_RegionList__c</members>
@@ -269,6 +271,7 @@
 		<members>DSALES_Certificado__c.DSALES_No_de_Telefono__c</members>
 		<members>DSALES_Certificado__c.DSALES_NombreCliente__c</members>
 		<members>DSALES_Certificado__c.DSALES_Nombre_Vendedor__c</members>
+		<members>DSALES_Certificado__c.DSales_Motivo__c</members>
 		<members>DSALES_Certificado__c.DSALES_Numero_celular__c</members>
 		<members>DSALES_Certificado__c.DSALES_Numero_de_Vendedor__c</members>
 		<members>DSALES_Certificado__c.DSALES_Numero_serie__c</members>
