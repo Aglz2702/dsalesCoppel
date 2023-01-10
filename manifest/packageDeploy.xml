@@ -169,8 +169,9 @@
 		<members>Claim.DSALES_Formato_compacto_siniestro</members>
 		<members>DSALES_Certificado__c.DSALES_Certificado</members>
 		<members>DSALES_Endoso__c.DSALES_Formato_compacto_endoso</members>
-		<members>DSALES_InformacionDePago__c.InfoPagoVenta</members>
+		<members>DSALES_InformacionDePago__c.InfoPagoVenta</members>	
 		<members>InsurancePolicy.DSALES_Formato_compacto_p_liza</members>
+		<members>Plazo__c.DSALES_FormatoompactoSM</members>
 		<members>Quote.DSALES_FormatocompactoSM</members>
 		<members>QuoteLineItem.DSALES_FormatocompactoSM</members>
 		<name>CompactLayout</name>
@@ -213,6 +214,7 @@
 		<members>Asset.DSALES_TipoProducto__c</members>
 		<members>Asset.DSALES_TipoSeguro__c</members>
 		<members>Asset.DSALES_TipoServicio__c</members>
+		<members>Campaign.DSALES_Tipodecapana__c</members>
 		<members>Claim.Cliente__c</members>
 		<members>Claim.DSALES_Monto__c</members>
 		<members>Claim.DSALES_Tipo_pago__c</members>
@@ -376,6 +378,7 @@
 		<members>DSales_Matriz_GEX__c.DSALES_Tiempogex__c</members>
 		<members>DSales_Matriz_GEX__c.DSALES_Tipo__c</members>
 		<members>DSales_Matriz_GEX__c.DSales_Region_GEX__c</members>
+		<members>DSALES_AsociacionCampanias__c.DSALES_Activo__c</members>
 		<members>DSALES_Partidadepago__c.DSALES_Cambio__c</members>
 		<members>DSALES_Partidadepago__c.DSALES_CreditoIVA__c</members>
 		<members>DSALES_Partidadepago__c.DSALES_Ganodineroelec__c</members>
@@ -496,6 +499,9 @@
 		<members>OrderItem.DSales_Servicio__c</members>
 		<members>OrderItem.DSales_Tipo__c</members>
 		<members>OrderItem.DSales_Vigencia__c</members>
+		<members>Plazo__c.DSALES_Descripcin__c</members>
+		<members>Plazo__c.DSALES_Seguro__c</members>
+		<members>Plazo__c.Dsales_Plazo__c</members>
 		<members>Product2.DSALES_VigenciaMeses__c</members>
 		<members>Product2.DSALES_Vinculado__c</members>
 		<members>Product2.DSales_Marca__c</members>
@@ -549,6 +555,7 @@
 		<members>Quote.DSALES_Nombredelsolicitante__c</members>
 		<members>Quote.DSALES_Mtododecontacto__c</members>
 		<members>Quote.DSALES_Opcindepago__c</members>
+		<members>Quote.DSALES_Plazoacotizar__c</members>
 		<members>Quote.DSALES_Region__c</members>
 		<members>Quote.DSALES_Suburbcode__c</members>
 		<members>Quote.DSales_Direccion_de_la_tienda__c</members>
@@ -568,7 +575,9 @@
     	<members>Quote.DSALES_Contado__c</members>
 		<members>Quote.DSALES_Numerodepartidas__c</members>
     	<members>Quote.Tiempo_transcurrido__c</members>
+		<members>QuoteLineItem.DSALES_Comision__c</members>
 		<members>QuoteLineItem.DSALES_Derechosdepliza__c</members>
+		<members>QuoteLineItem.DSALES_Descripcion__c</members>
 		<members>QuoteLineItem.DSALES_Fechadecompra__c</members>
 		<members>QuoteLineItem.DSALES_Fechadeinicio__c</members>
 		<members>QuoteLineItem.DSALES_Fechadetermino__c</members>
@@ -578,6 +587,7 @@
 		<members>QuoteLineItem.DSALES_NombreProducto__c</members>
 		<members>QuoteLineItem.DSALES_NombreProductoServicio__c</members>
 		<members>QuoteLineItem.DSALES_Primaneta__c</members>
+		<members>QuoteLineItem.DSALES_Plazo__c</members>
 		<members>QuoteLineItem.DSALES_SKU__c</members>
 		<members>QuoteLineItem.DSales_SKU_Producto__c</members>
 		<members>QuoteLineItem.DSALES_TipoServ__c</members>
@@ -591,6 +601,8 @@
 		<members>QuoteLineItem.DSales_Clase__c</members>
 		<members>QuoteLineItem.DSales_Familia__c</members>
 		<members>QuoteLineItem.DSALES_TrackingID__c</members>
+		<members>QuoteLineItem.DSALES_Recargos__c</members>
+		<members>QuoteLineItem.DSALES_Segurogratis__c</members>
 		<members>Tienda__c.DSALES_Cdigopostal__c</members>
 		<members>Quote.DSALES_Aseguradora__c</members>
 		<members>Quote.DSALES_Negocio__c</members>
@@ -676,20 +688,21 @@
 		<members>DSALES_SubCategoria__c</members>
 		<members>DSales_Matriz_GEX__c</members>
 		<members>DSALES_RutaIntegracion__mdt</members>
-		<members>Tienda__c</members>
-		<members>Asset</members>
+		<members>DSALES_TipodeUso__c</members>
+		<members>DSALES_Tipodevehculo__c</members>
 		<members>DASALES_Porcentajedecobro__c</members>
 		<members>DSALES_Partidadepago__c</members>
 		<members>Account</members>
 		<members>Account</members>
+		<members>Asset</members>
+		<members>Claim</members>
 		<members>InsurancePolicy</members>
 		<members>Opportunity</members>
+		<members>Plazo__c</members>
 		<members>Quote</members>
-		<members>Claim</members>
 		<members>QuoteLineItem</members>
 		<members>Tipo_de_endoso__mdt</members>
-		<members>DSALES_TipodeUso__c</members>
-		<members>DSALES_Tipodevehculo__c</members>
+		<members>Tienda__c</members>
 		<name>CustomObject</name>
 	</types>
 	<types>
@@ -766,6 +779,7 @@
 		<name>EmailTemplate</name>
 	</types>
 	<types>
+		<members>Asociaci_n_de_campa_as_Record_Page</members>
 		<members>Certificado_de_Garant_a_Extendida</members>
 		<members>DSALES_MatrizPaginaRegistro</members>
 		<members>DSALES_Pagina_de_Inicio_GEX</members>
@@ -779,6 +793,7 @@
 		<members>Partida_de_presupuesto_P_gina_de_registro</members>
 		<members>Quote_Record_Page</members>
 		<members>P_gina_de_inicio_predeterminada1</members>
+		<members>Plazo_Record_Page1</members>
 		<members>Seguro_de_Motos_UtilityBar</members>
 		<members>Siniestro_P_gina_de_registro</members>
 		<members>P_gina_de_inicio_predeterminada</members>
@@ -903,6 +918,8 @@
 		<members>Asset.AllAssets</members>
 		<members>Asset.DSALES_Misproductosadquridos</members>
 		<members>Asset.DSALES_Nuevosdeestasemana</members>
+		<members>DSALES_AsociacionCampanias__c.All</members>
+		<members>DSALES_AsociacionCampanias__c.DSALES_Misasociacionesdecampanas</members>
 		<members>DSALES_Categoria__c.All</members>
 		<members>DSALES_Certificado__c.All</members>
 		<members>DSALES_Certificado__c.Certificado_por_sucursal</members>
@@ -920,6 +937,8 @@
 		<members>DSALES_Matriz_de_Cotizacion__c.All</members>
 		<members>DSALES_SubCategoria__c.All</members>
 		<members>DSales_Matriz_GEX__c.All</members>
+		<members>Plazo__c.All</members>
+		<members>Plazo__c.DSALES_Misplazos</members>
 		<members>Quote.All</members>
 		<members>Quote.DSALES_Nuevosdeestasemana</members>
 		<members>Tienda__c.All</members>
