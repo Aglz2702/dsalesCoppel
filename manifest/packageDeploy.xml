@@ -166,6 +166,7 @@
 	</types>
 	<types>
 		<members>Asset.DSALES_PysisCompactLayout</members>
+		<members>Campaign.DSALES_FormatoCompactoCampanasSM</members>
 		<members>Claim.DSALES_Formato_compacto_siniestro</members>
 		<members>DSALES_Certificado__c.DSALES_Certificado</members>
 		<members>DSALES_Endoso__c.DSALES_Formato_compacto_endoso</members>
@@ -862,6 +863,7 @@
 	</types>
 	<types>
 		<members>Asset-Pisys Asset Layout</members>
+		<members>Campaign-DSALES_CAMPAÑAS SM</members>
 		<members>DSALES_Categoria__c-DSALES_SM</members>
 		<members>DSALES_Categoria__c-Formato Categoría</members>
 		<members>DSALES_Certificado__c-DSALES_Certificado_GEX</members>
@@ -992,6 +994,7 @@
     	<name>QuickAction</name>
 	</types>
 	<types>
+		<members>Campaign.DSALES_TipoderegistrocampaNasSM</members>
 		<members>DSALES_InformacionDePago__c.DSALES_Pagos_en_NPV</members>
 		<members>DSALES_InformacionDePago__c.DSALES_PagosdeVentaenNPVSM_c</members>
 		<members>DSALES_Endoso__c.Registro_de_endoso_completo</members>
