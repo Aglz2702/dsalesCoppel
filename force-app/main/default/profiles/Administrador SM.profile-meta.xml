@@ -17161,6 +17161,10 @@
         <recordType>DSALES_Endoso__c.Registro_de_endoso_completo</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Campaign-DSALES_CAMPAÑAS SM</layout>
+        <recordType>Campaign.DSALES_TipoderegistrocampaNasSM</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_Familia__c-Formato Familia</layout>
     </layoutAssignments>
     <layoutAssignments>
