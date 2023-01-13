@@ -18,10 +18,10 @@ public class DSALES_QuoteSmWrapperRequestTest {
         classs.Name = 'test';
         insert classs;
         
-        Product2 prodRc = new Product2(Name ='RC Seguro de Moto',DSALES_vehculo__c='sadkncdcs' ,StockKeepingUnit='0000',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Producto');
+        Product2 prodRc = new Product2(Name ='RC Seguro de Moto',DSALES_vehculo__c='sadkncdcs' ,StockKeepingUnit='0000',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro');
 		insert prodRc;
         
-        Product2 prodAmp = new Product2(Name ='AMP Seguro de Moto',DSALES_vehculo__c='23d23d23', StockKeepingUnit='123444',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Producto',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40);
+        Product2 prodAmp = new Product2(Name ='AMP Seguro de Moto',DSALES_vehculo__c='23d23d23', StockKeepingUnit='123444',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40);
 		insert prodAmp;
         
         Product2 prodM = new Product2(Name ='Moto',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='1231212',DSales_Tipo_de_Producto__c='Producto',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40);
@@ -122,6 +122,33 @@ public class DSALES_QuoteSmWrapperRequestTest {
         insert tipoUso;
         DSALES_Tipodevehculo__c tipovehiculo = new DSALES_Tipodevehculo__c(Name='Moto');
         insert tipovehiculo;
+        
+        Plazo__c plazo1 = new Plazo__c();
+        plazo1.Name='12';
+        plazo1.DSALES_Seguro__c=prodRc.Id;
+        plazo1.Dsales_Plazo__c='12';
+        plazo1.DSALES_Activo__c=true;
+        insert plazo1;
+        
+        Plazo__c plazo2 = new Plazo__c(Name='12',Dsales_Plazo__c='12',DSALES_Seguro__c=prodAmp.Id,DSALES_Activo__c=true);
+        insert plazo2;
+        
+        Campaign camapna = new Campaign();
+        camapna.Name='RC';
+        camapna.DSALES_Tipodecapana__c = 'Seguro gratis';
+        camapna.IsActive = true;
+        insert camapna;
+        
+        Campaign camapnaAmp = new Campaign();
+        camapnaAmp.Name='A';
+        camapnaAmp.DSALES_Tipodecapana__c = 'Seguro gratis';
+        camapnaAmp.IsActive = true;
+        insert camapnaAmp;
+        
+        DSALES_AsociacionCampanias__c asociacionRc = new DSALES_AsociacionCampanias__c(DSALES_Producto__c=prodRc.Id,DSALES_Campania__c=camapna.Id, DSALES_Activo__c=true);
+        DSALES_AsociacionCampanias__c asociacionAmp = new DSALES_AsociacionCampanias__c(DSALES_Producto__c=prodAmp.Id,DSALES_Campania__c=camapnaAmp.Id, DSALES_Activo__c=true);
+        insert asociacionRc;
+        insert asociacionAmp;
     }
     
     @isTest 
@@ -171,6 +198,22 @@ public class DSALES_QuoteSmWrapperRequestTest {
         RestContext.request = req;
         req.requestBody = Blob.valueof(body);
 		System.debug('Generico: ');
+        Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(5));
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
+        DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
+		Test.stopTest();
+    }
+    
+    @isTest 
+    static void CreateQuoteCreditoo(){
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+        String body = '{"vehicle_use":"Comercial","sku":"1231212","vehicle_type":"Moto","plazo":"12","rfc":"abcd","client_number":"323535324","first_name":"DanielaD","middle_name":"H535Go","last_name":"Galle535gos","suffix":"35","store_id":"CPPL-UGARTE","vendedor":"pedro","contact_phone":"45454554545","contact_email":"ssfas@fgmaoc.com","contact_gender":"Masculino","contact_birth_date":"1990-10-02","contact_state_code":"12","contact_township_code":"212","contact_suburb_code":12,"contact_zip_code":"12","vehicle_id":"slknvsaeclskvlams","payment_option":"Mensual","packagge":"EC","start_at":"2020-10-10","productList":[{"sku":"121212121212"},{"sku":"632013-GEX"}]}';
+        req.requestURI = '/apexrest/insertQuoteSM';
+        req.httpMethod = 'POST';
+        RestContext.request = req;
+        req.requestBody = Blob.valueof(body);
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(5));
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));

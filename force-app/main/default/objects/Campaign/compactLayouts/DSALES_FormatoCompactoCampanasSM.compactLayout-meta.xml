@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_FormatoCompactoCampanasSM</fullName>
+    <fields>Name</fields>
+    <fields>DSALES_Tipodecapana__c</fields>
+    <fields>IsActive</fields>
+    <fields>EndDate</fields>
+    <label>Formato compacto campañas SM</label>
+</CompactLayout>

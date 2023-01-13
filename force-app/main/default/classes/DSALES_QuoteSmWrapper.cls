@@ -56,32 +56,55 @@ global class DSALES_QuoteSmWrapper {
         global String associate_id {get; set;}//fijo
         global String quote_date {get; set;}//fecha creacion-sales
         global String start_at {get; set;}
+        global List<Plazo> listaPlazos {get; set;}
         
     }
-
+    global class Plazo {
+		global String producto {get;set;}
+        global String plazo {get;set;}
+	}
+    
 	global class Product {
 		global String sku {get;set;}
-
 	}
+    
     global class respuestaDelProveedor{
 		global Integer code {get;set;}
         global Boolean success {get;set;}
+        global List<ArmadoMuleSoft> plazos {get;set;}
+	}
+    
+    global class ArmadoMuleSoft{
         global String tracking_id {get;set;}
+        global String name {get;set;}
+        global String plazo {get;set;}
         global Data data {get;set;}
+	}
+    global class Campanias{
+        global String nombre {get;set;}
+        global String tipoCampana {get;set;}
+        global String descripcion {get;set;}
+	}
+    global class RespuestaPlazos{
+        global String tracking_id {get;set;}
+        global String nombreProducto {get;set;}
+        global String vigencia {get;set;}
+        global Receipt costos {get;set;}
+        global String Idpartida {get;set;}    
 	}
 
     global class RespuestaParaNpv{
         global String quoteId {get;set;}
-        global String TrackingId {get;set;}
         global String Cliente {get;set;}
         global String oppor {get;set;}
         global String cotiza {get;set;}
-        global Receipt rc {get;set;}
-        global Receipt amp {get;set;}
         global String message {get;set;}
         global Integer errorCode {get;set;}
         global Boolean success {get;set;}
         global Boolean listaNegra {get;set;}
+        global List<RespuestaPlazos> listaSeguros {get;set;}
+        global RespuestaPlazos listaproducto {get;set;}
+        global List<Campanias> campanias{get;set;}      
     }
 
     global class CoveragesArray{
