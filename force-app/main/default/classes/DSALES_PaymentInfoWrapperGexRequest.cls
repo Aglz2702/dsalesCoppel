@@ -61,7 +61,7 @@ global with sharing class DSALES_PaymentInfoWrapperGexRequest {
                     info.DSALES_SKU__c=payment.sku;
                     //info.DSALES_Certificado__c = payment.certified_id;
                    // info.DSALES_ProductoAdquirido__c = payment.asset_id;
-                    //insert info;
+                    insert info;
 						
                     for(DSALES_PaymentInfoWrapperGEX.Pagos p : payment.PartidasDePago){
                         DSALES_Partidadepago__c partidaPago = new DSALES_Partidadepago__c();
