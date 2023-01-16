@@ -2,16 +2,30 @@
 global with sharing class DSALES_CertificadoWrapperTest {
     @testSetup
     static void SetUp(){
+        Opportunity opp = new Opportunity(Name='Danny',StageName='Closed',CloseDate=Date.today());
+        insert opp;
+       
         Account ac= new Account(Name='DannyTest',CP_WalletCustomerNumber__c=123456);  
         insert ac;
         Contact con = new Contact(lastname= 'Test', AccountId= ac.Id, Email= 'johndoeus@salesforce.com');
         insert con;
-        Asset ass = new Asset(Name='Test',AccountId= ac.Id,ContactId=con.Id);
-        insert ass;
+      
         Tienda__c tienda = new Tienda__c(DSales_TiendaID__c='1234');
         insert tienda;
-        DSALES_Certificado__c certificado = new DSALES_Certificado__c(DSALES_Email__c='dsanmiguel@deloittemx.com',DSALES_ProductoAdquirido__c=ass.id);
+        DSALES_InformacionDePago__c pago = new DSALES_InformacionDePago__c(DSALES_Oportunidad__c=opp.id,DSALES_Factura__c='1234',DSALES_Clave_Tienda__c='1234');
+        insert pago;
+         String recordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('Garantia Extendida').getRecordTypeId();
+            String recordTypeId2 = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
+        Product2 pr= new Product2(Name='Daniel',StockKeepingUnit='12345',DSales_Tipo_de_Producto__c='Producto',RecordTypeId=recordTypeId2);
+		insert pr;
+        
+         Asset ass = new Asset(Name='Test',AccountId= ac.Id,ContactId=con.Id,DSALES_SKU__c='12345',DSales_Informacion_pago__c=pago.Id,Product2Id=pr.id,DSALES_TipoProducto__c='Producto',RecordTypeId=recordTypeId);
+        insert ass; 
+        DSALES_Certificado__c certificado = new DSALES_Certificado__c(DSALES_Email__c='dsanmiguel@deloittemx.com',DSALES_ProductoAdquirido__c=ass.id,
+                                                                     DSALES_InformacionDePago__c=pago.id);
         insert certificado;
+         
+        
     }
     @isTest static void CreateRecordTest()
     {
@@ -22,7 +36,7 @@ global with sharing class DSALES_CertificadoWrapperTest {
         
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
-       String body = '{"id_producto_adquirido":"'+ast.id+'","id_cuenta":"'+acc.id+'","id_tienda":"'+tienda.id+'","numero_caja_coppel": "1234","id_vendedor": "1234","direccion_cliente": "Montreal 169 Paseo Montejo","correo_cliente": "dsanmiguel@deloittemx.com","telefono_cliente": "8130912906","celular_cliente": "812091342","sku": "ABCDS12","modelo_tangible": "Italika","marca_tangible": "Samsung","numero_serie": "90001","descripcion_tangible": "Muy bueno","precio_tangible": "900","fecha_compra_tangible": "2022-09-06","garantia_coppel_tangible": "12","costo_garantia": "900","fecha_compra_garantia": "2022-09-06","fecha_fin_garantia_extendida": "2022-09-06","fecha_inicio_garantia_extendida": "2022-09-06"}';
+        String body = '{"id_producto_adquirido":"'+ast.id+'","id_cuenta":"'+acc.id+'","id_tienda":"'+tienda.id+'","numero_caja_coppel": "1234","id_vendedor": "1234","direccion_cliente": "Montreal 169 Paseo Montejo","correo_cliente": "dsanmiguel@deloittemx.com","telefono_cliente": "8130912906","celular_cliente": "812091342","sku": "ABCDS12","modelo_tangible": "Italika","marca_tangible": "Samsung","numero_serie": "90001","descripcion_tangible": "Muy bueno","precio_tangible": "900","fecha_compra_tangible": "2022-09-06","garantia_coppel_tangible": "12","costo_garantia": "900","fecha_compra_garantia": "2022-09-06","fecha_fin_garantia_extendida": "2022-09-06","fecha_inicio_garantia_extendida": "2022-09-06"}';
         request.requestURI='/apexrest/insertCertificado'; 
         request.httpMethod='POST';
         RestContext.request=request;
@@ -40,16 +54,21 @@ global with sharing class DSALES_CertificadoWrapperTest {
     }
     @isTest static void putRecordTest()
     {
-       
-        Asset prod =[SELECT id FROM Asset WHERE Name='Test' LIMIT 1 ];
-        DSALES_Certificado__c certi= [SELECT id,Name FROM DSALES_Certificado__c WHERE DSALES_Email__c='dsanmiguel@deloittemx.com' LIMIT 1];
-         String name=certi.Name,name1='';
-        Boolean asset=true,asset1=false;
+        DSALES_InformacionDePago__c pago = [SELECT Id,DSALES_Factura__c,DSALES_Clave_Tienda__c FROM
+                                            DSALES_InformacionDePago__c WHERE DSALES_Factura__c='1234' AND DSALES_Clave_Tienda__c='1234' ];
+        List<String> prod =new List<String>();
+         prod.add('12345');
+        DSALES_Certificado__c certi= [SELECT Name FROM DSALES_Certificado__c WHERE DSALES_Email__c='dsanmiguel@deloittemx.com' LIMIT 1];
+        List<String> c = new List<String>();
+        c.add(certi.Name);
+        String factura='1234',factura1='',clave_tienda='1234',clave_tienda1='';
+        String sku_tangible='';
         String estado='Can',estado1='Dev',estado2='';
+        String motivo='';
         
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
-        String body = '{"name":"'+name+'","estado":"'+estado+'","asset":"'+asset+'" }';
+        String body = '{"id_factura":"'+factura+'", "clave_tienda":"'+clave_tienda+'", "sku_de_tangible":"'+prod+'","numero_de_certificado":"'+c+'", "estado":"'+estado+'","motivo":"No le gustó más al cliente" }';
         request.requestURI='/apexrest/insertCertificado'; 
         request.httpMethod='PUT';
         RestContext.request=request;
@@ -57,17 +76,17 @@ global with sharing class DSALES_CertificadoWrapperTest {
         RestContext.response=response;
         DSALES_CertificadoWrapper.CertificadoRequest certificado =  (DSALES_CertificadoWrapper.CertificadoRequest)JSON.deserialize (body,DSALES_CertificadoWrapper.CertificadoRequest.class);
         Test.startTest();
-        DSALES_CertificadoWrapperRequest.putCertificado(name,estado,asset);
-        DSALES_CertificadoWrapperRequest.putCertificado(name,estado1,asset1);
-        DSALES_CertificadoWrapperRequest.putCertificado(name,estado2,asset);
-        DSALES_CertificadoWrapperRequest.putCertificado(name1,estado2,asset);
+        DSALES_CertificadoWrapperRequest.putCertificado(factura,clave_tienda,prod,c,estado,motivo);
+        DSALES_CertificadoWrapperRequest.putCertificado(factura1,clave_tienda1,prod,c,estado,motivo);
+         DSALES_CertificadoWrapperRequest.putCertificado(factura,clave_tienda,prod,c,estado1,motivo);
+         DSALES_CertificadoWrapperRequest.putCertificado(factura,clave_tienda,prod,c,estado2,motivo);
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
     }
-     @isTest static void FailedRecordTest()
+    @isTest static void FailedRecordTest()
     {
-                
+        
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
         String body = '{"numero_caja_coppel": "1234","id_vendedor": "1234","direccion_cliente": "Montreal 169 Paseo Montejo","correo_cliente": "dsanmiguel@deloittemx.com","telefono_cliente": "8130912906","celular_cliente": "812091342","sku": "ABCDS12","modelo_tangible": "Italika","marca_tangible": "Samsung","numero_serie": "90001","descripcion_tangible": "Muy bueno","precio_tangible": "900","fecha_compra_tangible": "2022-09-06","garantia_coppel_tangible": "12","costo_garantia": "900","fecha_compra_garantia": "2022-09-06","fecha_fin_garantia_extendida": "2022-09-06","fecha_inicio_garantia_extendida": "2022-09-06"}';

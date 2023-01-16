@@ -166,6 +166,7 @@
 	</types>
 	<types>
 		<members>Asset.DSALES_PysisCompactLayout</members>
+		<members>Campaign.DSALES_FormatoCompactoCampanasSM</members>
 		<members>Claim.DSALES_Formato_compacto_siniestro</members>
 		<members>DSALES_Certificado__c.DSALES_Certificado</members>
 		<members>DSALES_Endoso__c.DSALES_Formato_compacto_endoso</members>
@@ -193,6 +194,7 @@
 		<members>Account.Tipo_de_Cliente__c</members>
 		<members>Account.sumar__c</members>
 		<members>Account.DSALES_DeseaserContactado__c</members>
+		<members>Asset.DSales_Informacion_pago__c</members>
 		<members>Asset.DSALES_CategoriaBuscar__c</members>
 		<members>Asset.DSALES_Certificado__c</members>
 		<members>Asset.DSALES_ClaseBuscar__c</members>
@@ -202,6 +204,7 @@
 		<members>Asset.DSALES_Oportunidad__c</members>
 		<members>Asset.DSALES_PrecioSINIVA__c</members>
 		<members>Asset.DSALES_Precio_con_descuento_con_IVA__c</members>
+		<members>Asset.DSales_Motivo__c</members>
 		<members>Asset.DSALES_Precio_con_descuento_sin_IVA__c</members>
 		<members>Asset.DSALES_SKU__c</members>
 		<members>Asset.DSALES_RegionList__c</members>
@@ -243,9 +246,10 @@
 		<members>DSales_Asignacion_de_Productos__c.DSales_NombreProducto__c</members>
 		<members>DSales_Asignacion_de_Productos__c.DSales_Producto__c</members>
 		<members>DSales_Asignacion_de_Productos__c.DSales_Servicio_Seguro__c</members>
-		<members>DSALES_AsociacionCampanias__c.DSALES_Campania__c</members>
+		<members>DSALES_AsociacionCampanias__c.DSALES_Campania__c</members> 
 		<members>DSALES_AsociacionCampanias__c.DSALES_Producto__c</members>
 		<members>DSALES_AsociacionTiposUso__c.DSALES_Producto__c</members>
+		<members>DSALES_AsociacionTiposUso__c.DSALES_TipodeUso__c</members>
 		<members>DSALES_Categoria__c.DSALES_TipoProducto__c</members>
 		<members>DSALES_Categoria__c.DSALES_TipoSeguro__c</members>
 		<members>DSALES_Categoria__c.DSALES_TipoServicio__c</members>
@@ -271,6 +275,7 @@
 		<members>DSALES_Certificado__c.DSALES_No_de_Telefono__c</members>
 		<members>DSALES_Certificado__c.DSALES_NombreCliente__c</members>
 		<members>DSALES_Certificado__c.DSALES_Nombre_Vendedor__c</members>
+		<members>DSALES_Certificado__c.DSales_Motivo__c</members>
 		<members>DSALES_Certificado__c.DSALES_Numero_celular__c</members>
 		<members>DSALES_Certificado__c.DSALES_Numero_de_Vendedor__c</members>
 		<members>DSALES_Certificado__c.DSALES_Numero_serie__c</members>
@@ -799,6 +804,11 @@
 		<members>Producto_Adquirido_Record_Page</members>
 		<members>Activo_de_p_liza_de_seguro_P_gina_de_registro</members>
 		<members>Asignaci_n_de_Productos_P_gina_de_registro</members>
+		<members>Asociaci_n_de_campa_as_P_gina_de_registro</members>
+		<members>Asociaci_n_de_campa_as_Record_Page</members>
+		<members>Asociaci_n_de_tipos_de_uso_Record_Page</members>
+		<members>DSALES_TipodeUsoPginaderegistro</members>
+		<members>DSALES_TipodevehculoPginaderegistro</members>
 		<name>FlexiPage</name>
 	</types>
 	<types>
@@ -859,6 +869,7 @@
 	</types>
 	<types>
 		<members>Asset-Pisys Asset Layout</members>
+		<members>Campaign-DSALES_CAMPAÑAS SM</members>
 		<members>DSALES_Categoria__c-DSALES_SM</members>
 		<members>DSALES_Categoria__c-Formato Categoría</members>
 		<members>DSALES_Certificado__c-DSALES_Certificado_GEX</members>
@@ -989,6 +1000,7 @@
     	<name>QuickAction</name>
 	</types>
 	<types>
+		<members>Campaign.DSALES_TipoderegistrocampaNasSM</members>
 		<members>DSALES_InformacionDePago__c.DSALES_Pagos_en_NPV</members>
 		<members>DSALES_InformacionDePago__c.DSALES_PagosdeVentaenNPVSM_c</members>
 		<members>DSALES_Endoso__c.Registro_de_endoso_completo</members>
