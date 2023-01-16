@@ -62,13 +62,13 @@
                                     <div class="slds-col">
                                         <template if:true={data.showAdmiSM}>
                                             <lightning-combobox selected="Seguro" name="TipoProducto" required class="slds-m-bottom_x-small"
-                                                label="Tipo de Producto" value="Seguro" placeholder="Selecciona"
+                                                label="Tipo de producto" value="Seguro" placeholder="Selecciona"
                                                 options={pickList.tipoProducto} onchange={SelectSeguroServicio}
                                                 disabled></lightning-combobox>
                                         </template>
                                         <template if:true={data.showAdmiGex}>
                                             <lightning-combobox selected="Servicio" name="TipoProducto" required class="slds-m-bottom_x-small"
-                                                label="Tipo de Producto" value="Servicio" placeholder="Selecciona"
+                                                label="Tipo de producto" value="Servicio" placeholder="Selecciona"
                                                 options={pickList.tipoProducto} onchange={SelectSeguroServicio}
                                                 disabled></lightning-combobox>
                                         </template>
@@ -852,7 +852,7 @@
                 <h1 id="modal-heading-00" class="slds-text-heading_medium slds-hyphenate"> Clasificación de
                     Servicios
                 </h1>
-            </div>
+                </div>
             <div class="slds-modal__content">
                 <table if:false={popEdit}
                     class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
@@ -906,22 +906,16 @@
                             </div>
                         </th>
                             <th class="" scope="col">
-                                <div class="slds-truncate" title="Seguro">
+                                <div class="slds-truncate" title="No aplica">
                                     <lightning-input type="checkbox" checked={data.noAplica}
                                         onchange={onchangeAllNoAplica} label="No aplica"></lightning-input>
                                 </div>
                             </th>
                             <th class="" scope="col">
-                                <div class="slds-truncate" title="Campaña">
-                                    <lightning-input type="checkbox" checked={data.campanas}
-                                        onchange={onchangeAllCampanas} label="Campañas"></lightning-input>
-                                </div>
+                                <div class="slds-truncate" title="Campaña">Campaña</div>
                             </th>
                             <th class="" scope="col">
-                                <div class="slds-truncate" title="Tipos de Usos">
-                                    <lightning-input type="checkbox" checked={data.tiposUso}
-                                        onchange={onchangeAllTiposUso} label="Tipos de usos"></lightning-input>
-                                </div>
+                                <div class="slds-truncate" title="Tipos de Usos">Tipos de Usos</div>
                             </th>
 
                         </tr>
@@ -977,66 +971,64 @@
                                            onchange={onchangeSeguro}></lightning-input>
                                    </div>
                                </td>
-                                <td data-label="No Aplica" style="text-align: left;">
-                                    <div class="slds-truncate" title="No Aplica">
+                                <td data-label="No aplica" style="text-align: left;">
+                                    <div class="slds-truncate" title="No aplica">
                                         <lightning-input type="checkbox" name={record.id} checked={record.noAplica}
                                             onchange={onchangeNoAplica}></lightning-input>
                                     </div>
                                 </td>
-                                <td data-label={record.sku} style="text-align: middle;">
-                                    
-                                    <div if:true ={record.servicio} class="slds-p-bottom_x-small slds-p-left_small" style="width:50px; margin: 0 auto;">
-                                        <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                        value={record.sku} data-id={record.sku}  onclick={openFormCampaigns}>
-                                
-                                            <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                            </lightning-icon>
-                                        </button>
-                                    </div>
-                                    <div if:true ={record.seguro} class="slds-p-bottom_x-small slds-p-left_small" style="width:50px; margin: 0 auto;">
-                                        <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                        value={record.sku} data-id={record.sku}  onclick={openFormCampaigns}>
-                                
-                                            <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                            </lightning-icon>
-                                        </button>
-                                    </div>
-                                    <div if:true ={record.noAplica} class="slds-p-bottom_x-small slds-p-left_small" style="width:50px; margin: 0 auto;">
-                                        <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                        value={record.sku} data-id={record.sku}  onclick={openFormCampaigns}>
-                                
-                                            <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                            </lightning-icon>
-                                        </button>
-                                    </div>
+                                <td data-label="Campanas" style="text-align: left;">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col">
+                                            <div if:true={record.servicio} style=" box-sizing: border-box; margin: 0px; padding-left:20px;">
+                                                <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                                    value={record.sku} data-id={record.sku} onclick={openFormCampaigns}>
+                                                    <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                                    </lightning-icon>
+                                                </button>
+                                            </div>
+                                            <div if:true={record.seguro} style=" box-sizing: border-box; margin: 0px; padding-left:20px;">
+                                                <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                                    value={record.sku} data-id={record.sku} onclick={openFormCampaigns}>
+                                                    <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                                    </lightning-icon>
+                                                </button>
+                                            </div>
+                                            <div if:true={record.noAplica} style=" box-sizing: border-box; margin: 0px; padding-left:20px;">
+                                                <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                                    value={record.sku} data-id={record.sku} onclick={openFormCampaigns}>
+                                                    <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                                    </lightning-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        </div>
                                 </td>
-                                <td data-label={record.sku} style="text-align: middle;">
-                                    
-                                    <div if:true ={record.servicio} class="slds-p-bottom_x-small slds-p-left_small" style="width:50px; margin: 0 auto;">
-                                        <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                        value={record.sku} data-id={record.sku}  onclick={openFormTypes}>
+                                <td data-label="Tipos de uso" style="text-align: left;">
+                                    <div class="slds-grid slds-gutters">
+                                        <div if:true={record.servicio} style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
+                                            <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
                                 
-                                            <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                            </lightning-icon>
-                                        </button>
+                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                                </lightning-icon>
+                                            </button>
+                                        </div>
+                                        <div if:true={record.seguro} style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
+                                            <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
+                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                                </lightning-icon>
+                                            </button>
+                                        </div>
+                                        <div if:true={record.noAplica} style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
+                                            <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
+                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                                </lightning-icon>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div if:true ={record.seguro} class="slds-p-bottom_x-small slds-p-left_small" style="width:50px; margin: 0 auto;">
-                                        <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                        value={record.sku} data-id={record.sku}  onclick={openFormTypes}>
-                                
-                                            <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                            </lightning-icon>
-                                        </button>
-                                    </div>
-                                    <div if:true ={record.noAplica} class="slds-p-bottom_x-small slds-p-left_small" style="margin: 0 auto;">
-                                        <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                        value={record.sku} data-id={record.sku}  onclick={openFormTypes}>
-                                
-                                            <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                            </lightning-icon>
-                                        </button>
-                                    </div>
-
                                 </td>
                                
 
@@ -1101,7 +1093,7 @@
                             </div>
                             <div class="slds-modal__content slds-p-around_large" id="modal-content-id-4666">
                                 <lightning-dual-listbox 
-                                name="Tiposuso"
+                                name="Tipos de uso"
                                 label="Seleccione los tipos de uso que apliquen"
                                 source-label="Disponible"
                                 selected-label="Seleccionado"
