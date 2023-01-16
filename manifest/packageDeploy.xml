@@ -246,9 +246,10 @@
 		<members>DSales_Asignacion_de_Productos__c.DSales_NombreProducto__c</members>
 		<members>DSales_Asignacion_de_Productos__c.DSales_Producto__c</members>
 		<members>DSales_Asignacion_de_Productos__c.DSales_Servicio_Seguro__c</members>
-		<members>DSALES_AsociacionCampanias__c.DSALES_Campania__c</members>
+		<members>DSALES_AsociacionCampanias__c.DSALES_Campania__c</members> 
 		<members>DSALES_AsociacionCampanias__c.DSALES_Producto__c</members>
 		<members>DSALES_AsociacionTiposUso__c.DSALES_Producto__c</members>
+		<members>DSALES_AsociacionTiposUso__c.DSALES_TipodeUso__c</members>
 		<members>DSALES_Categoria__c.DSALES_TipoProducto__c</members>
 		<members>DSALES_Categoria__c.DSALES_TipoSeguro__c</members>
 		<members>DSALES_Categoria__c.DSALES_TipoServicio__c</members>
@@ -803,6 +804,11 @@
 		<members>Producto_Adquirido_Record_Page</members>
 		<members>Activo_de_p_liza_de_seguro_P_gina_de_registro</members>
 		<members>Asignaci_n_de_Productos_P_gina_de_registro</members>
+		<members>Asociaci_n_de_campa_as_P_gina_de_registro</members>
+		<members>Asociaci_n_de_campa_as_Record_Page</members>
+		<members>Asociaci_n_de_tipos_de_uso_Record_Page</members>
+		<members>DSALES_TipodeUsoPginaderegistro</members>
+		<members>DSALES_TipodevehculoPginaderegistro</members>
 		<name>FlexiPage</name>
 	</types>
 	<types>
