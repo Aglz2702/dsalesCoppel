@@ -853,6 +853,7 @@
                     Servicios
                 </h1>
                     </div>
+                </div>
             <div class="slds-modal__content">
                 <table if:false={popEdit}
                     class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
@@ -1006,6 +1007,42 @@
                                             </div>
                                         </div>
                                         </div> 
+                                </td>
+                                <td data-label="Tipos de uso" style="text-align: left;">
+                                    <div class="slds-grid slds-gutters">
+                                        <div if:true={record.servicio} style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
+                                            <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
+                                
+                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                                </lightning-icon>
+                                            </button>
+                                        </div>
+                                        <div if:true={record.seguro} style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
+                                            <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
+                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                                </lightning-icon>
+                                            </button>
+                                        </div>
+                                        <div if:true={record.noAplica} style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
+                                            <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
+                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                                </lightning-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label={record.id} style="text-align: left;">
+                                    <div class="slds-truncate" title="ID Vehiculo">
+                                        <lightning-input type="text" name={record.id} value={record.iDVehiculo} label="ID Vehiculo" data-id={record.id} onchange={handleInputChangeVehicleID} 
+                                        placeholder="Escriba/Modifique ID">
+                                        </lightning-input>
+                                    </div>
+                                </td>
+
+                                        </div>
                                 </td>
                                 <td data-label="Tipos de uso" style="text-align: left;">
                                     <div class="slds-grid slds-gutters">

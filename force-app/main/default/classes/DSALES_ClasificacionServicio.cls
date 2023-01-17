@@ -479,6 +479,7 @@ public without sharing class DSALES_ClasificacionServicio {
         b.value= item.Id;
         listCampaigns.add(b);
     }    
+    }   
         return listCampaigns;
     }
 
