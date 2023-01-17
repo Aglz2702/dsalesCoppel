@@ -40,7 +40,7 @@ public without sharing class DSALES_ClasificacionServicio {
         //String tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         String producto= 'Producto';
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
-        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, DSALES_TipoServicio__c, DSALES_Noaplica__c, RecordTypeId ';
+        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c,DSALES_vehculo__c, DSALES_TipoServicio__c, DSALES_Noaplica__c, RecordTypeId ';
         query += 'from Product2 Where RecordTypeId != null and DSALES_Noaplica__c = false and DSales_Servicio__c = false and DSales_Seguro__c= false ';
         query += listCategorias.size() > 0 ? ' And DSales_Categoria__c in :listCategorias ' : '';
         query += listSubCategorias.size() > 0 ? ' And DSALES_SubCategoria__c in :listSubCategorias ' : '';
@@ -60,7 +60,7 @@ public without sharing class DSALES_ClasificacionServicio {
         }
         //String tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSales_Tipo_de_Producto__c').getRecordTypeId();
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
-        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, RecordTypeId, DSALES_TipoServicio__c, DSALES_Noaplica__c ';
+        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c,DSALES_vehculo__c, RecordTypeId, DSALES_TipoServicio__c, DSALES_Noaplica__c ';
         query += 'from Product2 Where StockKeepingUnit = :sku ';
         query += ' order by DSales_Servicio__c asc';
         System.debug('Query: '+query);
@@ -255,6 +255,9 @@ public without sharing class DSALES_ClasificacionServicio {
             servicio.seguro = item.DSales_Seguro__c;
             servicio.noAplica = item.DSALES_NoAplica__c;
             servicio.tipoServicio = item.DSALES_TipoServicio__c;
+            servicio.tipoUso = false;
+            servicio.campanas = false;
+            servicio.iDVehiculo = item.DSALES_vehculo__c;
             listServicios.add(servicio); 
         }
         return listServicios;
@@ -267,7 +270,7 @@ public without sharing class DSALES_ClasificacionServicio {
         List<Product2> listProductos= new List<Product2>();
         for(Servicio item: objeto){
             listProductos.add(new Product2(Id = item.id, DSALES_Servicio__c = item.servicio, 
-                                           DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, DSALES_IsClasified__c=true));
+                                           DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, DSALES_IsClasified__c=true, DSALES_vehculo__c= item.iDVehiculo));
         }
         upsert listProductos;
     }
@@ -475,7 +478,7 @@ public without sharing class DSALES_ClasificacionServicio {
         b.label= item.Name;
         b.value= item.Id;
         listCampaigns.add(b);
-    }  
+    }   
         return listCampaigns;
     }
 
@@ -528,7 +531,7 @@ public without sharing class DSALES_ClasificacionServicio {
             }
         }
         upsert listCampanasSeleccion; 
-    }
+    } 
 
     @AuraEnabled
     public static void updateTipoUso(String allData, String idProducto){
@@ -567,17 +570,16 @@ public without sharing class DSALES_ClasificacionServicio {
         }
         upsert listTipoUsoSeleccion; 
     }
-
-
+ 
     @AuraEnabled
     public static List<String> getTiposUsoUsed(String idProducto){
 
         List<String> listTipoUsoUsed = new List<String>();
 
         for(DSALES_AsociacionTiposUso__c item: [Select DSALES_TipodeUso__c from DSALES_AsociacionTiposUso__c where DSALES_Producto__c=:idProducto and DSALES_Activo__c=true])
-    {
-        listTipoUsoUsed.add(item.DSALES_TipodeUso__c);
-    }  
+        {
+            listTipoUsoUsed.add(item.DSALES_TipodeUso__c);
+        }  
         return listTipoUsoUsed;
     }
 
@@ -610,11 +612,10 @@ public without sharing class DSALES_ClasificacionServicio {
             for(Servicio item:listaPreciosSelected){
                 if(item.servicio==true || item.seguro==true){
                     listPrices.add(new PricebookEntry(Product2Id = item.id, Pricebook2Id=idprecios, IsActive=true, UnitPrice=1));
-                    }
+                }
             }
-            insert listPrices;
-        }
-         
+        insert listPrices;
+        }   
     }
 
     @AuraEnabled
@@ -629,7 +630,7 @@ public without sharing class DSALES_ClasificacionServicio {
             pickListValuesList1.add(option);
         }
         return pickListValuesList1;
-        }
+    }
 
 
         @AuraEnabled
@@ -644,7 +645,7 @@ public without sharing class DSALES_ClasificacionServicio {
                 pickListValuesList2.add(option);
             }
             return pickListValuesList2;
-            }
+        }
 
         @AuraEnabled
         public static List<PicklistOp> getPickListValuesIntoList3(){
@@ -658,7 +659,7 @@ public without sharing class DSALES_ClasificacionServicio {
                 pickListValuesList3.add(option);
             }
             return pickListValuesList3;
-            }
+        }
 
         @AuraEnabled
         public static List<PicklistOp> getPickListValuesIntoList4(){
@@ -672,7 +673,7 @@ public without sharing class DSALES_ClasificacionServicio {
                 pickListValuesList4.add(option);
             }
             return pickListValuesList4;
-            }
+        }
 
               
 
@@ -706,9 +707,6 @@ public without sharing class DSALES_ClasificacionServicio {
 
     @AuraEnabled
     public static void insertPocentajeCobro(String idservicio, String JSONP){
-       //List<porcentajesCobro> listaPorcentajes = (List<porcentajesCobro>) JSON.deserialize(JSONP, List<porcentajesCobro>.class);
-       //DSALES_ClasificacionServicioWrapper objeto = (DSALES_ClasificacionServicioWrapper) JSON.deserialize(JSONP, DSALES_ClasificacionServicioWrapper.class);
-       //system.debug(listaPorcentajes);
        String listPorc= '['+JSONP+ ']';
        List<porcentajesCobro> listaPorcentajes = (List<porcentajesCobro>) JSON.deserialize(listPorc, List<porcentajesCobro>.class);
        system.debug(listPorc);
@@ -744,9 +742,7 @@ public without sharing class DSALES_ClasificacionServicio {
 
         }
         insert listInsertPorcentajes;
-            
-        
-                    
+                            
     }     
 
     @AuraEnabled
@@ -762,23 +758,6 @@ public without sharing class DSALES_ClasificacionServicio {
     }
                     
     }     
-    
-   /* @AuraEnabled
-    public static List<String> getSkuSelected(List<String> skuSelected){
-
-        List<String> listSkuSelected = new List<String>();
-
-
-        for(DSALES_Familia__c item: [Select Id, Name,DSALES_Clase__c from DSALES_Familia__c Where DSALES_Clase__c =:valueClases])
-    {
-        PicklistOp option = new PicklistOp();
-        option.label= item.name;
-        option.value = item.Id;
-        listFamilias.add(option);
-    }  
-        return listFamilias;
-    }*/
-
 
     public class PickListOp{
         @AuraEnabled public String  value;
@@ -796,6 +775,7 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public List <Servicio> listServicios{get;set;}  
         @AuraEnabled public String sku;
     }
+
     public class PickListOption{
         @AuraEnabled public String etiqueta;
         @AuraEnabled public String valor;
@@ -820,7 +800,10 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public String label;
         @AuraEnabled public String value;
         @AuraEnabled public String recordId;
-
+        @AuraEnabled public Boolean tipoUso;
+        @AuraEnabled public Boolean campanas;
+        @AuraEnabled public String iDVehiculo;
+        
     }
 
     public class AsignarProductos{
@@ -849,4 +832,26 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public integer anio6;      
     }
     //guardo correctamente 5:25 pm"
+
+    /*
+    @AuraEnabled
+    public static void updateTipoUsoMasivo(String allData, String AllProductsId){
+        List<String> objetoTipoUso = (List<String>) JSON.deserialize(allData, List<String>.class);
+        List<Servicio> objetoAllProducts = (List<Servicio>) JSON.deserialize(AllProductsId, List<Servicio>.class);
+        List<DSALES_AsociacionTiposUso__c> listTipoUsoSeleccion= new List<DSALES_AsociacionTiposUso__c>();
+        //List<DSALES_AsociacionTiposUso__c> updateList= new List<DSALES_AsociacionTiposUso__c>();
+        system.debug(objetoAllProducts);
+        for(Integer i=0; objetoTipoUso.size()>i; i++)
+        { 
+            for(Servicio item: objetoAllProducts)
+          {
+            if(item.tipoUso)
+            {
+                listTipoUsoSeleccion.addAll(new DSALES_AsociacionTiposUso__c(DSALES_TipodeUso__c = objetoTipoUso[i], DSALES_Producto__c=item.id, DSALES_Activo__c=true));
+            }
+          }
+        }
+        upsert listTipoUsoSeleccion;
+    }
+  */ 
 }

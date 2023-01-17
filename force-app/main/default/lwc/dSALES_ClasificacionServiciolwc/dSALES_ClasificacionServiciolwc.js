@@ -33,6 +33,7 @@ import getTipoUso from '@salesforce/apex/DSALES_ClasificacionServicio.getTipoUso
 import updateTipoUso from '@salesforce/apex/DSALES_ClasificacionServicio.updateTipoUso';
 import getTiposUsoUsed from '@salesforce/apex/DSALES_ClasificacionServicio.getTiposUsoUsed';
 import getCampanasUsed from '@salesforce/apex/DSALES_ClasificacionServicio.getCampanasUsed';
+//import updateTipoUsoMasivo from '@salesforce/apex/DSALES_ClasificacionServicio.updateTipoUsoMasivo';
 
 
 
@@ -79,8 +80,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     ValueCategoriaSelected = '';
     ValueSubCategoriaSelected = '';
     resultPerfil = false;
-    campanasSelected=[];
-    tiposUsoSelected=[];
+    campanasSelected = [];
+    tiposUsoSelected = [];
 
     connectedCallback() {
         this.init();
@@ -426,6 +427,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                 this.asignarTipoServicio(i);
             }
         }
+        console.log(JSON.stringify(this.data.listServicios))
     }
     onchangeNoAplica(event) {
         const name = event.target.name;
@@ -442,6 +444,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.data.registroSeguro = event.target.checked;
         for (let i = 0; i < this.data.listServicios.length; i++) {
             this.data.listServicios[i].seguro = this.data.registroSeguro;
+            this.data.listServicios[i].servicio = false;
+            this.data.listServicios[i].noAplica = false;
             this.asignarTipoServicio(i);
         }
         this.recordServicio();
@@ -451,8 +455,24 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.data.noAplica = event.target.checked;
         for (let i = 0; i < this.data.listServicios.length; i++) {
             this.data.listServicios[i].noAplica = this.data.noAplica;
+            this.data.listServicios[i].seguro = false;
+            this.data.listServicios[i].servicio = false;
         }
         this.recordServicio();
+    }
+
+    onchangeAllTiposuso(event) {
+        this.data.registroTiposUso = event.target.checked;
+        for (let i = 0; i < this.data.listServicios.length; i++) {
+            this.data.listServicios[i].tipoUso = this.data.registroTiposUso;
+        }
+    }
+
+    onchangeAllCampanas(event) {
+        this.data.registroCampanas = event.target.checked;
+        for (let i = 0; i < this.data.listServicios.length; i++) {
+            this.data.listServicios[i].campanas = this.data.registroCampanas;
+        }
     }
 
     onchangeServicio(event) {
@@ -472,6 +492,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.data.registroServicio = event.target.checked;
         for (let i = 0; i < this.data.listServicios.length; i++) {
             this.data.listServicios[i].servicio = this.data.registroServicio;
+            this.data.listServicios[i].noAplica = false;
+            this.data.listServicios[i].seguro = false;
             this.asignarTipoServicio(i);
         }
         this.recordServicio();
@@ -702,6 +724,19 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.pickList.Name = event.detail.value;
     }
 
+    handleInputChangeVehicleID(event) {
+        const name = event.target.name;
+        this.data.iDVehiculo = event.detail.value;
+        for (let i = 0; i < this.data.listServicios.length; i++) {
+            if (this.data.listServicios[i].id == name) {
+                this.data.listServicios[i].iDVehiculo = this.data.iDVehiculo;
+                
+            }
+
+           
+        }
+    }
+
     handleInputChangeDescription(event) {
         this.pickList.Description = event.detail.value;
     }
@@ -773,6 +808,26 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     onchangeTiposuso(event) {
         this.data.tiposUsoSelected = event.detail.value;
         console.log(JSON.stringify(this.data.tiposUsoSelected));
+    }
+
+    onchangeTypesChecked(event) {
+        const name = event.target.name;
+        const check = event.target.checked;
+        for (let i = 0; i < this.data.listServicios.length; i++) {
+            if (this.data.listServicios[i].id == name) {
+                this.data.listServicios[i].tipoUso = check;
+            }
+        }
+    }
+
+    onchangeCampaignsChecked(event) {
+        const name = event.target.name;
+        const check = event.target.checked;
+        for (let i = 0; i < this.data.listServicios.length; i++) {
+            if (this.data.listServicios[i].id == name) {
+                this.data.listServicios[i].campanas = check;
+            }
+        }
     }
 
     camposVacios() {
@@ -1419,34 +1474,34 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
             }
         }
     }
-    
+
     openFormCampaigns(event) {
         this.data.sku = event.currentTarget.dataset.id;
         getidservicio({ sku: this.data.sku })
-                    .then(result => {
-                        this.data.idProducto = result;
-                        this.getCampanas(); 
-                    }).catch(error => {
-                        console.log(error);
-                    });
+            .then(result => {
+                this.data.idProducto = result;
+                this.getCampanas();
+            }).catch(error => {
+                console.log(error);
+            });
     }
 
     openFormTypes(event) {
         this.data.sku = event.currentTarget.dataset.id;
         getidservicio({ sku: this.data.sku })
-                    .then(result => {
-                        this.data.idProducto = result;
-                        this.getTiposUso(); 
-                    }).catch(error => {
-                        console.log(error);
-                    });
+            .then(result => {
+                this.data.idProducto = result;
+                this.getTiposUso();
+            }).catch(error => {
+                console.log(error);
+            });
     }
 
     closeformCampaignsTypes() {
         this.data.showCampaigns = false;
-        this.data.showTypes =false;
-        this.tiposUsoSelected=[];
-        this.campanasSelected=[];
+        this.data.showTypes = false;
+        this.tiposUsoSelected = [];
+        this.campanasSelected = [];
     }
     cancelar3() {
         this.openTableVincProduct = false;
@@ -1503,24 +1558,24 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                 this.data.listaTiposuso = tipos;
                 this.getTiposUsoUsadas();
             })
-    }
+    } 
 
     getTiposUsoUsadas() {
-        getTiposUsoUsed({idProducto: this.data.idProducto})
+        getTiposUsoUsed({ idProducto: this.data.idProducto })
             .then(tipos => {
-                this.data.tiposUsoSelected=tipos;
+                this.data.tiposUsoSelected = tipos;
                 this.tiposUsoSelected.push(...this.data.tiposUsoSelected);
-                this.data.showTypes = true;   
-            }) 
+                this.data.showTypes = true;
+            })
     }
 
     getCampanasUsadas() {
-        getCampanasUsed({idProducto: this.data.idProducto})
+        getCampanasUsed({ idProducto: this.data.idProducto })
             .then(tipos => {
-                this.data.campanasSelected=tipos;
+                this.data.campanasSelected = tipos;
                 this.campanasSelected.push(... this.data.campanasSelected);
-                this.data.showCampaigns = true;   
-            }) 
+                this.data.showCampaigns = true;
+            })
     }
 
     getSkuforCampaings() {
@@ -1538,7 +1593,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                     .then(result => {
                     }).catch(error => {
                     });
-            this.closeformCampaignsTypes();
+                this.closeformCampaignsTypes();
             }).catch(error => {
                 this.showSpinner = false;
                 this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
@@ -1557,18 +1612,49 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                     .then(result => {
                     }).catch(error => {
                     });
+                console.log(this.data.idProducto);
+                if (this.data.idProducto == null) {
+                    this.typesVincuMasiva();
+                    this.closeformCampaignsTypes();
+                }
+                else {
                     updateTipoUso({ allData: JSON.stringify(this.data.tiposUsoSelected), idProducto: this.data.idProducto })
-                    .then(result => {
-                    }).catch(error => {
-                        console.log('Error: ' + error);
-                        this.showSpinner = false;
-                    });
-            this.closeformCampaignsTypes();
+                        .then(result => {
+                        }).catch(error => {
+                            console.log('Error: ' + error);
+                            this.showSpinner = false;
+                        });
+                    this.closeformCampaignsTypes();
+                }
+
+
             }).catch(error => {
                 this.showSpinner = false;
                 this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
             });
 
+    }
+
+
+    /*typesVincuMasiva() {
+        console.log(JSON.parse(JSON.stringify(this.data.tiposUsoSelected)));
+        console.log(JSON.parse(JSON.stringify(this.data.listServicios)));
+        updateTipoUsoMasivo({ allData: JSON.stringify(this.data.tiposUsoSelected), AllProductsId: JSON.stringify(this.data.listServicios) })
+            .then(result => {
+            }).catch(error => {
+                console.log('Error2: ' + error);
+                this.showSpinner = false;
+            });
+
+    }
+*/
+    openTypesVincuMasiva() {
+        getTipoUso()
+            .then(tipos => {
+                this.data.listaTiposuso = tipos;
+                this.data.showTypes = true;
+            })
+        this.data.idProducto = null;
     }
 
 
