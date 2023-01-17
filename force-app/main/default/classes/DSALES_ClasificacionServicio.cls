@@ -40,7 +40,7 @@ public without sharing class DSALES_ClasificacionServicio {
         //String tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         String producto= 'Producto';
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
-        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, DSALES_TipoServicio__c, DSALES_Noaplica__c, DSALES_vehculo__c, RecordTypeId ';
+        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, DSALES_TipoServicio__c, DSALES_Noaplica__c, RecordTypeId ';
         query += 'from Product2 Where RecordTypeId != null and DSALES_Noaplica__c = false and DSales_Servicio__c = false and DSales_Seguro__c= false ';
         query += listCategorias.size() > 0 ? ' And DSales_Categoria__c in :listCategorias ' : '';
         query += listSubCategorias.size() > 0 ? ' And DSALES_SubCategoria__c in :listSubCategorias ' : '';
@@ -60,7 +60,7 @@ public without sharing class DSALES_ClasificacionServicio {
         }
         //String tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSales_Tipo_de_Producto__c').getRecordTypeId();
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
-        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, DSALES_vehculo__c, RecordTypeId, DSALES_TipoServicio__c, DSALES_Noaplica__c ';
+        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, RecordTypeId, DSALES_TipoServicio__c, DSALES_Noaplica__c ';
         query += 'from Product2 Where StockKeepingUnit = :sku ';
         query += ' order by DSales_Servicio__c asc';
         System.debug('Query: '+query);
@@ -257,7 +257,6 @@ public without sharing class DSALES_ClasificacionServicio {
             servicio.tipoServicio = item.DSALES_TipoServicio__c;
             servicio.tipoUso = false;
             servicio.campanas = false;
-            servicio.idvehiculo=item.DSALES_vehculo__c;
             listServicios.add(servicio); 
         }
         return listServicios;
@@ -270,7 +269,7 @@ public without sharing class DSALES_ClasificacionServicio {
         List<Product2> listProductos= new List<Product2>();
         for(Servicio item: objeto){
             listProductos.add(new Product2(Id = item.id, DSALES_Servicio__c = item.servicio, 
-                                           DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, DSALES_IsClasified__c=true, DSALES_vehculo__c=item.idvehiculo));
+                                           DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, DSALES_IsClasified__c=true));
         }
         upsert listProductos;
     }
@@ -478,7 +477,6 @@ public without sharing class DSALES_ClasificacionServicio {
         b.label= item.Name;
         b.value= item.Id;
         listCampaigns.add(b);
-    }    
     }   
         return listCampaigns;
     }
@@ -532,7 +530,7 @@ public without sharing class DSALES_ClasificacionServicio {
             }
         }
         upsert listCampanasSeleccion; 
-    } 
+    }
 
     @AuraEnabled
     public static void updateTipoUso(String allData, String idProducto){
@@ -689,7 +687,8 @@ public without sharing class DSALES_ClasificacionServicio {
         catch(Exception e){
            
         throw new AuraHandledException(e.getMessage());
-    }              
+    }
+                    
     }
 
     @AuraEnabled
@@ -776,7 +775,6 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public String sku;
     }
 
-
     public class PickListOption{
         @AuraEnabled public String etiqueta;
         @AuraEnabled public String valor;
@@ -803,7 +801,6 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public String recordId;
         @AuraEnabled public Boolean tipoUso;
         @AuraEnabled public Boolean campanas;
-        @AuraEnabled public String idvehiculo;
     }
 
     public class AsignarProductos{
@@ -832,28 +829,6 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public integer anio6;      
     }
     //guardo correctamente 5:25 pm"
-
-    /*
-    @AuraEnabled
-    public static void updateTipoUsoMasivo(String allData, String AllProductsId){
-        List<String> objetoTipoUso = (List<String>) JSON.deserialize(allData, List<String>.class);
-        List<Servicio> objetoAllProducts = (List<Servicio>) JSON.deserialize(AllProductsId, List<Servicio>.class);
-        List<DSALES_AsociacionTiposUso__c> listTipoUsoSeleccion= new List<DSALES_AsociacionTiposUso__c>();
-        //List<DSALES_AsociacionTiposUso__c> updateList= new List<DSALES_AsociacionTiposUso__c>();
-        system.debug(objetoAllProducts);
-        for(Integer i=0; objetoTipoUso.size()>i; i++)
-        { 
-            for(Servicio item: objetoAllProducts)
-          {
-            if(item.tipoUso)
-            {
-                listTipoUsoSeleccion.addAll(new DSALES_AsociacionTiposUso__c(DSALES_TipodeUso__c = objetoTipoUso[i], DSALES_Producto__c=item.id, DSALES_Activo__c=true));
-            }
-          }
-        }
-        upsert listTipoUsoSeleccion;
-    }
-  */ 
 
     /*
     @AuraEnabled
