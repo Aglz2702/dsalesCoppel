@@ -783,6 +783,7 @@
 	<types>
 		<members>Asociaci_n_de_campa_as_Record_Page</members>
 		<members>Certificado_de_Garant_a_Extendida</members>
+		<members>Campa_a_P_gina_de_registro</members>
 		<members>DSALES_MatrizPaginaRegistro</members>
 		<members>DSALES_Pagina_de_Inicio_GEX</members>
 		<members>DSALES_PysisAccountRecordPage</members>
@@ -870,6 +871,7 @@
 	<types>
 		<members>Asset-Pisys Asset Layout</members>
 		<members>Campaign-DSALES_CAMPAÑAS SM</members>
+		<members>DSALES_AsociacionCampanias__c-Formato Asociación de campañas</members>
 		<members>DSALES_Categoria__c-DSALES_SM</members>
 		<members>DSALES_Categoria__c-Formato Categoría</members>
 		<members>DSALES_Certificado__c-DSALES_Certificado_GEX</members>
@@ -888,6 +890,7 @@
 		<members>Opportunity-DSALES_OpportunityPISYSGEX</members>
 		<members>Opportunity-DSALES_OpportunitySM</members>
 		<members>PersonAccount-DSALES_Clientes</members>
+		<members>Plazo__c-Formato Plazo</members>
 		<members>Quote-Venta SM</members>
 		<members>Quote-Venta GEX</members>
 		<members>QuoteLineItem-DSALES_GEXQuote</members>

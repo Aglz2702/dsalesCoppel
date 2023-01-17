@@ -341,22 +341,42 @@ global class DSALES_QuoteSmWrapperRequest {
         	partida.DSALES_Comision__c = decimal.valueOf(data.data.insurance_premium.commission);
             partida.DSALES_Recargos__c = decimal.valueOf(data.data.receipts[0].recharge);
         	partida.DSALES_Descripcion__c='Esta cobertura ampara la responsabilidad civil por el tránsito de vehículos en territorio nacional, en que incurra el Asegurado o cualquier persona que con consentimiento del Asegurado use o posea el vehículo descrito en la Póliza con el límite de responsabilidad establecido en la misma, siempre que a consecuencia de dicho uso o posesión, cause a Terceros daños materiales en sus bienes, lesiones corporales, incapacidades temporales y/o permanentes o la muerte, distintos de los ocupantes de dicho vehículo, que considera la Responsabilidad Civil a que se refiere el artículo 63 Bis de la Ley de Caminos, Puentes y Autotransporte Federal.';
-        	partida.DSALES_Segurogratis__c = Campana(valor, tipo, sku);
+        	partida.DSALES_Segurogratis__c = Campana(producto.Name, sku);
             return partida;
     }
-    public static Boolean Campana(String valor, String tipo, String sku){
-        Boolean condicion = false;
-        Product2 producto = [SELECT Id, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku LIMIT 1];
+    public static Boolean Campana2(String seguro, String tipo, String sku){
+        Boolean condicion = false;  
         if(sku!=null && sku!=''){
+            Product2 producto = [SELECT Id, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku LIMIT 1];
             List <DSALES_AsociacionCampanias__c> listaCampanas = [SELECT Name, DSALES_Campania__c, DSALES_Producto__c FROM DSALES_AsociacionCampanias__c WHERE DSALES_Producto__c =:producto.Id];
             for(DSALES_AsociacionCampanias__c asoCampana:listaCampanas){         
-                Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Name=:valor];             
+                //Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Name=:valor];             
+                Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Id=:asoCampana.DSALES_Campania__c];             
                 if(aux!=null){
-                    if(aux.Name == valor && aux.Id== asoCampana.DSALES_Campania__c && aux.IsActive==true && aux.DSALES_Tipodecapana__c==tipo){
+                    if(aux.IsActive==true && aux.DSALES_Tipodecapana__c==tipo){
                         condicion = true;           
                     }
-                }    
+                }  
         	}         
+        }  
+        return condicion;
+    }
+    
+    public static Boolean Campana(String seguro,String sku){
+        Boolean condicion = false;  
+        if(sku!=null && sku!=''){
+            Product2 producto = [SELECT Id, Name, StockKeepingUnit,DSales_Tipo_de_Producto__c, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku LIMIT 1];        
+            if(seguro == rc){               
+            	List <DSALES_AsociacionCampanias__c> listaCampanas = [SELECT Name, DSALES_Campania__c, DSALES_Producto__c,DSALES_Activo__c FROM DSALES_AsociacionCampanias__c WHERE DSALES_Producto__c =:producto.Id AND DSALES_Activo__c=true];
+                for(DSALES_AsociacionCampanias__c asoCampana:listaCampanas){                   
+                	Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Id=:asoCampana.DSALES_Campania__c];             
+                    if(aux!=null){
+                        if(aux.Name == valor && aux.Id== asoCampana.DSALES_Campania__c && aux.IsActive==true && aux.DSALES_Tipodecapana__c==tipo){
+                            condicion = true;           
+                        }
+                    }    
+        		}
+            }
         }  
         return condicion;
     }
@@ -371,7 +391,7 @@ global class DSALES_QuoteSmWrapperRequest {
             partidaM.Product2Id = precioM.Product2Id;
             partidaM.Quantity = 1;
             partidaM.UnitPrice = precioM.UnitPrice;
-            partidaM.DSALES_Segurogratis__c = Campana(valor, tipo, sku);
+            partidaM.DSALES_Segurogratis__c = Campana(rc, sku);
             DSALES_QuoteSmWrapper.RespuestaPlazos aux = new DSALES_QuoteSmWrapper.RespuestaPlazos(); 
             aux.nombreProducto = productoMoto.Name;
             insert partidaM;
