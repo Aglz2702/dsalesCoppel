@@ -852,7 +852,6 @@
                 <h1 id="modal-heading-00" class="slds-text-heading_medium slds-hyphenate"> Clasificación de
                     Servicios
                 </h1>
-                    </div>
                 </div>
             <div class="slds-modal__content">
                 <table if:false={popEdit}
@@ -916,12 +915,7 @@
                                 <div class="slds-truncate" title="Campaña">Campaña</div>
                             </th>
                             <th class="" scope="col">
-                                <div class="slds-truncate" title="Tipos de Usos">Tipos de usos</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Id vehículo"></div>
-                            </th>                            <th class="" scope="col">
-                                <div class="slds-truncate" title="ID Vehículo">ID Vehículo</div>
+                                <div class="slds-truncate" title="Tipos de Usos">Tipos de Usos</div>
                             </th>
 
                         </tr>
@@ -1008,7 +1002,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
+                                        </div>
                                 </td>
                                 <td data-label="Tipos de uso" style="text-align: left;">
                                     <div class="slds-grid slds-gutters">
@@ -1036,13 +1030,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td data-label={record.id} style="text-align: left;">
-                                    <div class="slds-truncate" title="Id vehiculo">
-                                        <lightning-input type="text" name={record.id} value={record.idvehiculo} label="Id vehículo" data-id={record.id}
-                                            onchange={handleInputChangeVehicleID} placeholder="Escriba/Modifique ID">
-                                        </lightning-input>
-                                    </div>
-                                </td>
+                               
 
                             </tr>
                         </template>
@@ -1105,7 +1093,7 @@
                             </div>
                             <div class="slds-modal__content slds-p-around_large" id="modal-content-id-4666">
                                 <lightning-dual-listbox 
-                                name="Tipos de  de uso"
+                                name="Tipos de uso"
                                 label="Seleccione los tipos de uso que apliquen"
                                 source-label="Disponible"
                                 selected-label="Seleccionado"
