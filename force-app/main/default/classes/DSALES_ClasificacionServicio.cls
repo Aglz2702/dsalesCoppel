@@ -478,7 +478,7 @@ public without sharing class DSALES_ClasificacionServicio {
         b.label= item.Name;
         b.value= item.Id;
         listCampaigns.add(b);
-    }   
+    }    
         return listCampaigns;
     }
 
@@ -775,6 +775,7 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public String sku;
     }
 
+
     public class PickListOption{
         @AuraEnabled public String etiqueta;
         @AuraEnabled public String valor;
@@ -831,6 +832,28 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public integer anio6;      
     }
     //guardo correctamente 5:25 pm"
+
+    /*
+    @AuraEnabled
+    public static void updateTipoUsoMasivo(String allData, String AllProductsId){
+        List<String> objetoTipoUso = (List<String>) JSON.deserialize(allData, List<String>.class);
+        List<Servicio> objetoAllProducts = (List<Servicio>) JSON.deserialize(AllProductsId, List<Servicio>.class);
+        List<DSALES_AsociacionTiposUso__c> listTipoUsoSeleccion= new List<DSALES_AsociacionTiposUso__c>();
+        //List<DSALES_AsociacionTiposUso__c> updateList= new List<DSALES_AsociacionTiposUso__c>();
+        system.debug(objetoAllProducts);
+        for(Integer i=0; objetoTipoUso.size()>i; i++)
+        { 
+            for(Servicio item: objetoAllProducts)
+          {
+            if(item.tipoUso)
+            {
+                listTipoUsoSeleccion.addAll(new DSALES_AsociacionTiposUso__c(DSALES_TipodeUso__c = objetoTipoUso[i], DSALES_Producto__c=item.id, DSALES_Activo__c=true));
+            }
+          }
+        }
+        upsert listTipoUsoSeleccion;
+    }
+  */ 
 
     /*
     @AuraEnabled
