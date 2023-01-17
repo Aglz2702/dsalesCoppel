@@ -688,8 +688,7 @@ public without sharing class DSALES_ClasificacionServicio {
         catch(Exception e){
            
         throw new AuraHandledException(e.getMessage());
-    }
-                    
+    }              
     }
 
     @AuraEnabled
