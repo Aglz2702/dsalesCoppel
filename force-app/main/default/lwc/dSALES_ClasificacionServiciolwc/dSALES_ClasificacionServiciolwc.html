@@ -916,9 +916,11 @@
                                 <div class="slds-truncate" title="Campaña">Campaña</div>
                             </th>
                             <th class="" scope="col">
-                                <div class="slds-truncate" title="Tipos de Usos">Tipos de Usos</div>
+                                <div class="slds-truncate" title="Tipos de Usos">Tipos de usos</div>
                             </th>
                             <th class="" scope="col">
+                                <div class="slds-truncate" title="Id vehículo"></div>
+                            </th>                            <th class="" scope="col">
                                 <div class="slds-truncate" title="ID Vehículo">ID Vehículo</div>
                             </th>
 
@@ -1006,7 +1008,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        </div> 
+                                    </div>
                                 </td>
                                 <td data-label="Tipos de uso" style="text-align: left;">
                                     <div class="slds-grid slds-gutters">
@@ -1035,50 +1037,12 @@
                                     </div>
                                 </td>
                                 <td data-label={record.id} style="text-align: left;">
-                                    <div class="slds-truncate" title="ID Vehiculo">
-                                        <lightning-input type="text" name={record.id} value={record.iDVehiculo} label="ID Vehiculo" data-id={record.id} onchange={handleInputChangeVehicleID} 
-                                        placeholder="Escriba/Modifique ID">
+                                    <div class="slds-truncate" title="Id vehiculo">
+                                        <lightning-input type="text" name={record.id} value={record.idvehiculo} label="Id vehículo" data-id={record.id}
+                                            onchange={handleInputChangeVehicleID} placeholder="Escriba/Modifique ID">
                                         </lightning-input>
                                     </div>
                                 </td>
-
-                                        </div>
-                                </td>
-                                <td data-label="Tipos de uso" style="text-align: left;">
-                                    <div class="slds-grid slds-gutters">
-                                        <div if:true={record.servicio} style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
-                                            <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
-                                
-                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                                </lightning-icon>
-                                            </button>
-                                        </div>
-                                        <div if:true={record.seguro} style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
-                                            <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
-                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                                </lightning-icon>
-                                            </button>
-                                        </div>
-                                        <div if:true={record.noAplica} style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
-                                            <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
-                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                                </lightning-icon>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td data-label={record.id} style="text-align: left;">
-                                    <div class="slds-truncate" title="ID Vehiculo">
-                                        <lightning-input type="text" name={record.id} value={record.iDVehiculo} label="ID Vehiculo" data-id={record.id} onchange={handleInputChangeVehicleID} 
-                                        placeholder="Escriba/Modifique ID">
-                                        </lightning-input>
-                                    </div>
-                                </td>
-
-                               
 
                             </tr>
                         </template>
