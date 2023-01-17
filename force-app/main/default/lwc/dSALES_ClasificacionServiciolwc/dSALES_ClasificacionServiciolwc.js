@@ -724,6 +724,19 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.pickList.Name = event.detail.value;
     }
 
+    handleInputChangeVehicleID(event) {
+        const name = event.target.name;
+        this.data.iDVehiculo = event.detail.value;
+        for (let i = 0; i < this.data.listServicios.length; i++) {
+            if (this.data.listServicios[i].id == name) {
+                this.data.listServicios[i].iDVehiculo = this.data.iDVehiculo;
+                
+            }
+
+           
+        }
+    }
+
     handleInputChangeDescription(event) {
         this.pickList.Description = event.detail.value;
     }
@@ -1545,7 +1558,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                 this.data.listaTiposuso = tipos;
                 this.getTiposUsoUsadas();
             })
-    }
+    } 
 
     getTiposUsoUsadas() {
         getTiposUsoUsed({ idProducto: this.data.idProducto })
