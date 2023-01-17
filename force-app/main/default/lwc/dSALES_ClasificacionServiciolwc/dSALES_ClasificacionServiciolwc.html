@@ -915,9 +915,11 @@
                                 <div class="slds-truncate" title="Campaña">Campaña</div>
                             </th>
                             <th class="" scope="col">
-                                <div class="slds-truncate" title="Tipos de Usos">Tipos de Usos</div>
+                                <div class="slds-truncate" title="Tipos de Usos">Tipos de usos</div>
                             </th>
-
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Id vehículo"></div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1002,7 +1004,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        </div>
+                                    </div>
                                 </td>
                                 <td data-label="Tipos de uso" style="text-align: left;">
                                     <div class="slds-grid slds-gutters">
@@ -1030,7 +1032,13 @@
                                         </div>
                                     </div>
                                 </td>
-                               
+                                <td data-label={record.id} style="text-align: left;">
+                                    <div class="slds-truncate" title="Id vehiculo">
+                                        <lightning-input type="text" name={record.id} value={record.idvehiculo} label="Id vehículo" data-id={record.id}
+                                            onchange={handleInputChangeVehicleID} placeholder="Escriba/Modifique ID">
+                                        </lightning-input>
+                                    </div>
+                                </td>
 
                             </tr>
                         </template>

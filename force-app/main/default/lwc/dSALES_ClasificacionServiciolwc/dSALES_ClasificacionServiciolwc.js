@@ -1635,6 +1635,16 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
 
     }
 */
+    handleInputChangeVehicleID(event) {
+        const name = event.target.name;
+        this.data.idvehiculo = event.detail.value;
+        for (let i = 0; i < this.data.listServicios.length; i++) {
+            if (this.data.listServicios[i].id == name) {
+                this.data.listServicios[i].idvehiculo = this.data.idvehiculo;
+            }
+        }
+    }
+    
     openTypesVincuMasiva() {
         getTipoUso()
             .then(tipos => {
