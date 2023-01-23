@@ -1,36 +1,27 @@
 global class DSALES_PaymentInfoWrapper {
-    global class PaymentRequest{
-    global String cashier_box {get;set;} 
-    global String article_description {get;set;}
-	global String payment_method {get;set;}
-    global String bill {get;set;}
-    global String customer_adress {get;set;}
-    global String sku {get;set;}
-    global String telephone {get;set;}
-    global double total {get;set;}
-    global String salesman_name {get;set;}
-    global String opportunity_name {get;set;}
-    global boolean moto_delivered {get;set;}
-    global boolean external_moto {get;set;}
-    global boolean moto_noInsurance {get;set;}
-    global String tipoProducto{get;set;}
-    
-    //Lo nuevo
-    global String quoteid {get;set;}
-    global String AccountId {get;set;}
-    global List<pago> ListadePagos{get;set;}
-    
-}
-global class PaymentResponse{
-    global String message {get;set;}
-    global Integer errorCode {get;set;}
-    global Boolean success {get;set;}
-    global List<String> paymentInfo_ids {get;set;}
+    public class PaymentRequest{
+        public Integer num_factura { get; set; }
+        public Integer total_factura { get; set; }
+        public Boolean Seguro { get; set; }
+        public String nombre_vendedor { get; set; }
+        public String numero_caja { get; set; }
+        public String id_oportunidad { get; set; }
+        public String clave_tienda { get; set; }
+        public Date fecha_de_entrega { get; set; }//pdf
+        public Date fecha_venta { get; set; }
+        public String sku { get; set; }
+        public Integer plazos { get; set; }
+        public List<ListaDePago> ListaDePagos { get; set; }
     }
-    
-global class pago{
-    global double total {get;set;}
-    global String producto {get;set;}
+    public class ListaDePago{
+        //public Integer num_pago { get; set; }
+        public String metodo_pago { get; set; }
+        public Integer pago { get; set; }
     }
-
+    global class PaymentResponse{
+        global String error_message {get;set;}
+        global Integer error_code {get;set;}
+        global Boolean success {get;set;}
+        global String paymentInfo_id {get;set;}
+    }
 }

@@ -14,7 +14,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 try{
                     
                     DSALES_IPAssetWrapper.IPAssetRequest policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
-                    DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c, DSALES_Motoentregada__c, DSALES_Motosinseguro__c FROM DSALES_InformacionDePago__c WHERE id=: policyAsset.payment_info];
+                    DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c, DSALES_Motoentregada__c, DSALES_Seguro__c FROM DSALES_InformacionDePago__c WHERE id=: policyAsset.payment_info];
                     policyAssetRes=insertActivo(policyAsset);
                     
                     success= true;
@@ -51,9 +51,9 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
 
         InsurancePolicyAsset IPassetRecord  = new InsurancePolicyAsset();
         try{
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c, DSALES_Motoentregada__c,DSALES_Motosinseguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE id=:policyAsset.payment_info];
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c, DSALES_Motoentregada__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE id=:policyAsset.payment_info];
             //Account cliente =[SELECT Id,Name FROM ACCOUNT WHERE Id=:policyAsset.client_id LIMIT 1];
-            if(pago.DSALES_Motosinseguro__c == false) {
+            if(pago.DSALES_Seguro__c == true) {
 
                 IPassetRecord.DSALES_InformacionPago__c=pago.Id;
                 IPassetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;

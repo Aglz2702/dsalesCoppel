@@ -7,15 +7,23 @@
     <picklistValues>
         <picklist>DSALES_Tipodepago__c</picklist>
         <values>
-            <fullName>Contado</fullName>
+            <fullName>Cheque</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Crédito</fullName>
+            <fullName>Dinero Electrónico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Débito</fullName>
+            <fullName>Efectivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reembolso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tarjeta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
