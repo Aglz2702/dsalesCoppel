@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSALES_SegurodeMotos</fullName>
+    <fullName>DSales_Garantia_Extendida</fullName>
     <active>true</active>
-    <description>Crea las partidas de pago para el proceso de Seguro de Motos del grupo Coppel</description>
-    <label>Seguro de Motos</label>
+    <label>Garantía Extendida</label>
     <picklistValues>
         <picklist>DSALES_Tipodepago__c</picklist>
         <values>

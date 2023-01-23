@@ -646,6 +646,36 @@
 		<members>DSALES_RutaIntegracion.DSALES_ListaNegra</members>
 		<members>DSALES_RutaIntegracion.DSALES_SendPdfToNVP</members>
 		<members>DSALES_RutaIntegracion.DSALES_QuoteSM</members>
+		<members>Tipo_de_endoso.AcreditacionMP</members>
+		<members>Tipo_de_endoso.CURP</members>
+		<members>Tipo_de_endoso.C_card_Trajeta_De_Circulatci_n</members>
+		<members>Tipo_de_endoso.CarpetaMP</members>
+		<members>Tipo_de_endoso.CartaConsentimientoCFDI</members>
+		<members>Tipo_de_endoso.Comprobante</members>
+		<members>Tipo_de_endoso.ComprobanteDomicilio</members>
+		<members>Tipo_de_endoso.Comprobante_de_domicilio</members>
+		<members>Tipo_de_endoso.ConstanciaBajaPlacas</members>
+		<members>Tipo_de_endoso.ConstanciaSituacionFiscal_c</members>
+		<members>Tipo_de_endoso.Constancia_de_Situacion_Fiscal</members>
+		<members>Tipo_de_endoso.Constancia_de_Situacion_Fiscal_CSF</members>
+		<members>Tipo_de_endoso.Descripcion</members>
+		<members>Tipo_de_endoso.EncabezadoCuentaBancaria</members>
+		<members>Tipo_de_endoso.Factura</members>
+		<members>Tipo_de_endoso.Factura_c</members>
+		<members>Tipo_de_endoso.FormatoCompraVenta</members>
+		<members>Tipo_de_endoso.FormatoFiniquito</members>
+		<members>Tipo_de_endoso.IdComprobante</members>
+		<members>Tipo_de_endoso.Id_Oficial</members>
+		<members>Tipo_de_endoso.Identificaci_n_oficial</members>
+		<members>Tipo_de_endoso.Identificaci_n_oficial_ID_Ofi</members>
+		<members>Tipo_de_endoso.IdentificacionFrontal</members>
+		<members>Tipo_de_endoso.IdentificacionReverso</members>
+		<members>Tipo_de_endoso.OficioLiberacionRobo</members>
+		<members>Tipo_de_endoso.PoderNotarial</members>
+		<members>Tipo_de_endoso.RFC</members>
+		<members>Tipo_de_endoso.Registro_Federal_de_Contibuyentes_RFC</members>
+		<members>Tipo_de_endoso.Trajeta_De_Circulatci_n</members>
+		<members>Tipo_de_endoso.official_identification</members>
         <name>CustomMetadata</name>
     </types>
 	<types>
@@ -721,6 +751,8 @@
 		<name>CustomObjectTranslation</name>
 	</types>
 	<types>
+	    <members>DSALES_AsociacionCampanias__c</members>
+		<members>DSALES_AsociacionTiposUso__c</members>
 		<members>DSALES_Categoria__c</members>
 		<members>DSALES_Certificado__c</members>
 		<members>DSALES_Clase__c</members>
@@ -809,7 +841,9 @@
 		<members>Asociaci_n_de_campa_as_Record_Page</members>
 		<members>Asociaci_n_de_tipos_de_uso_Record_Page</members>
 		<members>DSALES_TipodeUsoPginaderegistro</members>
+		<members>Tipo_de_Uso_Record_Page</members>
 		<members>DSALES_TipodevehculoPginaderegistro</members>
+		<members>Tipo_de_veh_culo_Record_Page</members>
 		<name>FlexiPage</name>
 	</types>
 	<types>

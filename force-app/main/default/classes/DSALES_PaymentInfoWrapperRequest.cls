@@ -4,126 +4,86 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
     @HttpPost
     global static DSALES_PaymentInfoWrapper.PaymentResponse createPayment(){
         DSALES_PaymentInfoWrapper.PaymentResponse responsePayload = new DSALES_PaymentInfoWrapper.PaymentResponse();      
-        Integer errorCode;
-        Boolean success = true;
-        String message='';
+        Boolean success = false;
+        String error_message = '';
+        Integer error_code;
         if(RestContext.request != null){
             try{
                 String body = System.RestContext.request.requestBody.toString();
                 if(String.isNotBlank(body)){
                     DSALES_PaymentInfoWrapper.PaymentRequest pago = (DSALES_PaymentInfoWrapper.PaymentRequest)JSON.deserialize(body, DSALES_PaymentInfoWrapper.PaymentRequest.class);            
-                    responsePayload = insertPagos(pago);
+                    responsePayload = insertarPago(pago);
                 }
             }catch(Exception.JSONException jsonException){
                 success = false;
-                message = DSALES_Utility.BAD_REQUEST_MSJ;
-                errorCode = DSALES_Utility.BAD_REQUEST_CODE; 
+                error_message = DSALES_Utility.BAD_REQUEST_MSJ;
+                error_code = DSALES_Utility.BAD_REQUEST_CODE; 
             }catch(Exception e){
                 success = false;
-                message = DSALES_Utility.INTERNAL_ERROR_MSJ;
-                errorCode = DSALES_Utility.INTERNAL_ERROR_CODE;
+                error_message = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                error_code = DSALES_Utility.INTERNAL_ERROR_CODE;
             }
         }
         responsePayload.success = success;
-        responsePayload.message = message;
-        responsePayload.errorCode = errorCode;
+        responsePayload.error_message = error_message;
+        responsePayload.error_code = error_code;
+        
         
         return responsePayload;
     }
-    public static Id creaInfoPago(DSALES_PaymentInfoWrapper.PaymentRequest pago, Quote cotizacion, String sku, String article_description){
-        Opportunity EsGenerico = [Select Id, SyncedQuoteId, AccountId, Account.Name from Opportunity where Id =:cotizacion.OpportunityId];
-        DSALES_InformacionDePago__c info = new DSALES_InformacionDePago__c();
-        String recordTypeId = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByName().get('Pagos de Venta en NPV de SM').getRecordTypeId();
-        info.DSALES_Oportunidad__c = cotizacion.OpportunityId;
-        info.RecordTypeId = recordTypeId;
-        info.DSALES_Cliente__c = EsGenerico.AccountId;
-        info.DSALES_Estatus__c = 'Acreditado';
-        info.DSALES_Fecha__c = date.today();
-        info.DSALES_FormaDePago__c = pago.payment_method;
-        info.DSALES_Factura__c = pago.bill;
-        info.DSALES_DireccionCliente__c = pago.customer_adress;
-        info.DSALES_SKU__c = sku;
-        info.DSALES_Montototal__c = pago.total;
-        info.DSALES_DescripcionArticulo__c = article_description;
-        info.DSALES_Celular_del_Cliente__c = pago.telephone;
-        info.DSALES_Nombre_del_Vendedor__c = pago.salesman_name;
-        info.DSALES_Caja__c = pago.cashier_box;
-        info.DSALES_Motoentregada__c = pago.moto_delivered;
-        info.DSALES_Motoexterna__c = pago.external_moto;
-        info.DSALES_Motosinseguro__c = pago.moto_noInsurance;
-        info.DSALES_TipoCompra__c = pago.tipoProducto;
-        insert info;
-        return info.Id;
-    }
-    
-    public static DSALES_PaymentInfoWrapper.PaymentResponse insertPagos(DSALES_PaymentInfoWrapper.PaymentRequest pago){
-        String consulta='no ha entrado en nada';
-        System.debug('pago:'+pago);
-        List<Id> listaPagos = new List<Id>();
-            Quote cotizacion = [Select id, Name,DSales_ID_Tienda__c, DSales_Tienda__c, ExpirationDate, RecordTypeId, DSALES_Fechadecreacionpresupuesto__c, Lista_negra__c, Motivo_de_lista_negra__c, Phone,
-                                DSALES_Fechadenacimiento__c, DSALES_Cdigodeestado__c, DSALES_Cdigodemunicipio__c, DSALES_Suburbcode__c, DSALES_Cdigopostal__c, DSALES_IDdelvehculo__c, DSALES_Opcindepago__c,
-                                DSALES_Cobertura__c, DSales_Vendedor__c, DSALES_Gnero__c, DSALES_Fechadecomienzodepliza__c,Email, TotalPrice, IsSyncing, OpportunityId from Quote where Id =:pago.quoteid];
-            Opportunity EsGenerico = [Select Id, SyncedQuoteId, AccountId, Account.Name from Opportunity where Id =:cotizacion.OpportunityId];
-            Opportunity nueva = new Opportunity();
-            Id TomarIdOportunidad = EsGenerico.Id;
-            if(EsGenerico.Account.Name == DSALES_Utility.NUMERO_CLIENTE_GENERICO){
-                EsGenerico.AccountId = pago.AccountId;
-                update EsGenerico;
+    public static DSALES_PaymentInfoWrapper.PaymentResponse insertarPago(DSALES_PaymentInfoWrapper.PaymentRequest pago){
+        Boolean success = false;
+        String error_message = '';
+        Integer code;
+        DSALES_InformacionDePago__c nuevoPago = new DSALES_InformacionDePago__c();
+        List<DSALES_Partidadepago__c> listaPartidas = new List<DSALES_Partidadepago__c>();
+        try{
+            String recordTypePago = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
+            Opportunity oportunidad =[SELECT Id,AccountId FROM Opportunity WHERE Id=:pago.id_oportunidad];
+            Tienda__c tienda =[SELECT Id,DSales_TiendaID__c FROM Tienda__c WHERE DSales_TiendaID__c=:pago.clave_tienda ];
+            Account cliente=[SELECT Id,	FinServ__BillingAddress__pc FROM Account WHERE Id=:oportunidad.AccountId];
+            nuevoPago.DSALES_Cliente__c=cliente.Id;
+            nuevoPago.DSALES_Oportunidad__c=pago.id_oportunidad;
+            nuevoPago.RecordTypeId=recordTypePago;
+            nuevoPago.DSALES_Estatus__c='Acreditado';
+            nuevoPago.DSALES_Factura__c=String.valueOf(pago.num_factura);
+            nuevoPago.DSALES_SKU__c=pago.sku;
+            nuevoPago.DSALES_Montototal__c=pago.total_factura;
+            nuevoPago.DSALES_Nombre_del_Vendedor__c=pago.nombre_vendedor;
+            nuevoPago.DSALES_Caja__c=pago.numero_caja;
+            nuevoPago.DSALES_Seguro__c=pago.Seguro;
+            nuevoPago.DSALES_Plazodecomprademoto__c=pago.plazos;
+            nuevoPago.DSALES_Fecha__c=pago.fecha_venta;
+            nuevoPago.DSALES_Fechadeentregaestimada__c=pago.fecha_de_entrega;
+            nuevoPago.DSales_Tienda__c=tienda.Id;
+            if(cliente.FinServ__BillingAddress__pc!=null){
+                String direcion =cliente.FinServ__BillingAddress__pc.replace('<br>', ',');
+                nuevoPago.DSALES_DireccionCliente__c=direcion;
             }
-            Double totalSeguro = 0;
-            Double totalMoto = 0;
-            Double total = 0;
-            
-            for(DSALES_PaymentInfoWrapper.pago item: pago.ListadePagos){
-                if(item.producto == 'moto'){
-                    totalMoto += item.total;
-                    
+            insert nuevoPago;
+            if(pago.ListaDePagos!=null){
+                for(DSALES_PaymentInfoWrapper.ListaDePago part : pago.ListaDePagos){
+                    DSALES_Partidadepago__c partida = new DSALES_Partidadepago__c();
+                    partida.DSALES_Informaciondepago__c=nuevoPago.Id;
+                    partida.DSALES_Tipodepago__c=part.metodo_pago;
+                    partida.DSALES_Pago__c=part.pago;
+                    listaPartidas.add(partida);
                 }
-                if(item.producto == 'seguro'){
-                    totalSeguro += item.total;
-                }                      
+                insert listaPartidas;
             }
-            total = totalMoto + totalSeguro;
-            
-            if(total == cotizacion.TotalPrice){
-                consulta = 'Compro los dos';
-                List<QuoteLineItem> partidas = [Select DSALES_SKU__c,DSALES_NombreProducto__c,PricebookEntryId, Product2Id, Quantity, DSALES_Fechadeinicio__c, DSALES_Fechadetermino__c, DSALES_Primaneta__c, UnitPrice, DSALES_Derechosdepliza__c, DSALES_Gastosdeoperacindelrecibo__c, DSALES_Impuestos__c, TotalPrice from QuoteLineItem where QuoteId =:cotizacion.Id];
-                for(QuoteLineItem objeto: partidas){
-                    pago.total = objeto.UnitPrice;
-                    Id aux = creaInfoPago(pago, cotizacion, objeto.DSALES_SKU__c, objeto.DSALES_NombreProducto__c); 
-                    listaPagos.add(aux);
-                }
-                /*EsGenerico.StageName = 'Cerrada ganada';
-                EsGenerico.SyncedQuoteId = cotizacion.Id;
-                update EsGenerico;*/
-            }
-        	
-            else{
-                List<QuoteLineItem> eliminarItem = [Select DSALES_SKU__c,DSALES_NombreProducto__c,PricebookEntryId, Product2Id, Quantity, DSALES_Fechadeinicio__c, DSALES_Fechadetermino__c, DSALES_Primaneta__c, UnitPrice, DSALES_Derechosdepliza__c, DSALES_Gastosdeoperacindelrecibo__c, DSALES_Impuestos__c, TotalPrice from QuoteLineItem where QuoteId =:cotizacion.Id];
-                
-                for(QuoteLineItem objeto: eliminarItem){
-                    if(objeto.TotalPrice == totalMoto){
-                        pago.total = totalMoto;
-                        Id aux = creaInfoPago(pago, cotizacion, objeto.DSALES_SKU__c, objeto.DSALES_NombreProducto__c);
-                        listaPagos.add(aux);
-                        consulta = 'pago moto';
-                    }
-                    if(objeto.TotalPrice == totalSeguro){
-                        pago.total = totalSeguro;
-                        Id aux = creaInfoPago(pago, cotizacion, objeto.DSALES_SKU__c, objeto.DSALES_NombreProducto__c);
-                        listaPagos.add(aux);
-                        EsGenerico.SyncedQuoteId = cotizacion.Id;
-                        EsGenerico.StageName = 'Cerrada ganada';
-                        update EsGenerico;
-                        consulta = 'pago seguro';                                
-                    }
-                }               
-            }
-          
-        DSALES_PaymentInfoWrapper.PaymentResponse responsePayload = new DSALES_PaymentInfoWrapper.PaymentResponse();
-        responsePayload.message = consulta;
-        system.debug('Resultado del pago:'+consulta);
-        responsePayload.paymentInfo_ids = listaPagos;
+            success=true;
+
+        }catch(Exception e){
+            success = false;
+            error_message = DSALES_Utility.INTERNAL_ERROR_MSJ;
+            code = DSALES_Utility.INTERNAL_ERROR_CODE;
+        }
+        DSALES_PaymentInfoWrapper.PaymentResponse responsePayload = new  DSALES_PaymentInfoWrapper.PaymentResponse();
+        responsePayload.success = success;
+        responsePayload.error_code=code;
+        responsePayload.error_message=error_message;
+        responsePayload.paymentInfo_id=nuevoPago.Id;
+        
         return responsePayload;
     }
 }
