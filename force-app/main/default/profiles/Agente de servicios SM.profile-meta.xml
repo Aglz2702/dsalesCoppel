@@ -6919,6 +6919,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Tipo_de_endoso__mdt.Tipo_de_endoso__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>DSALES_SubCategoria__c.DSALES_Categoria__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -7357,7 +7362,7 @@
         <field>DocumentTemplate.XmlRelationshipMetadata</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <!-- <fieldPermissions>
         <editable>true</editable>
         <field>DocumentTemplateClause.AccessType</field>
         <readable>true</readable>
@@ -7381,7 +7386,7 @@
         <editable>true</editable>
         <field>DocumentTemplateClause.TokenList</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions> -->
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentTemplateContentDoc.FileStageType</field>
@@ -13994,7 +13999,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Quote.DSALES_Region__c</field>
+        <field>Quote.DSALES_Regioon__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18363,10 +18368,10 @@
         <tab>standard-DocumentTemplate</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
-    <tabVisibilities>
+    <!-- <tabVisibilities>
         <tab>standard-DocumentTemplateClause</tab>
         <visibility>DefaultOff</visibility>
-    </tabVisibilities>
+    </tabVisibilities> -->
     <tabVisibilities>
         <tab>standard-DuplicateRecordSet</tab>
         <visibility>DefaultOn</visibility>

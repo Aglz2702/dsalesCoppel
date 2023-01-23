@@ -32,7 +32,7 @@ export default class DSALES_Endorsementbutton extends LightningElement {
                             this.dispatchEvent(new CloseActionScreenEvent());
                         });
                 } else {
-                    this.pushMessage('Error', 'error', 'Faltan documentos por subir.');
+                    this.pushMessage('Error', 'error', 'Faltan por cargar documentos.');
                     this.dispatchEvent(new CloseActionScreenEvent());
                 }
             }).catch(error => {
