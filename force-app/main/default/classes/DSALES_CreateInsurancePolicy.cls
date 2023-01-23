@@ -34,10 +34,10 @@ public without sharing class DSALES_CreateInsurancePolicy {
     public static void updateInfoPago(InsurancePolicy pol){
         //System.debug('updateInfoPago función');
         InsurancePolicy poliza =[SELECT Id,SourceOpportunityId FROM InsurancePolicy WHERE Id=:pol.Id];
-        List<DSALES_InformacionDePago__c>  pagos =[SELECT Id,DSALES_Oportunidad__c,DSALES_Poliza__c,DSALES_Motosinseguro__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:poliza.SourceOpportunityId  ];
+        List<DSALES_InformacionDePago__c>  pagos =[SELECT Id,DSALES_Oportunidad__c,DSALES_Poliza__c,DSALES_Seguro__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:poliza.SourceOpportunityId  ];
         List<DSALES_InformacionDePago__c> listToUpdate = new List<DSALES_InformacionDePago__c>();
         for(DSALES_InformacionDePago__c pago:pagos){
-            if(pago.DSALES_Poliza__c==null && pago.DSALES_Motosinseguro__c==false){
+            if(pago.DSALES_Poliza__c==null && pago.DSALES_Seguro__c==true){
                 pago.DSALES_Poliza__c=poliza.Id;
         		//update pago;
                 listToUpdate.add(pago);
