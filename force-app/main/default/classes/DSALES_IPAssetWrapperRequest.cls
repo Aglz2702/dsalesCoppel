@@ -48,8 +48,8 @@ global with sharing class DSALES_IPAssetWrapperRequest {
 
         try {
             //Account cliente =[SELECT Id,Name FROM ACCOUNT WHERE Id=:policyAsset.client_id LIMIT 1];
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c, DSALES_Motoexterna__c,DSALES_Motosinseguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE id=:policyAsset.payment_info];
-            if(pago.DSALES_Motosinseguro__c == false) {
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c, DSALES_Motoexterna__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE id=:policyAsset.payment_info];
+            if(pago.DSALES_Seguro__c == true) {
                 IPassetRecord.DSALES_InformacionPago__c=pago.Id;
                 IPassetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
                 IPassetRecord.DSALES_Tienda__c=policyAsset.store;
