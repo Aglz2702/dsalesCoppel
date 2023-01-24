@@ -6709,7 +6709,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>DSALES_InformacionDePago__c.DSALES_Motosinseguro__c</field>
+        <field>DSALES_InformacionDePago__c.DSALES_Seguro__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6875,6 +6875,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>DSALES_Partidadepago__c.DSALES_Menospagoinicial__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DSALES_Partidadepago__c.DSALES_Pago__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7352,7 +7357,7 @@
         <field>DocumentTemplate.XmlRelationshipMetadata</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <!--<fieldPermissions>
         <editable>true</editable>
         <field>DocumentTemplateClause.AccessType</field>
         <readable>true</readable>
@@ -7376,7 +7381,7 @@
         <editable>true</editable>
         <field>DocumentTemplateClause.TokenList</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions>-->
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentTemplateContentDoc.FileStageType</field>
@@ -18622,10 +18627,10 @@
         <tab>standard-DocumentTemplate</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
-    <tabVisibilities>
+    <!--<tabVisibilities>
         <tab>standard-DocumentTemplateClause</tab>
         <visibility>DefaultOff</visibility>
-    </tabVisibilities>
+    </tabVisibilities>-->
     <tabVisibilities>
         <tab>standard-DuplicateRecordSet</tab>
         <visibility>DefaultOn</visibility>
