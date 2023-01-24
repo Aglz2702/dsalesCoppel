@@ -147,6 +147,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>endososControllerClass</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>DSALES_GetDocumentBody</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -6921,6 +6925,16 @@
         <editable>false</editable>
         <field>DSALES_RutaIntegracion__mdt.DSALES_Endpoint__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tipo_de_endoso__mdt.ClaimType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tipo_de_endoso__mdt.Tipo_de_endoso__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13999,7 +14013,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Quote.DSALES_Region__c</field>
+        <field>Quote.DSALES_Regioon__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
