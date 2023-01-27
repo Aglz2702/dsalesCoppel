@@ -22,6 +22,16 @@
                 <label>En trámite</label>
             </value>
             <value>
+                <fullName>En requerimiento de información</fullName>
+                <default>false</default>
+                <label>En requerimiento de información</label>
+            </value>
+            <value>
+                <fullName>Autorizado</fullName>
+                <default>false</default>
+                <label>Autorizado</label>
+            </value>
+            <value>
                 <fullName>Pagado</fullName>
                 <default>false</default>
                 <label>Pagado</label>
