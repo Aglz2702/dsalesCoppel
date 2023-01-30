@@ -33,7 +33,6 @@ global class DSALES_QuoteSmWrapperRequest {
                       nombreCompleto += ' ' +data.apellido_paterno; 
                     String rfc = DSALES_ConsultaListaNegra.getRFC(data.nombre, data.apellido_materno, data.apellido_paterno, data.apellido_materno, data.fecha_nacimiento);
                     respuestaListaNegra = DSALES_ConsultaListaNegra.callWebService(rfc, nombreCompleto);
-                    System.debug('respuesta de la lista negra:  '+respuestaListaNegra);
                     if(respuestaListaNegra.estatus =='true'){
                         listaNegra = true;
                         message = 'Esta en la Lista negra';
@@ -145,6 +144,7 @@ global class DSALES_QuoteSmWrapperRequest {
         response.codigo_error = errorCode;
         response.success = succes;
         response.idCotizacion = cotiza.Id;
+        response.Idoportunidad = oppor.Id;
         //response.TrackingId = respuestaDeProveedor.tracking_id;
         response.listaNegra = listaNegra;
         response.listaSeguros = plazos;
@@ -192,13 +192,11 @@ global class DSALES_QuoteSmWrapperRequest {
         catch(Exception e){
             System.debug('No Se encontraron plazos con las condiciones');        
         }
-        //List<>
         return plazosSeguros;
     }
     
     public static DSALES_QuoteSmWrapper.respuestaDelProveedor crearQuoteSm(DSALES_QuoteSmWrapper.QuotePostProvedor obj){
         String body = JSON.serialize(obj);
-        System.debug('Campos se envian: '+ body);
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         String endpoint = DSALES_Utility.getEndpoint(NOMBRE_SERVICIO);
@@ -389,7 +387,10 @@ global class DSALES_QuoteSmWrapperRequest {
         }
         insert listaPartidas;
         for(Integer i=0; i<listaPartidas.size() ; i++){
-            listaSeguros[i].Idpartida = listaPartidas[i].Id;    
+            listaSeguros[i].Idpartida = listaPartidas[i].Id;
+            listaSeguros[i].descripcion = listaPartidas[i].DSALES_Descripcion__c;
+            listaSeguros[i].seguro_gratis = listaPartidas[i].DSALES_Segurogratis__c;
+
         }
         return listaSeguros;     
     }
@@ -399,11 +400,13 @@ global class DSALES_QuoteSmWrapperRequest {
         aux.fecha_inicio = original.start_date;
         aux.fecha_termino = original.end_date;
         aux.prima_neta = original.net_premium;
-        aux.total_premium = original.total_premium;
+        aux.precio_venta = original.total_premium;
         aux.derechos_poliza = original.right;
         aux.recargos = original.recharge;
         aux.impuestos = original.tax;
         aux.comision = original.commission;
+        aux.pagoTotalEfectivo = original.pagoTotalEfectivo;
+        aux.pagoMensual = original.pagoMensual;
         return aux;
     }
 }

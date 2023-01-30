@@ -161,8 +161,6 @@ public class DSALES_QuoteSmWrapperRequestTest {
         req.httpMethod = 'POST';
         RestContext.request = req;
         req.requestBody = Blob.valueof(body);
-        //RestContext.response = res;
-
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(5));
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
@@ -174,7 +172,7 @@ public class DSALES_QuoteSmWrapperRequestTest {
     static void CreateQuoteCredito2(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{"vehicle_use":"Comercial","sku":"1231212","vehicle_type":"Moto","plazo":"12","rfc":"abcd","client_number":"45654","first_name":"hpero","middle_name":"gonzalez","last_name":"lopez","suffix":"sepa","store_id":"CPPL-UGARTE","vendedor":"pedro","contact_phone":"4545454545","contact_email":"ssas@fgmaoc.com","contact_gender":"Masculino","contact_birth_date":"1990-10-02","contact_state_code":"12","contact_township_code":"212","contact_suburb_code":12,"contact_zip_code":"12","vehicle_id":"slknvsaeclskvlams","payment_option":"Mensual","packagge":"EC","start_at":"2020-10-10","productList":[{"sku":"121212"},{"sku":"632013-GEX"}]}';
+        String body = '{"precioProducto":"213.4","tipo_uso":"Comercial","sku":"1231212","tipo_vehiculo":"Moto","plazo_cotizar":"18","rfc":"abcd","numero_cliente":"45654","nombre":"hpero","apellido_paterno":"lopez","apellido_materno":"sepa","id_tienda":"CPPL-UGARTE","nombre_vendedor":"pedro","telefono_celular":"45454554545","correo_electronico":"ssfas@fgmaoc.com","genero_contacto":"Masculino","fecha_nacimiento":"1990-10-02","codigo_postal":"12","id_vehiculo":"slknvsaeclskvlams","opcion_pago":"Mensual","fecha_inicio":"2020-10-10"}';
         req.requestURI = '/apexrest/insertQuoteSM';
         req.httpMethod = 'POST';
         RestContext.request = req;
@@ -192,12 +190,11 @@ public class DSALES_QuoteSmWrapperRequestTest {
     static void CreateQuoteGenerico(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{"vehicle_use":"Comercial","sku":"1231212","vehicle_type":"Moto","plazo":"12","rfc":"abcd","client_number":"","first_name":"Daniela","middle_name":"Ho","last_name":"Gallegos","suffix":"","store_id":"CPPL-UGARTE","vendedor":"pedro","contact_phone":"4545454545","contact_email":"ssas@fgmaoc.com","contact_gender":"Masculino","contact_birth_date":"1990-10-02","contact_state_code":"12","contact_township_code":"212","contact_suburb_code":12,"contact_zip_code":"12","vehicle_id":"slknvsaeclskvlams","payment_option":"Mensual","packagge":"EC","start_at":"2020-10-10","productList":[{"sku":"121212121212"},{"sku":"632013-GEX"}]}';
+        String body = '{"precioProducto":"213.4","tipo_uso":"Comercial","sku":"0000","tipo_vehiculo":"Moto","plazo_cotizar":"12","rfc":"abcd","numero_cliente":"","nombre":"DanielaD","apellido_paterno":"Galle535gos","apellido_materno":"35","id_tienda":"CPPL-UGARTE","nombre_vendedor":"pedro","telefono_celular":"45454554545","correo_electronico":"ssfas@fgmaoc.com","genero_contacto":"Masculino","fecha_nacimiento":"1990-10-02","codigo_postal":"12","id_vehiculo":"slknvsaeclskvlams","opcion_pago":"Mensual","fecha_inicio":"2020-10-10"}';
         req.requestURI = '/apexrest/insertQuoteSM';
         req.httpMethod = 'POST';
         RestContext.request = req;
         req.requestBody = Blob.valueof(body);
-		System.debug('Generico: ');
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(5));
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
@@ -209,7 +206,7 @@ public class DSALES_QuoteSmWrapperRequestTest {
     static void CreateQuoteCreditoo(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{"vehicle_use":"Comercial","sku":"1231212","vehicle_type":"Moto","plazo":"12","rfc":"abcd","client_number":"323535324","first_name":"DanielaD","middle_name":"H535Go","last_name":"Galle535gos","suffix":"35","store_id":"CPPL-UGARTE","vendedor":"pedro","contact_phone":"45454554545","contact_email":"ssfas@fgmaoc.com","contact_gender":"Masculino","contact_birth_date":"1990-10-02","contact_state_code":"12","contact_township_code":"212","contact_suburb_code":12,"contact_zip_code":"12","vehicle_id":"slknvsaeclskvlams","payment_option":"Mensual","packagge":"EC","start_at":"2020-10-10","productList":[{"sku":"121212121212"},{"sku":"632013-GEX"}]}';
+        String body = '{"precioProducto":"213.4","tipo_uso":"Comercial","sku":"1231212","tipo_vehiculo":"Moto","plazo_cotizar":"12","rfc":"abcd","numero_cliente":"323535324","nombre":"DanielaD","apellido_paterno":"Galle535gos","apellido_materno":"35","id_tienda":"CPPL-UGARTE","nombre_vendedor":"pedro","telefono_celular":"45454554545","correo_electronico":"ssfas@fgmaoc.com","genero_contacto":"Masculino","fecha_nacimiento":"1990-10-02","codigo_postal":"12","id_vehiculo":"slknvsaeclskvlams","opcion_pago":"Mensual","fecha_inicio":"2020-10-10"}';
         req.requestURI = '/apexrest/insertQuoteSM';
         req.httpMethod = 'POST';
         RestContext.request = req;
