@@ -338,6 +338,7 @@
 		<members>DSALES_InformacionDePago__c.DSALES_ExpEn__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_Factura__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_Fecha__c</members>
+		<members>DSALES_InformacionDePago__c.DSALES_Fechadeentregaestimada__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_FormaDePago__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_Ganodineroelec__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_Marca__c</members>
@@ -353,6 +354,7 @@
 		<members>DSALES_InformacionDePago__c.DSALES_Nombre_del_cliente__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_Oportunidad__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_Pagoefectivo__c</members>
+		<members>DSALES_InformacionDePago__c.DSALES_Plazodecomprademoto__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_Poliza__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_Precio__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_ProductoAdquirido__c</members>
@@ -386,6 +388,7 @@
 		<members>DSALES_Partidadepago__c.DSALES_Ganodineroelec__c</members>
 		<members>DSALES_Partidadepago__c.DSALES_Informaciondepago__c</members>
 		<members>DSALES_Partidadepago__c.DSALES_Menospagoinicial__c</members>
+		<members>DSALES_Partidadepago__c.DSALES_Pago__c</members>
 		<members>DSALES_Partidadepago__c.DSALES_Pagoefectivo__c</members>
 		<members>DSALES_Partidadepago__c.DSALES_Productoadquirido__c</members>
 		<members>DSALES_Partidadepago__c.DSALES_Saldodineroelec__c</members>
@@ -569,6 +572,7 @@
 		<members>Quote.DSales_Tienda__c</members>
 		<members>Quote.DSALES_Tipodeserviciodelvehculo__c</members>
 		<members>Quote.DSALES_Tipodevehculo__c</members>
+		<members>Quote.DSALES_TrakingID__c</members>
 		<members>Quote.DSALES_Usodelvehculo__c</members>
 		<members>Quote.DSales_Vendedor__c</members>
 		<members>Quote.ID_Vendedor__c</members>
@@ -592,6 +596,7 @@
 		<members>QuoteLineItem.DSALES_Plazo__c</members>
 		<members>QuoteLineItem.DSALES_SKU__c</members>
 		<members>QuoteLineItem.DSales_SKU_Producto__c</members>
+		<members>QuoteLineItem.DSALES_Tipodeproducto__c</members>
 		<members>QuoteLineItem.DSALES_TipoServ__c</members>
 		<members>QuoteLineItem.DSales_Articulo__c</members>
 		<members>QuoteLineItem.DSales_Fecha_de_entrega_estimada__c</members>
@@ -827,6 +832,7 @@
 		<members>P_liza_P_gina_de_registro1</members>
 		<members>Partida_de_presupuesto_P_gina_de_registro</members>
 		<members>Quote_Record_Page</members>
+		<members>Quote_Record_Page_Seguros</members>
 		<members>P_gina_de_inicio_predeterminada1</members>
 		<members>Plazo_Record_Page1</members>
 		<members>Seguro_de_Motos_UtilityBar</members>
@@ -1059,6 +1065,7 @@
 		<members>DSALES_Familia__c.DSALES_GEX</members>
 		<members>DSALES_Familia__c.DSALES_SM</members>
 		<members>Claim.DSALES_Nuevo_Siniestro</members>
+		<members>DSALES_Partidadepago__c.DSALES_SegurodeMotos</members>
 		<members>Claim.DSALES_Siniestro</members>
 		<name>RecordType</name>
 	</types>
