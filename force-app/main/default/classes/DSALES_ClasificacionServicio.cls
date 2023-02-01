@@ -22,30 +22,44 @@ public without sharing class DSALES_ClasificacionServicio {
     }
     
     @AuraEnabled
-    public static DSALES_ClasificacionServicioWrapper getRecords(String allData){
+    public static DSALES_ClasificacionServicioWrapper getRecords(String allData, String perfilUsuario, String opcion){
         DSALES_ClasificacionServicioWrapper objeto = (DSALES_ClasificacionServicioWrapper) JSON.deserialize(allData, DSALES_ClasificacionServicioWrapper.class);
         List<String> listCategorias = itemSeleccionados(objeto.listCategorias);
         List<String> listSubCategorias = itemSeleccionados(objeto.listSubCategorias);
         List<String> listClases = itemSeleccionados(objeto.listClases);
         List<String> listFamilias = itemSeleccionados(objeto.listFamilias);
-        
-        if(listCategorias.size() == 0 && listSubCategorias.size() == 0 &&
-           listClases.size() == 0 && listFamilias.size() == 0){
+        String tipoRegistroId = '';
+       if(listCategorias.size() == 0 && listSubCategorias.size() == 0 &&
+           listClases.size() == 0 && listFamilias.size() == 0 && opcion!= 'AllRecords'){
                objeto.listServicios = new List<Servicio>();
                return objeto;
            }
-          /*  producto= [select Id, RecordTypeId from product2 Where RecordTypeId = ];
-           String recordId= producto[0].Id;
-           String recordId */
-        //String tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
+        if(perfilUsuario== 'Administrador del sistema'){
+            tipoRegistroId='';
+        }
+        else {
+            tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByName().get(perfilUsuario).getRecordTypeId();
+        }
+        
+        system.debug(tipoRegistroId);
         String producto= 'Producto';
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
         query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, DSALES_TipoServicio__c, DSALES_vehculo__c, DSALES_Noaplica__c, RecordTypeId ';
-        query += 'from Product2 Where RecordTypeId != null and DSALES_Noaplica__c = false and DSales_Servicio__c = false and DSales_Seguro__c= false ';
-        query += listCategorias.size() > 0 ? ' And DSales_Categoria__c in :listCategorias ' : '';
-        query += listSubCategorias.size() > 0 ? ' And DSALES_SubCategoria__c in :listSubCategorias ' : '';
-        query += listClases.size() > 0 ? ' And DSales_Clase__c in :listClases ' : '';
-        query += listFamilias.size() > 0 ? ' And DSALES_Familia__c in :listFamilias ' : '';
+        if(perfilUsuario== 'Administrador del sistema'){
+            query += 'from Product2 Where RecordTypeId != null ';
+        }
+        else {
+            query += 'from Product2 Where RecordTypeId = :tipoRegistroId ';
+        }
+        if(opcion=='AllRecords'){
+            query += ' And DSALES_Noaplica__c = false and DSales_Servicio__c = false and DSales_Seguro__c= false ';
+        }
+        else {
+            query += listCategorias.size() > 0 ? ' And DSales_Categoria__c in :listCategorias ' : '';
+            query += listSubCategorias.size() > 0 ? ' And DSALES_SubCategoria__c in :listSubCategorias ' : '';
+            query += listClases.size() > 0 ? ' And DSales_Clase__c in :listClases ' : '';
+            query += listFamilias.size() > 0 ? ' And DSALES_Familia__c in :listFamilias ' : '';
+        }
         query += '  and DSales_Tipo_de_Producto__c= :producto';
         query += ' order by DSales_Servicio__c asc';
         objeto.listServicios = consultarProductos(DataBase.query(query));
