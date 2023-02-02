@@ -449,6 +449,7 @@
 		<members>InsurancePolicyAsset.DSALES_Factura__c</members>
 		<members>Opportunity.DSALES_Certificado__c</members>
 		<members>Opportunity.A_o_anterior__c</members>
+		<members>Opportunity.DSales_Colaborador__c</members>
 		<members>Opportunity.Ingresos_GEX_A_o_anterior__c</members>
 		<members>Opportunity.Muebles__c</members>
 		<members>Opportunity.DSALES_Dias_Transcurridos__c</members>
