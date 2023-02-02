@@ -90,13 +90,14 @@ global class DSALES_VentaSMRest {
         Account clientNumber =[ SELECT Id, CP_WalletCustomerNumber__c FROM Account WHERE ID= :clientId];
         DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE Id=:pagoId];
         asset.id_pago=pago.Id;
-        if(pago.DSALES_SKU__c!=null){
+        System.debug('********numero de serie'+asset.numero_serie);
+        if(pago.DSALES_SKU__c!=null && asset.numero_serie!=''){
             response= DSALES_IPAssetWrapperRequestActivo.insertIPAsset(asset);//moto entregada
            
         }
-        else{
+        /*else{
             response=DSALES_IPAssetWrapperRequest.insertIPAsset(asset);//moto externa
-        }
+        }*/
             
         return response.id_activo;
     }
