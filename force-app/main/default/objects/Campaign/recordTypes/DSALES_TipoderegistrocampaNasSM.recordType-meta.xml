@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_TipoderegistrocampaNasSM</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>DSALES_FormatoCompactoCampanasSM</compactLayoutAssignment>
+    <label>Tipo de registro campañas SM</label>
+    <picklistValues>
+        <picklist>DB_Campaign_Tactic__c</picklist>
+        <values>
+            <fullName>Direct Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employment Seminars</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal Website</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lunches</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Online Banners%2FAds</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partners</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Print Advertisement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public Relations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referral Program</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Call Down</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Webinars</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Tipodecapana__c</picklist>
+        <values>
+            <fullName>Informativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seguro gratis</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Anulado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>En curso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Planificado</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Demo Signup %2F Trial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Event</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Otros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Programa de referencias</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Search</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social Media</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Thought Leadership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Website Direct</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

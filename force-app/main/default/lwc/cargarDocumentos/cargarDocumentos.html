@@ -1,62 +1,74 @@
 <template>
     <lightning-quick-action-panel header="Carga De Documentos">
-        <div class="slds-m-around_medium">
-            <lightning-card>
-                <template if:true={pickListValues}>
-                    <lightning-combobox name="TipoDeEndoso" label="Tipo de Endoso" value={value} placeholder="-Select--"
-                        options={pickListValues} onchange={handleChange}>
-                    </lightning-combobox>
+        <div class="slds-m-around_none">
+            <div class="slds-m-bottom_medium">
+                <template if:true={DSALES_Endoso__c.data}>
+                    <div class="slds-align_absolute-center">
+                        Tipo De Endoso &nbsp;&nbsp;: &nbsp;&nbsp;{endoso}
+                    </div>
                 </template>
-            </lightning-card>
+            </div>
+
+
+            <!-- <div class="slds-align_absolute-center">
+                <abbr class="slds-required" title="required">* </abbr> Tipo de compañía de seguros :
+                <div style="width:200px; padding:0.5rem;">
+                    <lightning-combobox onselectoption={handleSelectOption} options={options} value={selectedValue}
+                        onchange={handleChange} name="Tipo De Insurance"></lightning-combobox>
+                </div>
+            </div> -->
+
+
+            <!-- <template if:true={areDetailsVisible}> -->
             <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-label="">
                 <thead>
                     <tr class="slds-line-height_reset">
                         <th class="" scope="col">
-                            <div class="slds-truncate" title="Movimientos">MOVIMIENTOS</div>
+                            <div class="slds-truncate" title="Movimientos">TIPO DE DOCUMENTO</div>
                         </th>
                         <th class="" scope="col">
-                            <div class="slds-truncate" title="Qualitas">QUALITAS
+                            <div class="slds-truncate" title="Qualitas"> QUALITAS</div>
+
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Qualitas">File Name
                             </div>
                         </th>
+
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="slds-hint-parent">
-                        <th data-label="ID Oficial" scope="row">
-                            <div class="slds-truncate" title="ID Oficial">
-                                <a href="#" tabindex="-1">ID Oficial</a>
-                            </div>
+
+
+                <!-- <template if:true={isNameCorrection}> -->
+
+                <template for:each={dataFile} for:item="nm">
+                    <tr class="slds-hint-parent" key={nm.Id}>
+                        <th scope="row"> {nm.value} </th>
+                        <th>
+                            <lightning-file-upload name="fileUploader" accept={acceptedFormats} record-id={recordId}
+                                onuploadfinished={uploadFileData} data-item={nm.Id} multiple>
+                            </lightning-file-upload>
                         </th>
-                        <td data-label="Upload file">
-                            <div class="slds-truncate">
-                                <lightning-file-upload name="fileUploader" accept={acceptedFormats}
-                                    record-id={myRecordId} onuploadfinished={handleUploadFinished}
-                                    onchange={openfileUpload} multiple>
-                                </lightning-file-upload>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="slds-hint-parent">
-                        <th data-label="RFC" scope="row">
-                            <div class="slds-truncate" title="RFC">
-                                <a href="#" tabindex="-1">RFC</a>
-                            </div>
+                        <th scope="row">
+                            <template for:each={nm.Files} for:item="con" for:index="index">
+                                <div key={con.Id} class="slds-p-around_xxx-small">
+                                    <lightning-pill name={con.Id} label={con.Name} onremove={removeFile}
+                                        data-item={con.fileId}>
+                                        <lightning-icon icon-name="doctype:attachment" alternative-text="Documents">
+                                        </lightning-icon>
+                                    </lightning-pill>
+                                </div>
+                            </template>
                         </th>
-                        <td data-label="Upload file">
-                            <div class="slds-truncate">
-                                <lightning-file-upload name="fileUploader" accept={acceptedFormats}
-                                    record-id={myRecordId} onuploadfinished={handleUploadFinished} multiple>
-                                </lightning-file-upload>
-                            </div>
-                        </td>
                     </tr>
-                </tbody>
+                </template>
+                <!-- </template> -->
             </table>
+            <!-- </template> -->
+
         </div>
         <div slot="footer">
-            <lightning-button variant="neutral" label="Cancel" onclick={closeAction}></lightning-button>
-            &nbsp;&nbsp;
-            <lightning-button variant="brand" label="Save" onclick={handleSave}></lightning-button>
+            <lightning-button variant="brand" label="Submit" onclick={closeAction}></lightning-button>
         </div>
     </lightning-quick-action-panel>
 </template>
