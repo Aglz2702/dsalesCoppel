@@ -869,6 +869,7 @@
 	<members>DSALES_Certificado_cambio_de_estatus_activado</members>
 	<members>DSALES_CotizacionEnviada</members>
 	<members>DSALES_Correo_nueva_p_liza</members>
+	<members>DSALES_Desactivarcampaa</members>
 	<members>DSALES_Envidecorreoconcotizacin</members>
 	<members>DSALES_Presupuesto_Vencido</members>
 	<members>DSALES_Registro_de_Oportunidad_de_Venta_SM</members>
