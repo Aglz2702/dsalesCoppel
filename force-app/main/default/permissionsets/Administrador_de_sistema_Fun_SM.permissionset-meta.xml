@@ -1516,7 +1516,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>DSALES_Partidadepago__c.DSALES_Informaciondepago__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2946,7 +2946,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>QuoteLineItem.DSALES_Descripcion__c</field>
         <readable>true</readable>
     </fieldPermissions>

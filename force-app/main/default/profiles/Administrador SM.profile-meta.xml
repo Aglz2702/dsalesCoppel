@@ -6663,6 +6663,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>DSALES_InformacionDePago__c.DSALES_Fechadeentregaestimada__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>DSALES_InformacionDePago__c.DSALES_FormaDePago__c</field>
         <readable>true</readable>
@@ -6746,6 +6751,11 @@
         <editable>false</editable>
         <field>DSALES_InformacionDePago__c.DSALES_Pagoefectivo__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DSALES_InformacionDePago__c.DSALES_Plazodecomprademoto__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -6873,7 +6883,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>DSALES_Partidadepago__c.DSALES_Informaciondepago__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14038,6 +14048,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote.DSALES_Plazoacotizar__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote.DSALES_RFC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Quote.DSALES_Regioon__c</field>
         <readable>true</readable>
@@ -14055,6 +14075,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Quote.DSALES_Tipodevehculo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote.DSALES_Tipodeveihculo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote.DSALES_TipoUso__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Quote.DSALES_TrakingID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14273,8 +14308,18 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>QuoteLineItem.DSALES_Comision__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>QuoteLineItem.DSales_Clase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>QuoteLineItem.DSALES_Descripcion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14298,6 +14343,26 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>QuoteLineItem.DSALES_Pagomensual__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>QuoteLineItem.DSALES_Plazo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>QuoteLineItem.DSALES_Recargos__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>QuoteLineItem.DSALES_Segurogratis__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>QuoteLineItem.DSales_SKU_Producto__c</field>
         <readable>true</readable>
@@ -14310,6 +14375,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>QuoteLineItem.DSales_Tipo_de_Servicio__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>QuoteLineItem.DSALES_TrackingID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
