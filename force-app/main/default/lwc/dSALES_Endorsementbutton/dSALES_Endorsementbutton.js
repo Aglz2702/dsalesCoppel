@@ -17,7 +17,7 @@ export default class DSALES_Endorsementbutton extends LightningElement {
             .then(result => {
                 this.result = result;
                 console.log(result);
-                if (result >= 18) {
+                if (result >= 1) {
                     crearEndoso({ idEndoso: this.recordId })
                         .then(result => {
                             this.estatus = result;

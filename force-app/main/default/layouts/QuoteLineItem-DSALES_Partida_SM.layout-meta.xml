@@ -11,14 +11,22 @@
                 <field>LineNumber</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DSALES_TrackingID__c</field>
+                <behavior>Readonly</behavior>
+                <field>DSALES_Tipodeproducto__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>QuoteId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_TrackingID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_Segurogratis__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -42,8 +50,8 @@
                 <field>DSALES_Fechadeinicio__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Vigencia_meses__c</field>
+                <behavior>Edit</behavior>
+                <field>DSALES_Plazo__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -80,6 +88,14 @@
                 <behavior>Readonly</behavior>
                 <field>DSALES_Derechosdepliza__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_Comision__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_Recargos__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -99,6 +115,20 @@
                 <field>DSALES_Pagomensual__c</field>
             </layoutItems>
         </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Información del seguro</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_Descripcion__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>

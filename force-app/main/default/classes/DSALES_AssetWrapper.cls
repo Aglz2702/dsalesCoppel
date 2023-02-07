@@ -1,9 +1,11 @@
 global class DSALES_AssetWrapper {
     global class AssetRequest{
-         global String primer_nombre {get; set;}
+        global String id_pago{get;set;} 
+        global String id_producto{get;set;}
+        global String primer_nombre {get; set;}
         global String apellido {get;set;}
         global String email {get;set;}
-        global String nombre{get;set;}
+        global String articulo{get;set;}
         global String numero_cliente{get;set;}
         global String id_cuenta {get;set;}
         global String id_contacto{get;set;}
@@ -17,7 +19,7 @@ global class DSALES_AssetWrapper {
         //picklist values for Status: Adquirido,Cancelado,Devuelto 
         global String estado {get;set;}
         global String meses{get;set;}
-        global String sku {get;set;}
+        global String sku_de_tangible {get;set;}
         global String duracion_garantia {get;set;}
         global String numero_serie {get;set;}
         global Date fecha_compra {get;set;}
