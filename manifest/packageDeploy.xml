@@ -217,6 +217,7 @@
 	<members>Asset.DSALES_TipoProducto__c</members>
 	<members>Asset.DSALES_TipoSeguro__c</members>
 	<members>Asset.DSALES_TipoServicio__c</members>
+	<members>Asset.DSales_Fecha_compra__c</members>
 	<members>Campaign.DSALES_Tipodecapana__c</members>
 	<members>Claim.Cliente__c</members>
 	<members>Claim.DSALES_Monto__c</members>
@@ -929,6 +930,7 @@
 </types>
 <types>
 	<members>Asset-Pisys Asset Layout</members>
+	<members>Asset-Asset Layout</members>
 	<members>Campaign-DSALES_CAMPAÑAS SM</members>
 	<members>DSALES_AsociacionCampanias__c-Formato Asociación de campañas</members>
 	<members>DSALES_Categoria__c-DSALES_SM</members>
