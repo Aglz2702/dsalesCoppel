@@ -866,6 +866,7 @@
 	<members>DSALES_TipodevehculoPginaderegistro</members>
 	<members>Tipo_de_veh_culo_Record_Page</members>
 	<members>Quote_Record_Page_Servicios</members>
+	<members>Quote_Line_Item_Record_Page</members>
 	<name>FlexiPage</name>
 </types>
 <types>
