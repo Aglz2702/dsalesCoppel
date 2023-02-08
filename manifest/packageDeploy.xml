@@ -584,7 +584,11 @@
 	<members>Quote.Horas_transcurridas__c</members>
 	<members>Quote.Nombre_Cliente_Test__c</members>
 	<members>Quote.DSALES_Contado__c</members>
+	<members>Quote.DSales_GEX__c</members>
+	<members>Quote.DSales_Ingresos_GEX__c</members>
 	<members>Quote.DSALES_Numerodepartidas__c</members>
+	<members>Quote.DSales_Ingresos_productos__c</members>
+	<members>Quote.DSales_Productos__c</members>
 	<members>Quote.Tiempo_transcurrido__c</members>
 			<members>Quote.DSALES_esClon__c</members>
 
@@ -861,6 +865,7 @@
 	<members>Tipo_de_Uso_Record_Page</members>
 	<members>DSALES_TipodevehculoPginaderegistro</members>
 	<members>Tipo_de_veh_culo_Record_Page</members>
+	<members>Quote_Record_Page_Servicios</members>
 	<name>FlexiPage</name>
 </types>
 <types>
