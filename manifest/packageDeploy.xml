@@ -176,6 +176,7 @@
 	<members>Plazo__c.DSALES_FormatoompactoSM</members>
 	<members>Quote.DSALES_FormatocompactoSM</members>
 	<members>QuoteLineItem.DSALES_FormatocompactoSM</members>
+	<members>DSALES_InformacionDePago__c.DSales_Informacion_GEX</members>
 	<name>CompactLayout</name>
 </types>
 <types>
