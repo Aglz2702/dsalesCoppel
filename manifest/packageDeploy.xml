@@ -168,6 +168,7 @@
 	<members>Asset.DSALES_PysisCompactLayout</members>
 	<members>Campaign.DSALES_FormatoCompactoCampanasSM</members>
 	<members>Claim.DSALES_Formato_compacto_siniestro</members>
+	<members>Opportunity.DSales_Formato_GEX</members>
 	<members>DSALES_Certificado__c.DSALES_Certificado</members>
 	<members>DSALES_Endoso__c.DSALES_Formato_compacto_endoso</members>
 	<members>DSALES_InformacionDePago__c.InfoPagoVenta</members>	
@@ -496,6 +497,7 @@
 	<members>Opportunity.Posici_n__c</members>
 	<members>OpportunityLineItem.DSALES_Producto__c</members>
 	<members>OpportunityLineItem.DSALES_Servicio__c</members>
+	<members>Opportunity.DSales_Compra__c</members>
 	<members>OpportunityLineItem.DSALES_TipoServ__c</members>
 	<members>Opportunity.DSales_IDVendedor__c</members>
 	<members>OpportunityLineItem.DSALES_Vendido__c</members>
@@ -632,6 +634,10 @@
 	<members>Tienda__c.DSALES_Optica__c</members>
 	<name>CustomField</name>
 </types>
+<types>
+		<members>Opportunity.Garantia Extendida</members>
+		<name>BusinessProcess</name>
+	</types>
 <types>
 	<members>DSALES_ContactMethod</members>
 	<members>DSALES_coberturaAmp</members>
@@ -935,6 +941,7 @@
 	<members>InsurancePolicyAsset-Formato de Activo de póliza de seguro</members>
 	<members>Opportunity-DSALES_OpportunityPISYSGEX</members>
 	<members>Opportunity-DSALES_OpportunitySM</members>
+	<members>Opportunity-Opportunity Layout</members>
 	<members>PersonAccount-DSALES_Clientes</members>
 	<members>Plazo__c-Formato Plazo</members>
 	<members>Quote-Venta SM</members>
