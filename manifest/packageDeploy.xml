@@ -869,6 +869,8 @@
 	<members>Tipo_de_veh_culo_Record_Page</members>
 	<members>Quote_Record_Page_Servicios</members>
 	<members>Quote_Line_Item_Record_Page</members>
+	<members>Categor_a_P_gina_de_registro</members>
+	<members>Sub_Categor_a_P_gina_de_registro</members>
 	<name>FlexiPage</name>
 </types>
 <types>
@@ -967,6 +969,10 @@
 	<members>Tienda__c-Formato Tienda</members>
 	<members>DSALES_Endoso__c-Formato Endoso</members>
 	<members>DSALES_InformacionDePago__c-DSALESInformaciondepagosSM</members>
+	<members>DSALES_Categoria__c-DSALES_GEX</members>
+		<members>DSALES_Clase__c-DSALES_GEX</members>
+		<members>DSALES_Familia__c-DSALES_GEX</members>
+	<members>DSALES_SubCategoria__c-DSales_GEX</members>
 	<name>Layout</name>
 </types>
 <types>
