@@ -14,9 +14,8 @@ public class DSALES_InformacionDePago extends fflib_SObjectDomain{
     
     public override void onAfterInsert() {
         DSALES_InformacionPagoHandler.CambiaClienteCautivo( records);
-        DSALES_InformacionPagoHandler.createPolizaMExt(records);
-        //DSALES_InformacionPagoHandler.crearCotizacion(records);
-        //DSALES_InformacionPagoHandler.envioProgramado(records);
+       // DSALES_InformacionPagoHandler.createPolizaMExt(records);
+        
     }
     
     public override void onAfterUpdate(Map<Id,SObject> existingRecords){

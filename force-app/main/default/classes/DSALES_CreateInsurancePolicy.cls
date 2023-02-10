@@ -1,4 +1,7 @@
 public without sharing class DSALES_CreateInsurancePolicy {
+    private static  String seguroAMP='AMP Seguro de Moto';
+    private static  String seguroRC='RC Seguro de Moto';
+
     public static void createPoliza(String idPago) {
         try{
             //System.debug('creaePoliza función');
@@ -7,11 +10,15 @@ public without sharing class DSALES_CreateInsurancePolicy {
             System.debug('opp:'+ op.Id);
             Account cliente =[SELECT Id,RecordTypeId, Name,FirstName,MiddleName,LastName,Suffix,PersonEmail,Fecha_de_Nacimiento__c,CP_Gender__pc FROM Account WHERE Id=:op.AccountId];
             System.debug('opp:'+ cliente.Id);
-            Quote q=[SELECT Id FROM Quote WHERE OpportunityId=:op.Id LIMIT 1]; //aqui puse el limit verificar
-            System.debug('quote:'+ q.Id);
+            Quote cotizacion=[SELECT Id,DSALES_RFC__c FROM Quote WHERE Id=:op.SyncedQuoteId LIMIT 1]; //aqui puse el limit verificar
+            System.debug('quote:'+ cotizacion.Id);
+            List<QuoteLineItem> partidas =[SELECT Id,DSALES_Tipodeproducto__c,DSALES_NombreProducto__c FROM QuoteLineItem WHERE QuoteId=:cotizacion.Id AND DSALES_Tipodeproducto__c='Seguro'];
+            System.debug('xxxxxxx PARTIDASxxxxxxxx: '+partidas.size());
+            InsurancePolicy poliza = new InsurancePolicy();
+            
             //String rfc=DSALES_ConsultaListaNegra.getRFC(cliente.FirstName, cliente.MiddleName, cliente.LastName, cliente.Suffix, cliente.Fecha_de_Nacimiento__c);
            // System.debug('rfc: '+ rfc);
-            InsurancePolicy poliza = new InsurancePolicy();
+           poliza.DSALES_RFC__c=cotizacion.DSALES_RFC__c;
             poliza.PolicyName='0001';
             poliza.Name='0001';
             poliza.NameInsuredId=cliente.Id;
@@ -24,10 +31,24 @@ public without sharing class DSALES_CreateInsurancePolicy {
             }else {
                 poliza.DSALES_Tipodepersona__c='Moral';
             }
-           
+            //poliza.DSALES_Cobertura__c='';
             poliza.SourceOpportunityId=op.Id;
-            poliza.SourceQuoteId=q.Id;
+            poliza.SourceQuoteId=cotizacion.Id;
             poliza.Fecha_de_emisi_n__c=Date.today();
+            if(partidas.size()==1){
+                if(partidas[0].DSALES_NombreProducto__c==seguroAMP){
+                    poliza.DSALES_Cobertura__c='PLUS';
+                }
+                else if(partidas[0].DSALES_NombreProducto__c==seguroRC){
+                    poliza.DSALES_Cobertura__c='RC';
+                }
+                
+            }
+            else if( partidas.size()==2){
+                poliza.DSALES_Cobertura__c='PLUS';
+                
+            }
+            System.debug('cobertura: '+poliza.DSALES_Cobertura__c);
             //poliza.IsActive=false;
             insert poliza;
         }catch(Exception e){
