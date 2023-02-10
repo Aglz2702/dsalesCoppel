@@ -51,6 +51,8 @@ global class DSALES_VentaSMRest {
                     if(pago!=null){
                         System.debug('cotizaciones');
                         DSALES_QuotePagoSM.cotizacionesNuevas(pago.Id,partidasSeleccionadas,pago.DSALES_SKU__c);
+                        //crear prepolizacon cotizacion sincronizada
+                        DSALES_InformacionPagoHandler.createPolizaMExt(pago.Id);
                         String temp=insertIPAsset(venta.activo,pago.Id,cliente.id_cuenta);
                         id_pago=resp.pago_id;
                         id_activo=temp;

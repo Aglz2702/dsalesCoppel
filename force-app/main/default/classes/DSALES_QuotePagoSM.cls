@@ -33,13 +33,44 @@ public with sharing class DSALES_QuotePagoSM {
                 
             }
             else{//compro moto y seguro
-                System.debug('se crea UNA');
-                idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
-                System.debug('cotizaciones creadas: '+ idCotizacion);
-                crearPartidas(beforeCot.Id,idCotizacion,partidasSeleccionadas,skuMoto);
-                if(idCotizacion!=null || idCotizacion!=''){
-                    sincronizarOportunidad(idCotizacion);
-                } 
+                if(skuMoto!=null){
+                    QuoteLineItem producto =[SELECT Id,DSALES_NombreProducto__c, DSALES_Segurogratis__c FROM QuoteLineItem  WHERE DSALES_SKU__c=:skuMoto  AND quoteId=:beforeCot.Id LIMIT 1];
+                    System.debug('Nombre: '+producto.DSALES_NombreProducto__c);
+                    System.debug('trae seguro gratis?: '+producto.DSALES_Segurogratis__c);
+                    System.debug('////////////PARTIDAS////////: '+partidasSeleccionadas.size());
+                    if(producto.DSALES_Segurogratis__c==true && partidasSeleccionadas!=null && partidasSeleccionadas.size()==1){
+                        System.debug('DOS COTIZACIONES// SEGURO GRATIS');
+                        for(Integer i=0;i<2;i++){
+                            idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
+                            listIdCotiza.add(idCotizacion);
+                        } 
+                        String idCotSin=crear2CotPartidas(beforeCot.Id,listIdCotiza,Integer.valueOf(pago.DSALES_Plazodecomprademoto__c), partidasSeleccionadas,skuMoto);
+                        if(idCotSin!=null|| idCotSin!=''){
+                            sincronizarOportunidad(idCotSin);
+                        }
+                    }
+                    else if(producto.DSALES_Segurogratis__c==true && partidasSeleccionadas!=null && partidasSeleccionadas.size()==2){
+                        //solo crear una cotizacion
+                        System.debug('se crea UNA COTIZACION1');
+                        idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
+                        System.debug('cotizaciones creadas: '+ idCotizacion);
+                        crearPartidas(beforeCot.Id,idCotizacion,partidasSeleccionadas,skuMoto);
+                        if(idCotizacion!=null || idCotizacion!=''){
+                            sincronizarOportunidad(idCotizacion);
+                        } 
+                    }
+                    else if(producto.DSALES_Segurogratis__c==false){
+                        //solo crear una cotizacion
+                        System.debug('se crea UNA COTIZACION');
+                        idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
+                        System.debug('cotizaciones creadas: '+ idCotizacion);
+                        crearPartidas(beforeCot.Id,idCotizacion,partidasSeleccionadas,skuMoto);
+                        if(idCotizacion!=null || idCotizacion!=''){
+                            sincronizarOportunidad(idCotizacion);
+                        } 
+                    }
+                }
+                
             } 
             
         } catch (Exception e) {
@@ -89,6 +120,7 @@ public with sharing class DSALES_QuotePagoSM {
             cotizacion.DSALES_RFC__c=beforeCot.DSALES_RFC__c;
             cotizacion.DSALES_TipoUso__c=beforeCot.DSALES_TipoUso__c;
             cotizacion.DSALES_Tipodeveihculo__c=beforeCot.DSALES_Tipodeveihculo__c;
+            cotizacion.ExpirationDate=beforeCot.ExpirationDate;
             insert cotizacion;  
             return cotizacion.Id;
         }catch(Exception e){
@@ -124,13 +156,17 @@ public with sharing class DSALES_QuotePagoSM {
                                 FROM QuoteLineItem  WHERE QuoteId=:idCot  AND DSALES_SKU__c=:skuMoto LIMIT 1]; 
                     System.debug('moto:'+producto);
                     partidas.add(producto);
+                    
                 }
-                System.debug('Seguros:'+partidas);
-                System.debug('AMP ONLY:'+partidas.size());
-                for(QuoteLineItem q:partidas){
-                    //listIdPartidas.add(q.Id);
-                    listIdProd.add(q.Product2Id);
+                List<String> idsPartidasGratis= new List<String>();
+                if(partidas!=null){
+                    System.debug('partidas:'+partidas);
+                    System.debug(' Partidas size:'+partidas.size());
+                    for(QuoteLineItem q:partidas){
+                        listIdProd.add(q.Product2Id);
+                    }
                 }
+                
                 List<Product2> productos = [SELECT Id, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE Id IN:listIdProd ] ;
                 System.debug('productos: '+productos);
                 List<PricebookEntry> precios = [SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Product2Id IN:listIdProd]; 

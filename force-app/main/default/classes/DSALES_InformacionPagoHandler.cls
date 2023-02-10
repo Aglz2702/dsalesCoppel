@@ -17,11 +17,13 @@ public class DSALES_InformacionPagoHandler {
     }
 
 
-    public static void createPolizaMExt(List<DSALES_InformacionDePago__c> records){
-        List<DSALES_InformacionDePago__c> listPagos = [SELECT Id,DSALES_Factura__c,DSALES_Poliza__c,DSALES_SKU__c,DSALES_Motoexterna__c,DSALES_Motoentregada__c,RecordTypeId,RecordType.Name,RecordType.DeveloperName,DSALES_Seguro__c FROM DSALES_InformacionDePago__c WHERE Id IN:records];
-        System.debug('recordTypeid: '+listPagos[0].RecordTypeId);
-        System.debug('DeveloperName: '+listPagos[0].RecordType.DeveloperName);
-        for(DSALES_InformacionDePago__c pago:listPagos){
+    public static void createPolizaMExt(String idPaago){
+        DSALES_InformacionDePago__c pago = [SELECT Id,DSALES_Factura__c,DSALES_Poliza__c,DSALES_SKU__c,DSALES_Motoexterna__c,DSALES_Motoentregada__c,
+                                            RecordTypeId,RecordType.Name,RecordType.DeveloperName,DSALES_Seguro__c 
+                                            FROM DSALES_InformacionDePago__c WHERE Id =:idPaago];
+        //System.debug('recordTypeid: '+listPagos[0].RecordTypeId);
+        //System.debug('DeveloperName: '+listPagos[0].RecordType.DeveloperName);
+        //for(DSALES_InformacionDePago__c pago:listPagos){
             if(pago.RecordType.DeveloperName=='DSALES_PagosdeVentaenNPVSM_c'){
                 if(pago.DSALES_Seguro__c==true && pago.DSALES_Poliza__c==null){
                     if(pago.DSALES_Factura__c!=null   && (pago.DSALES_SKU__c==null || pago.DSALES_SKU__c!=null )){
@@ -34,7 +36,7 @@ public class DSALES_InformacionPagoHandler {
           	}    
             
             
-        }
+       // }
         
     } 
     public static void enviarIntegracion(Map<Id, SObject> existingRecords,List<DSALES_InformacionDePago__c> records){

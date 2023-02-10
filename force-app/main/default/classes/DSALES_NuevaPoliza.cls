@@ -6,7 +6,7 @@ public with sharing class DSALES_NuevaPoliza {
         String datos='SELECT Id,DSALES_Genero__c,DSALES_Codigopostal__c,DSALES_Codigoestado__c,DSALES_CorreoElectronico__c,DSALES_Activodeplizadeseguro__c,DSALES_Numeroseguimiento__c,SourceQuoteId,DSALES_Negocio__c,DSALES_Aseguradora__c,PlanTier,';
         String dats='DSALES_Estatusdepliza__c,Name,EffectiveDate,ExpirationDate,DSALES_Prima_Neta__c,DSALES_Prima_total__c,DSALES_Gastos_expedicion__c,DSALES_IVA__c,SourceOpportunityId,TotalSumInsured,DSALES_IDemision__c,DSALES_Servicio__c,DSALES_Uso__c,';
         String dat='DSALES_Telefono__c,DSALES_Codigomunicipio__c,DSALES_Codigocolonia__c,DSALES_Fechanacimiento__c,DSALES_Numeroserie__c,DSALES_Placas__c,DSALES_Modelo__c,NameInsuredId,DSALES_RFC__c,Fecha_de_emisi_n__c,CreatedDate,DSALES_Opcionpago__c,DSALES_Tipovehiculo__c,';
-        String query =datos+ dats + dat + 'DSALES_PDF_poliza__c,DSALES_Polizaenviada__c FROM InsurancePolicy WHERE Id =:idPoliza';
+        String query =datos+ dats + dat + 'DSALES_PDF_poliza__c,DSALES_Cobertura__c,DSALES_Polizaenviada__c FROM InsurancePolicy WHERE Id =:idPoliza';
         System.debug('Poliza:'+query);
         InsurancePolicy poliza = DataBase.query(query);
         if(service(poliza)!=null){
@@ -87,7 +87,7 @@ public with sharing class DSALES_NuevaPoliza {
         objPost.quote_id=obj.SourceQuoteId;
         objPost.business=obj.DSALES_Negocio__c;
         objPost.insurance=obj.DSALES_Aseguradora__c;
-        objPost.package_id=obj.PlanTier;
+        objPost.packagge=obj.PlanTier;
         objPost.payment_plan=obj.PlanTier;
         objPost.payment_option =obj.DSALES_Opcionpago__c;
         objPost.vehicle_id=obj.DSALES_Activodeplizadeseguro__c;
