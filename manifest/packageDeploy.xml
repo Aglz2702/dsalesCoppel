@@ -871,6 +871,7 @@
 	<members>Quote_Line_Item_Record_Page</members>
 	<members>Categor_a_P_gina_de_registro</members>
 	<members>Sub_Categor_a_P_gina_de_registro</members>
+	<members>Porcentaje_de_cobro_Record_Page</members>
 	<name>FlexiPage</name>
 </types>
 <types>
