@@ -722,6 +722,7 @@
 	<members>COPPELPISyS/Segurosdemotos/GTlTBYAPdOjzISvFslZpRafnShxOuq</members>
 	<members>Tableros_Venta_GEX</members>
 	<members>Tableros_Venta_GEX/WKEgdHadQdsLxqKdOxltMNwbiGcBqw</members>
+	<members>Tableros_Venta_GEX/EoaqAuKoDhWaYfWvwnNWuKjmrTQhPo</members>
 	<name>Dashboard</name>
 </types>
 <types>
@@ -1163,7 +1164,17 @@
 		<members>DSALES_ReportesdeVentasGEX/DSales_Top_10_Tiendas_lrA</members>
 		<members>DSALES_ReportesdeVentasGEX/DSales_Ventas_por_division_por_mes_0fb</members>
 		<members>DSALES_ReportesdeVentasGEX/DSales_Ventas_por_region_por_trimestre_3xy</members>
-		<members>DSALES_ReportesdeVentasGEX/Garanta_Extendida_Resultados_Nacional_t0U</
+		<members>DSALES_ReportesdeVentasGEX/Garanta_Extendida_Resultados_Nacional_t0U</members>
+		<members>DSALES_ReportesdeVentasGEX/GEXTiendas_Potenciales_VLLH_25X</members>
+		<members>DSALES_ReportesdeVentasGEX/Indicadores_Regin_VLLH_9j7</members>
+		<members>DSALES_ReportesdeVentasGEX/New_Report_bGJ</members>
+		<members>DSALES_ReportesdeVentasGEX/Ranking_Incentivos_a0S</members>
+		<members>DSALES_ReportesdeVentasGEX/Ranking_Tiendas_CuC</members>
+		<members>DSALES_ReportesdeVentasGEX/Resultado_Divisin_Primer_Trimestre_2_4Zj</members>
+		<members>DSALES_ReportesdeVentasGEX/Resultado_Divisin_Regin_iVL</members>
+
+
+
 	<name>Report</name>
 </types>
 <types>
