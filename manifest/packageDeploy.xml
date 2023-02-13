@@ -293,7 +293,9 @@
 	<members>DSALES_Certificado__c.DSALES_Tienda__c</members>
 	<members>DSALES_Certificado__c.DSALES_Vigenciacumplida__c</members>
 	<members>DSALES_Certificado__c.DSALES_enviado__c</members>
-	<members>DSALES_Certificado__c.NOMIGRAR__c</members>
+	
+	<members>DSALES_Clase__c.DSALES_SubCategoria__c</members>
+	<members>DSALES_Clase__c.DSales_ID_Departamento__c</members>
 	<members>DSALES_Clase__c.DSALES_Departamento__c</members>
 	<members>DSALES_Clase__c.DSALES_TipoSeguro__c</members>
 	<members>DSALES_Clase__c.DSALES_TipoServicio__c</members>
@@ -403,6 +405,7 @@
 	<members>DASALES_Porcentajedecobro__c.DSALES_Anios__c</members>
 	<members>DASALES_Porcentajedecobro__c.DSALES_Porcentaje__c</members>
 	<members>DASALES_Porcentajedecobro__c.DSALES_Product__c</members>
+	
 	<members>InsurancePolicy.DSALES_Aseguradora__c</members>
 	<members>InsurancePolicy.DSALES_Activodeplizadeseguro__c</members>
 	<members>InsurancePolicy.DSALES_Armadora__c</members>
@@ -528,6 +531,7 @@
 	<members>Product2.DSALES_Servicio__c</members>
 	<members>Product2.DSALES_ServEspecifico__c</members>
 	<members>Product2.DSALES_SubCategoria__c</members>
+	<members>Product2.DSales_SKU_anterior__c</members>
 	<members>Product2.DSALES_TipoServicio__c</members>
 	<members>Product2.DSales_Aplicaporcentajecobro__c</members>
 	<members>Product2.DSales_Articulo__c</members>
@@ -600,6 +604,7 @@
 	<members>QuoteLineItem.DSALES_Fechadecompra__c</members>
 	<members>QuoteLineItem.DSALES_Fechadeinicio__c</members>
 	<members>QuoteLineItem.DSALES_Fechadetermino__c</members>
+	<members>QuoteLineItem.DSALES_Nombre__c</members>
 	<members>QuoteLineItem.DSALES_Gastosdeoperacindelrecibo__c</members>
 	<members>QuoteLineItem.DSALES_Impuestos__c</members>
 	<members>QuoteLineItem.DSALES_ListaArticulo__c</members>
@@ -653,6 +658,7 @@
 	<members>DSALES_vehicleService</members>
 	<members>DSALES_vehicleType</members>
 	<members>DSALES_vehicleUse</members>
+	<members>DSALES_HoraEnvioCotizacion</members>
 	<name>CustomLabel</name>
 </types>
 	<types>
@@ -840,6 +846,7 @@
 	<members>Campa_a_P_gina_de_registro</members>
 	<members>DSALES_MatrizPaginaRegistro</members>
 	<members>DSALES_Pagina_de_Inicio_GEX</members>
+	<members>Familia_P_gina_de_registro</members>
 	<members>DSALES_PysisAccountRecordPage</members>
 	<members>Endoso_P_gina_de_registro</members>
 	<members>Garant_a_Extendida_UtilityBar</members>
@@ -872,6 +879,7 @@
 	<members>Categor_a_P_gina_de_registro</members>
 	<members>Sub_Categor_a_P_gina_de_registro</members>
 	<members>Porcentaje_de_cobro_Record_Page</members>
+	<members>Producto_P_gina_de_registro</members>
 	<name>FlexiPage</name>
 </types>
 <types>
@@ -941,12 +949,14 @@
 	<members>DSALES_Certificado__c-DSALES_Certificado_GEX</members>
 	<members>DSALES_Clase__c-Formato Clase</members>
 	<members>DSALES_Familia__c-Formato Familia</members>
+	<members>DSALES_SubCategoria__c-DSALES_SM</members>
 	<members>DSALES_Generador__c-Formato Generador Plantillas</members>
 	<members>DSALES_InformacionDePago__c-DSALES_Info_pago_Venta_NPV</members>
 	<members>DSALES_InformacionDePago__c-Formato Información de Pago</members>
 	<members>DSALES_Matriz_de_Cotizacion__c-Formato Matriz de Cotización</members>
 	<members>DSALES_SubCategoria__c-Formato Subcategoría</members>
 	<members>DSales_Matriz_GEX__c-Formato Matriz</members>
+	<members>Tipo_de_endoso__mdt-Formato Tipo de endoso</members>
 	<members>DSALES_Partidadepago__c-Partida de pago Layout</members>
 	<members>DASALES_Porcentajedecobro__c-Porcentage de cobro Layout</members>
 	<members>InsurancePolicy-Formato de póliza de seguro</members>
