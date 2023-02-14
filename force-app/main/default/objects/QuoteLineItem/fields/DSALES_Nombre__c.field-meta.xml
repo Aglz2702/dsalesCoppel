@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_Nombre__c</fullName>
+    <externalId>false</externalId>
+    <formula>If (TEXT(Vigencia_meses__c) &lt;&gt; null, &quot;Garantía Extendida&quot; &amp; &quot; - &quot; &amp; TEXT(Vigencia_meses__c )&amp; &quot; M &quot; , Product2.Name)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Nombre del servicio para NPV</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
