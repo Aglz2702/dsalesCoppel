@@ -62,7 +62,7 @@
         <apexClass>DSALES_ControladorCertificadoPDFTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-  
+   
     <classAccesses>
         <apexClass>DSALES_ControladorCotizacionGex</apexClass>
         <enabled>false</enabled>
@@ -91,8 +91,7 @@
         <apexClass>DSALES_EndorsementCallsTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-  
-   
+    
     <classAccesses>
         <apexClass>DSALES_GexCotizaciones</apexClass>
         <enabled>false</enabled>
@@ -241,8 +240,7 @@
         <apexClass>DSALES_TiposDeUsoTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-   
-   
+    
     <classAccesses>
         <apexClass>DSALES_ValidarClienteHelper</apexClass>
         <enabled>false</enabled>
@@ -284,9 +282,7 @@
         <apexClass>endososControllerClassTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-
-        
-
+   
     <custom>true</custom>
     <description>Perfil utilizado para la gestión de reportes en Garantía extendida de Grupo Coppel</description>
     <fieldPermissions>
