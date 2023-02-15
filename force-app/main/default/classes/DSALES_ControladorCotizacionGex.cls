@@ -386,7 +386,7 @@ public class DSALES_ControladorCotizacionGex {
         rempEspacio+='<td colspan="1" rowspan="1"  style="font-size:5px;">&nbsp;</td>';
         rempEspacio+='</tr>';
         String rempPres='<tr>';
-        rempPres+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white; font-size:12px;padding-left:15px;"><strong>Nro de presupuesto</strong></td>';
+        rempPres+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white; font-size:12px;padding-left:15px;"><strong>Nro de cotización</strong></td>';
         rempPres+='<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;width:20%">'+cotizacion.QuoteNumber+'</td>';
         rempPres+='</tr>';
 
@@ -1020,7 +1020,7 @@ public class DSALES_ControladorCotizacionGex {
             rempEspacio+='<td colspan="1" rowspan="1"  style="font-size:5px;">&nbsp;</td>';
             rempEspacio+='</tr>';
             String rempPres='<tr>';
-            rempPres+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white; font-size:12px;padding-left:15px;"><strong>Nro de presupuesto</strong></td>';
+            rempPres+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white; font-size:12px;padding-left:15px;"><strong>Nro de cotización</strong></td>';
             rempPres+='<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;width:20%">'+cotizacion.QuoteNumber+'</td>';
             rempPres+='</tr>';
 
