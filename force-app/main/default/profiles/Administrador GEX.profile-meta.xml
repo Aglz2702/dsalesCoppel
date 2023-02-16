@@ -62,7 +62,10 @@
         <apexClass>DSALES_ControladorCertificadoPDFTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    
+    <classAccesses>
+        <apexClass>DSALES_ControladorContizacionSm</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>DSALES_ControladorCotizacionGex</apexClass>
         <enabled>false</enabled>
@@ -91,7 +94,18 @@
         <apexClass>DSALES_EndorsementCallsTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-   
+    <classAccesses>
+        <apexClass>DSALES_EnviarCotizacionProgramado</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_EnviarCotizacionTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_EnvioProgramado</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>DSALES_GexCotizaciones</apexClass>
         <enabled>false</enabled>
@@ -240,7 +254,18 @@
         <apexClass>DSALES_TiposDeUsoTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    
+    <classAccesses>
+        <apexClass>DSALES_TrackingIdCall</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_TrackingIdWrapper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_TrackingIdWrapperTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>DSALES_ValidarClienteHelper</apexClass>
         <enabled>false</enabled>
@@ -273,7 +298,10 @@
         <apexClass>DSALES_VentaSMRestTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    
+    <classAccesses>
+        <apexClass>QuoteGexRequest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>endososControllerClass</apexClass>
         <enabled>false</enabled>
@@ -282,7 +310,10 @@
         <apexClass>endososControllerClassTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    
+    <classAccesses>
+        <apexClass>endososControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
     <custom>true</custom>
     <description>Perfil utilizado para la gestión en Garantía extendida de Grupo Coppel</description>
     <fieldPermissions>
@@ -3781,6 +3812,13 @@
         <recordType>DSALES_SubCategoria__c.DSales_GEX</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>DSALES_SubCategoria__c-Formato Subcategoría</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DSALES_SubCategoria__c-Formato Subcategoría</layout>
+        <recordType>DSALES_SubCategoria__c.DSALES_SM</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_TipodeUso__c-Formato Tipo de Uso</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -3935,6 +3973,15 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>DSALES_SubCategoria__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
@@ -3944,9 +3991,9 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Opportunity</object>
@@ -3963,10 +4010,10 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Quote</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>

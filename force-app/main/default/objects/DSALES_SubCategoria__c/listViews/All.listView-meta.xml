@@ -3,6 +3,9 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>OBJECT_ID</columns>
+    <columns>DSALES_Categoria__c</columns>
+    <columns>DSALES_TipoProducto__c</columns>
+    <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
