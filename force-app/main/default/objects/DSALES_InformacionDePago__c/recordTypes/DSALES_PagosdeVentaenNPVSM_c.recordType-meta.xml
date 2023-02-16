@@ -14,6 +14,10 @@
             <fullName>No Acreditado</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Reembolso</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>DSALES_FormaDePago__c</picklist>

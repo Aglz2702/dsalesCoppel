@@ -103,6 +103,8 @@
 	<members>DSALES_NuevaPoliza</members>
 	<members>DSALES_UpdateClienteTest</members>
 	<members>DSALES_UpdateInfoPago</members>
+	<members>DSALES_QuotePagoSM</members>
+	<members>DSALES_QuotePagoSmTest</members>
 	<members>DSALES_QuoteSmWrapper</members>
 	<members>DSALES_QuoteSmWrapperRequest</members>
 	<members>DSALES_QuoteSmWrapperRequestTest</members>
@@ -1217,6 +1219,9 @@
 	<members>DSALES_GEimg</members>
 	<members>DSALES_LogoCoppelGEX</members>
 	<members>DSALES_LogoGarantiaExtendida</members>
+	<members>DSALES_ClubProteccionMotos</members>
+	<members>DSALES_LogoCoppelSM</members>
+	<members>DSALES_MotoSG</members>
 	<members>DSALES_SG</members>
 	<members>chosen</members>
 	<members>ckEditor</members>
