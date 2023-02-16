@@ -62,7 +62,7 @@
         <apexClass>DSALES_ControladorCertificadoPDFTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-   
+    
     <classAccesses>
         <apexClass>DSALES_ControladorCotizacionGex</apexClass>
         <enabled>false</enabled>
@@ -91,9 +91,7 @@
         <apexClass>DSALES_EndorsementCallsTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-
-    
-    
+   
     <classAccesses>
         <apexClass>DSALES_GexCotizaciones</apexClass>
         <enabled>false</enabled>
@@ -284,7 +282,7 @@
         <apexClass>endososControllerClassTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-   
+    
     <custom>true</custom>
     <description>Perfil utilizado para la gestión en Garantía extendida de Grupo Coppel</description>
     <fieldPermissions>
@@ -4133,10 +4131,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Product2.DSALES_ProdTangible</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Product2.DSales_Garantia_Extendida</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

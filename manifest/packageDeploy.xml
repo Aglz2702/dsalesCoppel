@@ -880,6 +880,7 @@
 	<members>Categor_a_P_gina_de_registro</members>
 	<members>Sub_Categor_a_P_gina_de_registro</members>
 	<members>Porcentaje_de_cobro_Record_Page</members>
+	<members>Asignaci_n_de_Productos_P_gina_de_registro1</members>
 	<members>Producto_P_gina_de_registro</members>
 	<name>FlexiPage</name>
 </types>
@@ -1063,7 +1064,10 @@
 	<members>Atención de servicio SM</members>
 	<members>Control de Informes GEX</members>
 	<members>Control de Informes SM</members>
+	<members>Configurador SM</members>
 	<members>DSALES_Agente de Ventas</members>
+	<members>Control de Informes SM</members>
+	<members>Admin</members>
 	<name>Profile</name>
 </types>
 <types>
