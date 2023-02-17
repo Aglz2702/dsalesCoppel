@@ -27,7 +27,8 @@ public class DSALES_InformacionPagoHandler {
             if(pago.RecordType.DeveloperName=='DSALES_PagosdeVentaenNPVSM_c'){
                 if(pago.DSALES_Seguro__c==true && pago.DSALES_Poliza__c==null){
                     if(pago.DSALES_Factura__c!=null   && (pago.DSALES_SKU__c==null || pago.DSALES_SKU__c!=null )){
-                		DSALES_CreateInsurancePolicy.createPoliza(pago.Id);
+                        System.debug('||||||||SE CREA PREPOLIZA||||||||||');
+                        DSALES_CreateInsurancePolicy.createPoliza(pago.Id);
                  
                 	}else{
                     System.debug('no es pago de SM');
