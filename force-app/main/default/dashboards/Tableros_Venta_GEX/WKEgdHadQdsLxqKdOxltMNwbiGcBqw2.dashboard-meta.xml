@@ -7,13 +7,6 @@
     <colorPalette>pond</colorPalette>
     <dashboardChartTheme>dark</dashboardChartTheme>
     <dashboardColorPalette>pond</dashboardColorPalette>
-    <dashboardFilters>
-        <dashboardFilterOptions>
-            <operator>contains</operator>
-            <values>a</values>
-        </dashboardFilterOptions>
-        <name>Calle de envío</name>
-    </dashboardFilters>
     <dashboardGridLayout>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
@@ -22,9 +15,6 @@
                 <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
                 <componentType>Bar</componentType>
-                <dashboardFilterColumns>
-                    <column>ADDRESS2_STREET</column>
-                </dashboardFilterColumns>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
                 <drillToDetailEnabled>false</drillToDetailEnabled>
@@ -155,9 +145,6 @@
                     <column>Quote.DSales_Ingresos_GEX__c</column>
                 </chartSummary>
                 <componentType>ColumnLineStacked</componentType>
-                <dashboardFilterColumns>
-                    <column>ADDRESS2_STREET</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -204,9 +191,6 @@
                     <column>Quote.DSales_Ingresos_GEX__c</column>
                 </chartSummary>
                 <componentType>ColumnLineStacked</componentType>
-                <dashboardFilterColumns>
-                    <column>ADDRESS2_STREET</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -248,9 +232,6 @@
                     <column>Quote.DSales_Ingresos_GEX__c</column>
                 </chartSummary>
                 <componentType>Donut</componentType>
-                <dashboardFilterColumns>
-                    <column>ADDRESS2_STREET</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -289,9 +270,6 @@
                     <column>Quote.DSales_GEX__c</column>
                 </chartSummary>
                 <componentType>ColumnGrouped</componentType>
-                <dashboardFilterColumns>
-                    <column>ADDRESS2_STREET</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -334,9 +312,6 @@
                     <column>Quote.DSales_GEX__c</column>
                 </chartSummary>
                 <componentType>BarGrouped</componentType>
-                <dashboardFilterColumns>
-                    <column>ADDRESS2_STREET</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>
@@ -379,9 +354,6 @@
                     <column>Quote.DSales_Ingresos_GEX__c</column>
                 </chartSummary>
                 <componentType>ColumnGrouped</componentType>
-                <dashboardFilterColumns>
-                    <column>ADDRESS2_STREET</column>
-                </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
                 <drillEnabled>false</drillEnabled>

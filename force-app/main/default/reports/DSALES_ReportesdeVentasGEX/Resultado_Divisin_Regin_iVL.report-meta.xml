@@ -113,13 +113,7 @@
                 <operator>equals</operator>
                 <value>Opportunity.DSales_Garantia_Extendida</value>
             </criteriaItems>
-            <criteriaItems>
-                <column>Quote.NOMigrar__c</column>
-                <columnToColumn>false</columnToColumn>
-                <isUnlocked>true</isUnlocked>
-                <operator>notEqual</operator>
-                <value></value>
-            </criteriaItems>
+            
         </filter>
         <format>Summary</format>
         <name>Resultado -Región</name>

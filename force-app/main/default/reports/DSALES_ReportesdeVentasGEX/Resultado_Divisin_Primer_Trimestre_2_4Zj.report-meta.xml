@@ -134,10 +134,6 @@
         </columns>
         <columns>
             <aggregateTypes>Sum</aggregateTypes>
-            <field>Quote.DSales_GEX__c</field>
-        </columns>
-        <columns>
-            <aggregateTypes>Sum</aggregateTypes>
             <field>Quote.DSales_Ingresos_GEX__c</field>
         </columns>
         <filter>
@@ -231,6 +227,31 @@
         <blockId xsi:nil="true"/>
         <joinTable>o</joinTable>
     </blockInfo>
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <aggregate>Sum</aggregate>
+            <axisBinding>y</axisBinding>
+            <column>B2#Quote.DSales_GEX__c</column>
+        </chartSummaries>
+        <chartType>VerticalColumn</chartType>
+        <enableHoverLabels>false</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>Quote.DSales_DivisionG__c</groupingColumn>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>true</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>false</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
     <format>MultiBlock</format>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
@@ -243,5 +264,5 @@
         <value>1</value>
     </params>
     <reportType>QuoteProduct</reportType>
-    <showDetails>true</showDetails>
+    <showDetails>false</showDetails>
 </Report>
