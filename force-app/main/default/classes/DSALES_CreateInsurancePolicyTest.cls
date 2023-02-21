@@ -204,8 +204,9 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         insert seguroAmp;
     }
 
+    
     @isTest
-    public static void postVentaTest(){
+    public static void postVentaExternaTest(){
         RestRequest request=new RestRequest();
         //RestResponse response = new RestResponse();
         Product2 producto =[SELECT Id FROM Product2 WHERE Name='AMP Seguro de Moto' LIMIT 1];
@@ -216,7 +217,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         System.debug('cotizacion:'+cot.Id);
         System.debug('cotizacion:'+partida.Id);
         String idPartida=partida.Id;
-        String body='{"id_cotizacion":"'+cot.Id+'","id_partida_presupuesto":"","cliente":{"numero_de_cliente":"","nombre":"Sayra","apellido_paterno":"Martinez","apellido_materno":"Quiroz","telefono":"5579119743","correo_electronico":"saymartinez@deloittemx.com","fecha_nacimiento":"1994-10-01","codigo_postal":"12346","genero":"F"},"pagos":{"num_factura":"545774","total_factura":20000,"Seguro":true,"nombre_vendedor":"Nelson Varela","numero_caja":"1","clave_tienda":"T-0001","sku":"12121212","fecha_de_entrega":"2023-01-20","fecha_venta":"2023-01-19","plazos":18,"ListaDePagos":[{"metodo_pago":"Dinero Electrónico","pago":10},{"metodo_pago":"Tarjeta","pago":50},{"metodo_pago":"Efectivo","pago":500}]},"activo":{"uso":"","id_tienda":"","servicio":"","numero_serie":"","numero_motor":"","modelo":"","placas":"","clave_vehicular":"","valor_factura":null,"bajo_demanda":null,"descripcion":"","marca":"","nombre_activo":""}}';	
+        String body='{"id_cotizacion":"'+cot.Id+'","id_partida_presupuesto":"'+partida.Id+'","cliente":{"numero_de_cliente":"","nombre":"Sayra","apellido_paterno":"Martinez","apellido_materno":"Quiroz","telefono":"123456789","correo_electronico":"saymartinez@deloittemx.com","fecha_nacimiento":"1985-09-10","codigo_postal":"12346","genero":"F"},"pagos":{"num_factura":"545774","total_factura":20000,"Seguro":true,"nombre_vendedor":"Nelson Varela","numero_caja":"1","clave_tienda":"T-0001","sku":"12121212","fecha_de_entrega":"2023-01-20","fecha_venta":"2023-01-19","plazos":18,"ListaDePagos":[{"metodo_pago":"Dinero Electrónico","pago":1}]},"activo":{"emitir_poliza":true,"uso":"Personal","id_tienda":"T-0001","servicio":"Particular","numero_serie":"1334342343","numero_motor":"343434343","modelo":"2022","placas":"XRDH48","clave_vehicular":"023023834","valor_factura":8000,"bajo_demanda":true,"descripcion":"VITALIA ITALIKA ","marca":"Vento","nombre_activo":"VITALIA ITALIKA "}}';	
         request.requestURI='/apexrest/ventaSM'; 
         request.httpMethod='POST'; 
         RestContext.request=request;
@@ -252,11 +253,9 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         insert activo;
         DSALES_CreateInsurancePolicy.cambiarEstatus(pol.Id);
         DSALES_CreateInsurancePolicy.updateInfoPago(pol);
+        activo.Estatus__c='Devuelto';
+        update activo;
         DSALES_CreateInsurancePolicy.cancelarPoliza(activo.Id);
         Test.stopTest();
-        
-        
-    
-
     }
 }

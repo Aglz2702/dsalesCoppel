@@ -71,10 +71,13 @@ global with sharing class DSALES_IPAssetWrapperRequest {
                 IPassetRecord.AssetName=policyAsset.nombre_activo;
                 if(policyAsset.bajo_demanda==true){
                     pago.DSALES_Motoexterna__c=true;
-                }             
-                
-                insert IPassetRecord;
+                }
+                IPassetRecord.DSALES_emitir_poliza__c=policyAsset.emitir_poliza;
+                        
+                System.debug('***pago actualizado:***'+pago.DSALES_Motoexterna__c);
                 update pago;
+                insert IPassetRecord;
+                
                 
                 success = true;  
             }

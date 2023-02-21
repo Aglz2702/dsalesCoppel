@@ -4,7 +4,7 @@ public with sharing class DSALES_VentaSMRestTest {
     static void SetUp(){
         String tipoProducto = 'Producto';
         String message = '';
-        String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
+        String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Seguro_de_Moto').getRecordTypeId();
         
         DSALES_Familia__c family = new DSALES_Familia__c();
         family.Name = 'test';
@@ -216,7 +216,37 @@ public with sharing class DSALES_VentaSMRestTest {
         System.debug('cotizacion:'+cot.Id);
         System.debug('cotizacion:'+partida.Id);
         String idPartida=partida.Id;
-        String body='{"id_cotizacion":"'+cot.Id+'","id_partida_presupuesto":"","cliente":{"numero_de_cliente":"","nombre":"Sayra","apellido_paterno":"Martinez","apellido_materno":"Quiroz","telefono":"5579119743","correo_electronico":"saymartinez@deloittemx.com","fecha_nacimiento":"1994-10-01","codigo_postal":"12346","genero":"F"},"pagos":{"num_factura":"545774","total_factura":20000,"Seguro":true,"nombre_vendedor":"Nelson Varela","numero_caja":"1","clave_tienda":"T-0001","sku":"1225473","fecha_de_entrega":"2023-01-20","fecha_venta":"2023-01-19","plazos":18,"ListaDePagos":[{"metodo_pago":"Dinero Electrónico","pago":10},{"metodo_pago":"Tarjeta","pago":50},{"metodo_pago":"Efectivo","pago":500}]},"activo":{"uso":"","id_tienda":"","servicio":"","numero_serie":"","numero_motor":"","modelo":"","placas":"","clave_vehicular":"","valor_factura":null,"bajo_demanda":null,"descripcion":"","marca":"","nombre_activo":""}}';	
+        String body='{"id_cotizacion":"'+cot.Id+'","id_partida_presupuesto":"","cliente":{"numero_de_cliente":"","nombre":"Sayra","apellido_paterno":"Martinez","apellido_materno":"Quiroz","telefono":"5579119743","correo_electronico":"saymartinez@deloittemx.com","fecha_nacimiento":"1994-10-01","codigo_postal":"12346","genero":"F"},"pagos":{"num_factura":"545774","total_factura":20000,"Seguro":true,"nombre_vendedor":"Nelson Varela","numero_caja":"1","clave_tienda":"T-0001","sku":"12121212","fecha_de_entrega":"2023-01-20","fecha_venta":"2023-01-19","plazos":18,"ListaDePagos":[{"metodo_pago":"Dinero Electrónico","pago":10},{"metodo_pago":"Tarjeta","pago":50},{"metodo_pago":"Efectivo","pago":500}]},"activo": {"emitir_poliza":null, "uso":"","id_tienda":"","servicio":"","numero_serie":"","numero_motor":"","modelo":"","placas":"","clave_vehicular":"","valor_factura":null,"bajo_demanda":null,"descripcion":"","marca":"","nombre_activo":""}}';	
+        request.requestURI='/apexrest/ventaSM'; 
+        request.httpMethod='POST'; 
+        RestContext.request=request;
+        request.requestBody=Blob.valueOf(body);
+        RestContext.response=response;
+        DSALES_VentaSM.VentaSMRequest venta =(DSALES_VentaSM.VentaSMRequest)JSON.deserialize (body,DSALES_VentaSM.VentaSMRequest.class);
+        System.debug('venta: '+venta);
+        Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
+        DSALES_VentaSMRest.createVenta();
+        Test.stopTest();
+        RestContext.request = request;
+        RestContext.response= response;
+
+    }
+    
+     @isTest
+    public static void ventaExternaTest(){
+        RestRequest request=new RestRequest();
+        RestResponse response = new RestResponse();
+        Product2 producto =[SELECT Id FROM Product2 WHERE Name='AMP Seguro de Moto' LIMIT 1];
+        Plazo__c plazo=[SELECT Id FROM Plazo__c WHERE Name='18' LIMIT 1];
+        Quote cot =[SELECT Id,OpportunityId,Opportunity.Name FROM Quote WHERE Name ='test' LIMIT 1];
+        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  DSALES_Plazo__c=:plazo.Id LIMIT 1];
+		SYstem.debug('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        System.debug('cotizacion:'+cot.Id);
+        System.debug('partida:'+partida.Id);
+        String idPartida=partida.Id;
+        //String body='{"id_cotizacion":"'+cot.Id+'","id_partida_presupuesto":"'+partida.Id+'","cliente":{"numero_de_cliente":"","nombre":"Sayra","apellido_paterno":"Martinez","apellido_materno":"Quiroz","telefono":"5579119743","correo_electronico":"saymartinez@deloittemx.com","fecha_nacimiento":"1994-10-01","codigo_postal":"12346","genero":"F"},"pagos":{"num_factura":"545774","total_factura":20000,"Seguro":true,"nombre_vendedor":"Nelson Varela","numero_caja":"1","clave_tienda":"T-0001","sku":"12121212","fecha_de_entrega":"2023-01-20","fecha_venta":"2023-01-19","plazos":18,"ListaDePagos":[{"metodo_pago":"Dinero Electrónico","pago":10},{"metodo_pago":"Tarjeta","pago":50},{"metodo_pago":"Efectivo","pago":500}]},"activo": {"emitir_poliza":null, "uso":"","id_tienda":"","servicio":"","numero_serie":"","numero_motor":"","modelo":"","placas":"","clave_vehicular":"","valor_factura":null,"bajo_demanda":null,"descripcion":"","marca":"","nombre_activo":""}}';	
+        String body='{"id_cotizacion":"'+cot.Id+'","id_partida_presupuesto":"'+partida.Id+'","cliente":{"numero_de_cliente":"","nombre":"Sayra","apellido_paterno":"Martinez","apellido_materno":"Quiroz","telefono":"5579119743","correo_electronico":"saymartinez@deloittemx.com","fecha_nacimiento":"1994-10-01","codigo_postal":"12346","genero":"F"},"pagos":{"num_factura":"545774","total_factura":20000,"Seguro":true,"nombre_vendedor":"Nelson Varela","numero_caja":"1","clave_tienda":"T-0001","sku":"12121212","fecha_de_entrega":"2023-01-20","fecha_venta":"2023-01-19","plazos":18,"ListaDePagos":[{"metodo_pago":"Dinero Electrónico","pago":1}]},"activo":{"emitir_poliza":true,"uso":"Personal","id_tienda":"T-0001","servicio":"Particular","numero_serie":"1334342343","numero_motor":"343434343","modelo":"2022","placas":"XRDH48","clave_vehicular":"023023834","valor_factura":8000,"bajo_demanda":true,"descripcion":"VITALIA ITALIKA ","marca":"Vento","nombre_activo":"VITALIA ITALIKA "}}';
         request.requestURI='/apexrest/ventaSM'; 
         request.httpMethod='POST'; 
         RestContext.request=request;

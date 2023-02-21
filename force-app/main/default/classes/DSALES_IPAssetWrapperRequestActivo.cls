@@ -48,8 +48,8 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
 
         try {
             //Account cliente =[SELECT Id,Name FROM ACCOUNT WHERE Id=:policyAsset.client_id LIMIT 1];
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c, DSALES_Motoexterna__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE id=:policyAsset.id_pago];
-            if(pago.DSALES_Seguro__c ==true) {
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c,DSALES_Motoentregada__c, DSALES_Motoexterna__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE id=:policyAsset.id_pago];
+            if(pago.DSALES_Seguro__c ==true ) {
                 IPassetRecord.DSALES_InformacionPago__c=pago.Id;
                 IPassetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
                 IPassetRecord.DSALES_Tienda__c=policyAsset.id_tienda;
@@ -72,10 +72,11 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 if(policyAsset.bajo_demanda==false){
                     pago.DSALES_Motoentregada__c=true;
                 }
-                              
-                
-                insert IPassetRecord;
+                IPassetRecord.DSALES_emitir_poliza__c=policyAsset.emitir_poliza;            
+                System.debug('***pago actualizado:***'+pago.DSALES_Motoentregada__c);
                 update pago;
+                insert IPassetRecord;
+                
                 
                 success = true; 
               

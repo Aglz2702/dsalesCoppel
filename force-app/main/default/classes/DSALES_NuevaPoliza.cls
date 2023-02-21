@@ -63,7 +63,7 @@ public with sharing class DSALES_NuevaPoliza {
                 poliza.DSALES_IVA__c=Decimal.valueOf(!String.isEmpty(respuesta.data.payment_data.data.value_resume.tax) ? respuesta.data.payment_data.data.value_resume.tax : '0') ;
                 poliza.DSALES_Estatusdepliza__c='Vigente';
                 System.debug('Estatus despues de recibir respuesta: '+ poliza.DSALES_Estatusdepliza__c);
-                //update poliza;
+               // update poliza;
                 System.debug('poliza Name:'+poliza.Name);
                 String str = JSON.serialize(poliza);
         		

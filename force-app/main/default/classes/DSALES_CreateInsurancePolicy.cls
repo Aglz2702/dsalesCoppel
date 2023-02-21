@@ -1,6 +1,6 @@
 public without sharing class DSALES_CreateInsurancePolicy {
-    private static  String seguroAMP='AMP Seguro de Moto';
-    private static  String seguroRC='RC Seguro de Moto';
+    private static  String seguroAMP='AMP';
+    private static  String seguroRC='RC';
 
     public static void createPoliza(String idPago) {
         try{
@@ -10,46 +10,44 @@ public without sharing class DSALES_CreateInsurancePolicy {
             System.debug('opp:'+ op.Id);
             Account cliente =[SELECT Id,RecordTypeId, Name,FirstName,MiddleName,LastName,Suffix,PersonEmail,Fecha_de_Nacimiento__c,CP_Gender__pc FROM Account WHERE Id=:op.AccountId];
             System.debug('opp:'+ cliente.Id);
-            Quote cotizacion=[SELECT Id,DSALES_RFC__c FROM Quote WHERE Id=:op.SyncedQuoteId LIMIT 1]; //aqui puse el limit verificar
+            Quote cotizacion=[SELECT Id,DSALES_RFC__c FROM Quote WHERE Id=:op.SyncedQuoteId LIMIT 1]; 
             System.debug('quote:'+ cotizacion.Id);
             List<QuoteLineItem> partidas =[SELECT Id,DSALES_Tipodeproducto__c,DSALES_NombreProducto__c FROM QuoteLineItem WHERE QuoteId=:cotizacion.Id AND DSALES_Tipodeproducto__c='Seguro'];
             System.debug('xxxxxxx PARTIDASxxxxxxxx: '+partidas.size());
+            System.debug('xxxxxxx PARTIDAS NOMBRExxxxxxxx: '+partidas[0].DSALES_NombreProducto__c);
             InsurancePolicy poliza = new InsurancePolicy();
-            
-            //String rfc=DSALES_ConsultaListaNegra.getRFC(cliente.FirstName, cliente.MiddleName, cliente.LastName, cliente.Suffix, cliente.Fecha_de_Nacimiento__c);
-           // System.debug('rfc: '+ rfc);
-           poliza.DSALES_RFC__c=cotizacion.DSALES_RFC__c;
+            poliza.DSALES_RFC__c=cotizacion.DSALES_RFC__c;
             poliza.PolicyName='0001';
             poliza.Name='0001';
             poliza.NameInsuredId=cliente.Id;
             poliza.DSALES_Estatusdepliza__c='En solicitud';
             poliza.DSALES_CorreoElectronico__c=cliente.PersonEmail;
-           // poliza.DSALES_RFC__c=DSALES_ConsultaListaNegra.getRFC(cliente.FirstName, cliente.MiddleName, cliente.LastName, cliente.Suffix, cliente.Fecha_de_Nacimiento__c);
-            String recordTypeId =Schema.SObjectType.Account.getRecordTypeInfosByName().get('Cuenta personal').getRecordTypeId();
+           String recordTypeId =Schema.SObjectType.Account.getRecordTypeInfosByName().get('Cuenta personal').getRecordTypeId();
             if(cliente.RecordTypeId==recordTypeId){
                 poliza.DSALES_Tipodepersona__c='Física';
             }else {
                 poliza.DSALES_Tipodepersona__c='Moral';
             }
-            //poliza.DSALES_Cobertura__c='';
             poliza.SourceOpportunityId=op.Id;
             poliza.SourceQuoteId=cotizacion.Id;
             poliza.Fecha_de_emisi_n__c=Date.today();
             if(partidas.size()==1){
                 if(partidas[0].DSALES_NombreProducto__c==seguroAMP){
+                    System.debug('Es PLUS');
                     poliza.DSALES_Cobertura__c='PLUS';
                 }
                 else if(partidas[0].DSALES_NombreProducto__c==seguroRC){
+                    System.debug('Es RC');
                     poliza.DSALES_Cobertura__c='RC';
                 }
                 
             }
             else if( partidas.size()==2){
+                System.debug('Es AMBOS');
                 poliza.DSALES_Cobertura__c='PLUS';
                 
             }
             System.debug('cobertura: '+poliza.DSALES_Cobertura__c);
-            //poliza.IsActive=false;
             insert poliza;
         }catch(Exception e){
             System.debug(e.getLineNumber() +':'+ e.getMessage() );

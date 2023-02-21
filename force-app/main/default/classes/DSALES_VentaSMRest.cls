@@ -44,7 +44,7 @@ global class DSALES_VentaSMRest {
                     //DSALES_PaymentInfoWrapper.PaymentResponse resp= DSALES_PaymentInfoWrapperRequest.insertPagos(venta.pagos);
                     DSALES_PaymentInfoWrapper.PaymentResponse resp= DSALES_PaymentInfoWrapperRequest.insertarPago(venta.pagos);
                     System.debug('pago:'+resp);
-                    DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Seguro__c,DSALES_SKU__c  
+                    DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Poliza__c,DSALES_Seguro__c,DSALES_SKU__c  
                                             FROM DSALES_InformacionDePago__c 
                                             WHERE Id=:resp.pago_id];
                     System.debug('pagox:'+pago);
@@ -56,10 +56,8 @@ global class DSALES_VentaSMRest {
                         String temp=insertIPAsset(venta.activo,pago.Id,cliente.id_cuenta);
                         id_pago=resp.pago_id;
                         id_activo=temp;
-
                         
                     }
-
                     success=true;
                 }catch(Exception.JSONException je ){
                     success =false;
@@ -90,16 +88,17 @@ global class DSALES_VentaSMRest {
     public static String insertIPAsset(DSALES_IPAssetWrapper.IPAssetRequest asset, String pagoId, String clientId){
         DSALES_IPAssetWrapper.IPAssetResponse response = new DSALES_IPAssetWrapper.IPAssetResponse();
         Account clientNumber =[ SELECT Id, CP_WalletCustomerNumber__c FROM Account WHERE ID= :clientId];
-        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE Id=:pagoId];
+        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_SKU__c,DSALES_Poliza__c FROM DSALES_InformacionDePago__c WHERE Id=:pagoId];
         asset.id_pago=pago.Id;
         System.debug('********numero de serie'+asset.numero_serie);
         if(pago.DSALES_SKU__c!=null && asset.numero_serie!=''){
-            response= DSALES_IPAssetWrapperRequestActivo.insertIPAsset(asset);//moto entregada
+            response= DSALES_IPAssetWrapperRequest.insertIPAsset(asset);//moto  externa
+            if( pago.DSALES_Poliza__c!=null && response.id_activo!='' && asset.emitir_poliza==true){
+                DSALES_CreateInsurancePolicy.estatusTramite(pago.DSALES_Poliza__c);
+                DSALES_NuevaPoliza.invokeService(pago.DSALES_Poliza__c);
+            }  
            
         }
-        /*else{
-            response=DSALES_IPAssetWrapperRequest.insertIPAsset(asset);//moto externa
-        }*/
             
         return response.id_activo;
     }
