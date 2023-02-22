@@ -17,14 +17,14 @@ global with sharing class DSALES_IPAssetWrapperRequest {
                 }catch(Exception.JSONException e)
                 {
                     policyAssetRes.success = false;
-                    policyAssetRes.error_message = DSALES_Utility.BAD_REQUEST_MSJ;
-                    policyAssetRes.error_code=DSALES_Utility.BAD_REQUEST_CODE;
+                    policyAssetRes.mensaje_error = DSALES_Utility.BAD_REQUEST_MSJ;
+                    policyAssetRes.codigo_error=DSALES_Utility.BAD_REQUEST_CODE;
                     
                 }
                 catch(Exception e){
                     policyAssetRes.success = false;
-                    policyAssetRes.error_message = DSALES_Utility.INTERNAL_ERROR_MSJ;
-                    policyAssetRes.error_code=DSALES_Utility.INTERNAL_ERROR_CODE;
+                    policyAssetRes.mensaje_error = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    policyAssetRes.codigo_error=DSALES_Utility.INTERNAL_ERROR_CODE;
                     
                     
                 }
@@ -48,54 +48,51 @@ global with sharing class DSALES_IPAssetWrapperRequest {
 
         try {
             //Account cliente =[SELECT Id,Name FROM ACCOUNT WHERE Id=:policyAsset.client_id LIMIT 1];
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c, DSALES_Motoexterna__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE id=:policyAsset.payment_info];
-            if(pago.DSALES_Seguro__c == true) {
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c, DSALES_Motoexterna__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE id=:policyAsset.id_pago];
+            if(pago.DSALES_Seguro__c ==true) {
                 IPassetRecord.DSALES_InformacionPago__c=pago.Id;
                 IPassetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
-                IPassetRecord.DSALES_Tienda__c=policyAsset.store;
-                IPassetRecord.DSALES_Colaborador__c=policyAsset.partner;
-                IPassetRecord.DSALES_Motoexterna__c=policyAsset.external_motorcycle; 
-                IPassetRecord.DSALES_Valorfactura__c=policyAsset.invoice_value;
+                IPassetRecord.DSALES_Tienda__c=policyAsset.id_tienda;
+                //IPassetRecord.DSALES_Colaborador__c=policyAsset.partner;
+                IPassetRecord.DSALES_Motoexterna__c=policyAsset.bajo_demanda; 
+                IPassetRecord.DSALES_Valorfactura__c=policyAsset.valor_factura;
                 IPassetRecord.InsurancePolicyId=pago.DSALES_Poliza__c;
-                IPassetRecord.Estatus__c=policyAsset.status;
-                IPassetRecord.DSALES_ClaveAMIS__c=policyAsset.key_amis;
-                IPassetRecord.DSALES_Clavevehicular__c=policyAsset.key_vehicle;
-                IPassetRecord.DSALES_Descripcion__c=policyAsset.description;
-                IPassetRecord.DSALES_Modelo__c=policyAsset.model;
-                IPassetRecord.DSALES_Marca__c=policyAsset.brand;
-                IPassetRecord.DSALES_Numeromotor__c=policyAsset.motor_number;
-                IPassetRecord.DSALES_Numeroserie__c=policyAsset.serial_number;
-                IPassetRecord.DSALES_Placas__c=policyAsset.license_plate;
-                IPassetRecord.DSALES_Servicio__c=policyAsset.service;
-                IPassetRecord.DSALES_Uso__c  =policyAsset.use;
-                IPassetRecord.AssetName=policyAsset.asset_name;
-                pago.DSALES_Motoexterna__c= policyAsset.external_motorcycle;               
-                
-                insert IPassetRecord;
+                IPassetRecord.Estatus__c='Activo';
+               // IPassetRecord.DSALES_ClaveAMIS__c=policyAsset.key_amis;
+                IPassetRecord.DSALES_Clavevehicular__c=policyAsset.clave_vehicular;
+                IPassetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
+                IPassetRecord.DSALES_Modelo__c=policyAsset.modelo;
+                IPassetRecord.DSALES_Marca__c=policyAsset.marca;
+                IPassetRecord.DSALES_Numeromotor__c=policyAsset.numero_motor;
+                IPassetRecord.DSALES_Numeroserie__c=policyAsset.numero_serie;
+                IPassetRecord.DSALES_Placas__c=policyAsset.placas;
+                IPassetRecord.DSALES_Servicio__c=policyAsset.servicio;
+                IPassetRecord.DSALES_Uso__c  =policyAsset.uso;
+                IPassetRecord.AssetName=policyAsset.nombre_activo;
+                if(policyAsset.bajo_demanda==true){
+                    pago.DSALES_Motoexterna__c=true;
+                }
+                IPassetRecord.DSALES_emitir_poliza__c=policyAsset.emitir_poliza;
+                        
+                System.debug('***pago actualizado:***'+pago.DSALES_Motoexterna__c);
                 update pago;
+                insert IPassetRecord;
                 
-                success = true;
-                message = 'IPAsset successfully saved';
-            
                 
-            } else {
-        
-                success = false;
-                message = 'Error: No es un pago de SM, moto sin seguro ';
-                
+                success = true;  
             }
-
             
         } catch (Exception e) {
             success = false;
-           message = DSALES_Utility.INTERNAL_ERROR_MSJ;
-                    code=DSALES_Utility.INTERNAL_ERROR_CODE;
+            message = DSALES_Utility.INTERNAL_ERROR_MSJ;
+            code=DSALES_Utility.INTERNAL_ERROR_CODE;
         }
 
         DSALES_IPAssetWrapper.IPAssetResponse responsePayload = new DSALES_IPAssetWrapper.IPAssetResponse();
         responsePayload.success = success;
-        responsePayload.error_message = message;
-        responsePayload.Asset_id = IPAssetRecord.id;
+        responsePayload.codigo_error=code;
+        responsePayload.mensaje_error = message;
+        responsePayload.id_activo = IPAssetRecord.id;
         
         return responsePayload;
 

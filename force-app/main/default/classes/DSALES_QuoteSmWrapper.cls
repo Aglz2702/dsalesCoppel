@@ -1,66 +1,55 @@
 global class DSALES_QuoteSmWrapper {
     global class QuoteSmRequest{
-        global String client_number {get;set;}
-        global String first_name {get; set;}
-        global String middle_name {get;set;}
-        global String last_name {get;set;}
-        global String suffix {get;set;}
-        global String store_id {get; set;}
-        global String vendedor {get;set;}
+        global String numero_cliente {get;set;}
+        global String nombre {get; set;}
+        global String apellido_materno {get;set;}
+        global String apellido_paterno {get;set;}
+        global String id_tienda {get; set;}
         global String sku {get;set;}
-        global List<Product> productList {get;set;}
-        
         //pedido por inter
-        global String vehicle_use {get; set;}
-        global String vehicle_type {get; set;}
+        global String tipo_uso {get; set;}
+        global String tipo_vehiculo {get; set;}
         global String rfc {get; set;}
-        global String plazo {get; set;}
+        global String plazo_cotizar {get; set;}
         global String nombre_vendedor {get; set;}
-        
-        global String contact_phone {get; set;}
-        global String contact_email {get;set;}
-        global String contact_gender {get; set;}
-        global Date contact_birth_date {get; set;}
-        global String contact_state_code {get; set;}
-        global String contact_township_code {get; set;}
-        global Integer contact_suburb_code {get; set;}
-        global String contact_zip_code{get; set;}
-        global String vehicle_id {get; set;}
-        global String payment_option {get; set;}
-        global String packagge {get; set;}
-        global date start_at {get; set;}
- }
+        global String telefono_celular {get; set;}
+        global String correo_electronico {get;set;}
+        global String genero_contacto {get; set;}
+        global Date fecha_nacimiento {get; set;}
+        global String codigo_postal {get; set;}
+        global String id_vehiculo {get; set;}
+        global String opcion_pago {get; set;}
+        global date fecha_inicio {get; set;}
+        global String precioProducto {get; set;}
+    }
     global class QuotePostProvedor{
         //Inter Cotizacion
         global String plazo {get; set;}
-        global String business {get; set;} //sales-fijo
-        global String insurance {get; set;} //sales-fijo
-        global String contact_name {get; set;}//combinacion
-        global String contact_method {get; set;}//sales-fijo
-        global String contact_phone {get; set;}
-        global String contact_email {get;set;}
-        global String contact_gender {get; set;}
-        global String contact_birth_date {get; set;}
-        global String contact_state_code {get; set;}
-        global String contact_township_code {get; set;}
-        global Integer contact_suburb_code {get; set;}
-        global String contact_zip_code{get; set;}
-        global Boolean contact_now {get; set;}//fijo-sales
-        global String vehicle_id {get; set;}
-        global String vehicle_service {get; set;}//fijo-sales
-        global String vehicle_use {get; set;}//fijo-sales
-        global String vehicle_type {get; set;}//fijo-sales
-        global String payment_option {get; set;}
-        global String packagge {get; set;}
-        global String promotion_code {get; set;}//fijo
-        global String associate_id {get; set;}//fijo
-        global String quote_date {get; set;}//fecha creacion-sales
-        global String start_at {get; set;}
+        global String negocio {get; set;} //sales-fijo
+        global String aseguradora {get; set;} //sales-fijo
+        global String nombre_completo {get; set;}//combinacion
+        global String metodo_contacto {get; set;}//sales-fijo
+        global String telefono_contacto {get; set;}
+        global String correo_contacto {get;set;}
+        global String genero_contacto {get; set;}
+        global String fecha_nacimiento_contacto {get; set;}
+        global String cp_contacto{get; set;}
+        global Boolean contactar {get; set;}//fijo-sales
+        global String id_vehiculo {get; set;}
+        global String servicio_vehiculo {get; set;}//fijo-sales
+        global String uso_vehiculo {get; set;}//fijo-sales
+        global String tipo_vehiculo {get; set;}//fijo-sales
+        //global String payment_option {get; set;} A rc y 6 m, 12M para plus
+        global String paquete {get; set;}
+        global String codigo_promocion {get; set;}//fijo 0
+        global String id_asociado {get; set;}//fijo
+        global String fecha_cotizacion {get; set;}//fecha creacion-sales
+        global String fecha_inicio {get; set;}
         global List<Plazo> listaPlazos {get; set;}
         
     }
     global class Plazo {
-		global String producto {get;set;}
+		global String paquete {get;set;}
         global String plazo {get;set;}
 	}
     
@@ -88,23 +77,24 @@ global class DSALES_QuoteSmWrapper {
     global class RespuestaPlazos{
         global String tracking_id {get;set;}
         global String nombreProducto {get;set;}
-        global String vigencia {get;set;}
-        global Receipt costos {get;set;}
-        global String Idpartida {get;set;}    
+        global String vigencia {get;set;}  
+        global String Idpartida {get;set;}
+        global String descripcion {get;set;}
+        global Boolean seguro_gratis {get;set;}
+        //global ReceiptEspa costos {get;set;}
+        global Data data {get;set;}
 	}
 
     global class RespuestaParaNpv{
-        global String quoteId {get;set;}
-        global String Cliente {get;set;}
-        global String oppor {get;set;}
-        global String cotiza {get;set;}
-        global String message {get;set;}
-        global Integer errorCode {get;set;}
+        global String idCotizacion {get;set;}
+        global String mensaje {get;set;}
+        global Integer codigo_error {get;set;}
         global Boolean success {get;set;}
         global Boolean listaNegra {get;set;}
         global List<RespuestaPlazos> listaSeguros {get;set;}
         global RespuestaPlazos listaproducto {get;set;}
-        global List<Campanias> campanias{get;set;}      
+        global List<Campanias> campanias{get;set;}
+        global String Idoportunidad{get;set;}   
     }
 
     global class CoveragesArray{
@@ -147,5 +137,21 @@ global class DSALES_QuoteSmWrapper {
         global String recharge {get;set;}
         global String tax {get;set;}
         global String commission {get;set;}
+        global String pagoTotalEfectivo {get;set;}
+        global String pagoMensual {get;set;}
+        
+    }
+    global class ReceiptEspa{
+        global Integer numero {get;set;}
+        global String fecha_inicio {get;set;}
+        global String fecha_termino {get;set;}
+        global String prima_neta {get;set;}
+        global String precio_venta {get;set;}
+        global String derechos_poliza {get;set;}
+        global String recargos {get;set;}
+        global String impuestos {get;set;}
+        global String comision {get;set;}
+        global String pagoTotalEfectivo {get;set;}
+        global String pagoMensual {get;set;}
     }
 }
