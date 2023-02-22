@@ -60,7 +60,6 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     show = false;
     show2 = false;
     showc = false;
-    showbyfilter=false;
     showVincuProduct = false;
     showCrearIntangible = false;
     showasignarSubCategorias = false;
@@ -113,7 +112,6 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
 
     buscarSku() {
-        this.showbyfilter=true;
         this.showSpinner = true;
         getSku({ sku: this.buscarSkuString })
             .then(result => {
@@ -332,39 +330,12 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
 
     search() {
-        this.getNameRecordTypeId();
-        this.showbyfilter=true;
-        getRecords({ allData: JSON.stringify(this.data), perfilUsuario: this.data.nameRecordType, opcion: 'RecordType' })
+        this.showSpinner = true;
+        getRecords({ allData: JSON.stringify(this.data) })
             .then(result => {
                 this.ProfileChecker();
                 this.showSpinner = false;
                 this.data = result;
-                this.data.registroSeguro = false;
-                this.data.registroServicio = false;
-                if (this.data.listServicios.length > 0) {
-                    this.popServicios = true;
-                    this.recordServicio();
-                } else {
-                    this.pushMessage('Advertencia', 'warning', 'No se han encontrado productos.');
-                }
-            })
-            .catch(error => {
-                this.showSpinner = false;
-                this.pushMessage('Error', 'error', 'Ha ocurrido un error, por favor contacte su administrador.');
-            });
-    }
-
-    searchAllRecords() {
-        this.showSpinner = true;
-        this.showbyfilter=false;
-        this.getNameRecordTypeId();
-        console.log(this.data.nameRecordType);
-        console.log(this.data.nameRecordType);
-        getRecords({ allData: JSON.stringify(this.data), perfilUsuario: this.data.nameRecordType, opcion: 'AllRecords' })
-            .then(result => {
-                this.ProfileChecker();
-                this.showSpinner = false;
-                this.data= result;
                 this.data.registroSeguro = false;
                 this.data.registroServicio = false;
                 if (this.data.listServicios.length > 0) {
@@ -1595,6 +1566,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
 
     getSkuforCampaings() {
+        this.showSpinner = true;
         console.log(JSON.stringify(this.data.listServicios));
         upsertRecord({ allData: JSON.stringify(this.data.listServicios) })
             .then(result => {
@@ -1610,12 +1582,14 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                     });
                 this.closeformCampaignsTypes();
             }).catch(error => {
+                this.showSpinner = false;
                 this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
             });
 
     }
 
     getSkuforTypes() {
+        this.showSpinner = true;
         console.log(JSON.stringify(this.data.listServicios));
         upsertRecord({ allData: JSON.stringify(this.data.listServicios) })
             .then(result => {
@@ -1635,7 +1609,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                         .then(result => {
                         }).catch(error => {
                             console.log('Error: ' + error);
-                            
+                            this.showSpinner = false;
                         });
                     this.closeformCampaignsTypes();
                 }
@@ -1681,17 +1655,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         }
     }
 
-    getNameRecordTypeId(){
-        if(this.data.confirmarProfileType=='Administrador SM') {
-            this.data.nameRecordType= 'Seguro de Motos';
-        }
-        else if(this.data.confirmarProfileType=='Administrador del sistema') {
-            this.data.nameRecordType= 'Administrador del sistema';
-        }
-        else {
-            this.data.nameRecordType= 'Garantía Extendida';
-        }
-    }
+
+
     //guardo correctamente 10:22 pm"
 
 

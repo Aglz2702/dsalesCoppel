@@ -16,12 +16,12 @@ global with sharing class DSALES_AccountWrapperRequest {
                     responsePayload = upsertAccount(cliente);
                 }catch(JSONException e){
                     responsePayload.success = false;
-                    responsePayload.codigo_error = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
-                    responsePayload.mensaje_error = DSALES_Utility.BAD_REQUEST_MSJ + e.getLineNumber()+e.getCause()+e.getMessage();
+                    responsePayload.error_code = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
+                    responsePayload.error_message = DSALES_Utility.BAD_REQUEST_MSJ;
                 }catch(Exception e){
                     responsePayload.success = false;
-                    responsePayload.codigo_error = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
-                    responsePayload.mensaje_error = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    responsePayload.error_code = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+                    responsePayload.error_message = DSALES_Utility.INTERNAL_ERROR_MSJ;
                 }
             }
         }
@@ -36,27 +36,55 @@ global with sharing class DSALES_AccountWrapperRequest {
         String code = '';
         Account accountRecord = new Account();
         try{
-            if(cliente.numero_de_cliente == null || cliente.numero_de_cliente ==''){
-                for(Account item : [Select id from Account Where FirstName=:cliente.nombre and LastName=:cliente.apellido_paterno and PersonEmail= :cliente.correo_electronico]){
+            String nombre = cliente.first_name + ' '+ cliente.last_name;
+            if(cliente.first_name.contains(' ')){
+                List<String> nombres = cliente.first_name.split(' ');
+                for(Integer i=0; i<nombres.size(); i++){
+                    if(i==0){
+                        cliente.first_name=nombres[0];
+                    }else{
+                        cliente.middle_name = nombres[i]+' ';
+                    }
+                }
+                cliente.middle_name=cliente.middle_name.subString(0,cliente.middle_name.length()-1);
+            }
+            if(cliente.last_name.contains(' ')){
+                List<String> apellidos = cliente.last_name.split(' ');
+                for(Integer i=0; i<apellidos.size(); i++){
+                    if(i==0){
+                        cliente.last_name=apellidos[0];
+                    }else{
+                        cliente.suffix = apellidos[i]+' ';
+                    }
+                }
+                cliente.suffix=cliente.suffix.subString(0,cliente.suffix.length()-1);
+            }
+            if(cliente.client_number == null || cliente.client_number ==''){
+                for(Account item : [Select id from Account Where FirstName=:cliente.first_name and LastName=:cliente.last_name and PersonEmail= :cliente.email]){
                     accountRecord.Id = item.Id;
                 }
             }else{
-                for(Account item : [Select id from Account Where CP_WalletCustomerNumber__c =: Decimal.valueOf(cliente.numero_de_cliente)]){
+                for(Account item : [Select id from Account Where CP_WalletCustomerNumber__c =: Decimal.valueOf(cliente.client_number)]){
                     accountRecord.Id = item.Id;
-                    accountRecord.CP_WalletCustomerNumber__c = Decimal.valueOf(cliente.numero_de_cliente);
+                    accountRecord.CP_WalletCustomerNumber__c = Decimal.valueOf(cliente.client_number);
                 }
             }
-            accountRecord.FirstName = cliente.nombre;
-            accountRecord.LastName = cliente.apellido_paterno;
-            accountRecord.Suffix = cliente.apellido_materno;
-            accountRecord.PersonMobilePhone = cliente.telefono;
-            accountRecord.PersonEmail = cliente.correo_electronico;
-            accountRecord.CP_Gender__pc = cliente.genero;
-            accountRecord.PersonBirthdate = cliente.fecha_nacimiento;
-            accountRecord.BillingStreet = cliente.domicilio;
-            accountRecord.BillingCity =  cliente.nombre_ciudad;
-            accountRecord.BillingState = cliente.nombre_estado;
-            accountRecord.BillingPostalCode = cliente.codigo_postal;
+            accountRecord.FirstName = cliente.first_name;
+            accountRecord.MiddleName = cliente.middle_name;
+            accountRecord.LastName = cliente.last_name;
+            accountRecord.Suffix = cliente.suffix;
+            accountRecord.CP_MaritalStatus__pc = cliente.marital_status;
+            accountRecord.PersonMobilePhone = cliente.telephone;
+            accountRecord.PersonEmail = cliente.email;
+            accountRecord.DSALES_Metodocontacto__pc = cliente.contact_method;
+            accountRecord.CP_Gender__pc = cliente.gender;
+            accountRecord.PersonBirthdate = cliente.birthdate;
+            accountRecord.BillingState = cliente.state_code;
+            accountRecord.BillingCity = cliente.city_code;
+            accountRecord.BillingCountry = cliente.town_code;
+            accountRecord.BillingStreet = cliente.suburb_code;
+            accountRecord.BillingPostalCode = cliente.zip_code;
+            
             upsert accountRecord;
             
             success = true;
@@ -72,9 +100,9 @@ global with sharing class DSALES_AccountWrapperRequest {
         
         DSALES_AccountWrapper.AccountResponse responsePayload = new DSALES_AccountWrapper.AccountResponse();
         responsePayload.success = success;
-        responsePayload.mensaje_error = message;
-        responsePayload.codigo_error = code;
-        responsePayload.id_cuenta = accountRecord.id;
+        responsePayload.error_message = message;
+        responsePayload.error_code = code;
+        responsePayload.account_id = accountRecord.id;
         
         return responsePayload;
     }

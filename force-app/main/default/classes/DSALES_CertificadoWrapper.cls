@@ -1,11 +1,11 @@
 global class DSALES_CertificadoWrapper {
     
-    
     global class CertificadoRequest{
+        global String sku_tangible {get;set;}
         global String id_cuenta {get;set;} 
         global String id_producto_adquirido{get;set;}
         global String id_pago {get;set;}
-        global String id_factura {get;set;}//remaining
+        global String ticket {get;set;}//remaining
         global String numero_cliente {get;set;}
         global	String	clave_tienda	{get;set;}//remaining
         global  String  id_tienda {get;set;}//remaining
@@ -19,8 +19,6 @@ global class DSALES_CertificadoWrapper {
         global	String	celular_cliente	{get;set;}
         global	String	sku	{get;set;}
        
-         global String sku_de_tangible {get;set;}
-        global String id_partida_presupuesto {get;set;}
         global	String	modelo_tangible	{get;set;}
         global	String	marca_tangible	{get;set;}
         global	String	numero_serie	{get;set;}

@@ -1,27 +1,28 @@
 global class DSALES_AccountWrapper {
 	
     global class AccountRequest{
-        global String numero_de_cliente {get;set;}
-        global String nombre {get; set;}
-        global String apellido_paterno {get;set;}
-        global String apellido_materno {get;set;}
-        global String telefono {get;set;}
-        global String correo_electronico {get;set;}
-        global String genero {get;set;}
-        global Date fecha_nacimiento {get;set;}
-        global String nombre_ciudad {get;set;}
-        global String nombre_estado {get;set;}
-        global String domicilio {get;set;}
-        global String calle {get;set;}
-        global String numero_exterior {get;set;}
-        global String numero_interior {get;set;}
-        global String colonia {get;set;}
-        global String codigo_postal {get;set;}     
+        global String client_number {get;set;}
+        global String first_name {get; set;}
+        global String middle_name {get;set;}
+        global String last_name {get;set;}
+        global String suffix {get;set;}
+        global string marital_status {get;set;}
+        global String telephone {get;set;}
+        global String email {get;set;}
+        global String contact_method {get;set;}
+        global String gender {get;set;}
+        global Date birthdate {get;set;}
+        global String state_code {get;set;}
+        global String city_code {get;set;}
+        global String town_code {get;set;}
+        global String suburb_code{get;set;}
+        global String zip_code {get;set;}
+        global Boolean contact_now {get;set;}       
     }
     global class AccountResponse{
         global Boolean success {get;set;}
-        global String codigo_error {get;set;}
-        global String mensaje_error {get;set;}
-        global String id_cuenta {get;set;}
+        global String error_code {get;set;}
+        global String error_message {get;set;}
+        global String account_id {get;set;}
     }
 }

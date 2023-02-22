@@ -1036,6 +1036,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DSALES_InformacionDePago__c.DSALES_Motosinseguro__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DSALES_InformacionDePago__c.DSALES_No_de_cliente__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1097,11 +1102,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DSALES_InformacionDePago__c.DSALES_Saldodineroelec__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_InformacionDePago__c.DSALES_Seguro__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1207,11 +1207,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DSALES_Partidadepago__c.DSALES_Menospagoinicial__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Partidadepago__c.DSALES_Pago__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1966,6 +1961,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Quote.DSALES_Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Quote.DSALES_Suburbcode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2062,11 +2062,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Quote.Motivo_de_lista_negra__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Quote.NOMigrar__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2576,10 +2571,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>DSALES_InformacionDePago__c.DSALES_PagosdeVentaenNPVSM_c</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>DSALES_Partidadepago__c.DSales_Garantia_Extendida</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

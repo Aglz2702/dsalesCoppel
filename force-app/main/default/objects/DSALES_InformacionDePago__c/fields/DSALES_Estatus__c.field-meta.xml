@@ -21,11 +21,6 @@
                 <default>false</default>
                 <label>No Acreditado</label>
             </value>
-            <value>
-                <fullName>Reembolso</fullName>
-                <default>false</default>
-                <label>Reembolso</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

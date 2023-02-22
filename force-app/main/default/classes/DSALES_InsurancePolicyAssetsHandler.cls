@@ -12,7 +12,7 @@ public with sharing class DSALES_InsurancePolicyAssetsHandler extends fflib_SObj
     
     public override void onAfterInsert() {
         DSALES_InsurancePolicyAssets.agregarDatosDeActivo(records);
-        DSALES_InsurancePolicyAssets.emisionDePoliza(records);
+        //DSALES_InsurancePolicyAssets.enviarIntegracion(records);
     }
     
     public override void onAfterUpdate(Map<Id,SObject> existingRecords){

@@ -25,10 +25,8 @@ global class DSALES_QuoteGexWrapper {
         global double	precio	{get;set;}
         global double	costo_total	{get;set;}
         global String 	meses_cobertura {get;set;}
-        global String	id_partida_de_presupuesto	{get;set;}
         
     }
-
     global class respuestaNPV{        
         global Boolean 	success {get;set;}
         global String	id_cotizacion	{get;set;}
@@ -36,14 +34,6 @@ global class DSALES_QuoteGexWrapper {
         global String 	codigo_error {get;set;}
         global String 	mensaje_error {get;set;}
         global List<QuoteGexResponse> respuesta {get;set;}
-        global List<nodos> descripciones {get;set;}
-    }
-    
-    global class nodos{
-        global String	Description	{get;set;}
-        global String	subTipo	{get;set;}
-        global String	tipo_de_servicio{get;set;}
-        global List<String>	sku	{get;set;}
     }
     
 }

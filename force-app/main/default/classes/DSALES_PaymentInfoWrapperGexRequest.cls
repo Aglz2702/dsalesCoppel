@@ -47,7 +47,7 @@ global with sharing class DSALES_PaymentInfoWrapperGexRequest {
                     info.DSales_Tienda__c = idTienda[0].Id;
                     info.DSALES_Estatus__c = 'Acreditado';
                     info.DSALES_Factura__c = payment.id_factura;
-                    info.DSALES_TotalContado__c = payment.precio_total;
+                    info.DSALES_TotalContado__c = payment.total_compra;
                     info.DSALES_Cliente__c = cliente[0].AccountId;
                     info.DSALES_Oportunidad__c = payment.opportunity_id;
 					info.DSALES_DireccionCliente__c = cliente[0].Account.BillingStreet+' '+cliente[0].Account.BillingCity+' '+cliente[0].Account.BillingState+' '+cliente[0].Account.BillingPostalCode;
@@ -58,10 +58,10 @@ global with sharing class DSALES_PaymentInfoWrapperGexRequest {
                     info.DSALES_Caja__c=payment.caja;
                     info.DSALES_Factura__c=payment.id_factura;
                     info.DSALES_Oportunidad__c = payment.opportunity_id;
-                    //info.DSALES_SKU__c=payment.sku;
+                    info.DSALES_SKU__c=payment.sku;
                     //info.DSALES_Certificado__c = payment.certified_id;
                    // info.DSALES_ProductoAdquirido__c = payment.asset_id;
-                    //insert info;
+                    insert info;
 						
                     for(DSALES_PaymentInfoWrapperGEX.Pagos p : payment.PartidasDePago){
                         DSALES_Partidadepago__c partidaPago = new DSALES_Partidadepago__c();

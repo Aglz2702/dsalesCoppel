@@ -82,7 +82,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
         responsePayload.success = success;
         responsePayload.error_code=code;
         responsePayload.error_message=error_message;
-        responsePayload.pago_id=nuevoPago.Id;
+        responsePayload.paymentInfo_id=nuevoPago.Id;
         
         return responsePayload;
     }

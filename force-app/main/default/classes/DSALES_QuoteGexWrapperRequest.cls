@@ -37,10 +37,12 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     String recordTypeQuoteId = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Garantía Extendida').getRecordTypeId();
                     List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet()];
                     productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSALES_SKU__c in: mapProducts.keySet() ];
+                    system.debug('asignacion: '+productAsig);
                     List<Id> DSales_ProductoSetId = new List<Id>();
                     for(DSales_Asignacion_de_Productos__c da : productAsig){
                         DSales_ProductoSetId.add(da.DSales_Producto__c);
                     }
+                    system.debug('Ids de asignacion: '+DSales_ProductoSetId);
                     List<DSales_Matriz_GEX__c> mat = [SELECT id, Name, DSALES_Activo__c, DSALES_Region__c, DSALES_Tipo__c FROM DSales_Matriz_GEX__c WHERE DSALES_Servicio__c =: DSales_ProductoSetId and DSALES_Activo__c =true and DSALES_Tipo__c=:originalMat and DSALES_Region__c INCLUDES (:regions)];
                     List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = [SELECT id, Name,SALES_Precio_GEX__c,DSales_Matriz_GEX__c,DSALES_Rango_interior_GEX__c,DSALES_Rango_Superior_GEX__c,DSALES_Tiempo_de_Garantia_Extendida_GEX__c FROM DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c =: mat ORDER BY SALES_Precio_GEX__c DESC];
                     List<Pricebook2> precioLista = [SELECT id,Name FROM Pricebook2 WHERE Name= 'Standard Price Book' and IsActive=true LIMIT 1];
@@ -101,12 +103,15 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                                 for(DASALES_Porcentajedecobro__c percent: porcent){
                                                     if(percent.DSALES_Anios__c == 1){
                                                         price1= (p.precio_tangible * percent.DSALES_Porcentaje__c)/100;
+                                                        system.debug('Porcentaje 1año: '+percent.DSALES_Porcentaje__c);
                                                     }
                                                     if(percent.DSALES_Anios__c == 2){
                                                         price2= (p.precio_tangible * percent.DSALES_Porcentaje__c)/100;
+                                                        system.debug('Porcentaje 2 años: '+percent.DSALES_Porcentaje__c);
                                                     }
                                                     if(percent.DSALES_Anios__c == 3){
                                                         price3= (p.precio_tangible * percent.DSALES_Porcentaje__c)/100;
+                                                        system.debug('Porcentaje 1año: '+percent.DSALES_Porcentaje__c);
                                                     }
                                                     if(percent.DSALES_Anios__c == 4){
                                                         price4= (p.precio_tangible * percent.DSALES_Porcentaje__c)/100;
@@ -1023,24 +1028,22 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 }catch(Exception e){
                     success = false;
                     code = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
-                    message = DSALES_Utility.INTERNAL_ERROR_MSJ+' '+e.getCause()+' '+e.getLineNumber();
+                    message = DSALES_Utility.INTERNAL_ERROR_MSJ + ' ' +e.getMessage() + ' '+e.getLineNumber() + ' '+ e.getCause();
                 }
             }
         }
         
         DSALES_QuoteGexWrapper.respuestaNPV respuestaNpvList = new DSALES_QuoteGexWrapper.respuestaNPV();
         respuestaNpvList.id_cotizacion = cotiza.Id;
-        respuestaNpvList.id_oportunidad = oppor.Id;
         respuestaNpvList.success = success;
         respuestaNpvList.codigo_error = code;
         respuestaNpvList.mensaje_error = message;
         respuestaNpvList.respuesta =  new List<DSALES_QuoteGexWrapper.QuoteGexResponse>();
-        respuestaNpvList.descripciones =  responseDescription('Servicio',cotiza.Id);
         
         List<QuoteLineItem> ConsultaRespuesta = new List<QuoteLineItem> ();
         List<QuoteLineItem> ConsultaRespuestaGEX = new List<QuoteLineItem> ();
         
-        for(QuoteLineItem item: [Select Id,Product2.Id,Product2.Name,Product2.Description,ListPrice,UnitPrice,Quantity,Vigencia_meses__c,DSALES_SKU__c,Quote.GrandTotal,Product2.DSales_Tipo_de_Producto__c,Product2.DSALES_Familia__r.Name,Product2.DSALES_Clase__r.Name,Product2.DSALES_Categoria__r.Name,Product2.DSales_Aplicaporcentajecobro__c from QuoteLineItem WHERE QuoteId=: cotiza.Id]){
+        for(QuoteLineItem item: [Select Id,Product2.Id,Product2.Name,ListPrice,UnitPrice,Quantity,Vigencia_meses__c,DSALES_SKU__c,Quote.GrandTotal,Product2.DSales_Tipo_de_Producto__c,Product2.DSALES_Familia__r.Name,Product2.DSALES_Clase__r.Name,Product2.DSALES_Categoria__r.Name from QuoteLineItem WHERE QuoteId=: cotiza.Id]){
             if(item.Product2.DSales_Tipo_de_Producto__c == 'Producto'){
                 ConsultaRespuesta.add(item);
             }else{
@@ -1070,20 +1073,14 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 }
                 for(QuoteLineItem resIntangible : ConsultaRespuestaGEX){
                     if(listIntangible.contains(resIntangible.Product2Id)){
-                       	DSALES_QuoteGexWrapper.QuoteGexResponse responsePayload = new DSALES_QuoteGexWrapper.QuoteGexResponse();
+                        DSALES_QuoteGexWrapper.QuoteGexResponse responsePayload = new DSALES_QuoteGexWrapper.QuoteGexResponse();
                         responsePayload.costo_total = resIntangible.UnitPrice + resTangible.UnitPrice;
                         responsePayload.precio = resIntangible.UnitPrice;
                         responsePayload.nombre_intangible = 'Garantia Extendida '+resIntangible.Vigencia_meses__c+'M'+' '+resTangible.DSALES_SKU__c+' '+resTangible.Product2.Name;
                         responsePayload.sku_de_tangible = resTangible.DSALES_SKU__c;
-                        if(resIntangible.Product2.DSales_Aplicaporcentajecobro__c==true){
-                             responsePayload.sku_de_precio = null;
-                        }else{
-                            DSALES_Matriz_de_Cotizacion__c SKUPRECIO =[Select id, Name,DSALES_Rango_interior_GEX__c,DSALES_Rango_Superior_GEX__c,DSALES_Tiempo_de_Garantia_Extendida_GEX__c,SALES_Precio_GEX__c,DSales_Matriz_GEX__c From DSALES_Matriz_de_Cotizacion__c WHERE SALES_Precio_GEX__c=: resIntangible.UnitPrice AND DSales_Matriz_GEX__r.DSALES_Activo__c=true AND DSALES_Rango_Superior_GEX__c>=: resTangible.UnitPrice LIMIT 1];
-                        	 responsePayload.sku_de_precio = SKUPRECIO.Name;
-                        }
+                        responsePayload.sku_de_precio = 'por definir';
                         responsePayload.sku_de_servicio = resIntangible.DSALES_SKU__c;
                         responsePayload.meses_cobertura = resIntangible.Vigencia_meses__c;
-                        responsePayload.id_partida_de_presupuesto = resIntangible.Id;
                         respuestaNpvList.respuesta.add(responsePayload);
                     }
                 }
@@ -1092,38 +1089,4 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return respuestaNpvList;
     }
     
-    public static DSALES_QuoteGexWrapper.nodos respuestaDescripcion(String nombre, String cotizaId,String tipoServicio){
-        List<Quotelineitem> lstSkus = [SELECT id,Product2.StockKeepingUnit,Product2.Description FROM Quotelineitem WHERE Quoteid=:cotizaId AND Product2.DSales_Tipo_de_Producto__c='Servicio' AND Product2.Description=:nombre];
-        DSALES_QuoteGexWrapper.nodos nodoAux = new DSALES_QuoteGexWrapper.nodos();
-        nodoAux.Description = nombre;
-        nodoAux.tipo_de_servicio = tipoServicio;
-        nodoAux.sku = new List<String>();
-        
-        for(Quotelineitem valores :lstSkus){
-            String skuAux = valores.Product2.StockKeepingUnit;
-            nodoAux.sku.add(skuAux);
-        }
-        return nodoAux;
-    }
-    
-    public static List<DSALES_QuoteGexWrapper.nodos> responseDescription(String tipoProducto, String cotizaId){
-        List<Quotelineitem> valores = [SELECT id,Product2.StockKeepingUnit,Product2.Description FROM Quotelineitem WHERE Quoteid=:cotizaId AND Product2.DSales_Tipo_de_Producto__c=:tipoProducto ORDER BY Product2.Description];
-        List<String> ValoresBusqueda = new List<String>();
-        if(valores!=null){
-            String valorDescripcion=valores[0].Product2.Description;
-            ValoresBusqueda.add(valorDescripcion);
-            for(Quotelineitem aux :valores){
-                if(valorDescripcion!=aux.Product2.Description){
-                    ValoresBusqueda.add(aux.Product2.Description);
-                    valorDescripcion=aux.Product2.Description;
-                }
-            }
-        }
-        List<DSALES_QuoteGexWrapper.nodos> response = new List<DSALES_QuoteGexWrapper.nodos>();
-        for(String aux :ValoresBusqueda){
-            DSALES_QuoteGexWrapper.nodos respuesta = DSALES_QuoteGexWrapperRequest.respuestaDescripcion(aux, cotizaId,'Servicio' );
-            response.add(respuesta);
-        }
-        return response;
-    }
 }

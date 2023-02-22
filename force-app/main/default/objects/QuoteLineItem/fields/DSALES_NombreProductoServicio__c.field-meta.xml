@@ -2,10 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DSALES_NombreProductoServicio__c</fullName>
     <externalId>false</externalId>
-    <label>Cotizados</label>
-    <length>60</length>
+    <label>Nombre del producto / servicio</label>
+    <length>40</length>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

@@ -18,7 +18,7 @@ public class DSALES_PolizaWrapperTest {
         req.contractor_zip_code='12';
         req.emision_date='07/10/2022';
         req.insurance='qwrstvu75323';
-        req.packagge='234689asd';
+        req.package_id='234689asd';
         req.payment_option='cdfgvbhui';
         req.payment_plan='test';
         req.quote_id='134dt7687';
@@ -68,6 +68,7 @@ public class DSALES_PolizaWrapperTest {
         
         DSALES_PolizaWrapper.Errors err=new DSALES_PolizaWrapper.Errors();
         err.service=service;
+        
        
         
         

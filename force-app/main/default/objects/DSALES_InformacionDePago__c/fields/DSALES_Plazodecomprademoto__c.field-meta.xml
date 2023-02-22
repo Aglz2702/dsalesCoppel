@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DSALES_Plazodecomprademoto__c</fullName>
-    <description>Campo para registrar el plazo en que se vendió la moto</description>
     <externalId>false</externalId>
     <label>Plazo de compra de moto</label>
     <precision>2</precision>
     <required>false</required>
     <scale>0</scale>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
-    <unique>false</unique>
+    <type>Currency</type>
 </CustomField>
