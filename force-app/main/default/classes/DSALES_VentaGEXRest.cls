@@ -65,7 +65,7 @@ global class DSALES_VentaGEXRest {
                     code = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
                 }catch(Exception ex){
                     success = false;
-                    message += DSALES_Utility.INTERNAL_ERROR_MSJ; // + ex.getLineNumber()+ ex.getMessage();
+                    message += ex.getMessage() + ex.getLineNumber(); // + ex.getLineNumber()+ ex.getMessage();
                     code = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
                 }
             }
@@ -83,7 +83,7 @@ global class DSALES_VentaGEXRest {
          system.debug('Lista de productos: '+product);
         List<DSALES_InformacionDePago__c> pago=[Select id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE id IN:paymentIds];
         system.debug('Lista de pagos: '+pago);
-        List<DSALES_Certificado__c> certi=[Select id,DSALES_SKU__c,DSALES_SKUTangible__c FROM DSALES_Certificado__c WHERE id IN:certifiedIds];
+        List<DSALES_Certificado__c> certi=[Select id,DSALES_SKU__c,DSALES_SKUTangible__c,DSALES_Precio_del_Articulo__c FROM DSALES_Certificado__c WHERE id IN:certifiedIds];
         system.debug('Lista de cert: '+certi);
        
             for(Asset a: product)
@@ -108,7 +108,8 @@ global class DSALES_VentaGEXRest {
 				if(c.DSALES_SKUTangible__c==a.DSALES_SKU__c)
                 {
                       c.DSALES_ProductoAdquirido__c=a.Id;
-               		  a.DSALES_Certificado__c=c.Id; 
+               		  a.DSALES_Certificado__c=c.Id;
+                      a.Price=c.DSALES_Precio_del_Articulo__c;
                 }
                    
                
@@ -270,8 +271,10 @@ global class DSALES_VentaGEXRest {
                             
                             certi.sku= mapPartida.get(certi.id_partida_presupuesto).DSALES_SKU__c;
                             System.debug('Aquí si pasó donde agarra el SKU: '+certi.sku);
-                            //certi.garantia_coppel_tangible=Integer.valueOf(mapPartida.get(certi.id_partida_presupuesto).Vigencia_meses__c);
-                        certi.costo_garantia=mapPartida.get(certi.id_partida_presupuesto).TotalPrice;
+                            if(mapPartida.get(certi.id_partida_presupuesto).Vigencia_meses__c!=null)
+                                certi.garantia_coppel_tangible=Integer.valueOf(mapPartida.get(certi.id_partida_presupuesto).Vigencia_meses__c);
+                        		
+                            certi.costo_garantia=mapPartida.get(certi.id_partida_presupuesto).TotalPrice;
                         }
                        certi.email_cliente=cliente.correo_electronico;
                         certi.telefono_cliente=cliente.telefono;

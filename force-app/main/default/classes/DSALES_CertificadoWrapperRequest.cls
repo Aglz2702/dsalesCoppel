@@ -235,7 +235,8 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             certificadoRecord.DSALES_Numero_serie__c=certificado.numero_serie;	
             certificadoRecord.DSALES_DescripcionDelArtculo__c=certificado.descripcion_tangible;
             certificadoRecord.DSALES_Precio_del_Articulo__c=certificado.precio_tangible;
-            certificadoRecord.DSALES_Duracion_de_GEX__c=certificado.garantia_coppel_tangible;	
+            certificadoRecord.DSALES_Duracion_de_GEX__c=certificado.garantia_coppel_tangible;
+            certificadoRecord.DSales_Garantia_Coppel__c=certificado.garantia_coppel_producto;
             certificadoRecord.DSALES_Fecha_de_compra_GEX__c=certificado.fecha_compra_garantia;	
             certificadoRecord.DSALES_Fecha_Inicio_de_Vigencia__c=certificado.fecha_inicio_garantia_extendida;
             certificadoRecord.DSALES_Costo_de_Garantia_Extendida__c=certificado.costo_garantia;

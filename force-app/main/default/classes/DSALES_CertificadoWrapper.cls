@@ -12,6 +12,7 @@ global class DSALES_CertificadoWrapper {
         global	String	numero_caja_coppel	{get;set;}
         global	String	id_vendedor	{get;set;}
         global	String	nombre_vendedor	{get;set;}
+        global String  garantia_coppel_producto{get;set;}
         global	String	nombre_completo_cliente	{get;set;}
         global	String	direccion_cliente	{get;set;}
         global	String	email_cliente	{get;set;}
