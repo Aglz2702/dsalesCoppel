@@ -152,6 +152,21 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>NewEvent</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.ContentPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -175,21 +190,6 @@
             <actionName>NewTask</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>NewEvent</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.ContentPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -224,30 +224,22 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>DSALES_ProductoAdquirido__c</fields>
-        <fields>DSALES_TipoCompra__c</fields>
-        <fields>DSALES_Precio__c</fields>
-        <fields>DSALES_SKU__c</fields>
+        <fields>DSALES_Factura__c</fields>
+        <fields>DSales_Tienda__c</fields>
+        <fields>DSALES_Montototal__c</fields>
         <relatedList>DSALES_InformacionDePago__c.DSALES_Oportunidad__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>QUOTE.QUOTENUMBER</fields>
         <fields>QUOTE.NAME</fields>
-        <fields>DSALES_Cobertura__c</fields>
-        <fields>QUOTE.TOTALPRICE</fields>
-        <fields>DSALES_AdquiriopolizaSM__c</fields>
-        <fields>QUOTE.SUBTOTAL</fields>
-        <fields>QUOTE.EXPIRATIONDATE</fields>
-        <fields>CreatedBy</fields>
+        <fields>DSALES_TipoUso__c</fields>
+        <fields>DSALES_Tipodeveihculo__c</fields>
         <relatedList>RelatedQuoteList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Product2</fields>
         <fields>Quantity</fields>
         <fields>UnitPrice</fields>
-        <fields>ServiceDate</fields>
-        <fields>Description</fields>
-        <fields>ListPrice</fields>
         <relatedList>RelatedLineItemList</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
@@ -257,7 +249,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8J000000Ilck</masterLabel>
+        <masterLabel>00h6w000000FP0M</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

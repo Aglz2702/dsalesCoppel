@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>AddToActionableList</excludeButtons>
+    
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>CreateAccountChannel</excludeButtons>
     <excludeButtons>CreateCallList</excludeButtons>
     <excludeButtons>CreateSurveyInvitation</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
@@ -41,10 +42,6 @@
                 <behavior>Edit</behavior>
                 <field>DSALES_Metodocontacto__pc</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DSALES_DeseaserContactado__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -54,6 +51,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>PersonBirthdate</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_DeseaserContactado__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -188,18 +189,17 @@
     </quickActionList>
     <relatedLists>
         <fields>Name</fields>
+        <fields>ClaimType</fields>
+        <fields>Status</fields>
+        <fields>ApprovedAmount</fields>
+        <relatedList>RelatedClaimList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
         <fields>PolicyType</fields>
         <fields>EffectiveDate</fields>
         <fields>ExpirationDate</fields>
         <relatedList>InsurancePolicies</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Name</fields>
-        <fields>ClaimType</fields>
-        <fields>Status</fields>
-        <fields>ApprovedAmount</fields>
-        <fields>Cliente__c</fields>
-        <relatedList>RelatedClaimList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -247,19 +247,13 @@
         <fields>QUOTE.TOTALPRICE</fields>
         <relatedList>Quote.Nombre_Cliente_Test__c</relatedList>
     </relatedLists>
-    <relatedLists>
-        <fields>Name</fields>
-        <fields>InsurancePolicy</fields>
-        <fields>CustomerProperty</fields>
-        <relatedList>InsurancePolicyAsset.DSALES_Account__c</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8J000000IlA7</masterLabel>
+        <masterLabel>00h6w000000FP0N</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
