@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_IDUniversal__c</fullName>
+    <externalId>false</externalId>
+    <formula>DSALES_Factura__c  &amp;  DSALES_Clave_Tienda__c  &amp;  TEXT (DAY(DSALES_Fecha__c)) &amp; TEXT (MONTH(DSALES_Fecha__c)) &amp; TEXT (YEAR(DSALES_Fecha__c))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>ID Universal</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

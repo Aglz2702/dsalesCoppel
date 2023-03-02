@@ -6,11 +6,11 @@ global class DSALES_PaymentInfoWrapperGEX {
         global String caja {get;set;}
         global String id_vendedor {get;set;}
         global String nombre_vendedor {get;set;}
-        global Double total_compra {get;set;}
+        global Double precio_total {get;set;}
         global String asset_id {get;set;}
         global String certified_id {get;set;}
         global String opportunity_id {get;set;}
-        global String sku{get;set;}
+        //global String sku{get;set;}
     	global List<Pagos> PartidasDePago {get;set;}
  }
 	global class Pagos {

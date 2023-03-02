@@ -9,5 +9,6 @@
     <relationshipLabel>Cotizaciones</relationshipLabel>
     <relationshipName>Cotizaciones</relationshipName>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Lookup</type>
 </CustomField>

@@ -9,75 +9,154 @@
     <dashboardColorPalette>pond</dashboardColorPalette>
     <dashboardFilters>
         <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>HERMOSILLO</values>
+            <operator>contains</operator>
+            <values>a</values>
         </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>CULIACAN</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>GUADALAJARA I</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>MONTERREY I</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>LEON</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>AZCAPOTZALCO</values>
-        </dashboardFilterOptions>
-        <name>Región</name>
-    </dashboardFilters>
-    <dashboardFilters>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>1</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>2</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>3</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>4</values>
-        </dashboardFilterOptions>
-        <dashboardFilterOptions>
-            <operator>equals</operator>
-            <values>5</values>
-        </dashboardFilterOptions>
-        <name>División</name>
+        <name>Calle de envío</name>
     </dashboardFilters>
     <dashboardGridLayout>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
             <columnIndex>0</columnIndex>
             <dashboardComponent>
+                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <componentType>Bar</componentType>
+                <dashboardFilterColumns>
+                    <column>ADDRESS2_STREET</column>
+                </dashboardFilterColumns>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingSortProperties/>
+                <header>Indicadores GEX</header>
+                <report>DSALES_ReportesdeVentasGEX/Garanta_Extendida_Resultados_Nacional_t0U</report>
+                <showPercentage>false</showPercentage>
+                <showPicturesOnCharts>false</showPicturesOnCharts>
+                <showValues>false</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>0</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>4</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <componentType>Bar</componentType>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingSortProperties/>
+                <header>Ventas por división por trimestre</header>
+                <report>DSALES_ReportesdeVentasGEX/DSales_Resultado_Division_Primer_Tr_Ymt</report>
+                <showPercentage>false</showPercentage>
+                <showPicturesOnCharts>false</showPicturesOnCharts>
+                <showValues>false</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>0</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>8</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <componentType>Bar</componentType>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingSortProperties/>
+                <header>Ventas por región por trimestre</header>
+                <report>DSALES_ReportesdeVentasGEX/DSales_Resultado_Region_Primer_Trimestre_Gf3</report>
+                <showPercentage>false</showPercentage>
+                <showPicturesOnCharts>false</showPicturesOnCharts>
+                <showValues>false</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>0</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <componentType>Bar</componentType>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingSortProperties/>
+                <header>Ventas por división por mes</header>
+                <report>DSALES_ReportesdeVentasGEX/DSales_Ventas_por_division_por_mes_0fb</report>
+                <showPercentage>false</showPercentage>
+                <showPicturesOnCharts>false</showPicturesOnCharts>
+                <showValues>false</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>8</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>4</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <componentType>Bar</componentType>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingSortProperties/>
+                <header>Ventas por región por mes</header>
+                <report>DSALES_ReportesdeVentasGEX/DSales_Ventas_por_region_por_trimestre_3xy</report>
+                <showPercentage>false</showPercentage>
+                <showPicturesOnCharts>false</showPicturesOnCharts>
+                <showValues>false</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>true</useReportChart>
+            </dashboardComponent>
+            <rowIndex>8</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>8</columnIndex>
+            <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
                 <chartSummary>
+                    <aggregate>Sum</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>FORMULA1</column>
+                    <column>Quote.DSales_GEX__c</column>
                 </chartSummary>
                 <chartSummary>
+                    <aggregate>Sum</aggregate>
                     <axisBinding>y2</axisBinding>
-                    <column>RowCount</column>
+                    <column>Quote.DSales_Ingresos_GEX__c</column>
                 </chartSummary>
-                <componentType>ColumnLineGrouped</componentType>
+                <componentType>ColumnLineStacked</componentType>
                 <dashboardFilterColumns>
-                    <column>Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Opportunity.DSALES_Division__c</column>
+                    <column>ADDRESS2_STREET</column>
                 </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
@@ -85,8 +164,8 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>CREATED_DATE</groupingColumn>
-                <groupingColumn>Opportunity.DSales_Resumen_Tipo_de_Compra_Servicio__c</groupingColumn>
+                <groupingColumn>Quote.DSALES_Regioon__c</groupingColumn>
+                <groupingColumn>FK_$Tienda__c.DSALES_Nombre_GerentedeTiendadeZona__c</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
@@ -97,65 +176,17 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Indicadores GEX Resultado Nacional</header>
+                <header>GEX Resultado - Zonas</header>
                 <legendPosition>Right</legendPosition>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Indicadores_GEX_Resultado_Nacional_4TL</report>
+                <report>DSALES_ReportesdeVentasGEX/DSales_GEX_Resultado_Zonas_w4C</report>
                 <showPercentage>false</showPercentage>
-                <showValues>true</showValues>
+                <showValues>false</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
-            <rowIndex>0</rowIndex>
+            <rowIndex>8</rowIndex>
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
-        <!--dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>4</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <componentType>Bar</componentType>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingSortProperties/>
-                <header>Resultado-Division</header>
-                <report>DSALES_ReportesdeVentasGEX/DSALES_ResultadoDivision_9XK</report>
-                <showPercentage>false</showPercentage>
-                <showPicturesOnCharts>false</showPicturesOnCharts>
-                <showValues>false</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>true</useReportChart>
-            </dashboardComponent>
-            <rowIndex>0</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>8</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <componentType>Bar</componentType>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingSortProperties/>
-                <header>Resultado GEX -Región</header>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Resultado_GEX_Region_qfw</report>
-                <showPercentage>false</showPercentage>
-                <showPicturesOnCharts>false</showPicturesOnCharts>
-                <showValues>false</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>true</useReportChart>
-            </dashboardComponent>
-            <rowIndex>0</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents-->
         <dashboardGridComponents>
             <colSpan>4</colSpan>
             <columnIndex>0</columnIndex>
@@ -165,181 +196,16 @@
                 <chartSummary>
                     <aggregate>Sum</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>Opportunity.DSales_Resumen_Tipo_de_Compra_Servicio__c</column>
+                    <column>Quote.DSales_GEX__c</column>
                 </chartSummary>
-                <componentType>ColumnGrouped</componentType>
-                <dashboardFilterColumns>
-                    <column>Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Opportunity.DSALES_Division__c</column>
-                </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingColumn>Opportunity.Posici_n__c</groupingColumn>
-                <groupingColumn>Opportunity.DSALES_Division__c</groupingColumn>
-                <groupingSortProperties>
-                    <groupingSorts>
-                        <groupingLevel>g1</groupingLevel>
-                        <sortOrder>a</sortOrder>
-                    </groupingSorts>
-                    <groupingSorts>
-                        <groupingLevel>g2</groupingLevel>
-                        <sortOrder>a</sortOrder>
-                    </groupingSorts>
-                </groupingSortProperties>
-                <header>Indicadores GEX por Trimestre</header>
-                <legendPosition>Right</legendPosition>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Indicadores_GEX_por_Trimestre_7oC</report>
-                <showPercentage>false</showPercentage>
-                <showValues>true</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>false</useReportChart>
-            </dashboardComponent>
-            <rowIndex>8</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>4</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <componentType>Bar</componentType>
-                <dashboardFilterColumns>
-                    <column>Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Opportunity.DSALES_Division__c</column>
-                </dashboardFilterColumns>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingSortProperties/>
-                <header>Resultado GEX - División/Región</header>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Resultado_GEX_DivisionRegion_I6Q</report>
-                <showPercentage>false</showPercentage>
-                <showPicturesOnCharts>false</showPicturesOnCharts>
-                <showValues>false</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>true</useReportChart>
-            </dashboardComponent>
-            <rowIndex>8</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>8</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
                 <chartSummary>
                     <aggregate>Sum</aggregate>
-                    <axisBinding>y</axisBinding>
-                    <column>Opportunity.DSales_Ingresos_GEX__c</column>
-                </chartSummary>
-                <componentType>Bar</componentType>
-                <dashboardFilterColumns>
-                    <column>Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Opportunity.DSALES_Division__c</column>
-                </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingColumn>Opportunity.DSALES_RegionList__c</groupingColumn>
-                <groupingSortProperties>
-                    <groupingSorts>
-                        <groupingLevel>g1</groupingLevel>
-                        <sortOrder>a</sortOrder>
-                    </groupingSorts>
-                </groupingSortProperties>
-                <header>Resultado GEX por Mes por Zonas</header>
-                <legendPosition>Bottom</legendPosition>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Resultado_GEX_Zonas_g9H</report>
-                <showPercentage>false</showPercentage>
-                <showPicturesOnCharts>false</showPicturesOnCharts>
-                <showValues>true</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>false</useReportChart>
-            </dashboardComponent>
-            <rowIndex>8</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <!--dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>0</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <chartSummary>
-                    <aggregate>Sum</aggregate>
-                    <axisBinding>y</axisBinding>
-                    <column>FK_$Opportunity.DSales_Resumen_Tipo_de_Compra_Servicio__c</column>
-                </chartSummary>
-                <componentType>Funnel</componentType>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_Division__c</column>
-                </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>true</expandOthers>
-                <groupingColumn>FK_$Opportunity.DSALES_RegionList__c</groupingColumn>
-                <groupingSortProperties>
-                    <groupingSorts>
-                        <groupingLevel>g1</groupingLevel>
-                        <sortOrder>a</sortOrder>
-                    </groupingSorts>
-                </groupingSortProperties>
-                <header>Resultados GEX por Tiendas</header>
-                <legendPosition>Right</legendPosition>
-                <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Resultados_GEX_por_Tiendas_Udp</report>
-                <showPercentage>true</showPercentage>
-                <showValues>true</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>false</useReportChart>
-            </dashboardComponent>
-            <rowIndex>16</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents-->
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>4</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <chartSummary>
-                    <aggregate>Sum</aggregate>
-                    <axisBinding>y</axisBinding>
-                    <column>Opportunity.DSales_Ingresos_GEX__c</column>
-                </chartSummary>
-                <chartSummary>
                     <axisBinding>y2</axisBinding>
-                    <column>FORMULA1</column>
+                    <column>Quote.DSales_Ingresos_GEX__c</column>
                 </chartSummary>
-                <componentType>ColumnLineGrouped</componentType>
+                <componentType>ColumnLineStacked</componentType>
                 <dashboardFilterColumns>
-                    <column>Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>Opportunity.DSALES_Division__c</column>
+                    <column>ADDRESS2_STREET</column>
                 </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
@@ -347,8 +213,8 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>CREATED_DATE</groupingColumn>
-                <groupingColumn>Opportunity.DSALES_RegionList__c</groupingColumn>
+                <groupingColumn>FK_NAME</groupingColumn>
+                <groupingColumn>Quote.DSALES_Regioon__c</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
@@ -359,200 +225,31 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Indicadores GEX Región</header>
+                <header>GEX - Tiendas por mes</header>
                 <legendPosition>Right</legendPosition>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Indicadores_GEX_Region_yPR</report>
+                <report>DSALES_ReportesdeVentasGEX/DSales_GEX_Resultado_Tiendas_ozC</report>
                 <showPercentage>false</showPercentage>
-                <showValues>true</showValues>
+                <showValues>false</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
             <rowIndex>16</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <!--dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>8</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <chartSummary>
-                    <aggregate>Sum</aggregate>
-                    <axisBinding>y</axisBinding>
-                    <column>FK_$Opportunity.DSales_Resumen_Tipo_de_Compra_Servicio__c</column>
-                </chartSummary>
-                <componentType>Line</componentType>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_Division__c</column>
-                </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingColumn>FK_$Opportunity.DSALES_RegionList__c</groupingColumn>
-                <groupingSortProperties>
-                    <groupingSorts>
-                        <groupingLevel>g1</groupingLevel>
-                        <sortOrder>a</sortOrder>
-                    </groupingSorts>
-                </groupingSortProperties>
-                <header>Ranking GEX por Región</header>
-                <legendPosition>Bottom</legendPosition>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Ranking_GEX_por_Regin_Def</report>
-                <showPercentage>false</showPercentage>
-                <showValues>true</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>false</useReportChart>
-            </dashboardComponent>
-            <rowIndex>16</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>0</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <chartSummary>
-                    <axisBinding>y</axisBinding>
-                    <column>FORMULA2</column>
-                </chartSummary>
-                <componentType>Column</componentType>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_Division__c</column>
-                </dashboardFilterColumns>
-                <decimalPrecision>-1</decimalPrecision>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingColumn>DSALES_InformacionDePago__c.DSALES_Nombre_de_la_Tienda__c</groupingColumn>
-                <groupingSortProperties>
-                    <groupingSorts>
-                        <groupingLevel>g1</groupingLevel>
-                        <sortColumn>FORMULA2</sortColumn>
-                        <sortOrder>d</sortOrder>
-                    </groupingSorts>
-                </groupingSortProperties>
-                <header>Ranking Tiendas GEX</header>
-                <legendPosition>Bottom</legendPosition>
-                <maxValuesDisplayed>10</maxValuesDisplayed>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Ranking_Tiendas_GEX_hY8</report>
-                <showPercentage>false</showPercentage>
-                <showValues>true</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>false</useReportChart>
-            </dashboardComponent>
-            <rowIndex>24</rowIndex>
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
             <columnIndex>4</columnIndex>
             <dashboardComponent>
-                <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
-                <chartAxisRange>Auto</chartAxisRange>
-                <componentType>Bar</componentType>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_Division__c</column>
-                </dashboardFilterColumns>
-                <displayUnits>Auto</displayUnits>
-                <drillEnabled>false</drillEnabled>
-                <drillToDetailEnabled>false</drillToDetailEnabled>
-                <enableHover>false</enableHover>
-                <expandOthers>false</expandOthers>
-                <groupingSortProperties/>
-                <header>Tiendas con menor venta GEX</header>
-                <report>DSALES_ReportesdeVentasGEX/DSALES_Tiendas_con_menor_venta_GEX_SVV</report>
-                <showPercentage>false</showPercentage>
-                <showPicturesOnCharts>false</showPicturesOnCharts>
-                <showValues>false</showValues>
-                <sortBy>RowLabelAscending</sortBy>
-                <useReportChart>true</useReportChart>
-            </dashboardComponent>
-            <rowIndex>24</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>8</columnIndex>
-            <dashboardComponent>
-                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
-                <componentType>FlexTable</componentType>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_Division__c</column>
-                </dashboardFilterColumns>
-                <flexComponentProperties>
-                    <decimalPrecision>-1</decimalPrecision>
-                    <flexTableColumn>
-                        <reportColumn>DSALES_InformacionDePago__c.DSALES_Nombre_de_la_Tienda__c</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>detail</type>
-                    </flexTableColumn>
-                    <flexTableColumn>
-                        <reportColumn>FK_Opportunity.DSales_Resumen_Tipo_de_Compra_Producto__c</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>detail</type>
-                    </flexTableColumn>
-                    <flexTableColumn>
-                        <reportColumn>FK_Opportunity.DSales_Resumen_Tipo_de_Compra_Servicio__c</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>detail</type>
-                    </flexTableColumn>
-                    <flexTableColumn>
-                        <reportColumn>FK_Opportunity.DSales_Ingresos_GEX__c</reportColumn>
-                        <showSubTotal>false</showSubTotal>
-                        <showTotal>true</showTotal>
-                        <type>detail</type>
-                    </flexTableColumn>
-                    <flexTableSortInfo>
-                        <sortColumn>FK_Opportunity.DSales_Ingresos_GEX__c</sortColumn>
-                        <sortOrder>2</sortOrder>
-                    </flexTableSortInfo>
-                    <hideChatterPhotos>true</hideChatterPhotos>
-                </flexComponentProperties>
-                <groupingSortProperties/>
-                <header>Tiendas Potenciales GEX</header>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Tiendas_Potenciales_GEX_C8S</report>
-            </dashboardComponent>
-            <rowIndex>24</rowIndex>
-            <rowSpan>8</rowSpan>
-        </dashboardGridComponents>
-        <dashboardGridComponents>
-            <colSpan>4</colSpan>
-            <columnIndex>0</columnIndex>
-            <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
                 <chartSummary>
                     <aggregate>Sum</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>FK_$Opportunity.DSales_Resumen_Tipo_de_Compra_Servicio__c</column>
+                    <column>Quote.DSales_Ingresos_GEX__c</column>
                 </chartSummary>
                 <componentType>Donut</componentType>
                 <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_Division__c</column>
+                    <column>ADDRESS2_STREET</column>
                 </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
@@ -560,42 +257,40 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>true</expandOthers>
-                <groupingColumn>DSALES_InformacionDePago__c.DSALES_Nombre_del_Vendedor__c</groupingColumn>
+                <groupingColumn>Quote.DSALES_Regioon__c</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Ranking por Unidades GEX</header>
+                <header>GEX Ranking Región por año</header>
                 <legendPosition>Right</legendPosition>
                 <maxValuesDisplayed>6</maxValuesDisplayed>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Ranking_por_Unidades_GEX_HEV</report>
+                <report>DSALES_ReportesdeVentasGEX/DSales_Ranking_Region_wen</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
-            <rowIndex>32</rowIndex>
+            <rowIndex>16</rowIndex>
             <rowSpan>8</rowSpan>
         </dashboardGridComponents>
         <dashboardGridComponents>
             <colSpan>4</colSpan>
-            <columnIndex>4</columnIndex>
+            <columnIndex>8</columnIndex>
             <dashboardComponent>
                 <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
                 <chartAxisRange>Auto</chartAxisRange>
                 <chartSummary>
+                    <aggregate>Sum</aggregate>
                     <axisBinding>y</axisBinding>
-                    <column>FORMULA1</column>
+                    <column>Quote.DSales_GEX__c</column>
                 </chartSummary>
-                <componentType>BarGrouped</componentType>
+                <componentType>ColumnGrouped</componentType>
                 <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_RegionList__c</column>
-                </dashboardFilterColumns>
-                <dashboardFilterColumns>
-                    <column>FK_$Opportunity.DSALES_Division__c</column>
+                    <column>ADDRESS2_STREET</column>
                 </dashboardFilterColumns>
                 <decimalPrecision>-1</decimalPrecision>
                 <displayUnits>Auto</displayUnits>
@@ -603,8 +298,8 @@
                 <drillToDetailEnabled>false</drillToDetailEnabled>
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
-                <groupingColumn>DSALES_InformacionDePago__c.DSALES_Clave_Tienda__c</groupingColumn>
-                <groupingColumn>DSALES_InformacionDePago__c.DSALES_Nombre_del_Vendedor__c</groupingColumn>
+                <groupingColumn>Quote.DSALES_Regioon__c</groupingColumn>
+                <groupingColumn>Quote.DSales_Tienda__c</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
@@ -615,22 +310,112 @@
                         <sortOrder>a</sortOrder>
                     </groupingSorts>
                 </groupingSortProperties>
-                <header>Ranking por Ingresos generados GEX</header>
+                <header>Top 10 Tiendas</header>
                 <legendPosition>Right</legendPosition>
-                <maxValuesDisplayed>20</maxValuesDisplayed>
-                <report>DSALES_ReportesdeVentasGEX/DSales_Ranking_por_Unidades_GEX_HEV</report>
+                <maxValuesDisplayed>10</maxValuesDisplayed>
+                <report>DSALES_ReportesdeVentasGEX/DSales_Top_10_Tiendas_lrA</report>
                 <showPercentage>false</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>
                 <useReportChart>false</useReportChart>
             </dashboardComponent>
-            <rowIndex>32</rowIndex>
+            <rowIndex>16</rowIndex>
             <rowSpan>8</rowSpan>
-        </dashboardGridComponents-->
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>0</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <chartSummary>
+                    <aggregate>Sum</aggregate>
+                    <axisBinding>y</axisBinding>
+                    <column>Quote.DSales_GEX__c</column>
+                </chartSummary>
+                <componentType>BarGrouped</componentType>
+                <dashboardFilterColumns>
+                    <column>ADDRESS2_STREET</column>
+                </dashboardFilterColumns>
+                <decimalPrecision>-1</decimalPrecision>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingColumn>Quote.DSales_Tienda__c</groupingColumn>
+                <groupingColumn>Opportunity.DSales_Colaborador__c</groupingColumn>
+                <groupingSortProperties>
+                    <groupingSorts>
+                        <groupingLevel>g1</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                    <groupingSorts>
+                        <groupingLevel>g2</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                </groupingSortProperties>
+                <header>Ranking por unidades GEX del mes</header>
+                <legendPosition>Right</legendPosition>
+                <maxValuesDisplayed>10</maxValuesDisplayed>
+                <report>DSALES_ReportesdeVentasGEX/DSales_Ranking_por_colaboradores_del_mes_6HG</report>
+                <showPercentage>false</showPercentage>
+                <showValues>true</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>false</useReportChart>
+            </dashboardComponent>
+            <rowIndex>24</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
+        <dashboardGridComponents>
+            <colSpan>4</colSpan>
+            <columnIndex>4</columnIndex>
+            <dashboardComponent>
+                <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+                <chartAxisRange>Auto</chartAxisRange>
+                <chartSummary>
+                    <aggregate>Sum</aggregate>
+                    <axisBinding>y</axisBinding>
+                    <column>Quote.DSales_Ingresos_GEX__c</column>
+                </chartSummary>
+                <componentType>ColumnGrouped</componentType>
+                <dashboardFilterColumns>
+                    <column>ADDRESS2_STREET</column>
+                </dashboardFilterColumns>
+                <decimalPrecision>-1</decimalPrecision>
+                <displayUnits>Auto</displayUnits>
+                <drillEnabled>false</drillEnabled>
+                <drillToDetailEnabled>false</drillToDetailEnabled>
+                <enableHover>false</enableHover>
+                <expandOthers>false</expandOthers>
+                <groupingColumn>Quote.DSales_Tienda__c</groupingColumn>
+                <groupingColumn>Opportunity.DSales_Colaborador__c</groupingColumn>
+                <groupingSortProperties>
+                    <groupingSorts>
+                        <groupingLevel>g1</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                    <groupingSorts>
+                        <groupingLevel>g2</groupingLevel>
+                        <sortOrder>a</sortOrder>
+                    </groupingSorts>
+                </groupingSortProperties>
+                <header>Ranking por ingresos GEX del mes</header>
+                <legendPosition>Right</legendPosition>
+                <maxValuesDisplayed>10</maxValuesDisplayed>
+                <report>DSALES_ReportesdeVentasGEX/DSales_Ranking_por_colaboradores_del_mes_6HG</report>
+                <showPercentage>false</showPercentage>
+                <showValues>true</showValues>
+                <sortBy>RowLabelAscending</sortBy>
+                <useReportChart>false</useReportChart>
+            </dashboardComponent>
+            <rowIndex>24</rowIndex>
+            <rowSpan>8</rowSpan>
+        </dashboardGridComponents>
         <numberOfColumns>12</numberOfColumns>
         <rowHeight>36</rowHeight>
     </dashboardGridLayout>
-    <dashboardType>SpecifiedUser</dashboardType>
+    <dashboardType>MyTeamUser</dashboardType>
     <isGridLayout>true</isGridLayout>
     <runningUser>lcastanedad@deloitte.com</runningUser>
     <textColor>#000000</textColor>

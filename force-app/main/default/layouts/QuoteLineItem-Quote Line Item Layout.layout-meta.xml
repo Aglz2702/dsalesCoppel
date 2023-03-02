@@ -110,10 +110,12 @@
         <style>CustomLinks</style>
     </layoutSections>
     <multilineLayoutFields>Product2Id</multilineLayoutFields>
+    <multilineLayoutFields>ListPrice</multilineLayoutFields>
     <multilineLayoutFields>UnitPrice</multilineLayoutFields>
     <multilineLayoutFields>Quantity</multilineLayoutFields>
     <multilineLayoutFields>TotalPrice</multilineLayoutFields>
     <multilineLayoutFields>QuoteId</multilineLayoutFields>
+    <multilineLayoutFields>DSALES_ListaArticulo__c</multilineLayoutFields>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
