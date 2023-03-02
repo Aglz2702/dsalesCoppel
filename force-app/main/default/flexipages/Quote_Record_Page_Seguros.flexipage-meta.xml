@@ -14,6 +14,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Quote.DSALES_VerCotizacion</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.DSALES_Enviarcotizacion__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -45,7 +52,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>hideUpdateButton</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>variant</name>
@@ -118,14 +125,10 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <flexiPageRegions>
-        <name>sidebar</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <masterLabel>Quote Record Page Seguros</masterLabel>
+    <masterLabel>Quote Record General</masterLabel>
     <sobjectType>Quote</sobjectType>
     <template>
-        <name>flexipage:recordHomeTemplateDesktop</name>
+        <name>flexipage:recordHomeSimpleViewTemplate</name>
         <properties>
             <name>enablePageActionConfig</name>
             <value>false</value>

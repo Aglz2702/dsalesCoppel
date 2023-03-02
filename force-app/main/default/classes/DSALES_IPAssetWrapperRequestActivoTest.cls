@@ -11,8 +11,10 @@ global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         /*Asset producto= new Asset(Name='Nelson',AccountId=ac.id);
         insert producto;*/
         String recordTypeIdPago=Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
-
-        DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=ip.id,DSALES_Clave_Tienda__c='2');
+		Tienda__c t = new Tienda__c();
+        t.DSales_TiendaID__c =  'CPPL-UGARTE';
+        insert t;
+        DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=ip.id,DSALES_Clave_Tienda__c='2',DSALES_Seguro__c=true);
         insert pago; 
     }
     @isTest static void CreateRecordTest()
@@ -20,7 +22,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
         DSALES_InformaciondePago__c pago = [SELECT id,DSALES_Poliza__c, DSALES_Motoentregada__c FROM  DSALES_InformaciondePago__c  LIMIT 1];
-        String body='{"payment_info":"'+pago.Id+'","store":"123","client_number":"90229562","partner":"Prueba","external_motorcycle":true, "invoice_value":"1234","status":"Activo","key_amis":"NelsonTest","key_vehicle":"NelsonTest","description":"NelsonTest","model":"NelsonTest","brand":"NelsonTest","motor_number":"NelsonTest","serial_number":"NelsonTest","license_plate":"NelsonTest","service":"NelsonTest","use":"NelsonTest","asset_name":"NelsonTest"}';
+        String body='{"uso":"Personal","id_tienda":"CPPL-UGARTE","servicio":"Particular","numero_serie":"1334342343","numero_motor":"343434343","modelo":"2022","placas":"XRDH48","clave_vehicular":"023023834","valor_factura":8000,"bajo_demanda":false,"descripcion":"Motocicleta vento xr","marca":"Vento","nombre_activo":"Motocicleta vento xr","id_pago":"'+pago.Id+'"}';
         request.requestURI='/apexrest/insertIPAssetDelivered'; 
         request.httpMethod='POST';
         RestContext.request=request;
@@ -30,18 +32,20 @@ global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         //policyAsset.payment_info=pago.id;
         Test.startTest();
         DSALES_IPAssetWrapperRequestActivo.createIPAsset();
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
         
     }
-   /* @isTest static void CreateRecordTestWrong()
+    
+    @isTest static void CreateRecordErrorTest()
     {
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
         DSALES_InformaciondePago__c pago = [SELECT id,DSALES_Poliza__c, DSALES_Motoentregada__c FROM  DSALES_InformaciondePago__c  LIMIT 1];
-        String body='{"payment_info":"dadsada","store":"123","client_number":"90229565","partner":"Prueba","external_motorcycle":true, "invoice_value":"1234","status":"Activo","key_amis":"NelsonTest","key_vehicle":"NelsonTest","description":"NelsonTest","model":"NelsonTest","brand":"NelsonTest","motor_number":"NelsonTest","serial_number":"NelsonTest","license_plate":"NelsonTest","service":"NelsonTest","use":"NelsonTest","asset_name":"NelsonTest"}';
-        request.requestURI='/apexrest/insertIPAsset'; 
+        String body='{"uso":"Personal","id_tienda":"CPPL-UGARTE","servicio":"Particular","numero_serie":"1334342343","numero_motor":"343434343","modelo":"2022","placas":"XRDH48","clave_vehicular":"023023834","valor_factura":8000,"bajo_demanda":false,"descripcion":"Motocicleta vento xr","marca":"Vento","nombre_activo":"Motocicleta vento xr","id_pago":"xxxxxxxxxxxxxxx"}';
+        request.requestURI='/apexrest/insertIPAssetDelivered'; 
         request.httpMethod='POST';
         RestContext.request=request;
         request.requestBody=Blob.valueOf(body);
@@ -50,9 +54,11 @@ global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         //policyAsset.payment_info=pago.id;
         Test.startTest();
         DSALES_IPAssetWrapperRequestActivo.createIPAsset();
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
-    }*/
+        
+    }
     
 }

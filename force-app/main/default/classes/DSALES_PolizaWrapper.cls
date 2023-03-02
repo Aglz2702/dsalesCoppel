@@ -6,7 +6,7 @@ public class DSALES_PolizaWrapper {
         public String quote_id{get; set;}
         public String business{get; set;}
         public String insurance{get; set;}
-        public String package_id{get; set;}
+        public String packagge{get; set;}
         public String payment_plan{get; set;}
         public String payment_option {get;set;}
         public String vehicle_id{get; set;}

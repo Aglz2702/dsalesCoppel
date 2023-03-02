@@ -85,6 +85,14 @@ public class DSALES_ClasificacionServicio_Test {
         asignacionprod.DSALES_Activo__c=true;
         insert asignacionprod;
         
+        Campaign camp = new Campaign();
+        camp.Name = 'TestCampaing';
+        insert camp;
+        
+        DSALES_TipodeUso__c tp = new DSALES_TipodeUso__c();
+        tp.Name = 'TestTipoUso';
+        insert tp;
+        
     }
     
     @isTest
@@ -94,8 +102,11 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_SubCategoria__c idsubc= [select id from DSALES_SubCategoria__c limit 1];
         DSALES_Clase__c idclass=  [select id from DSALES_Clase__c limit 1];
         DSales_Matriz_GEX__c idmat= [select id from DSales_Matriz_GEX__c limit 1];
+        Campaign idcamp = [Select id from Campaign limit 1];
+        DSALES_TipodeUso__c idtp = [Select id from DSALES_TipodeUso__c limit 1];
         DSALES_ClasificacionServicio.DSALES_ClasificacionServicioWrapper controller = DSALES_ClasificacionServicio.getPickListCategoria();
         controller.listCategorias[0].seleccionado = true;
+        
         
         controller = DSALES_ClasificacionServicio.getPicklistOptionsDependent(JSON.serialize(controller));
         controller.listSubCategorias[0].seleccionado = true;
@@ -106,7 +117,7 @@ public class DSALES_ClasificacionServicio_Test {
         controller = DSALES_ClasificacionServicio.getPicklistOptionsDependent(JSON.serialize(controller));
         controller.listFamilias[0].seleccionado = true;
         
-        controller = DSALES_ClasificacionServicio.getRecords(JSON.serialize(controller));
+        controller = DSALES_ClasificacionServicio.getRecords(JSON.serialize(controller), 'Administrador del sistema', 'Opcion2');
         //DSALES_ClasificacionServicio.upsertRecord(JSON.serialize(controller));
         
         controller.sku = 'SKU1234353464565654665';
@@ -130,6 +141,10 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_ClasificacionServicio.getPickListValuesIntoList2();
         DSALES_ClasificacionServicio.getPickListValuesIntoList3();
         DSALES_ClasificacionServicio.getPickListValuesIntoList4();
+        DSALES_ClasificacionServicio.getCampaings();
+        DSALES_ClasificacionServicio.getTipoUso();
+        DSALES_ClasificacionServicio.updateCampaigns('["'+idcamp.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
+        DSALES_ClasificacionServicio.updateTipoUso('["'+idtp.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
        // DSALES_ClasificacionServicio.createProductIntan('{valueSelectedtipoProducto: 'Servicio', DSales_Tipo_de_Producto__c: 'Servicio', tipoSeguroServicio: Array(1), ValueClasesSelected: 'a3275000000D7zAAAS', ValuefamiliasSelected: ''}', 'sku8080');
         System.assertEquals(controller.listServicios.size(), 1);
         

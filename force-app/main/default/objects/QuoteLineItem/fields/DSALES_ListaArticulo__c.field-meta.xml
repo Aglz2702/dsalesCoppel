@@ -6,6 +6,7 @@
     <inlineHelpText>Un artículo como Refrigerador o Cafetera, caería en producto</inlineHelpText>
     <label>Tipo de Producto</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

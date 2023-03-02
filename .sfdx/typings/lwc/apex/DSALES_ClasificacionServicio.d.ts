@@ -2,7 +2,7 @@ declare module "@salesforce/apex/DSALES_ClasificacionServicio.getPickListCategor
   export default function getPickListCategoria(): Promise<any>;
 }
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.getRecords" {
-  export default function getRecords(param: {allData: any}): Promise<any>;
+  export default function getRecords(param: {allData: any, perfilUsuario: any, opcion: any}): Promise<any>;
 }
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.getBuscarSKU" {
   export default function getBuscarSKU(param: {sku: any}): Promise<any>;
