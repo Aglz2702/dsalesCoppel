@@ -7,6 +7,7 @@ global class DSALES_QuoteGexWrapper {
         global String apellido_materno {get;set;}
         global String correo_electronico {get;set;}
         global String id_factura {get;set;}
+        //global String	id_oportunidad	{get;set;}
         global List<Product> productos {get;set;}
  }
 	global class Product {
