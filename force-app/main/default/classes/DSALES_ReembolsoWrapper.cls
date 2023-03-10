@@ -1,12 +1,14 @@
 global class DSALES_ReembolsoWrapper {
     global class ReembolsoRequest{
-        global String pago_universal {get;set;}
+        //global String pago_universal {get;set;}
         global String comentarios {get;set;}
-        global date fecha {get;set;}
+        global date fecha_reembolso {get;set;}
+        global String nombre_producto {get;set;}
+        global String numero_cancelacion {get;set;}
         //Efectivo/Tarjeta
         global String metodo_pago {get;set;}
         global String numero_referencia {get;set;}
-        global double cantidad {get;set;}
+        global double cantidad_reembolsada {get;set;}
         
     }  
     global class ReembolsoResponse

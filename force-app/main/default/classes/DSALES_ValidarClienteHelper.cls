@@ -103,13 +103,13 @@ public class DSALES_ValidarClienteHelper {
                 for(OpportunityLineItem op:opLine)
                     {
                          DSALES_VentaGEX.OpporLineItem opportunityLine = new DSALES_VentaGEX.OpporLineItem();
-                        opportunityLine.id_OpportunityLineItem=op.Id;
+                        opportunityLine.id_partida_de_oportunidad=op.Id;
                        opportunityLine.sku=op.Product2.StockKeepingUnit;
                         for(QuoteLineItem p:partida)
                         {
                             if(p.DSALES_SKU__c==op.Product2.StockKeepingUnit)
                             {
-                                opportunityLine.articulo=p.DSALES_NombreProductoServicio__c;
+                                opportunityLine.nombre_producto=p.DSALES_NombreProductoServicio__c;
                             }
                             
                         }
@@ -117,7 +117,7 @@ public class DSALES_ValidarClienteHelper {
                         listaDeOportunidades.add(opportunityLine);
                        
                     }
-                ventaGEX.opportunity_line_item=listaDeOportunidades;
+                ventaGEX.ListaPartidasOportunidad=listaDeOportunidades;
             }
             try{
                 Update oppor;

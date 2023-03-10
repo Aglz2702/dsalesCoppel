@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_NumeroCancelacion__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Campo relación con el objeto cancelación</description>
+    <externalId>false</externalId>
+    <label>Número de cancelación</label>
+    <referenceTo>DSALES_Cancelacion__c</referenceTo>
+    <relationshipLabel>Reembolsos</relationshipLabel>
+    <relationshipName>Reembolsos</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
