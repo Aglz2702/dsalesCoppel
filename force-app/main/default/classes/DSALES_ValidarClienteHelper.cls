@@ -70,7 +70,7 @@ public class DSALES_ValidarClienteHelper {
                 unpurchasedQuote.DSALES_esClon__c=true;
                 system.debug('Id del quote a borrar: '+unpurchasedQuote.Id);
                 update unpurchasedQuote;
-                actualizarCotizacion(quoteId);
+                //actualizarCotizacion(quoteId);
                 //DELETE unpurchasedQuote;
             }  catch (DmlException e) {
                 System.debug('Error occured: ' + e);
@@ -82,17 +82,43 @@ public class DSALES_ValidarClienteHelper {
     }
     
     //@future(callout=true)
-    public static void actualizarCotizacion(String quoteId){
-        Quote cotizacion = [SELECT Id,AccountId,OpportunityId,Opportunity.AccountId FROM Quote WHERE Id= :quoteId];
-        List<Opportunity> oppor= new List<Opportunity>(); 
+    public static void actualizarCotizacion(String quoteId,DSALES_VentaGEX.VentaGexResponse ventaGEX){
+        Quote cotizacion = [SELECT Id,AccountId,Name,OpportunityId,Opportunity.AccountId FROM Quote WHERE Id= :quoteId];
+        List<QuoteLineItem> partida = [SELECT DSALES_NombreProductoServicio__c,DSALES_SKU__c FROM QuoteLineItem WHERE QuoteId=:quoteId]; 
+ 
+        List<Opportunity> oppor= new List<Opportunity>();
+        List<OpportunityLineItem> opLine = new List<OpportunityLineItem>();
         oppor = [SELECT Id, StageName,SyncedQuoteId FROM opportunity WHERE Id=:cotizacion.OpportunityId ];
         If(oppor.size()>0){
             System.debug(oppor);
             for(Opportunity opp:oppor){
                 opp.StageName='Cerrada ganada';
                 opp.SyncedQuoteId=cotizacion.Id;
-                
             } 
+            opLine=[SELECT Id,Name,Product2.StockKeepingUnit FROM OpportunityLineItem WHERE OpportunityId=:oppor[0].id];
+            if(opLine.size()>0)
+            {
+               system.debug('Size del opLine '+opLine.size());
+                List<DSALES_VentaGEX.OpporLineItem> listaDeOportunidades = new List<DSALES_VentaGEX.OpporLineItem>();
+                for(OpportunityLineItem op:opLine)
+                    {
+                         DSALES_VentaGEX.OpporLineItem opportunityLine = new DSALES_VentaGEX.OpporLineItem();
+                        opportunityLine.id_OpportunityLineItem=op.Id;
+                       opportunityLine.sku=op.Product2.StockKeepingUnit;
+                        for(QuoteLineItem p:partida)
+                        {
+                            if(p.DSALES_SKU__c==op.Product2.StockKeepingUnit)
+                            {
+                                opportunityLine.articulo=p.DSALES_NombreProductoServicio__c;
+                            }
+                            
+                        }
+                       
+                        listaDeOportunidades.add(opportunityLine);
+                       
+                    }
+                ventaGEX.opportunity_line_item=listaDeOportunidades;
+            }
             try{
                 Update oppor;
                 
@@ -102,222 +128,7 @@ public class DSALES_ValidarClienteHelper {
         }
     }
     
-    /*  
-//quote has Client´s email & name
-
-public static void deleteTangibles(List<DSALES_AssetWrapper.AssetRequest> listAssets, String quoteId){
-Quote originalQuote = [SELECT Id, Name FROM Quote WHERE Id = :quoteId];              
-List<QuoteLineItem> unpurchasedItems = new List<QuoteLineItem>();
-Map<String, Boolean> purchasedSKUs = new Map<String, Boolean>();
-for(DSALES_AssetWrapper.AssetRequest a:listAssets){
-purchasedSKUs.put(a.sku_de_tangible, true);            
-}
-for (QuoteLineItem item : [SELECT Id,DSALES_SKU__c  FROM QuoteLineItem WHERE QuoteId = :quoteId and Product2.DSales_Tipo_de_Producto__c='Producto']) {
-if (!purchasedSKUs.containsKey(item.DSALES_SKU__c)) {
-unpurchasedItems.add(item);
-}
-}
-
-}
-
-public static void recepcionProductos(List<DSALES_CertificadoWrapper.CertificadoRequest>certificado, String quoteId){ 
-Map<Id, Boolean> purchasedWarranties = new Map<Id, Boolean>();
-for(DSALES_CertificadoWrapper.CertificadoRequest c:certificado){           
-purchasedWarranties.put(c.id_partida_presupuesto, true);                  //purchased Warranties.
-
-}
-Quote originalQuote = [SELECT Id, Name FROM Quote WHERE Id = :quoteId];
-List<QuoteLineItem>quoteLineMap= [SELECT id FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Servicio']; 
-
-//Sku:1234 Computer + warranty 12 months.
-//Sku:1234 24 months
-//Sku:1234 36 months
-List<QuoteLineItem> item= new List<QuoteLineItem>();
-// item=[SELECT DSALES_SKU__c FROM QuoteLineItem WHERE id IN:id_quotelineitem];
-// if(certificado == null){
-// List<QuoteLineItem>quoteLineMap= [SELECT id FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Servicio'AND Id NOT IN:id_quotelineitem ]; 
-
-//AND DSALES_SKU__c NOT IN:sku
-// item.addAll(quoteLineMap);
-// DELETE item;
-
-// }
-for (QuoteLineItem lineItem : quoteLineMap) {
-if (!purchasedWarranties.containsKey(lineItem.Id)) {
-item.add(lineItem);
-}
-}
-
-}
-*/   
-    
-    
-    
-    /*public static void deleteTangibles(List<DSALES_AssetWrapper.AssetRequest>listAssets, String quoteId)
-{
-
-Map<String,QuoteLineItem>quoteLineMapTan= new map<String,QuoteLineItem>();
-for(QuoteLineItem qt:[SELECT DSALES_SKU__c,Vigencia_meses__c,id FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Producto'])
-{
-quoteLineMapTan.put(qt.DSALES_SKU__c + qt.Vigencia_meses__c,qt);
-}
-
-Integer meses;
-for(DSALES_CertificadoWrapper.CertificadoRequest certi: certificado)
-{
-meses=Integer.valueOf(certi.warranty_duration);
-if(quoteLineMap.containskey(certi.sku+meses))
-{
-quoteLineMap.remove(certi.sku+meses);
-}
-
-}
-DELETE quoteLineMap.values();
-
-}*/
-    /*
-public static String ValidarCliente(String quoteId)
-{
-String clienteId;
-Integer contadora=0;
-String email,name,accountNumber,telephone,Product2Id;
-//quoteId='0Q08J000000D4U2SAK';
-
-
-try{
-
-
-Quote coti = [Select id, DSALES_EmailNew__c, OpportunityId,Name FROM Quote WHERE Id=:quoteId];
-Opportunity oppor=[SELECT AccountId FROM Opportunity WHERE Id=:coti.OpportunityId LIMIT 1];
-system.debug('Su account Id es: '+oppor.AccountId);
-email=coti.DSALES_EmailNew__c;
-name=coti.Name;
-
-//if the client doesn´t exist, then create it.
-
-Account nameAccount=[SELECT Name FROM Account WHERE ID=:oppor.AccountId LIMIT 1];
-system.debug('Su account Id es: '+nameAccount.Name);
-//   if(pago.DSALES_Cliente__r.Name.Contains('90001'))
-
-if(nameAccount.Name.Contains(DSALES_Utility.NUMERO_CLIENTE_GENERICO))
-{
-
-List<Account> acc = [SELECT Id FROM Account WHERE Name=:Name OR PersonEmail=:email  LIMIT 1];
-
-
-if(acc.size()==0)
-{
-RecordType record= [SELECT id FROM RECORDTYPE WHERE Name='Cuenta personal'];
-Account cliente = new Account(RecordTypeId=''+record.Id,FirstName=Name,LastName=Name,PersonEmail=email,PersonMobilePhone=telephone);
-insert cliente;
-oppor.AccountId=cliente.Id;
-clienteId=cliente.Id;
-upsert oppor;
-//Step 2
-
-system.debug('Si pasó, y el Id del nuevo cliente es: ' +cliente.Id);
-}
-else
-{
-system.debug('Ya existe un cliente con el siguiente id: '+ acc[contadora].Id);
-clienteId=acc[contadora].Id;
-contadora++;
-
-}
-}
-else
-{
-clienteId=oppor.AccountId;
-}
-
-}
-catch(Exception e)
-{
-system.debug('No pasó ');
-String message= e.getMessage() + ' '+e.getLineNumber() + ' '+e.getCause();
-System.debug(message);
-}
-
-return clienteId;
-
-}
-*/
-    //comparing QuoteLineItem products with Asset object 
-    /* 
-public static void insertProduct(List<DSALES_AssetWrapper.AssetRequest> lstAsset, String accountId, String quoteId){
-List<QuoteLineItem> quotitem1 =  [SELECT Id, QuoteId, Product2Id, DSales_SKU_Producto__c FROM QuoteLineItem where QuoteId=:quoteId AND DSALES_ListaArticulo__c= 'Producto'];
-List<QuoteLineItem> lstItem1 = new  List<QuoteLineItem>();
-for(DSALES_AssetWrapper.AssetRequest ass: lstAsset ){
-for(QuoteLineItem item:quotitem1){
-if(item.DSales_SKU_Producto__c!= ass.sku){
-ass.account_id=accountId;
-QuoteLineItem cot = new QuoteLineItem();
-cot.DSales_SKU_Producto__c= ass.sku;
-cot.Vigencia_meses__c = ass.months;
-lstItem1.add(cot);
-}
-
-} 
-}
-
-upsert lstItem1;
-System.debug('updated list of QuoteLineItem is------->' +lstItem1);
-}
-// Comparing QuoteLineItem service with Certificado object
-
-public static void insertService(List<DSALES_CertificadoWrapper.CertificadoRequest> lstcert, String quoteId, String accountId){
-List<QuoteLineItem> quotitem =  [SELECT Id, QuoteId, Product2Id, DSales_SKU_Producto__c FROM QuoteLineItem where QuoteId=:quoteId AND DSALES_ListaArticulo__c= 'Servicio'];
-List<QuoteLineItem> lstItem = new  List<QuoteLineItem>();
-List<QuoteLineItem> lstItem1 = new  List<QuoteLineItem>();
-
-for(DSALES_CertificadoWrapper.CertificadoRequest certificate: lstcert ){
-string monthsValidity= string.valueOf(certificate.warranty_duration);            
-for(QuoteLineItem item:quotitem){
-if(item.DSales_SKU_Producto__c== certificate.sku &&  item.Vigencia_meses__c!= monthsValidity){
-lstItem1.add(item);
-} 
-else if(quotitem.size()== 0 || quotitem == null){
-QuoteLineItem cot = new QuoteLineItem();
-cot.DSales_SKU_Producto__c= certificate.sku;
-cot.Vigencia_meses__c = monthsValidity;
-lstItem.add(cot);
-}
-}
-
-}
-upsert lstItem;
-Delete lstItem1;
-System.debug('Updated list of QuoteLineItem is------->' +lstItem);        
-System.debug('Deleted list of QuoteLineItem is------->' +lstItem1);
-
-
-}  
-      
-          for(QuoteLineItem item:quoteLineMap){
-              for(DSALES_CertificadoWrapper.CertificadoRequest cert:certificado){
-                     if(lstSku.contains(item.Product2.StockKeepingUnit) && item.Product2.StockKeepingUnit== cert.sku && item.Product2.StockKeepingUnit== cert.id_partida_presupuesto) {
-                        lstwotId.add(item.Product2.StockKeepingUnit);
-                            }
-                        }
-                  }
-             if(lstwotId.size() > 0) {
-              lstwotId.clear();
-                 }
-
-           
-        for(Product2 t: [Select StockKeepingUnit,Id from Product2 where StockKeepingUnit in :lstSku and DSales_Tipo_de_Producto__c='Servicio']){
-            for(DSALES_CertificadoWrapper.CertificadoRequest cert:certificado){
-                If(string.valueOf(t.StockKeepingUnit)==cert.id_partida_presupuesto && String.isEmpty(cert.id_partida_presupuesto)){
-                    lstwotId.add(cert.sku);
-                }
-            }  
-        }
-        if(!lstwotId.isEmpty()){
-            lstwotId.clear();
-        }
-        
-*/
-    
+       
     
     
 }

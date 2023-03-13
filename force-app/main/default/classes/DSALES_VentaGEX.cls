@@ -13,10 +13,25 @@ global class DSALES_VentaGEX {
         global String nombre_vendedor{get;set;}
         global String id_factura {get;set;}
         //fecha_compra
-        
-        
-        
-        
+    }
+    global class OpporLineItem{
+       	global String id_OpportunityLineItem {get;set;}
+        global String articulo {get;set;}
+        global String sku {get;set;}
+    }
+    global class Assets{
+        global String idAsset{get;set;}
+        global String sku{get;set;}
+        global String articulo {get;set;}
+    }
+     global class Certificado{
+         global String idCertificado {get;set;}
+         global String	sku_de_tangible {get;set;} 
+         global String id_partida_presupuesto{get;set;}
+         global String modelo_tangible{get;set;}
+         global String marca_tangible{get;set;}
+         global String precio_tangible{get;set;}
+         global String garantia_coppel_producto{get;set;}
     }
     
     global class VentaGexResponse{
@@ -26,6 +41,7 @@ global class DSALES_VentaGEX {
         global List<String> assets_id {get;set;}
         global List<String> certifieds_id {get;set;}
         global List<String> payments_id {get;set;}
+        global List<OpporLineItem> opportunity_line_item {get;set;}
     }
     
 }
