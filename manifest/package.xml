@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>DSALES_EndorsementWrapper</members>
-		<members>DSALES_EndosoWrapperRequest</members>
-		<members>DSALES_EndosoWrapperRequestHelper</members>
-		<members>DSALES_EndosoWrapperRequestTest</members>
-		<name>ApexClass</name>
+		<members>DSALES_Endoso__c.DSALES_Formato_compacto_endoso</members>
+		<name>CompactLayout</name>
 	</types>
 	<types>
-		<members>DSALES_Endoso__c.DSALES_MontoaDevolver__c</members>
-		<members>InsurancePolicy.DSALES_NombredelAsegurado__c</members>
-		<members>InsurancePolicy.DSALES_TelefonoContacto__c</members>
-		<name>CustomField</name>
+		<members>DSALES_Endoso__c</members>
+		<name>CustomTab</name>
+	</types>
+	<types>
+		<members>Endoso_Pagina_registro</members>
+		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>Carga_Cliente_en_Endoso</members>
+		<members>DSALES_Envio_correos_para_estatus_endosos</members>
+		<members>Dsales_Agregarelcorreoelectrnicodelclienteenelcampocorreodelendoso</members>
+		<name>Flow</name>
+	</types>
+	<types>
+		<members>DSALES_Endoso__c-Visualización de Endoso</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>DSALES_Ruta_de_estatus_de_Endosos</members>
+		<name>PathAssistant</name>
+	</types>
+	<types>
+		<members>DSALES_Endoso__c.Registro_de_endoso_completo</members>
+		<name>RecordType</name>
 	</types>
 	<version>55.0</version>
 </Package>
