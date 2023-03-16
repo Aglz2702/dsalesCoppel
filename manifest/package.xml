@@ -5,9 +5,14 @@
 		<name>CompactLayout</name>
 	</types>
 	<types>
+		<members>DSALES_Endoso__c.DSALES_Tipodeendoso__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
 		<members>DSALES_Endoso__c</members>
 		<name>CustomTab</name>
 	</types>
+	 <fullName>Endoso Página de registro</fullName>
 	<types>
 		<members>Endoso_Pagina_registro</members>
 		<name>FlexiPage</name>
@@ -25,6 +30,10 @@
 	<types>
 		<members>DSALES_Ruta_de_estatus_de_Endosos</members>
 		<name>PathAssistant</name>
+	</types>
+	<types>
+		<members>Administrador SM</members>
+		<name>Profile</name>
 	</types>
 	<types>
 		<members>DSALES_Endoso__c.Registro_de_endoso_completo</members>

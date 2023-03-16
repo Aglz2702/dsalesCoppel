@@ -13,34 +13,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Cambio de dirección</fullName>
+                <fullName>Actualización de correo electrónico</fullName>
                 <default>false</default>
-                <label>Cambio de dirección</label>
+                <label>Actualización de correo electrónico</label>
             </value>
             <value>
-                <fullName>Cambio de placas</fullName>
+                <fullName>Actualización de teléfono</fullName>
                 <default>false</default>
-                <label>Cambio de placas</label>
+                <label>Actualización de teléfono</label>
             </value>
             <value>
-                <fullName>Cambio de titular</fullName>
+                <fullName>Cancelación de póliza</fullName>
                 <default>false</default>
-                <label>Cambio de titular</label>
-            </value>
-            <value>
-                <fullName>Cambio No. motor</fullName>
-                <default>false</default>
-                <label>Cambio No. motor</label>
-            </value>
-            <value>
-                <fullName>Cambio No. serie</fullName>
-                <default>false</default>
-                <label>Cambio No. serie</label>
-            </value>
-            <value>
-                <fullName>Corrección de datos fiscales</fullName>
-                <default>false</default>
-                <label>Corrección de datos fiscales</label>
+                <label>Cancelación de póliza</label>
             </value>
             <value>
                 <fullName>Corrección de nombre</fullName>
@@ -48,9 +33,29 @@
                 <label>Corrección de nombre</label>
             </value>
             <value>
-                <fullName>Corrección de RFC</fullName>
+                <fullName>Cambio de dirección sin modificar el codigo postal</fullName>
                 <default>false</default>
-                <label>Corrección de RFC</label>
+                <label>Cambio de dirección (sin modificar el Código Postal)</label>
+            </value>
+            <value>
+                <fullName>Cambio de placas</fullName>
+                <default>false</default>
+                <label>Cambio de placas</label>
+            </value>
+            <value>
+                <fullName>Cambio de número de serie</fullName>
+                <default>false</default>
+                <label>Cambio de número de serie</label>
+            </value>
+            <value>
+                <fullName>Cambio de número de motor</fullName>
+                <default>false</default>
+                <label>Cambio de número de motor</label>
+            </value>
+            <value>
+                <fullName>Beneficiario preferente</fullName>
+                <default>false</default>
+                <label>Beneficiario preferente</label>
             </value>
             <value>
                 <fullName>Actualización de color</fullName>
@@ -59,22 +64,22 @@
                 <label>Actualización de color</label>
             </value>
             <value>
-                <fullName>Actualización de correo electrónico</fullName>
+                <fullName>Cambio de titular</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
-                <label>Actualización de correo electrónico</label>
+                <label>Cambio de titular</label>
             </value>
             <value>
-                <fullName>Actualización de teléfono</fullName>
+                <fullName>Corrección de RFC</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
-                <label>Actualización de teléfono</label>
+                <label>Corrección de RFC</label>
             </value>
             <value>
-                <fullName>Beneficiario preferente</fullName>
+                <fullName>Corrección de datos fiscales</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
-                <label>Beneficiario preferente</label>
+                <label>Corrección de datos fiscales</label>
             </value>
         </valueSetDefinition>
     </valueSet>
