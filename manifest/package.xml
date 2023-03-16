@@ -5,6 +5,10 @@
 		<name>CompactLayout</name>
 	</types>
 	<types>
+		<members>DSALES_Seguro_de_Motos</members>
+		<name>CustomApplication</name>
+	</types>
+	<types>
 		<members>DSALES_Endoso__c.DSALES_Tipodeendoso__c</members>
 		<name>CustomField</name>
 	</types>
@@ -12,7 +16,6 @@
 		<members>DSALES_Endoso__c</members>
 		<name>CustomTab</name>
 	</types>
-	 <fullName>Endoso Página de registro</fullName>
 	<types>
 		<members>Endoso_Pagina_registro</members>
 		<name>FlexiPage</name>
