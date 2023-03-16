@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_NombreVendedor__c</fullName>
+    <description>Campo para identificar la persona quien realizo la cancelación</description>
+    <externalId>false</externalId>
+    <label>Nombre del vendedor</label>
+    <length>40</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_RegistroReembolsoSM</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>DSALES_FormatoCompactoSM</compactLayoutAssignment>
+    <description>Tipo de registro para el proceso de SM</description>
+    <label>Registro de reembolso SM</label>
+    <picklistValues>
+        <picklist>DSALES_MetododePpago__c</picklist>
+        <values>
+            <fullName>Efectivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tarjeta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

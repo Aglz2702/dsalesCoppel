@@ -18,16 +18,14 @@ global class DSALES_ReembolsoWrapperRequest {
                     DSALES_ReembolsoWrapper.ReembolsoRequest reembolso = (DSALES_ReembolsoWrapper.ReembolsoRequest)JSON.deserialize(body, DSALES_ReembolsoWrapper.ReembolsoRequest.class);
                     //responsePayload = insertReembolso(reembolso);
                     DSALES_Reembolso__c reembolsoRecord = new DSALES_Reembolso__c();
-                    List<DSALES_InformacionDePago__c> buscarPago=[SELECT Id FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal__c=:reembolso.pago_universal];
-                    if(buscarPago.size()>0)
-                    {
-                        reembolsoRecord.DSALES_InformaciondePago__c=buscarPago[0].id;
-                    }
+                   
                     reembolsoRecord.DSALES_Comentarios__c=reembolso.comentarios;
-                    reembolsoRecord.DSALES_Fecha__c=reembolso.fecha;
-                    reembolsoRecord.Cantidad__c=reembolso.cantidad;
+                    reembolsoRecord.DSALES_FechaReembolso__c=reembolso.fecha_reembolso;
+                    reembolsoRecord.DSALES_CantidadReembolsada__c=reembolso.cantidad_reembolsada;
                     reembolsoRecord.DSALES_MetododePpago__c=reembolso.metodo_pago;
                     reembolsoRecord.DSALES_NumerodeReferencia__c=reembolso.numero_referencia;
+                    reembolsoRecord.NombredelProducto__c=reembolso.nombre_producto;
+                    reembolsoRecord.DSALES_NumeroCancelacion__c=reembolso.numero_cancelacion;
                     
                     insert reembolsoRecord;
                     

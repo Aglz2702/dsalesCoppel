@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_RegistroCancelacionSM</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>DSALES_FormatoCompactoSM</compactLayoutAssignment>
+    <description>Registro de cancelaciones para el procesos de SM</description>
+    <label>Registro de cancelación de SM</label>
+    <picklistValues>
+        <picklist>DSALES_Canal__c</picklist>
+        <values>
+            <fullName>%2EEXE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PSF</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Estatus__c</picklist>
+        <values>
+            <fullName>Cancelado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Devuelto</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_MotivoCancelacion__c</picklist>
+        <values>
+            <fullName>A petición del cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Demora de entrega</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Precio mas económico en otro establecimiento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Producto dañado</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

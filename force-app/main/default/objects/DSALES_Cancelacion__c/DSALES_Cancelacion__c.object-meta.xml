@@ -143,7 +143,6 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>DSALES_FormatoCompactoSM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Objeto para registrar los reembolso que nos comparte Coppel por cancelaciones o devoluciones.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -154,14 +153,14 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <gender>Masculine</gender>
-    <label>Reembolso</label>
+    <gender>Feminine</gender>
+    <label>Cancelación</label>
     <nameField>
         <displayFormat>{000000}</displayFormat>
-        <label>Número de Reembolso</label>
+        <label>Número de Cancelación</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Reembolsos</pluralLabel>
+    <pluralLabel>Cancelaciones</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

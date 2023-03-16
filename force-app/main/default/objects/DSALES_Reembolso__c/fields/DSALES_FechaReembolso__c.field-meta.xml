@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSALES_Fechadeinicio__c</fullName>
+    <fullName>DSALES_FechaReembolso__c</fullName>
+    <description>La fecha en que se creó este reembolso.</description>
     <externalId>false</externalId>
-    <label>Fecha de inicio</label>
+    <label>Fecha de reembolso</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Date</type>
 </CustomField>

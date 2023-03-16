@@ -182,6 +182,8 @@
 	<members>Quote.DSALES_FormatocompactoSM</members>
 	<members>QuoteLineItem.DSALES_FormatocompactoSM</members>
 	<members>DSALES_InformacionDePago__c.DSales_Informacion_GEX</members>
+	<members>Product2.DSALES_FormatoCompactoSMIntang</members>
+	<members>Product2.DSALES_FormatocompactoSM</members>
 	<name>CompactLayout</name>
 </types>
 <types>
@@ -531,6 +533,7 @@
 	<members>Product2.DSALES_Categoria__c</members>
 	<members>Product2.DSALES_Clase__c</members>
 	<members>Product2.DSALES_Familia__c</members>
+	<members>Product2.DSALES_IsClasified__c</members>
 	<members>Product2.DSALES_Noaplica__c</members>
 	<members>Product2.DSales_Nombre_del_Producto__c</members>
 	<members>Product2.DSALES_Regiones__c</members>
@@ -540,6 +543,7 @@
 	<members>Product2.DSALES_SubCategoria__c</members>
 	<members>Product2.DSales_SKU_anterior__c</members>
 	<members>Product2.DSALES_TipoServicio__c</members>
+	<members>Product2.DSALES_Vigencia__c</members>
 	<members>Product2.DSales_Aplicaporcentajecobro__c</members>
 	<members>Product2.DSales_Articulo__c</members>
 	<members>Product2.DSales_PorcentajeCobro__c</members>
@@ -612,6 +616,8 @@
 	<members>QuoteLineItem.DSALES_Fechadeinicio__c</members>
 	<members>QuoteLineItem.DSALES_Fechadetermino__c</members>
 	<members>QuoteLineItem.DSALES_Nombre__c</members>
+	<members>QuoteLineItem.DSALES_PagoContado__c</members>
+	<members>QuoteLineItem.DSALES_Pagomensual__c</members>
 	<members>QuoteLineItem.DSALES_Gastosdeoperacindelrecibo__c</members>
 	<members>QuoteLineItem.DSALES_Impuestos__c</members>
 	<members>QuoteLineItem.DSALES_ListaArticulo__c</members>
@@ -638,6 +644,10 @@
 	<members>Tienda__c.DSALES_Cdigopostal__c</members>
 	<members>Quote.DSALES_Aseguradora__c</members>
 	<members>Quote.DSALES_Negocio__c</members>
+	<members>DSALES_Reembolso__c.DSALES_CantidadReembolsada__c</members>
+		<members>DSALES_Reembolso__c.DSALES_FechaReembolso__c</members>
+		<members>DSALES_Reembolso__c.DSALES_NumeroCancelacion__c</members>
+		<members>DSALES_Reembolso__c.NombredelProducto__c</members>
 	<members>Tienda__c.DSALES_Region__c</members>
 	<members>Tienda__c.DSALES_A_o_de_ltima_remodelaci_n__c</members>
 	<members>Tienda__c.DSALES_Banco__c</members>
@@ -652,6 +662,7 @@
 	<members>Tienda__c.DSALES_Optica__c</members>
 	<members>DSALES_Certificado__c.DSales_Garantia_Coppel__c</members>
 		<members>DSALES_InformacionDePago__c.DSALES_IDUniversal__c</members>
+		
 	<name>CustomField</name>
 </types>
 <types>
@@ -774,6 +785,7 @@
 	<members>Tipo_de_endoso__mdt</members>
 	<members>Tienda__c</members>
 	<members>DSALES_Reembolso__c</members>
+	<members>DSALES_Cancelacion__c</members>
 	<name>CustomObject</name>
 </types>
 <types>
@@ -892,6 +904,7 @@
 	<members>Porcentaje_de_cobro_Record_Page</members>
 	<members>Asignaci_n_de_Productos_P_gina_de_registro1</members>
 	<members>Producto_P_gina_de_registro</members>
+	<members>Partida_presupuesto_Pagina_registro</members>
 	<name>FlexiPage</name>
 </types>
 <types>
