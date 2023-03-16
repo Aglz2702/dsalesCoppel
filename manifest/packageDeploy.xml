@@ -779,6 +779,7 @@
 	<members>Tipo_de_endoso__mdt</members>
 	<members>Tienda__c</members>
 	<members>DSALES_Reembolso__c</members>
+	<members>DSALES_Cancelacion__c</members>
 	<name>CustomObject</name>
 </types>
 <types>
