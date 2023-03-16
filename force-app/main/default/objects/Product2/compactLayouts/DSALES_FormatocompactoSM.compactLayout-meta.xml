@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_FormatocompactoSM</fullName>
+    <fields>Name</fields>
+    <fields>DSales_Tipo_de_Producto__c</fields>
+    <fields>IsActive</fields>
+    <fields>StockKeepingUnit</fields>
+    <fields>DSALES_vehculo__c</fields>
+    <fields>DSALES_Vigencia__c</fields>
+    <label>Formato compacto SM</label>
+</CompactLayout>

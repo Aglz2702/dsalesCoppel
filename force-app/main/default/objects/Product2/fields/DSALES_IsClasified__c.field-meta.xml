@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSales_SKU_anterior__c</fullName>
+    <fullName>DSALES_IsClasified__c</fullName>
+    <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>SKU anterior</label>
-    <length>6</length>
-    <required>false</required>
+    <label>Clasificado</label>
     <trackHistory>false</trackHistory>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Checkbox</type>
 </CustomField>
