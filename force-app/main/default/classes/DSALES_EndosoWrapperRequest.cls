@@ -1,41 +1,41 @@
 /*********************************************************************************************************************************************************************
- @ Class Name :  DSALES_EndosoWrapperRequest
- @ Author : Namrata Katore
- @ Purpose : exposing service for webhook to insert or update Endoso record in salesforce
- @ Date : 5/4/2023
+@ Class Name :  DSALES_EndosoWrapperRequest
+@ Author : Namrata Katore
+@ Purpose : exposing service for webhook to insert or update Endoso record in salesforce
+@ Date : 5/3/2023
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
- @ Change History :
+@ Change History :
 **********************************************************************************************************************************************************************/
 
 
 @RestResource(urlMapping='/insertEndoso/*')
 global with sharing class DSALES_EndosoWrapperRequest {
-  
-/*********************************************************************************************************************************************************************
- @ Method Name :  createEndoso (HttpPost Method)
- @ Author : Namrata Katore
- @ Purpose : exposing method for webhook to insert or update Endoso record in salesforce
- @ Date : 5/4/2023
+    
+    /*********************************************************************************************************************************************************************
+@ Method Name :  createEndoso (HttpPost Method)
+@ Author : Namrata Katore
+@ Purpose : exposing method for webhook to insert or update Endoso record in salesforce
+@ Date : 5/3/2023
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
- @ Change History :
+@ Change History :
 **********************************************************************************************************************************************************************/
     @HttpPost
-    global static DSALES_EndorsementWrapper.endorsementResponse createEndoso(){
-        DSALES_EndorsementWrapper.endorsementResponse responsePayload = new DSALES_EndorsementWrapper.endorsementResponse();
+    global static DSALES_EndorsementWrapper.EndorsementResponse createEndoso(){
+        DSALES_EndorsementWrapper.EndorsementResponse responsePayload = new DSALES_EndorsementWrapper.EndorsementResponse();
         if(RestContext.request != null){
             String body = System.RestContext.request.requestBody.toString();
             if(String.isNotBlank(body)){
                 try{
-                    DSALES_EndorsementWrapper.endorsementRequest endoso = (DSALES_EndorsementWrapper.endorsementRequest)JSON.deserialize(body, DSALES_EndorsementWrapper.endorsementRequest.class);
+                    DSALES_EndorsementWrapper.EndorsementRequest endoso = (DSALES_EndorsementWrapper.EndorsementRequest)JSON.deserialize(body, DSALES_EndorsementWrapper.EndorsementRequest.class);
                     responsePayload = DSALES_EndosoWrapperRequestHelper.upsertEndoso(endoso);
-                 }catch(JSONException e){
+                }catch(JSONException e){
                     responsePayload.success = false;
-                    responsePayload.codigo_error = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
-                    responsePayload.mensaje_error = DSALES_Utility.BAD_REQUEST_MSJ+' '+ e.getLineNumber()+' '+e.getCause()+' '+e.getMessage();
+                    responsePayload.codigoError = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
+                    responsePayload.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ+' '+ e.getLineNumber()+' '+e.getCause()+' '+e.getMessage();
                 }catch(Exception e){
                     responsePayload.success = false;
-                    responsePayload.codigo_error = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
-                    responsePayload.mensaje_error = DSALES_Utility.INTERNAL_ERROR_MSJ+' '+ e.getLineNumber()+' '+e.getCause()+' '+e.getMessage();
+                    responsePayload.codigoError = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+                    responsePayload.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ+' '+ e.getLineNumber()+' '+e.getCause()+' '+e.getMessage();
                 }
             }
         }

@@ -1,46 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>DSALES_Endoso__c.DSALES_Formato_compacto_endoso</members>
-		<name>CompactLayout</name>
+		<members>DSALES_EndorsementWrapper</members>
+		<members>DSALES_EndosoWrapperRequest</members>
+		<members>DSALES_EndosoWrapperRequestHelper</members>
+		<members>DSALES_EndosoWrapperRequest_Test</members>
+		<name>ApexClass</name>
 	</types>
 	<types>
-		<members>DSALES_Seguro_de_Motos</members>
-		<name>CustomApplication</name>
-	</types>
-	<types>
-		<members>DSALES_Endoso__c.DSALES_Tipodeendoso__c</members>
+		<members>DSALES_Endoso__c.DSALES_Tipodedocumento__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>
-		<members>DSALES_Endoso__c</members>
-		<name>CustomTab</name>
-	</types>
-	<types>
-		<members>Endoso_Pagina_registro</members>
-		<name>FlexiPage</name>
-	</types>
-	<types>
-		<members>Carga_Cliente_en_Endoso</members>
-		<members>DSALES_Envio_correos_para_estatus_endosos</members>
-		<members>Dsales_Agregarelcorreoelectrnicodelclienteenelcampocorreodelendoso</members>
-		<name>Flow</name>
-	</types>
-	<types>
-		<members>DSALES_Endoso__c-Visualización de Endoso</members>
-		<name>Layout</name>
-	</types>
-	<types>
-		<members>DSALES_Ruta_de_estatus_de_Endosos</members>
-		<name>PathAssistant</name>
-	</types>
-	<types>
-		<members>Administrador SM</members>
-		<name>Profile</name>
-	</types>
-	<types>
-		<members>DSALES_Endoso__c.Registro_de_endoso_completo</members>
-		<name>RecordType</name>
+		<members>Administrador_de_sistema_Fun_SM</members>
+		<name>PermissionSet</name>
 	</types>
 	<version>55.0</version>
 </Package>
