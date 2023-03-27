@@ -262,17 +262,17 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     } 
                     
                     List<Account> clienteContado = [SELECT Id,FirstName,LastName FROM Account WHERE FirstName=: data.nombre and LastName=: data.apellido_paterno and PersonEmail= :data.correo_electronico];
-                    if(data.numero_de_cliente == '' || data.numero_de_cliente == null ){
-                        
+                    if(String.isEmpty(data.numero_de_cliente) && clienteContado.size()>0 ){
+                        system.debug('Sí se encontró');
                         oppor.AccountId = clienteContado[0].Id;
-                        oppor.Name = clienteContado[0].FirstName+' '+clienteContado[0].LastName;
+                        oppor.Name = clienteContado[0].FirstName+' '+clienteContado[0].LastName + ' '+data.apellido_materno;
                         oppor.CloseDate = date.today()+30;
                         oppor.StageName = 	'Nuevo';
                         oppor.RecordTypeId = recordTypeId;
                         oppor.Pricebook2Id = precioLista[0].Id;
                         insert oppor;
                         
-                        cotiza.Name = clienteContado[0].FirstName+' '+clienteContado[0].LastName;
+                        cotiza.Name = clienteContado[0].FirstName+' '+clienteContado[0].LastName + ' '+data.apellido_materno;
                         cotiza.OpportunityId = oppor.Id;
                         cotiza.RecordTypeId =recordTypeQuoteId;
                         cotiza.DSales_ID_Tienda__c = data.id_tienda;
@@ -458,6 +458,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                 oppor.RecordTypeId = recordTypeId;
                                 oppor.Pricebook2Id = precioLista[0].Id;
                                 insert oppor;
+                                system.debug('oppor'+oppor.Id);
                                 
                                 cotiza.Name = result[0].FirstName+' '+result[0].LastName;
                                 cotiza.OpportunityId = oppor.Id;
@@ -1019,18 +1020,20 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 }catch(JSONException e){
                     success = false;
                     code = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
-                    message = DSALES_Utility.BAD_REQUEST_MSJ;
+                    message = DSALES_Utility.BAD_REQUEST_MSJ+' '+e.getCause()+' '+e.getLineNumber()+e.getMessage();
                 }catch(Exception e){
                     success = false;
                     code = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
-                    message = DSALES_Utility.INTERNAL_ERROR_MSJ+' '+e.getCause()+' '+e.getLineNumber();
+                    message = e.getMessage() + e.getLineNumber(); //+' '+e.getCause()+' '+e.getLineNumber();DSALES_Utility.INTERNAL_ERROR_MSJ
                 }
             }
         }
         
         DSALES_QuoteGexWrapper.respuestaNPV respuestaNpvList = new DSALES_QuoteGexWrapper.respuestaNPV();
         respuestaNpvList.id_cotizacion = cotiza.Id;
+        system.debug('cotizacion_____'+cotiza.Id);
         respuestaNpvList.id_oportunidad = oppor.Id;
+        system.debug('Oportunidad______'+oppor.Id);
         respuestaNpvList.success = success;
         respuestaNpvList.codigo_error = code;
         respuestaNpvList.mensaje_error = message;
@@ -1094,6 +1097,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
     
     public static DSALES_QuoteGexWrapper.nodos respuestaDescripcion(String nombre, String cotizaId,String tipoServicio){
         List<Quotelineitem> lstSkus = [SELECT id,Product2.StockKeepingUnit,Product2.Description FROM Quotelineitem WHERE Quoteid=:cotizaId AND Product2.DSales_Tipo_de_Producto__c='Servicio' AND Product2.Description=:nombre];
+        system.debug('partidas::__' + lstSkus);
         DSALES_QuoteGexWrapper.nodos nodoAux = new DSALES_QuoteGexWrapper.nodos();
         nodoAux.Description = nombre;
         nodoAux.tipo_de_servicio = tipoServicio;
@@ -1103,13 +1107,16 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             String skuAux = valores.Product2.StockKeepingUnit;
             nodoAux.sku.add(skuAux);
         }
+        system.debug('nodos::__' + nodoAux);
         return nodoAux;
     }
     
     public static List<DSALES_QuoteGexWrapper.nodos> responseDescription(String tipoProducto, String cotizaId){
         List<Quotelineitem> valores = [SELECT id,Product2.StockKeepingUnit,Product2.Description FROM Quotelineitem WHERE Quoteid=:cotizaId AND Product2.DSales_Tipo_de_Producto__c=:tipoProducto ORDER BY Product2.Description];
+        system.debug('cotizacion::__' + cotizaId);
+        system.debug('valores::__' + valores);
         List<String> ValoresBusqueda = new List<String>();
-        if(valores!=null){
+        if(valores.size()>0){
             String valorDescripcion=valores[0].Product2.Description;
             ValoresBusqueda.add(valorDescripcion);
             for(Quotelineitem aux :valores){
@@ -1121,9 +1128,10 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         }
         List<DSALES_QuoteGexWrapper.nodos> response = new List<DSALES_QuoteGexWrapper.nodos>();
         for(String aux :ValoresBusqueda){
-            DSALES_QuoteGexWrapper.nodos respuesta = DSALES_QuoteGexWrapperRequest.respuestaDescripcion(aux, cotizaId,'Servicio' );
+            DSALES_QuoteGexWrapper.nodos respuesta = DSALES_QuoteGexWrapperRequest.respuestaDescripcion(aux, cotizaId,'Servicio');
             response.add(respuesta);
         }
+        system.debug('response::__' + response);
         return response;
     }
 }

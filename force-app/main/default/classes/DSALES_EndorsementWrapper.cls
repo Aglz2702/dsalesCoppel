@@ -1,48 +1,36 @@
-public class DSALES_EndorsementWrapper {
+global class DSALES_EndorsementWrapper {
     public class documento {
-        public string IdDocumento{ get; set; }
-        public string TipoDocumento{ get; set; }
-        public string Documento{ get; set; }   
+        public string id_documento{ get; set; }
+        public string tipo_documento{ get; set; }
+        public string documento{ get; set; }   
     }
     
     public class dato {
-        public string IdDato {get; set;}
-        public string TipoDato {get; set;}
-        public string Valor {get; set;}
-        
+        public string id_dato {get; set;}
+        public string tipo_dato {get; set;}
+        public string valor {get; set;}
     }
     
     public class endorsementRequest {
         public string uid{ get; set; }
-        public String TipoEndoso { get; set; }
-        public String NumeroPoliza { get; set; }
-        public Date FechaEndoso { get; set; }
-        public String Estatus { get; set; }
-        public documento Documentos { get; set; } 
-        public dato Datos { get; set; } 
-        public string salesforceid { get; set; } 
+        public String numero_poliza { get; set; }
+        public String tipo_endoso { get; set; }
+        public String tipo_documento { get; set; }
+        //public Date fecha_endoso { get; set; }
+        public String estatus { get; set; }
+        public string motivo_devolucion {get; set;}
+        public string solucion_devolucion {get; set;}
+        public string motivo_rechazo {get; set;}
+        public Decimal monto_a_devolver {get; set;}
+        //public documento documentos { get; set; } 
+        public dato datos { get; set; } 
+        public string salesforce_id { get; set; } 
     }
     
-    public class Endoso{
-        public string uid{ get; set; }
-    }
-    public class endorsementResponse{
-        public String ok { get; set; }
-   		public string response { get; set; }
-   		public string msg { get; set; }
-   		public Endoso endoso { get; set; } 
-    }
-    public class getResponse {
-        public string uid { get; set; } 
-        public string TipoEndoso { get; set; }
-        public string NumeroPoliza { get; set; }
-        public String FechaEndoso { get; set; }
-        public String FechaAplicacionEndoso { get; set; }
-        public string Estatus { get; set; }
-        public string ComentarioEstatus { get; set; }
-        public List<documento> Documentos { get; set;}
-        public List<dato> Datos { get; set;} 
-        public string salesforceid { get; set; } 
-    }
-    
+    global class endorsementResponse{
+        global Boolean success {get;set;}
+        global String codigo_error {get;set;}
+        global String mensaje_error {get;set;}
+   		global String id_endoso { get; set; } 
+    } 
 }
