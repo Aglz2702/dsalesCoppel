@@ -69,6 +69,10 @@
             <fullName>Seguro gratis</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Seguro obligatorio</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Status</picklist>

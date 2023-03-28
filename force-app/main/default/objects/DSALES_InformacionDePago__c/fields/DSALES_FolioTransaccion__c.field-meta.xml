@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSALES_SKU__c</fullName>
-    <description>Número SKU del producto</description>
+    <fullName>DSALES_FolioTransaccion__c</fullName>
     <externalId>false</externalId>
-    <label>SKU</label>
+    <label>Folio de transacción</label>
     <length>6</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
