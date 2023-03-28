@@ -3,24 +3,6 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Partida_de_presupuesto_P_gina_de_registro</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>QuoteLineItem</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Partida_de_presupuesto_P_gina_de_registro</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>QuoteLineItem</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>DSALES_PysisAccountRecordPage</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -39,7 +21,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Endoso_P_gina_de_registro</content>
+        <content>Endoso_Pagina_registro</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -48,7 +30,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Endoso_P_gina_de_registro</content>
+        <content>Endoso_Pagina_registro</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
@@ -89,60 +71,6 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>Opportunity</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override updated by Lightning App Builder during activation.</comment>
-        <content>P_liza_P_gina_de_registro1</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>InsurancePolicy</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override updated by Lightning App Builder during activation.</comment>
-        <content>P_liza_P_gina_de_registro1</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>InsurancePolicy</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Quote_Record_Page</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>Quote</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Quote_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>Quote</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Siniestro_P_gina_de_registro</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>Claim</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Siniestro_P_gina_de_registro</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>Claim</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>Tab</actionName>
@@ -151,6 +79,186 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>standard-home</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Partida_presupuesto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>QuoteLineItem</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Partida_presupuesto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>QuoteLineItem</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Siniestro_P_gina_de_registro</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Claim</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Siniestro_P_gina_de_registro</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Claim</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Tienda_P_gina_de_registro</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Tienda__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Tienda_P_gina_de_registro</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Tienda__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Campa_a_P_gina_de_registro</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Campaign</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Campa_a_P_gina_de_registro</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Campaign</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>DSALES_TipodeUsoPginaderegistro</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>DSALES_TipodeUso__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>DSALES_TipodeUsoPginaderegistro</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>DSALES_TipodeUso__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>DSALES_TipodevehculoPginaderegistro</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>DSALES_Tipodevehculo__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>DSALES_TipodevehculoPginaderegistro</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>DSALES_Tipodevehculo__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Asociaci_n_de_campa_as_P_gina_de_registro</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>DSALES_AsociacionCampanias__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Asociaci_n_de_campa_as_P_gina_de_registro</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>DSALES_AsociacionCampanias__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Quote_Record_Page_Seguros</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Quote</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Quote_Record_Page_Seguros</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Quote</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Producto_de_oportunidad_P_gina_de_registro</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>OpportunityLineItem</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Producto_de_oportunidad_P_gina_de_registro</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>OpportunityLineItem</pageOrSobjectType>
     </actionOverrides>
     <brand>
         <headerColor>#F2C641</headerColor>
@@ -168,11 +276,624 @@
     <navType>Standard</navType>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>Quote_Record_Page_Seguros</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Quote</pageOrSobjectType>
+        <recordType>Quote.DSALES_VentaSM</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Quote_Record_Page_Seguros</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Quote</pageOrSobjectType>
+        <recordType>Quote.DSALES_VentaSM</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Quote_Record_Page_Seguros</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Quote</pageOrSobjectType>
+        <recordType>Quote.DSALES_VentaSM</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Quote_Record_Page_Seguros</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Quote</pageOrSobjectType>
+        <recordType>Quote.DSALES_VentaSM</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Quote_Record_Page_Seguros</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Quote</pageOrSobjectType>
+        <recordType>Quote.DSALES_VentaSM</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Quote_Record_Page_Seguros</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Quote</pageOrSobjectType>
+        <recordType>Quote.DSALES_VentaSM</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Quote_Record_Page_Seguros</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Quote</pageOrSobjectType>
+        <recordType>Quote.DSALES_VentaSM</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Configurador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Garantia_Extendida</recordType>
+        <type>Flexipage</type>
+        <profile>Configurador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Configurador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
+        <type>Flexipage</type>
+        <profile>Configurador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes GEX</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Configurador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Producto_Pagina_registro</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Product2</pageOrSobjectType>
+        <recordType>Product2.DSALES_ProdTangible</recordType>
+        <type>Flexipage</type>
+        <profile>Configurador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.FinServ__General</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>Oportunidad_PISYS_GEX</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.FinServ__General</recordType>
         <type>Flexipage</type>
         <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.FinServ__General</recordType>
+        <type>Flexipage</type>
+        <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.FinServ__General</recordType>
+        <type>Flexipage</type>
+        <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.DSALES_Oportunidad</recordType>
+        <type>Flexipage</type>
+        <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.DSALES_Oportunidad</recordType>
+        <type>Flexipage</type>
+        <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.FinServ__General</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.FinServ__General</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.FinServ__General</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.FinServ__General</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.DSALES_Oportunidad</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.DSALES_Oportunidad</recordType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.DSALES_Oportunidad</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.DSALES_Oportunidad</recordType>
+        <type>Flexipage</type>
+        <profile>Atención de servicio SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -189,6 +910,14 @@
         <pageOrSobjectType>Opportunity</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Agente de servicios SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>Administrador SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -219,141 +948,6 @@
         <content>Oportunidad_PISYS_GEX</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Control de Informes SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Control de Informes SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Control de Informes SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
         <type>Flexipage</type>
         <profile>Control de Informes SM</profile>
     </profileActionOverrides>
@@ -451,6 +1045,15 @@
         <pageOrSobjectType>standard-home</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Atención de servicio SM</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Oportunidad_PISYS_GEX</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.DSALES_Oportunidad</recordType>
+        <type>Flexipage</type>
+        <profile>Control de Informes SM</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>
@@ -460,13 +1063,12 @@
     <tabs>DSALES_InformacionDePago__c</tabs>
     <tabs>DSALES_Endoso__c</tabs>
     <tabs>standard-Claim</tabs>
-    <tabs>standard-Asset</tabs>
+    <tabs>DSALES_TipodeUso__c</tabs>
+    <tabs>DSALES_Tipodevehculo__c</tabs>
+    <tabs>standard-Campaign</tabs>
+    <tabs>standard-Product2</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
-    <tabs>DSALES_Categoria__c</tabs>
-    <tabs>DSALES_SubCategoria__c</tabs>
-    <tabs>DSALES_Clase__c</tabs>
-    <tabs>DSALES_Familia__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Seguro_de_Motos_UtilityBar</utilityBar>
 </CustomApplication>

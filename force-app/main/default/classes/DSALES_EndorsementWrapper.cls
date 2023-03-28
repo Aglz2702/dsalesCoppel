@@ -1,36 +1,36 @@
 global class DSALES_EndorsementWrapper {
-    public class documento {
-        public string id_documento{ get; set; }
-        public string tipo_documento{ get; set; }
-        public string documento{ get; set; }   
+    public class Documento {
+        public String idDocumento{ get; set; }
+        public String tipoDocumento{ get; set; }
+        public String documento{ get; set; }   
     }
     
-    public class dato {
-        public string id_dato {get; set;}
-        public string tipo_dato {get; set;}
-        public string valor {get; set;}
+    public class Dato {
+        public String idDato {get; set;}
+        public String tipoDato {get; set;}
+        public String valor {get; set;}
     }
     
-    public class endorsementRequest {
-        public string uid{ get; set; }
-        public String numero_poliza { get; set; }
-        public String tipo_endoso { get; set; }
-        public String tipo_documento { get; set; }
-        //public Date fecha_endoso { get; set; }
+    public class EndorsementRequest {
+        public String uid{ get; set; }
+        public String numeroPoliza { get; set; }
+        public String tipoEndoso { get; set; }
+        public String tipoDocumento { get; set; }
+        //public Date fechaEndoso { get; set; }
         public String estatus { get; set; }
-        public string motivo_devolucion {get; set;}
-        public string solucion_devolucion {get; set;}
-        public string motivo_rechazo {get; set;}
-        public Decimal monto_a_devolver {get; set;}
-        //public documento documentos { get; set; } 
-        public dato datos { get; set; } 
-        public string salesforce_id { get; set; } 
+        public String motivoDevolucion {get; set;}
+        public String solucionDevolucion {get; set;}
+        public String motivoRechazo {get; set;}
+        public Decimal montoDevolver {get; set;}
+        //public Documento documentos { get; set; } 
+        public Dato datos { get; set; } 
+        public String salesforceId { get; set; } 
     }
     
-    global class endorsementResponse{
+    global class EndorsementResponse{
         global Boolean success {get;set;}
-        global String codigo_error {get;set;}
-        global String mensaje_error {get;set;}
-   		global String id_endoso { get; set; } 
+        global String codigoError {get;set;}
+        global String mensajeError {get;set;}
+        global String idEndoso { get; set; } 
     } 
 }
