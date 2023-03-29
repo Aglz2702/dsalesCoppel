@@ -107,7 +107,7 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_EndosoWrapperRequestTest</apexClass>
+        <apexClass>DSALES_EndosoWrapperRequest_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -300,6 +300,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_TiposDeUsoTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_UpdateInfoPago</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1580,6 +1584,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Claim.DSALES_NumeroPagos__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Claim.DSALES_SaldoInsoluto__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1689,7 +1698,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>DSALES_Cancelacion__c.DSALES_FolioCancelacion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2174,6 +2183,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>DSALES_InformacionDePago__c.DSALES_FolioTransaccion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>DSALES_InformacionDePago__c.DSALES_FormaDePago__c</field>
         <readable>true</readable>
@@ -2187,6 +2201,11 @@
         <editable>false</editable>
         <field>DSALES_InformacionDePago__c.DSALES_Ganodineroelec__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DSALES_InformacionDePago__c.DSALES_IDUniversal1__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2330,6 +2349,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>DSALES_InformacionDePago__c.DSALES_TipoFolio__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>DSALES_InformacionDePago__c.DSALES_TotalContado__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2429,7 +2453,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>DSALES_Reembolso__c.DSALES_NumeroCancelacion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2474,19 +2498,19 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>DSALES_Tipodevehculo__c.DSALES_Activo__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>DSALES_Tipodevehculo__c.DSALES_Descripcin__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>DSALES_Tipodevehculo__c.DSALES_Numerodevehculo__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3124,9 +3148,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>InsurancePolicyAsset.CustomerPropertyId</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -3697,6 +3721,11 @@
         <editable>false</editable>
         <field>Product2.DSALES_Matriz__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Product2.DSALES_Noaplica__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -4669,6 +4698,10 @@
         <layout>DSALES_Reembolso__c-Formato Reembolso</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>DSALES_Reembolso__c-Formato Reembolso SM</layout>
+        <recordType>DSALES_Reembolso__c.DSALES_RegistroReembolsoSM</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_RutaIntegracion__mdt-Formato Ruta de Integración</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -5089,6 +5122,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>DSALES_Reembolso__c.DSALES_RegistroReembolsoSM</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -5205,6 +5239,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>DSALES_Matriz_de_Cotizacion__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>DSALES_Reembolso__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
