@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <description>Cuando se genera un registro de siniestro, se trae el valor del correo y cliente relacionado a la póliza seleccionada</description>
+    <environments>Default</environments>
+    <interviewLabel>Actualizar cliente y correo de la poliza {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Actualizar cliente y correo de la póliza</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Actualiza_cliente</name>
+        <label>Actualiza cliente</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>$Record.PolicyNumber.NameInsured.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Correo_electr_nico__c</field>
+            <value>
+                <elementReference>$Record.PolicyNumber.DSALES_CorreoElectronico__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DSALES_Marca__c</field>
+            <value>
+                <elementReference>$Record.PolicyNumber.DSALES_Marca__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InsuredAssetId</field>
+            <value>
+                <elementReference>$Record.PolicyNumber.DSALES_Activodeplizadeseguro__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Actualiza_cliente</targetReference>
+        </connector>
+        <object>Claim</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_NumeroPagos__c</fullName>
+    <description>Campo para contar los pagos que tuvo un siniestro</description>
+    <externalId>false</externalId>
+    <label>Número de pagos</label>
+    <summaryFilterItems>
+        <field>ClaimPaymentSummary.DSALES_Tipopago__c</field>
+        <operation>equals</operation>
+        <value>Pago a Cliente, Pago a cuenta Coppel</value>
+    </summaryFilterItems>
+    <summaryForeignKey>ClaimPaymentSummary.ClaimId</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

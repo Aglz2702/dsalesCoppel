@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>DSALES_Informa_Siniestro_En_Tramite</fullName>
-        <description>Informa Siniestro En Tramite</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Correo_electr_nico__c</field>
-            <type>email</type>
-        </recipients>
-        <senderAddress>atencion@coppel.com</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>DSALES_Deloitte/Siniestro_En_Tr_mite_1660834028554</template>
-    </alerts>
-    <alerts>
         <fullName>Informa_Nuevo_Siniestro</fullName>
         <description>Informa Nuevo Siniestro</description>
         <protected>false</protected>
