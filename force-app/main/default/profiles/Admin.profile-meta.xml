@@ -2736,11 +2736,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>InsurancePolicy.DSALES_Numeroseguimiento__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>InsurancePolicy.DSALES_Numeroserie__c</field>
         <readable>false</readable>
     </fieldPermissions>
