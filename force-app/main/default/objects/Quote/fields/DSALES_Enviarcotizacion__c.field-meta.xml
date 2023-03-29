@@ -3,6 +3,7 @@
     <fullName>DSALES_Enviarcotizacion__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Enviar cotización</label>
+    <label>Cotización enviada al cliente</label>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

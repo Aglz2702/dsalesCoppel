@@ -5,5 +5,6 @@
     <externalId>false</externalId>
     <label>Fecha de creación cotización</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Date</type>
 </CustomField>

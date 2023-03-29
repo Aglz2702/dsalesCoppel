@@ -6,6 +6,7 @@
     <label>Código de promoción</label>
     <length>1</length>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>
