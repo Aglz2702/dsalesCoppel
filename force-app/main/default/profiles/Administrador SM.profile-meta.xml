@@ -2734,11 +2734,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InsurancePolicy.DSALES_Numeroseguimiento__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>InsurancePolicy.DSALES_Numeroserie__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4748,6 +4743,9 @@
     <layoutAssignments>
         <layout>Opportunity-DSALES_OpportunitySM</layout>
         <recordType>Opportunity.Seguro_de_Moto</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OpportunityLineItem-DSALES_FormatodePaginaPOSM</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>PersonAccount-DSALES_Clientes</layout>

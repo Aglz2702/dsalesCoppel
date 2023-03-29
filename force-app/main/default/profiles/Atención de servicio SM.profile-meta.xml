@@ -343,10 +343,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>endososControllerClass</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>endososControllerClassTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2729,11 +2725,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>InsurancePolicy.DSALES_NombredelAsegurado__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>InsurancePolicy.DSALES_Numeroseguimiento__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

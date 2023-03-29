@@ -92,15 +92,15 @@
     <picklistValues>
         <picklist>DSALES_Tipodeendoso__c</picklist>
         <values>
-            <fullName>Cambio No%2E motor</fullName>
+            <fullName>Cambio de dirección sin modificar el codigo postal</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio No%2E serie</fullName>
+            <fullName>Cambio de número de motor</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio de dirección</fullName>
+            <fullName>Cambio de número de serie</fullName>
             <default>false</default>
         </values>
         <values>
@@ -108,15 +108,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio de titular</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Corrección de RFC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Corrección de datos fiscales</fullName>
+            <fullName>Cancelación de póliza</fullName>
             <default>false</default>
         </values>
         <values>

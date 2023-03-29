@@ -16,11 +16,6 @@
                 <label>Tarjeta</label>
             </value>
             <value>
-                <fullName>Dinero Electrónico</fullName>
-                <default>false</default>
-                <label>Dinero Electrónico</label>
-            </value>
-            <value>
                 <fullName>Cheque</fullName>
                 <default>false</default>
                 <label>Cheque</label>
@@ -34,6 +29,21 @@
                 <fullName>Efectivo</fullName>
                 <default>false</default>
                 <label>Efectivo</label>
+            </value>
+            <value>
+                <fullName>Dolar</fullName>
+                <default>false</default>
+                <label>Dolar</label>
+            </value>
+            <value>
+                <fullName>Codi</fullName>
+                <default>false</default>
+                <label>Codi</label>
+            </value>
+            <value>
+                <fullName>Documentos por Cobrar (Convención y Sedesol)</fullName>
+                <default>false</default>
+                <label>Documentos por Cobrar (Convención y Sedesol)</label>
             </value>
         </valueSetDefinition>
     </valueSet>
