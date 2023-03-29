@@ -5,7 +5,7 @@
     <description>Capo para poder identificar si el tipo de uso esta activado.</description>
     <externalId>false</externalId>
     <label>Activo</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
