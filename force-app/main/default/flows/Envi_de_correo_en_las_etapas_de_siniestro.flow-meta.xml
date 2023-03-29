@@ -157,9 +157,17 @@
         <connector>
             <targetReference>Etapas_de_siniestro</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Correo_electr_nico__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
         <object>Claim</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
 </Flow>
