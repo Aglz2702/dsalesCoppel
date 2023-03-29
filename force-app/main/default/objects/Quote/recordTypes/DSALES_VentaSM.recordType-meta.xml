@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DSALES_VentaSM</fullName>
     <active>true</active>
+    <compactLayoutAssignment>DSALES_FormatocompactoSM</compactLayoutAssignment>
     <description>Tipo de registro para cotizaciones del producto SM.</description>
     <label>Venta de Seguro de Motos</label>
     <picklistValues>
@@ -202,7 +203,78 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DSALES_Region__c</picklist>
+        <picklist>DSALES_Tipodeserviciodelvehculo__c</picklist>
+        <values>
+            <fullName>Particular</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Tipodeuso__c</picklist>
+        <values>
+            <fullName>Comercial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Particular</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reparto de comida</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Todo terreno</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Tipodevehculo__c</picklist>
+        <values>
+            <fullName>Carro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moto</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Pick up</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Usodelvehculo__c</picklist>
+        <values>
+            <fullName>Normal</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSales_Division__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NOMigrar__c</picklist>
         <values>
             <fullName>AZCAPOTZALCO</fullName>
             <default>false</default>
@@ -301,62 +373,6 @@
         </values>
         <values>
             <fullName>VILLAHERMOSA</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DSALES_Tipodeserviciodelvehculo__c</picklist>
-        <values>
-            <fullName>Particular</fullName>
-            <default>true</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DSALES_Tipodeuso__c</picklist>
-        <values>
-            <fullName>Comercial</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Particular</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reparto de comida</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Todo terreno</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DSALES_Usodelvehculo__c</picklist>
-        <values>
-            <fullName>Normal</fullName>
-            <default>true</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DSales_Division__c</picklist>
-        <values>
-            <fullName>1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5</fullName>
             <default>false</default>
         </values>
     </picklistValues>
