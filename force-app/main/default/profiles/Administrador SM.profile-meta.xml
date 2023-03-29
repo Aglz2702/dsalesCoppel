@@ -2734,6 +2734,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>InsurancePolicy.DSALES_Numeroseguimiento__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>InsurancePolicy.DSALES_Numeroserie__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4643,6 +4648,10 @@
         <recordType>DSALES_Categoria__c.DSALES_GEX</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>DSALES_Categoria__c-DSALES_GEX</layout>
+        <recordType>DSALES_Categoria__c.DSales_ProductoTangible</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_Categoria__c-DSALES_SM</layout>
         <recordType>DSALES_Categoria__c.DSALES_SM</recordType>
     </layoutAssignments>
@@ -5065,6 +5074,11 @@
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>DSALES_Categoria__c.DSALES_SM</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>DSALES_Categoria__c.DSales_ProductoTangible</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
