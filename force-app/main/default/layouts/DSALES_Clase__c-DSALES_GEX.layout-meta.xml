@@ -27,15 +27,15 @@
                 <behavior>Edit</behavior>
                 <field>DSALES_TipoServicio__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DSales_ID_Departamento__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DSALES_SubCategoria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSales_ID_Departamento__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -73,6 +73,9 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>DSALES_TipoSeguro__c</fields>
+        <fields>DSALES_Tipodeproducto__c</fields>
         <relatedList>DSALES_Familia__c.DSALES_Clase__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

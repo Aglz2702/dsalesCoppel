@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>DSALES_Seguro_de_Motos</members>
-		<name>CustomApplication</name>
-	</types>
-	<types>
-		<members>DSALES_SubCategoria__c.DSALES_Categoria__c</members>
-		<members>DSALES_SubCategoria__c.DSALES_TipoProducto__c</members>
+		<members>DSALES_Clase__c.DSALES_Departamento__c</members>
+		<members>DSALES_Clase__c.DSALES_SubCategoria__c</members>
+		<members>DSALES_Clase__c.DSALES_Tipodeproducto__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>
-		<members>Sub_Categor_a_P_gina_de_registro</members>
+		<members>Clase_P_gina_de_registro</members>
 		<name>FlexiPage</name>
 	</types>
 	<types>
-		<members>DSALES_SubCategoria__c-DSALES_SM</members>
-		<members>DSALES_SubCategoria__c-DSales_GEX</members>
-		<members>DSALES_SubCategoria__c-Formato Subcategoría</members>
+		<members>DSALES_Clase__c-DSALES_GEX</members>
+		<members>DSALES_Clase__c-DSALES_SM</members>
+		<members>DSALES_Clase__c-Formato Clase</members>
 		<name>Layout</name>
 	</types>
 	<types>
@@ -24,15 +21,12 @@
 		<name>PermissionSet</name>
 	</types>
 	<types>
-		<members>Admin</members>
 		<members>Administrador SM</members>
-		<members>Atención de servicio SM</members>
 		<name>Profile</name>
 	</types>
 	<types>
-		<members>DSALES_SubCategoria__c.DSALES_SM</members>
-		<members>DSALES_SubCategoria__c.DSales_GEX</members>
-		<members>DSALES_SubCategoria__c.DSales_Producto_Tangible</members>
+		<members>DSALES_Clase__c.DSALES_SM</members>
+		<members>DSALES_Clase__c.DSales_ProductoTangible</members>
 		<name>RecordType</name>
 	</types>
 	<version>55.0</version>
