@@ -4651,6 +4651,10 @@
         <recordType>DSALES_Categoria__c.DSALES_GEX</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>DSALES_Categoria__c-DSALES_GEX</layout>
+        <recordType>DSALES_Categoria__c.DSales_ProductoTangible</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_Categoria__c-DSALES_SM</layout>
         <recordType>DSALES_Categoria__c.DSALES_SM</recordType>
     </layoutAssignments>
@@ -4894,6 +4898,11 @@
         <default>false</default>
         <recordType>DSALES_Categoria__c.DSALES_SM</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>DSALES_Categoria__c.DSales_ProductoTangible</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>

@@ -42,6 +42,10 @@
                 <behavior>Edit</behavior>
                 <field>DSALES_Colaborador__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_emitir_poliza__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -75,10 +79,6 @@
                 <behavior>Edit</behavior>
                 <field>DSALES_Marca__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DSALES_Descripcion__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -103,7 +103,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_ClaveAMIS__c</field>
+                <field>DSALES_Descripcion__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -139,15 +139,9 @@
     </layoutSections>
     <relatedLists>
         <fields>Name</fields>
-        <fields>ApplicableObjectType</fields>
-        <relatedList>InsurancePolicySurcharge</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Name</fields>
         <fields>NameInsured</fields>
+        <fields>DSALES_Estatusdepliza__c</fields>
         <fields>ExpirationDate</fields>
-        <fields>PremiumAmount</fields>
-        <fields>Status</fields>
         <relatedList>InsurancePolicy.DSALES_Activodeplizadeseguro__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

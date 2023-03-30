@@ -4648,6 +4648,10 @@
         <recordType>DSALES_Categoria__c.DSALES_GEX</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>DSALES_Categoria__c-DSALES_GEX</layout>
+        <recordType>DSALES_Categoria__c.DSales_ProductoTangible</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_Categoria__c-DSALES_SM</layout>
         <recordType>DSALES_Categoria__c.DSALES_SM</recordType>
     </layoutAssignments>
@@ -4748,6 +4752,9 @@
     <layoutAssignments>
         <layout>Opportunity-DSALES_OpportunitySM</layout>
         <recordType>Opportunity.Seguro_de_Moto</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OpportunityLineItem-DSALES_FormatodePaginaPOSM</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>PersonAccount-DSALES_Clientes</layout>
@@ -5067,6 +5074,11 @@
     <recordTypeVisibilities>
         <default>true</default>
         <recordType>DSALES_Categoria__c.DSALES_SM</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>DSALES_Categoria__c.DSales_ProductoTangible</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
