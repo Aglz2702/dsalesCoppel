@@ -4712,6 +4712,17 @@
         <recordType>DSALES_SubCategoria__c.DSales_GEX</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>DSALES_SubCategoria__c-DSales_GEX</layout>
+        <recordType>DSALES_SubCategoria__c.DSales_Producto_Tangible</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DSALES_SubCategoria__c-Formato Subcategoría</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DSALES_SubCategoria__c-Formato Subcategoría</layout>
+        <recordType>DSALES_SubCategoria__c.DSALES_SM</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_TipodeUso__c-Formato Tipo de Uso</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -4926,11 +4937,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
-        <recordType>DSALES_Familia__c.DSALES_GEX</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <default>false</default>
         <recordType>DSALES_Familia__c.DSALES_SM</recordType>
         <visible>true</visible>
@@ -4968,6 +4974,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>DSALES_SubCategoria__c.DSales_GEX</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>DSALES_SubCategoria__c.DSales_Producto_Tangible</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

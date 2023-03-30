@@ -5,16 +5,18 @@
 		<name>CustomApplication</name>
 	</types>
 	<types>
-		<members>DSALES_Categoria__c.DSALES_TipoProducto__c</members>
-		<members>DSALES_Categoria__c.DSALES_TipoSeguro__c</members>
+		<members>DSALES_SubCategoria__c.DSALES_Categoria__c</members>
+		<members>DSALES_SubCategoria__c.DSALES_TipoProducto__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>
-		<members>Categor_a_P_gina_de_registro</members>
+		<members>Sub_Categor_a_P_gina_de_registro</members>
 		<name>FlexiPage</name>
 	</types>
 	<types>
-		<members>DSALES_Categoria__c-DSALES_SM</members>
+		<members>DSALES_SubCategoria__c-DSALES_SM</members>
+		<members>DSALES_SubCategoria__c-DSales_GEX</members>
+		<members>DSALES_SubCategoria__c-Formato Subcategoría</members>
 		<name>Layout</name>
 	</types>
 	<types>
@@ -28,8 +30,9 @@
 		<name>Profile</name>
 	</types>
 	<types>
-		<members>DSALES_Categoria__c.DSALES_SM</members>
-		<members>DSALES_Categoria__c.DSales_ProductoTangible</members>
+		<members>DSALES_SubCategoria__c.DSALES_SM</members>
+		<members>DSALES_SubCategoria__c.DSales_GEX</members>
+		<members>DSALES_SubCategoria__c.DSales_Producto_Tangible</members>
 		<name>RecordType</name>
 	</types>
 	<version>55.0</version>
