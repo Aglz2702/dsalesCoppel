@@ -61,6 +61,9 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>DSALES_TipoSeguro__c</fields>
+        <fields>DSALES_Departamento__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>DSALES_Clase__c.DSALES_SubCategoria__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
