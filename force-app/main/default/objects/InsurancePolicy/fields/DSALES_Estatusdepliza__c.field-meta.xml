@@ -12,9 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>En solicitud</fullName>
+                <fullName>Prepoliza</fullName>
                 <default>true</default>
-                <label>En solicitud</label>
+                <label>Prepóliza</label>
             </value>
             <value>
                 <fullName>En trámite</fullName>
@@ -35,6 +35,12 @@
                 <fullName>Cancelada</fullName>
                 <default>false</default>
                 <label>Cancelada</label>
+            </value>
+            <value>
+                <fullName>En solicitud</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>En solicitud</label>
             </value>
         </valueSetDefinition>
     </valueSet>

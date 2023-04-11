@@ -11,5 +11,10 @@
         <operation>equals</operation>
         <value>THIS_WEEK</value>
     </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>DSALES_InformacionDePago__c.DSALES_PagosdeVentaenNPVSM_c</value>
+    </filters>
     <label>Nuevos de esta semana</label>
 </ListView>

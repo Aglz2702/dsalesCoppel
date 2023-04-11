@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_NumeroEndosoCancelacion__c</fullName>
+    <description>Campo que lleva el conteo de endosos que tiene una póliza</description>
+    <externalId>false</externalId>
+    <label>Número de endosos de cancelación</label>
+    <summaryFilterItems>
+        <field>DSALES_Endoso__c.DSALES_Estatus__c</field>
+        <operation>equals</operation>
+        <value>Autorizado</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>DSALES_Endoso__c.DSALES_Tipodeendoso__c</field>
+        <operation>equals</operation>
+        <value>Cancelación de póliza</value>
+    </summaryFilterItems>
+    <summaryForeignKey>DSALES_Endoso__c.DSALES_Poliza__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>
