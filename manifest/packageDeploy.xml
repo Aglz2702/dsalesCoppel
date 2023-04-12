@@ -167,6 +167,9 @@
 	<members>PISYS_Color2</members>
 	<members>PISYS_Color3</members>
 	<members>PISYS_Color4</members>
+	<members>CDP_MOTOS_LOGO01</members>
+		<members>LOGO_COPPEL012</members>
+		<members>logo_club_de_proteccion</members>
 	<name>ContentAsset</name>
 </types>
 <types>
@@ -360,12 +363,15 @@
 	<members>DSALES_InformacionDePago__c.DSALES_Factura__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Fecha__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Fechadeentregaestimada__c</members>
+	<members>DSALES_InformacionDePago__c.DSALES_IDUniversal1__c</members>
+	<members>DSALES_InformacionDePago__c.DSALES_FolioTransaccion__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_FormaDePago__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Ganodineroelec__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Marca__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Menospagoinicial__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Modelo__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Montototal__c</members>
+	<members>DSALES_InformacionDePago__c.DSALES_Motoentregada__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Motoexterna__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Motor__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_No_de_cliente__c</members>
@@ -380,6 +386,8 @@
 	<members>DSALES_InformacionDePago__c.DSALES_Precio__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_ProductoAdquirido__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_SKU__c</members>
+	<members>DSALES_InformacionDePago__c.DSALES_Seguro__c</members>
+	<members>DSALES_InformacionDePago__c.DSALES_TipoFolio__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Saldodineroelec__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_TelefonoCliente__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Telefono__c</members>
@@ -866,6 +874,7 @@
 	<members>DSALES_Deloitte/Informa_Siniestro_Nuevo_1659549870686</members>
 	<members>DSALES_Deloitte/Informa_Siniestro_Completado_1659548817745</members>
 	<members>DSALES_Deloitte/Informa_Siniestro_Rechazado_1659550884711</members>
+	<members>DSALES_Deloitte/Envi_de_correo_de_cancelaci_n_de_p_liza_1676935961633</members>
 	<name>EmailTemplate</name>
 </types>
 <types>
@@ -892,6 +901,7 @@
 	<members>P_gina_de_inicio_predeterminada</members>
 	<members>Tienda_P_gina_de_registro</members>
 	<members>Partida_de_pago_Record_Page</members>
+	<members>Resumen_de_pago_de_reclamaci_n_P_gina_de_registro</members>
 	<members>Producto_Adquirido_Record_Page</members>
 	<members>Activo_de_p_liza_de_seguro_P_gina_de_registro</members>
 	<members>Asignaci_n_de_Productos_P_gina_de_registro</members>
@@ -910,6 +920,7 @@
 	<members>Asignaci_n_de_Productos_P_gina_de_registro1</members>
 	<members>Producto_P_gina_de_registro</members>
 	<members>Partida_presupuesto_Pagina_registro</members>
+	<members>Campaign_Record_PageSM</members>
 	<name>FlexiPage</name>
 </types>
 <types>
@@ -943,6 +954,7 @@
 	<members>DSALES_Actualizar_cliente_correo_poliza</members>
 	<members>DSALES_Actualizar_el_estatus_siniestro_pagado</members>
 	<members>DSALES_Actualizar_poliza_cancelada_siniestrada</members>
+	<members>DSALES_EnvioCorreoEstatusPoliza</members>
 	<name>Flow</name>
 </types>
 <types>
@@ -1021,6 +1033,7 @@
 	<members>DSales_Asignacion_de_Productos__c-Formato Asignación de Productos</members>
 	<members>Product2-Formato para servicios y seguros</members>
 	<members>DSALES_Certificado__c-DSALES_Certificado_GEX</members>
+	<members>ClaimPaymentSummary-Formato de Resumen de pago de reclamación</members>
 	<name>Layout</name>
 </types>
 <types>
@@ -1301,6 +1314,8 @@
 	<members>DSALES_Endoso__c.DSALES_Endoso_Nuevo</members>
 	<members>InsurancePolicy.DSALES_Poliza_Nueva</members>
 	<members>Quote.DSALES_Alertadecorreoparaelenvidecotizacin</members>
+	<members>InsurancePolicy.DSALES_AlertadeCorreocambiodeEstatusdePolizaaCancelado</members>
+	
 	<name>WorkflowAlert</name>
 </types>
 <types>
