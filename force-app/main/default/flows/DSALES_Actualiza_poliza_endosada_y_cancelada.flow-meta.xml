@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <decisions>
+        <name>Tipo_de_endoso</name>
+        <label>Tipo de endoso</label>
+        <locationX>314</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Resultado predeterminado</defaultConnectorLabel>
+        <rules>
+            <name>Endoso_cancelacion</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DSALES_NumeroEndosoCancelacion__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Actualizar_poliza_cancelada</targetReference>
+            </connector>
+            <label>Endoso cancelacion</label>
+        </rules>
+        <rules>
+            <name>Endoso_de_no_cancelacion</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DSALES_NumeroEndosoAutorizados__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Actualizar_poliza_endosada</targetReference>
+            </connector>
+            <label>Endoso de no cancelación</label>
+        </rules>
+    </decisions>
+    <description>Actualiza póliza a endosada y cancelada cuando la póliza tiene un endoso autorizado de tipo cancelación</description>
+    <environments>Default</environments>
+    <interviewLabel>Actualiza póliza a endosada y cancelada cuando la póliza tiene un endoso autorizado de tipo cancelación {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Actualiza póliza a endosada y cancelada</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Actualizar_poliza_cancelada</name>
+        <label>Actualizar póliza a cancelada</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <inputAssignments>
+            <field>ChangeSubtype</field>
+            <value>
+                <stringValue>Endosada</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DSALES_Estatusdepliza__c</field>
+            <value>
+                <stringValue>Cancelada</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Actualizar_poliza_endosada</name>
+        <label>Actualizar póliza a endosada</label>
+        <locationX>314</locationX>
+        <locationY>455</locationY>
+        <inputAssignments>
+            <field>ChangeSubtype</field>
+            <value>
+                <stringValue>Endosada</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Tipo_de_endoso</targetReference>
+        </connector>
+        <object>InsurancePolicy</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

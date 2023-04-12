@@ -3,9 +3,9 @@
     <fullName>DSales_Todos_los_clientes</fullName>
     <columns>ACCOUNT.NAME</columns>
     <columns>PC_EMAIL</columns>
-    <columns>FinServ__Status__c</columns>
     <columns>PC_PHONE3</columns>
     <columns>CP_CRMCustomerNumber__c</columns>
+    <columns>Tipo_de_Cliente__c</columns>
     <filterScope>Everything</filterScope>
     <label>Todos los clientes</label>
     <sharedTo>

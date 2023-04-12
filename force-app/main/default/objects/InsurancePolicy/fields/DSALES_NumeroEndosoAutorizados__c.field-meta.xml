@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_NumeroEndosoAutorizados__c</fullName>
+    <description>Campo que realiza el conteo de endosos autorizados relacionados a una póliza</description>
+    <externalId>false</externalId>
+    <label>Número de endoso autorizados</label>
+    <summaryFilterItems>
+        <field>DSALES_Endoso__c.DSALES_Estatus__c</field>
+        <operation>equals</operation>
+        <value>Autorizado</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>DSALES_Endoso__c.DSALES_Tipodeendoso__c</field>
+        <operation>equals</operation>
+        <value>Actualización de correo electrónico, Actualización de teléfono, Corrección de nombre, Cambio de dirección (sin modificar el Código Postal), Cambio de placas, Cambio de número de serie, Cambio de número de motor, Beneficiario preferente</value>
+    </summaryFilterItems>
+    <summaryForeignKey>DSALES_Endoso__c.DSALES_Poliza__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

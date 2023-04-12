@@ -3,6 +3,7 @@
     <fullName>Seguro_de_Moto</fullName>
     <active>true</active>
     <businessProcess>Garantia Extendida</businessProcess>
+    <compactLayoutAssignment>DSALES_FormatoCompactoSM</compactLayoutAssignment>
     <description>Crea las oportunidades para el proceso de Seguro de Motos del grupo Coppel</description>
     <label>Seguro de Moto</label>
     <picklistValues>
