@@ -82,9 +82,15 @@ public class DSALES_ValidarClienteHelper {
     }
     
     //@future(callout=true)
-    public static void actualizarCotizacion(String quoteId,DSALES_VentaGEX.VentaGexResponse ventaGEX){
+    public static void actualizarCotizacion(String quoteId,DSALES_VentaGEX.VentaGexResponse ventaGEX,Map<String,String> mapAssets,Map<String,String>mapCertifieds){
+    
         Quote cotizacion = [SELECT Id,AccountId,Name,OpportunityId,Opportunity.AccountId FROM Quote WHERE Id= :quoteId];
-        List<QuoteLineItem> partida = [SELECT DSALES_NombreProductoServicio__c,DSALES_SKU__c FROM QuoteLineItem WHERE QuoteId=:quoteId]; 
+        List<QuoteLineItem> partida = [SELECT DSALES_NombreProductoServicio__c,DSALES_SKU__c FROM QuoteLineItem WHERE QuoteId=:quoteId];
+        //Map<String,DSALES_Certificado__c> listaCertificados =[SELECT Id,Name FROM DSALES_Certificado__c WHERE DSALES_SKU__c IN:mapCertifieds.keySet() ];
+        Map<String,DSALES_Certificado__c> mapaNombreCertificado = new Map<String,DSALES_Certificado__c>([SELECT Id,Name,DSALES_SKUTangible__c,DSALES_SKU__c FROM DSALES_Certificado__c WHERE Id IN:mapCertifieds.values()]);
+       Map<String,DSALES_VentaGEX.ServicioCorrespondiente> OportunidadLineMap= new Map<String,DSALES_VentaGEX.ServicioCorrespondiente>();
+        List<OpportunityLineItem> listActualizarOp = new List<OpportunityLineItem>();
+       
  
         List<Opportunity> oppor= new List<Opportunity>();
         List<OpportunityLineItem> opLine = new List<OpportunityLineItem>();
@@ -95,32 +101,106 @@ public class DSALES_ValidarClienteHelper {
                 opp.StageName='Cerrada ganada';
                 opp.SyncedQuoteId=cotizacion.Id;
             } 
-            opLine=[SELECT Id,Name,Product2.StockKeepingUnit FROM OpportunityLineItem WHERE OpportunityId=:oppor[0].id];
+            opLine=[SELECT Id,Name,Product2.StockKeepingUnit,Product2.Name,DSALES_FolioCertificado__c FROM OpportunityLineItem WHERE OpportunityId=:oppor[0].id];
             if(opLine.size()>0)
             {
                system.debug('Size del opLine '+opLine.size());
                 List<DSALES_VentaGEX.OpporLineItem> listaDeOportunidades = new List<DSALES_VentaGEX.OpporLineItem>();
                 for(OpportunityLineItem op:opLine)
                     {
-                         DSALES_VentaGEX.OpporLineItem opportunityLine = new DSALES_VentaGEX.OpporLineItem();
-                        opportunityLine.id_partida_de_oportunidad=op.Id;
-                       opportunityLine.sku=op.Product2.StockKeepingUnit;
-                        for(QuoteLineItem p:partida)
+                       if(mapAssets.containsKey(op.Product2.StockKeepingUnit))
+                       {
+                           system.debug('Cúantas veces pasó??? ');
+                           DSALES_VentaGEX.ServicioCorrespondiente servicioGex= new DSALES_VentaGEX.ServicioCorrespondiente();
+                            DSALES_VentaGEX.OpporLineItem opportunityLine = new DSALES_VentaGEX.OpporLineItem();
+                           servicioGex.id_partida_de_oportunidad=op.Id;
+                           OportunidadLineMap.put(op.Product2.StockKeepingUnit,servicioGex);
+                         opportunityLine.id_partida_de_oportunidad=op.Id;
+                         opportunityLine.nombre_producto=op.Product2.Name;
+                       	opportunityLine.sku=op.Product2.StockKeepingUnit;
+                       	opportunityLine.tipo_producto='Producto';
+                        opportunityLine.id_producto_adquirido=mapAssets.get(op.Product2.StockKeepingUnit); 
+                         
+                           for(String b :mapaNombreCertificado.keySet())
                         {
-                            if(p.DSALES_SKU__c==op.Product2.StockKeepingUnit)
+                        
+                            if(mapaNombreCertificado.get(b).DSALES_SKUTangible__c==op.Product2.StockKeepingUnit )
                             {
-                                opportunityLine.nombre_producto=p.DSALES_NombreProductoServicio__c;
+                                List<DSALES_VentaGEX.ServicioCorrespondiente> servicioCoList = new List <DSALES_VentaGEX.ServicioCorrespondiente>();
+                                system.debug('Debugeando B : '+b);
+                                  DSALES_VentaGex.ServicioCorrespondiente servicioCo = new  DSALES_VentaGex.ServicioCorrespondiente();
+                                system.debug('Cúantas veces pasó??? hijo ');
+                                 
+                             
+                                servicioCo.folio_certificado=mapaNombreCertificado.get(b).Name;
+                                servicioCo.id_partida_de_oportunidad=op.Id;
+                                servicioGex.id_partida_de_oportunidad=op.id;
+                                servicioGex.folio_certificado=servicioCo.folio_certificado;
+                                servicioCo.sku=mapaNombreCertificado.get(b).DSALES_SKU__c;
+                                OportunidadLineMap.put(servicioCo.sku,servicioGex);
+                                servicioCo.tipo_producto='Servicio';
+                               
+                                 if(OportunidadLineMap.containsKey(servicioCo.sku))
+                                {
+                                    servicioCo.id_partida_de_oportunidad=OportunidadLineMap.get(servicioCo.sku).id_partida_de_oportunidad;
+                                   
+                                }
+                                    for(QuoteLineItem p:partida)
+                        {
+                            if(p.DSALES_SKU__c==servicioCo.sku)
+                            {
+                                servicioCo.nombre_producto=p.DSALES_NombreProductoServicio__c;
+                                
+                                
                             }
                             
                         }
-                       
-                        listaDeOportunidades.add(opportunityLine);
-                       
+                                 
+                                 servicioCoList.add(servicioCo);
+                                opportunityLine.entregaServicioCorrespondiente=servicioCoList;
+                            }
+
+                           
+                        }
+                            listaDeOportunidades.add(opportunityLine);
+                       }
+                        else
+                        {
+                            DSALES_VentaGEX.ServicioCorrespondiente servicioGex= new DSALES_VentaGEX.ServicioCorrespondiente();
+                            servicioGex.id_partida_de_oportunidad=op.Id;
+                            if(!OportunidadLineMap.isEmpty())
+                           servicioGex.folio_certificado=OportunidadLineMap.get(op.Product2.StockKeepingUnit).folio_certificado;
+                             OportunidadLineMap.put(op.Product2.StockKeepingUnit,servicioGex);
+                        }
+                        
+                         
+                      
                     }
+                for(DSALES_VentaGEX.OpporLineItem lista:listaDeOportunidades)
+                {
+                    if(lista.entregaServicioCorrespondiente!=null)
+                    {
+                    for(DSALES_VentaGEX.ServicioCorrespondiente listaServicio:lista.entregaServicioCorrespondiente)
+                    {
+                        if(OportunidadLineMap.containsKey(listaServicio.sku))
+                        {
+                            listaServicio.id_partida_de_oportunidad=OportunidadLineMap.get(listaServicio.sku).id_partida_de_oportunidad;
+                         opportunityLineItem opporLine = new opportunityLineItem();
+                            opporLine.id= listaServicio.id_partida_de_oportunidad;
+
+                            opporLine.DSALES_FolioCertificado__c=OportunidadLineMap.get(listaServicio.sku).folio_certificado;
+                            system.debug('Ids Certificados: '+OportunidadLineMap.keySet());
+      						listActualizarOp.add(opporLine);
+                        }
+                    }
+                }
+                     }
                 ventaGEX.ListaPartidasOportunidad=listaDeOportunidades;
+                
             }
             try{
                 Update oppor;
+                Update listActualizarOp;
                 
             }catch(DmlException e){
                 System.debug('Error occured: ' + e);  

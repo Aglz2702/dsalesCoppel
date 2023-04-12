@@ -5,7 +5,24 @@ public with sharing class DSALES_VentaGEXRestTest {
     static void SetUp(){
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         String recordTypeQuoteId = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Garantía Extendida').getRecordTypeId();
-       
+        Tienda__c t = new Tienda__c();
+        t.DSales_TiendaID__c =  'CPPL-UGARTE';
+        insert t;
+
+        Account acc = new Account();
+        acc.FirstName ='test';
+        acc.LastName = 'test';
+        acc.PersonEmail = 'test@gmail.com';
+        acc.PersonBirthdate = date.today();
+        insert acc;
+        Opportunity oppor = new Opportunity();
+        oppor.AccountId = acc.Id;
+        oppor.Name = acc.Name+' '+'GEX';
+        oppor.CloseDate = date.today()+30;
+        oppor.StageName = 	'Nuevo';
+        oppor.RecordTypeId = recordTypeId;
+        oppor.DSALES_Tienda__c = t.Id;
+        insert oppor;
          Product2 prod2 = new Product2();
         prod2.Name='Testing Test2';
         prod2.StockKeepingUnit='1234689011111';
@@ -17,44 +34,45 @@ public with sharing class DSALES_VentaGEXRestTest {
         produ.StockKeepingUnit='123468911';
         produ.DSales_Tipo_de_Producto__c='Producto';
         insert produ;
+        String pb2Id=Test.getStandardPricebookId();
         
-        Account acc = new Account();
-        acc.FirstName ='test';
-        acc.LastName = 'test';
-        acc.PersonEmail = 'test@gmail.com';
-        acc.PersonBirthdate = date.today();
-        insert acc;
+          PricebookEntry pb = New PricebookEntry();
+        pb.Product2Id = prod2.Id;
+        pb.PriceBook2Id =pb2Id;//Test.getStandardPricebookId();
+        pb.UseStandardPrice = false;
+        pb.UnitPrice=200;
+        //pb.UnitPrice=35;//when we use standarprice book =true thenunit price is readonly field
+        pb.isActive=true;
+       	insert pb;
         
-        Tienda__c t = new Tienda__c();
-        t.DSales_TiendaID__c =  'CPPL-UGARTE';
-        insert t;
-        
-        Opportunity oppor = new Opportunity();
-        oppor.AccountId = acc.Id;
-        oppor.Name = acc.Name+' '+'GEX';
-        oppor.CloseDate = date.today()+30;
-        oppor.StageName = 	'Nuevo';
-        oppor.RecordTypeId = recordTypeId;
-        oppor.DSALES_Tienda__c = t.Id;
-        insert oppor;
-        
-        Quote cotiza = new Quote();
-        cotiza.Name = acc.Name+' '+'GEX';
+         Quote cotiza = new Quote();
+        cotiza.Name = 'GEX';
         cotiza.OpportunityId = oppor.Id;
         cotiza.RecordTypeId =recordTypeQuoteId;
         cotiza.DSales_Tienda__c = t.Id;
+        cotiza.PriceBook2Id=pb2Id;
        // cotiza.DSALES_Regioon__c = 'HERMOSILLO';
         cotiza.DSales_Division__c= '4';
         cotiza.ExpirationDate = date.today()+14;
         insert cotiza;
+          QuoteLineItem quote= new QuoteLineItem(QuoteId=cotiza.Id,UnitPrice=2,Quantity=2,PricebookEntryId=pb.Id,Product2Id=prod2.id,Vigencia_meses__c='12');
+        insert quote;
+        
+       
+        
+               
+        
+        
+       
     }
     
     @isTest 
     static void CreateSaleTest(){
         Quote cotiza=[SELECT id FROM Quote LIMIT 1];
+        QuoteLineItem qt=[SELECT Id FROM QuoteLineItem LIMIT 1]; 
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{ "cliente":{ "numero_cliente":"","nombre": "Daniel","apellido_paterno": "San Miguel","apellido_materno":"Cardona","telefono": "89017829","correo_electronico": "dsanmiguel@deloittemx.com","genero": "F","fecha_nacimiento": "1992-08-02","nombre_ciudad": "Monterrey","nombre_estado": "Nuevo Leon","domicilio": "Montreal","numero_exterior": "169","numero_interior": "","colonia":"Valle de las Lomas","codigo_postal":"66758"},"quoteId":"'+cotiza.Id+'","fecha_compra":"1992-08-02","id_tienda":"21","numero_caja":"23","id_vendedor":"27","nombre_vendedor":"Daniel San Miguel Cárdenas","id_factura":"1233456","listAssets":[{"sku_de_tangible" :"123468911", "articulo":"Computadora"}],"certificado":[ {  "sku_de_tangible" :"12145",  "id_partida_presupuesto":"0QL6w000000EiNUGA0","modelo_tangible": "Horno","marca_tangible": "Samsung","numero_serie": "", "precio_tangible": "13000","garantia_coppel_producto" : "12","fecha_inicio_garantia_extendida":"1992-08-02"}   ],"paymentInformation":{"precio_total":5000,"pago_con_dinero_electronico":0,"pago_tarjeta":1500,"cheque":0,"reembolso":1500,"porcentaje_iva":5,"PartidasDePago": [{"num_pago": 1,"tipo_de_pago": "Efectivo","pago": 10000}]}} ';
+        String body = '{ "cliente":{ "numero_cliente":"","nombre": "Daniel","apellido_paterno": "San Miguel","apellido_materno":"Cardona","telefono": "89017829","correo_electronico": "dsanmiguel@deloittemx.com","genero": "F","fecha_nacimiento": "1992-08-02","nombre_ciudad": "Monterrey","nombre_estado": "Nuevo Leon","domicilio": "Montreal","numero_exterior": "169","numero_interior": "","colonia":"Valle de las Lomas","codigo_postal":"66758"},"quoteId":"'+cotiza.Id+'","fecha_compra":"1992-08-02","id_tienda":"21","numero_caja":"23","id_vendedor":"27","nombre_vendedor":"Daniel San Miguel Cárdenas","id_factura":"1233456","lista_de_productos":[{"sku_de_tangible" :"123468911", "articulo":"Computadora"}],"lista_de_certificados":[ {  "sku_de_tangible" :"123468911",  "id_partida_presupuesto":"'+qt.id+'","modelo_tangible": "Horno","marca_tangible": "Samsung","numero_serie": "", "precio_tangible": "13000","garantia_coppel_producto" : "12","fecha_inicio_garantia_extendida":"1992-08-02"}   ],"pago":{"precio_total":5000,"pago_con_dinero_electronico":0,"pago_tarjeta":1500,"cheque":0,"reembolso":1500,"porcentaje_iva":5,"PartidasDePago": [{"num_pago": 1,"tipo_de_pago": "Efectivo","pago": 10000}]}} ';
         req.requestURI = '/apexrest/ventaGex';
         req.httpMethod = 'POST';
         RestContext.request = req;
@@ -62,6 +80,18 @@ public with sharing class DSALES_VentaGEXRestTest {
         RestContext.response = res;
         DSALES_VentaGEX.VentaGexRequest venta = (DSALES_VentaGEX.VentaGexRequest)JSON.deserialize(body, DSALES_VentaGEX.VentaGexRequest.class);
         Test.startTest();
+        DSALES_VentaGEX.VentaGexResponse ventaGex= new DSALES_VentaGEX.VentaGexResponse();
+       DSALES_VentaGEX.OpporLineItem oporLine = new DSALES_VentaGEX.OpporLineItem();
+        oporLine.id_partida_de_oportunidad='test';
+        oporLine.nombre_producto='Test';
+        oporLine.sku='Test';
+        oporLine.tipo_producto='Test';
+        oporLine.id_producto_adquirido='Test';
+        DSALES_VentaGEX.ServicioCorrespondiente servicio = new  DSALES_VentaGEX.ServicioCorrespondiente();
+        servicio.folio_certificado='Test';
+        servicio.sku='Test';
+        servicio.tipo_producto='Test';
+        servicio.id_partida_de_oportunidad='Test';
         DSALES_VentaGEXRest.createVenta();
         Test.stopTest();
         RestContext.request = req;
