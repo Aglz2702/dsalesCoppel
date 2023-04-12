@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <description>Actualiza el campo nombre del asegurado con el nombre del contratante al crear la prepóliza</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Nombredelaseguradodelapoliza</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.NameInsured.FirstName}&amp;&apos; &apos;&amp;{!$Record.NameInsured.LastName}&amp;&apos; &apos;&amp;{!$Record.NameInsured.Suffix}</expression>
+    </formulas>
+    <interviewLabel>Actualizar campo del asegurado {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Actualizar campo del asegurado al crear póliza</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>ActualizarNombredeAsegurado</name>
+        <label>Actualizar nombre de asegurado</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <inputAssignments>
+            <field>DSALES_NombredelAsegurado__c</field>
+            <value>
+                <elementReference>Nombredelaseguradodelapoliza</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DSALES_TelefonoContacto__c</field>
+            <value>
+                <elementReference>$Record.SourceQuote.Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>ActualizarNombredeAsegurado</targetReference>
+        </connector>
+        <object>InsurancePolicy</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

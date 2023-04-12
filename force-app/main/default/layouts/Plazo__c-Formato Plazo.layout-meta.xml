@@ -67,11 +67,7 @@
     <relatedLists>
         <fields>QUOTE_LI.PRODUCT2</fields>
         <fields>QUOTE_LI.QUANTITY</fields>
-        <fields>QUOTE_LI.UNIT_PRICE</fields>
-        <fields>QUOTE_LI.LIST_PRICE</fields>
-        <fields>QUOTE_LI.SUBTOTAL</fields>
         <fields>QUOTE_LI.TOTAL_PRICE</fields>
-        <fields>QUOTE_LI.DISCOUNT</fields>
         <relatedList>QuoteLineItem.DSALES_Plazo__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

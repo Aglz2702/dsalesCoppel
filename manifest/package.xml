@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>DSALES_Reembolso__c.DSALES_FormatoCompactoSM</members>
-		<name>CompactLayout</name>
+		<members>DSALES_Familia__c.DSALES_Clase__c</members>
+		<members>DSALES_Familia__c.DSALES_Tipodeproducto__c</members>
+		<name>CustomField</name>
 	</types>
 	<types>
-		<members>DSALES_Seguro_de_Motos</members>
-		<name>CustomApplication</name>
-	</types>
-	<types>
-		<members>DSALES_Reembolso__c</members>
-		<name>CustomTab</name>
-	</types>
-	<types>
-		<members>ReembolsoPaginaRegistroSM</members>
+		<members>Familia_P_gina_de_registro</members>
 		<name>FlexiPage</name>
 	</types>
 	<types>
-		<members>DSALES_Reembolso__c-Formato Reembolso SM</members>
+		<members>DSALES_Familia__c-DSALES_GEX</members>
+		<members>DSALES_Familia__c-DSALES_SM</members>
+		<members>DSALES_Familia__c-Formato Familia</members>
 		<name>Layout</name>
 	</types>
 	<types>
@@ -31,7 +26,9 @@
 		<name>Profile</name>
 	</types>
 	<types>
-		<members>DSALES_Reembolso__c.DSALES_RegistroReembolsoSM</members>
+		<members>DSALES_Familia__c.DSALES_GEX</members>
+		<members>DSALES_Familia__c.DSALES_SM</members>
+		<members>DSALES_Familia__c.DSales_ProductoTangible</members>
 		<name>RecordType</name>
 	</types>
 	<version>55.0</version>

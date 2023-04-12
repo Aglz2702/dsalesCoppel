@@ -3601,7 +3601,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>OpportunityLineItem.DSALES_PrecioServ__c</field>
+        <field>OpportunityLineItem.DSALES_Estatus__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4654,6 +4654,10 @@
         <recordType>DSALES_Categoria__c.DSALES_GEX</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>DSALES_Categoria__c-DSALES_GEX</layout>
+        <recordType>DSALES_Categoria__c.DSales_ProductoTangible</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_Categoria__c-DSALES_SM</layout>
         <recordType>DSALES_Categoria__c.DSALES_SM</recordType>
     </layoutAssignments>
@@ -4666,6 +4670,10 @@
     <layoutAssignments>
         <layout>DSALES_Clase__c-DSALES_GEX</layout>
         <recordType>DSALES_Clase__c.DSALES_GEX</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DSALES_Clase__c-DSALES_GEX</layout>
+        <recordType>DSALES_Clase__c.DSales_ProductoTangible</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DSALES_Endoso__c-Ingreso de Endoso</layout>
@@ -4683,8 +4691,15 @@
         <recordType>DSALES_Familia__c.DSALES_GEX</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>DSALES_Familia__c-DSALES_GEX</layout>
+        <recordType>DSALES_Familia__c.DSales_ProductoTangible</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_Familia__c-DSALES_SM</layout>
         <recordType>DSALES_Familia__c.DSALES_SM</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DSALES_Familia__c-Formato Familia</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DSALES_InformacionDePago__c-DSALESInformaciondepagosSM</layout>
@@ -4724,6 +4739,10 @@
     <layoutAssignments>
         <layout>DSALES_SubCategoria__c-DSales_GEX</layout>
         <recordType>DSALES_SubCategoria__c.DSales_GEX</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DSALES_SubCategoria__c-DSales_GEX</layout>
+        <recordType>DSALES_SubCategoria__c.DSales_Producto_Tangible</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DSALES_TipodeUso__c-Formato Tipo de Uso</layout>
@@ -5117,6 +5136,11 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>DSALES_Categoria__c.DSales_ProductoTangible</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>DSALES_Clase__c.DSALES_GEX</recordType>
         <visible>false</visible>
@@ -5125,6 +5149,11 @@
         <default>false</default>
         <recordType>DSALES_Clase__c.DSALES_SM</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>DSALES_Clase__c.DSales_ProductoTangible</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -5145,6 +5174,11 @@
         <default>false</default>
         <recordType>DSALES_Familia__c.DSALES_SM</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>DSALES_Familia__c.DSales_ProductoTangible</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -5180,6 +5214,11 @@
         <default>false</default>
         <recordType>DSALES_SubCategoria__c.DSales_GEX</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>DSALES_SubCategoria__c.DSales_Producto_Tangible</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

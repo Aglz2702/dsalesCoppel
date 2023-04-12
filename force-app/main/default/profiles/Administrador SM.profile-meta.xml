@@ -3599,6 +3599,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OpportunityLineItem.DSALES_Estatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OpportunityLineItem.DSALES_PrecioServ__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4648,6 +4653,10 @@
         <recordType>DSALES_Categoria__c.DSALES_GEX</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>DSALES_Categoria__c-DSALES_GEX</layout>
+        <recordType>DSALES_Categoria__c.DSales_ProductoTangible</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_Categoria__c-DSALES_SM</layout>
         <recordType>DSALES_Categoria__c.DSALES_SM</recordType>
     </layoutAssignments>
@@ -4656,6 +4665,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>DSALES_Certificado__c-DSALES_Certificado_GEX</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DSALES_Clase__c-DSALES_GEX</layout>
+        <recordType>DSALES_Clase__c.DSales_ProductoTangible</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DSALES_Endoso__c-Ingreso de Endoso</layout>
@@ -4669,8 +4682,19 @@
         <recordType>DSALES_Endoso__c.Registro_de_endoso_completo</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>DSALES_Familia__c-DSALES_GEX</layout>
+        <recordType>DSALES_Familia__c.DSales_ProductoTangible</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>DSALES_Familia__c-DSALES_SM</layout>
         <recordType>DSALES_Familia__c.DSALES_SM</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DSALES_Familia__c-Formato Familia</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DSALES_Familia__c-Formato Familia</layout>
+        <recordType>DSALES_Familia__c.DSALES_GEX</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DSALES_InformacionDePago__c-DSALESInformaciondepagosSM</layout>
@@ -4707,6 +4731,10 @@
     <layoutAssignments>
         <layout>DSALES_SubCategoria__c-DSales_GEX</layout>
         <recordType>DSALES_SubCategoria__c.DSales_GEX</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DSALES_SubCategoria__c-DSales_GEX</layout>
+        <recordType>DSALES_SubCategoria__c.DSales_Producto_Tangible</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DSALES_TipodeUso__c-Formato Tipo de Uso</layout>
@@ -4748,6 +4776,9 @@
     <layoutAssignments>
         <layout>Opportunity-DSALES_OpportunitySM</layout>
         <recordType>Opportunity.Seguro_de_Moto</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OpportunityLineItem-DSALES_FormatodePaginaPOSM</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>PersonAccount-DSALES_Clientes</layout>
@@ -5070,6 +5101,11 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>DSALES_Categoria__c.DSales_ProductoTangible</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
         <recordType>DSALES_Clase__c.DSALES_GEX</recordType>
         <visible>true</visible>
@@ -5078,6 +5114,11 @@
         <default>false</default>
         <recordType>DSALES_Clase__c.DSALES_SM</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>DSALES_Clase__c.DSales_ProductoTangible</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -5098,6 +5139,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>DSALES_Familia__c.DSALES_SM</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>DSALES_Familia__c.DSales_ProductoTangible</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -5135,6 +5181,11 @@
         <default>false</default>
         <recordType>DSALES_SubCategoria__c.DSales_GEX</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>DSALES_SubCategoria__c.DSales_Producto_Tangible</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

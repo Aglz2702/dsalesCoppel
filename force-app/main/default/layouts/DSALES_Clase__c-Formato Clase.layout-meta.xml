@@ -53,6 +53,9 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>DSALES_TipoSeguro__c</fields>
+        <fields>DSALES_Tipodeproducto__c</fields>
         <relatedList>DSALES_Familia__c.DSALES_Clase__c</relatedList>
     </relatedLists>
     <relatedLists>
