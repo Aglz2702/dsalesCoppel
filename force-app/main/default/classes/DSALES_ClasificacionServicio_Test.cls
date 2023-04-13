@@ -94,7 +94,7 @@ public class DSALES_ClasificacionServicio_Test {
         insert tp;
         
     }
-    
+
     @isTest
     static void ClasificacionServicio(){
         Product2 idprueba= [Select id from Product2 limit 1];
@@ -132,7 +132,7 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_ClasificacionServicio.getClases(idsubc.id);
         DSALES_ClasificacionServicio.getFamilias(idclass.id);
         DSALES_ClasificacionServicio.getMatriz();
-        DSALES_ClasificacionServicio.upsertRecord('[{"categoria":"LÍNEA BLANCA","clase":"COOLER","familia":"VENTANA","id":"'+idprueba.id+'","noAplica":true,"nombre":"Extractor de Aire 6p Volteck color Blanco","seguro":false,"servicio":false,"sku":"48671001","subCategoria":"COOLER","tipoServicio":"0"}]');
+        //DSALES_ClasificacionServicio.upsertRecord('[{"categoria":"LÍNEA BLANCA","clase":"COOLER","familia":"VENTANA","id":"'+idprueba.id+'","noAplica":true,"nombre":"Extractor de Aire 6p Volteck color Blanco","seguro":false,"servicio":false,"sku":"48671001","subCategoria":"COOLER","tipoServicio":"0"}]');
         DSALES_ClasificacionServicio.RecordTypeId('Garantía Extendida');
         DSALES_ClasificacionServicio.updateMatriz( '["'+idmat.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU12346VG'));
         //DSALES_ClasificacionServicio.insertListaPrecios(DSALES_ClasificacionServicio.getidservicio('SKU12346VG'),'1','[]');
@@ -151,4 +151,124 @@ public class DSALES_ClasificacionServicio_Test {
         //Modificacion OVG a partir de aqui
         
     }
+
+    @isTest 
+    static  void testGetCallout() {
+        Test.startTest(); 
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif());
+        DSALES_ClasificacionServicio.getserviciocategorias('test');
+        Test.stopTest();
+        //System.assertNotEquals(null,result);  
+    }   
+
+    @isTest 
+    static  void testGetCallout2() {
+        Test.startTest(); 
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif2());
+        DSALES_ClasificacionServicio.getserviciosubcategorias('2');
+        Test.stopTest();
+        //System.assertNotEquals(null,result);  
+    }   
+
+    @isTest 
+    static  void testGetCallout3() {
+        Test.startTest(); 
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif3());
+        DSALES_ClasificacionServicio.getservicioclase('2','4');
+        Test.stopTest();
+        //System.assertNotEquals(null,result);  
+    }  
+    @isTest 
+    static  void testGetCallout4() {
+        Test.startTest(); 
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif4());
+        DSALES_ClasificacionServicio.getserviciofamilia('2','4','178');
+        Test.stopTest();
+        //System.assertNotEquals(null,result);  
+    } 
+    @isTest 
+    static  void testGetCallout5() {
+        Test.startTest(); 
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif5());
+        DSALES_ClasificacionServicio.getserviciosku('2','4','178','2');
+        Test.stopTest();
+        //System.assertNotEquals(null,result);  
+    } 
+    
+    @isTest 
+    static  void testGetCallout6() {
+        String idproducto= DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665');
+        Test.startTest(); 
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif6());
+        DSALES_ClasificacionServicio.upsertRecord('[{"campanas":false,"id":"'+idproducto+'", "noAplica":false,"noAplicaSeguro":false,"noAplicaServicio":false,"nombre":"NotiPrueba","seguro":false,"servicio":true,"sku":"2122","tipoServicio":"2","tipoUso":false}]');
+        Test.stopTest();
+        //System.assertNotEquals(null,result);  
+    } 
+
+private class DSALES_MockHttpClasif implements HttpCalloutMock {
+    // Implement this interface method
+    public HTTPResponse respond(HTTPRequest request) {
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"data":[{"id": 1, "nombre":"CELULARES"}, {"id":2, "nombre":"ENSERES DOMÉSTICOS"}]}');
+        response.setStatusCode(200);
+        return response;
+    }
+}
+
+private class DSALES_MockHttpClasif2 implements HttpCalloutMock {
+    // Implement this interface method
+    public HTTPResponse respond(HTTPRequest request) {
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"data":[{"id": 4,"nombre": "ASEO DE CASA", "categoria":{"id":2, "nombre": "ENSERES DOMÉSTICOS"}}]}');
+        response.setStatusCode(200);
+        return response;
+    }
+}
+
+private class DSALES_MockHttpClasif4 implements HttpCalloutMock {
+    // Implement this interface method
+    public HTTPResponse respond(HTTPRequest request) {
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"data": [{"id": 6,"nombre": "ACCESORIOS ASPIRADORAS","deptClase": {"id": 178,"nombre": "ASPIRADORAS","departamento": 1,"subcategoria": {"id": 4,"nombre": "ASEO DE CASA", "categoria": {"id": 2,"nombre": "ENSERES DOMÉSTICOS"}}}}]}');
+        response.setStatusCode(200);
+        return response;
+    }
+}
+ 
+private class DSALES_MockHttpClasif3 implements HttpCalloutMock {
+    // Implement this interface method
+    public HTTPResponse respond(HTTPRequest request) {
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"data":[{"id":178, "nombre": "ASPIRADORAS", "departamento": 1, "subcategoria": {"id": 4,"nombre": "ASEO DE CASA", "categoria": {"id": 2, "nombre": "ENSERES DOMÉSTICOS" }}}]}');
+        response.setStatusCode(200);
+        return response;
+    }
+}
+
+private class DSALES_MockHttpClasif5 implements HttpCalloutMock {
+    // Implement this interface method
+    public HTTPResponse respond(HTTPRequest request) {
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"data": [{"codigo": 113931,"articulo": "ACUMULACIO ACUMULACIO ACUMULACION ","codigoServicio": 0,"descripcionCompleta": "ACUMULACION|ACUMULACION|ACUMULACION|ACUMULACION","familia": {"id": 2,"nombre": "ASPIRADORAS CANISTER","deptClase": { "id": 178,"nombre": "ASPIRADORAS","departamento": 1,"subcategoria": {"id": 4,"nombre": "ASEO DE CASA ","categoria": {"id": 2,"nombre": "ENSERES DOMÉSTICOS"}}}}}]}');
+        response.setStatusCode(200);
+        return response;
+    }
+}
+  
+private class DSALES_MockHttpClasif6 implements HttpCalloutMock {
+    // Implement this interface method
+    public HTTPResponse respond(HTTPRequest request) {
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"data": [{"code": 2122,"statusCode": 200},{"code": 222902,"statusCode": 404}]}');
+        response.setStatusCode(200);
+        return response;
+    }
+}
+   
 }

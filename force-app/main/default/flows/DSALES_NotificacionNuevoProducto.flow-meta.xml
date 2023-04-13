@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>nuevo sku registrado</description>
+        <name>Nuevo_SKU</name>
+        <label>Nuevo SKU</label>
+        <locationX>264</locationX>
+        <locationY>935</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>Asignacion_de_notificacion</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>TraerNotificacion.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <stringValue>Nuevo Sku. Asignar tipo de servicio </stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Nuevo Producto</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>Usuarios</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetPageRef</name>
+            <value>
+                <elementReference>Redireccionamiento</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>NuevoSKU2</name>
+        <label>Nuevo SKU</label>
+        <locationX>264</locationX>
+        <locationY>1631</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>envioDeNotificacionaSM</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>TraerNotificacion.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <stringValue>Nuevo Sku. Asignar tipo de servicio</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Nuevo Producto</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>Usuarios2</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetPageRef</name>
+            <value>
+                <elementReference>Redireccionamiento</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Asignaci_n_de_id</name>
+        <label>asignación de id</label>
+        <locationX>264</locationX>
+        <locationY>815</locationY>
+        <assignmentItems>
+            <assignToReference>Usuarios</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Asignacion_de_notificacion.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Nuevo_SKU</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>envioDeNotificacionSM</name>
+        <label>Envio de notificacion SM</label>
+        <locationX>264</locationX>
+        <locationY>1511</locationY>
+        <assignmentItems>
+            <assignToReference>Usuarios2</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>envioDeNotificacionaSM.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NuevoSKU2</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>URLcomponene</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>&quot;{&quot;type&quot;: &quot;standard__navItemPage&quot;,&quot;attributes&quot;: {&quot;apiName&quot;: &quot;DSALES_ClasificacionServicio&quot;}}&quot;</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>URLdireccion</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>https://coppelmx--pisysdev2.sandbox.lightning.force.com/lightning/n/DSALES_ClasificacionServicio</stringValue>
+        </value>
+    </constants>
+    <description>Notificación de nuevos productos con redireccion a administrador de servicios y productos</description>
+    <environments>Default</environments>
+    <interviewLabel>Notificación de nuevo SKU {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Notificación de nuevo producto</label>
+    <loops>
+        <name>Asignacion_de_notificacion</name>
+        <label>Asignación de notificación</label>
+        <locationX>176</locationX>
+        <locationY>695</locationY>
+        <collectionReference>Obtener_usuarios</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Asignaci_n_de_id</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Obtener_Perfil_SM</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <description>Envio de notificación a SM</description>
+        <name>envioDeNotificacionaSM</name>
+        <label>Envió de notificación a SM</label>
+        <locationX>176</locationX>
+        <locationY>1391</locationY>
+        <collectionReference>Obtener_usuarios_SM</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>envioDeNotificacionSM</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Obtener perfil SM para notificación</description>
+        <name>Obtener_Perfil_SM</name>
+        <label>Obtener Perfil SM</label>
+        <locationX>176</locationX>
+        <locationY>1151</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Obtener_usuarios_SM</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Administrador SM</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Profile</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Obtener usuarios</description>
+        <name>Obtener_usuarios</name>
+        <label>Obtener usuarios</label>
+        <locationX>176</locationX>
+        <locationY>575</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Asignacion_de_notificacion</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ProfileId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ObtenerPerfiles.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Obtencion de usuarios con perfil SM</description>
+        <name>Obtener_usuarios_SM</name>
+        <label>Obtener usuarios SM</label>
+        <locationX>176</locationX>
+        <locationY>1271</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>envioDeNotificacionaSM</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ProfileId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Obtener_Perfil_SM.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Obtener ID Adiministrador GEX y SM</description>
+        <name>ObtenerPerfiles</name>
+        <label>Obtener perfiles</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Obtener_usuarios</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Administrador GEX</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Profile</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Obtener registro de notificación custom</description>
+        <name>TraerNotificacion</name>
+        <label>TraerNotificación</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>ObtenerPerfiles</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>nuevosSKU</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CustomNotificationType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>TraerNotificacion</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DSales_Tipo_de_Producto__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Producto</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>dsalesRecordTypeName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Producto Tangible</stringValue>
+            </value>
+        </filters>
+        <object>Product2</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Redireccionamiento a administrador de servicios</description>
+        <name>Redireccionamiento</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{ &quot;type&quot;: &quot;standard__navItemPage&quot;,&quot;attributes&quot;: {&quot;apiName&quot;: &quot;DSALES_ClasificacionServicio&quot;}}</text>
+    </textTemplates>
+    <variables>
+        <description>Usuarios que recibiran las notificaciones</description>
+        <name>Usuarios</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>Usuarios2</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

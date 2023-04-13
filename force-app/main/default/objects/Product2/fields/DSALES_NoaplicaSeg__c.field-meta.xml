@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_NoaplicaSeg__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indicador que muestra cuando un sku no aplica un seguro</description>
+    <externalId>false</externalId>
+    <label>No aplica Seguro</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>
