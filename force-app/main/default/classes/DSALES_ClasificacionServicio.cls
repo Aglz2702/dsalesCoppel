@@ -34,25 +34,24 @@ public without sharing class DSALES_ClasificacionServicio {
                objeto.listServicios = new List<Servicio>();
                return objeto;
            }
-        if(perfilUsuario== 'Administrador del sistema'){
-            tipoRegistroId='';
-        }
-        else {
-            tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByName().get(perfilUsuario).getRecordTypeId();
-        }
+        tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Producto Tangible').getRecordTypeId();
         
         system.debug(tipoRegistroId);
         String producto= 'Producto';
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
-        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, DSALES_TipoServicio__c, DSALES_vehculo__c, DSALES_Noaplica__c, RecordTypeId ';
-        if(perfilUsuario== 'Administrador del sistema'){
-            query += 'from Product2 Where RecordTypeId != null ';
-        }
-        else {
-            query += 'from Product2 Where RecordTypeId = :tipoRegistroId ';
-        }
+        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, DSALES_TipoServicio__c, DSALES_vehculo__c, DSALES_Noaplica__c, DSALES_NoaplicaServ__c, DSALES_NoaplicaSeg__c, RecordTypeId ';
+        query += 'from Product2 Where RecordTypeId = :tipoRegistroId ';
+       
         if(opcion=='AllRecords'){
-            query += ' And DSALES_Noaplica__c = false and DSales_Servicio__c = false and DSales_Seguro__c= false ';
+            if(perfilUsuario== 'Administrador del sistema'){
+                query += 'and DSales_Servicio__c != true and DSales_Seguro__c!= true ';
+            }
+            else if (perfilUsuario== 'Seguro de Motos'){
+                query += ' And DSALES_NoaplicaSeg__c = false and DSales_Seguro__c= false ';
+            }
+            else if (perfilUsuario== 'Garantía Extendida'){
+                query += ' And DSALES_NoaplicaServ__c = false and DSales_Servicio__c = false ';
+            }
         }
         else {
             query += listCategorias.size() > 0 ? ' And DSales_Categoria__c in :listCategorias ' : '';
@@ -72,30 +71,16 @@ public without sharing class DSALES_ClasificacionServicio {
         if(String.isBlank(sku)){
             return new List<Servicio>();
         }
+        system.debug(sku);
         //String tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSales_Tipo_de_Producto__c').getRecordTypeId();
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
-        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, RecordTypeId, DSALES_vehculo__c, DSALES_TipoServicio__c, DSALES_Noaplica__c ';
-        query += 'from Product2 Where StockKeepingUnit = :sku ';
+        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, RecordTypeId, DSALES_vehculo__c, DSALES_TipoServicio__c, DSALES_Noaplica__c, DSALES_NoaplicaServ__c, DSALES_NoaplicaSeg__c ';
+        query += 'from Product2 Where StockKeepingUnit LIKE \''+ sku + '%\' OR Name LIKE \'' + sku + '%\' ';
         query += ' order by DSales_Servicio__c asc';
         System.debug('Query: '+query);
         return consultarProductos(DataBase.query(query));
     }
-    
-     
-   /* @AuraEnabled
-    public static List<AsignarProductos> getBuscarVinculacion(String servicio){
-        if(String.isBlank(servicio)){
-            return new List<AsignarProductos>();
-        }
-       // String tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSALES_ProdTangible').getRecordTypeId();
-        String query = 'Select DSales_Producto__c, DSales_NombreProducto__c, DSALES_Departamento__c, DSALES_Clase__c, DSALES_Familia__c, DSALES_SKU__c, CreatedDate';
-        query += 'from DSales_Asignacion_de_Productos__c';
-        query += 'Where Name =:servicio';
-        query += ' order by DSALES_Departamento__c asc';
-        System.debug('Query: '+query);
-        return consultarAsignaciones(DataBase.query(query));
-    } */
-    
+
     @AuraEnabled
     public static List<AsignarProductos> getBuscarVinculacion(String servicio){
        
@@ -268,6 +253,8 @@ public without sharing class DSALES_ClasificacionServicio {
             servicio.servicio = item.DSALES_Servicio__c;
             servicio.seguro = item.DSales_Seguro__c;
             servicio.noAplica = item.DSALES_NoAplica__c;
+            servicio.noAplicaServicio = item.DSALES_NoaplicaServ__c;
+            servicio.noAplicaSeguro = item.DSALES_NoaplicaSeg__c;
             servicio.tipoServicio = item.DSALES_TipoServicio__c;
             servicio.tipoUso = false;
             servicio.campanas = false;
@@ -277,16 +264,113 @@ public without sharing class DSALES_ClasificacionServicio {
         return listServicios;
     } 
     
-    
     @AuraEnabled
-    public static void upsertRecord(String allData){
+    public static List<String> upsertRecord(String allData){
+        system.debug(allData);
         List<Servicio> objeto= (List<Servicio>) JSON.deserialize(allData, List<Servicio>.class);
         List<Product2> listProductos= new List<Product2>();
+        Map<String, Integer> listProductosServicio= new Map<String, Integer>();
+        List<String> tipoServicio= new List<String>();
+        List<Object> listaJson = new List<Object>();
         for(Servicio item: objeto){
-            listProductos.add(new Product2(Id = item.id, DSALES_Servicio__c = item.servicio, 
-                                           DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, DSALES_IsClasified__c=true, DSALES_vehculo__c = item.idvehiculo));
+               if(item.seguro==false && item.servicio==true && item.noAplicaServicio == false && item.noAplicaSeguro== true){
+                listProductosServicio.put(item.sku, 2);
+               }
+               else if(item.seguro==false && item.servicio==true && item.noAplicaServicio == false && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 2);
+               }
+               else if(item.seguro==true && item.servicio==true && item.noAplicaServicio == false && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 3);
+               }
+               else if(item.seguro==true && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 1);
+
+               }
+               else if(item.seguro==true && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 1);
+               }
+               else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 0);
+               }
+               else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== true){
+                listProductosServicio.put(item.sku, 0);
+               }
+               else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== true){
+                    listProductosServicio.put(item.sku, 0);
+               }
+               else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 0);
+           }        
         }
-        upsert listProductos;
+        for(String sku : listProductosServicio.keySet()) {
+            Integer codigoServicio = Integer.valueOf(listProductosServicio.get(sku));
+            listaJson.add(new Map<String, Object>{'codigo' => integer.valueof(sku), 'codigoServicio' => integer.valueof(codigoServicio)});
+        }
+        String cuerpoJson = JSON.serialize(listaJson);
+        system.debug(cuerpoJson);
+        Http https = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/codigos');
+        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setBody(cuerpoJson); 
+        request.setHeader('Content-Type', 'application/json'); 
+        request.setHeader('X-HTTP-Method-Override','PATCH');
+        request.setMethod('PATCH');
+        HttpResponse response = https.send(request);
+        Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+        List<Object> dataList = (List<Object>) responseMap.get('data');
+        Map<Integer, Integer> codeStatusMap = new Map<Integer, Integer>();
+        List<Integer> listCompleted= new List<Integer>();
+        List<Integer> listError404= new List<Integer>();
+        List<Integer> listError500= new List<Integer>();
+        List<String> status= new List<String>();
+        for (Object data : dataList) {
+            Map<String, Object> dataMap = (Map<String, Object>) data;
+            Integer code = (Integer) dataMap.get('code');
+            Integer statusCode = (Integer) dataMap.get('statusCode');
+            if(statusCode==200)
+            {
+                listCompleted.add(code);
+            }
+            if(statusCode==404)
+            {
+                listError404.add(code);
+            }
+            if(statusCode==500)
+            {
+                listError500.add(code);
+            }
+            codeStatusMap.put(code, statusCode);
+        }
+        if(listError404.size()>0){
+            if(listError500.size()>0){
+                status.add('Error 404 "No se encontró el recurso solicitado" en: '+listError404+ ', Error 500 en: ' +listError500);
+            }
+            status.add('Error 404 "No se encontró el recurso solicitado" en: '+listError404);
+        }
+        else if(listError500.size()>0){
+            if(listError404.size()>0){
+                status.add('Error 500 en: '+listError404+ ', Error 404 "No se encontró el recurso solicitado" en: ' +listError500);
+            }
+            status.add('Error 500 en: '+listError500);
+        }
+        else{
+            status.add('sin errores');
+        }
+        system.debug(listCompleted);
+        System.debug('Mapa de código y estado: ' + codeStatusMap);
+        for(Servicio item: objeto){
+            for(integer i=0; i<listCompleted.size(); i++)
+            {
+                if(listCompleted[i]==integer.valueof(item.sku)){
+                    listProductos.add(new Product2(Id = item.id, DSALES_Servicio__c = item.servicio, DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, 
+                    DSALES_NoaplicaSeg__c= item.noAplicaSeguro, DSALES_NoaplicaServ__c=item.noAplicaServicio, DSALES_IsClasified__c=true, DSALES_vehculo__c = item.idvehiculo)); 
+                } 
+            }
+        }
+        upsert listProductos;   
+        status.add(String.valueof(response.getStatusCode())) ;       
+        return status;
     }
     
     public static List<String> itemSeleccionados(List<PicklistOption> listPickList){
@@ -396,8 +480,8 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
-    public static List<PicklistOp> getcategories(string recordName){
-        List<PicklistOp>listcategories = new List<PicklistOp>();
+    public static List<PicklistOp> getcategories(string recordName){        
+        List<PicklistOp> listcategories = new List<PicklistOp>();
         for(DSALES_Categoria__c item: [Select Id, Name From DSALES_Categoria__c where RecordType.name=: recordName])
     {
         PicklistOp p = new PicklistOp();
@@ -409,9 +493,208 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
+    public static List<PicklistOp> getserviciocategorias(String recordName){   
+        List<String> categoriasNombres = new List<String>();
+        List<String> categoriasIds = new List<String>();
+        Http https = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/categorias');
+        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setMethod('GET');
+        HttpResponse response = https.send(request);
+        system.debug('response '+response);
+        if (response.getStatusCode() == 200) {
+            Map<String, Object> respuesta = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+            List<Object> categoriasObj = (List<Object>) respuesta.get('data');
+            system.debug('respuesta: ' + respuesta);
+            for (Object categoria : categoriasObj) {
+                Map<String, Object> categoriaMap = (Map<String, Object>) categoria;
+                categoriasNombres.add(String.valueOf(categoriaMap.get('nombre')));
+                categoriasIds.add(String.valueOf(categoriaMap.get('id')));
+            }
+            System.debug('Categorías nombres: ' + categoriasNombres);
+            System.debug('Categorías ids: ' + categoriasIds);
+        } 
+        else {
+            System.debug('Error al obtener la respuesta: ' + response.getBody());
+            }    
+        List<PicklistOp> listcategories = new List<PicklistOp>();
+        for(Integer i=0; i<categoriasNombres.size(); i++)
+        {
+            PicklistOp p = new PicklistOp();
+            p.label= categoriasNombres[i];
+            p.value = categoriasIds[i];
+            listcategories.add(p);
+        }  
+        return listcategories;
+    }
+
+    @AuraEnabled
+    public static List<PicklistOp> getserviciosubcategorias(String valueCategoria){   
+        List<String> subcategoriasNombres = new List<String>();
+        List<String> subcategoriasIds = new List<String>();
+        Http https = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/categorias/'+valueCategoria+'/subcategorias');
+        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setMethod('GET');
+        HttpResponse response = https.send(request);
+        if (response.getStatusCode() == 200) {
+            Map<String, Object> respuesta = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+            List<Object> categoriasObj = (List<Object>) respuesta.get('data');
+            system.debug('respuesta: ' + respuesta);
+            for (Object categoria : categoriasObj) {
+                Map<String, Object> categoriaMap = (Map<String, Object>) categoria;
+                subcategoriasNombres.add(String.valueOf(categoriaMap.get('nombre')));
+                subcategoriasIds.add(String.valueOf(categoriaMap.get('id')));
+            }
+            System.debug('Categorías nombres: ' + subcategoriasNombres);
+            System.debug('Categorías ids: ' + subcategoriasIds);
+        } 
+        else {
+            System.debug('Error al obtener la respuesta: ' + response.getBody());
+            }    
+        List<PicklistOp> listsubcategories = new List<PicklistOp>();
+        for(Integer i=0; i<subcategoriasNombres.size(); i++)
+        {
+            PicklistOp p = new PicklistOp();
+            p.label= subcategoriasNombres[i];
+            p.value = subcategoriasIds[i];
+            listsubcategories.add(p);
+        }  
+        return listsubcategories;
+    }
+
+    @AuraEnabled
+    public static List<PicklistOp> getservicioclase(String valueCategoria, String valueSubcategoria){   
+        List<String> clasesNombres = new List<String>();
+        List<String> clasesIds = new List<String>();
+        Http https = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/categorias/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase');
+        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setMethod('GET');
+        HttpResponse response = https.send(request);
+        if (response.getStatusCode() == 200) {
+            Map<String, Object> respuesta = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+            List<Object> categoriasObj = (List<Object>) respuesta.get('data');
+            system.debug('respuesta: ' + respuesta);
+            for (Object categoria : categoriasObj) {
+                Map<String, Object> categoriaMap = (Map<String, Object>) categoria;
+                clasesNombres.add(String.valueOf(categoriaMap.get('nombre')));
+                clasesIds.add(String.valueOf(categoriaMap.get('id')));
+            }
+            System.debug('Categorías nombres: ' + clasesNombres);
+            System.debug('Categorías ids: ' + clasesIds);
+        } 
+        else {
+            System.debug('Error al obtener la respuesta: ' + response.getBody());
+            }    
+        List<PicklistOp> listclases = new List<PicklistOp>();
+        for(Integer i=0; i<clasesNombres.size(); i++)
+        {
+            PicklistOp p = new PicklistOp();
+            p.label= clasesNombres[i];
+            p.value = clasesIds[i];
+            listclases.add(p);
+        }  
+        return listclases;
+    }
+
+    @AuraEnabled
+    public static List<PicklistOp> getserviciofamilia(String valueCategoria, String valueSubcategoria, String valueClases){   
+        List<String> familiasNombres = new List<String>();
+        List<String> familiasIds = new List<String>();
+        Http https = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/categorias/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClases+'/familias');
+        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setMethod('GET');
+        HttpResponse response = https.send(request);
+        if (response.getStatusCode() == 200) {
+            Map<String, Object> respuesta = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+            List<Object> categoriasObj = (List<Object>) respuesta.get('data');
+            system.debug('respuesta: ' + respuesta);
+            for (Object categoria : categoriasObj) {
+                Map<String, Object> categoriaMap = (Map<String, Object>) categoria;
+                familiasNombres.add(String.valueOf(categoriaMap.get('nombre')));
+                familiasIds.add(String.valueOf(categoriaMap.get('id')));
+            }
+            System.debug('Categorías nombres: ' + familiasNombres);
+            System.debug('Categorías ids: ' + familiasIds);
+        } 
+        else {
+            System.debug('Error al obtener la respuesta: ' + response.getBody());
+            }    
+        List<PicklistOp> listfamilias = new List<PicklistOp>();
+        for(Integer i=0; i<familiasNombres.size(); i++)
+        {
+            PicklistOp p = new PicklistOp();
+            p.label= familiasNombres[i];
+            p.value = familiasIds[i];
+            listfamilias.add(p);
+        }  
+        return listfamilias;
+    }
+
+    @AuraEnabled
+    public static List<AsignarProductos> getserviciosku(String valueCategoria, String valueSubcategoria, String valueClases, String valueFamilias){   
+        List<String> skus = new List<String>();
+        List<String> skusNombres = new List<String>();
+        List<String> tiposervicio= new  List<String>();
+        List<String> descripcion= new  List<String>();
+        String nombreTipoServicio;
+        Http https = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/categorias/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClases+'/familias/'+valueFamilias+'/codigos');
+        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setMethod('GET');
+        HttpResponse response = https.send(request);
+        if (response.getStatusCode() == 200) {
+            Map<String, Object> respuesta = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+            List<Object> categoriasObj = (List<Object>) respuesta.get('data');
+            system.debug('respuesta: ' + respuesta);
+            for (Object categoria : categoriasObj) {
+                Map<String, Object> categoriaMap = (Map<String, Object>) categoria;
+                tiposervicio.add(String.valueOf(categoriaMap.get('codigoServicio')));
+                skus.add(String.valueOf(categoriaMap.get('codigo')));
+                skusNombres.add(String.valueOf(categoriaMap.get('articulo')));
+                descripcion.add(String.valueOf(categoriaMap.get('descripcionCompleta')));
+
+            }
+        } 
+        else {
+            System.debug('Error al obtener la respuesta: ' + response.getBody());
+            }    
+        List<AsignarProductos> listskus = new List<AsignarProductos>();
+        for(Integer i=0; i<skusNombres.size(); i++)
+        {
+            if(tiposervicio[i]=='0') {
+                nombreTipoServicio='No aplica';
+            }
+            else if (tiposervicio[i]=='1') {
+                nombreTipoServicio='Seguros';
+            }
+            else if (tiposervicio[i]=='2') {
+                nombreTipoServicio='Servicios';
+            }
+            else if (tiposervicio[i]=='3') {
+                nombreTipoServicio='Seguros y Servicios';
+            }
+            AsignarProductos p = new AsignarProductos();
+            p.nombre= skusNombres[i];
+            p.sku= skus[i];
+            p.servicio= nombreTipoServicio;
+            p.descripcion=descripcion[i];
+            listskus.add(p);
+        }  
+        return listskus;
+    }
+
+    @AuraEnabled
     public static List<PicklistOp> getSubCategories(string valueCategoria){
 
-        List<PicklistOp>listSubCategories = new List<PicklistOp>();
+        List<PicklistOp> listSubCategories = new List<PicklistOp>();
 
         for(DSALES_SubCategoria__c item: [Select Id, Name,DSALES_Categoria__c from DSALES_SubCategoria__c Where DSALES_Categoria__c =:valueCategoria])
     {
@@ -426,7 +709,7 @@ public without sharing class DSALES_ClasificacionServicio {
     @AuraEnabled
     public static List<PicklistOp> getClases(string valueCategoria){
 
-        List<PicklistOp>listClases = new List<PicklistOp>();
+        List<PicklistOp> listClases = new List<PicklistOp>();
         System.debug(valueCategoria);
         for(DSALES_Clase__c item: [Select Id, Name from DSALES_Clase__c where DSALES_SubCategoria__c=: valueCategoria])
     {
@@ -441,7 +724,7 @@ public without sharing class DSALES_ClasificacionServicio {
     @AuraEnabled
     public static List<PicklistOp> getFamilias(string valueClases){
 
-        List<PicklistOp>listFamilias = new List<PicklistOp>();
+        List<PicklistOp> listFamilias = new List<PicklistOp>();
 
         for(DSALES_Familia__c item: [Select Id, Name,DSALES_Clase__c from DSALES_Familia__c Where DSALES_Clase__c =:valueClases])
     {
@@ -452,7 +735,7 @@ public without sharing class DSALES_ClasificacionServicio {
     }  
         return listFamilias;
     }
-
+    
     @AuraEnabled
     public static List<Servicio> getMatriz(){
 
@@ -808,7 +1091,9 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public String familia;
         @AuraEnabled public Boolean servicio;
         @AuraEnabled public Boolean seguro;
-        @AuraEnabled public Boolean noAplica;
+        @AuraEnabled public Boolean noAplica; 
+        @AuraEnabled public Boolean noAplicaServicio;
+        @AuraEnabled public Boolean noAplicaSeguro;
         @AuraEnabled public String tipoServicio;
         @AuraEnabled public String tipoMatriz;
         @AuraEnabled public String label;
@@ -834,7 +1119,8 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public String createdDate;
         @AuraEnabled public Boolean estado;
         @AuraEnabled public Boolean seleccionadoSku;
-        @AuraEnabled public String idasignacion;    
+        @AuraEnabled public String idasignacion;  
+        @AuraEnabled public String descripcion;  
     }
 
     public class porcentajesCobro{

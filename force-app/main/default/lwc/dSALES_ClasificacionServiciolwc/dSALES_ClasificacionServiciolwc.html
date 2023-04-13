@@ -1,1466 +1,1242 @@
 <template>
     <div style="background-color: #ffffff">
         <div class="slds-modal__header">
-            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
-                Catálogo de Productos
+            <h1 if:true={resultPerfil} id="modal-heading-11" class="slds-text-heading_medium slds-hyphenate">
+                Administrador de servicios y seguros
+            </h1>
+            <h1 if:true={data.showAdmiSM} id="modal-heading-12" class="slds-text-heading_medium slds-hyphenate">
+                Administrador de seguros
+            </h1>
+            <h1 if:true={data.showAdmiGex} id="modal-heading-13" class="slds-text-heading_medium slds-hyphenate">
+                Administrador de servicios
             </h1>
         </div>
-
-
-        <div class="slds-grid slds-grid_align-end slds-box_x-small">
-            <lightning-button if:false={data.showAdmiSM} variant="brand" label="Vincular Productos"
-                onclick={openVincuProduct} title="Vincular Productos" class="slds-m-right_large ">
-            </lightning-button>
-            <div>
-                <lightning-button variant="brand" label="Crear Seguro/Servicio" onclick={openFormIntangible}
-                    title="Crear Seguro/Servicio" class="slds-m-right_large">
-                </lightning-button>
-
-            </div>
-
-        </div>
-
-
-        <template if:true={showCrearIntangible}>
-            <div role="dialog" tabindex="-1" aria-labelledby="header43"
-                class="slds-modal slds-fade-in-open slds-modal_large">
-                <div class="slds-modal__container">
-                    <div style="background-color: #ffffff" class="slds-modal__header">
-                        <button variant="brand"
-                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
-                            title="Close" onclick={cancelar}>
-
-                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
-                                size="small">
-                            </lightning-icon>
-                            <span class="slds-assistive-text">Close</span>
-                        </button>
-
-                        <template if:true={data.showAdmiGex}>
-                            <h1 id="modal-heading-03"
-                                class="slds-text-heading_medium slds-text-align_center slds-hyphenate">
-                                Crear Servicio
-                            </h1>
-                        </template>
-                        <template if:true={data.showAdmiSM}>
-                            <h1 id="modal-heading-04"
-                                class="slds-text-heading_medium slds-text-align_center slds-hyphenate">
-                                Crear Seguro
-                            </h1>
-                        </template>
-                    </div>
-                    <div class="slds-modal__content">
-                        <div class="slds-p-around_medium ">
-
-                            <div>
-                                <h1>Complete los siguientes campos:</h1>
-                            </div>
-
-
-                            <div class="slds-grid slds-gutters">
-                                <div class="slds-col">
-                                    <div class="slds-col">
-                                        <template if:true={data.showAdmiSM}>
-                                            <lightning-combobox selected="Seguro" name="TipoProducto" required
-                                                class="slds-m-bottom_x-small" label="Tipo de producto" value="Seguro"
-                                                placeholder="Selecciona" options={pickList.tipoProducto}
-                                                onchange={SelectSeguroServicio} disabled></lightning-combobox>
-                                        </template>
-                                        <template if:true={data.showAdmiGex}>
-                                            <lightning-combobox selected="Servicio" name="TipoProducto" required
-                                                class="slds-m-bottom_x-small" label="Tipo de producto" value="Servicio"
-                                                placeholder="Selecciona" options={pickList.tipoProducto}
-                                                onchange={SelectSeguroServicio} disabled></lightning-combobox>
-                                        </template>
-                                        <template if:true={resultPerfil}>
-                                            <lightning-combobox selected="Servicio" name="TipoProducto" required
-                                                class="slds-m-bottom_x-small" label="Tipo de Producto" value="Servicio"
-                                                placeholder="Selecciona" options={pickList.tipoProducto}
-                                                onchange={SelectSeguroServicioAdmi}></lightning-combobox>
-                                        </template>
-
-                                        <lightning-combobox name="TipoServicio" label={label.labelTipoServicio}
-                                            value={pickList.valueSelectedtipoSeguroServicio} required
-                                            class="slds-m-bottom_x-small" placeholder="Selecciona"
-                                            options={pickList.tipoSeguroServicio}
-                                            onchange={asignarCategoria}></lightning-combobox>
-
-
-
-                                        <lightning-input label={label.labelSku} value={pickList.StockKeepingUnit}
-                                            required type="text" class="slds-m-bottom_x-small"
-                                            onchange={handleInputChangeSku} placeholder="Escribe aquí">
-                                        </lightning-input>
-
-
-                                        <lightning-input label={label.labelName} value={pickList.Name} type="text"
-                                            required class="slds-m-bottom_x-small" onchange={handleInputChangeNameSS}
-                                            placeholder="Escribe aquí"></lightning-input>
-
-                                        <lightning-textarea value={pickList.Description} required
-                                            label={label.labelDescripcion} type="text"
-                                            onchange={handleInputChangeDescription} class="slds-m-bottom_x-small"
-                                            placeholder="Escribe aquí">
-                                        </lightning-textarea>
-
-                                        <template if:true={data.showServicio}>
-                                            <lightning-input class="lgc-bg " type="checkbox"
-                                                onchange={openPorcentajeCobro} value={pickList.aplicaCobro}
-                                                label="Aplica porcentaje de cobro" name="input3" checked={checkpc}>
-                                            </lightning-input>
-
-                                            <div class="slds-grid slds-grid_align-start slds-box_x-small">
-                                                <div>
-
-                                                    <lightning-input if:true={showPorcentajeCobro}
-                                                        class="lgc-bg slds-m-bottom_small" type="number"
-                                                        value={pickList.porcentajeCobro}
-                                                        onchange={onChangePorcentajeCobro}
-                                                        label="Porcentaje primer año (%)" name="input7">
-                                                    </lightning-input>
-
-                                                    <lightning-input if:true={data.dos}
-                                                        class="lgc-bg slds-m-bottom_small" type="number"
-                                                        value={pickList.porcentajeCobro}
-                                                        onchange={onChangePorcentajeCobro2}
-                                                        label="Porcentaje segundo año (%)" name="input8">
-                                                    </lightning-input>
-
-                                                    <lightning-input if:true={data.tres}
-                                                        class="lgc-bg slds-m-bottom_small" type="number"
-                                                        value={pickList.porcentajeCobro}
-                                                        onchange={onChangePorcentajeCobro3}
-                                                        label="Porcentaje tercer año(%)" name="input9">
-                                                    </lightning-input>
-
-                                                    <lightning-input if:true={data.cuatro}
-                                                        class="lgc-bg slds-m-bottom_small" type="number"
-                                                        value={pickList.porcentajeCobro}
-                                                        onchange={onChangePorcentajeCobro4}
-                                                        label="Porcentaje cuarto año(%)" name="input10">
-                                                    </lightning-input>
-
-                                                    <lightning-input if:true={data.cinco}
-                                                        class="lgc-bg slds-m-bottom_small" type="number"
-                                                        value={pickList.porcentajeCobro}
-                                                        onchange={onChangePorcentajeCobro5}
-                                                        label="Porcentaje quinto año(%)" name="input11">
-                                                    </lightning-input>
-
-                                                    <lightning-input if:true={data.seis}
-                                                        class="lgc-bg slds-m-bottom_small" type="number"
-                                                        value={pickList.porcentajeCobro}
-                                                        onchange={onChangePorcentajeCobro6}
-                                                        label="Porcentaje sexto año(%)" name="input12">
-                                                    </lightning-input>
-
-                                                </div>
-                                                <template if:true={showPorcentajeCobro}>
-                                                    <div class="slds-p-bottom_xx-large slds-p-left_large"
-                                                        style="width:70px">
-                                                        <button variant="brand"
-                                                            class="slds-button slds-button_icon slds-modal__new slds-button_icon-small"
-                                                            title="Añadir año" onclick={agregarAnioPorcentaje}>
-
-                                                            <lightning-icon icon-name="utility:new" variant="brand"
-                                                                size="small">
-                                                            </lightning-icon>
-                                                        </button>
-                                                    </div>
-                                                    <div>
-                                                        <button variant="brand"
-                                                            class="slds-button slds-button_icon slds-modal__new slds-button_icon-small"
-                                                            title="Quitar año" onclick={quitarAnioPorcentaje}>
-
-                                                            <lightning-icon icon-name="utility:close" variant="brand"
-                                                                size="small">
-                                                            </lightning-icon>
-                                                        </button>
-                                                    </div>
-                                                </template>
-                                            </div>
-                                        </template>
-
-                                    </div>
-
-
-
-                                </div>
-                                <div class="slds-col">
-                                    <lightning-combobox name="progress" label="Categoria" required
-                                        value={ValueCategoriaSelected} placeholder="Selecciona"
-                                        options={pickList.listCategorias} class="slds-m-bottom_x-small"
-                                        onchange={asignarSubCategorias}></lightning-combobox>
-
-                                    <lightning-combobox name="progress" label="Subcategoria" required
-                                        class="slds-m-bottom_x-small" value={pickList.subCategoriaSelected}
-                                        placeholder="Selecciona" options={pickList.listSubCategorias}
-                                        onchange={asignarClase}></lightning-combobox>
-
-                                    <div class="lgc-bg slds-m-bottom_x-small">
-                                        <lightning-combobox name="Clase" label="Clase" required
-                                            class="slds-m-bottom_x-small" value={pickList.ValueClasesSelected}
-                                            placeholder="Selecciona" options={pickList.listClases}
-                                            onchange={asignarFamilas}>
-                                        </lightning-combobox>
-                                    </div>
-
-                                    <div class="lgc-bg slds-m-bottom_x-small">
-                                        <lightning-combobox name="Familias" label="Familias" required
-                                            value={pickList.ValuefamiliasSelected} placeholder="Selecciona"
-                                            options={pickList.listFamilias} onchange={asignarMatriz}>
-                                        </lightning-combobox>
-                                    </div>
-
-
-
-
-                                    <template if:true={data.showServicio}>
-                                        <lightning-dual-listbox if:false={showPorcentajeCobro} name="Matrices"
-                                            label="Seleccione matrices" source-label="Disponible"
-                                            selected-label="Seleccionado"
-                                            field-level-help="Selecciona las matrices que apliquen"
-                                            options={pickList.listMatrices} onchange={onchangeValueMatriz}>
-                                        </lightning-dual-listbox>
-                                    </template>
-
-                                </div>
-                            </div>
+        <div class="screen-divider" style="width: 100%; height: 14px; background-color: #ffffff;"></div>
+        
+        <div class="slds-path">
+            <div class="slds-grid slds-path__track">
+                <div class="slds-grid slds-path__scroller-container">
+                    <div class="slds-path__scroller">
+                        <div class="slds-path__scroller_inner">
+                            <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                                <li class="slds-path__item slds-is-active" role="presentation">
+                                    <a aria-selected="true" class="slds-path__link" id="path-13" role="option"
+                                        tabindex="0" onclick={searchAllRecords}>
+                                        <span class="slds-path__title">Clasificar nuevos productos</span>
+                                    </a>
+                                </li>
+                                <li class="slds-path__item slds-is-active" role="presentation">
+                                    <a aria-selected="true" class="slds-path__link" id="path-19" role="option"
+                                        tabindex="0" onclick={openSearchFilter}>
+                                        <span class="slds-path__title">Búsqueda personalizada</span>
+                                    </a>
+                                </li>
+                                <li class="slds-path__item slds-is-active" role="presentation">
+                                    <a aria-selected="true" class="slds-path__link" id="path-16" role="option"
+                                        tabindex="0" onclick={openFormIntangible}>
+                                        <span class="slds-path__title">Crear Seguro/Servicio</span>
+                                    </a>
+                                </li>
+                                <li if:false={data.showAdmiSM} class="slds-path__item slds-is-active"
+                                    role="presentation">
+                                    <a aria-selected="true" class="slds-path__link" id="path-17" role="option"
+                                        tabindex="0" onclick={openVincuProduct}>
+                                        <span class="slds-path__title">Vincular Productos</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-
-
                     </div>
-                    <footer class="slds-modal__footer">
-                        <lightning-button label="Guardar" onclick={confirmarGuardar} variant="brand"
-                            class="slds-m-left_x-small">
-                        </lightning-button>
-                    </footer>
-
                 </div>
             </div>
-    </div>
-    <div class="slds-backdrop slds-backdrop--open"></div>
-</template>
-
-<template if:true={data.confirmarGuardar}>
-    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
-        class="slds-modal slds-fade-in-open slds-modal_small">
-        <div class="slds-modal__container">
-            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
-                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
-                </svg>
-                <span class="slds-assistive-text">Cancel and close</span>
-            </button>
-            <div class="slds-modal__header">
-                <h1 id="modal-heading-565" class="slds-modal__title slds-hyphenate">Vincular Producto
-                </h1>
-            </div>
-            <div class="slds-modal__content slds-p-around_large" id="modal-content-id-1">
-                <h1 class="slds-text-heading_small">¿Deseas vincular algún producto al servicio creado anteriormente?
-                </h1>
-            </div>
-            <div class="slds-modal__footer">
-                <button class="slds-button slds-button_neutral" onclick={cancelar4}
-                    aria-label="Cancel and close">Cancelar</button>
-                <button onclick={vincularNuevoServicio} class="slds-button slds-button_brand">Vincular</button>
-            </div>
         </div>
-    </section>
-    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-</template>
+        <div class="screen-divider" style="width: 100%; height: 14px; background-color: #ffffff;"></div>
+        <div class="screen-divider" style="width: 100%; height: 14px; background-color: #186ca4;"></div>
 
+        <div if:true={showCrearIntangible}>
+            <div>
+                <div style="background-color: #ffffff" class="slds-modal__header">
+                    <h1 if:true={data.showAdmiGex} id="modal-heading-03"
+                        class="slds-text-heading_medium slds-text-align_center slds-hyphenate">
+                        Crear Servicio
+                    </h1>
+                    <h1 if:true={data.showAdmiSM} id="modal-heading-04"
+                        class="slds-text-heading_medium slds-text-align_center slds-hyphenate">
+                        Crear Seguro
+                    </h1>
+                    <h1 if:true={resultPerfil} id="modal-heading-14"
+                        class="slds-text-heading_medium slds-text-align_center slds-hyphenate">
+                        Crear Servicio o Seguro
+                    </h1>
 
-
-
-<template if:true={showVincuProduct}>
-    <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
-        <div class="slds-modal__container">
-
-            <div style="background-color: #ffffff" class="slds-modal__header">
-                <button variant="brand" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
-                    title="Close" onclick={cancelar}>
-
-                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
-                    </lightning-icon>
-                    <span class="slds-assistive-text">Close</span>
-                </button>
-
-                <h1 id="modal-heading-02" class="slds-text-heading_medium  slds-text-align_center slds-hyphenate">
-                    Vincular Productos
-                </h1>
-            </div>
-            <div class="slds-modal__content">
-
-                <div class="slds-p-around_large">
-                    <div>
-                        <h2 class="slds-text-heading_small">Busca el producto intangible</h2>
-
-                    </div>
-
-                    <div class="slds-grid slds-grid_vertical-align-center slds-box_small">
-
-                        <div class="slds-p-bottom_xx-large slds-p-left_large" style="width:300px">
-                            <lightning-record-edit-form object-api-name="DSales_Asignacion_de_Productos__c">
-                                <lightning-messages></lightning-messages>
-                                <lightning-input-field field-name="DSales_Producto__c"
-                                    onchange={onChangeInputBuscarServicio}> </lightning-input-field>
-                            </lightning-record-edit-form>
+                </div>
+                <div class="slds-modal__content">
+                    <div class="slds-p-around_medium ">
+                        <div>
+                            <h1>Complete los siguientes campos:</h1>
                         </div>
-
-                        <div class="slds-col slds-p-bottom_x-large">
-
-                            <lightning-button variant="brand" label="Buscar" title="Primary action"
-                                onclick={onClickBuscarIntanProduct} class="slds-m-left_small" size="medium">
-                            </lightning-button>
-
-                        </div>
-
-
-
-
-                    </div>
-                    <div if:true={openTablaResultado} class="slds-p-around_large">
                         <div class="slds-grid slds-gutters">
                             <div class="slds-col">
-                                <h2>Productos tangibles relacionados: {data.nombreServicio}</h2>
+                                <div class="slds-col">
+                                    <template if:true={data.showAdmiSM}>
+                                        <lightning-combobox selected="Seguro" name="TipoProducto" required
+                                            class="slds-m-bottom_x-small" label="Tipo de producto" value="Seguro"
+                                            placeholder="Selecciona" options={pickList.tipoProducto}
+                                            onchange={SelectSeguroServicio} disabled></lightning-combobox>
+                                    </template>
+                                    <template if:true={data.showAdmiGex}>
+                                        <lightning-combobox selected="Servicio" name="TipoProducto" required
+                                            class="slds-m-bottom_x-small" label="Tipo de producto" value="Servicio"
+                                            placeholder="Selecciona" options={pickList.tipoProducto}
+                                            onchange={SelectSeguroServicio} disabled></lightning-combobox>
+                                    </template>
+                                    <template if:true={resultPerfil}>
+                                        <lightning-combobox selected="Servicio" name="TipoProducto" required
+                                            class="slds-m-bottom_x-small" label="Tipo de Producto" value="Servicio"
+                                            placeholder="Selecciona" options={pickList.tipoProducto}
+                                            onchange={SelectSeguroServicioAdmi}></lightning-combobox>
+                                    </template>
+
+                                    <lightning-combobox name="TipoServicio" label={label.labelTipoServicio}
+                                        value={pickList.valueSelectedtipoSeguroServicio} required
+                                        class="slds-m-bottom_x-small" placeholder="Selecciona"
+                                        options={pickList.tipoSeguroServicio}
+                                        onchange={asignarCategoria}></lightning-combobox>
+
+
+
+                                    <lightning-input label={label.labelSku} value={pickList.StockKeepingUnit} required
+                                        type="number"  pattern="[0-9]*" maxlength="6"  class="slds-m-bottom_x-small" onchange={handleInputChangeSku}
+                                        placeholder="Escribe aquí">
+                                    </lightning-input>
+
+
+                                    <lightning-input label={label.labelName} value={pickList.Name} type="text" required
+                                        class="slds-m-bottom_x-small" onchange={handleInputChangeNameSS}
+                                        placeholder="Escribe aquí"></lightning-input>
+
+                                    <lightning-textarea value={pickList.Description} required
+                                        label={label.labelDescripcion} type="text"
+                                        onchange={handleInputChangeDescription} class="slds-m-bottom_x-small"
+                                        placeholder="Escribe aquí">
+                                    </lightning-textarea>
+
+                                    <template if:true={data.showServicio}>
+                                        <lightning-input class="lgc-bg " type="checkbox" onchange={openPorcentajeCobro}
+                                            value={pickList.aplicaCobro} label="Aplica porcentaje de cobro"
+                                            name="input3" checked={checkpc}>
+                                        </lightning-input>
+
+                                        <div class="slds-grid slds-grid_align-start slds-box_x-small">
+                                            <div>
+
+                                                <lightning-input if:true={showPorcentajeCobro}
+                                                    class="lgc-bg slds-m-bottom_small" type="number"
+                                                    value={pickList.porcentajeCobro} onchange={onChangePorcentajeCobro}
+                                                    label="Porcentaje primer año (%)" name="input7">
+                                                </lightning-input>
+
+                                                <lightning-input if:true={data.dos} class="lgc-bg slds-m-bottom_small"
+                                                    type="number" value={pickList.porcentajeCobro}
+                                                    onchange={onChangePorcentajeCobro2}
+                                                    label="Porcentaje segundo año (%)" name="input8">
+                                                </lightning-input>
+
+                                                <lightning-input if:true={data.tres} class="lgc-bg slds-m-bottom_small"
+                                                    type="number" value={pickList.porcentajeCobro}
+                                                    onchange={onChangePorcentajeCobro3} label="Porcentaje tercer año(%)"
+                                                    name="input9">
+                                                </lightning-input>
+
+                                                <lightning-input if:true={data.cuatro}
+                                                    class="lgc-bg slds-m-bottom_small" type="number"
+                                                    value={pickList.porcentajeCobro} onchange={onChangePorcentajeCobro4}
+                                                    label="Porcentaje cuarto año(%)" name="input10">
+                                                </lightning-input>
+
+                                                <lightning-input if:true={data.cinco} class="lgc-bg slds-m-bottom_small"
+                                                    type="number" value={pickList.porcentajeCobro}
+                                                    onchange={onChangePorcentajeCobro5} label="Porcentaje quinto año(%)"
+                                                    name="input11">
+                                                </lightning-input>
+
+                                                <lightning-input if:true={data.seis} class="lgc-bg slds-m-bottom_small"
+                                                    type="number" value={pickList.porcentajeCobro}
+                                                    onchange={onChangePorcentajeCobro6} label="Porcentaje sexto año(%)"
+                                                    name="input12">
+                                                </lightning-input>
+
+                                            </div>
+                                            <template if:true={showPorcentajeCobro}>
+                                                <div class="slds-p-bottom_xx-large slds-p-left_large"
+                                                    style="width:70px">
+                                                    <button variant="brand"
+                                                        class="slds-button slds-button_icon slds-modal__new slds-button_icon-small"
+                                                        title="Añadir año" onclick={agregarAnioPorcentaje}>
+
+                                                        <lightning-icon icon-name="utility:new" variant="brand"
+                                                            size="small">
+                                                        </lightning-icon>
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <button variant="brand"
+                                                        class="slds-button slds-button_icon slds-modal__new slds-button_icon-small"
+                                                        title="Quitar año" onclick={quitarAnioPorcentaje}>
+
+                                                        <lightning-icon icon-name="utility:close" variant="brand"
+                                                            size="small">
+                                                        </lightning-icon>
+                                                    </button>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+
+                                </div>
+
+
 
                             </div>
                             <div class="slds-col">
-                                <div class="slds-grid slds-grid_align-end slds-box_x-small">
+                                <lightning-combobox name="progress" label="Categoría" required
+                                    value={ValueCategoriaSelected} placeholder="Selecciona"
+                                    options={pickList.listCategorias} class="slds-m-bottom_x-small"
+                                    onchange={asignarSubCategorias}></lightning-combobox>
 
-                                    <div class="slds-m-right_medium slds-m-bottom_small">
-                                        <button variant="brand"
-                                            class="slds-button slds-button_icon slds-modal__new slds-button_icon-small"
-                                            title="Vincular nuevo producto" onclick={buscarProductsNoVinc}>
+                                <lightning-combobox name="progress" label="Subcategoría" required
+                                    class="slds-m-bottom_x-small" value={pickList.subCategoriaSelected}
+                                    placeholder="Selecciona" options={pickList.listSubCategorias}
+                                    onchange={asignarClase}></lightning-combobox>
 
-                                            <lightning-icon icon-name="utility:new" variant="brand" size="small">
-                                            </lightning-icon>
-                                            <span class="slds-assistive-text">Vincular</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="slds-m-right_medium">
-                                        <button variant="brand" onclick={openEmergenteDesvincular}
-                                            class="slds-button slds-button_icon slds-modal__remove_link slds-button_icon-small"
-                                            title="Desvincular">
-
-                                            <lightning-icon icon-name="utility:remove_link" alternative-text="close"
-                                                variant="brand" size="small">
-                                            </lightning-icon>
-                                            <span class="slds-assistive-text">Desvincular</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="slds-m-right_medium">
-                                        <button variant="brand"
-                                            class="slds-button slds-button_icon slds-modal__delete slds-button_icon-small"
-                                            title="Actualizar" onclick={onClickBuscarIntanProduct}>
-
-                                            <lightning-icon icon-name="utility:sync" alternative-text="Actualizar"
-                                                variant="brand" size="small">
-                                            </lightning-icon>
-                                            <span class="slds-assistive-text">Actualizar</span>
-                                        </button>
-                                    </div>
-
-                                    <div>
-                                        <lightning-input type="checkbox" checked={checkSku} onchange={selectAllSku}
-                                            name="input45" label="Seleccionar todo">
-                                        </lightning-input>
-
-                                    </div>
-
+                                <div class="lgc-bg slds-m-bottom_x-small">
+                                    <lightning-combobox name="Clase" label="Clase" required
+                                        class="slds-m-bottom_x-small" value={pickList.ValueClasesSelected}
+                                        placeholder="Selecciona" options={pickList.listClases}
+                                        onchange={asignarFamilas}>
+                                    </lightning-combobox>
                                 </div>
+
+                                <div class="lgc-bg slds-m-bottom_x-small">
+                                    <lightning-combobox name="Familias" label="Familias" required
+                                        value={pickList.ValuefamiliasSelected} placeholder="Selecciona"
+                                        options={pickList.listFamilias} onchange={asignarMatriz}>
+                                    </lightning-combobox>
+                                </div>
+
+
+
+
+                                <template if:true={data.showServicio}>
+                                    <lightning-dual-listbox if:false={showPorcentajeCobro} name="Matrices"
+                                        label="Seleccione matrices" source-label="Disponible"
+                                        selected-label="Seleccionado"
+                                        field-level-help="Selecciona las matrices que apliquen"
+                                        options={pickList.listMatrices} onchange={onchangeValueMatriz}>
+                                    </lightning-dual-listbox>
+                                </template>
+
                             </div>
                         </div>
-                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
-                            aria-label="linea de ordenes">
-                            <thead>
-                                <tr class="slds-line-height_reset">
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Departamento">Nombre Producto</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Departamento">SKU</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Clase">Categoria</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Clase">Subcategoria</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Familia">Clase</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="SKU">Familia</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="FechaVinculacion">Fecha de Vinculación</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="VinculadoPor">Vinculado por</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                        <div class="slds-truncate" title="Departamento">Estado</div>
-                                    </th>
+                    </div>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template for:each={data.listasignacion} for:item="record">
-                                    <tr class="slds-hint-parent" key={record.Id}>
-                                        <td data-label={record.nombre}>
-                                            <div class="slds-truncate" title={record.nombre}>{record.nombre}</div>
-                                        </td>
-                                        <td data-label={record.sku}>
 
-                                            <lightning-input checked={record.seleccionadoSku} type="checkbox"
-                                                label={record.sku} onchange={selectAllSkuSelected} name={record.id}>
+                </div>
+                <footer class="slds-modal__footer slds-modal_footer_" >
+                    <lightning-button label="Cancelar" onclick={cancelar} variant="brand" 
+                        class="slds-m-left_x-small">
+                    </lightning-button>
+                    <lightning-button label="Guardar" onclick={confirmarGuardar} variant="brand"
+                        class="slds-m-left_x-small">
+                    </lightning-button>
+                </footer>
+            </div>
+
+        </div>
+
+
+        <template if:true={data.confirmarGuardar}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                class="slds-modal slds-fade-in-open slds-modal_small">
+                <div class="slds-modal__container">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Cancel and close</span>
+                    </button>
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-565" class="slds-modal__title slds-hyphenate">Vincular Producto
+                        </h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_large" id="modal-content-id-1">
+                        <h1 class="slds-text-heading_small">¿Deseas vincular algún producto al servicio creado
+                            anteriormente?
+                        </h1>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={cancelar4}
+                            aria-label="Cancel and close">Cancelar</button>
+                        <button onclick={vincularNuevoServicio} class="slds-button slds-button_brand">Vincular</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+        <template if:true={showVincuProduct}>
+                <div style="background-color: #ffffff" class="slds-modal__header">
+                    <button variant="brand"
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={cancelar}>
+
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+
+                    <h1 id="modal-heading-02"
+                        class="slds-text-heading_medium  slds-text-align_center slds-hyphenate">
+                        Vincular Productos
+                    </h1>
+                </div>
+                <div class="slds-modal__content">
+
+                    <div class="slds-p-around_small">
+                        <div style="padding: 15px;">
+                            <h2 class="slds-text-heading_small">Busca el producto intangible</h2>
+                        </div>
+
+                        <div class="slds-grid slds-grid_vertical-align-center slds-box_small">
+
+                            <div class="slds-p-bottom_xx-large slds-p-right_large" style="width:300px">
+                                <lightning-record-edit-form object-api-name="DSales_Asignacion_de_Productos__c">
+                                    <lightning-messages></lightning-messages>
+                                    <lightning-input-field field-name="DSales_Producto__c"
+                                        onchange={onChangeInputBuscarServicio}> </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+
+                            <div class="slds-col slds-p-bottom_x-large">
+
+                                <lightning-button variant="brand" label="Buscar" title="Buscar productos"
+                                    onclick={onClickBuscarIntanProduct} class="slds-m-left_small" size="medium">
+                                </lightning-button>
+
+                            </div>
+                        </div>
+                        <div if:true={openTablaResultado} class="slds-p-around_large" style="overflow-x:scroll;">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col">
+                                    <h2>Productos tangibles relacionados: {data.nombreServicio}</h2>
+
+                                </div>
+                                <div class="slds-col">
+                                    <div class="slds-grid slds-grid_align-end slds-box_x-small">
+
+                                        <div class="slds-m-right_medium slds-m-bottom_small">
+                                            <button variant="brand"
+                                                class="slds-button slds-button_icon slds-modal__new slds-button_icon-small"
+                                                title="Vincular nuevo producto" onclick={buscarProductsNoVinc}>
+
+                                                <lightning-icon icon-name="utility:new" variant="brand"
+                                                    size="small">
+                                                </lightning-icon>
+                                                <span class="slds-assistive-text">Vincular</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="slds-m-right_medium">
+                                            <button variant="brand" onclick={openEmergenteDesvincular}
+                                                class="slds-button slds-button_icon slds-modal__remove_link slds-button_icon-small"
+                                                title="Desvincular">
+
+                                                <lightning-icon icon-name="utility:remove_link"
+                                                    alternative-text="close" variant="brand" size="small">
+                                                </lightning-icon>
+                                                <span class="slds-assistive-text">Desvincular</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="slds-m-right_medium">
+                                            <button variant="brand"
+                                                class="slds-button slds-button_icon slds-modal__delete slds-button_icon-small"
+                                                title="Actualizar" onclick={onClickBuscarIntanProduct}>
+
+                                                <lightning-icon icon-name="utility:sync"
+                                                    alternative-text="Actualizar" variant="brand" size="small">
+                                                </lightning-icon>
+                                                <span class="slds-assistive-text">Actualizar</span>
+                                            </button>
+                                        </div>
+
+                                        <div>
+                                            <lightning-input type="checkbox" checked={checkSku}
+                                                onchange={selectAllSku} name="input45" label="Seleccionar todo">
                                             </lightning-input>
 
-                                        </td>
-                                        <td data-label={record.departamento}>
-                                            <lightning-input type="checkbox" label={record.departamento}
-                                                checked={record.seleccionadoDept} onchange={selectAllDepartamentos}>
-                                            </lightning-input>
-                                        </td>
-                                        <td data-label={record.subcategoria}>
-                                            <lightning-input type="checkbox" label={record.subcategoria}
-                                                checked={record.seleccionadoSubcategoria}
-                                                onchange={selectAllSubcategoria}>
-                                            </lightning-input>
-                                        </td>
+                                        </div>
 
-                                        <td data-label={record.clase}>
-                                            <lightning-input type="checkbox" label={record.clase}
-                                                onchange={selectAllClases} checked={record.seleccionadoClase}>
-                                            </lightning-input>
-                                        </td>
-                                        <td data-label={record.familia}>
-                                            <lightning-input type="checkbox" label={record.familia}
-                                                onchange={selectAllFamilias} checked={record.seleccionadoFamilia}
-                                                name={}>
-                                            </lightning-input>
-                                        </td>
-                                        <td data-label={record.createdDate}>
-                                            <div class="slds-truncate" title="Creación">{record.createdDate}</div>
-                                        </td>
-                                        <td data-label={record.creadoPor}>
-                                            <div class="slds-truncate" title="Creado por">{record.creadoPor}</div>
-                                        </td>
-                                        <td data-label={record.estado}>
-                                            <div class="slds-m-right_medium" style="text-align: center;">
-                                                <div class="slds-modal__check" title="Activo">
-
-                                                    <lightning-icon icon-name="utility:check" alternative-text="Activo"
-                                                        variant="brand" color="success" size="xx-small">
-                                                    </lightning-icon>
-                                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+                                aria-label="linea de ordenes">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Departamento">Nombre Producto</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Departamento">SKU</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Clase">Categoría</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Clase">Subcategoría</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Familia">Clase</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="SKU">Familia</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="FechaVinculacion">Fecha de Vinculación
                                             </div>
-                                            <!-- <div class="slds-truncate" title="Activo">{record.estado}</div> -->
-                                        </td>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="VinculadoPor">Vinculado por</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Departamento">Estado</div>
+                                        </th>
 
                                     </tr>
-                                </template>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <template for:each={data.listasignacion} for:item="record">
+                                        <tr class="slds-hint-parent" key={record.Id}>
+                                            <td data-label={record.nombre}>
+                                                <div class="slds-truncate" title={record.nombre}>{record.nombre}
+                                                </div>
+                                            </td>
+                                            <td data-label={record.sku}>
 
+                                                <lightning-input checked={record.seleccionadoSku} type="checkbox"
+                                                    label={record.sku} onchange={selectAllSkuSelected}
+                                                    name={record.id}>
+                                                </lightning-input>
 
-                    </div>
+                                            </td>
+                                            <td data-label={record.departamento}>
+                                                <lightning-input type="checkbox" label={record.departamento}
+                                                    checked={record.seleccionadoDept}
+                                                    onchange={selectAllDepartamentos}>
+                                                </lightning-input>
+                                            </td>
+                                            <td data-label={record.subcategoria}>
+                                                <lightning-input type="checkbox" label={record.subcategoria}
+                                                    checked={record.seleccionadoSubcategoria}
+                                                    onchange={selectAllSubcategoria}>
+                                                </lightning-input>
+                                            </td>
 
+                                            <td data-label={record.clase}>
+                                                <lightning-input type="checkbox" label={record.clase}
+                                                    onchange={selectAllClases} checked={record.seleccionadoClase}>
+                                                </lightning-input>
+                                            </td>
+                                            <td data-label={record.familia}>
+                                                <lightning-input type="checkbox" label={record.familia}
+                                                    onchange={selectAllFamilias}
+                                                    checked={record.seleccionadoFamilia} name={}>
+                                                </lightning-input>
+                                            </td>
+                                            <td data-label={record.createdDate}>
+                                                <div class="slds-truncate" title="Creación">{record.createdDate}
+                                                </div>
+                                            </td>
+                                            <td data-label={record.creadoPor}>
+                                                <div class="slds-truncate" title="Creado por">{record.creadoPor}
+                                                </div>
+                                            </td>
+                                            <td data-label={record.estado}>
+                                                <div class="slds-m-right_medium" style="text-align: center;">
+                                                    <div class="slds-modal__check" title="Activo">
 
-                    <template if:true={showConfirmarDesvincular}>
-                        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
-                            class="slds-modal slds-fade-in-open slds-modal_small">
-                            <div class="slds-modal__container">
-                                <button
-                                    class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
-                                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
-                                    </svg>
-                                    <span class="slds-assistive-text">Cancel and close</span>
-                                </button>
-                                <div class="slds-modal__header">
-                                    <h1 id="modal-heading-564" class="slds-modal__title slds-hyphenate">Desnvincular
-                                    </h1>
-                                </div>
-                                <div class="slds-modal__content slds-p-around_large" id="modal-content-id-20">
-                                    <h1 class="slds-text-heading_small">¿Estás seguro que quieres desvincular los
-                                        productos seleccionados?
-                                    </h1>
-                                </div>
-                                <div class="slds-modal__footer">
-                                    <button class="slds-button slds-button_neutral" onclick={cancelar4}
-                                        aria-label="Cancel and close">Cancelar</button>
-                                    <button onclick={updateVinculacion}
-                                        class="slds-button slds-button_brand">Guardar</button>
-                                </div>
-                            </div>
-                        </section>
-                        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-                    </template>
-
-
-
-
-
-
-
-
-                    <template if:true={openTableVincProduct}>
-                        <div role="dialog" tabindex="-1" aria-labelledby="header43"
-                            class="slds-modal slds-fade-in-open slds-modal_large">
-                            <div class="slds-modal__container">
-
-                                <div style="background-color: #fdffff" class="slds-modal__header">
-                                    <button variant="brand"
-                                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
-                                        title="Close" onclick={cancelar3}>
-
-                                        <lightning-icon icon-name="utility:close" alternative-text="close"
-                                            variant="inverse" size="small">
-                                        </lightning-icon>
-                                        <span class="slds-assistive-text">Close</span>
-                                    </button>
-
-                                    <div class="slds-p-around_small">
-                                        <div class="slds-grid slds-gutters">
-                                            <div class="slds-col">
-                                                <div class="slds-grid slds-grid_align-start slds-box_x-small">
-                                                    <div>
-                                                        <h1>Productos tangibles no relacionados {pickList.Name}</h1>
-
+                                                        <lightning-icon icon-name="utility:check"
+                                                            alternative-text="Activo" variant="brand"
+                                                            color="success" size="xx-small">
+                                                        </lightning-icon>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <!-- <div class="slds-truncate" title="Activo">{record.estado}</div> -->
+                                            </td>
 
-                                            <div class="slds-col">
-
-                                                <div class="slds-grid slds-grid_align-end slds-box_x-small">
-
-                                                    <div>
-                                                        <lightning-input type="checkbox" checked={checkSkus}
-                                                            name="input45" onclick={selectAllSkusProducto}
-                                                            label="Seleccionar todo">
-                                                        </lightning-input>
-
-                                                    </div>
-
-                                                    <div class="slds-m-right_medium">
-                                                        <lightning-button slds-align-bottom variant="brand"
-                                                            label="Vincular" title="Primary action"
-                                                            class="slds-m-right_x-small"
-                                                            onclick={openEmergenteVincular}>
-                                                        </lightning-button>
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <lightning-card>
-
-                                        <table
-                                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
-                                            aria-label="linea de ordenes">
-                                            <thead>
-                                                <tr class="slds-line-height_reset">
-                                                    <th class="" scope="col">
-                                                        <div class="slds-truncate" title="Nombre producto">Nombre
-                                                            Producto
-                                                        </div>
-                                                    </th>
-                                                    <th class="" scope="col">
-                                                        <div class="slds-truncate" title="SKU">SKU</div>
-                                                    </th>
-                                                    <th class="" scope="col">
-                                                        <div class="slds-truncate" title="Categoria">Categoria</div>
-                                                    </th>
-                                                    <th class="" scope="col">
-                                                        <div class="slds-truncate" title="Subcategoria">Subcategoria
-                                                        </div>
-                                                    </th>
-                                                    <th class="" scope="col">
-                                                        <div class="slds-truncate" title="Clase">Clase</div>
-                                                    </th>
-                                                    <th class="" scope="col">
-                                                        <div class="slds-truncate" title="Familia">Familia</div>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <template for:each={data.listaproductos} for:item="record">
-                                                    <tr class="slds-hint-parent" key={record.Id}>
-                                                        <td data-label={record.nombre}>
-                                                            <div class="slds-truncate" title={record.nombre}>
-                                                                {record.nombre}</div>
-                                                        </td>
-                                                        <td data-label={record.sku}>
-
-                                                            <lightning-input checked={record.seleccionadoSku}
-                                                                type="checkbox" label={record.sku}
-                                                                onchange={selectAllSkuProducto} name={record.id}>
-                                                            </lightning-input>
-
-                                                        </td>
-                                                        <td data-label={record.departamento}>
-                                                            <lightning-input type="checkbox" label={record.departamento}
-                                                                checked={record.seleccionadoDept}
-                                                                onchange={selectAllDepartamentosProducto}>
-
-                                                            </lightning-input>
-                                                        </td>
-                                                        <td data-label={record.subcategoria}>
-                                                            <lightning-input type="checkbox" label={record.subcategoria}
-                                                                checked={record.seleccionadoSubcategoria}
-                                                                onchange={selectAllSubcategoriaProducto}>
-
-                                                            </lightning-input>
-                                                        </td>
-
-                                                        <td data-label={record.clase}>
-                                                            <lightning-input type="checkbox" label={record.clase}
-                                                                onchange={selectAllClasesProducto}
-                                                                checked={record.seleccionadoClase}>
-                                                            </lightning-input>
-                                                        </td>
-                                                        <td data-label={record.familia}>
-                                                            <lightning-input type="checkbox" label={record.familia}
-                                                                onchange={selectAllFamiliasProducto}
-                                                                checked={record.seleccionadoFamilia}>
-                                                            </lightning-input>
-                                                        </td>
-
-
-                                                    </tr>
-                                                </template>
-                                            </tbody>
-                                        </table>
-
-
-                                    </lightning-card>
-
-                                    <template if:true={showConfirmarVincular}>
-                                        <section role="dialog" tabindex="-1" aria-modal="true"
-                                            aria-labelledby="modal-heading-01"
-                                            class="slds-modal slds-fade-in-open slds-modal_small">
-                                            <div class="slds-modal__container">
-                                                <button
-                                                    class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
-                                                    <svg class="slds-button__icon slds-button__icon_large"
-                                                        aria-hidden="true">
-                                                        <use
-                                                            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close">
-                                                        </use>
-                                                    </svg>
-                                                    <span class="slds-assistive-text">Cancelar y cerrar</span>
-                                                </button>
-                                                <div class="slds-modal__header">
-                                                    <h1 id="modal-heading-574" class="slds-modal__title slds-hyphenate">
-                                                        Vincular
-                                                    </h1>
-                                                </div>
-                                                <div class="slds-modal__content slds-p-around_large"
-                                                    id="modal-content-id-45">
-                                                    <h1 class="slds-text-heading_small">¿Estás seguro que quieres
-                                                        vincular los productos seleccionados?</h1>
-                                                </div>
-                                                <div class="slds-modal__footer">
-                                                    <button class="slds-button slds-button_neutral" onclick={cancelar5}
-                                                        aria-label="Cancel and close">Cancelar</button>
-                                                    <button onclick={guardarAsignacion}
-                                                        class="slds-button slds-button_brand">Guardar</button>
-                                                </div>
-                                            </div>
-                                        </section>
-                                        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                                        </tr>
                                     </template>
+                                </tbody>
+                            </table>
 
 
-
-
-                                </div>
-                            </div>
                         </div>
-                </div>
-
-            </div>
-            <div class="slds-backdrop slds-backdrop--open"></div>
-</template>
 
 
-</div>
-</div>
-</div>
-
-</div>
-<div class="slds-backdrop slds-backdrop--open"></div>
-</template>
-
-
-
-
-
-<lightning-card if:true={showc}>
-
-    <lightning-accordion onsectiontoggle={searchAllRecords}
-        active-section-name={activeSections}>
-        <lightning-accordion-section name="A" label="Productos sin clasificar">
-            <div class="slds-grid slds-grid_vertical-align-center slds-box_x-small" style="overflow-x:scroll;">
-
-                <Table if:false={popEdit}
-                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
-                    aria-label="linea de ordenes ">
-                    <thead>
-                        <tr class="slds-line-height_reset">
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Nombre">Nombre</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="SKU">SKU</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Categoria">Categoria</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Subcategoria">Subcategoria</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Clase">Clase</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Familia">Familia</div>
-                            </th>
-                            <th if:true={data.showAdmiGex} class="" scope="col">
-                                <div class="slds-truncate" title="Servicio">
-                                    <lightning-input type="checkbox" checked={data.registroServicio}
-                                        onchange={onchangeAllServicio} label="Servicio"></lightning-input>
+                        <template if:true={showConfirmarDesvincular}>
+                            <section role="dialog" tabindex="-1" aria-modal="true"
+                                aria-labelledby="modal-heading-01"
+                                class="slds-modal slds-fade-in-open slds-modal_small">
+                                <div class="slds-modal__container">
+                                    <button
+                                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
+                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close">
+                                            </use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Cancel and close</span>
+                                    </button>
+                                    <div class="slds-modal__header">
+                                        <h1 id="modal-heading-564" class="slds-modal__title slds-hyphenate">
+                                            Desvincular
+                                        </h1>
+                                    </div>
+                                    <div class="slds-modal__content slds-p-around_large" id="modal-content-id-20">
+                                        <h1 class="slds-text-heading_small">¿Estás seguro que quieres desvincular
+                                            los
+                                            productos seleccionados?
+                                        </h1>
+                                    </div>
+                                    <div class="slds-modal__footer">
+                                        <button class="slds-button slds-button_neutral" onclick={cancelar4}
+                                            aria-label="Cancel and close">Cancelar</button>
+                                        <button onclick={updateVinculacion}
+                                            class="slds-button slds-button_brand">Guardar</button>
+                                    </div>
                                 </div>
-                            </th>
-                            <th if:true={data.showAdmiSM} class="" scope="col">
-                                <div class="slds-truncate" title="Seguro">
-                                    <lightning-input type="checkbox" checked={data.registroSeguro}
-                                        onchange={onchangeAllSeguro} label="Seguro"></lightning-input>
-                                </div>
-                            </th>
-                            <th if:true={resultPerfil} class="" scope="col">
-                                <div class="slds-truncate" title="Servicio">
-                                    <lightning-input type="checkbox" checked={data.registroServicio}
-                                        onchange={onchangeAllServicio} label="Servicio"></lightning-input>
-                                </div>
-                            </th>
-                            <th if:true={resultPerfil} class="" scope="col">
-                                <div class="slds-truncate" title="Seguro">
-                                    <lightning-input type="checkbox" checked={data.registroSeguro}
-                                        onchange={onchangeAllSeguro} label="Seguro"></lightning-input>
-                                </div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="No aplica">
-                                    <lightning-input type="checkbox" checked={data.noAplica}
-                                        onchange={onchangeAllNoAplica} label="No aplica"></lightning-input>
-                                </div>
-                            </th>
-                            <th if:false={data.showAdmiGex} class="" scope="col">
-                                <div class="slds-truncate" title="Campaña">Campaña</div>
-                            </th>
-                            <th if:false={data.showAdmiGex} class="" scope="col">
-                                <div class="slds-truncate" title="Tipos de Usos">Tipos de Usos</div>
-                            </th>
-                            <th if:false={data.showAdmiGex} class="" scope="col">
-                                <div class="slds-truncate" title="Tipos de Usos">ID vehículo</div>
-                            </th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <template for:each={data.listServicios} for:item="record">
-                            <tr class="slds-hint-parent" key={record.productId}>
-                                <td data-label={record.nombre}>
-                                    <div class="slds-truncate" title={record.nombre}>{record.nombre}</div>
-                                </td>
-                                <td data-label={record.sku}>
-                                    <div class="slds-truncate" title={record.sku}>{record.sku}</div>
-                                </td>
-                                <td data-label={record.categoria} style="text-align: left;">
-                                    <div class="slds-truncate" title={record.categoria}>{record.categoria}</div>
-                                </td>
-                                <td data-label={record.subcategoria} style="text-align: left;">
-                                    <div class="slds-truncate" title={record.subCategoria}>{record.subCategoria}</div>
-                                </td>
-                                <td data-label={record.clase} style="text-align: left;">
-                                    <div class="slds-truncate" title={record.clase}>{record.clase}</div>
-                                </td>
-                                <td data-label={record.familia} style="text-align: left;">
-                                    <div class="slds-truncate" title="familia">{record.familia}</div>
-                                </td>
-                                <td if:true={data.showAdmiGex} data-label="Servicio" style="text-align: left;">
-                                    <div class="slds-truncate" title="Servicio">
-                                        <lightning-input type="checkbox" name={record.id} checked={record.servicio}
-                                            onchange={onchangeServicio}>
-                                        </lightning-input>
-                                    </div>
-                                </td>
-                                <td if:true={data.showAdmiSM} data-label="Seguro" style="text-align: left;">
-                                    <div class="slds-truncate" title="Seguro">
-                                        <lightning-input type="checkbox" name={record.id} checked={record.seguro}
-                                            onchange={onchangeSeguro}></lightning-input>
-                                    </div>
-                                </td>
-                                <td if:true={resultPerfil} data-label="Servicio" style="text-align: left;">
-                                    <div class="slds-truncate" title="Servicio">
-                                        <lightning-input type="checkbox" name={record.id} checked={record.servicio}
-                                            onchange={onchangeServicio}>
-                                        </lightning-input>
-                                    </div>
-                                </td>
-                                <td if:true={resultPerfil} data-label="Seguro" style="text-align: left;">
-                                    <div class="slds-truncate" title="Seguro">
-                                        <lightning-input type="checkbox" name={record.id} checked={record.seguro}
-                                            onchange={onchangeSeguro}></lightning-input>
-                                    </div>
-                                </td>
-                                <td data-label="No aplica" style="text-align: left;">
-                                    <div class="slds-truncate" title="No aplica">
-                                        <lightning-input type="checkbox" name={record.id} checked={record.noAplica}
-                                            onchange={onchangeNoAplica}></lightning-input>
-                                    </div>
-                                </td>
-                                <td if:false={data.showAdmiGex} data-label="Campanas" style="text-align: left;">
-                                    <div class="slds-grid slds-gutters">
-                                        <div class="slds-col">
-                                            <div if:true={record.servicio}
-                                                style=" box-sizing: border-box; margin: 0px; padding-left:20px;">
-                                                <button variant="brand"
-                                                    class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                    value={record.sku} data-id={record.sku} onclick={openFormCampaigns}>
-                                                    <lightning-icon icon-name="utility:open" variant="brand"
-                                                        size="small">
-                                                    </lightning-icon>
-                                                </button>
-                                            </div>
-                                            <div if:true={record.seguro}
-                                                style=" box-sizing: border-box; margin: 0px; padding-left:20px;">
-                                                <button variant="brand"
-                                                    class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                    value={record.sku} data-id={record.sku} onclick={openFormCampaigns}>
-                                                    <lightning-icon icon-name="utility:open" variant="brand"
-                                                        size="small">
-                                                    </lightning-icon>
-                                                </button>
-                                            </div>
-                                            <div if:true={record.noAplica}
-                                                style=" box-sizing: border-box; margin: 0px; padding-left:20px;">
-                                                <button variant="brand"
-                                                    class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                    value={record.sku} data-id={record.sku} onclick={openFormCampaigns}>
-                                                    <lightning-icon icon-name="utility:open" variant="brand"
-                                                        size="small">
-                                                    </lightning-icon>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td if:false={data.showAdmiGex} data-label="Tipos de uso" style="text-align: left;">
-                                    <div class="slds-grid slds-gutters">
-                                        <div if:true={record.servicio}
-                                            style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
-                                            <button variant="brand"
-                                                class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
-
-                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                                </lightning-icon>
-                                            </button>
-                                        </div>
-                                        <div if:true={record.seguro}
-                                            style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
-                                            <button variant="brand"
-                                                class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
-                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                                </lightning-icon>
-                                            </button>
-                                        </div>
-                                        <div if:true={record.noAplica}
-                                            style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
-                                            <button variant="brand"
-                                                class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
-                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                                </lightning-icon>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td if:false={data.showAdmiGex} data-label={record.id} style="text-align: left;">
-                                    <div class="slds-truncate" title="ID vehiculo">
-                                        <lightning-input type="text" name={record.id} value={record.idvehiculo}
-                                            label="ID Vehiculo" data-id={record.id}
-                                            onchange={handleInputChangeVehicleID} placeholder="Escriba/Modifique ID">
-                                        </lightning-input>
-                                    </div>
-                                </td>
-
-                            </tr>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
                         </template>
-                    </tbody>
-                </table>
-                <template if:true={data.showCampaigns}>
-                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-067"
-                        class="slds-modal slds-fade-in-open slds-modal_small" style="width: 700px; margin: 0 auto;">
-                        <div class="slds-modal__container">
-                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
-                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
-                                </svg>
-                                <span class="slds-assistive-text">Cancelar y cerrar</span>
-                            </button>
-                            <div class="slds-modal__header">
-                                <h1 id="modal-heading-5756" class="slds-modal__title slds-hyphenate">Administrar
-                                    campañas
-                                </h1>
-                            </div>
-                            <div class="slds-modal__content slds-p-around_large" id="modal-content-id-466">
-                                <lightning-dual-listbox name="Campañas" label="Seleccione las Campañas que apliquen"
-                                    source-label="Disponible" selected-label="Seleccionado"
-                                    field-level-help="Selecciona las campañas que apliquen" options={data.listaCampanas}
-                                    onchange={onchangeCampana} value={campanasSelected}>
 
-                                </lightning-dual-listbox>
-                            </div>
-                            <div class="slds-modal__footer">
-                                <button class="slds-button slds-button_neutral" onclick={closeformCampaignsTypes}
-                                    aria-label="Cancel and close">Cancelar</button>
-                                <button onclick={getSkuforCampaings}
-                                    class="slds-button slds-button_brand">Guardar</button>
-                            </div>
-                        </div>
-                    </section>
-                    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-                </template>
-                <template if:true={data.showTypes}>
-                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-067"
-                        class="slds-modal slds-fade-in-open slds-modal_small" style="width: 700px; margin: 0 auto;">
-                        <div class="slds-modal__container">
-                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
-                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
-                                </svg>
-                                <span class="slds-assistive-text">Cancelar y cerrar</span>
-                            </button>
-                            <div class="slds-modal__header">
-                                <h1 id="modal-heading-57566" class="slds-modal__title slds-hyphenate">Administrar tipos
-                                    de uso
-                                </h1>
-                            </div>
-                            <div class="slds-modal__content slds-p-around_large" id="modal-content-id-4666">
-                                <lightning-dual-listbox name="Tipos de uso"
-                                    label="Seleccione los tipos de uso que apliquen" source-label="Disponible"
-                                    selected-label="Seleccionado"
-                                    field-level-help="Selecciona los tipos de uso que apliquen"
-                                    options={data.listaTiposuso} onchange={onchangeTiposuso} value={tiposUsoSelected}>
-                                </lightning-dual-listbox>
-                            </div>
-                            <div class="slds-modal__footer">
-                                <button class="slds-button slds-button_neutral" onclick={closeformCampaignsTypes}
-                                    aria-label="Cancel and close">Cancelar</button>
-                                <button onclick={getSkuforTypes} class="slds-button slds-button_brand">Guardar</button>
-                            </div>
-                        </div>
-                    </section>
-                    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-                </template>
 
-            </div>
-            <div class="slds-docked-form-footer"   style="box-sizing: border-box; margin: 0px; padding-left:40px;">
-                <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                    onclick={guardar}>
-                    <lightning-icon icon-name="utility:save" variant="brand" size="small">
-                    </lightning-icon>
-                </button>
-            </div>
-        </lightning-accordion-section>
 
-        <lightning-accordion-section name="B" label="Busqueda personalizada de productos">
-            <div class="slds-grid slds-grid_vertical-align-center slds-box_x-small">
-                <lightning-input type="search" class="slds-m-right_small" onchange={changeSku} value={buscarSkuString}
-                    placeholder="Buscar SKU">
-                </lightning-input>
-                <div class="slds-col slds-align-bottom">
-                    <lightning-button variant="brand" label="Buscar" title="Primary action" onclick={buscarSku}
-                        class="slds-m-right_x-small"></lightning-button>
-                </div>
-            </div>
 
-            <div class="slds-grid slds-wrap">
-                <div class="slds-grid slds-grid_align-center slds-size_3-of-12 slds-box_x-small">
 
-                    <lightning-input type="search" class="slds-m-right_xx-small" onchange={buscadorC}
-                        value={buscarCategoria} placeholder="Buscar Categoría">
-                    </lightning-input>
-                    <div class="slds-grid">
-                        <div class="slds-col slds-align-bottom">
-                            <lightning-button slds-align-bottom variant="brand" label="Aplicar" title="Primary action"
-                                onclick={mostrarSubcategoria}> </lightning-button>
-                        </div>
+
+
+
+                        <template if:true={openTableVincProduct}>
+                            <div role="dialog" tabindex="-1" aria-labelledby="header43"
+                                class="slds-modal slds-fade-in-open slds-modal_large">
+                                <div class="slds-modal__container">
+
+                                    <div style="background-color: #fdffff" class="slds-modal__header">
+                                        <button variant="brand"
+                                            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                            title="Close" onclick={cancelar3}>
+
+                                            <lightning-icon icon-name="utility:close" alternative-text="close"
+                                                variant="inverse" size="small">
+                                            </lightning-icon>
+                                            <span class="slds-assistive-text">Close</span>
+                                        </button>
+
+                                        <div class="slds-p-around_small">
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col">
+                                                    <div class="slds-grid slds-grid_align-start slds-box_x-small">
+                                                        <div>
+                                                            <h1>Productos tangibles no relacionados {pickList.Name}
+                                                            </h1>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="slds-col">
+
+                                                    <div class="slds-grid slds-grid_align-end slds-box_x-small">
+
+                                                        <div>
+                                                            <lightning-input type="checkbox" checked={checkSkus}
+                                                                name="input45" onclick={selectAllSkusProducto}
+                                                                label="Seleccionar todo">
+                                                            </lightning-input>
+
+                                                        </div>
+
+                                                        <div class="slds-m-right_medium">
+                                                            <lightning-button slds-align-bottom variant="brand"
+                                                                label="Vincular" title="Primary action"
+                                                                class="slds-m-right_x-small"
+                                                                onclick={openEmergenteVincular}>
+                                                            </lightning-button>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <lightning-card>
+
+                                            <table
+                                                class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+                                                aria-label="linea de ordenes">
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Nombre producto">
+                                                                Nombre
+                                                                Producto
+                                                            </div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="SKU">SKU</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Categoría">Categoría
+                                                            </div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Subcategoría">
+                                                                Subcategoría
+                                                            </div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Clase">Clase</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Familia">Familia</div>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template for:each={data.listaproductos} for:item="record">
+                                                        <tr class="slds-hint-parent" key={record.Id}>
+                                                            <td data-label={record.nombre}>
+                                                                <div class="slds-truncate" title={record.nombre}>
+                                                                    {record.nombre}</div>
+                                                            </td>
+                                                            <td data-label={record.sku}>
+
+                                                                <lightning-input checked={record.seleccionadoSku}
+                                                                    type="checkbox" label={record.sku}
+                                                                    onchange={selectAllSkuProducto}
+                                                                    name={record.id}>
+                                                                </lightning-input>
+
+                                                            </td>
+                                                            <td data-label={record.departamento}>
+                                                                <lightning-input type="checkbox"
+                                                                    label={record.departamento}
+                                                                    checked={record.seleccionadoDept}
+                                                                    onchange={selectAllDepartamentosProducto}>
+
+                                                                </lightning-input>
+                                                            </td>
+                                                            <td data-label={record.subcategoria}>
+                                                                <lightning-input type="checkbox"
+                                                                    label={record.subcategoria}
+                                                                    checked={record.seleccionadoSubcategoria}
+                                                                    onchange={selectAllSubcategoriaProducto}>
+
+                                                                </lightning-input>
+                                                            </td>
+
+                                                            <td data-label={record.clase}>
+                                                                <lightning-input type="checkbox"
+                                                                    label={record.clase}
+                                                                    onchange={selectAllClasesProducto}
+                                                                    checked={record.seleccionadoClase}>
+                                                                </lightning-input>
+                                                            </td>
+                                                            <td data-label={record.familia}>
+                                                                <lightning-input type="checkbox"
+                                                                    label={record.familia}
+                                                                    onchange={selectAllFamiliasProducto}
+                                                                    checked={record.seleccionadoFamilia}>
+                                                                </lightning-input>
+                                                            </td>
+
+
+                                                        </tr>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+
+
+                                        </lightning-card>
+
+                                        <template if:true={showConfirmarVincular}>
+                                            <section role="dialog" tabindex="-1" aria-modal="true"
+                                                aria-labelledby="modal-heading-01"
+                                                class="slds-modal slds-fade-in-open slds-modal_small">
+                                                <div class="slds-modal__container">
+                                                    <button
+                                                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
+                                                        <svg class="slds-button__icon slds-button__icon_large"
+                                                            aria-hidden="true">
+                                                            <use
+                                                                xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close">
+                                                            </use>
+                                                        </svg>
+                                                        <span class="slds-assistive-text">Cancelar y cerrar</span>
+                                                    </button>
+                                                    <div class="slds-modal__header">
+                                                        <h1 id="modal-heading-574"
+                                                            class="slds-modal__title slds-hyphenate">
+                                                            Vincular
+                                                        </h1>
+                                                    </div>
+                                                    <div class="slds-modal__content slds-p-around_large"
+                                                        id="modal-content-id-45">
+                                                        <h1 class="slds-text-heading_small">¿Estás seguro que
+                                                            quieres
+                                                            vincular los productos seleccionados?</h1>
+                                                    </div>
+                                                    <div class="slds-modal__footer">
+                                                        <button class="slds-button slds-button_neutral"
+                                                            onclick={cancelar5}
+                                                            aria-label="Cancel and close">Cancelar</button>
+                                                        <button onclick={guardarAsignacion}
+                                                            class="slds-button slds-button_brand">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                                        </template>
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
                     </div>
-                </div>
+
+                </div>  
+                <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>        
+        </template>
+    </div>
+    </div>
+</template>
 
 
-
-                <div if:true={show} class="slds-grid slds-grid_align-center slds-size_2-of-12 slds-box_x-small">
-
-                    <lightning-input type="search" onchange={buscadorSubC} class="slds-m-right_xx-small"
-                        value={buscarSCat} placeholder="Buscar SubCategaría">
-                    </lightning-input>
-                    <div class="slds-grid">
-                        <div class="slds-col slds-align-bottom">
-                            <lightning-button variant="brand" label="Aplicar" title="Primary action"
-                                onclick={mostrarClase} class="slds-m-right_x-small"></lightning-button>
-                        </div>
-                    </div>
-                </div>
-
-                <div if:true={show2} class="slds-grid slds-grid_align-center slds-size_3-of-12 slds-box_x-small">
-
-                    <lightning-input type="search" class="slds-m-right_xx-small" onchange={buscadorCla}
-                        value={buscarClase} placeholder="Buscar Clase">
-                    </lightning-input>
-
-                    <div class="slds-grid">
-                        <div class="slds-col slds-align-bottom">
-                            <lightning-button variant="brand" label="Aplicar" title="Primary action"
-                                onclick={mostrarFamilia} class="slds-m-right_x-small"></lightning-button>
-                        </div>
-                    </div>
-                </div>
-
-                <div if:true={show3} class="slds-grid slds-grid_align-center slds-size_2-of-12 slds-box_x-small">
-                    <lightning-input type="search" onchange={buscadorFami} value={buscarFami}
-                        placeholder="Buscar Familia">
-                    </lightning-input>
-
-                </div>
-
-                <div
-                    class="slds-grow-none slds-align-bottom slds-box_xx-small slds-size_1-of-12 slds-grid slds-grid_align-end">
-                    <lightning-button variant="brand" label="Buscar" class="slds-m-left_large  slds-m-bottom_xx-small"
-                        onclick={search} slds-box_x-small>
-                    </lightning-button>
-                </div>
-
-            </div>
-
-
-
-            <div class="slds-border_bottom"></div>
-            <div class="slds-grid slds-wrap slds-box_x-small">
-                <div class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
-                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                        <thead>
-                            <tr class="slds-line-height_reset">
-                                <th class="" scope="col">
-                                    <lightning-input type="checkbox" checked={checkCategoria}
-                                        onchange={selectAllCategoria} label="Categoria" name="input"></lightning-input>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template for:each={data.listCategorias} for:item="record">
-                                <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
-                                    <td>
-                                        <lightning-input checked={record.seleccionado} onchange={onclickCategoria}
-                                            type="checkbox" label={record.etiqueta} name={record.valor}>
-                                        </lightning-input>
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div if:true={show} class="slds-col slds-grow-none slds-size_2-of-12 slds-truncate">
-                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                        <thead>
-                            <tr class="slds-line-height_reset">
-                                <th class="" scope="col">
-                                    <lightning-input type="checkbox" checked={checkSubCategoria}
-                                        onchange={selectAllSubCategoria} label="SubCategoria" name="input2">
-                                    </lightning-input>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template for:each={data.listSubCategorias} for:item="record">
-                                <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
-                                    <td>
-                                        <lightning-input checked={record.seleccionado} onchange={onclickSubCategoria}
-                                            type="checkbox" label={record.etiqueta} name={record.valor}>
-                                        </lightning-input>
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div if:true={show2} class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
-                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                        <thead>
-                            <tr class="slds-line-height_reset">
-                                <th class="" scope="col">
-                                    <lightning-input type="checkbox" checked={checkClase} onchange={selectAllClase}
-                                        label="Clase" name="input4"></lightning-input>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template for:each={data.listClases} for:item="record">
-                                <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
-                                    <td>
-                                        <lightning-input checked={record.seleccionado} onchange={onclicklistClases}
-                                            type="checkbox" label={record.etiqueta} name={record.valor}>
-                                        </lightning-input>
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div if:true={show3} class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
-                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                        <thead>
-                            <tr class="slds-line-height_reset">
-                                <th class="" scope="col">
-                                    <lightning-input type="checkbox" checked={checkFamilia} onchange={selectAllFamilia}
-                                        label="Familia" name="input3"></lightning-input>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template for:each={data.listFamilias} for:item="record">
-                                <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
-                                    <td>
-                                        <lightning-input checked={record.seleccionado} onchange={onclickListFamilias}
-                                            type="checkbox" label={record.etiqueta} name={record.valor}>
-                                        </lightning-input>
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- <div class="slds-col slds-grow-none slds-box_x-small slds-size_1-of-12">
-            <lightning-button variant="brand" label="Buscarb" onclick={search} slds-box_x-small>
-            </lightning-button>
+<div if:true={showc}>
+    <div class="slds-modal__header">
+        <h1 id="modal-heading-05" class="slds-text-heading_medium slds-hyphenate">
+            Búsqueda personalizada
+        </h1>
+    </div>
+    <div class="slds-grid slds-grid_vertical-align-center slds-box_x-small">
+        <lightning-input type="search" class="slds-m-right_small" onchange={changeSku} value={buscarSkuString}
+            placeholder="Buscar por nombre o SKU">
+        </lightning-input>
+        <div class="slds-col slds-align-bottom">
+            <lightning-button variant="brand" label="Buscar" title="Buscar productos" onclick={search}
+                class="slds-m-right_xxx-small" style="position: absolute; top: 5; right: 18.8rem; transform: translateX(100%);" ></lightning-button>
         </div>
- -->
-            </div>
+    </div>
+    <div class="screen-divider" style="width: 100%; height: 14px; background-color: #ffffff;"></div>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-grid slds-grid_align-left slds-size_3-of-12 slds-box_x-small">
+            <lightning-input type="search" class="slds-m-right_xx-small" onchange={buscadorC} value={buscarCategoria}
+                placeholder="Buscar Categoría">
+            </lightning-input>
+        </div>
 
-            <div if:true={showbyfilter} class="slds-grid slds-grid_vertical-align-center slds-box_x-small" style="overflow-x:scroll;">
 
-                <Table if:false={popEdit}
-                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
-                    aria-label="linea de ordenes ">
-                    <thead>
-                        <tr class="slds-line-height_reset">
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Nombre">Nombre</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="SKU">SKU</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Categoria">Categoria</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Subcategoria">Subcategoria</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Clase">Clase</div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="Familia">Familia</div>
-                            </th>
-                            <th if:true={data.showAdmiGex} class="" scope="col">
-                                <div class="slds-truncate" title="Servicio">
-                                    <lightning-input type="checkbox" checked={data.registroServicio}
-                                        onchange={onchangeAllServicio} label="Servicio"></lightning-input>
-                                </div>
-                            </th>
-                            <th if:true={data.showAdmiSM} class="" scope="col">
-                                <div class="slds-truncate" title="Seguro">
-                                    <lightning-input type="checkbox" checked={data.registroSeguro}
-                                        onchange={onchangeAllSeguro} label="Seguro"></lightning-input>
-                                </div>
-                            </th>
-                            <th if:true={resultPerfil} class="" scope="col">
-                                <div class="slds-truncate" title="Servicio">
-                                    <lightning-input type="checkbox" checked={data.registroServicio}
-                                        onchange={onchangeAllServicio} label="Servicio"></lightning-input>
-                                </div>
-                            </th>
-                            <th if:true={resultPerfil} class="" scope="col">
-                                <div class="slds-truncate" title="Seguro">
-                                    <lightning-input type="checkbox" checked={data.registroSeguro}
-                                        onchange={onchangeAllSeguro} label="Seguro"></lightning-input>
-                                </div>
-                            </th>
-                            <th class="" scope="col">
-                                <div class="slds-truncate" title="No aplica">
-                                    <lightning-input type="checkbox" checked={data.noAplica}
-                                        onchange={onchangeAllNoAplica} label="No aplica"></lightning-input>
-                                </div>
-                            </th>
-                            <th if:false={data.showAdmiGex} class="" scope="col">
-                                <div class="slds-truncate" title="Campaña">Campaña</div>
-                            </th>
-                            <th if:false={data.showAdmiGex} class="" scope="col">
-                                <div class="slds-truncate" title="Tipos de Usos">Tipos de Usos</div>
-                            </th>
-                            <th if:false={data.showAdmiGex} class="" scope="col">
-                                <div class="slds-truncate" title="Tipos de Usos">ID vehículo</div>
-                            </th>
 
+        <div class="slds-grid slds-grid_align-left slds-size_3-of-12 slds-box_x-small">
+            <lightning-input type="search" onchange={buscadorSubC} class="slds-m-right_xx-small" value={buscarSCat}
+                placeholder="Buscar Subcategoría">
+            </lightning-input>
+        </div>
+
+        <div class="slds-grid slds-grid_align-left slds-size_3-of-12 slds-box_x-small">
+            <lightning-input type="search" class="slds-m-right_xx-small" onchange={buscadorCla} value={buscarClase}
+                placeholder="Buscar Clase">
+            </lightning-input>
+        </div>
+
+        <div class="slds-grid slds-grid_align-left slds-size_2-of-12 slds-box_x-small">
+            <lightning-input type="search" onchange={buscadorFami} value={buscarFami} placeholder="Buscar Familia">
+            </lightning-input>
+        </div>
+    </div>
+
+
+
+    <div class="slds-border_bottom"></div>
+    <div class="slds-grid slds-wrap slds-box_x-small">
+        <div class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <lightning-input type="checkbox" checked={checkCategoria} onchange={selectAllCategoria}
+                                label="Categoría" name="input"></lightning-input>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={data.listCategorias} for:item="record">
+                        <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
+                            <td>
+                                <lightning-input checked={record.seleccionado} onchange={onclickCategoria}
+                                    type="checkbox" label={record.etiqueta} name={record.valor}>
+                                </lightning-input>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <template for:each={data.listServicios} for:item="record">
-                            <tr class="slds-hint-parent" key={record.productId}>
-                                <td data-label={record.nombre}>
-                                    <div class="slds-truncate" title={record.nombre}>{record.nombre}</div>
-                                </td>
-                                <td data-label={record.sku}>
-                                    <div class="slds-truncate" title={record.sku}>{record.sku}</div>
-                                </td>
-                                <td data-label={record.categoria} style="text-align: left;">
-                                    <div class="slds-truncate" title={record.categoria}>{record.categoria}</div>
-                                </td>
-                                <td data-label={record.subcategoria} style="text-align: left;">
-                                    <div class="slds-truncate" title={record.subCategoria}>{record.subCategoria}</div>
-                                </td>
-                                <td data-label={record.clase} style="text-align: left;">
-                                    <div class="slds-truncate" title={record.clase}>{record.clase}</div>
-                                </td>
-                                <td data-label={record.familia} style="text-align: left;">
-                                    <div class="slds-truncate" title="familia">{record.familia}</div>
-                                </td>
-                                <td if:true={data.showAdmiGex} data-label="Servicio" style="text-align: left;">
-                                    <div class="slds-truncate" title="Servicio">
-                                        <lightning-input type="checkbox" name={record.id} checked={record.servicio}
-                                            onchange={onchangeServicio}>
-                                        </lightning-input>
-                                    </div>
-                                </td>
-                                <td if:true={data.showAdmiSM} data-label="Seguro" style="text-align: left;">
-                                    <div class="slds-truncate" title="Seguro">
-                                        <lightning-input type="checkbox" name={record.id} checked={record.seguro}
-                                            onchange={onchangeSeguro}></lightning-input>
-                                    </div>
-                                </td>
-                                <td if:true={resultPerfil} data-label="Servicio" style="text-align: left;">
-                                    <div class="slds-truncate" title="Servicio">
-                                        <lightning-input type="checkbox" name={record.id} checked={record.servicio}
-                                            onchange={onchangeServicio}>
-                                        </lightning-input>
-                                    </div>
-                                </td>
-                                <td if:true={resultPerfil} data-label="Seguro" style="text-align: left;">
-                                    <div class="slds-truncate" title="Seguro">
-                                        <lightning-input type="checkbox" name={record.id} checked={record.seguro}
-                                            onchange={onchangeSeguro}></lightning-input>
-                                    </div>
-                                </td>
-                                <td data-label="No aplica" style="text-align: left;">
-                                    <div class="slds-truncate" title="No aplica">
-                                        <lightning-input type="checkbox" name={record.id} checked={record.noAplica}
-                                            onchange={onchangeNoAplica}></lightning-input>
-                                    </div>
-                                </td>
-                                <td if:false={data.showAdmiGex} data-label="Campanas" style="text-align: left;">
-                                    <div class="slds-grid slds-gutters">
-                                        <div class="slds-col">
-                                            <div if:true={record.servicio}
-                                                style=" box-sizing: border-box; margin: 0px; padding-left:20px;">
-                                                <button variant="brand"
-                                                    class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                    value={record.sku} data-id={record.sku} onclick={openFormCampaigns}>
-                                                    <lightning-icon icon-name="utility:open" variant="brand"
-                                                        size="small">
-                                                    </lightning-icon>
-                                                </button>
-                                            </div>
-                                            <div if:true={record.seguro}
-                                                style=" box-sizing: border-box; margin: 0px; padding-left:20px;">
-                                                <button variant="brand"
-                                                    class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                    value={record.sku} data-id={record.sku} onclick={openFormCampaigns}>
-                                                    <lightning-icon icon-name="utility:open" variant="brand"
-                                                        size="small">
-                                                    </lightning-icon>
-                                                </button>
-                                            </div>
-                                            <div if:true={record.noAplica}
-                                                style=" box-sizing: border-box; margin: 0px; padding-left:20px;">
-                                                <button variant="brand"
-                                                    class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                    value={record.sku} data-id={record.sku} onclick={openFormCampaigns}>
-                                                    <lightning-icon icon-name="utility:open" variant="brand"
-                                                        size="small">
-                                                    </lightning-icon>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td if:false={data.showAdmiGex} data-label="Tipos de uso" style="text-align: left;">
-                                    <div class="slds-grid slds-gutters">
-                                        <div if:true={record.servicio}
-                                            style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
-                                            <button variant="brand"
-                                                class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
+                    </template>
+                </tbody>
+            </table>
+        </div>
 
-                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                                </lightning-icon>
-                                            </button>
-                                        </div>
-                                        <div if:true={record.seguro}
-                                            style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
-                                            <button variant="brand"
-                                                class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
-                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                                </lightning-icon>
-                                            </button>
-                                        </div>
-                                        <div if:true={record.noAplica}
-                                            style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
-                                            <button variant="brand"
-                                                class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                                                value={record.sku} data-id={record.sku} onclick={openFormTypes}>
-                                                <lightning-icon icon-name="utility:open" variant="brand" size="small">
-                                                </lightning-icon>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td if:false={data.showAdmiGex} data-label={record.id} style="text-align: left;">
-                                    <div class="slds-truncate" title="ID vehiculo">
-                                        <lightning-input type="text" name={record.id} value={record.idvehiculo}
-                                            label="ID Vehiculo" data-id={record.id}
-                                            onchange={handleInputChangeVehicleID} placeholder="Escriba/Modifique ID">
-                                        </lightning-input>
-                                    </div>
-                                </td>
+        <div class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <lightning-input type="checkbox" checked={checkSubCategoria}
+                                onchange={selectAllSubCategoria} label="Subcategoría" name="input2">
+                            </lightning-input>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={data.listSubCategorias} for:item="record">
+                        <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
+                            <td>
+                                <lightning-input checked={record.seleccionado} onchange={onclickSubCategoria}
+                                    type="checkbox" label={record.etiqueta} name={record.valor}>
+                                </lightning-input>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
 
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
-                <template if:true={data.showCampaigns}>
-                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-067"
-                        class="slds-modal slds-fade-in-open slds-modal_small" style="width: 700px; margin: 0 auto;">
-                        <div class="slds-modal__container">
-                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
-                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
-                                </svg>
-                                <span class="slds-assistive-text">Cancelar y cerrar</span>
+        <div class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <lightning-input type="checkbox" checked={checkClase} onchange={selectAllClase}
+                                label="Clase" name="input4"></lightning-input>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={data.listClases} for:item="record">
+                        <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
+                            <td>
+                                <lightning-input checked={record.seleccionado} onchange={onclicklistClases}
+                                    type="checkbox" label={record.etiqueta} name={record.valor}>
+                                </lightning-input>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <lightning-input type="checkbox" checked={checkFamilia} onchange={selectAllFamilia}
+                                label="Familia" name="input3"></lightning-input>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={data.listFamilias} for:item="record">
+                        <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
+                            <td>
+                                <lightning-input checked={record.seleccionado} onchange={onclickListFamilias}
+                                    type="checkbox" label={record.etiqueta} name={record.valor}>
+                                </lightning-input>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="screen-divider" style="width: 100%; height: 14px; background-color: #186ca4;"></div>
+</div>
+
+<div if:true={showbyfilter}>
+    <div if:false={showc} class="slds-modal__header">
+        <h1 id="modal-heading-06" class="slds-text-heading_medium slds-hyphenate">
+            Productos sin clasificar
+        </h1>
+    </div>
+    <div class="screen-divider" style="width: 100%; height: 25px; background-color: #ffffff;"></div>
+    <lightning-button variant="brand" label="Consultar en compras" title="Consultar en compras" onclick={getservicecategories}
+            class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-large slds-p-right_large" 
+            size="small" style="position: absolute; top: 10; right: 17rem; transform: translateX(100%);" ></lightning-button>
+          
+            <template if:true={data.showcompras}>
+                <section role="dialog" tabindex="-1" aria-modal="true"
+                    aria-labelledby="modal-heading-01"
+                    class="slds-modal slds-fade-in-open slds-modal_large">
+                    <div class="slds-modal__container">
+                        <div style="background-color: #fdffff" class="slds-modal__header">
+                            <button variant="brand"
+                                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={cancelar}>
+
+                                <lightning-icon icon-name="utility:close" alternative-text="close"
+                                    variant="inverse" size="small">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
                             </button>
-                            <div class="slds-modal__header">
-                                <h1 id="modal-heading-57456" class="slds-modal__title slds-hyphenate">Administrar
-                                    campañas
-                                </h1>
+                            <h1 id="modal-heading-16" class="slds-text-heading_medium slds-hyphenate">
+                                Consultar en compras
+                            </h1>
+                            <div class="screen-divider" style="width: 100%; height: 20px; background-color: #ffffff;"></div>
+                            <div class="slds-grid slds-wrap">
+                                <lightning-combobox name="progress" label="Categoría" required
+                                    value={data.valueCategoryService} placeholder="Selecciona"
+                                    options={data.servicioCategoria} class="slds-m-bottom_x-small slds-size_1-of-5"
+                                    onchange={getservicesubcategories}></lightning-combobox>
+                            
+                                <lightning-combobox name="progress" label="Subcategoría" required
+                                    class="slds-m-bottom_x-small slds-size_1-of-5" value={data.valueSubcategoryService}
+                                    placeholder="Selecciona" options={data.servicioSubcategoria}
+                                    onchange={getserviceclass}></lightning-combobox>
+                            
+                                <div class="lgc-bg slds-m-bottom_x-small slds-size_1-of-5">
+                                    <lightning-combobox name="Clases" label="Clase" required
+                                        class="slds-m-bottom_x-small" value={data.valueClassService}
+                                        placeholder="Selecciona" options={data.servicioClases}
+                                        onchange={getservicefamily}>
+                                    </lightning-combobox>
+                                </div>
+                            
+                                <div class="lgc-bg slds-m-bottom_x-small slds-size_1-of-5">
+                                    <lightning-combobox name="Familias" label="Familia" required
+                                        value={data.valueFamilyService} placeholder="Selecciona"
+                                        options={data.servicioFamilias} onchange={getValueFamily}>
+                                    </lightning-combobox>
+                                </div>
+                                <lightning-button variant="brand" label="Buscar" title="Buscar en compras"
+                                    onclick={getservicesku} class="slds-m-bottom_x-small slds-size_1-of-5" size="medium">
+                                </lightning-button>
                             </div>
-                            <div class="slds-modal__content slds-p-around_large" id="modal-content-id-4466">
-                                <lightning-dual-listbox name="Campañas" label="Seleccione las Campañas que apliquen"
-                                    source-label="Disponible" selected-label="Seleccionado"
-                                    field-level-help="Selecciona las campañas que apliquen" options={data.listaCampanas}
-                                    onchange={onchangeCampana} value={campanasSelected}>
+                            <lightning-card>
+                                <table
+                                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+                                    aria-label="linea de ordenes">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-size_1-of-3"  scope="col">
+                                                <div class="slds-truncate" title="Nombre producto">
+                                                    Nombre
+                                                    Producto
+                                                </div>
+                                            </th>
+                                            <th class="slds-size_1-of-3" scope="col">
+                                                <div class="slds-truncate" title="SKU">SKU</div>
+                                            </th>
+                                            <th class="slds-size_1-of-3"  scope="col">
+                                                <div class="slds-truncate" title="Tipo de servicio">Tipo de servicio
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={data.servicioSku} for:item="record">
+                                            <tr class="slds-hint-parent" key={record.Id}>
+                                                <td data-label={record.nombre}>
+                                                    <div class="slds-truncate" title={record.nombre}>
+                                                        {record.nombre}</div>
+                                                </td>
+                                                <td data-label={record.sku}>
+                                                    <div class="slds-truncate" title={record.sku}>
+                                                        {record.sku}</div>
+                                                </td>
+                                                <td data-label={record.servicio}>
+                                                    <div class="slds-truncate" title={record.servicio}>
+                                                        {record.servicio}</div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </lightning-card>
 
-                                </lightning-dual-listbox>
-                            </div>
-                            <div class="slds-modal__footer">
-                                <button class="slds-button slds-button_neutral" onclick={closeformCampaignsTypes}
-                                    aria-label="Cancel and close">Cancelar</button>
-                                <button onclick={getSkuforCampaings}
-                                    class="slds-button slds-button_brand">Guardar</button>
-                            </div>
+                            
                         </div>
-                    </section>
-                    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-                </template>
-                <template if:true={data.showTypes}>
-                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-067"
-                        class="slds-modal slds-fade-in-open slds-modal_small" style="width: 700px; margin: 0 auto;">
-                        <div class="slds-modal__container">
-                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
-                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
-                                </svg>
-                                <span class="slds-assistive-text">Cancelar y cerrar</span>
-                            </button>
-                            <div class="slds-modal__header">
-                                <h1 id="modal-heading-547566" class="slds-modal__title slds-hyphenate">Administrar tipos
-                                    de uso
-                                </h1>
-                            </div>
-                            <div class="slds-modal__content slds-p-around_large" id="modal-content-id-44666">
-                                <lightning-dual-listbox name="Tipos de uso"
-                                    label="Seleccione los tipos de uso que apliquen" source-label="Disponible"
-                                    selected-label="Seleccionado"
-                                    field-level-help="Selecciona los tipos de uso que apliquen"
-                                    options={data.listaTiposuso} onchange={onchangeTiposuso} value={tiposUsoSelected}>
-                                </lightning-dual-listbox>
-                            </div>
-                            <div class="slds-modal__footer">
-                                <button class="slds-button slds-button_neutral" onclick={closeformCampaignsTypes}
-                                    aria-label="Cancel and close">Cancelar</button>
-                                <button onclick={getSkuforTypes} class="slds-button slds-button_brand">Guardar</button>
-                            </div>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+            </template>
+    <div if:true={showc} class="slds-modal__header">
+        <lightning-icon icon-name="utility:search" size="small">
+        </lightning-icon>
+        <h1 id="modal-heading-07" class="slds-text-heading_medium slds-hyphenate">
+            Resultados de la búsqueda
+        </h1>
+    </div>
+    <div if:true={showc} class="screen-divider" style="width: 100%; height: 25px; background-color: #ffffff;"></div>
+    <lightning-button variant="brand" label="Guardar" title="Guardar cambios"
+    onclick={guardar}  class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-large slds-p-right_large" 
+    size="small" style="position: absolute; top: 10; right: 6rem; transform: translateX(100%);" >
+    </lightning-button>
+    <div class="screen-divider" style="width: 100%; height: 50px; background-color: #ffffff;"></div>
+    <div class="slds-grid slds-grid_vertical-align-center slds-box_x-small" style="overflow-x:scroll;">
+        <Table if:false={popEdit} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+            aria-label="linea de ordenes ">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Nombre">Nombre</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="SKU">SKU</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Categoría">Categoría</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Subcategoría">Subcategoría</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Clase">Clase</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Familia">Familia</div>
+                    </th>
+                    <th if:true={data.showAdmiGex} class="" scope="col">
+                        <div class="slds-truncate" title="Servicio">
+                            <lightning-input type="checkbox" checked={data.registroServicio}
+                                onchange={onchangeAllServicio} label="Servicio"></lightning-input>
                         </div>
-                    </section>
-                    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                    </th>
+                    <th if:true={data.showAdmiSM} class="" scope="col">
+                        <div class="slds-truncate" title="Seguro">
+                            <lightning-input type="checkbox" checked={data.registroSeguro} onchange={onchangeAllSeguro}
+                                label="Seguro"></lightning-input>
+                        </div>
+                    </th>
+                    <th if:true={resultPerfil} class="" scope="col">
+                        <div class="slds-truncate" title="Servicio">
+                            <lightning-input type="checkbox" checked={data.registroServicio}
+                                onchange={onchangeAllServicio} label="Servicio"></lightning-input>
+                        </div>
+                    </th>
+                    <th if:true={resultPerfil} class="" scope="col">
+                        <div class="slds-truncate" title="Seguro">
+                            <lightning-input type="checkbox" checked={data.registroSeguro} onchange={onchangeAllSeguro}
+                                label="Seguro"></lightning-input>
+                        </div>
+                    </th>
+                    <th class="" scope="col">
+                        <div if:true={resultPerfil} class="slds-truncate" title="No aplica">
+                            <lightning-input type="checkbox" checked={data.noAplica} onchange={onchangeAllNoAplica}
+                                label="No aplica"></lightning-input>
+                        </div>
+                        <div if:true={data.showAdmiGex} class="slds-truncate" title="No aplica">
+                            <lightning-input type="checkbox" checked={data.noAplica} onchange={onchangeAllNoAplicaServicio}
+                                label="No aplica"></lightning-input>
+                        </div>
+                        <div if:true={data.showAdmiSM} class="slds-truncate" title="No aplica">
+                            <lightning-input type="checkbox" checked={data.noAplica} onchange={onchangeAllNoAplicaSeguro}
+                                label="No aplica"></lightning-input>
+                        </div>
+                    </th>
+                    <th if:false={data.showAdmiGex} class="" scope="col">
+                        <div class="slds-truncate" title="Campaña">Campaña</div>
+                    </th>
+                    <th if:false={data.showAdmiGex} class="" scope="col">
+                        <div class="slds-truncate" title="Tipos de Usos">Tipos de Usos</div>
+                    </th>
+                    <th if:false={data.showAdmiGex} class="" scope="col">
+                        <div class="slds-truncate" title="Tipos de Usos">ID vehículo</div>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={data.listServicios} for:item="record">
+                    <tr class="slds-hint-parent" key={record.productId}>
+                        <td data-label={record.nombre}>
+                            <div class="slds-truncate" title={record.nombre}>{record.nombre}</div>
+                        </td>
+                        <td data-label={record.sku}>
+                            <div class="slds-truncate" title={record.sku}>{record.sku}</div>
+                        </td>
+                        <td data-label={record.categoria} style="text-align: left;">
+                            <div class="slds-truncate" title={record.categoria}>{record.categoria}</div>
+                        </td>
+                        <td data-label={record.subcategoria} style="text-align: left;">
+                            <div class="slds-truncate" title={record.subCategoria}>{record.subCategoria}</div>
+                        </td>
+                        <td data-label={record.clase} style="text-align: left;">
+                            <div class="slds-truncate" title={record.clase}>{record.clase}</div>
+                        </td>
+                        <td data-label={record.familia} style="text-align: left;">
+                            <div class="slds-truncate" title="familia">{record.familia}</div>
+                        </td>
+                        <td if:true={data.showAdmiGex} data-label="Servicio" style="text-align: left;">
+                            <div class="slds-truncate" title="Servicio">
+                                <lightning-input type="checkbox" name={record.id} checked={record.servicio}
+                                    onchange={onchangeServicio}>
+                                </lightning-input>
+                            </div>
+                        </td>
+                        <td if:true={data.showAdmiSM} data-label="Seguro" style="text-align: left;">
+                            <div class="slds-truncate" title="Seguro">
+                                <lightning-input type="checkbox" name={record.id} checked={record.seguro}
+                                    onchange={onchangeSeguro}></lightning-input>
+                            </div>
+                        </td>
+                        <td if:true={resultPerfil} data-label="Servicio" style="text-align: left;">
+                            <div class="slds-truncate" title="Servicio">
+                                <lightning-input type="checkbox" name={record.id} checked={record.servicio}
+                                    onchange={onchangeServicio}>
+                                </lightning-input>
+                            </div>
+                        </td>
+                        <td if:true={resultPerfil} data-label="Seguro" style="text-align: left;">
+                            <div class="slds-truncate" title="Seguro">
+                                <lightning-input type="checkbox" name={record.id} checked={record.seguro}
+                                    onchange={onchangeSeguro}></lightning-input>
+                            </div>
+                        </td>
+                        <td if:true={resultPerfil} data-label="No aplica" style="text-align: left;">
+                            <div class="slds-truncate" title="No aplica">
+                                <lightning-input type="checkbox" name={record.id} checked={record.noAplica}
+                                    onchange={onchangeNoAplica}></lightning-input>
+                            </div>
+                        </td>
+                        <td if:true={data.showAdmiGex} data-label="No aplica servicio" style="text-align: left;">
+                            <div class="slds-truncate" title="No aplica servicio">
+                                <lightning-input type="checkbox" name={record.id} checked={record.noAplicaServicio}
+                                    onchange={onchangeNoAplicaServicio}></lightning-input>
+                            </div>
+                        </td> 
+                        <td if:true={data.showAdmiSM} data-label="No aplica seguro" style="text-align: left;">
+                            <div class="slds-truncate" title="No aplica seguro">
+                                <lightning-input type="checkbox" name={record.id} checked={record.noAplicaSeguro}
+                                    onchange={onchangeNoAplicaSeguro}></lightning-input>
+                            </div>
+                        </td> 
+                        <td if:false={data.showAdmiGex} data-label="Campanas" style="text-align: left;">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col">
+                                    <div
+                                        style=" box-sizing: border-box; margin: 0px; padding-left:20px;">
+                                        <button variant="brand"
+                                            class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                            value={record.sku} data-id={record.sku} onclick={openFormCampaigns}>
+                                            <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                            </lightning-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td if:false={data.showAdmiGex} data-label="Tipos de uso" style="text-align: left;">
+                            <div class="slds-grid slds-gutters">
+                                <div
+                                    style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
+                                    <button variant="brand"
+                                        class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
+                                        value={record.sku} data-id={record.sku} onclick={openFormTypes}>
+
+                                        <lightning-icon icon-name="utility:open" variant="brand" size="small">
+                                        </lightning-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                        <td if:false={data.showAdmiGex} data-label={record.id} style="text-align: left;">
+                            <lightning-input type="text" name={record.id} value={record.idvehiculo}
+                                data-id={record.id} onchange={handleInputChangeVehicleID}
+                                placeholder="Escriba/Modifique ID"
+                                variant="label-hidden">
+                            </lightning-input>
+                        </td>
+
+                    </tr>
                 </template>
+            </tbody>
+        </table>
+        <template if:true={data.showCampaigns}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-067"
+                class="slds-modal slds-fade-in-open slds-modal_small" style="width: 700px; margin: 0 auto;">
+                <div class="slds-modal__container">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Cancelar y cerrar</span>
+                    </button>
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-5756" class="slds-modal__title slds-hyphenate">Administrar
+                            campañas
+                        </h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_large" id="modal-content-id-466">
+                        <lightning-dual-listbox name="Campañas" label="Seleccione las Campañas que apliquen"
+                            source-label="Disponible" selected-label="Seleccionado"
+                            field-level-help="Selecciona las campañas que apliquen" options={data.listaCampanas}
+                            onchange={onchangeCampana} value={campanasSelected}>
 
-            </div>
-            <div class="slds-docked-form-footer" style=" box-sizing: border-box; margin: 0px; padding-left:40px;">
-                <button variant="brand" class="slds-button slds-button_icon slds-modal__new slds-button_icon-xx-small"
-                    onclick={guardar}>
-                    <lightning-icon icon-name="utility:save" variant="brand" size="small">
-                    </lightning-icon>
-                </button>
-            </div>
-        </lightning-accordion-section>
+                        </lightning-dual-listbox>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeformCampaignsTypes}
+                            aria-label="Cancel and close">Cancelar</button>
+                        <button onclick={getSkuforCampaings} class="slds-button slds-button_brand">Guardar</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+        <template if:true={data.showTypes}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-067"
+                class="slds-modal slds-fade-in-open slds-modal_small" style="width: 700px; margin: 0 auto;">
+                <div class="slds-modal__container">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse ">
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Cancelar y cerrar</span>
+                    </button>
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-57566" class="slds-modal__title slds-hyphenate">Administrar tipos
+                            de uso
+                        </h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_large" id="modal-content-id-4666">
+                        <lightning-dual-listbox name="Tipos de uso" label="Seleccione los tipos de uso que apliquen"
+                            source-label="Disponible" selected-label="Seleccionado"
+                            field-level-help="Selecciona los tipos de uso que apliquen" options={data.listaTiposuso}
+                            onchange={onchangeTiposuso} value={tiposUsoSelected}>
+                        </lightning-dual-listbox>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeformCampaignsTypes}
+                            aria-label="Cancel and close">Cancelar</button>
+                        <button onclick={getSkuforTypes} class="slds-button slds-button_brand">Guardar</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
 
-
-    </lightning-accordion>
-
-
-
-
-
-
-
-</lightning-card>
-
-<lightning-card if:true={showbyfilter}>
-
-
-
-</lightning-card>
-
-
-
-
-
+    </div>
+</div>
 
 <template if:true={showSpinner}>
     <div id="activityIndicator" class="slds-spinner_container">
