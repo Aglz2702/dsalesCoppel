@@ -1,6 +1,5 @@
 @RestResource(urlMapping='/siniestroUpsert/*')
 global class DSALES_Siniestro {
-    public static final String NOMBRE_SERVICIO = 'DSALES_QuoteSM';
     @HttpPost
     global static DSALES_SiniestroWrapper.siniestroPostResponse siniestroUpsert(){
         String message = '';
