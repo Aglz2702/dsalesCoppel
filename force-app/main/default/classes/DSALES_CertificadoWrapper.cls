@@ -37,7 +37,11 @@ global class DSALES_CertificadoWrapper {
         global	Date	fecha_fin_garantia_extendida	{get;set;}
         
     }
-    
+    global class cancelacionGex{
+        global String idProducto {get;set;}
+        global String motivoCancelacion {get;set;}
+        global String estatus {get;set;}
+    }
     global class CertificadoResponse{
         global Boolean exito {get;set;}
         global String codigo_error {get;set;}

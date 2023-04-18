@@ -1,6 +1,8 @@
 global class DSALES_PaymentInfoWrapper {
     global class PaymentRequest{
-        global String num_factura { get; set; }
+        global String id_universal { get; set; }
+        global String tipo_folio { get; set; }
+        global String folio_transaccion { get; set; }
         global Integer total_factura { get; set; }
         global Boolean Seguro { get; set; }
         global String nombre_vendedor { get; set; }

@@ -1,5 +1,6 @@
 //buscar moto por sku y seguro por id de partida, modificar cuando ya se tenga el servicio de la venta 
 public with sharing class DSALES_QuotePagoSM {
+    private static String RcGratis='RC';
     public static void cotizacionesNuevas(String idPago,List<String> partidasSeleccionadas,String skuMoto){
         try {
             System.debug('Entra en función 2');
@@ -70,8 +71,17 @@ public with sharing class DSALES_QuotePagoSM {
                         } 
                     }
                 }
+                else{
+                     System.debug('se crea UNA COTIZACION SOLO SEGUROS SIN SKU');
+                        idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
+                        System.debug('cotizaciones creadas: '+ idCotizacion);
+                        crearPartidas(beforeCot.Id,idCotizacion,partidasSeleccionadas,skuMoto);
+                        if(idCotizacion!=null || idCotizacion!=''){
+                            sincronizarOportunidad(idCotizacion);
+                		}
                 
             } 
+            }
             
         } catch (Exception e) {
             System.debug('Error en método principal de cotización');
@@ -451,7 +461,7 @@ public with sharing class DSALES_QuotePagoSM {
                     if(listSeguros!=null && listSeguros.size()==1){
                         seguro=[SELECT Id,QuoteId,DSALES_Plazo__r.Dsales_Plazo__c,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,Dsales_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,DSALES_Derechosdepliza__c,
                                 DSALES_Gastosdeoperacindelrecibo__c,DSALES_Pagomensual__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
-                                FROM QuoteLineItem WHERE  QuoteId=:idCot AND DSALES_Tipodeproducto__c='Seguro' AND DSALES_NombreProducto__c=:'RC Seguro de Moto' ORDER BY DSALES_Plazo__r.Dsales_Plazo__c DESC LIMIT 1]; 
+                                FROM QuoteLineItem WHERE  QuoteId=:idCot AND DSALES_Tipodeproducto__c='Seguro' AND DSALES_NombreProducto__c=:RcGratis ORDER BY DSALES_Plazo__r.Dsales_Plazo__c DESC LIMIT 1]; 
                         listSeguros.add(seguro);
                         System.debug('Seguros:'+listSeguros);
                         System.debug('Dos seguros:'+ listSeguros.size());
