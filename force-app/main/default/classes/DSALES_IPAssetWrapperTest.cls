@@ -22,7 +22,7 @@ global with sharing class DSALES_IPAssetWrapperTest {
         RestResponse response = new RestResponse();
         DSALES_InformaciondePago__c pago = [SELECT id,DSALES_Poliza__c FROM  DSALES_InformaciondePago__c  LIMIT 1];
         Tienda__c tienda =[SELECT Id FROM Tienda__c LIMIT 1];
-        String body='{"uso":"Personal","id_tienda":"CPPL-UGARTE","servicio":"Particular","numero_serie":"1334342343","numero_motor":"343434343","modelo":"2022","placas":"XRDH48","clave_vehicular":"023023834","valor_factura":8000,"bajo_demanda":true,"descripcion":"Motocicleta vento xr","marca":"Vento","nombre_activo":"Motocicleta vento xr","id_pago":"'+pago.Id+'"}';
+        String body='{"emitir_poliza":true,"uso":"Personal","id_tienda":"CPPL","servicio":"Particular","numero_serie":"1334342343","numero_motor":"343434343","modelo":"2022","placas":"XRDH48","clave_vehicular":"023023834","valor_factura":8000,"bajo_demanda":true,"descripcion":"Motocicleta vento xr","marca":"Vento","nombre_activo":"Motocicleta vento xr","id_pago":"'+pago.Id+'"}';
         request.requestURI='/apexrest/insertIPAsset'; 
         request.httpMethod='POST';
         RestContext.request=request;
@@ -44,7 +44,7 @@ global with sharing class DSALES_IPAssetWrapperTest {
         RestResponse response = new RestResponse();
         DSALES_InformaciondePago__c pago = [SELECT id,DSALES_Poliza__c FROM  DSALES_InformaciondePago__c  LIMIT 1];
         Tienda__c tienda =[SELECT Id FROM Tienda__c LIMIT 1];
-        String body='{"uso":"Personal","id_tienda":"CPPL","servicio":"Particular","numero_serie":"1334342343","numero_motor":"343434343","modelo":"2022","placas":"XRDH48","clave_vehicular":"023023834","valor_factura":8000,"bajo_demanda":true,"descripcion":"Motocicleta vento xr","marca":"Vento","nombre_activo":"Motocicleta vento xr","id_pago":"qqqqqqqqqqqqq"}';
+        String body='{"emitir_poliza":true,"uso":"Personal","id_tienda":"CPPL","servicio":"Particular","numero_serie":"1334342343","numero_motor":"343434343","modelo":"2022","placas":"XRDH48","clave_vehicular":"023023834","valor_factura":8000,"bajo_demanda":true,"descripcion":"Motocicleta vento xr","marca":"Vento","nombre_activo":"Motocicleta vento xr","id_pago":"xxxxxxx"}';
         request.requestURI='/apexrest/insertIPAsset'; 
         request.httpMethod='POST';
         RestContext.request=request;
