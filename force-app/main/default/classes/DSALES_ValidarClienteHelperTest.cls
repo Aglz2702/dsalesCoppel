@@ -5,30 +5,39 @@ global with sharing class DSALES_ValidarClienteHelperTest {
     { 
         String pb2Id=Test.getStandardPricebookId();
         Product2 pr = new Product2(Name='Producto de Prueba',DSales_Tipo_de_Producto__c='Producto');
+        pr.StockKeepingUnit='123';
         insert pr;
-        
+        Product2 pr2 = new Product2(Name='Servicio de Prueba',DSales_Tipo_de_Producto__c='Servicio');
+        pr.StockKeepingUnit='1234';
+        insert pr2;
         Account ac= new Account(Name='DannyTest',CP_WalletCustomerNumber__c=123456);  
         insert ac;
         
         Contact con = new Contact(lastname= 'Test', AccountId= ac.Id, Email= 'johndoeus@salesforce.com');
         insert con;
-        
-        Asset ass = new Asset(Name='Test',AccountId= ac.Id,ContactId=con.Id);
-        insert ass;
-        
-        Opportunity op = New Opportunity();
+            Opportunity op = New Opportunity();
         op.Name='Danny';
         op.StageName='Open';
         op.CloseDate=Date.today();
         op.AccountId=ac.Id;
         insert op;
+        Asset ass = new Asset(Name='Test',AccountId= ac.Id,ContactId=con.Id);
+        ass.Product2Id=pr.Id;
+        insert ass;
+        DSALES_Certificado__c certificadoInsert = new DSALES_Certificado__c();
+        certificadoInsert.DSALES_ProductoAdquirido__c=ass.id;
+        certificadoInsert.DSALES_Cliente__c=ac.id;
+        certificadoInsert.DSALES_Oportunidad__c=op.Id;
+        certificadoinsert.DSALES_SKUTangible__c='123';
+insert certificadoInsert;        
+        
+    
+       
         Id rtSg = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Seguro de Motos').getRecordTypeId();
         Quote qt = New Quote();
         qt.OpportunityId=op.Id;
         qt.Name='Danny';
-        qt.RecordTypeId=rtSg;
         qt.Pricebook2Id=pb2Id;
-        qt.Status= 'Draft';
         insert qt;
         
         //PriceBookEntry
@@ -40,6 +49,10 @@ global with sharing class DSALES_ValidarClienteHelperTest {
         //pb.UnitPrice=35;//when we use standarprice book =true thenunit price is readonly field
         pb.isActive=true;
         insert pb; 
+         OpportunityLineItem opp = new OpportunityLineItem(OpportunityId=op.id,Quantity=2,TotalPrice=1200,PricebookEntryId=pb.id,Product2Id=pr.id);
+        insert opp;
+        OpportunityLineItem opp2 = new OpportunityLineItem(OpportunityId=op.id,Quantity=1,TotalPrice=1200,PricebookEntryId=pb.id,Product2Id=pr2.id);
+        insert opp2;
         
         List<QuoteLineItem>  quote= new List<QuoteLineItem> {new QuoteLineItem(QuoteId=qt.Id,UnitPrice=2,Quantity=2,PricebookEntryId=pb.Id,Product2Id=pr.id,Vigencia_meses__c='12')};
         insert quote;
@@ -89,12 +102,27 @@ global with sharing class DSALES_ValidarClienteHelperTest {
 
         List <DSALES_CertificadoWrapper.CertificadoRequest> certificados = new List<DSALES_CertificadoWrapper.CertificadoRequest>();
         List<DSALES_AssetWrapper.AssetRequest> assets= new List<DSALES_AssetWrapper.AssetRequest>();
+        
         String qtId=qt.Id;
         Test.startTest();
         DSALES_ValidarClienteHelper.deleteUnpurchasedItem(assets, certificados,qtId);
         Test.stopTest();
         
        
+    }
+    @isTest static void opporLineItem()
+    {
+        Quote qt = [SELECT id FROM Quote LIMIT 1];
+        DSALES_Certificado__c certi = [SELECT id FROM DSALES_Certificado__c LIMIT 1 ];
+        Asset a = [SELECT id FROM Asset LIMIT 1 ];
+        Map<String,String> certificados = new Map <String,String>();
+        Map<String,String> assets = new Map<String,String>();
+        certificados.put('1234',certi.Id);
+        assets.put('123',a.Id);
+        DSALES_VentaGEX.VentaGexResponse ventaGEX = new DSALES_VentaGEX.VentaGexResponse();
+        test.startTest();
+            DSALES_ValidarClienteHelper.actualizarCotizacion(qt.Id, ventaGEX, assets, certificados);
+        test.stopTest();
     }
    /* @isTest static void actualQuote(){
         Account acc=[SELECT CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];
