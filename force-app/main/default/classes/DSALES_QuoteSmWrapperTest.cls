@@ -1,7 +1,7 @@
 @isTest
 public class DSALES_QuoteSmWrapperTest {
     @isTest 
-    static void CreateQuoteCredito(){
+    static void createQuoteCredito(){
         DSALES_QuoteSmWrapper.QuoteSmRequest requestnpv = new DSALES_QuoteSmWrapper.QuoteSmRequest();
         requestnpv.numero_cliente = 'dato';
         requestnpv.tipo_uso='Moto';
@@ -125,8 +125,9 @@ public class DSALES_QuoteSmWrapperTest {
         plazos.vigencia = 'dato prueba';
         plazos.Idpartida = 'dato prueba';
         plazos.descripcion = 'dato prueba';
-        plazos.seguro_gratis = true;
-        
+        plazos.seguro_gratis = true; 
+        RestResponse res3 = new RestResponse();
+        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
     
 

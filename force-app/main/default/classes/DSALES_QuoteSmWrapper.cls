@@ -8,6 +8,7 @@ global class DSALES_QuoteSmWrapper {
         global String idTienda {get; set;}
         global String sku {get;set;}
         //pedido por inter
+        
         global String tipoUso {get; set;}
         global String tipoVehiculo {get; set;}
         global String rfc {get; set;}

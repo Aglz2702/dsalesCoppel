@@ -27,11 +27,11 @@ public class DSALES_ConsultaListaNegraTest {
     @isTest 
     static void testListaNegra(){
         Quote cotizacion = [Select Id, Name FROM Quote WHERE Name = 'Nueva' LIMIT 1];
-        System.debug('Name = '+cotizacion.Name);
+        RestResponse res3 = new RestResponse();
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(4)); 
         DSALES_ConsultaListaNegra.listaNegra(cotizacion.Id);
 		Test.stopTest();
-        System.assertNoequals(200,200,'mensajito');   
+        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
 }

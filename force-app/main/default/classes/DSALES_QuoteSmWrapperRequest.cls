@@ -6,7 +6,7 @@ global class DSALES_QuoteSmWrapperRequest {
     public static final String TIPO = 'Seguro gratis';
     public static final String RC = 'RC Seguro de Moto';
     public static final String AMP = 'AMP Seguro de Moto';
-    @HttpPost
+    @HttpPost 
     global static DSALES_QuoteSmWrapper.RespuestaParaNpv createQuoteSM(){
         String numeroCliente = DSALES_Utility.NUMERO_CLIENTE_GENERICO;
         String message = '';

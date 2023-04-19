@@ -11,6 +11,7 @@ public class DSALES_ConsultaListaNegra{
             if(nombre2!=null){
               nombreCompleto += ' ' +nombre2;  
             }
+            
             nombreCompleto += ' ' +apellidoPat; 
             if(apellidoMat!=null){
               nombreCompleto += ' ' +apellidoMat;  

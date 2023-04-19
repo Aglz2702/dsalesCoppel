@@ -8,4 +8,5 @@ public class DSALES_MockHttpResponseEndoso implements HttpCalloutMock {
         response.setStatusCode(200);
         return response;
     }
+    
 }
