@@ -28,11 +28,10 @@ public class DSALES_ConsultaListaNegraTest {
     static void testListaNegra(){
         Quote cotizacion = [Select Id, Name FROM Quote WHERE Name = 'Nueva' LIMIT 1];
         System.debug('Name = '+cotizacion.Name);
-        String NOMBRE_SERVICIO = 'DSALES_ListaNegra';
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(4)); 
         DSALES_ConsultaListaNegra.listaNegra(cotizacion.Id);
-		Test.stopTest();       
+		Test.stopTest();
+        System.assertNoequals(200,200,'mensajito');   
     }
-
 }

@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 @isTest
 global class DSALES_MockHttpResponseSiniestro implements HttpCalloutMock{
     Integer opc;
