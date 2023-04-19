@@ -1,7 +1,7 @@
 @isTest
-global with sharing class DSALES_AssetWrapperTest {
+public with sharing class DSALES_AssetWrapperTest {
     @testSetup
-    static void SetUp(){
+    static void crearRegistros(){
         DSALES_Categoria__c categoria = new DSALES_Categoria__c(Name='LÍNEA BLANCA');
         insert categoria;
         DSALES_SubCategoria__c subcategoria = new DSALES_SubCategoria__c(Name='ARTICULOS VIANA LINEA BLANCA');
@@ -10,54 +10,56 @@ global with sharing class DSALES_AssetWrapperTest {
         insert familia;
         DSALES_Clase__c clase = new DSALES_Clase__c(Name='01 • AMPLIFICADORES CAR AUDIO');
         insert clase;
-        Account ac= new Account(Name='DannyTest',CP_WalletCustomerNumber__c=123456);  
-        insert ac;
+        Account cuentas= new Account(Name='DannyTest',CP_WalletCustomerNumber__c=123456);  
+        insert cuentas;
         
     }
     
-    @isTest static void CreateRecordTest()
+    @isTest static void crearRegistroTest()
     {
-        Account acc=[SELECT CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];
-        Contact con = new Contact(lastname= 'Test1', AccountId= acc.Id, Email= 'johndoeus@salesforce.com');
-        insert con;
-        RestRequest request=new RestRequest();
-        RestResponse response = new RestResponse();
-        String body = '{"name":"Prueba DannyTest", "account_id":"'+acc.Id+'", "contact_id":"'+con.Id+'", "client_number":"123456", "product_type":"Producto","service_type ":"Garantía Extendida","category":"LÍNEA BLANCA","subcategory" :"ARTICULOS VIANA LINEA BLANCA","class_type" :"01 • AMPLIFICADORES CAR AUDIO","family" :"TEST FAMILIA","status" :"Cancelado","region" :"1 • HERMOSILLO","division" :"1","sku" :"DannyTest","warranty_duration" :"12","serial_number" :"DannyTest","purchase_date" :"2022-09-06","quantity":"1","price" :"12"}';
+        Account cuenta=[SELECT CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];
+        Contact contacto = new Contact(lastname= 'Test1', AccountId= acc.Id, Email= 'johndoeus@salesforce.com');
+        insert contacto;
+        RestRequest peticion=new RestRequest();
+        RestResponse respuesta = new RestResponse();
+        String cuerpo = '{"name":"Prueba DannyTest", "account_id":"'+cuenta.Id+'", "contact_id":"'+contacto.Id+'", "client_number":"123456", "product_type":"Producto","service_type ":"Garantía Extendida","category":"LÍNEA BLANCA","subcategory" :"ARTICULOS VIANA LINEA BLANCA","class_type" :"01 • AMPLIFICADORES CAR AUDIO","family" :"TEST FAMILIA","status" :"Cancelado","region" :"1 • HERMOSILLO","division" :"1","sku" :"DannyTest","warranty_duration" :"12","serial_number" :"DannyTest","purchase_date" :"2022-09-06","quantity":"1","price" :"12"}';
         request.requestURI='/apexrest/insertAsset'; 
         request.httpMethod='POST';
-        RestContext.request=request;
-        request.requestBody=Blob.valueOf(body);
-        RestContext.response=response;
-        DSALES_AssetWrapper.AssetRequest assetRecord =  (DSALES_AssetWrapper.AssetRequest)JSON.deserialize (body,DSALES_AssetWrapper.AssetRequest.class);       
-        assetRecord.numero_cliente=String.ValueOf(acc.CP_WalletCustomerNumber__c);
+        RestContext.request=peticion;
+        request.requestBody=Blob.valueOf(cuerpo);
+        RestContext.response=respuesta;
+        DSALES_AssetWrapper.AssetRequest assetRegistro =  (DSALES_AssetWrapper.AssetRequest)JSON.deserialize (cuerpo,DSALES_AssetWrapper.AssetRequest.class);       
+        assetRegistro.numero_cliente=String.ValueOf(cuenta.CP_WalletCustomerNumber__c);
         Test.startTest();
-        DSALES_AssetWrapperRequest.createAsset();
+        DSALES_AssetWrapperRequest.crearAsset();
         Test.stopTest();
-        RestContext.request = request;
-        RestContext.response= response;
+        RestContext.request = peticion;
+        RestContext.response= respuesta;
+        System.assertNotEquals(200, response.statusCode,'La llamada no debe devolver el código 200');
         
     }
-    @isTest static void CreateRecordTest1()
+    @isTest static void crearRegistroTest1()
     {          
-        Account acc=[SELECT Id, Name, CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];  
-        Contact con = new Contact(lastname= 'Test', AccountId= acc.Id, Email= 'johndoeus@salesforce.com');
-        insert con;
+        Account cuenta=[SELECT Id, Name, CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];  
+        Contact contacto = new Contact(lastname= 'Test', AccountId= acc.Id, Email= 'johndoeus@salesforce.com');
+        insert contacto;
         
-        RestRequest request=new RestRequest();
-        RestResponse response = new RestResponse();
-        String body = '{"nombre":"Prueba DannyTest","id_cuenta":"'+acc.Id+'", "id_contacto":"'+con.Id+'", "numero_cliente":"1234567", "tipo_producto":"Servicio","tipo_servicio ":"Garantía Extendida","categoria":"LÍNEA BLANCA","subcategoria" :"ARTICULOS VIANA LINEA BLANCA","clase" :"01 • AMPLIFICADORES CAR AUDIO","familia" :"TEST FAMILIA","estado" :"Adquirido","sku" :"658019","duracion_garantia" :"12","numero_serie" :"658019","fecha_compra" :"2022-09-07","cantidad":"1","marca" :"Samsung", "modelo": "2010","descripcion":"Muy cómodo"}';
+        RestRequest peticion=new RestRequest();
+        RestResponse respuesta = new RestResponse();
+        String cuerpo = '{"nombre":"Prueba DannyTest","id_cuenta":"'+cuenta.Id+'", "id_contacto":"'+contacto.Id+'", "numero_cliente":"1234567", "tipo_producto":"Servicio","tipo_servicio ":"Garantía Extendida","categoria":"LÍNEA BLANCA","subcategoria" :"ARTICULOS VIANA LINEA BLANCA","clase" :"01 • AMPLIFICADORES CAR AUDIO","familia" :"TEST FAMILIA","estado" :"Adquirido","sku" :"658019","duracion_garantia" :"12","numero_serie" :"658019","fecha_compra" :"2022-09-07","cantidad":"1","marca" :"Samsung", "modelo": "2010","descripcion":"Muy cómodo"}';
         request.requestURI='/apexrest/insertAsset'; 
         request.httpMethod='POST';
         RestContext.request=request;
-        request.requestBody=Blob.valueOf(body);
+        request.requestBody=Blob.valueOf(cuerpo);
         RestContext.response=response;
-        DSALES_AssetWrapper.AssetRequest assetRecord =  (DSALES_AssetWrapper.AssetRequest)JSON.deserialize (body,DSALES_AssetWrapper.AssetRequest.class);
-        assetRecord.numero_cliente=String.ValueOf(acc.CP_WalletCustomerNumber__c);
+        DSALES_AssetWrapper.AssetRequest assetRegistro =  (DSALES_AssetWrapper.AssetRequest)JSON.deserialize (cuerpo,DSALES_AssetWrapper.AssetRequest.class);
+        assetRegistro.numero_cliente=String.ValueOf(cuenta.CP_WalletCustomerNumber__c);
         Test.startTest();
-        DSALES_AssetWrapperRequest.createAsset();
+        DSALES_AssetWrapperRequest.crearAsset();
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
+        System.assertNotEquals(200, response.statusCode,'La llamada no debe devolver el código 200');
         
     }
     
