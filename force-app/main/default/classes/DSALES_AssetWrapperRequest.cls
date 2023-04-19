@@ -15,15 +15,15 @@ global with sharing class DSALES_AssetWrapperRequest {
                 catch(Exception.JSONException e)
                 {
                     responsePayload.exito = false;
-                    responsePayload.mensaje_error = DSALES_Utility.BAD_REQUEST_MSJ;
-                    responsePayload.codigo_error=String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
+                    responsePayload.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ;
+                    responsePayload.codigoError=String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
                     
                 }
                 catch(Exception e){
                     responsePayload.exito = false;
                    
-                    responsePayload.mensaje_error = DSALES_Utility.INTERNAL_ERROR_MSJ + ' '+e.GetMessage() ;
-                    responsePayload.codigo_error=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+                    responsePayload.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ + ' '+e.GetMessage() ;
+                    responsePayload.codigoError=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
                     
                     
                 }
@@ -60,10 +60,10 @@ global with sharing class DSALES_AssetWrapperRequest {
                 familia=[SELECT id FROM DSALES_familia__c WHERE name=:product.familia WITH SECURITY_ENFORCED];
             }
             
-            if(!String.isEmpty(product.id_producto))
+            if(!String.isEmpty(product.idProducto))
             {
                 
-                Product2 producto=[SELECT Id,RecordTypeId FROM Product2 WHERE Id=:product.id_producto WITH SECURITY_ENFORCED LIMIT 1 ];
+                Product2 producto=[SELECT Id,RecordTypeId FROM Product2 WHERE Id=:product.idProducto WITH SECURITY_ENFORCED LIMIT 1 ];
                
                     assetRegistro.Product2Id=producto.id;
                 
