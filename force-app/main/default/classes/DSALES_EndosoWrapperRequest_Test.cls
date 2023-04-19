@@ -50,7 +50,9 @@ public class DSALES_EndosoWrapperRequest_Test {
         DSALES_EndosoWrapperRequest.createEndoso();
         Test.stopTest();        
         RestContext.request = request;
-        RestContext.response= response; 
+        RestContext.response= response;
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200'); 
+ 
     }
     
     @isTest 
@@ -69,6 +71,8 @@ public class DSALES_EndosoWrapperRequest_Test {
         Test.startTest();
         DSALES_EndosoWrapperRequest.createEndoso();
         Test.stopTest();
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200'); 
+
         
     }
     
@@ -83,8 +87,8 @@ public class DSALES_EndosoWrapperRequest_Test {
         Test.startTest();
         DSALES_EndorsementWrapper.EndorsementResponse response = DSALES_EndosoWrapperRequest.createEndoso();
         Test.stopTest();
-        System.assertEquals(false, response.success);
-        System.assertEquals(String.valueOf(DSALES_Utility.BAD_REQUEST_CODE), response.codigoError);
+        System.assertEquals(false, response.success, 'Hay algún problema');
+        System.assertEquals(String.valueOf(DSALES_Utility.BAD_REQUEST_CODE), response.codigoError, 'Error de codigo');
         //System.assertEquals(DSALES_Utility.BAD_REQUEST_MSJ, response.mensajeError);
     }
     
@@ -101,7 +105,7 @@ public class DSALES_EndosoWrapperRequest_Test {
         request.uid = 'testUid';
         request.estatus = 'En tramite';
         DSALES_EndorsementWrapper.EndorsementResponse response = DSALES_EndosoWrapperRequestHelper.updateEndoso(request);
-        System.assertEquals(true, response.success);
+        System.assertEquals(true, response.success, 'El registro se ha creado correctamente');
         
         // Test update with 'Requerimiento de Información' status
         DSALES_EndorsementWrapper.EndorsementRequest requestReq = new DSALES_EndorsementWrapper.EndorsementRequest();
@@ -110,11 +114,11 @@ public class DSALES_EndosoWrapperRequest_Test {
         requestReq.motivoDevolucion = 'Test Motivo Devolucion';
         requestReq.solucionDevolucion = 'Test Solucion Devolucion';
         DSALES_EndorsementWrapper.EndorsementResponse responseRes = DSALES_EndosoWrapperRequestHelper.updateEndoso(requestReq);
-        System.assertEquals(true, responseRes.success);      
+        System.assertEquals(true, responseRes.success, 'El registro se ha creado correctamente');      
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MotivoDevolucion__c, DSALES_SolucionDevolucion__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
-        System.assertEquals('Requerimiento de Información', endoso.DSALES_Estatus__c);
-        System.assertEquals('Test Motivo Devolucion', endoso.DSALES_MotivoDevolucion__c);
-        System.assertEquals('Test Solucion Devolucion', endoso.DSALES_SolucionDevolucion__c);
+        System.assertEquals('Requerimiento de Información', endoso.DSALES_Estatus__c, 'El estado de endoso es Requerimiento de Información');
+        System.assertEquals('Test Motivo Devolucion', endoso.DSALES_MotivoDevolucion__c, 'El MotivoDevolucion de endoso es Test Motivo Devolucion');
+        System.assertEquals('Test Solucion Devolucion', endoso.DSALES_SolucionDevolucion__c, 'El SolucionDevolucion de endoso es Test Solucion Devolucion');
         
         // Test update with 'Rechazado' status
         DSALES_EndorsementWrapper.EndorsementRequest requestRech = new DSALES_EndorsementWrapper.EndorsementRequest();
@@ -122,10 +126,10 @@ public class DSALES_EndosoWrapperRequest_Test {
         requestRech.estatus = 'Rechazado';
         requestRech.motivoRechazo = 'Test Motivo Rechazo';
         DSALES_EndorsementWrapper.EndorsementResponse responseRech = DSALES_EndosoWrapperRequestHelper.updateEndoso(requestRech);
-        System.assertEquals(true, responseRech.success);
+        System.assertEquals(true, responseRech.success, 'El registro se ha creado correctamente');
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MotivoRechazo__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
-        System.assertEquals('Rechazado', endoso.DSALES_Estatus__c);
-        System.assertEquals('Test Motivo Rechazo', endoso.DSALES_MotivoRechazo__c);
+        System.assertEquals('Rechazado', endoso.DSALES_Estatus__c, 'El estado de endoso es Rechazado');
+        System.assertEquals('Test Motivo Rechazo', endoso.DSALES_MotivoRechazo__c, 'El MotivoRechazo de endoso es Test Motivo Rechazo');
         
         // Test update with 'Autorizado' status
         DSALES_EndorsementWrapper.EndorsementRequest requestAuto = new DSALES_EndorsementWrapper.EndorsementRequest();
@@ -134,8 +138,8 @@ public class DSALES_EndosoWrapperRequest_Test {
         requestAuto.montoDevolver = 4.55;
         DSALES_EndosoWrapperRequestHelper.updateEndoso(requestAuto);
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MontoaDevolver__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
-        System.assertEquals('Autorizado', endoso.DSALES_Estatus__c);
-        System.assertEquals(4.55, endoso.DSALES_MontoaDevolver__c);
+        System.assertEquals('Autorizado', endoso.DSALES_Estatus__c, 'El estado de endoso es Autorizado');
+        System.assertEquals(4.55, endoso.DSALES_MontoaDevolver__c, 'El MontoaDevolver de endoso es 4.55');
         
         DSALES_EndorsementWrapper.EndorsementRequest endosos = new DSALES_EndorsementWrapper.EndorsementRequest();
         endosos.uid = 'testUid';
@@ -146,43 +150,43 @@ public class DSALES_EndosoWrapperRequest_Test {
         endosos.datos.valor= 'new@test.com';       
         DSALES_EndosoWrapperRequestHelper.updatePolicy(endosos);
         poliza = [SELECT Id, DSALES_CorreoElectronico__c, ChangeSubtype FROM InsurancePolicy WHERE Id =: poliza.Id  LIMIT 1];
-        System.assertEquals('new@test.com', poliza.DSALES_CorreoElectronico__c);
-        System.assertEquals('Endosada', poliza.ChangeSubtype);
+        System.assertEquals('new@test.com', poliza.DSALES_CorreoElectronico__c, 'Póliza de seguro CorreoElectronico es new@test.com');
+        System.assertEquals('Endosada', poliza.ChangeSubtype, 'ChangeSubtype de póliza de seguro es Endosada');
         
         endosos.tipoEndoso = 'Actualización de teléfono';
         endosos.datos.valor = '555-555-5555';
         DSALES_EndosoWrapperRequestHelper.updatePolicy(endosos);
         poliza = [SELECT DSALES_TelefonoContacto__c, ChangeSubtype FROM InsurancePolicy WHERE Id =: poliza.Id LIMIT 1];
-        System.assertEquals('555-555-5555', poliza.DSALES_TelefonoContacto__c);
-        System.assertEquals('Endosada', poliza.ChangeSubtype);
+        System.assertEquals('555-555-5555', poliza.DSALES_TelefonoContacto__c, 'Póliza de seguro TelefonoContacto es 555-555-5555');
+        System.assertEquals('Endosada', poliza.ChangeSubtype, 'ChangeSubtype de póliza de seguro es Endosada');
         
         endosos.tipoEndoso = 'Corrección de nombre';
         endosos.datos.valor = 'Jane Doe';
         DSALES_EndosoWrapperRequestHelper.updatePolicy(endosos);
         poliza = [SELECT DSALES_NombredelAsegurado__c, ChangeSubtype FROM InsurancePolicy WHERE Id =: poliza.Id LIMIT 1];
-        System.assertEquals('Jane Doe', poliza.DSALES_NombredelAsegurado__c);
-        System.assertEquals('Endosada', poliza.ChangeSubtype);
+        System.assertEquals('Jane Doe', poliza.DSALES_NombredelAsegurado__c, 'Póliza de seguro NombredelAsegurado es Jane Doe');
+        System.assertEquals('Endosada', poliza.ChangeSubtype, 'ChangeSubtype de póliza de seguro es Endosada');
         
         endosos.tipoEndoso = 'Cambio de placas';
         endosos.datos.valor = 'XYZ789';
         DSALES_EndosoWrapperRequestHelper.updatePolicy(endosos);
         poliza = [SELECT DSALES_Placas__c, ChangeSubtype FROM InsurancePolicy WHERE Id =: poliza.Id LIMIT 1];
-        System.assertEquals('XYZ789', poliza.DSALES_Placas__c);
-        System.assertEquals('Endosada', poliza.ChangeSubtype);
+        System.assertEquals('XYZ789', poliza.DSALES_Placas__c, 'Póliza de seguro placas es XYZ789');
+        System.assertEquals('Endosada', poliza.ChangeSubtype, 'ChangeSubtype de póliza de seguro es Endosada');
         
         endosos.tipoEndoso = 'Cambio de número de serie';
         endosos.datos.valor = 'XTVS';
         DSALES_EndosoWrapperRequestHelper.updatePolicy(endosos);
         poliza = [SELECT DSALES_Numeroserie__c, ChangeSubtype FROM InsurancePolicy WHERE Id =: poliza.Id LIMIT 1];
-        System.assertEquals('XTVS', poliza.DSALES_Numeroserie__c);
-        System.assertEquals('Endosada', poliza.ChangeSubtype);
+        System.assertEquals('XTVS', poliza.DSALES_Numeroserie__c, 'Póliza de seguro Numeroserie es XTVS');
+        System.assertEquals('Endosada', poliza.ChangeSubtype, 'ChangeSubtype de póliza de seguro es Endosada');
         
         endosos.tipoEndoso = 'Cambio de número de motor';
         endosos.datos.valor = 'TVS100';
         DSALES_EndosoWrapperRequestHelper.updatePolicy(endosos);
         poliza = [SELECT DSALES_Nmerodemotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id =: poliza.Id LIMIT 1];
-        System.assertEquals('TVS100', poliza.DSALES_Nmerodemotor__c);
-        System.assertEquals('Endosada', poliza.ChangeSubtype);
+        System.assertEquals('TVS100', poliza.DSALES_Nmerodemotor__c, 'Póliza de seguro Nmerodemotor es TVS100');
+        System.assertEquals('Endosada', poliza.ChangeSubtype, 'ChangeSubtype de póliza de seguro es Endosada');
         
         
         

@@ -1,16 +1,4 @@
-/**
- * @description       : 
- * @author            : 
- * @group             : 
- * @last modified on  : 04-18-2023
- * @last modified by  : Juan Antonio Flores
- * Modifications Log 
- * Ver   Date          Author             Modification
- * 1.0   04-18-2023                       Initial Version
-**/
-
 global class DSALES_PaymentInfoWrapper {
-
     global class PaymentRequest{
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -52,10 +40,14 @@ global class DSALES_PaymentInfoWrapper {
         global List<ListaDePago> ListaDePagos { get; set; }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> deuda-tecnica
     global class ListaDePago{
         //public Integer num_pago { get; set; }
         global String metodo_pago { get; set; }
         global Integer pago { get; set; }
+<<<<<<< HEAD
 >>>>>>> Deuda-Tecnica
     }
 =======
@@ -66,10 +58,13 @@ global class DSALES_PaymentInfoWrapper {
         global Integer errorCode {get;set;}
         global Boolean success {get;set;}
         global List<String> paymentInfo_ids {get;set;}
+=======
+>>>>>>> deuda-tecnica
     }
-        
-    global class Pago{
-        global double total {get;set;}
-        global String producto {get;set;}
+    global class PaymentResponse{
+        global String error_message {get;set;}
+        global Integer error_code {get;set;}
+        global Boolean success {get;set;}
+        global String pago_id {get;set;}
     }
 }
