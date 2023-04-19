@@ -11,7 +11,6 @@ public without sharing class DSALES_InsurancePolicyHandler extends fflib_SObject
     }
 
     public override void onAfterUpdate(Map<Id,SObject> existingRecords){
-        System.debug('After update');
         DSALES_UpdateInfoPago.cancelarPoliza(existingRecords, records);   
     }
 }
