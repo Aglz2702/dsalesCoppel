@@ -26,6 +26,6 @@ public class DSALES_ClonarMatriz_Test {
         item.DSales_Matriz_GEX__c = idClon;
         insert item;
        	String idOriginal = DSALES_ClonarMatriz.actualizarMatrizOriginal(idClon);
-        System.assertEquals(idOriginal, tempo.Id);
+        System.assertEquals(idOriginal, tempo.Id, 'la identificación es la misma');
     }
 }
