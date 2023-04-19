@@ -1,7 +1,7 @@
 @istest
 public with sharing class DSALES_VentaSMRestTest {
    @testSetup
-    static void SetUp(){
+    static void creacionRegistros(){
         String tipoProducto = 'Producto';
         String message = '';
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Seguro_de_Moto').getRecordTypeId();
@@ -256,10 +256,10 @@ public with sharing class DSALES_VentaSMRestTest {
         System.debug('venta: '+venta);
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
-        DSALES_VentaSMRest.createVenta();
+        DSALES_VentaSMRest.crearVenta();
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
-
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
     }
 }
