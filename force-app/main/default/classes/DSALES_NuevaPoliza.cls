@@ -1,4 +1,16 @@
+/**
+ * @description       : 
+ * @author            : 
+ * @group             : 
+ * @last modified on  : 04-18-2023
+ * @last modified by  : Juan Antonio Flores
+ * Modifications Log 
+ * Ver   Date          Author             Modification
+ * 1.0   04-18-2023                       Initial Version
+**/
+
 public with sharing class DSALES_NuevaPoliza {
+    
     public static final String NOMBRE_SERVICIO = 'DSALES_createPoliza';
     public static InsurancePolicy invokeService(InsurancePolicyAsset activo){
         InsurancePolicy poliza =new InsurancePolicy();
@@ -84,17 +96,20 @@ public with sharing class DSALES_NuevaPoliza {
             System.debug('error: '+e.getLineNumber()+e.getMessage());
         }
         return poliza;
+        return poliza;
     }
 
 
     public static String obtenerCampos(InsurancePolicy obj){
-        Account cli =[SELECT Id, FirstName,LastName,Suffix,Fecha_de_Nacimiento__c FROM Account WHERE Id=:obj.NameInsuredId];
+        if(Account.SObjectType.getDescribe().isAccessible()){
+            Account cli =[SELECT Id, FirstName,LastName,Suffix,Fecha_de_Nacimiento__c FROM Account WHERE Id=:obj.NameInsuredId];
+        }
         DSALES_PolizaWrapper.polizaRequest objPost= new DSALES_PolizaWrapper.polizaRequest();
         objPost.tracking_id =obj.DSALES_Numeroseguimiento__c;
         objPost.quote_id=obj.SourceQuoteId;
         objPost.business=obj.DSALES_Negocio__c;
         objPost.insurance=obj.DSALES_Aseguradora__c;
-        objPost.packagge=obj.PlanTier;
+        objPost.package_id=obj.PlanTier;
         objPost.payment_plan=obj.PlanTier;
         objPost.payment_option =obj.DSALES_Opcionpago__c;
         objPost.vehicle_id=obj.DSALES_Activodeplizadeseguro__c;
@@ -112,7 +127,6 @@ public with sharing class DSALES_NuevaPoliza {
         objPost.start_at=String.valueOf(obj.CreatedDate);
         System.debug('poliza json:'+objPost);
         String str = JSON.serialize(objPost);
-        return str;
-        
+        return str;  
     }
 }

@@ -16,12 +16,12 @@ global with sharing class DSALES_AccountWrapperRequest {
                     responsePayload = upsertAccount(cliente);
                 }catch(JSONException e){
                     responsePayload.success = false;
-                    responsePayload.codigo_error = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
-                    responsePayload.mensaje_error = DSALES_Utility.BAD_REQUEST_MSJ + e.getLineNumber()+e.getCause()+e.getMessage();
+                    responsePayload.codigoError = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
+                    responsePayload.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ + e.getLineNumber()+e.getCause()+e.getMessage();
                 }catch(Exception e){
                     responsePayload.success = false;
-                    responsePayload.codigo_error = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
-                    responsePayload.mensaje_error = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    responsePayload.codigoError = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+                    responsePayload.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
                 }
             }
         }
@@ -30,34 +30,39 @@ global with sharing class DSALES_AccountWrapperRequest {
     }
     
     
-    global static  DSALES_AccountWrapper.AccountResponse upsertAccount (DSALES_AccountWrapper.AccountRequest cliente){
+    public static  DSALES_AccountWrapper.AccountResponse upsertAccount (DSALES_AccountWrapper.AccountRequest cliente){
         Boolean success = false;
         String message = '';
         String code = '';
         Account accountRecord = new Account();
         try{
-            if(cliente.numero_de_cliente == null || cliente.numero_de_cliente ==''){
-                for(Account item : [Select id from Account Where FirstName=:cliente.nombre and LastName=:cliente.apellido_paterno and PersonEmail= :cliente.correo_electronico]){
+            if(cliente.numeroCliente == null || cliente.numeroCliente ==''){
+                for(Account item : [Select id from Account Where FirstName=:cliente.nombre and LastName=:cliente.apellidoPaterno and PersonEmail= :cliente.correoElectronico WITH SECURITY_ENFORCED]){
                     accountRecord.Id = item.Id;
                 }
             }else{
-                for(Account item : [Select id from Account Where CP_WalletCustomerNumber__c =: Decimal.valueOf(cliente.numero_de_cliente)]){
+                for(Account item : [Select id from Account Where CP_WalletCustomerNumber__c =: Decimal.valueOf(cliente.numeroCliente) WITH SECURITY_ENFORCED]){
                     accountRecord.Id = item.Id;
-                    accountRecord.CP_WalletCustomerNumber__c = Decimal.valueOf(cliente.numero_de_cliente);
+                    accountRecord.CP_WalletCustomerNumber__c = Decimal.valueOf(cliente.numeroCliente);
                 }
             }
             accountRecord.FirstName = cliente.nombre;
-            accountRecord.LastName = cliente.apellido_paterno;
-            accountRecord.Suffix = cliente.apellido_materno;
+            accountRecord.LastName = cliente.apellidoPaterno;
+            accountRecord.Suffix = cliente.apellidoMaterno;
             accountRecord.PersonMobilePhone = cliente.telefono;
-            accountRecord.PersonEmail = cliente.correo_electronico;
+            accountRecord.PersonEmail = cliente.correoElectronico;
             accountRecord.CP_Gender__pc = cliente.genero;
-            accountRecord.PersonBirthdate = cliente.fecha_nacimiento;
+            accountRecord.PersonBirthdate = cliente.fechaNacimiento;
             accountRecord.BillingStreet = cliente.domicilio;
-            accountRecord.BillingCity =  cliente.nombre_ciudad;
-            accountRecord.BillingState = cliente.nombre_estado;
-            accountRecord.BillingPostalCode = cliente.codigo_postal;
-            upsert accountRecord;
+            accountRecord.BillingCity =  cliente.nombreCiudad;
+            accountRecord.BillingState = cliente.nombreEstado;
+            accountRecord.BillingPostalCode = cliente.codigoPostal;
+            
+            if(Schema.sObjectType.Account.isCreateable() && Schema.sObjectType.Account.isUpdateable()){
+                upsert accountRecord;
+            } else {
+                System.debug('Permisos insuficientes para actualizar');
+            }
             
             success = true;
             message = '';
@@ -72,9 +77,9 @@ global with sharing class DSALES_AccountWrapperRequest {
         
         DSALES_AccountWrapper.AccountResponse responsePayload = new DSALES_AccountWrapper.AccountResponse();
         responsePayload.success = success;
-        responsePayload.mensaje_error = message;
-        responsePayload.codigo_error = code;
-        responsePayload.id_cuenta = accountRecord.id;
+        responsePayload.mensajeError = message;
+        responsePayload.codigoError = code;
+        responsePayload.idCuenta = accountRecord.id;
         
         return responsePayload;
     }

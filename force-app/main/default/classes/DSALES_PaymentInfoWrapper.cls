@@ -1,4 +1,16 @@
+/**
+ * @description       : 
+ * @author            : 
+ * @group             : 
+ * @last modified on  : 04-18-2023
+ * @last modified by  : Juan Antonio Flores
+ * Modifications Log 
+ * Ver   Date          Author             Modification
+ * 1.0   04-18-2023                       Initial Version
+**/
+
 global class DSALES_PaymentInfoWrapper {
+
     global class PaymentRequest{
         global String id_universal { get; set; }
         global String tipo_folio { get; set; }
@@ -15,15 +27,16 @@ global class DSALES_PaymentInfoWrapper {
         global Integer plazos { get; set; }
         global List<ListaDePago> ListaDePagos { get; set; }
     }
-    global class ListaDePago{
-        //public Integer num_pago { get; set; }
-        global String metodo_pago { get; set; }
-        global Integer pago { get; set; }
-    }
+
     global class PaymentResponse{
-        global String error_message {get;set;}
-        global Integer error_code {get;set;}
+        global String message {get;set;}
+        global Integer errorCode {get;set;}
         global Boolean success {get;set;}
-        global String pago_id {get;set;}
+        global List<String> paymentInfo_ids {get;set;}
+    }
+        
+    global class Pago{
+        global double total {get;set;}
+        global String producto {get;set;}
     }
 }

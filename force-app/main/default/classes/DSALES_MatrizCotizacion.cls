@@ -1,21 +1,32 @@
-public class DSALES_MatrizCotizacion {    
+/**
+ * @description       : 
+ * @author            : 
+ * @group             : 
+ * @last modified on  : 04-18-2023
+ * @last modified by  : Juan Antonio Flores
+ * Modifications Log 
+ * Ver   Date          Author             Modification
+ * 1.0   04-18-2023                       Initial Version
+**/
+public without sharing class DSALES_MatrizCotizacion {   
+
     public static String clonarMatriz(Id recordId){       
         List<String> listaCampo = DSALES_ClonarMatriz.getField('DSales_Matriz_GEX__c');
-        String query = 'Select ';
+        String query = 'SELECT ';
         for(Integer i = 0; i < listaCampo.size(); i++){
             query += listaCampo[i]+',';  
-        }
-        
+        } 
         query = query.substring(0, query.length()-1);
-        query += ' From DSales_Matriz_GEX__c WHERE Id =: recordId'; 
-        DSales_Matriz_GEX__c matrizClone = Database.query(query);
+        query += ' FROM DSales_Matriz_GEX__c WHERE Id =: recordId'; 
+        DSales_Matriz_GEX__c matrizClone=Database.query(String.escapeSingleQuotes(query));
         matrizClone.Id = matrizClone.DSALES_CloneMatriz__c;
         matrizClone.DSALES_EsClone__c = false;
         matrizClone.DSALES_CloneMatriz__c = recordId;
-        update matrizClone;
+        if (DSales_Matriz_GEX__c.SObjectType.getDescribe().isUpdateable()) {
+            update matrizClone;
+        }
         clonarMatrizItem(matrizClone.Id,recordId);
-        return matrizClone.Id;
-        
+        return matrizClone.Id;   
     }
     
     public static void clonarMatrizItem(Id originalId, Id recordId){       
@@ -23,19 +34,23 @@ public class DSALES_MatrizCotizacion {
         String query = 'Select ';
         for(Integer i = 0; i < listaCampo.size(); i++){
             query += listaCampo[i]+',';  
-        }
-        
+        }  
         query = query.substring(0, query.length()-1);
         DSales_Matriz_GEX__c ds = new DSales_Matriz_GEX__c();
         
         query += ' From DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c =: recordId'; 
-        List <DSALES_Matriz_de_Cotizacion__c> listMatrizItem = Database.query(query);
+        List <DSALES_Matriz_de_Cotizacion__c> listMatrizItem = Database.query(String.escapeSingleQuotes(query));
         for(DSALES_Matriz_de_Cotizacion__c matrizItem:listMatrizItem )	{
+            if (DSALES_Matriz_de_Cotizacion__c.SObjectType.getDescribe().isAccessible() && Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.fields.DSALES_MatrizItemClone__c.isUpdateable()) {
+                return null;
+            }
             matrizItem.DSALES_MatrizItemClone__c=matrizItem.Id;
             matrizItem.Id=null;
             matrizItem.DSales_Matriz_GEX__c=originalId;
         }
-        Database.upsert(listMatrizItem,DSALES_Matriz_de_Cotizacion__c.DSALES_MatrizItemClone__c) ;  
+        if(Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isCreateable() && Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isUpdateable()){
+            Database.upsert(listMatrizItem,DSALES_Matriz_de_Cotizacion__c.DSALES_MatrizItemClone__c);
+        }
         compararEliminados(originalId,recordId);
     }
     
@@ -57,7 +72,9 @@ public class DSALES_MatrizCotizacion {
                 listaARemover.add(mapOriginal.get(item));
             }      
         }
-        delete  listaARemover;
+        if (DSALES_Matriz_de_Cotizacion__c.SObjectType.getDescribe().isDeletable()) {
+            delete listaARemover;
+        }
     }
     
 }
