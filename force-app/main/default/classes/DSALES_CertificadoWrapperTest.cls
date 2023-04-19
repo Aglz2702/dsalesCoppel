@@ -1,7 +1,7 @@
 @isTest
-global with sharing class DSALES_CertificadoWrapperTest {
+public with sharing class DSALES_CertificadoWrapperTest {
     @testSetup
-    static void SetUp(){
+    static void crearRegistros(){
         String recordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('Garantia Extendida').getRecordTypeId();
         String recordTypeId2 = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         Product2 pr= new Product2(Name='Lavadora',StockKeepingUnit='123452',DSales_Tipo_de_Producto__c='Producto',RecordTypeId=recordTypeId2,IsActive=true);
@@ -55,7 +55,7 @@ global with sharing class DSALES_CertificadoWrapperTest {
         opp.SyncedQuoteId  = cotGex.Id;     
        	update opp;
     }
-    @isTest static void CreateRecordTest()
+    @isTest static void crearRegistroTest()
     {
         
         Tienda__c tienda = [SELECT Id FROM Tienda__c WHERE DSales_TiendaID__c='1234'];
@@ -63,23 +63,23 @@ global with sharing class DSALES_CertificadoWrapperTest {
         contact c= [SELECT Id, FirstName, LastName, AccountId from Contact];
         Asset ast =[select Id, Name, AccountId from Asset];
         
-        RestRequest request=new RestRequest();
-        RestResponse response = new RestResponse();
-        String body = '{"id_producto_adquirido":"'+ast.id+'","id_cuenta":"'+acc.id+'","id_tienda":"'+tienda.id+'","numero_caja_coppel": "1234","id_vendedor": "1234","direccion_cliente": "Montreal 169 Paseo Montejo","correo_cliente": "dsanmiguel@deloittemx.com","telefono_cliente": "8130912906","celular_cliente": "812091342","sku": "ABCDS12","modelo_tangible": "Italika","marca_tangible": "Samsung","numero_serie": "90001","descripcion_tangible": "Muy bueno","precio_tangible": "900","fecha_compra_tangible": "2022-09-06","garantia_coppel_tangible": "12","costo_garantia": "900","fecha_compra_garantia": "2022-09-06","fecha_fin_garantia_extendida": "2022-09-06","fecha_inicio_garantia_extendida": "2022-09-06"}';
-        request.requestURI='/apexrest/insertCertificado'; 
-        request.httpMethod='POST';
-        RestContext.request=request;
-        request.requestBody=Blob.valueOf(body);
-        RestContext.response=response;
-        DSALES_CertificadoWrapper.CertificadoRequest certificado =  (DSALES_CertificadoWrapper.CertificadoRequest)JSON.deserialize (body,DSALES_CertificadoWrapper.CertificadoRequest.class);
-        certificado.numero_cliente=String.ValueOf(acc.CP_WalletCustomerNumber__c);
+        RestRequest peticion=new RestRequest();
+        RestResponse respuesta = new RestResponse();
+        String cuerpo = '{"id_producto_adquirido":"'+ast.id+'","id_cuenta":"'+acc.id+'","id_tienda":"'+tienda.id+'","numero_caja_coppel": "1234","id_vendedor": "1234","direccion_cliente": "Montreal 169 Paseo Montejo","correo_cliente": "dsanmiguel@deloittemx.com","telefono_cliente": "8130912906","celular_cliente": "812091342","sku": "ABCDS12","modelo_tangible": "Italika","marca_tangible": "Samsung","numero_serie": "90001","descripcion_tangible": "Muy bueno","precio_tangible": "900","fecha_compra_tangible": "2022-09-06","garantia_coppel_tangible": "12","costo_garantia": "900","fecha_compra_garantia": "2022-09-06","fecha_fin_garantia_extendida": "2022-09-06","fecha_inicio_garantia_extendida": "2022-09-06"}';
+        peticion.requestURI='/apexrest/insertCertificado'; 
+        peticion.httpMethod='POST';
+        RestContext.request=peticion;
+        peticion.requestBody=Blob.valueOf(cuerpo);
+        RestContext.response=respuesta;
+        DSALES_CertificadoWrapper.CertificadoRequest certificado =  (DSALES_CertificadoWrapper.CertificadoRequest)JSON.deserialize (cuerpo,DSALES_CertificadoWrapper.CertificadoRequest.class);
+        certificado.numeroCliente=String.ValueOf(acc.CP_WalletCustomerNumber__c);
         
         Test.startTest();
         DSALES_CertificadoWrapperRequest.createCertificado();
         Test.stopTest();
-        RestContext.request = request;
-        RestContext.response= response;
-        
+        RestContext.request = peticion;
+        RestContext.response= respuesta;
+        System.assertNotEquals(200, respuesta.statusCode,'La llamada no debe devolver el código 200');
     }
     @isTest static void cancelacionTest()
     {
@@ -104,9 +104,10 @@ global with sharing class DSALES_CertificadoWrapperTest {
         DSALES_CertificadoWrapperRequest.putCertificado(pago.DSALES_IDUniversal1__c,listGex,estatusGlobal,MotivoGlobal);
         //DSALES_CertificadoWrapperRequest.putCertificado(pago.DSALES_IDUniversal__c,listGex2);
         Test.stopTest();
+        System.assertNotEquals(null, pago.DSALES_IDUniversal1__c);
        
     }
-    @isTest static void devolicionTest()
+    @isTest static void devolucionTest()
     {
         DSALES_InformacionDePago__c pago = [SELECT Id,DSALES_Factura__c,DSALES_Clave_Tienda__c,DSALES_IDUniversal1__c,DSALES_Oportunidad__c FROM
                                             DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c='11111111111111111110' ];
@@ -117,26 +118,28 @@ global with sharing class DSALES_CertificadoWrapperTest {
         Test.startTest();
         DSALES_CertificadoWrapperRequest.putCertificado(pago.DSALES_IDUniversal1__c,listGex2,estatusGlobal,motivoGlobal);
         Test.stopTest();
+        System.assertNotEquals(null, pago.DSALES_IDUniversal1__c,'La llamada no debe devolver el código 200');
        
     }
-    @isTest static void FailedRecordTest()
+    @isTest static void fallaRegistroTest()
     {
         
-        RestRequest request=new RestRequest();
-        RestResponse response = new RestResponse();
-        String body = '{"numero_caja_coppel": "1234","id_vendedor": "1234","direccion_cliente": "Montreal 169 Paseo Montejo","correo_cliente": "dsanmiguel@deloittemx.com","telefono_cliente": "8130912906","celular_cliente": "812091342","sku": "ABCDS12","modelo_tangible": "Italika","marca_tangible": "Samsung","numero_serie": "90001","descripcion_tangible": "Muy bueno","precio_tangible": "900","fecha_compra_tangible": "2022-09-06","garantia_coppel_tangible": "12","costo_garantia": "900","fecha_compra_garantia": "2022-09-06","fecha_fin_garantia_extendida": "2022-09-06","fecha_inicio_garantia_extendida": "2022-09-06"}';
-        request.requestURI='/apexrest/insertCertificado'; 
-        request.httpMethod='POST';
-        RestContext.request=request;
-        request.requestBody=Blob.valueOf(body);
-        RestContext.response=response;
-        DSALES_CertificadoWrapper.CertificadoRequest certificado =  (DSALES_CertificadoWrapper.CertificadoRequest)JSON.deserialize (body,DSALES_CertificadoWrapper.CertificadoRequest.class);
+        RestRequest peticion=new RestRequest();
+        RestResponse respuesta = new RestResponse();
+        String cuerpo = '{"numero_caja_coppel": "1234","id_vendedor": "1234","direccion_cliente": "Montreal 169 Paseo Montejo","correo_cliente": "dsanmiguel@deloittemx.com","telefono_cliente": "8130912906","celular_cliente": "812091342","sku": "ABCDS12","modelo_tangible": "Italika","marca_tangible": "Samsung","numero_serie": "90001","descripcion_tangible": "Muy bueno","precio_tangible": "900","fecha_compra_tangible": "2022-09-06","garantia_coppel_tangible": "12","costo_garantia": "900","fecha_compra_garantia": "2022-09-06","fecha_fin_garantia_extendida": "2022-09-06","fecha_inicio_garantia_extendida": "2022-09-06"}';
+        peticion.requestURI='/apexrest/insertCertificado'; 
+        peticion.httpMethod='POST';
+        RestContext.request=peticion;
+        peticion.requestBody=Blob.valueOf(cuerpo);
+        RestContext.response=respuesta;
+        DSALES_CertificadoWrapper.CertificadoRequest certificado =  (DSALES_CertificadoWrapper.CertificadoRequest)JSON.deserialize (cuerpo,DSALES_CertificadoWrapper.CertificadoRequest.class);
         
         Test.startTest();
         DSALES_CertificadoWrapperRequest.createCertificado();
         Test.stopTest();
-        RestContext.request = request;
-        RestContext.response= response;
+        RestContext.request = peticion;
+        RestContext.response= respuesta;
+        System.assertNotEquals(200, respuesta.statusCode,'La llamada no debe devolver el código 200');
         
     }
 }
