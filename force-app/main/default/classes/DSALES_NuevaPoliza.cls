@@ -13,6 +13,7 @@ public with sharing class DSALES_NuevaPoliza {
     
     public static final String NOMBRE_SERVICIO = 'DSALES_createPoliza';
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     @future(callout=true)
     public static void invokeService(String idPoliza){
@@ -33,6 +34,8 @@ public with sharing class DSALES_NuevaPoliza {
             System.debug('No se actualizarón los datos de la póliza');
         }    
 =======
+=======
+>>>>>>> Deuda-Tecnica
     public static InsurancePolicy invokeService(InsurancePolicyAsset activo){
         InsurancePolicy poliza =new InsurancePolicy();
          String datos='SELECT Id,DSALES_Genero__c,DSALES_Descripcion__c,DSALES_Nmerodemotor__c,DSALES_Clavevehicular__c,DSALES_Codigopostal__c,DSALES_Codigoestado__c,DSALES_CorreoElectronico__c,DSALES_Activodeplizadeseguro__c,DSALES_Numeroseguimiento__c,SourceQuoteId,DSALES_Negocio__c,DSALES_Aseguradora__c,PlanTier,';
@@ -71,11 +74,15 @@ public with sharing class DSALES_NuevaPoliza {
         return poliza;
         
         
+<<<<<<< HEAD
+>>>>>>> Deuda-Tecnica
+=======
 >>>>>>> Deuda-Tecnica
     }
     
     
     public static InsurancePolicy service(InsurancePolicy poliza){
+<<<<<<< HEAD
 <<<<<<< HEAD
         String body = obtenerCampos(poliza);
         Http http = new Http();
@@ -97,6 +104,8 @@ public with sharing class DSALES_NuevaPoliza {
             System.System.debug('error: '+errores[0].service.message);
             return null;
 =======
+=======
+>>>>>>> Deuda-Tecnica
        try{
             String body = obtenerCampos(poliza);
             Http http = new Http();
@@ -137,43 +146,12 @@ public with sharing class DSALES_NuevaPoliza {
             }
         }catch(Exception e){
             System.debug('error: '+e.getLineNumber()+e.getMessage());
+<<<<<<< HEAD
+>>>>>>> Deuda-Tecnica
+=======
 >>>>>>> Deuda-Tecnica
         }
         return poliza;
-    }
-
-    public static InsurancePolicy respuestaExitosa(InsurancePolicy poliza){
-        if(respuesta.success == true){
-            poliza.DSALES_IDemision__c=respuesta.data.payment_data.data.emission_id;
-            poliza.DSALES_Numeroseguimiento__c=respuesta.data.payment_data.data.tracking_id;
-            System.debug('Name data:'+respuesta.data.payment_data.data.policy_number);
-            poliza.Name=respuesta.data.payment_data.data.policy_number;
-            poliza.PolicyName =respuesta.data.payment_data.data.insured_data.policy;
-            System.debug('Name:'+ poliza.Name);
-            System.debug('Num:'+poliza.PolicyName);
-            String fechaIni=respuesta.data.payment_data.data.insured_data.start_date;
-            System.debug('fechaIni'+fechaIni);
-            Date fInicio= date.valueOf(fechaIni);
-            System.debug('fInicio'+fInicio);
-            poliza.EffectiveDate = Datetime.newInstance(fInicio.year(),fInicio.month(),fInicio.day());
-            String fechaFin=respuesta.data.payment_data.data.insured_data.end_date;
-            System.debug('fechaFin'+fechaFin);
-            Date endDate= date.valueOf(fechaFin);
-            System.debug('endDate'+endDate);
-            poliza.ExpirationDate=Datetime.newInstance(endDate.year(),endDate.month(),endDate.day());
-            poliza.Fecha_de_emisi_n__c=Date.valueOf(respuesta.data.payment_data.data.insured_data.emission_date);
-            System.debug('Fecha_de_emisi_n__c'+poliza.Fecha_de_emisi_n__c);
-            poliza.TotalSumInsured =Decimal.valueOf(!String.isEmpty(respuesta.data.payment_data.data.insured_data.vehicle_summ) ? respuesta.data.payment_data.data.insured_data.vehicle_summ : '0');
-            poliza.DSALES_Prima_Neta__c=Decimal.valueOf(!String.isEmpty(respuesta.data.payment_data.data.value_resume.net_premium) ? respuesta.data.payment_data.data.value_resume.net_premium  : '0');
-            poliza.DSALES_Prima_total__c=Decimal.valueOf(!String.isEmpty(respuesta.data.payment_data.data.value_resume.total_premium) ? respuesta.data.payment_data.data.value_resume.total_premium : '0');
-            poliza.DSALES_Gastos_expedicion__c=Decimal.valueOf(!String.isEmpty(respuesta.data.payment_data.data.value_resume.right) ? respuesta.data.payment_data.data.value_resume.right : '0');
-            poliza.DSALES_IVA__c=Decimal.valueOf(!String.isEmpty(respuesta.data.payment_data.data.value_resume.tax) ? respuesta.data.payment_data.data.value_resume.tax : '0') ;
-            poliza.DSALES_Estatusdepliza__c='Vigente';
-            System.debug('Estatus despues de recibir respuesta: '+ poliza.DSALES_Estatusdepliza__c);
-            //update poliza;
-            System.debug('poliza Name:'+poliza.Name);
-            String str = JSON.serialize(poliza);	    
-        }
         return poliza;
     }
 
@@ -204,6 +182,10 @@ public with sharing class DSALES_NuevaPoliza {
         objPost.emision_date=String.valueOf( obj.Fecha_de_emisi_n__c);
         objPost.start_at=String.valueOf(obj.CreatedDate);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        System.debug('poliza json:'+objPost);
+>>>>>>> Deuda-Tecnica
 =======
         System.debug('poliza json:'+objPost);
 >>>>>>> Deuda-Tecnica

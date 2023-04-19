@@ -1,75 +1,75 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global class DSALES_SiniestroWrapper {
-    global class siniestroCallPost { 
+    global class SiniestroCallPost { 
         global String uid { get; set;}
-        global String Reporte { get; set;}
-        global String NumeroSiniestro { get; set;}
-        global String TipoSiniestro { get; set;}
-        global String FechaSiniestro { get; set;}
-        global String NombreConductor { get; set;}
-        global String Causa { get; set;}
+        global String reporte { get; set;}
+        global String numeroSiniestro { get; set;}
+        global String tipoSiniestro { get; set;}
+        global String fechaSiniestro { get; set;}
+        global String nombreConductor { get; set;}
+        global String causa { get; set;}
 
-        global vehiculo Vehiculo { get; set;}
-        global poliza Poliza { get; set;} //minuscula
+        global vehiculo vehiculo { get; set;}
+        global poliza poliza { get; set;}
 
-        global String ComoOcurrio { get; set;}
-        global String Ubicacion { get; set;}
-        global String Municipio { get; set;}
-        global String Estado { get; set;}
-        global String Estatus { get; set;}
+        global String comoOcurrio { get; set;}
+        global String ubicacion { get; set;}
+        global String municipio { get; set;}
+        global String estado { get; set;}
+        global String estatus { get; set;}
         global String salesforceid { get; set;}
     }
-
-    global class vehiculo{
-        global String Descripcion { get; set;}
-        global String Anio { get; set;}
-        global String Placa { get; set;}
-        global String Serie { get; set;}
+    global class Vehiculo{
+        global String descripcion { get; set;}
+        global String anio { get; set;}
+        global String placa { get; set;}
+        global String serie { get; set;}
     }
 
-    global class poliza{
+    global class Poliza{
         global String numeroPoliza { get; set;}
-        global String Inciso { get; set;}
-        global String FechaInicioVigencia { get; set;}
-        global String FechaFinVigencia { get; set;}
-        global String NombreAsegurado { get; set;}
+        global String inciso { get; set;}
+        global String fechaInicioVigencia { get; set;}
+        global String fechaFinVigencia { get; set;}
+        global String nombreAsegurado { get; set;}
     }
 
-    global class siniestroPostResponse{
+    global class SiniestroPostResponse{
         global Boolean success { get; set;}
         global String mensaje { get; set;}
-        global Integer codigo_error { get; set;}
-        global String id_siniestro { get; set;}      
+        global Integer codigoError { get; set;}
+        global String idSiniestro { get; set;}      
     }
 
-    global class siniestro{
+    global class Siniestro{
         global String uid { get; set;}
-        global String NumeroSiniestro { get; set;}
+        global String numeroSiniestro { get; set;}
     }
 
     global class SiniestroPut{
         global String uid { get; set;}
-        global String Reporte { get; set;}
-        global String NumeroSiniestro { get; set;}
-        global String TipoSiniestro { get; set;}
-        global String FechaSiniestro { get; set;}
-        global String NombreConductor { get; set;}
-        global String Causa { get; set;}
+        global String reporte { get; set;}
+        global String numeroSiniestro { get; set;}
+        global String tipoSiniestro { get; set;}
+        global String fechaSiniestro { get; set;}
+        global String nombreConductor { get; set;}
+        global String causa { get; set;}
 
-        global vehiculo Vehiculo { get; set;}
-        global poliza Poliza { get; set;}
+        global vehiculo vehiculo { get; set;}
+        global poliza poliza { get; set;}
 
-        global String ComoOcurrio { get; set;}
-        global String Ubicacion { get; set;}
-        global String Municipio { get; set;}
-        global String Estado { get; set;}
-        global String Estatus { get; set;}
+        global String comoOcurrio { get; set;}
+        global String ubicacion { get; set;}
+        global String municipio { get; set;}
+        global String estado { get; set;}
+        global String estatus { get; set;}
         global String salesforceid { get; set;}       
     }
 
-    global class comprobantesTenencia{
-        global String Descripcion { get; set;} 
-        global String Comprobante { get; set;} 
-        global String IdComprobante { get; set;} 
+    global class ComprobantesTenencia{
+        global String descripcion { get; set;} 
+        global String comprobante { get; set;} 
+        global String idComprobante { get; set;} 
         
     }
 
@@ -97,12 +97,12 @@ global class DSALES_SiniestroWrapper {
         global String motivoRechazo {get;set;}
         global String salesforceid { get; set;}       
     }
-        global class listaSiniestros{
+        global class ListaSiniestros{
         //Informacion de Resumen de pago de poliza
-        global String claimpayment_name{get;set;}
-        global Double payment_amount{get;set;}
-        global String payment_type{get;set;}
-        global Date payment_date{get;set;}
+        global String claimpaymentName{get;set;}
+        global Double paymentAmount{get;set;}
+        global String paymentType{get;set;}
+        global Date paymentDate{get;set;}
     }
 
 }

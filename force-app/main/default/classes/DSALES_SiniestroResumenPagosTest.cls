@@ -1,8 +1,7 @@
 @isTest
-global with sharing class DSALES_SiniestroResumenPagosTest {
-
+private with sharing class DSALES_SiniestroResumenPagosTest {
     @TestSetup
-    static void SetUp(){
+    static void setUp(){
          
 
         Claim siniestro = new Claim(Name='SNT',ClaimType='Perdida Total',ClaimReason='Choque unilateral');
@@ -13,46 +12,48 @@ global with sharing class DSALES_SiniestroResumenPagosTest {
         insert resumenPago;
         
     }
-    @isTest static void CreateRecordTest()
+    @isTest static void crearRegistroTest()
     {
         
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
         Claim siniestro = [SELECT Id FROM  Claim  LIMIT 1];
-        String body='{"claimpayment_info":"'+siniestro.Id+'","payment_amount":"45900","claimpayment_name":"Prueba funcional","payment_type":"Pago a cliente","payment_date": "2022-10-11"}';
+        String body='{"infoResumenPago":"'+siniestro.Id+'","cantidadPago":"45900","nombrePagoSiniestro":"Prueba funcional","tipoPago":"Pago a cliente","fechaPago": "2022-09-06"}';
         request.requestURI='/apexrest/insertClaimPaymentSummary'; 
         request.httpMethod='POST';
         RestContext.request=request;
         request.requestBody=Blob.valueOf(body);
         RestContext.response=response;
-        DSALES_SiniestroRPWrapper.SiniestroRPRequest SiniestroRP = (DSALES_SiniestroRPWrapper.SiniestroRPRequest)JSON.deserialize(body, DSALES_SiniestroRPWrapper.SiniestroRPRequest.class);
+        DSALES_SiniestroRPWrapper.SiniestroRPRequest siniestroRp = (DSALES_SiniestroRPWrapper.SiniestroRPRequest)JSON.deserialize(body, DSALES_SiniestroRPWrapper.SiniestroRPRequest.class);
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
-        DSALES_SiniestroResumenPagos.createSiniestroRP();
+        DSALES_SiniestroResumenPagos.crearSiniestro();
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
         
     }
-    @isTest static void CreateRecordTestWrong()
+    @isTest static void crearRegistroTestIncorrecto()
     {
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
         Claim siniestro = [SELECT Id FROM  Claim  LIMIT 1];
-        String body='{"claimpayment_info":"'+siniestro.Id+'","payment_amount":"45900","claimpayment_name":"Prueba funcional","payment_type":"Pago a cliente","payment_date": "2022-09-06"}';
+        String body='{"infoResumenPago":"'+siniestro.Id+'","cantidadPago":"45900","nombrePagoSiniestro":"Prueba funcional","tipoPago":"Pago a cliente","fechaPago": "2022-09-06"}';
         request.requestURI='/apexrest/insertClaimPaymentSummary/'; 
         request.httpMethod='POST';
         RestContext.request=request;
         request.requestBody=Blob.valueOf(body);
         RestContext.response=response;
-        DSALES_SiniestroRPWrapper.SiniestroRPRequest SiniestroRP = (DSALES_SiniestroRPWrapper.SiniestroRPRequest)JSON.deserialize(body, DSALES_SiniestroRPWrapper.SiniestroRPRequest.class);
+        DSALES_SiniestroRPWrapper.SiniestroRPRequest siniestroRp = (DSALES_SiniestroRPWrapper.SiniestroRPRequest)JSON.deserialize(body, DSALES_SiniestroRPWrapper.SiniestroRPRequest.class);
         Test.startTest();
 		Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
-        DSALES_SiniestroResumenPagos.createSiniestroRP();
+        DSALES_SiniestroResumenPagos.crearSiniestro();
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
         System.debug('ok');
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
     }
     
 }
