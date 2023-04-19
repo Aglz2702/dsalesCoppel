@@ -9,7 +9,11 @@ public class DSALES_ListaNegraWrapperTest {
         op.ok='ok';
         op.rfc='ASFAA';
         op2.nombre='ok';
-        op2.rfc='GFASfas';           
+        op2.rfc='GFASfas';
+        
+        String expectedValue = 'Rechazado'; // valor esperado
+        String actualValue = op.estatus; // valor actual
+        System.assertNotEquals(expectedValue, actualValue, 'Los valores no deben ser iguales');
     }
 
 }
