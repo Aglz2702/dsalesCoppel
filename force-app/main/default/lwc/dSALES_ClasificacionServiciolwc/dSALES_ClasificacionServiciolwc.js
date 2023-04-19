@@ -26,7 +26,7 @@ import insertVinculacion from '@salesforce/apex/DSALES_ClasificacionServicio.ins
 import updateMatriz from '@salesforce/apex/DSALES_ClasificacionServicio.updateMatriz';
 import insertListaPrecios from '@salesforce/apex/DSALES_ClasificacionServicio.insertListaPrecios';
 import insertPocentajeCobro from '@salesforce/apex/DSALES_ClasificacionServicio.insertPocentajeCobro';
-import RecordTypeId from '@salesforce/apex/DSALES_ClasificacionServicio.RecordTypeId';
+import recordTypeId from '@salesforce/apex/DSALES_ClasificacionServicio.recordTypeId';
 import getCampaings from '@salesforce/apex/DSALES_ClasificacionServicio.getCampaings';
 import updateCampaigns from '@salesforce/apex/DSALES_ClasificacionServicio.updateCampaigns';
 import getTipoUso from '@salesforce/apex/DSALES_ClasificacionServicio.getTipoUso';
@@ -414,7 +414,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                     else{
                         this.pushMessage('Advertencia', 'Warning', 'Operacion exitosa con los siguientes errores: '+result[0]);
                     }
-                    insertListaPrecios({ idproductoservicio: 'opcion2', opcion: '2', JSON2: JSON.stringify(this.data.listServicios) })
+                    insertListaPrecios({ idproductoservicio: 'opcion2', opcion: '2', json2: JSON.stringify(this.data.listServicios) })
                         .then(result => {
                         }).catch(error => {
                         });
@@ -734,7 +734,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     asignarCategoria(event) {
         this.showSpinner = true;
         this.pickList.valueSelectedtipoSeguroServicio = event.target.value;
-        RecordTypeId({ tipoRegistro: this.pickList.valueSelectedtipoSeguroServicio })
+        recordTypeId({ tipoRegistro: this.pickList.valueSelectedtipoSeguroServicio })
             .then(result => {
                 this.pickList.RecordTypeId = result;
                 if (this.pickList.valueSelectedtipoSeguroServicio == 'Garantía Extendida') {
@@ -1049,7 +1049,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                                 });
                         }
                         else {
-                            insertPocentajeCobro({ idservicio: result, JSONP: JSON.stringify(this.matrizPorcentaje) })
+                            insertPocentajeCobro({ idservicio: result, jsonp: JSON.stringify(this.matrizPorcentaje) })
                                 .then(result => {
                                 }).catch(error => {
                                     this.showSpinner = false;
@@ -1063,7 +1063,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                     .then(result => {
                         this.data.idservicio = result;
                         this.showSpinner = false;
-                        insertListaPrecios({ idproductoservicio: result, opcion: '1', JSON2: JSON.stringify(this.data.listServicios) })
+                        insertListaPrecios({ idproductoservicio: result, opcion: '1', json2: JSON.stringify(this.data.listServicios) })
                             .then(result => {
                             }).catch(error => {
                             });
