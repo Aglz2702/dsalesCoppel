@@ -2,9 +2,28 @@
 global with sharing class DSALES_CertificadoWrapperTest {
     @testSetup
     static void SetUp(){
-        Opportunity opp = new Opportunity(Name='Danny',StageName='Closed',CloseDate=Date.today());
-        insert opp;
-       
+        String recordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('Garantia Extendida').getRecordTypeId();
+        String recordTypeId2 = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
+        Product2 pr= new Product2(Name='Lavadora',StockKeepingUnit='123452',DSales_Tipo_de_Producto__c='Producto',RecordTypeId=recordTypeId2,IsActive=true);
+		insert pr;
+        Id pricebookId = Test.getStandardPricebookId();
+        PricebookEntry standardPricePG = new PricebookEntry();
+        standardPricePG.Pricebook2Id = pricebookId;
+        standardPricePG.Product2Id = pr.Id;
+        standardPricePG.UnitPrice = 1200;
+        standardPricePG.IsActive = true;
+        insert standardPricePG;
+        Pricebook2 customPB = new Pricebook2();
+        customPB.Name='Standard Price Book';
+        customPB.isActive=true;
+        insert customPB;
+        PricebookEntry customPricePG = new PricebookEntry();
+        customPricePG.Pricebook2Id = customPB.Id;
+        customPricePG.Product2Id = pr.Id;
+        customPricePG.UnitPrice = 1000;
+        customPricePG.IsActive = true;
+        insert customPricePG;
+        
         Account ac= new Account(Name='DannyTest',CP_WalletCustomerNumber__c=123456);  
         insert ac;
         Contact con = new Contact(lastname= 'Test', AccountId= ac.Id, Email= 'johndoeus@salesforce.com');
@@ -12,23 +31,33 @@ global with sharing class DSALES_CertificadoWrapperTest {
       
         Tienda__c tienda = new Tienda__c(DSales_TiendaID__c='1234');
         insert tienda;
-        DSALES_InformacionDePago__c pago = new DSALES_InformacionDePago__c(DSALES_Oportunidad__c=opp.id,DSALES_Factura__c='1234',DSALES_Clave_Tienda__c='1234');
+        Opportunity opp = new Opportunity(Name='Danny',StageName='Closed',CloseDate=Date.today(),Pricebook2Id=customPB.Id);
+        insert opp;
+        DSALES_InformacionDePago__c pago = new DSALES_InformacionDePago__c(DSALES_Oportunidad__c=opp.id,DSALES_Factura__c='1234',DSALES_Clave_Tienda__c='1234',DSALES_IDUniversal1__c='11111111111111111110');
         insert pago;
-         String recordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('Garantia Extendida').getRecordTypeId();
-            String recordTypeId2 = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
-        Product2 pr= new Product2(Name='Daniel',StockKeepingUnit='12345',DSales_Tipo_de_Producto__c='Producto',RecordTypeId=recordTypeId2);
-		insert pr;
         
-         Asset ass = new Asset(Name='Test',AccountId= ac.Id,ContactId=con.Id,DSALES_SKU__c='12345',DSales_Informacion_pago__c=pago.Id,Product2Id=pr.id,DSALES_TipoProducto__c='Producto',RecordTypeId=recordTypeId);
+        
+         Asset ass = new Asset(Name='Test',AccountId= ac.Id,ContactId=con.Id,DSALES_SKU__c='123454',DSales_Informacion_pago__c=pago.Id,Product2Id=pr.id,DSALES_TipoProducto__c='Producto',RecordTypeId=recordTypeId);
         insert ass; 
         DSALES_Certificado__c certificado = new DSALES_Certificado__c(DSALES_Email__c='dsanmiguel@deloittemx.com',DSALES_ProductoAdquirido__c=ass.id,
                                                                      DSALES_InformacionDePago__c=pago.id);
         insert certificado;
-         
-        
+        Quote cotGex = new Quote(OpportunityId=opp.Id,Name='GEX',DSales_Tienda__c=tienda.Id);
+        insert cotGex;
+       
+        QuoteLineItem lavadora = new QuoteLineItem();
+        lavadora.QuoteId = cotGex.Id;
+        lavadora.PricebookEntryId = customPricePG.Id;
+        lavadora.Product2Id = pr.Id;
+        lavadora.Quantity = 1.0;
+        lavadora.UnitPrice = customPricePG.UnitPrice;
+        insert lavadora;
+        opp.SyncedQuoteId  = cotGex.Id;     
+       	update opp;
     }
     @isTest static void CreateRecordTest()
     {
+        
         Tienda__c tienda = [SELECT Id FROM Tienda__c WHERE DSales_TiendaID__c='1234'];
         Account acc=[SELECT CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];
         contact c= [SELECT Id, FirstName, LastName, AccountId from Contact];
@@ -52,37 +81,43 @@ global with sharing class DSALES_CertificadoWrapperTest {
         RestContext.response= response;
         
     }
-    @isTest static void putRecordTest()
+    @isTest static void cancelacionTest()
     {
-        DSALES_InformacionDePago__c pago = [SELECT Id,DSALES_Factura__c,DSALES_Clave_Tienda__c FROM
-                                            DSALES_InformacionDePago__c WHERE DSALES_Factura__c='1234' AND DSALES_Clave_Tienda__c='1234' ];
-        List<String> prod =new List<String>();
-         prod.add('12345');
+        DSALES_InformacionDePago__c pago = [SELECT Id,DSALES_Factura__c,DSALES_Clave_Tienda__c,DSALES_IDUniversal1__c,DSALES_Oportunidad__c FROM
+                                            DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c='11111111111111111110' ];
         DSALES_Certificado__c certi= [SELECT Name FROM DSALES_Certificado__c WHERE DSALES_Email__c='dsanmiguel@deloittemx.com' LIMIT 1];
         List<String> c = new List<String>();
-        c.add(certi.Name);
-        String factura='1234',factura1='',clave_tienda='1234',clave_tienda1='';
-        String sku_tangible='';
-        String estado='Can',estado1='Dev',estado2='';
-        String motivo='';
-        
-        RestRequest request=new RestRequest();
-        RestResponse response = new RestResponse();
-        String body = '{"id_factura":"'+factura+'", "clave_tienda":"'+clave_tienda+'", "sku_de_tangible":"'+prod+'","numero_de_certificado":"'+c+'", "estado":"'+estado+'","motivo":"No le gustó más al cliente" }';
-        request.requestURI='/apexrest/insertCertificado'; 
-        request.httpMethod='PUT';
-        RestContext.request=request;
-        request.requestBody=Blob.valueOf(body);
-        RestContext.response=response;
-        DSALES_CertificadoWrapper.CertificadoRequest certificado =  (DSALES_CertificadoWrapper.CertificadoRequest)JSON.deserialize (body,DSALES_CertificadoWrapper.CertificadoRequest.class);
+        OpportunityLineItem productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago.DSALES_Oportunidad__c AND Product2.Name='Lavadora' LIMIT 1];
+        List<DSALES_CancelacionProductosWrapper.ListaProducto> listGex= new List<DSALES_CancelacionProductosWrapper.ListaProducto>();
+        DSALES_CancelacionProductosWrapper.ListaProducto servicioGex= new DSALES_CancelacionProductosWrapper.ListaProducto();
+         List<DSALES_CancelacionProductosWrapper.ListaProducto> listGex2= new List<DSALES_CancelacionProductosWrapper.ListaProducto>();
+        servicioGex.idPartidaOportunidad=productosSincro.Id;
+        servicioGex.estatus='Cancelado';
+        servicioGex.motivoCancelacion='A petición del cliente';
+        servicioGex.idCertificado=certi.Name;
+        listGex.add(servicioGex);
+       
+  
         Test.startTest();
-        DSALES_CertificadoWrapperRequest.putCertificado(factura,clave_tienda,prod,c,estado,motivo);
-        DSALES_CertificadoWrapperRequest.putCertificado(factura1,clave_tienda1,prod,c,estado,motivo);
-         DSALES_CertificadoWrapperRequest.putCertificado(factura,clave_tienda,prod,c,estado1,motivo);
-         DSALES_CertificadoWrapperRequest.putCertificado(factura,clave_tienda,prod,c,estado2,motivo);
+        String estatusGlobal='Cancelado';
+        String motivoGlobal='a petición del cliente';
+        DSALES_CertificadoWrapperRequest.putCertificado(pago.DSALES_IDUniversal1__c,listGex,estatusGlobal,MotivoGlobal);
+        //DSALES_CertificadoWrapperRequest.putCertificado(pago.DSALES_IDUniversal__c,listGex2);
         Test.stopTest();
-        RestContext.request = request;
-        RestContext.response= response;
+       
+    }
+    @isTest static void devolicionTest()
+    {
+        DSALES_InformacionDePago__c pago = [SELECT Id,DSALES_Factura__c,DSALES_Clave_Tienda__c,DSALES_IDUniversal1__c,DSALES_Oportunidad__c FROM
+                                            DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c='11111111111111111110' ];
+        DSALES_Certificado__c certi= [SELECT Name FROM DSALES_Certificado__c WHERE DSALES_Email__c='dsanmiguel@deloittemx.com' LIMIT 1];
+        List<DSALES_CancelacionProductosWrapper.ListaProducto> listGex2= new List<DSALES_CancelacionProductosWrapper.ListaProducto>();
+               String estatusGlobal='Cancelado';
+        String motivoGlobal='a petición del cliente';
+        Test.startTest();
+        DSALES_CertificadoWrapperRequest.putCertificado(pago.DSALES_IDUniversal1__c,listGex2,estatusGlobal,motivoGlobal);
+        Test.stopTest();
+       
     }
     @isTest static void FailedRecordTest()
     {

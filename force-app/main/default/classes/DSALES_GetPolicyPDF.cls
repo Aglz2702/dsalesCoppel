@@ -1,32 +1,8 @@
 public with sharing class DSALES_GetPolicyPDF {
-
     public static final String NOMBRE_SERVICIO = 'DSALES_GetPolicyPDF';
-    public static void sendPdf(InsurancePolicy poliza){
-        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Motoentregada__c,DSALES_Motoexterna__c FROM DSALES_InformacionDePago__c WHERE DSALES_Poliza__c=:poliza.Id];
-        poliza.DSALES_PDF_poliza__c=service(poliza);
-        if(pago.DSALES_Motoexterna__c==true && pago.DSALES_Motoentregada__c==false){
-            if(DSALES_IPServiceToNPV.service(poliza)==true){
-                System.debug('Envío de url a NPV');
-                poliza.DSALES_Polizaenviada__c=true;
-            }
-            else{
-                System.debug('No se realizó el envio');
-            }
-        }
-        if(pago.DSALES_Motoentregada__c==true && pago.DSALES_Motoexterna__c==false){
-            if(DSALES_IPServiceToEXE.service(poliza)==true){
-             	System.debug('Envío de url a .EXE');
-           		poliza.DSALES_Polizaenviada__c=true;   
-            }
-            else{
-                System.debug('No se realizó el envio a .EXE');
-            }
-            
-        }
-        
-    }
     public static String  service(InsurancePolicy poliza){
-        String pdf=null;
+        System.debug('POLIZA EN GETPDF:'+poliza);
+        String pdf='';
         String body = obtenerCampos(poliza);
         Http http = new Http();
         HttpRequest request = new HttpRequest();
@@ -41,7 +17,7 @@ public with sharing class DSALES_GetPolicyPDF {
             if(respuesta.success == true){
                 pdf=respuesta.data.policy_url;
                 System.debug('url pdf: '+pdf);
-                
+                //update poliza;
             }
             
         }
@@ -49,10 +25,14 @@ public with sharing class DSALES_GetPolicyPDF {
             List<DSALES_GetPolicyPdfWrapper.Errors> errores = respuesta.data.errors;
             System.debug('error'+ errores);
         }
+        System.debug('url en getPolicyPdf:'+pdf);    
         return pdf;
     }
 
     public static String obtenerCampos(InsurancePolicy poliza){
+        System.debug('******************************************');
+        System.debug('****NOMBRE PÓLIZA ****:'+poliza.Name);
+        System.debug('****tracking_id****:'+poliza.DSALES_Numeroseguimiento__c);
         DSALES_GetPolicyPdfWrapper.requestWrapper req= new DSALES_GetPolicyPdfWrapper.requestWrapper();
         req.tracking_id=poliza.DSALES_Numeroseguimiento__c;
         req.business=poliza.DSALES_Negocio__c;

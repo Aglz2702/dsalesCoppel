@@ -13,14 +13,11 @@ public class DSALES_InformacionDePago extends fflib_SObjectDomain{
 
     
     public override void onAfterInsert() {
-        DSALES_InformacionPagoHandler.CambiaClienteCautivo( records);
-       // DSALES_InformacionPagoHandler.createPolizaMExt(records);
-        
+        DSALES_InformacionPagoHandler.cambiaClienteCautivo(records);
     }
     
     public override void onAfterUpdate(Map<Id,SObject> existingRecords){
-        DSALES_InformacionPagoHandler.CambiaClienteCautivo( records);
-        DSALES_InformacionPagoHandler.enviarIntegracion(existingRecords, records);
+        DSALES_InformacionPagoHandler.cambiaClienteCautivo( records);
     }
     
     

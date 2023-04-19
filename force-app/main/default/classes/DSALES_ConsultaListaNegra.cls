@@ -1,8 +1,8 @@
 public class DSALES_ConsultaListaNegra{
     public static final String NOMBRE_SERVICIO = 'DSALES_ListaNegra';
     	public static void listaNegra(Id cotizacion){
-            Quote updateCheck = [SELECT Id,Name, AccountId,DSALES_NombreCliente__c, Lista_negra__c, Motivo_de_lista_negra__c FROM Quote WHERE Id =:cotizacion];
-            Account cuenta = [SELECT Id, Name, LastName, FirstName, MiddleName,Suffix, PersonBirthdate FROM Account WHERE Id =:updateCheck.AccountId];
+            Quote updateCheck = [SELECT Id,Name, AccountId,DSALES_NombreCliente__c, Lista_negra__c, Motivo_de_lista_negra__c FROM Quote WHERE Id =:cotizacion WITH SECURITY_ENFORCED];
+            Account cuenta = [SELECT Id, Name, LastName, FirstName, MiddleName,Suffix, PersonBirthdate FROM Account WHERE Id =:updateCheck.AccountId WITH SECURITY_ENFORCED];
             String nombre1 = cuenta.FirstName;
             String nombre2 =cuenta.MiddleName;
             String apellidoPat = cuenta.LastName;
@@ -11,6 +11,7 @@ public class DSALES_ConsultaListaNegra{
             if(nombre2!=null){
               nombreCompleto += ' ' +nombre2;  
             }
+            
             nombreCompleto += ' ' +apellidoPat; 
             if(apellidoMat!=null){
               nombreCompleto += ' ' +apellidoMat;  
@@ -27,7 +28,7 @@ public class DSALES_ConsultaListaNegra{
                 updateCheck.Lista_negra__c = true;
                 updateCheck.Motivo_de_lista_negra__c= 'Pedir descrip';
             }
-            update updateCheck; 
+            update updateCheck WITH SECURITY_ENFORCED; 
                   
         }
     

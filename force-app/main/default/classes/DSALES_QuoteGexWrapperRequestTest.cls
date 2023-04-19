@@ -2,7 +2,7 @@
 public class DSALES_QuoteGexWrapperRequestTest{
     
    @testSetup
-    static void SetUp(){
+    static void setUp(){
         String tipoProducto = 'Servicio';
         String message = '';
         String regions = 'Todas las regiones';
@@ -176,10 +176,10 @@ public class DSALES_QuoteGexWrapperRequestTest{
     }
     
     @isTest 
-    static void CreateQuoteRecordTest(){
+    static void createQuoteRecordTest(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{  "id_tienda": "21", "productos": [{"sku_de_tangible": "0000", "cantidad_productos_tangibles": 1.0, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precio_tangible": "4650" } ], "apellido_materno": "Lopez", "apellido_paterno": "Gonzalez", "nombre": "Emmanuel", "correo_electronico": "egl@deloittemx.com", "numero_de_cliente": "", "id_factura": null, "id_oportunidad": null }';
+        String body = '{  "idTienda": "21", "productos": [{"skuDeTangible": "0000", "cantidadProductosTangibles": 1.0, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precioTangible": "4650" } ], "apellidoMaterno": "Lopez", "apellidoPaterno": "Gonzalez", "nombre": "Emmanuel", "correoElectronico": "egl@deloittemx.com", "numeroCliente": "", "idFactura": null, "idOportunidad": null }';
         req.requestURI = '/apexrest/insertQuoteGex';
         req.httpMethod = 'POST';
         RestContext.request = req;
@@ -191,13 +191,14 @@ public class DSALES_QuoteGexWrapperRequestTest{
         Test.stopTest();
         RestContext.request = req;
         RestContext.response= res;
+        System.assertNotEquals(200, res.statusCode, 'La llamada no debe devolver un código 200');
     }
     
     @isTest 
-    static void CreateQuoteRecordTest2(){
+    static void createQuoteRecordTest2(){
         RestRequest req2 = new RestRequest();
         RestResponse res2 = new RestResponse();
-        String body2 = '{ "id_tienda": "21", "productos": [ { "sku_de_tangible": "0000", "cantidad_productos_tangibles": 1.0, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precio_tangible": "4650" } ], "apellido_materno": "Test", "apellido_paterno": "Tes", "nombre": "Test", "correo_electronico": "danigallegos@deloittemx.com", "numero_de_cliente": "45654", "id_factura": null, "id_oportunidad": null }';
+        String body2 = '{ "idTienda": "21", "productos": [ { "skuDeTangible": "0000", "cantidadProductosTangibles": 1.0, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precioTangible": "4650" } ], "apellidoMaterno": "Test", "apellidoPaterno": "Tes", "nombre": "Test", "correoElectronico": "danigallegos@deloittemx.com", "numeroCliente": "45654", "idFactura": null, "idOportunidad": null }';
         req2.requestURI = '/apexrest/insertQuoteGex';
         req2.httpMethod = 'POST';
         RestContext.request = req2;
@@ -209,13 +210,14 @@ public class DSALES_QuoteGexWrapperRequestTest{
         Test.stopTest();
         RestContext.request = req2;
         RestContext.response= res2;
+        System.assertNotEquals(200, res2.statusCode, 'La llamada no debe devolver un código 200');
     }
     
     @isTest 
-    static void CreateQuoteRecordTest3(){
+    static void createQuoteRecordTest3(){
         RestRequest req3 = new RestRequest();
         RestResponse res3 = new RestResponse();
-        String body3 = '{ "id_tienda": "21", "productos": [ { "sku_de_tangible": "0000", "cantidad_productos_tangibles": 1.0, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precio_tangible": "4650" } ], "apellido_materno": "Test", "apellido_paterno": "Tes", "nombre": "Test", "correo_electronico": "danigallegos@deloittemx.com", "numero_de_cliente": "90001", "id_factura": null, "id_oportunidad": null }';
+        String body3 = '{ "idTienda": "21", "productos": [ { "skuDeTangible": "0000", "cantidadProductosTangibles": 1.0, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precioTangible": "4650" } ], "apellidoMaterno": "Test", "apellidoPaterno": "Tes", "nombre": "Test", "correoElectronico": "danigallegos@deloittemx.com", "numeroCliente": "90001", "idFactura": null, "idOportunidad": null }';
         req3.requestURI = '/apexrest/insertQuoteGex';
         req3.httpMethod = 'POST';
         RestContext.request = req3;
@@ -227,13 +229,14 @@ public class DSALES_QuoteGexWrapperRequestTest{
         Test.stopTest();
         RestContext.request = req3;
         RestContext.response= res3;
+        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
     
     @isTest 
-    static void CreateQuoteRecordTest4(){
+    static void createQuoteRecordTest4(){
         RestRequest req4 = new RestRequest();
         RestResponse res4 = new RestResponse();
-        String body4 = '{ "id_tienda": "21", "productos": [ { "sku_de_tangible": "0000", "cantidad_productos_tangibles": 1.0, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precio_tangible": "4650" } ], "apellido_materno": "Test2", "apellido_paterno": "Test2", "nombre": "Test2", "correo_electronico": "test@deloittemx.com", "numero_de_cliente": "8765765875", "id_factura": null, "id_oportunidad": null }';
+        String body4 = '{ "idTienda": "21", "productos": [ { "skuDeTangible": "0000", "cantidadProductosTangibles": 1.0, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precioTangible": "4650" } ], "apellidoMaterno": "Test2", "apellidoPaterno": "Test2", "nombre": "Test2", "correoElectronico": "test@deloittemx.com", "numeroCliente": "8765765875", "idFactura": null, "idOportunidad": null }';
         req4.requestURI = '/apexrest/insertQuoteGex';
         req4.httpMethod = 'POST';
         RestContext.request = req4;
@@ -245,13 +248,14 @@ public class DSALES_QuoteGexWrapperRequestTest{
         Test.stopTest();
         RestContext.request = req4;
         RestContext.response= res4;
+        System.assertNotEquals(200, res4.statusCode, 'La llamada no debe devolver un código 200');
     }
     
     @isTest 
-    static void CreateQuoteRecordTest5(){
+    static void createQuoteRecordTest5(){
         RestRequest req5 = new RestRequest();
         RestResponse res5 = new RestResponse();
-        String body5 = '{ "id_tienda": "21", "productos": [ { "sku_de_tangible": "0000", "cantidad_productos_tangibles": 1.0, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precio_tangible": "4650" } ], "apellido_materno": "Test", "apellido_paterno": "Tes", "nombre": "Test", "correo_electronico": "danigallegos@deloittemx.com", "numero_de_cliente": "444444", "id_factura": "FAC001", "id_oportunidad": null }';
+        String body5 = '{ "idTienda": "21", "productos": [ { "skuDeTangible": "0000", "cantidadProductosTangibles": 1.0, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precioTangible": "4650" } ], "apellidoMaterno": "Test", "apellidoPaterno": "Tes", "nombre": "Test", "correoElectronico": "danigallegos@deloittemx.com", "numeroCliente": "444444", "idFactura": "FAC001", "idOportunidad": null }';
         req5.requestURI = '/apexrest/insertQuoteGex';
         req5.httpMethod = 'POST';
         RestContext.request = req5;
@@ -263,5 +267,6 @@ public class DSALES_QuoteGexWrapperRequestTest{
         Test.stopTest();
         RestContext.request = req5;
         RestContext.response= res5;
+        System.assertNotEquals(200, res5.statusCode, 'La llamada no debe devolver un código 200');
     }
 }

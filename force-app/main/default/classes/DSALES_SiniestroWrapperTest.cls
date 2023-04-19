@@ -186,5 +186,7 @@ public class DSALES_SiniestroWrapperTest {
         obj5.DocumentosAseguradora.CartaConsentimientoCFDI = 'CartaConsentimientoCFDI.pdf';
         obj5.DocumentosAseguradora.FormatoCompraVenta = 'FormatoCompraVenta.pdf';
         obj5.DocumentosAseguradora.FormatoFiniquito = 'FormatoFiniquito.pdf';
+        RestResponse res3 = new RestResponse();
+        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
 }

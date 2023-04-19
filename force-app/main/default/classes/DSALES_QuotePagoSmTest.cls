@@ -18,10 +18,10 @@ public with sharing class DSALES_QuotePagoSmTest {
         classs.Name = 'test';
         insert classs;
         
-        Product2 prodRc = new Product2(Name ='RC Seguro de Moto',DSALES_vehculo__c='sadkncdcs' ,StockKeepingUnit='0000',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro',IsActive=true);
+        Product2 prodRc = new Product2(Name ='RC',DSALES_vehculo__c='sadkncdcs' ,StockKeepingUnit='0000',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro',IsActive=true);
 		insert prodRc;
         
-        Product2 prodAmp = new Product2(Name ='AMP Seguro de Moto',DSALES_vehculo__c='23d23d23', StockKeepingUnit='123444',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40,IsActive=true);
+        Product2 prodAmp = new Product2(Name ='AMP',DSALES_vehculo__c='23d23d23', StockKeepingUnit='123444',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40,IsActive=true);
 		insert prodAmp;
         
         Product2 prodM = new Product2(Name ='Moto',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='109876',DSales_Tipo_de_Producto__c='Producto',IsActive=true);
@@ -270,8 +270,10 @@ public with sharing class DSALES_QuotePagoSmTest {
     @isTest 
     public static void ventaMotoYSeguroTest(){
         Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test2' LIMIT 1 ];
-        Plazo__c pl =[SELECT Id,Dsales_Plazo__c FROM Plazo__c  WHERE Dsales_Plazo__c='18' AND DSALES_Seguro__r.Name='AMP Seguro de Moto' LIMIT 1];
+        Plazo__c pl =[SELECT Id,Dsales_Plazo__c FROM Plazo__c  WHERE Dsales_Plazo__c='18' AND DSALES_Seguro__r.Name='AMP' LIMIT 1];
+        System.debug('plazo de partida:'+ pl);
         List<QuoteLineItem> partidas =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro'  AND DSALES_Plazo__c=:pl.Id AND quoteId=:cotizacion.Id LIMIT 1];
+        System.debug('PARTIDA CON PLAZO:'+partidas);
         QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=false AND quoteId=:cotizacion.Id LIMIT 1];
        // DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE DSALES_Seguro__c=false  AND DSALES_Oportunidad__c=:cotizacion.OpportunityId LIMIT 1];
         Account acc=[SELECT Id FROM Account WHERE FirstName = 'Daniela' LIMIT 1];
@@ -324,7 +326,7 @@ public with sharing class DSALES_QuotePagoSmTest {
     @isTest 
     public static void ventaSoloMotoTest(){
         Quote cot=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test3'  LIMIT 1];
-        //List<QuoteLineItem> partidas =[SELECT Id,DSALES_Segurogratis__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro' AND DSALES_Segurogratis__c=false AND DSALES_NombreProducto__c='AMP Seguro de Moto' AND quoteId=:cot.Id  LIMIT 1];
+        //List<QuoteLineItem> partidas =[SELECT Id,DSALES_Segurogratis__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro' AND DSALES_Segurogratis__c=false AND DSALES_NombreProducto__c='AMP' AND quoteId=:cot.Id  LIMIT 1];
         QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=false  AND quoteId=:cot.Id LIMIT 1];
         //DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE DSALES_Seguro__c=false AND DSALES_Oportunidad__c=:cot.OpportunityId LIMIT 1];
         Account acc=[SELECT Id FROM Account WHERE FirstName = 'Daniela' LIMIT 1];
