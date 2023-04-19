@@ -1,22 +1,23 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global class DSALES_SiniestroRPWrapper {
 
     global class SiniestroRPRequest{
         //Información de Siniestro
-        global String claimpayment_info{get;set;}
+        global String infoResumenPago{get;set;}
         global List<listaSiniestros> listSiniestro{get;set;}
     }
-    global class listaSiniestros{
+    global class ListaSiniestros{
         //Informacion de Resumen de pago de poliza
-        global String claimpayment_name{get;set;}
-        global Double payment_amount{get;set;}
-        global String payment_type{get;set;}
-        global Date payment_date{get;set;}
+        global String nombrePagoSiniestro{get;set;}
+        global Double cantidadPago{get;set;}
+        global String tipoPago{get;set;}
+        global Date fechaPago{get;set;}
     }
     global class SiniestroRPResponse{ 
-        global Boolean success {get;set;}
-        global String error_message {get;set;}
-        global Integer error_code {get;set;}
-        global String claimpayment_id {get;set;}
+        global Boolean exitoso {get;set;}
+        global String mensajeError {get;set;}
+        global Integer codigoError {get;set;}
+        global String idPagoSiniestro {get;set;}
     }
     
 
