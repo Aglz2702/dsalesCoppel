@@ -12,6 +12,7 @@
 global class DSALES_PaymentInfoWrapper {
 
     global class PaymentRequest{
+<<<<<<< HEAD
         global String cashier_box {get;set;} 
         global String article_description {get;set;}
         global String payment_method {get;set;}
@@ -31,6 +32,27 @@ global class DSALES_PaymentInfoWrapper {
         global String quoteid {get;set;}
         global String AccountId {get;set;}
         global List<Pago> ListadePagos{get;set;}
+=======
+        global String id_universal { get; set; }
+        global String tipo_folio { get; set; }
+        global String folio_transaccion { get; set; }
+        global Integer total_factura { get; set; }
+        global Boolean Seguro { get; set; }
+        global String nombre_vendedor { get; set; }
+        global String numero_caja { get; set; }
+        global String id_oportunidad { get; set; }
+        global String clave_tienda { get; set; }
+        global Date fecha_de_entrega { get; set; }//pdf
+        global Date fecha_venta { get; set; }
+        global String sku { get; set; }
+        global Integer plazos { get; set; }
+        global List<ListaDePago> ListaDePagos { get; set; }
+    }
+    global class ListaDePago{
+        //public Integer num_pago { get; set; }
+        global String metodo_pago { get; set; }
+        global Integer pago { get; set; }
+>>>>>>> Deuda-Tecnica
     }
 
     global class PaymentResponse{

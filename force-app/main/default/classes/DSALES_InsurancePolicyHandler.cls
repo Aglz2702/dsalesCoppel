@@ -10,15 +10,8 @@ public without sharing class DSALES_InsurancePolicyHandler extends fflib_SObject
         }
     }
 
-    public override void onAfterInsert() {
-		DSALES_UpdateInfoPago.updateInfoPagoPoliza(records);
-        
-       	
-    }
-    
     public override void onAfterUpdate(Map<Id,SObject> existingRecords){
-        DSALES_UpdateInfoPago.updateStatus(existingRecords, records);
-        DSALES_UpdateInfoPago.updatefieldOfAsset(existingRecords, records);
-       
+        System.debug('After update');
+        DSALES_UpdateInfoPago.cancelarPoliza(existingRecords, records);   
     }
 }

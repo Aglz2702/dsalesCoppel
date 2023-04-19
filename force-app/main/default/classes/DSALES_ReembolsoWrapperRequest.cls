@@ -1,63 +1,88 @@
 @RestResource(urlMapping='/insertReembolso/*')
+
 global class DSALES_ReembolsoWrapperRequest {
+    
     @HttpPost
     global static  DSALES_ReembolsoWrapper.ReembolsoResponse createReembolso()
     {
-        String id_reembolso='';
+        List< String> listaIdsReembolso = new  List<String>();
         Boolean exito=false;
-        String codigo_error='';
-        String mensaje_error='';
-        
-        
+        String codigoError='';
+        String mensajeError='';
         DSALES_ReembolsoWrapper.ReembolsoResponse responsePayload= new DSALES_ReembolsoWrapper.ReembolsoResponse();
         if(RestContext.request != null){
             String Body = System.RestContext.request.requestBody.toString();
             
             if(String.isNotBlank(Body)){
                 try{
-                    DSALES_ReembolsoWrapper.ReembolsoRequest reembolso = (DSALES_ReembolsoWrapper.ReembolsoRequest)JSON.deserialize(body, DSALES_ReembolsoWrapper.ReembolsoRequest.class);
-                    //responsePayload = insertReembolso(reembolso);
-                    DSALES_Reembolso__c reembolsoRecord = new DSALES_Reembolso__c();
+                  
+                    List<DSALES_ReembolsoWrapper.ReembolsoRequest>  reembolsosList = (List<DSALES_ReembolsoWrapper.ReembolsoRequest> )JSON.deserialize(body, List<DSALES_ReembolsoWrapper.ReembolsoRequest>.class );
+                   responsePayload =insertReembolso(reembolsosList);
+                
                    
-                    reembolsoRecord.DSALES_Comentarios__c=reembolso.comentarios;
-                    reembolsoRecord.DSALES_FechaReembolso__c=reembolso.fecha_reembolso;
-                    reembolsoRecord.DSALES_CantidadReembolsada__c=reembolso.cantidad_reembolsada;
-                    reembolsoRecord.DSALES_MetododePpago__c=reembolso.metodo_pago;
-                    reembolsoRecord.DSALES_NumerodeReferencia__c=reembolso.numero_referencia;
-                    reembolsoRecord.NombredelProducto__c=reembolso.nombre_producto;
-                    reembolsoRecord.DSALES_NumeroCancelacion__c=reembolso.numero_cancelacion;
-                    
-                    insert reembolsoRecord;
-                    
-                     id_reembolso=reembolsoRecord.Id;
-                     exito=true;
-                     codigo_error='';
-                     mensaje_error='Reembolso creado';
+
                 }
                 
                 catch(Exception.JSONException e)
                 {
                     exito = false;
-                    mensaje_error =e.GetMessage();
-                    codigo_error=String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
+                    mensajeError =DSALES_Utility.BAD_REQUEST_MSJ;
+                    codigoError =String.valueof(DSALES_Utility.BAD_REQUEST_CODE);
                     
                 }
                 catch(Exception e){
-                   exito = false;
-                  mensaje_error = e.GetMessage();
-                    codigo_error=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+                    exito = false;
+                    mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    codigoError=String.valueof(DSALES_Utility.INTERNAL_ERROR_CODE);
                     
                     
                 }
             }
         }
-        responsePayload.id_reembolso=id_reembolso;
-        responsePayload.exito=exito;
-         responsePayload.mensaje_error=mensaje_error;
-         responsePayload.codigo_error=codigo_error;
+        responsePayload.codigoError=codigoError;
+
+        
         return responsePayload;
         
     }
+    global static DSALES_ReembolsoWrapper.ReembolsoResponse insertReembolso(List<DSALES_ReembolsoWrapper.ReembolsoRequest> reembolso){
+        System.debug('Reembolso en reembolso:'+reembolso);
+        DSALES_ReembolsoWrapper.ReembolsoResponse responsePayload= new DSALES_ReembolsoWrapper.ReembolsoResponse();
+        List< DSALES_Reembolso__c> listaReembolso = new  List<DSALES_Reembolso__c>();
+        List< String> listaIdsReembolso = new  List<String>();
+        try{
+            for(DSALES_ReembolsoWrapper.ReembolsoRequest rem:reembolso){
+                DSALES_Reembolso__c reembolsoRecord = new DSALES_Reembolso__c();
+                reembolsoRecord.DSALES_Comentarios__c=rem.comentarios;
+                reembolsoRecord.DSALES_FechaReembolso__c=rem.fechaReembolso;
+                reembolsoRecord.DSALES_CantidadReembolsada__c=rem.cantidadReembolsada;
+                reembolsoRecord.DSALES_MetododePpago__c=rem.metodoPago;
+                reembolsoRecord.DSALES_NumerodeReferencia__c=rem.numeroReferencia;
+                reembolsoRecord.NombredelProducto__c=rem.nombreProducto;
+                reembolsoRecord.DSALES_NumeroCancelacion__c=rem.numeroCancelacion;
+                listaReembolso.add(reembolsoRecord);
+            }
+            List<String> reembolsoIds= new List<String>();
+            System.debug('Insertar reembolso'+listaReembolso);
+            insert listaReembolso;
+            responsePayload.exito=true;
+            responsePayload.codigoError='';
+            responsePayload.mensajeError='Reembolsos creados';
+            for(DSALES_Reembolso__c rb: listaReembolso){
+                reembolsoIds.add(rb.Id);
+            }  
+            responsePayload.idReembolsos=reembolsoIds;
+        }
+        catch(Exception e)
+        {
+          responsePayload.exito = false;
+         responsePayload.mensajeError=e.GetMessage() + ' '+ e.GetLineNumber();
+         responsePayload.codigoError=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+        }
+       
+        return responsePayload;
+    }
+    
     
     
 }
