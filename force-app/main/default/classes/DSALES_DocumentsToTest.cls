@@ -1,5 +1,5 @@
 public class DSALES_DocumentsToTest {
-	public static ContentVersion CrearDocumentos(String datos, String name ) {
+	public static ContentVersion crearDocumentos(String datos, String name ) {
         ContentVersion content = new ContentVersion();
         content.ContentLocation = 'S';
         content.ContentDocumentId = null;

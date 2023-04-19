@@ -685,6 +685,7 @@
 	<members>Tienda__c.DSALES_Optica__c</members>
 	<members>DSALES_Certificado__c.DSales_Garantia_Coppel__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_IDUniversal__c</members>
+	<members>OpportunityLineItem.DSALES_Duracion__c</members>
 	<name>CustomField</name>
 </types>
 <types>
@@ -1048,6 +1049,7 @@
 	<members>Product2-Formato para servicios y seguros</members>
 	<members>DSALES_Certificado__c-DSALES_Certificado_GEX</members>
 	<members>ClaimPaymentSummary-Formato de Resumen de pago de reclamación</members>
+	<members>OpportunityLineItem-dsalesformatopaginagex</members>
 	<name>Layout</name>
 </types>
 <types>
