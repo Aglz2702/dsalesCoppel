@@ -1,7 +1,7 @@
 @isTest
 public class DSALES_QuoteSmWrapperRequestTest {
     @testSetup
-    static void SetUp(){
+    static void setUp(){
         String tipoProducto = 'Producto';
         String message = '';
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
@@ -152,7 +152,7 @@ public class DSALES_QuoteSmWrapperRequestTest {
     }
     
     @isTest 
-    static void CreateQuoteCredito(){
+    static void createQuoteCredito(){
         
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
@@ -166,10 +166,12 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
 		Test.stopTest();
+        RestResponse res3 = new RestResponse();
+        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
     
     @isTest 
-    static void CreateQuoteCredito2(){
+    static void createQuoteCredito2(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
         String body = '{"precioProducto":"213.4","tipo_uso":"Comercial","sku":"1231212","tipo_vehiculo":"Moto","plazo_cotizar":"18","rfc":"abcd","numero_cliente":"45654","nombre":"hpero","apellido_paterno":"lopez","apellido_materno":"sepa","id_tienda":"CPPL-UGARTE","nombre_vendedor":"pedro","telefono_celular":"45454554545","correo_electronico":"ssfas@fgmaoc.com","genero_contacto":"Masculino","fecha_nacimiento":"1990-10-02","codigo_postal":"12","id_vehiculo":"slknvsaeclskvlams","opcion_pago":"Mensual","fecha_inicio":"2020-10-10"}';
@@ -184,10 +186,12 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
 		Test.stopTest();
+        RestResponse res3 = new RestResponse();
+        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
     
     @isTest 
-    static void CreateQuoteGenerico(){
+    static void createQuoteGenerico(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
         String body = '{"precioProducto":"213.4","tipo_uso":"Comercial","sku":"0000","tipo_vehiculo":"Moto","plazo_cotizar":"12","rfc":"abcd","numero_cliente":"","nombre":"DanielaD","apellido_paterno":"Galle535gos","apellido_materno":"35","id_tienda":"CPPL-UGARTE","nombre_vendedor":"pedro","telefono_celular":"45454554545","correo_electronico":"ssfas@fgmaoc.com","genero_contacto":"Masculino","fecha_nacimiento":"1990-10-02","codigo_postal":"12","id_vehiculo":"slknvsaeclskvlams","opcion_pago":"Mensual","fecha_inicio":"2020-10-10"}';
@@ -200,10 +204,12 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
 		Test.stopTest();
+        RestResponse res3 = new RestResponse();
+        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
     
     @isTest 
-    static void CreateQuoteCreditoo(){
+    static void createQuoteCreditoo(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
         String body = '{"precioProducto":"213.4","tipo_uso":"Comercial","sku":"1231212","tipo_vehiculo":"Moto","plazo_cotizar":"12","rfc":"abcd","numero_cliente":"323535324","nombre":"DanielaD","apellido_paterno":"Galle535gos","apellido_materno":"35","id_tienda":"CPPL-UGARTE","nombre_vendedor":"pedro","telefono_celular":"45454554545","correo_electronico":"ssfas@fgmaoc.com","genero_contacto":"Masculino","fecha_nacimiento":"1990-10-02","codigo_postal":"12","id_vehiculo":"slknvsaeclskvlams","opcion_pago":"Mensual","fecha_inicio":"2020-10-10"}';
@@ -216,6 +222,8 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
 		Test.stopTest();
+        RestResponse res3 = new RestResponse();
+        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
 
 }

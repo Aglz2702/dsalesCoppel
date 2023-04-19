@@ -1,7 +1,7 @@
 @isTest
-global with sharing class DSALES_ValidarClienteHelperTest {
+public with sharing class DSALES_ValidarClienteHelperTest {
     @testSetup
-    static void SetUp()
+    static void setUp()
     { 
         String pb2Id=Test.getStandardPricebookId();
         Product2 pr = new Product2(Name='Producto de Prueba',DSales_Tipo_de_Producto__c='Producto');
@@ -58,7 +58,7 @@ insert certificadoInsert;
         insert quote;
       
     }
-    @isTest static void CertificadoValor()
+    @isTest static void certificadoValor()
     {
         Quote qt = [SELECT id, OpportunityId, DSALES_Enviarcotizacion__c, Pricebook2Id, RecordTypeId, Status FROM Quote WHERE Name='Danny' LIMIT 1];
         Account acc=[SELECT CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];
@@ -79,6 +79,7 @@ insert certificadoInsert;
         // certificado.client_number=String.ValueOf(acc.CP_WalletCustomerNumber__c);
         String qtId=qt.Id;
         
+        
         Contact con = [SELECT Id FROM Contact WHERE EMAIL='johndoeus@salesforce.com' AND AccountId=:acc.Id];
         RestRequest request2=new RestRequest();
         RestResponse response2 = new RestResponse();
@@ -95,8 +96,9 @@ insert certificadoInsert;
         Test.startTest();
         DSALES_ValidarClienteHelper.deleteUnpurchasedItem(assets, certificados,qtId) ;
         Test.stopTest();
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
     }
-    @isTest static void CertificadoNull()
+    @isTest static void certificadoNull()
     {
         Quote qt = [SELECT id, OpportunityId, DSALES_Enviarcotizacion__c, Pricebook2Id, RecordTypeId, Status FROM Quote WHERE Name='Danny' LIMIT 1];
 
@@ -107,6 +109,7 @@ insert certificadoInsert;
         Test.startTest();
         DSALES_ValidarClienteHelper.deleteUnpurchasedItem(assets, certificados,qtId);
         Test.stopTest();
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
         
        
     }
@@ -123,6 +126,7 @@ insert certificadoInsert;
         test.startTest();
             DSALES_ValidarClienteHelper.actualizarCotizacion(qt.Id, ventaGEX, assets, certificados);
         test.stopTest();
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
     }
    /* @isTest static void actualQuote(){
         Account acc=[SELECT CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];

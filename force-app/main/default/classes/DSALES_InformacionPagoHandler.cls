@@ -1,19 +1,27 @@
-public class DSALES_InformacionPagoHandler {
-    public static void CambiaClienteCautivo(List<DSALES_InformacionDePago__c> actualInfoPago){
+public without sharing class DSALES_InformacionPagoHandler {
+    public static void cambiaClienteCautivo(List<DSALES_InformacionDePago__c> actualInfoPago){
+        List<DSALES_InformacionDePago__c> listaCliente=[SELECT Id,DSALES_Estatus__c,DSALES_Cliente__c,RecordType.DeveloperName FROM DSALES_InformacionDePago__c WHERE Id IN:actualInfoPago WITH SECURITY_ENFORCED];
         List<Account> clientes = new List<Account>();  
-        List<DSALES_InformacionDePago__c> listCliente=[SELECT Id,DSALES_Estatus__c,DSALES_Cliente__c,RecordType.DeveloperName FROM DSALES_InformacionDePago__c WHERE Id IN:actualInfoPago];
-        for(DSALES_InformacionDePago__c info: listCliente){
-            if(info.RecordType.DeveloperName=='DSALES_PagosdeVentaenNPVSM_c'){
-                if(info.DSALES_Estatus__c == 'Acreditado'){
-                    Account aux  = [SELECT Id, FinServ__Status__c FROM Account WHERE Id=:info.DSALES_Cliente__c];
-                    Aux.FinServ__Status__c = 'Cautivo';
-                    clientes.add(aux); 
-                    update clientes;
-                }
-               
+        Set<Id> clienteIds = new Set<Id>();
+        for(DSALES_InformacionDePago__c info: listaCliente){
+            if(info.RecordType.DeveloperName == 'DSALES_PagosdeVentaenNPVSM_c' && info.DSALES_Estatus__c == 'Acreditado'){
+                clienteIds.add(info.DSALES_Cliente__c);
             }
         }
-               
+        Map<Id, Account> clienteMap = new Map<Id, Account>([SELECT Id, FinServ__Status__c FROM Account WHERE Id IN :clienteIds WITH SECURITY_ENFORCED]);
+        for(DSALES_InformacionDePago__c info: listaCliente){
+            if(info.RecordType.DeveloperName == 'DSALES_PagosdeVentaenNPVSM_c' && info.DSALES_Estatus__c == 'Acreditado'){
+                Account aux = clienteMap.get(info.DSALES_Cliente__c);
+                if(aux != null){
+                    aux.FinServ__Status__c = 'Cautivo';
+                    clientes.add(aux); 
+                }
+            }
+        }
+        if(Account.SObjectType.getDescribe().isUpdateable()) {
+            update clientes;   
+        }else{
+            System.debug('Permisos insuficientes para actualizar');   
+        }   
     }
-
 }
