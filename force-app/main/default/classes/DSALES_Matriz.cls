@@ -6,7 +6,7 @@
  * @last modified by  : Juan Antonio Flores
  * Modifications Log 
  * Ver   Date          Author             Modification 
- * 1.0   04-18-2023                       Initial Version
+ * 1.0   04-18-2023                       Initial Version 
 **/
 public class DSALES_Matriz extends fflib_SObjectDomain{
     

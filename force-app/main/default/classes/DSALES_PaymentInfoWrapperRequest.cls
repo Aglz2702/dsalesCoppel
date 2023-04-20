@@ -1,17 +1,6 @@
-/**
- * @description       : Test class for PaymentInfoWrapperGex
- * @author            : 
- * @group             : 
- * @last modified on  : 04-18-2023
- * @last modified by  : Juan Antonio Flores
- * Modifications Log 
- * Ver   Date          Author             Modification
- * 1.0   04-18-2023                       Initial Version
-**/
-
 @RestResource(urlMapping='/insertPaymentInformationSM/*')
 global with sharing class DSALES_PaymentInfoWrapperRequest {
-
+    
     @HttpPost
     global static DSALES_PaymentInfoWrapper.PaymentResponse crearPago(){
         DSALES_PaymentInfoWrapper.PaymentResponse responsePago = new DSALES_PaymentInfoWrapper.PaymentResponse();      
@@ -36,9 +25,9 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
                 codigoError = DSALES_Utility.INTERNAL_ERROR_CODE;
             }
         }
-        responsePago.success = exito;
-        responsePago.errorMessage = mensajeError;
-        responsePago.errorCode = codigoError;
+        responsePago.exito = exito;
+        responsePago.mensajeError = mensajeError;
+        responsePago.codigoError = codigoError;
         
         
         return responsePago;
@@ -62,10 +51,10 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             nuevoPago.DSALES_Montototal__c=pago.totalFactura;
             nuevoPago.DSALES_Nombre_del_Vendedor__c=pago.nombreVendedor;
             nuevoPago.DSALES_Caja__c=pago.numeroCaja;
-            nuevoPago.DSALES_Seguro__c=pago.Seguro;
+            nuevoPago.DSALES_Seguro__c=pago.seguro;
             nuevoPago.DSALES_Plazodecomprademoto__c=pago.plazos;
-            if(pago.fechaDeEntrega!=null){
-              nuevoPago.DSALES_Fechadeentregaestimada__c=pago.fechaDeEntrega;   
+            if(pago.fechaEntrega!=null){
+              nuevoPago.DSALES_Fechadeentregaestimada__c=pago.fechaEntrega;   
             }
             nuevoPago.DSALES_Fecha__c=pago.fechaVenta;
            	nuevoPago.DSales_Tienda__c=tienda.Id;
@@ -79,10 +68,10 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             if(Schema.sObjectType.DSALES_InformacionDePago__c.isCreateable()) {
                 insert nuevoPago;
             }else{
-                System.debug('Permisos insuficientes para insertar');
+                System.debug('Permisos insuficientes para insertar'); 
             }
-            if(pago.listaDePagos!=null){
-                for(DSALES_PaymentInfoWrapper.ListaDePago part : pago.listaDePagos){
+            if(pago.ListaDePagos!=null){
+                for(DSALES_PaymentInfoWrapper.listaDePago part : pago.listaDePagos){
                     DSALES_Partidadepago__c partida = new DSALES_Partidadepago__c();
                     partida.DSALES_Informaciondepago__c=nuevoPago.Id;
                     partida.DSALES_Tipodepago__c=part.metodoPago;
@@ -104,10 +93,11 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             codigoError = DSALES_Utility.INTERNAL_ERROR_CODE;
         }
         DSALES_PaymentInfoWrapper.PaymentResponse responsePago = new  DSALES_PaymentInfoWrapper.PaymentResponse();
-        responsePago.success = exito;
-        responsePago.errorCode=codigoError;
-        responsePago.errorMessage=mensajeError;
-        responsePago.pagoId=nuevoPago.Id;   
+        responsePago.exito = exito;
+        responsePago.codigoError=codigoError;
+        responsePago.mensajeError=mensajeError;
+        responsePago.pagoId=nuevoPago.Id;
+        
         return responsePago;
     }
 }

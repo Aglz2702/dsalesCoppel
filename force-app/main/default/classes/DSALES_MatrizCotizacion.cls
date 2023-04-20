@@ -13,7 +13,7 @@ public without sharing class DSALES_MatrizCotizacion {
     public static String clonarMatriz(Id recordId){       
         List<String> listaCampo = DSALES_ClonarMatriz.getField('DSales_Matriz_GEX__c');
         String query = 'SELECT ';
-        for(Integer i = 0; i < listaCampo.size(); i++){
+        for(Integer i = 0; i < listaCampo.size(); i++){ 
             query += listaCampo[i]+',';  
         } 
         query = query.substring(0, query.length()-1);

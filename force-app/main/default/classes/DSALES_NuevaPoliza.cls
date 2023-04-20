@@ -100,7 +100,7 @@ public with sharing class DSALES_NuevaPoliza {
     }
 
 
-    public static String obtenerCampos(InsurancePolicy obj){
+    public static String obtenerCampos(InsurancePolicy obj){ 
         Account cli=new Account();
         if(Account.SObjectType.getDescribe().isAccessible()) {
             cli =[SELECT Id, FirstName,LastName,Suffix,Fecha_de_Nacimiento__c FROM Account WHERE Id=:obj.NameInsuredId];

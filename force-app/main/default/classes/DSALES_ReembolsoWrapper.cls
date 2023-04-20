@@ -5,9 +5,10 @@
  * @last modified on  : 04-18-2023
  * @last modified by  : Juan Antonio Flores
  * Modifications Log 
- * Ver   Date          Author             Modification
+ * Ver   Date          Author             Modification 
  * 1.0   04-18-2023                       Initial Version
 **/
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global class DSALES_ReembolsoWrapper {
 
     global class ReembolsoRequest {
@@ -32,5 +33,4 @@ global class DSALES_ReembolsoWrapper {
         global String codigoError {get;set;}
         global String mensajeError {get;set;}    
     }
-
 }
