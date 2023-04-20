@@ -17,7 +17,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             if(String.isNotBlank(Body)){
                 try{
                     DSALES_IPAssetWrapper.IPAssetRequest policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
-                  	DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_IDUniversal__c,	DSALES_Oportunidad__c,DSALES_Motoentregada__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.id_universal];
+                  	DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_IDUniversal__c,	DSALES_Oportunidad__c,DSALES_Motoentregada__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal];
 					pago.DSALES_Motoentregada__c=true;	
                     for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
                                           FROM OpportunityLineItem WHERE OpportunityId=:pago.DSALES_Oportunidad__c AND Product2.DSales_Tipo_de_Producto__c=:'Seguro']){
@@ -26,16 +26,16 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                        }                                             
                     }
                     
-                    if(policyAsset.numero_serie!=''){
+                    if(policyAsset.numeroSerie!=''){
                         InsurancePolicyAsset activo= insertIPAsset(policyAsset);
                         if(pago.DSALES_Poliza__c!=null){
-                            if(policyAsset.emitir_poliza==true && emitirPoliza==true){
+                            if(policyAsset.emitirPoliza==true && emitirPoliza==true){
                                 if(pago.DSALES_Poliza__r.PolicyName!= DSALES_Utility.SEGURO_PREDETERMINADO){
                                     if( activo!=null){
                                         Insurancepolicy poliza=DSALES_NuevaPoliza.invokeService(activo);  
                                         success=true;
                                         seguro.poliza=poliza.Name;
-                                        seguro.url_pdf_poliza= poliza.DSALES_PDF_poliza__c;
+                                        seguro.urlPdfPoliza= poliza.DSALES_PDF_poliza__c;
                                         System.debug('SEGURO:'+seguro);  
                                         System.debug('POLIZA DESPUES DE EMITIR:'+poliza); 
                                         idActivo=poliza.DSALES_Activodeplizadeseguro__c;
@@ -73,12 +73,12 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
 						
                         
                         String idOportunidad=pago.DSALES_Oportunidad__c;
-                        List<DSALES_VentaSMRest.OpportunityLineItemProduct> productosSincronisados=DSALES_VentaSMRest.getOpportunityLineItemProducts(idOportunidad);
-                        for(DSALES_VentaSMRest.OpportunityLineItemProduct listSin:productosSincronisados){
+                        List<DSALES_VentaSMRest.WrapperDatosProductos> productosSincronisados=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(idOportunidad);
+                        for(DSALES_VentaSMRest.WrapperDatosProductos listSin:productosSincronisados){
                             DSALES_IPAssetWrapper.ListaPartidasOportunidad listp= new  DSALES_IPAssetWrapper.ListaPartidasOportunidad ();
-                            listp.id_partida_de_oportunidad=listSin.oliId;
-                            listp.nombre_producto=listSin.productName;
-                            listp.sku=listSin.productSku;
+                            listp.idPartidaDeOportunidad=listSin.oliId;
+                            listp.nombreProducto=listSin.nombreProducto;
+                            listp.sku=listSin.sku;
                             listaPartidas.add(listp);
                         }
                         success=true;
@@ -87,15 +87,15 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 }catch(Exception.JSONException e)
                 {
                     policyAssetRes.success = false;
-                    policyAssetRes.mensaje_error = DSALES_Utility.BAD_REQUEST_MSJ;
-                    policyAssetRes.codigo_error=DSALES_Utility.BAD_REQUEST_CODE;
+                    policyAssetRes.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ;
+                    policyAssetRes.codigoError=DSALES_Utility.BAD_REQUEST_CODE;
                     
                 }
                 catch(Exception e){
                     System.debug('**ERROR**'+e.getLineNumber()+ ': '+e.getMessage());
                     policyAssetRes.success = false;
-                    policyAssetRes.mensaje_error = DSALES_Utility.INTERNAL_ERROR_MSJ;
-                    policyAssetRes.codigo_error=DSALES_Utility.INTERNAL_ERROR_CODE;
+                    policyAssetRes.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    policyAssetRes.codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;
                     
                     
                 }
@@ -119,27 +119,27 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
 
         InsurancePolicyAsset IPassetRecord  = new InsurancePolicyAsset();
         try {
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c,DSALES_Nombre_del_Vendedor__c,DSALES_Motoentregada__c, DSALES_Motoexterna__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.id_universal LIMIT 1];
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c,DSALES_Nombre_del_Vendedor__c,DSALES_Motoentregada__c, DSALES_Motoexterna__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal LIMIT 1];
             if(pago.DSALES_Seguro__c ==true ) {
                 IPassetRecord.DSALES_InformacionPago__c=pago.Id;
                 IPassetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
-                IPassetRecord.DSALES_Tienda__c=policyAsset.id_tienda;
+                IPassetRecord.DSALES_Tienda__c=policyAsset.idTienda;
                 IPassetRecord.DSALES_Colaborador__c=pago.DSALES_Nombre_del_Vendedor__c;
-                IPassetRecord.DSALES_Motoexterna__c=policyAsset.bajo_demanda; 
-                IPassetRecord.DSALES_Valorfactura__c=policyAsset.valor_factura;
+                IPassetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
+                IPassetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
                 IPassetRecord.InsurancePolicyId=pago.DSALES_Poliza__c;
                 IPassetRecord.Estatus__c='Activo';
-                IPassetRecord.DSALES_Clavevehicular__c=policyAsset.clave_vehicular;
+                IPassetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
                 IPassetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
                 IPassetRecord.DSALES_Modelo__c=policyAsset.modelo;
                 IPassetRecord.DSALES_Marca__c=policyAsset.marca;
-                IPassetRecord.DSALES_Numeromotor__c=policyAsset.numero_motor;
-                IPassetRecord.DSALES_Numeroserie__c=policyAsset.numero_serie;
+                IPassetRecord.DSALES_Numeromotor__c=policyAsset.numeroMotor;
+                IPassetRecord.DSALES_Numeroserie__c=policyAsset.numeroSerie;
                 IPassetRecord.DSALES_Placas__c=policyAsset.placas;
                 IPassetRecord.DSALES_Servicio__c=policyAsset.servicio;
                 IPassetRecord.DSALES_Uso__c  =policyAsset.uso;
-                IPassetRecord.AssetName=policyAsset.nombre_activo;
-                IPassetRecord.DSALES_emitir_poliza__c=policyAsset.emitir_poliza;            
+                IPassetRecord.AssetName=policyAsset.nombreActivo;
+                IPassetRecord.DSALES_emitir_poliza__c=policyAsset.emitirPoliza;            
                 success = true; 
               
             }
@@ -148,23 +148,23 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 System.debug('poliza domi'+poliza);
                 IPassetRecord.DSALES_InformacionPago__c=pago.Id;
                 IPassetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
-                IPassetRecord.DSALES_Tienda__c=policyAsset.id_tienda;
+                IPassetRecord.DSALES_Tienda__c=policyAsset.idTienda;
                 IPassetRecord.DSALES_Colaborador__c=pago.DSALES_Nombre_del_Vendedor__c;
-                IPassetRecord.DSALES_Motoexterna__c=policyAsset.bajo_demanda; 
-                IPassetRecord.DSALES_Valorfactura__c=policyAsset.valor_factura;
+                IPassetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
+                IPassetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
                 IPassetRecord.InsurancePolicyId= poliza.Id;
                 IPassetRecord.Estatus__c='Activo';
-                IPassetRecord.DSALES_Clavevehicular__c=policyAsset.clave_vehicular;
+                IPassetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
                 IPassetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
                 IPassetRecord.DSALES_Modelo__c=policyAsset.modelo;
                 IPassetRecord.DSALES_Marca__c=policyAsset.marca;
-                IPassetRecord.DSALES_Numeromotor__c=policyAsset.numero_motor;
-                IPassetRecord.DSALES_Numeroserie__c=policyAsset.numero_serie;
+                IPassetRecord.DSALES_Numeromotor__c=policyAsset.numeroMotor;
+                IPassetRecord.DSALES_Numeroserie__c=policyAsset.numeroSerie;
                 IPassetRecord.DSALES_Placas__c=policyAsset.placas;
                 IPassetRecord.DSALES_Servicio__c=policyAsset.servicio;
                 IPassetRecord.DSALES_Uso__c  =policyAsset.uso;
-                IPassetRecord.AssetName=policyAsset.nombre_activo;
-                IPassetRecord.DSALES_emitir_poliza__c=policyAsset.emitir_poliza;            
+                IPassetRecord.AssetName=policyAsset.nombreActivo;
+                IPassetRecord.DSALES_emitir_poliza__c=policyAsset.emitirPoliza;            
                 success = true; 
               
             }

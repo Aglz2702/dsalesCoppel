@@ -32,13 +32,11 @@ public class DSALES_SiniestroWrapperTest {
         obj.salesforceid = 'prueba';
 
         DSALES_SiniestroWrapper.siniestroPostResponse obj2= new DSALES_SiniestroWrapper.siniestroPostResponse();
-        obj2.ok = 'prueba';
-        obj2.response = 'prueba';
-        obj2.msg = 'prueba';
-        obj2.ok = 'prueba';
-        obj2.siniestro = new DSALES_SiniestroWrapper.siniestro();
-        obj2.siniestro.uid = 'prueba';
-        obj2.siniestro.NumeroSiniestro = 'prueba';
+        obj2.success = true;
+        obj2.mensaje = 'prueba';
+        obj2.codigoError = 0;
+        obj2.idSiniestro = 'prueba';
+
  
         DSALES_SiniestroWrapper.SiniestroPut obj3= new DSALES_SiniestroWrapper.SiniestroPut();
         obj3.uid = 'prueba'; 
@@ -68,7 +66,6 @@ public class DSALES_SiniestroWrapperTest {
         obj3.Estado = 'prueba';
         obj3.Estatus = 'Nuevo';
         obj3.salesforceid = 'prueba';
-        obj3.DocumentosVehiculo = new DSALES_SiniestroWrapper.documentosVehiculo();
         
         
         DSALES_SiniestroWrapper.SiniestroGet obj4= new DSALES_SiniestroWrapper.SiniestroGet();
@@ -99,34 +96,11 @@ public class DSALES_SiniestroWrapperTest {
         obj4.Estado = 'prueba';
         obj4.Estatus = 'Nuevo';
         obj4.salesforceid = 'prueba';
-        obj4.DocumentosVehiculo = new DSALES_SiniestroWrapper.documentosVehiculo();
-        obj4.DocumentosVehiculo.Factura = 'Factura.pdf';
-        obj4.DocumentosVehiculo.ContanciaBajaPlacas =  'ContanciaBajaPlacas.pdf';
-        obj4.DocumentosVehiculo.ComprobantesTenencia = new list<DSALES_SiniestroWrapper.comprobantesTenencia>();
         DSALES_SiniestroWrapper.comprobantesTenencia gg =new  DSALES_SiniestroWrapper.comprobantesTenencia();
-        gg.Descripcion ='dfd';
-        gg.IdComprobante ='f';
-        gg.Comprobante='vb';
+        gg.descripcion ='dfd';
+        gg.idComprobante ='f';
+        gg.comprobante='vb';
     
-        obj4.DocumentosVehiculo.CarpetaMP ='CarpetaMP.pdf';
-        obj4.DocumentosVehiculo.AcreditacionMP = 'AcreditacionMP.pdf';
-        obj4.DocumentosVehiculo.OficioLiberacionRobo = 'OficioLiberacionRobo.pdf';
-
-        obj4.DocumentosAsegurado = new DSALES_SiniestroWrapper.documentosAsegurado();
-        obj4.DocumentosAsegurado.IdentificacionFrontal = 'IdentificacionFrontal.pdf';
-        obj4.DocumentosAsegurado.IdentificacionReverso ='IdentificacionReverso.pdf';
-        obj4.DocumentosAsegurado.ComprobanteDomicilio ='ComprobanteDomicilio.pdf';
-        obj4.DocumentosAsegurado.CURP = 'CURP.pdf';
-        obj4.DocumentosAsegurado.EncabezadoCuentaBancaria = 'EncabezadoCuentaBancaria.pdf';
-        obj4.DocumentosAsegurado.PoderNotarial = 'PoderNotarial.pdf';
-        obj4.DocumentosAsegurado.EncabezadoCuentaBancaria = 'EncabezadoCuentaBancaria.pdf';
-        obj4.DocumentosAsegurado.ConstanciaSituacionFiscal = 'ConstanciaSituacionFiscal.pdf';
-
-        obj4.DocumentosAseguradora = new DSALES_SiniestroWrapper.documentosAseguradora();
-        obj4.DocumentosAseguradora.CartaConsentimientoCFDI = 'CartaConsentimientoCFDI.pdf';
-        obj4.DocumentosAseguradora.FormatoCompraVenta = 'FormatoCompraVenta.pdf';
-        obj4.DocumentosAseguradora.FormatoFiniquito = 'FormatoFiniquito.pdf';
-        
         //____
         DSALES_SiniestroWrapper.SiniestroPut obj5= new DSALES_SiniestroWrapper.SiniestroPut();
         obj5.uid = 'prueba'; 
@@ -156,36 +130,6 @@ public class DSALES_SiniestroWrapperTest {
         obj5.Estado = 'prueba';
         obj5.Estatus = 'Nuevo';
         obj5.salesforceid = 'prueba';
-        
-        obj5.DocumentosVehiculo = new DSALES_SiniestroWrapper.documentosVehiculo();
-        obj5.DocumentosVehiculo.Factura = 'Factura.pdf';
-        obj5.DocumentosVehiculo.ContanciaBajaPlacas =  'ContanciaBajaPlacas.pdf';
-        obj5.DocumentosVehiculo.ComprobantesTenencia = new list<DSALES_SiniestroWrapper.comprobantesTenencia>();
-        DSALES_SiniestroWrapper.comprobantesTenencia gh =new  DSALES_SiniestroWrapper.comprobantesTenencia();
-        gh.Descripcion ='dfd';
-        gh.Comprobante ='f';
-        gh.IdComprobante='vb';
-        obj5.DocumentosVehiculo.ComprobantesTenencia.add(gh);
- 
-    
-        obj5.DocumentosVehiculo.CarpetaMP ='CarpetaMP.pdf';
-        obj5.DocumentosVehiculo.AcreditacionMP = 'AcreditacionMP.pdf';
-        obj5.DocumentosVehiculo.OficioLiberacionRobo = 'OficioLiberacionRobo.pdf';
-
-        obj5.DocumentosAsegurado = new DSALES_SiniestroWrapper.documentosAsegurado();
-        obj5.DocumentosAsegurado.IdentificacionFrontal = 'IdentificacionFrontal.pdf';
-        obj5.DocumentosAsegurado.IdentificacionReverso ='IdentificacionReverso.pdf';
-        obj5.DocumentosAsegurado.ComprobanteDomicilio ='ComprobanteDomicilio.pdf';
-        obj5.DocumentosAsegurado.CURP = 'CURP.pdf';
-        obj5.DocumentosAsegurado.EncabezadoCuentaBancaria = 'EncabezadoCuentaBancaria.pdf';
-        obj5.DocumentosAsegurado.PoderNotarial = 'PoderNotarial.pdf';
-        obj5.DocumentosAsegurado.EncabezadoCuentaBancaria = 'EncabezadoCuentaBancaria.pdf';
-        obj5.DocumentosAsegurado.ConstanciaSituacionFiscal = 'ConstanciaSituacionFiscal.pdf';
-
-        obj5.DocumentosAseguradora = new DSALES_SiniestroWrapper.documentosAseguradora();
-        obj5.DocumentosAseguradora.CartaConsentimientoCFDI = 'CartaConsentimientoCFDI.pdf';
-        obj5.DocumentosAseguradora.FormatoCompraVenta = 'FormatoCompraVenta.pdf';
-        obj5.DocumentosAseguradora.FormatoFiniquito = 'FormatoFiniquito.pdf';
         RestResponse res3 = new RestResponse();
         System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
