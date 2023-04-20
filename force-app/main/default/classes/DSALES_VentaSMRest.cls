@@ -19,21 +19,21 @@ global without sharing class DSALES_VentaSMRest {
         DSALES_VentaSM.IdsARetornar idsLista = new DSALES_VentaSM.IdsARetornar();
         if(RestContext.request != null){
             String body = System.RestContext.request.requestBody.toString();
-                if(String.isNotBlank(Body)){
+                if(String.isNotBlank(body)){
                     try{
                         DSALES_VentaSM.VentaSMRequest venta = (DSALES_VentaSM.VentaSMRequest)JSON.deserialize(body, DSALES_VentaSM.VentaSMRequest.class);
                         DSALES_AccountWrapper.AccountResponse cliente = DSALES_AccountWrapperRequest.upsertAccount(venta.cliente);
-                       // sincronizarOportunidad(venta.idCotizacion, cliente.idCuenta);
+                        sincronizarOportunidad(venta.idCotizacion, cliente.idCuenta);
                         idCliente=cliente.idCuenta;
-                        idUniversal=venta.pagos.id_universal;
+                        idUniversal=venta.pagos.idUniversal;
                         Quote cotizacion=[SELECT  Id,OpportunityId FROM Quote WHERE Id=:venta.idCotizacion WITH SECURITY_ENFORCED];
                         Opportunity oppor=[SELECT Id,StageName,SyncedQuoteId FROM Opportunity WHERE Id=:cotizacion.OpportunityId WITH SECURITY_ENFORCED ];
-                        venta.pagos.id_oportunidad=oppor.Id;
+                        venta.pagos.idOportunidad=oppor.Id;
                         List<String> partidasSeleccionadas= venta.idPartidaPresupuesto;
                         DSALES_PaymentInfoWrapper.PaymentResponse resp= DSALES_PaymentInfoWrapperRequest.insertarPago(venta.pagos);
                         pago=[SELECT Id,DSALES_Factura__c,DSALES_Oportunidad__c,DSALES_Plazodecomprademoto__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName,DSALES_Seguro__c,DSALES_SKU__c  
                                                 FROM DSALES_InformacionDePago__c 
-                                                WHERE Id=:resp.pago_id WITH SECURITY_ENFORCED];
+                                                WHERE Id=:resp.pagoId WITH SECURITY_ENFORCED];
                         idPago=pago.Id;
                         idsLista=procesoVenta(pago,partidasSeleccionadas,venta.activo);
                         
@@ -73,7 +73,7 @@ global without sharing class DSALES_VentaSMRest {
         Insurancepolicy poliza= new Insurancepolicy();
         DSALES_VentaSM.IdsARetornar listaIds = new DSALES_VentaSM.IdsARetornar();
         if(pago!=null){
-            DSALES_QuotePagoSM.cotizacionesNuevas(pago.Id,partidasSeleccionadas,pago.DSALES_SKU__c);
+            //DSALES_QuotePagoSM.cotizacionesNuevas(pago.Id,partidasSeleccionadas,pago.DSALES_SKU__c);
             List<WrapperDatosProductos> productosSincronisados= obtenerProductosEnPartidasOportunidad(pago.DSALES_Oportunidad__c);
             for(WrapperDatosProductos listSin:productosSincronisados){
                 DSALES_VentaSM.ListaPartidasOportunidad listaPartidaOportunidad= new DSALES_VentaSM.ListaPartidasOportunidad();
@@ -92,18 +92,25 @@ global without sharing class DSALES_VentaSMRest {
     private static String crearActivo(DSALES_InformacionDePago__c pago, DSALES_IPAssetWrapper.IPAssetRequest datosActivo, Insurancepolicy poliza){
         String idActivo ='';
         InsurancePolicyAsset activo = new InsurancePolicyAsset();
-        if(String.isNotEmpty(datosActivo.numero_serie)){
+        if(String.isNotEmpty(datosActivo.numeroSerie)){
             activo= DSALES_IPAssetWrapperRequest.insertIPAsset(datosActivo,pago.Id);
             idActivo=activo.Id;
             poliza.DSALES_Activodeplizadeseguro__c=activo.Id;
             poliza=DSALES_CreateInsurancePolicy.agregarDatosDeActivo(activo,poliza.Id);
             if(pago.DSALES_Poliza__c!=null && pago.DSALES_Poliza__r.PolicyName!= DSALES_Utility.SEGURO_PREDETERMINADO){
-                if( activo!=null && datosActivo.emitir_poliza==true){
-                    emitirPoliza(activo.Id);  
-                }
+                condicionesParaEmitir(activo,datosActivo.emitirPoliza);
             }
+            
         }
         return idActivo;
+    }
+
+    private static void  condicionesParaEmitir(InsurancePolicyAsset activo, Boolean emitir){
+        if( activo!=null){
+            if(emitir==true){
+                emitirPoliza(activo.Id);
+            }       
+        }
     }
     private static void crearPrePoliza(DSALES_InformacionDePago__c pago, Insurancepolicy poliza){
         if(pago.DSALES_Seguro__c==true && pago.DSALES_Poliza__c==null){
@@ -129,7 +136,7 @@ global without sharing class DSALES_VentaSMRest {
         return true; 
     }
 
-    private static List<WrapperDatosProductos> obtenerProductosEnPartidasOportunidad(Id opportunityId) {
+    public static List<WrapperDatosProductos> obtenerProductosEnPartidasOportunidad(Id opportunityId) {
         List<WrapperDatosProductos> listaWrapperProducto = new List<WrapperDatosProductos>();
         List<OpportunityLineItem> oliLista = [SELECT Id, Product2Id FROM OpportunityLineItem WHERE OpportunityId = :opportunityId WITH SECURITY_ENFORCED];
         List<Id> listaIdsProducto = new List<Id>();
