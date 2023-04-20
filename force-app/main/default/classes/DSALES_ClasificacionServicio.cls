@@ -62,7 +62,7 @@ public without sharing class DSALES_ClasificacionServicio {
         }
         query += '  and DSales_Tipo_de_Producto__c= :producto';
         query += ' order by DSales_Servicio__c asc';
-        objeto.listServicios = consultarProductos(DataBase.query(query));
+        objeto.listServicios = consultarProductos(DataBase.query(String.escapeSingleQuotes(query)));
         System.debug('Query: '+query);
         return objeto;
     }
@@ -79,7 +79,7 @@ public without sharing class DSALES_ClasificacionServicio {
         query += 'from Product2 Where StockKeepingUnit LIKE \''+ sku + '%\' OR Name LIKE \'' + sku + '%\' ';
         query += ' order by DSales_Servicio__c asc';
         System.debug('Query: '+query);
-        return consultarProductos(DataBase.query(query));
+        return consultarProductos(DataBase.query(String.escapeSingleQuotes(query)));
     }
 
     @AuraEnabled
@@ -522,7 +522,7 @@ public without sharing class DSALES_ClasificacionServicio {
         List<String> categoriasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/categorias');
+        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT));
         request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
         request.setMethod('GET');
         HttpResponse response = https.send(request);
@@ -559,7 +559,7 @@ public without sharing class DSALES_ClasificacionServicio {
         List<String> subcategoriasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/categorias/'+valueCategoria+'/subcategorias');
+        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias');
         request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
         request.setMethod('GET');
         HttpResponse response = https.send(request);
@@ -595,7 +595,7 @@ public without sharing class DSALES_ClasificacionServicio {
         List<String> clasesIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/categorias/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase');
+        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase');
         request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
         request.setMethod('GET');
         HttpResponse response = https.send(request);
@@ -631,7 +631,7 @@ public without sharing class DSALES_ClasificacionServicio {
         List<String> familiasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/categorias/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClases+'/familias');
+        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClases+'/familias');
         request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
         request.setMethod('GET');
         HttpResponse response = https.send(request);

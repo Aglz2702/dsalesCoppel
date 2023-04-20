@@ -2,7 +2,7 @@ public class DSALES_GexCotizacionesHelper {
     //SG Template
     private static final String TEMPLETE_NAME = 'Envi_de_cotizaci_n_1660589806562';
     //GEX
-    private static final String GEX_Template = 'DSALES_Cotizacion';             // Namrata added
+    private static final String GEX_TEMPLATE = 'DSALES_Cotizacion';             // Namrata added
     
     
     private static final String DIRECCION_CORREO = 'atencion@coppel.com';  
@@ -14,23 +14,27 @@ public class DSALES_GexCotizacionesHelper {
             List<Quote> sObjectList = (List<Quote>) JSON.deserialize(jsonString, List<Quote>.class);
             Map<Id,Quote> mapQuote= (Map<Id,Quote>) JSON.deserialize(quoteOld, Map<Id,Quote>.class);
             Map<String, Account> mapAccount = new Map<String, Account>();
-            
+            EmailTemplate templete= new EmailTemplate();
+            EmailTemplate templeteGEX= new EmailTemplate();
+            OrgWideEmailAddress owa = new OrgWideEmailAddress();
             for(Quote item: sObjectList){
-                mapAccount.put(item.AccountId, new Account());
-                
-                
-                
+                mapAccount.put(item.AccountId, new Account());  
             }
-            for(Account item: [Select Id,Name,PersonContactId, PersonEmail from Account where Id in : mapAccount.keySet()]){
-                mapAccount.put(item.Id, item);
+            if (Schema.sObjectType.Account.isQueryable()) {
+                for(Account item: [Select Id,Name,PersonContactId, PersonEmail from Account where Id in : mapAccount.keySet()]){
+                    mapAccount.put(item.Id, item);
+                }
             }
-            EmailTemplate templete = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :TEMPLETE_NAME];
-            system.debug('Template name------->' +templete.DeveloperName);
-            EmailTemplate templeteGEX = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :GEX_Template];     // Namrata added
-            system.debug('Template name------->'  +templeteGEX.DeveloperName);
-            OrgWideEmailAddress owa = [Select Id,Address From OrgWideEmailAddress Where Address = :DIRECCION_CORREO LIMIT 1];
-            
-            List<Messaging.SingleEmailMessage> MessageList = new List<Messaging.SingleEmailMessage>();
+            if (Schema.sObjectType.EmailTemplate.isQueryable()) {
+                templete = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :TEMPLETE_NAME];
+                system.debug('Template name------->' +templete.DeveloperName);
+                templeteGEX = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :GEX_TEMPLATE];     // Namrata added
+                system.debug('Template name------->'  +templeteGEX.DeveloperName);
+            }
+            if (Schema.sObjectType.OrgWideEmailAddress.isQueryable()) {
+                owa = [Select Id,Address From OrgWideEmailAddress Where Address = :DIRECCION_CORREO LIMIT 1];
+            }
+            List<Messaging.SingleEmailMessage> messageList = new List<Messaging.SingleEmailMessage>();
             
             for(Quote item: sObjectList){
                 system.debug('Id: del Coti: '+item.Id);
@@ -46,7 +50,8 @@ public class DSALES_GexCotizacionesHelper {
                     mail.setToAddresses(new string[] {correo});
                     system.debug('Email: '+correo);
                     //  Namrata changes start
-                    RECORDTYPE motos= [SELECT Id, Name FROM RECORDTYPE WHERE Id=:item.RecordTypeId ];
+                        RECORDTYPE motos= [SELECT Id, Name FROM RECORDTYPE WHERE Id=:item.RecordTypeId ];
+                    
                     if(motos.Name=='Venta de Seguro de Motos'){          
                         mail.setHtmlBody(templete.HtmlValue);
                         mail.setSubject(templete.Subject);
@@ -66,15 +71,17 @@ public class DSALES_GexCotizacionesHelper {
                     efa.setFileName('Cotización.pdf');
                     efa.setBody(b);
                     mail.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
-                    MessageList.add(mail); 
+                    messageList.add(mail); 
                 }
                 else
                 {
                     system.debug('NO Entró');
                 }
             }
-            if(MessageList.Size()!=0)
-                Messaging.sendEmail(MessageList, false);
+            if(messageList.Size()!=0)
+            {
+                Messaging.sendEmail(messageList, false);
+            }
             System.debug('Correo enviado');
             
         
@@ -87,14 +94,22 @@ public class DSALES_GexCotizacionesHelper {
         PageReference pdf = Page.Cotizacion; 
         pdf.setRedirect(False);
         pdf.getParameters().put('quoteID',quoteId);
-         List<Quote> dupQuote = [SELECT Id, Name,OpportunityId, DSALES_EmailNew__c, Pricebook2Id, RecordTypeId, Status, DSALES_Enviarcotizacion__c, DSales_Tienda__c, DSales_Vendedor__c,
+        if (Schema.sObjectType.Quote.isQueryable()&&Schema.sObjectType.Quote.isDeletable()) {
+            List<Quote> dupQuote = [SELECT Id, Name,OpportunityId, DSALES_EmailNew__c, Pricebook2Id, RecordTypeId, Status, DSALES_Enviarcotizacion__c, DSales_Tienda__c, DSales_Vendedor__c,
                                DSALES_Fechadecreacionpresupuesto__c, ExpirationDate, DSALES_esClon__c FROM Quote where DSALES_esClon__c= true]; 
             delete dupQuote;
+        }
+         
         Blob b; 
         if(!test.isRunningTest())
+        {
             b = pdf.getContent();
+        }  
         else
+        {
             b = blob.valueOF('Test');
+        }
+           
         return b;
     }
     
