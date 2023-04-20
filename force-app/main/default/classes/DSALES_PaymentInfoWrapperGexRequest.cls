@@ -1,33 +1,37 @@
 /**
- * @description       : 
+ * @description       : Test class for PaymentInfoWrapperGex
  * @author            : 
- * @group             : 
+ * @group             :  
  * @last modified on  : 04-18-2023
  * @last modified by  : Juan Antonio Flores
  * Modifications Log 
  * Ver   Date          Author             Modification
- * 1.0   04-18-2023                       Initial Version
-**/
+ * 1.0   04-18-2023                       Initial Version 
+**/ 
 @RestResource(urlMapping='/insertPaymentInformationGEX/*')
-global with sharing class DSALES_PaymentInfoWrapperGexRequest {  
-
+global with sharing class DSALES_PaymentInfoWrapperGexRequest {
+    
+   
     @HttpPost
     global static DSALES_PaymentInfoWrapperGEX.PaymentGEXResponse createPayment(){
         DSALES_PaymentInfoWrapperGEX.PaymentGEXResponse responsePayload = new DSALES_PaymentInfoWrapperGEX.PaymentGEXResponse();
         if(RestContext.request != null){
-            String body = System.RestContext.request.requestBody.toString();      
+            String body = System.RestContext.request.requestBody.toString();
+            
             if(String.isNotBlank(body)){
                 try{
                     DSALES_PaymentInfoWrapperGEX.PaymentGEXRequest pago = (DSALES_PaymentInfoWrapperGEX.PaymentGEXRequest)JSON.deserialize(body, DSALES_PaymentInfoWrapperGEX.PaymentGEXRequest.class);
                     responsePayload = insertPaymentGex(pago);
                 }catch(JSONException e){
-                    responsePayload.success = false;
-                    responsePayload.error_code = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
-                    responsePayload.error_message = DSALES_Utility.BAD_REQUEST_MSJ;
+                    responsePayload.exito = false;
+                    responsePayload.codigoError = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
+                    responsePayload.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ;
                 }catch(Exception e){
-                    responsePayload.success = false;
-                    responsePayload.error_code = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
-                    responsePayload.error_message = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    responsePayload.exito = false;
+                    responsePayload.codigoError = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+
+                    responsePayload.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                  
                 }
             }
         }
@@ -39,55 +43,72 @@ global with sharing class DSALES_PaymentInfoWrapperGexRequest {
         String message = '';
         String code = '';
         DSALES_InformacionDePago__c info = new DSALES_InformacionDePago__c();
+       
+        List<DSALES_Partidadepago__c> partidaPagolst = new List<DSALES_Partidadepago__c>();
                 try{
-                    String recordTypeId = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByName().get('Pagos de Venta en NPV de GEX').getRecordTypeId();
+                    system.debug('pagoss:  '+payment.PartidasDePago);
+                    String recordTypeId = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByName().get('Pagos de venta de servicios').getRecordTypeId();
+                    List<Tienda__c> idTienda = new List<Tienda__c>();
+                    List<Opportunity> cliente = new List<Opportunity>();
+                    if(Opportunity.SObjectType.getDescribe().isAccessible() && Tienda__c.SObjectType.getDescribe().isAccessible()){
+                        idTienda = [SELECT id FROM Tienda__c WHERE DSales_TiendaID__c =:payment.claveTienda LIMIT 1];
+                        cliente = [SELECT id,AccountId,Account.Name,Account.BillingStreet,Account.BillingCity,Account.BillingState,Account.BillingCountry,Account.BillingPostalCode,Account.AccountNumber,Account.PersonMobilePhone FROM Opportunity WHERE Id=:payment.opportunityId LIMIT 1];
+                    }
+                    system.debug('pagoss 222:  '+payment.PartidasDePago);
                     info.RecordTypeId = recordTypeId;
-                    info.DSALES_Clave_Tienda__c = payment.store_key;
-                    info.DSales_Tienda__c = payment.Store_id;
-                    info.DSALES_TipoCompra__c = payment.product_type;
-                    info.DSALES_Estatus__c = payment.status;
-                    info.DSALES_Factura__c = payment.bill;
-                    info.DSALES_Caja__c = payment.cashier_box;
-                    info.DSALES_Vendedor__c = payment.vendor_id;
-                    info.DSALES_Nombre_del_Vendedor__c = payment.vendor_name;
-                    info.DSALES_ExpEn__c = payment.exp_en;
-                    info.DSALES_Cliente__c = payment.client_id;
-                    info.DSALES_DireccionCliente__c =  payment.customer_adress;
-                    info.DSALES_No_de_cliente__c = payment.customer_number;
-                    info.DSALES_TelefonoCliente__c = payment.telephone;
-                    info.DSALES_Celular_del_Cliente__c = payment.movilPhone;
-                    info.DSALES_ProductoAdquirido__c = payment.asset_id;
-                    info.DSALES_Precio__c = payment.price;
-                    info.DSALES_TotalContado__c = payment.cash_total;
-                    info.DSALES_CreditoIVA__c = payment.credit_VAT;
-                    info.DSALES_Saldodineroelec__c = payment.electronic_money;
-                    info.DSALES_dineroelectronico__c = payment.paymentElectronic_money;
-                    info.DSALES_Pagoefectivo__c = payment.cash_payment;
-                    info.DSALES_Cambio__c =  payment.change;
-                    info.DSALES_Ganodineroelec__c = payment.wonElectronic_money;
-                    info.DSALES_GEXPagada__c = payment.GEX_paid;
-                    info.DSALES_Certificado__c = payment.certified_id;
-                    info.DSALES_Oportunidad__c = payment.opportunity_id;
-                    info.DSALES_PrecioSinIVA__c = payment.price_noVAT;
-                    info.DSALES_PrecioDesIVA__c = payment.price_DiscountVAT;
-                    info.DSALES_PrecioDesSinIVA__c = payment.price_DiscountNoVAT; 
-                    if(Schema.sObjectType.DSALES_InformacionDePago__c.isCreateable()){
+                    info.DSALES_Fecha__c = payment.fechaVenta;
+                    info.DSALES_Clave_Tienda__c = payment.claveTienda;
+                    info.DSales_Tienda__c = idTienda[0].Id;
+                    info.DSALES_Estatus__c = 'Acreditado';
+                    info.DSALES_Factura__c = payment.idFactura;
+                    info.DSALES_TotalContado__c = payment.precioTotal;
+                    info.DSALES_Cliente__c = cliente[0].AccountId;
+                    info.DSALES_Oportunidad__c = payment.opportunityId;
+					info.DSALES_DireccionCliente__c = cliente[0].Account.BillingStreet+' '+cliente[0].Account.BillingCity+' '+cliente[0].Account.BillingState+' '+cliente[0].Account.BillingPostalCode;
+                    info.DSALES_No_de_cliente__c = cliente[0].Account.AccountNumber;
+                    info.DSALES_TelefonoCliente__c = cliente[0].Account.PersonMobilePhone;
+                    info.DSALES_Nombre_del_Vendedor__c= payment.nombreVendedor;
+                    info.DSALES_Vendedor__c=payment.idVendedor;
+                    info.DSALES_Caja__c=payment.caja;
+                    info.DSALES_Factura__c=payment.idFactura;
+                    info.DSALES_Oportunidad__c = payment.opportunityId;
+                    info.DSALES_IDUniversal1__c=payment.idUniversal;
+					info.DSALES_FolioTransaccion__c=payment.folioTransaccion;
+					info.DSALES_TipoFolio__c=payment.tipoFolio;
+                    //info.DSALES_SKU__c=payment.sku;
+                    //info.DSALES_Certificado__c = payment.certified_id;
+                   // info.DSALES_ProductoAdquirido__c = payment.asset_id;
+                    if(Schema.sObjectType.DSALES_InformacionDePago__c.isCreateable()) {
                         insert info;
+                    }else{
+                        System.debug('Permisos insuficientes para insertar');
+                    }	
+                    for(DSALES_PaymentInfoWrapperGEX.Pagos p : payment.PartidasDePago){
+                        DSALES_Partidadepago__c partidaPago = new DSALES_Partidadepago__c();
+                        partidaPago.DSALES_Informaciondepago__c = info.Id;
+                        partidaPago.DSALES_Tipodepago__c = p.tipoDePago;
+                        partidaPago.DSALES_Pago__c = p.pago;
+                        partidaPagolst.add(partidaPago);
+                    }
+                    if(Schema.sObjectType.DSALES_Partidadepago__c.isCreateable()) {
+                        insert partidaPagolst;
+                    }else{
+                        System.debug('Permisos insuficientes para insertar');
                     }
                     success = true;
                     message = '';
                     code = '';
                 }catch(Exception e){
                     success = false;
-                    message = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    message = e.getMessage() +e.getLineNumber();
                     code = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
 
         }
         DSALES_PaymentInfoWrapperGEX.PaymentGEXResponse responsePayload = new DSALES_PaymentInfoWrapperGEX.PaymentGEXResponse();
-        responsePayload.success = success;
-        responsePayload.error_message = message;
-        responsePayload.error_code = code;
-        responsePayload.paymentInfo_id = info.Id;    
+        responsePayload.exito = success;
+        responsePayload.mensajeError = message;
+        responsePayload.codigoError = code;
+        responsePayload.idInformacionPago = info.Id;     
         return responsePayload;
     }
 }
