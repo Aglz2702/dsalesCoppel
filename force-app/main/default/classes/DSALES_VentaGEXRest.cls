@@ -224,19 +224,19 @@ global with sharing class DSALES_VentaGEXRest {
         
         Quote cotizacion = [SELECT OpportunityId FROM Quote WHERE Id= :quoteId WITH SECURITY_ENFORCED];
         
-        stores=paymentInformation.clave_tienda;
+        stores=paymentInformation.claveTienda;
         
         
         //pagos.id_tienda = mapStores.get(pagos.clave_tienda);
         //system.debug('Store_id: '+pagos.id_tienda);
         // pagos.id_cliente = accountId;
         // pagos.asset_id =  assetsId.get(pagos.sku);
-        paymentInformation.opportunity_id = cotizacion.OpportunityId;
+        paymentInformation.opportunityId = cotizacion.OpportunityId;
         
         
         DSALES_PaymentInfoWrapperGEX.PaymentGEXResponse responsePaymInfo = DSALES_PaymentInfoWrapperGexRequest.insertPaymentGex(paymentInformation);
-        ids.add(responsePaymInfo.id_informacionPago);
-        system.debug('Error en P A G O: '+responsePaymInfo.mensaje_error);
+        ids.add(responsePaymInfo.idInformacionPago);
+        system.debug('Error en P A G O: '+responsePaymInfo.mensajeError);
         return ids;
     }
     public static void assignFields(DSALES_VentaGEX.VentaGexRequest venta,DSALES_VentaGEX.VentaGexResponse ventaGEX)
@@ -260,7 +260,7 @@ global with sharing class DSALES_VentaGEXRest {
         
         List<DSALES_CertificadoWrapper.CertificadoRequest> certificadoList= new List<DSALES_CertificadoWrapper.CertificadoRequest>();
         Map<Id,QuoteLineItem>mapPartida= new map<Id,QuoteLineitem>([SELECT Vigencia_meses__c,DSALES_SKU__c,TotalPrice FROM QuoteLineItem WHERE quoteId=:venta.quoteId ]);
-        system.debug('Mapa: '+mapPartida);
+        
         for(DSALES_CertificadoWrapper.CertificadoRequest certi: venta.listaDeCertificados)
         {
             certi.emailCliente=cliente.correoElectronico;
@@ -292,11 +292,11 @@ global with sharing class DSALES_VentaGEXRest {
         //pays.direccion_cliente=cliente.codigo_postal;
         //pays.numero_de_cliente=cliente.numero_de_cliente;
         //pays.telefono=cliente.telefono;
-        venta.pago.fecha_venta=venta.fechaCompra;
-        venta.pago.clave_tienda=venta.idTienda;
-        venta.pago.id_factura=venta.idFactura;
+        venta.pago.fechaVenta=venta.fechaCompra;
+        venta.pago.claveTienda=venta.idTienda;
+        venta.pago.idFactura=venta.idFactura;
         venta.pago.caja=venta.numeroCaja;
-        venta.pago.id_vendedor=venta.idVendedor;
-        venta.pago.nombre_vendedor=venta.nombreVendedor;              
+        venta.pago.idVendedor=venta.idVendedor;
+        venta.pago.nombreVendedor=venta.nombreVendedor;              
     }
 }
