@@ -6,42 +6,49 @@ public class DSALES_ControladorMatrizTiempo {
         List<ResultWrapper> resultado = new List<ResultWrapper>();
         Map<String, String> mapMatrizItem = new Map<String, String>();
         List<String> listMatrizItem = new List<String>();
-        DSales_Matriz_GEX__c matriz = [Select DSALES_Tiempogex__c, DSALES_EsClone__c  from DSales_Matriz_GEX__c Where Id =:recordId];
+        DSales_Matriz_GEX__c matriz = new DSales_Matriz_GEX__c();
+        if (Schema.sObjectType.DSales_Matriz_GEX__c.isQueryable()) {
+            matriz = [Select DSALES_Tiempogex__c, DSALES_EsClone__c  from DSales_Matriz_GEX__c Where Id =:recordId];
+        }
         Map<String, ResultWrapper> mapMatriz = getPicklistOptions('DSALES_Matriz_de_Cotizacion__c', 'DSALES_Tiempo_de_Garantia_Extendida_GEX__c', matriz.DSALES_Tiempogex__c);
-        for(DSALES_Matriz_de_Cotizacion__c item : 
+        if (Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isQueryable()) {
+            for(DSALES_Matriz_de_Cotizacion__c item : 
             [Select DSALES_MatrizItemClone__c  from DSALES_Matriz_de_Cotizacion__c
              where DSales_Matriz_GEX__c = :recordId and DSales_Matriz_GEX__r.DSALES_EsClone__c = false
              and DSALES_MatrizItemClone__c != null]){
                  listMatrizItem.add(item.DSALES_MatrizItemClone__c);
              }
-        for(DSALES_Matriz_de_Cotizacion__c item : 
-            [Select  Id, Name from DSALES_Matriz_de_Cotizacion__c
-             where Id in :listMatrizItem]){
-                 mapMatrizItem.put(item.Id,  item.Name);
-             }
-        for(DSALES_Matriz_de_Cotizacion__c item : 
-            [Select DSALES_Rango_interior_GEX__c , DSALES_Rango_Superior_GEX__c, Id,
-             DSALES_Tiempo_de_Garantia_Extendida_GEX__c, Name, DSALES_ID_Matriz_GEX__c,
-             SALES_Precio_GEX__c, DSALES_MatrizItemClone__c  
-             from DSALES_Matriz_de_Cotizacion__c
-             where DSales_Matriz_GEX__c = :recordId
-             order by DSALES_Rango_interior_GEX__c]){
-                 ResultWrapper mat = mapMatriz.get(item.DSALES_Tiempo_de_Garantia_Extendida_GEX__c);
-                 MatrizTiempo mt = new MatrizTiempo();
-                 mt.codigo = item.Name;
-                 mt.matrizId = item.Id;
-                 mt.rangoMenor = item.DSALES_Rango_interior_GEX__c;
-                 mt.rangoMayor = item.DSALES_Rango_Superior_GEX__c;
-                 mt.precio = item.SALES_Precio_GEX__c;
-                 mt.anio = item.DSALES_Tiempo_de_Garantia_Extendida_GEX__c;
-                 mt.seleccionado = false;
-                 mt.index = mat.listMatriz.size();
-                 if(mapMatrizItem.containsKey(item.DSALES_MatrizItemClone__c) ){
-                     mt.codigo = mapMatrizItem.get(item.DSALES_MatrizItemClone__c);
-                 }
-                 mat.listMatriz.add(mt);
-                 mapMatriz.put(item.DSALES_Tiempo_de_Garantia_Extendida_GEX__c, mat);
-             }
+             for(DSALES_Matriz_de_Cotizacion__c item : 
+             [Select  Id, Name from DSALES_Matriz_de_Cotizacion__c
+              where Id in :listMatrizItem]){
+                  mapMatrizItem.put(item.Id,  item.Name);
+              }
+         for(DSALES_Matriz_de_Cotizacion__c item : 
+             [Select DSALES_Rango_interior_GEX__c , DSALES_Rango_Superior_GEX__c, Id,
+              DSALES_Tiempo_de_Garantia_Extendida_GEX__c, Name, DSALES_ID_Matriz_GEX__c,
+              SALES_Precio_GEX__c, DSALES_MatrizItemClone__c  
+              from DSALES_Matriz_de_Cotizacion__c
+              where DSales_Matriz_GEX__c = :recordId
+              order by DSALES_Rango_interior_GEX__c]){
+                  ResultWrapper mat = mapMatriz.get(item.DSALES_Tiempo_de_Garantia_Extendida_GEX__c);
+                  MatrizTiempo mt = new MatrizTiempo();
+                  mt.codigo = item.Name;
+                  mt.matrizId = item.Id;
+                  mt.rangoMenor = item.DSALES_Rango_interior_GEX__c;
+                  mt.rangoMayor = item.DSALES_Rango_Superior_GEX__c;
+                  mt.precio = item.SALES_Precio_GEX__c;
+                  mt.anio = item.DSALES_Tiempo_de_Garantia_Extendida_GEX__c;
+                  mt.seleccionado = false;
+                  mt.index = mat.listMatriz.size();
+                  if(mapMatrizItem.containsKey(item.DSALES_MatrizItemClone__c) ){
+                      mt.codigo = mapMatrizItem.get(item.DSALES_MatrizItemClone__c);
+                  }
+                  mat.listMatriz.add(mt);
+                  mapMatriz.put(item.DSALES_Tiempo_de_Garantia_Extendida_GEX__c, mat);
+              }
+        }
+        
+        
         for(String item: mapMatriz.keySet()){
             resultado.add(mapMatriz.get(item));
         }
@@ -73,7 +80,12 @@ public class DSALES_ControladorMatrizTiempo {
                 listMatriz.add(matriz);
             }
         }
-        upsert listMatriz;
+        if(Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isCreateable() && Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isUpdateable()){
+            upsert listMatriz;
+        } else {
+            System.debug('Permisos insuficientes para actualizar');
+        }
+        
         return getRecords(recordId);
     }
     
@@ -86,7 +98,11 @@ public class DSALES_ControladorMatrizTiempo {
                 listMatriz.add(new DSALES_Matriz_de_Cotizacion__c(Id = item.matrizId));
             }
         }
-        delete listMatriz;
+        if(Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isDeletable()) {
+            delete listMatriz;
+        }else{
+            System.debug('Permisos insuficientes para insertar');
+        }
         return getRecords(recordId);
     }
     

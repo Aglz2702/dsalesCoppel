@@ -10,7 +10,7 @@ public class DSALES_ControladorMatrizTiempo_Test {
     }
     
     @isTest
-    static void DSALES_ControladorMatrizTiempo(){
+    static void dsalesControladorMatrizTiempo(){
         DSales_Matriz_GEX__c matriz = [Select Id from DSales_Matriz_GEX__c Where DSALES_EsClone__c = false];
         DSALES_ControladorMatrizTiempo.getClone(matriz.Id);
         List<DSALES_ControladorMatrizTiempo.ResultWrapper> listMatrix =  DSALES_ControladorMatrizTiempo.getRecords(matriz.Id);
