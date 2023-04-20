@@ -1,5 +1,5 @@
 @isTest
-private with sharing class DSALES_SiniestroResumenPagosTest {
+public with sharing class DSALES_SiniestroResumenPagosTest {
     @TestSetup
     static void setUp(){
          

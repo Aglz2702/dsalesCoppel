@@ -1,5 +1,6 @@
+
 @RestResource(urlMapping='/ventaGex/*')
-global class DSALES_VentaGEXRest {
+global with sharing class DSALES_VentaGEXRest {
     
     @HttpPost
     global static DSALES_VentaGEX.VentaGexResponse createVenta() {
@@ -14,26 +15,25 @@ global class DSALES_VentaGEXRest {
         
         if(RestContext.request != null){
             
-            String Body = System.RestContext.request.requestBody.toString();
-            if(String.isNotBlank(Body)){
+            String cuerpo = System.RestContext.request.requestBody.toString();
+            if(String.isNotBlank(cuerpo)){
                 try{
                     
-                    DSALES_VentaGEX.VentaGexRequest venta = (DSALES_VentaGEX.VentaGexRequest)JSON.deserialize(body, DSALES_VentaGEX.VentaGexRequest.class);
-                    assignFields(venta.lista_de_productos, venta.pago, venta.lista_de_certificados,venta,ventaGEX);
+                    DSALES_VentaGEX.VentaGexRequest venta = (DSALES_VentaGEX.VentaGexRequest)JSON.deserialize(cuerpo, DSALES_VentaGEX.VentaGexRequest.class);
+                    assignFields(venta,ventaGEX);
                     
                     DSALES_AccountWrapper.AccountResponse cliente = DSALES_AccountWrapperRequest.upsertAccount(venta.cliente);
-                    validarCliente(venta.quoteId, cliente.id_cuenta,venta.nombre_vendedor);
+                    validarCliente(venta.quoteId, cliente.idCuenta,venta.nombreVendedor);
                     
-                    asignarSku();
-                    
-                    Map<String, String> mapAssets = insertAssets(venta.lista_de_productos, cliente.id_cuenta); 
+                   
+                    Map<String, String> mapAssets = insertAssets(venta.listaDeProductos, cliente.idCuenta); 
                     
                     for (String assetId : mapAssets.values())
                     {
                         assetsId.add(assetId);
                     }
                     
-                    Map<String, String> mapCertifieds = insertCertified(venta.lista_de_certificados, cliente.id_cuenta, mapAssets);
+                    Map<String, String> mapCertifieds = insertCertified(venta.listaDeCertificados, cliente.idCuenta, mapAssets);
                     
                     if(mapCertifieds.size()>0)
                     {
@@ -46,10 +46,10 @@ global class DSALES_VentaGEXRest {
                     }
                     
                     
-                    paymentIds=insertPaymentInfo(venta.pago, cliente.id_cuenta, mapAssets, venta.quoteId);
-                    DSALES_ValidarClienteHelper.deleteUnpurchasedItem(venta.lista_de_productos,venta.lista_de_certificados, venta.quoteId);
-                    DSALES_ValidarClienteHelper.actualizarCotizacion(venta.quoteId,ventaGEX,mapAssets,mapCertifieds);
-                    //DSALES_ValidarClienteHelper.recepcionProductos(venta.certificado, venta.quoteid,newQuote);
+                    paymentIds=insertPaymentInfo(venta.pago, cliente.idCuenta, mapAssets, venta.quoteId);
+                    //DSALES_ValidarClienteHelper.deleteUnpurchasedItem(venta.listaDeProductos,venta.listaDeCertificados, venta.quoteId);
+                    //DSALES_ValidarClienteHelper.actualizarCotizacion(venta.quoteId,ventaGEX,mapAssets,mapCertifieds);
+                    
 
                     success=true;
                     message='';
@@ -67,16 +67,16 @@ global class DSALES_VentaGEXRest {
         }
         
         ventaGEX.exito = success;
-        ventaGEX.mensaje_de_error=message;
-        ventaGEX.codigo_de_error=code;
-        ventaGEX.id_de_pago=paymentIds;
+        ventaGEX.mensajeDeError=message;
+        ventaGEX.codigoDeError=code;
+        ventaGEX.idDePago=paymentIds;
         
         
-        List<Asset> product= [SELECT id,Product2.StockKeepingUnit,DSALES_SKU__c FROM ASSET WHERE id IN: assetsId];
+        List<Asset> product= [SELECT id,Product2.StockKeepingUnit,DSALES_SKU__c FROM ASSET WHERE id IN: assetsId WITH SECURITY_ENFORCED];
         system.debug('Lista de productos: '+product);
-        List<DSALES_InformacionDePago__c> pago=[Select id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE id IN:paymentIds];
+        List<DSALES_InformacionDePago__c> pago=[Select id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE id IN:paymentIds WITH SECURITY_ENFORCED];
         system.debug('Lista de pagos: '+pago);
-        List<DSALES_Certificado__c> certi=[Select id,DSALES_SKU__c,DSALES_SKUTangible__c,DSALES_Precio_del_Articulo__c FROM DSALES_Certificado__c WHERE id IN:certifiedIds];
+        List<DSALES_Certificado__c> certi=[Select id,DSALES_SKU__c,DSALES_SKUTangible__c,DSALES_Precio_del_Articulo__c FROM DSALES_Certificado__c WHERE id IN:certifiedIds WITH SECURITY_ENFORCED];
         system.debug('Lista de cert: '+certi);
         
         for(Asset a: product)
@@ -107,9 +107,20 @@ global class DSALES_VentaGEXRest {
                 }  
             }
         }
-        upsert product;
-        upsert certi;
-        upsert pago;
+        if(Schema.sObjectType.Asset.isUpdateable())
+        {
+            update product;
+        }
+       
+        if(Schema.sObjectType.DSALES_Certificado__c.isUpdateable())
+        {
+            update certi;
+        }
+        if(Schema.sObjectType.DSALES_InformacionDePago__c.isUpdateable())
+        {
+            update pago;
+        }
+        
         
       
         //ventaGEX.assets_id=responsePayloadAsset;
@@ -118,7 +129,7 @@ global class DSALES_VentaGEXRest {
     }
 
     public static Boolean validarCliente(String quoteId, String accountId,String nombreVendedor){ 
-        Quote cotizacion = [SELECT Id,AccountId,OpportunityId,Opportunity.AccountId FROM Quote WHERE Id= :quoteId]; 
+        Quote cotizacion = [SELECT Id,AccountId,OpportunityId,Opportunity.AccountId FROM Quote WHERE Id= :quoteId WITH SECURITY_ENFORCED]; 
         
         Opportunity oportunidad = new Opportunity();
         oportunidad.AccountId = accountId;
@@ -127,8 +138,12 @@ global class DSALES_VentaGEXRest {
         oportunidad.Id = cotizacion.OpportunityId;
         
         try{
+            if(Schema.sObjectType.Opportunity.isUpdateable())
+            {
+                update oportunidad;
+            }
+          
             
-            update oportunidad;
             return true;
         }catch(Exception e){
             return false;
@@ -141,31 +156,28 @@ global class DSALES_VentaGEXRest {
         List<String> idsAssets = new List<String>();
         
         for(DSALES_AssetWrapper.AssetRequest sku: listAssets){
-            listSKU.add(sku.sku_de_tangible);
+            listSKU.add(sku.skuDeTangible);
         }
         
         
-        for(Product2 t: [Select StockKeepingUnit,Id from Product2 where StockKeepingUnit in :listSKU and DSales_Tipo_de_Producto__c='Producto']){
+        for(Product2 t: [Select StockKeepingUnit,Id from Product2 where StockKeepingUnit in :listSKU and DSales_Tipo_de_Producto__c='Producto' WITH SECURITY_ENFORCED] ){
             for(DSALES_AssetWrapper.AssetRequest producto: listAssets){
-                if(t.StockKeepingUnit == producto.sku_de_tangible){
-                    producto.id_cuenta=accountId;
-                    producto.id_producto=t.Id;
+                if(t.StockKeepingUnit == producto.skuDeTangible){
+                    producto.idCuenta=accountId;
+                    producto.idProducto=t.Id;
                     producto.estado='Adquirido';
                     
-                    DSALES_AssetWrapper.AssetResponse responsePayloadAsset = DSALES_AssetWrapperRequest.insertAssets(producto);
-                    system.debug('Mensaje de ASSET: '+responsePayloadAsset.mensaje_error);
-                    mapAssets.put(t.StockKeepingUnit, responsePayloadAsset.id_asset);
-                    idsAssets.add(responsePayloadAsset.id_asset);
+                    DSALES_AssetWrapper.AssetResponse responsePayloadAsset = DSALES_AssetWrapperRequest.insertaAssets(producto);
+                    system.debug('Mensaje de ASSET: '+responsePayloadAsset.mensajeError);
+                    mapAssets.put(t.StockKeepingUnit, responsePayloadAsset.idAsset);
+                    idsAssets.add(responsePayloadAsset.idAsset);
                     
                 }
             }
         }
         return mapAssets;
     }
-    public static void asignarSku()
-    {
-        
-    }
+   
     public static Map<String, String> insertCertified(List<DSALES_CertificadoWrapper.CertificadoRequest> certificado, String accountId, Map<String, String> mapAssets){
         Map<String, String> mapCertifieds = new Map<String, String>();
         Map<String, String> mapStores = new Map<String, String>();
@@ -173,31 +185,31 @@ global class DSALES_VentaGEXRest {
         List<String> listStores= new List<String>();
         system.debug('Aquí sí llegó');
         for(DSALES_CertificadoWrapper.CertificadoRequest sku: certificado){
-            if(!String.isEmpty(sku.id_partida_presupuesto) )
+            if(!String.isEmpty(sku.idPartidaPresupuesto) )
             {system.debug('Entró al for: y el SKU es: '+sku.sku);
              listSKUCertifieds.add(sku.sku);
-             listStores.add(sku.clave_tienda);
+             listStores.add(sku.claveTienda);
             }
             system.debug('Aquí sí llegó: SKU: '+listStores);
         }
-        for(Tienda__c store: [select id,DSales_TiendaID__c from Tienda__c where DSales_TiendaID__c in :listStores]){
+        for(Tienda__c store: [select id,DSales_TiendaID__c from Tienda__c where DSales_TiendaID__c in :listStores WITH SECURITY_ENFORCED]){
             mapStores.put(store.DSales_TiendaID__c, store.Id);
         }
         system.debug('Seguimos bien con sku '+listSKUCertifieds);
-        for(Product2 t: [Select StockKeepingUnit from Product2 where StockKeepingUnit in :listSKUCertifieds and DSales_Tipo_de_Producto__c='Servicio']){
+        for(Product2 t: [Select StockKeepingUnit from Product2 where StockKeepingUnit in :listSKUCertifieds and DSales_Tipo_de_Producto__c='Servicio' WITH SECURITY_ENFORCED]){
             system.debug('Entramos1 '+mapStores);
             for(DSALES_CertificadoWrapper.CertificadoRequest productoGex: certificado){
-                if(!String.isEmpty(productoGex.id_partida_presupuesto) )
+                if(!String.isEmpty(productoGex.idPartidaPresupuesto) )
                 {
                     system.debug('Entramos '+mapStores);
                     if(t.StockKeepingUnit == productoGex.sku){
-                        productoGex.id_cuenta =accountId;
-                        productoGex.id_producto_adquirido = mapAssets.get(productoGex.sku_de_tangible);
-                        productoGex.id_tienda = mapStores.get(productoGex.clave_tienda);
-                        system.debug('Asset al que va: '+productoGex.id_producto_adquirido);
+                        productoGex.idCuenta =accountId;
+                        productoGex.idProductoAdquirido = mapAssets.get(productoGex.skuDeTangible);
+                        productoGex.idTienda = mapStores.get(productoGex.claveTienda);
+                        system.debug('Asset al que va: '+productoGex.idProductoAdquirido);
                         DSALES_CertificadoWrapper.CertificadoResponse responsePayloadCertifieds = DSALES_CertificadoWrapperRequest.insertCertificado(productoGex);
-                        System.debug('C E R T I: '+responsePayloadCertifieds.mensaje_error);
-                        mapCertifieds.put(t.StockKeepingUnit, responsePayloadCertifieds.id_certificado);
+                        System.debug('C E R T I: '+responsePayloadCertifieds.mensajeError);
+                        mapCertifieds.put(t.StockKeepingUnit, responsePayloadCertifieds.idCertificado);
                     }
                 }
             }
@@ -210,7 +222,7 @@ global class DSALES_VentaGEXRest {
         String stores = '';
         List<String> ids= new List<String>();
         
-        Quote cotizacion = [SELECT OpportunityId FROM Quote WHERE Id= :quoteId];
+        Quote cotizacion = [SELECT OpportunityId FROM Quote WHERE Id= :quoteId WITH SECURITY_ENFORCED];
         
         stores=paymentInformation.clave_tienda;
         
@@ -227,7 +239,7 @@ global class DSALES_VentaGEXRest {
         system.debug('Error en P A G O: '+responsePaymInfo.mensaje_error);
         return ids;
     }
-    public static void assignFields(List<DSALES_AssetWrapper.AssetRequest> listAssets,DSALES_PaymentInfoWrapperGEX.PaymentGEXRequest pays, List<DSALES_CertificadoWrapper.CertificadoRequest> listCertificado,DSALES_VentaGEX.VentaGexRequest venta,DSALES_VentaGEX.VentaGexResponse ventaGEX)
+    public static void assignFields(DSALES_VentaGEX.VentaGexRequest venta,DSALES_VentaGEX.VentaGexResponse ventaGEX)
     {
         String nombreConcat='';
         Integer contadora=0;
@@ -237,52 +249,54 @@ global class DSALES_VentaGEXRest {
         
         DSALES_AccountWrapper.AccountRequest cliente=venta.cliente;
         
-        for(DSALES_AssetWrapper.AssetRequest assi: listAssets)
+        for(DSALES_AssetWrapper.AssetRequest assi: venta.listaDeProductos)
         {
             articulo.add(assi.articulo);
-            sku.add(assi.sku_de_tangible);
-            assi.email=cliente.correo_electronico;
-            assi.primer_nombre=cliente.nombre;
-            assi.apellido=cliente.apellido_paterno + ' '+cliente.apellido_materno;
+            sku.add(assi.skuDeTangible);
+            assi.email=cliente.correoElectronico;
+            assi.primerNombre=cliente.nombre;
+            assi.apellido=cliente.apellidoPaterno + ' '+cliente.apellidoMaterno;
         }
         
         List<DSALES_CertificadoWrapper.CertificadoRequest> certificadoList= new List<DSALES_CertificadoWrapper.CertificadoRequest>();
         Map<Id,QuoteLineItem>mapPartida= new map<Id,QuoteLineitem>([SELECT Vigencia_meses__c,DSALES_SKU__c,TotalPrice FROM QuoteLineItem WHERE quoteId=:venta.quoteId ]);
         system.debug('Mapa: '+mapPartida);
-        for(DSALES_CertificadoWrapper.CertificadoRequest certi: listCertificado)
+        for(DSALES_CertificadoWrapper.CertificadoRequest certi: venta.listaDeCertificados)
         {
-            certi.email_cliente=cliente.correo_electronico;
-            certi.telefono_cliente=cliente.telefono;
-            certi.direccion_cliente=cliente.codigo_postal;
-            certi.clave_tienda=venta.id_tienda;
-            certi.nombre_vendedor=venta.nombre_vendedor;    
-            certi.numero_caja_coppel=venta.numero_caja;
-            certi.id_vendedor=venta.id_vendedor;
-            certi.id_factura=venta.id_factura;
-            certi.fecha_venta=venta.fecha_compra;
-            certi.fecha_compra_garantia=venta.fecha_compra;
-            certi.numero_cliente=cliente.numero_de_cliente;
-            certi.nombre_completo_cliente=cliente.nombre + ' '+cliente.apellido_paterno + ' '+cliente.apellido_materno;
-            if(!String.isEmpty(certi.id_partida_presupuesto) && mapPartida.containsKey(certi.id_partida_presupuesto))
+            certi.emailCliente=cliente.correoElectronico;
+            certi.telefonoCliente=cliente.telefono;
+            certi.direccionCliente=cliente.codigoPostal;
+            certi.claveTienda=venta.idTienda;
+            certi.nombreVendedor=venta.nombreVendedor;    
+            certi.numeroCajaCoppel=venta.numeroCaja;
+            certi.idVendedor=venta.idVendedor;
+            certi.idFactura=venta.idFactura;
+            certi.fechaVenta=venta.fechaCompra;
+            certi.fechaCompraGarantia=venta.fechaCompra;
+            certi.numeroCliente=cliente.numeroCliente;
+            certi.nombreCompletoCliente=cliente.nombre + ' '+cliente.apellidoPaterno + ' '+cliente.apellidoMaterno;
+            if(!String.isEmpty(certi.idPartidaPresupuesto) && mapPartida.containsKey(certi.idPartidaPresupuesto))
             {
                 
-                certi.sku= mapPartida.get(certi.id_partida_presupuesto).DSALES_SKU__c;
+                certi.sku= mapPartida.get(certi.idPartidaPresupuesto).DSALES_SKU__c;
                 System.debug('Aquí si pasó donde agarra el SKU: '+certi.sku);
-                if(mapPartida.get(certi.id_partida_presupuesto).Vigencia_meses__c!=null)
-                    certi.garantia_coppel_tangible=Integer.valueOf(mapPartida.get(certi.id_partida_presupuesto).Vigencia_meses__c);
+                if(mapPartida.get(certi.idPartidaPresupuesto).Vigencia_meses__c!=null)
+                {
+                    certi.garantiaCoppelTangible=Integer.valueOf(mapPartida.get(certi.idPartidaPresupuesto).Vigencia_meses__c);
+                }
                 
-                certi.costo_garantia=mapPartida.get(certi.id_partida_presupuesto).TotalPrice;
+                certi.costoGarantia=mapPartida.get(certi.idPartidaPresupuesto).TotalPrice;
                 certificadoList.add(certi);
             }
         }
         //pays.direccion_cliente=cliente.codigo_postal;
         //pays.numero_de_cliente=cliente.numero_de_cliente;
         //pays.telefono=cliente.telefono;
-        pays.fecha_venta=venta.fecha_compra;
-        pays.clave_tienda=venta.id_tienda;
-        pays.id_factura=venta.id_factura;
-        pays.caja=venta.numero_caja;
-        pays.id_vendedor=venta.id_vendedor;
-        pays.nombre_vendedor=venta.nombre_vendedor;              
+        venta.pago.fecha_venta=venta.fechaCompra;
+        venta.pago.clave_tienda=venta.idTienda;
+        venta.pago.id_factura=venta.idFactura;
+        venta.pago.caja=venta.numeroCaja;
+        venta.pago.id_vendedor=venta.idVendedor;
+        venta.pago.nombre_vendedor=venta.nombreVendedor;              
     }
 }
