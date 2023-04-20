@@ -37,16 +37,14 @@ public without sharing class DSALES_MatrizCotizacion {
         }  
         query = query.substring(0, query.length()-1);
         DSales_Matriz_GEX__c ds = new DSales_Matriz_GEX__c();
-        
         query += ' From DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c =: recordId'; 
         List <DSALES_Matriz_de_Cotizacion__c> listMatrizItem = Database.query(String.escapeSingleQuotes(query));
         for(DSALES_Matriz_de_Cotizacion__c matrizItem:listMatrizItem )	{
             if (DSALES_Matriz_de_Cotizacion__c.SObjectType.getDescribe().isAccessible() && Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.fields.DSALES_MatrizItemClone__c.isUpdateable()) {
-                return null;
+                matrizItem.DSALES_MatrizItemClone__c=matrizItem.Id;
+                matrizItem.Id=null;
+                matrizItem.DSales_Matriz_GEX__c=originalId;
             }
-            matrizItem.DSALES_MatrizItemClone__c=matrizItem.Id;
-            matrizItem.Id=null;
-            matrizItem.DSales_Matriz_GEX__c=originalId;
         }
         if(Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isCreateable() && Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isUpdateable()){
             Database.upsert(listMatrizItem,DSALES_Matriz_de_Cotizacion__c.DSALES_MatrizItemClone__c);
@@ -75,6 +73,5 @@ public without sharing class DSALES_MatrizCotizacion {
         if (DSALES_Matriz_de_Cotizacion__c.SObjectType.getDescribe().isDeletable()) {
             delete listaARemover;
         }
-    }
-    
+    }  
 }

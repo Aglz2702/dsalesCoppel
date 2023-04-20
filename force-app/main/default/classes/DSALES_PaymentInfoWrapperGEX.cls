@@ -1,5 +1,5 @@
 /**
- * @description       : 
+ * @description       : Test class for PaymentInfoWrapperGex
  * @author            : 
  * @group             : 
  * @last modified on  : 04-18-2023
@@ -8,46 +8,36 @@
  * Ver   Date          Author             Modification
  * 1.0   04-18-2023                       Initial Version
 **/
-global class DSALES_PaymentInfoWrapperGEX {
 
+global class DSALES_PaymentInfoWrapperGEX {
     global class PaymentGEXRequest{
-        global date sale_date {get;set;}
-        global String store_key {get;set;}
-        global String store_id {get;set;}
-        global String product_type {get;set;}
-        global String status {get;set;}
-        global String bill {get;set;}
-        global String cashier_box {get;set;}
-        global String vendor_id {get;set;}
-        global String vendor_name {get;set;}
-        global String exp_en {get;set;}
-        global String client_id {get;set;}
-        global String customer_adress {get;set;}
-        global String customer_number {get;set;}
-        global String telephone {get;set;}
-        global String movilPhone {get;set;}
-        global String asset_id {get;set;}
-        global String sku {get;set;}
-        global double price {get;set;}
-        global double cash_total {get;set;}
-        global double credit_VAT {get;set;}
-        global double electronic_money {get;set;}
-        global double paymentElectronic_money {get;set;}
-        global double cash_payment {get;set;}
-        global double change {get;set;}
-        global double wonElectronic_money {get;set;}
-        global boolean GEX_paid {get;set;}
-        global String certified_id {get;set;}
-        global String opportunity_id {get;set;}
-        global double price_noVAT {get;set;}
-        global double price_DiscountVAT {get;set;}
-        global double price_DiscountNoVAT {get;set;}
-	}
+        global Date fechaVenta {get;set;}
+        global String claveTienda {get;set;}
+        global String idFactura {get;set;}
+        global String caja {get;set;}
+        global String idVendedor {get;set;}
+        global String nombreVendedor {get;set;}
+        global Double precioTotal {get;set;}
+        global String assetId {get;set;}
+        global String certifiedId {get;set;}
+        global String opportunityId {get;set;}
+        global String idUniversal {get;set;}
+        global String folioTransaccion{get;set;}
+        global String tipoFolio{get;set;}
+        //global String sku{get;set;}
+    	global List<Pagos> partidasDePago {get;set;}
+    }
+
+	global class Pagos {
+        global String tipoDePago {get;set;}
+        global Double pago {get;set;}
+    }
 
 	global class PaymentGEXResponse{
-        global Boolean success {get;set;}
-        global String error_code {get;set;}
-        global String error_message {get;set;}
-        global String paymentInfo_id {get;set;}
+        global Boolean exito {get;set;}
+        global String codigoError {get;set;}
+        global String mensajeError {get;set;}
+        global String idInformacionPago {get;set;}
     }
+
 }

@@ -1,6 +1,17 @@
+/**
+ * @description       : Test class for PaymentInfoWrapperGex
+ * @author            : 
+ * @group             : 
+ * @last modified on  : 04-18-2023
+ * @last modified by  : Juan Antonio Flores
+ * Modifications Log 
+ * Ver   Date          Author             Modification
+ * 1.0   04-18-2023                       Initial Version
+**/
+
 @RestResource(urlMapping='/insertPaymentInformationSM/*')
 global with sharing class DSALES_PaymentInfoWrapperRequest {
-    
+
     @HttpPost
     global static DSALES_PaymentInfoWrapper.PaymentResponse crearPago(){
         DSALES_PaymentInfoWrapper.PaymentResponse responsePago = new DSALES_PaymentInfoWrapper.PaymentResponse();      
@@ -26,8 +37,8 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             }
         }
         responsePago.success = exito;
-        responsePago.error_message = mensajeError;
-        responsePago.error_code = codigoError;
+        responsePago.errorMessage = mensajeError;
+        responsePago.errorCode = codigoError;
         
         
         return responsePago;
@@ -40,27 +51,27 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
         List<DSALES_Partidadepago__c> listaPartidasPago = new List<DSALES_Partidadepago__c>();
         try{
             String recordTypePago = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
-            Opportunity oportunidad =[SELECT Id,AccountId FROM Opportunity WHERE Id=:pago.id_oportunidad WITH SECURITY_ENFORCED];
-            Tienda__c tienda =[SELECT Id,DSales_TiendaID__c FROM Tienda__c WHERE DSales_TiendaID__c=:pago.clave_tienda WITH SECURITY_ENFORCED];
+            Opportunity oportunidad =[SELECT Id,AccountId FROM Opportunity WHERE Id=:pago.idOportunidad WITH SECURITY_ENFORCED];
+            Tienda__c tienda =[SELECT Id,DSales_TiendaID__c FROM Tienda__c WHERE DSales_TiendaID__c=:pago.claveTienda WITH SECURITY_ENFORCED];
             Account cliente=[SELECT Id,	FinServ__BillingAddress__pc FROM Account WHERE Id=:oportunidad.AccountId WITH SECURITY_ENFORCED];
             nuevoPago.DSALES_Cliente__c=cliente.Id;
-            nuevoPago.DSALES_Oportunidad__c=pago.id_oportunidad;
+            nuevoPago.DSALES_Oportunidad__c=pago.idOportunidad;
             nuevoPago.RecordTypeId=recordTypePago;
             nuevoPago.DSALES_Estatus__c='Acreditado';
             nuevoPago.DSALES_SKU__c=pago.sku;
-            nuevoPago.DSALES_Montototal__c=pago.total_factura;
-            nuevoPago.DSALES_Nombre_del_Vendedor__c=pago.nombre_vendedor;
-            nuevoPago.DSALES_Caja__c=pago.numero_caja;
+            nuevoPago.DSALES_Montototal__c=pago.totalFactura;
+            nuevoPago.DSALES_Nombre_del_Vendedor__c=pago.nombreVendedor;
+            nuevoPago.DSALES_Caja__c=pago.numeroCaja;
             nuevoPago.DSALES_Seguro__c=pago.Seguro;
             nuevoPago.DSALES_Plazodecomprademoto__c=pago.plazos;
-            if(pago.fecha_de_entrega!=null){
-              nuevoPago.DSALES_Fechadeentregaestimada__c=pago.fecha_de_entrega;   
+            if(pago.fechaDeEntrega!=null){
+              nuevoPago.DSALES_Fechadeentregaestimada__c=pago.fechaDeEntrega;   
             }
-            nuevoPago.DSALES_Fecha__c=pago.fecha_venta;
+            nuevoPago.DSALES_Fecha__c=pago.fechaVenta;
            	nuevoPago.DSales_Tienda__c=tienda.Id;
-            nuevoPago.DSALES_IDUniversal1__c=pago.id_universal;
-            nuevoPago.DSALES_FolioTransaccion__c=pago.folio_transaccion;
-            nuevoPago.DSALES_TipoFolio__c=pago.tipo_folio;
+            nuevoPago.DSALES_IDUniversal1__c=pago.idUniversal;
+            nuevoPago.DSALES_FolioTransaccion__c=pago.folioTransaccion;
+            nuevoPago.DSALES_TipoFolio__c=pago.tipoFolio;
             if(cliente.FinServ__BillingAddress__pc!=null){
                 String direcion =cliente.FinServ__BillingAddress__pc.replace('<br>', ',');
                 nuevoPago.DSALES_DireccionCliente__c=direcion;
@@ -70,11 +81,11 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             }else{
                 System.debug('Permisos insuficientes para insertar');
             }
-            if(pago.ListaDePagos!=null){
-                for(DSALES_PaymentInfoWrapper.ListaDePago part : pago.ListaDePagos){
+            if(pago.listaDePagos!=null){
+                for(DSALES_PaymentInfoWrapper.ListaDePago part : pago.listaDePagos){
                     DSALES_Partidadepago__c partida = new DSALES_Partidadepago__c();
                     partida.DSALES_Informaciondepago__c=nuevoPago.Id;
-                    partida.DSALES_Tipodepago__c=part.metodo_pago;
+                    partida.DSALES_Tipodepago__c=part.metodoPago;
                     partida.DSALES_Pago__c=part.pago;
                     listaPartidasPago.add(partida);
                 }
@@ -94,10 +105,9 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
         }
         DSALES_PaymentInfoWrapper.PaymentResponse responsePago = new  DSALES_PaymentInfoWrapper.PaymentResponse();
         responsePago.success = exito;
-        responsePago.error_code=codigoError;
-        responsePago.error_message=mensajeError;
-        responsePago.pago_id=nuevoPago.Id;
-        
+        responsePago.errorCode=codigoError;
+        responsePago.errorMessage=mensajeError;
+        responsePago.pagoId=nuevoPago.Id;   
         return responsePago;
     }
 }

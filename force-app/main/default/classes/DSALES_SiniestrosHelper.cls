@@ -1,6 +1,16 @@
-public with sharing class DSALES_SiniestrosHelper {
+/**
+ * @description       : 
+ * @author            : 
+ * @group             : 
+ * @last modified on  : 04-18-2023
+ * @last modified by  : Juan Antonio Flores
+ * Modifications Log 
+ * Ver   Date          Author             Modification
+ * 1.0   04-18-2023                       Initial Version
+**/
+
+public without sharing class DSALES_SiniestrosHelper {
     //public static final String NOMBRE_SERVICIO = 'DSALES_ActualizarEstadoSiniestro';
-    
     //@future(callout=true)
     public static void actualizarDatos(String jsonString){//recibo datos de pago
         try{
@@ -13,8 +23,7 @@ public with sharing class DSALES_SiniestrosHelper {
                 System.debug('Actualizar datos2');
                 siniestrosId.add(pagos.ClaimId);
                 //polizasId.add(pagos.Claim.PolicyNumberId);
-            }
-             
+            } 
             //se actualiza el siniestro a Pagado
             String query = 'SELECT Id, Name,PolicyNumberId,P_liza__c, DSALES_SiniestroUid__c,DSALES_Reporte__c,IncidentSiteStreet,IncidentSiteState,IncidentSiteCountry, ClaimType, CreatedDate, DSALES_Nombre_conductor__c, DSALES_Causa__c, DSALES_Descripcion__c, DSALES_Ano__c, DSALES_Marca__c, DSALES_Serie__c, InitiationDate, FinalizedDate, Cliente__r.Name, P_liza__r.Name, ClaimReason, DSALES_Estatus__c FROM Claim WHERE Id IN:siniestrosId';       
             List<Claim> listSiniestros = DataBase.query(query);
@@ -24,7 +33,10 @@ public with sharing class DSALES_SiniestrosHelper {
                	c.DSALES_Estatus__c='Pagado';
                 polizasId.add(c.PolicyNumberId);
             }
-            List<InsurancePolicy> listToUpdatePoliza = [SELECT Id,ChangeSubtype,DSALES_Estatusdepliza__c,DSALES_Activodeplizadeseguro__c FROM InsurancePolicy WHERE Id IN:polizasId]; 
+            List<InsurancePolicy> listToUpdatePoliza=new List<InsurancePolicy>(); 
+            if(InsurancePolicy.SObjectType.getDescribe().isAccessible()) {
+                listToUpdatePoliza = [SELECT Id,ChangeSubtype,DSALES_Estatusdepliza__c,DSALES_Activodeplizadeseguro__c FROM InsurancePolicy WHERE Id IN:polizasId];
+            }
             System.debug('listToUpdatePoliza :'+listToUpdatePoliza);
             System.debug('listToUpdatePoliza size:'+listToUpdatePoliza.size());
             if(listToUpdatePoliza.size()>0){ 
@@ -35,15 +47,14 @@ public with sharing class DSALES_SiniestrosHelper {
                     System.debug('se asignaron los datos');
                 }
             }
-            
-           System.debug('poliza:'+listToUpdatePoliza);
-            update listToUpdatePoliza;
-            update listSiniestros;
+            System.debug('poliza:'+listToUpdatePoliza);
+            if(InsurancePolicy.SObjectType.getDescribe().isUpdateable() && Claim.SObjectType.getDescribe().isUpdateable()) {
+                update listToUpdatePoliza;
+                update listSiniestros;
+            }
         }catch(Exception e){
             System.debug('Error en linea :'+e.getLineNumber());
             System.debug('mensaje:'+e.getMessage());
         }
-    }
-    
-   
+    } 
 }
