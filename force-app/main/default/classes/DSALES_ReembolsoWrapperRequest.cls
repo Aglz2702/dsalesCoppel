@@ -1,55 +1,53 @@
-@RestResource(urlMapping='/insertReembolso/*')
+/**
+ * @description       : 
+ * @author            : 
+ * @group             : 
+ * @last modified on  : 04-18-2023
+ * @last modified by  : Juan Antonio Flores
+ * Modifications Log 
+ * Ver   Date          Author             Modification
+ * 1.0   04-18-2023                       Initial Version
+**/ 
 
-global class DSALES_ReembolsoWrapperRequest {
+@RestResource(urlMapping='/insertReembolso/*')
+global without sharing class DSALES_ReembolsoWrapperRequest {
     
     @HttpPost
-    global static  DSALES_ReembolsoWrapper.ReembolsoResponse createReembolso()
-    {
+    global static  DSALES_ReembolsoWrapper.ReembolsoResponse createReembolso() {
         List< String> listaIdsReembolso = new  List<String>();
         Boolean exito=false;
         String codigoError='';
         String mensajeError='';
         DSALES_ReembolsoWrapper.ReembolsoResponse responsePayload= new DSALES_ReembolsoWrapper.ReembolsoResponse();
         if(RestContext.request != null){
-            String Body = System.RestContext.request.requestBody.toString();
-            
-            if(String.isNotBlank(Body)){
-                try{
-                  
+            String body = System.RestContext.request.requestBody.toString();
+            if(String.isNotBlank(body)){
+                try{   
                     List<DSALES_ReembolsoWrapper.ReembolsoRequest>  reembolsosList = (List<DSALES_ReembolsoWrapper.ReembolsoRequest> )JSON.deserialize(body, List<DSALES_ReembolsoWrapper.ReembolsoRequest>.class );
-                   responsePayload =insertReembolso(reembolsosList);
-                
-                   
-
+                    responsePayload =insertReembolso(reembolsosList);
                 }
-                
                 catch(Exception.JSONException e)
                 {
                     exito = false;
                     mensajeError =DSALES_Utility.BAD_REQUEST_MSJ;
-                    codigoError =String.valueof(DSALES_Utility.BAD_REQUEST_CODE);
-                    
+                    codigoError =String.valueof(DSALES_Utility.BAD_REQUEST_CODE);  
                 }
                 catch(Exception e){
                     exito = false;
                     mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
-                    codigoError=String.valueof(DSALES_Utility.INTERNAL_ERROR_CODE);
-                    
-                    
+                    codigoError=String.valueof(DSALES_Utility.INTERNAL_ERROR_CODE);   
                 }
             }
         }
-        responsePayload.codigoError=codigoError;
-
-        
-        return responsePayload;
-        
+        responsePayload.codigoError=codigoError; 
+        return responsePayload;     
     }
+
     global static DSALES_ReembolsoWrapper.ReembolsoResponse insertReembolso(List<DSALES_ReembolsoWrapper.ReembolsoRequest> reembolso){
         System.debug('Reembolso en reembolso:'+reembolso);
         DSALES_ReembolsoWrapper.ReembolsoResponse responsePayload= new DSALES_ReembolsoWrapper.ReembolsoResponse();
-        List< DSALES_Reembolso__c> listaReembolso = new  List<DSALES_Reembolso__c>();
-        List< String> listaIdsReembolso = new  List<String>();
+        List<DSALES_Reembolso__c> listaReembolso = new  List<DSALES_Reembolso__c>();
+        List<String> listaIdsReembolso = new  List<String>();
         try{
             for(DSALES_ReembolsoWrapper.ReembolsoRequest rem:reembolso){
                 DSALES_Reembolso__c reembolsoRecord = new DSALES_Reembolso__c();
@@ -64,7 +62,9 @@ global class DSALES_ReembolsoWrapperRequest {
             }
             List<String> reembolsoIds= new List<String>();
             System.debug('Insertar reembolso'+listaReembolso);
-            insert listaReembolso;
+            if(Schema.sObjectType.DSALES_Reembolso__c.isCreateable()){
+                insert listaReembolso;
+            }
             responsePayload.exito=true;
             responsePayload.codigoError='';
             responsePayload.mensajeError='Reembolsos creados';
@@ -75,14 +75,10 @@ global class DSALES_ReembolsoWrapperRequest {
         }
         catch(Exception e)
         {
-          responsePayload.exito = false;
-         responsePayload.mensajeError=e.GetMessage() + ' '+ e.GetLineNumber();
-         responsePayload.codigoError=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
-        }
-       
+            responsePayload.exito = false;
+            responsePayload.mensajeError=e.GetMessage() + ' '+ e.GetLineNumber();
+            responsePayload.codigoError=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+        } 
         return responsePayload;
-    }
-    
-    
-    
+    } 
 }
