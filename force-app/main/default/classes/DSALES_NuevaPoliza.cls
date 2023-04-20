@@ -12,6 +12,30 @@
 public with sharing class DSALES_NuevaPoliza {
     
     public static final String NOMBRE_SERVICIO = 'DSALES_createPoliza';
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+    @future(callout=true)
+    public static void invokeService(String idPoliza){
+        String datos='SELECT Id,DSALES_Genero__c,DSALES_Codigopostal__c,DSALES_Codigoestado__c,DSALES_CorreoElectronico__c,DSALES_Activodeplizadeseguro__c,DSALES_Numeroseguimiento__c,SourceQuoteId,DSALES_Negocio__c,DSALES_Aseguradora__c,PlanTier,';
+        String dats='DSALES_Estatusdepliza__c,Name,EffectiveDate,ExpirationDate,DSALES_Prima_Neta__c,DSALES_Prima_total__c,DSALES_Gastos_expedicion__c,DSALES_IVA__c,SourceOpportunityId,TotalSumInsured,DSALES_IDemision__c,DSALES_Servicio__c,DSALES_Uso__c,';
+        String dat='DSALES_Telefono__c,DSALES_Codigomunicipio__c,DSALES_Codigocolonia__c,DSALES_Fechanacimiento__c,DSALES_Numeroserie__c,DSALES_Placas__c,DSALES_Modelo__c,NameInsuredId,DSALES_RFC__c,Fecha_de_emisi_n__c,CreatedDate,DSALES_Opcionpago__c,DSALES_Tipovehiculo__c,';
+        String query =datos+ dats + dat + 'DSALES_PDF_poliza__c,DSALES_Polizaenviada__c FROM InsurancePolicy WHERE Id =:idPoliza';
+        System.debug('Poliza:'+query);
+        InsurancePolicy poliza = DataBase.query(String.escapeSingleQuotes(query));
+        if(service(poliza)!=null){
+            System.debug('se actualiza la póliza');
+            DSALES_GetPolicyPDF.sendPdf(poliza);
+            DSALES_Matriz_de_Cotizacion__c;
+            if(InsurancePolicy.SObjectType.getDescribe().isUpdateable()) {
+                update poliza;
+            }
+        }else{
+            System.debug('No se actualizarón los datos de la póliza');
+        }    
+=======
+=======
+>>>>>>> Deuda-Tecnica
     public static InsurancePolicy invokeService(InsurancePolicyAsset activo){
         InsurancePolicy poliza =new InsurancePolicy();
          String datos='SELECT Id,DSALES_Genero__c,DSALES_Descripcion__c,DSALES_Nmerodemotor__c,DSALES_Clavevehicular__c,DSALES_Codigopostal__c,DSALES_Codigoestado__c,DSALES_CorreoElectronico__c,DSALES_Activodeplizadeseguro__c,DSALES_Numeroseguimiento__c,SourceQuoteId,DSALES_Negocio__c,DSALES_Aseguradora__c,PlanTier,';
@@ -50,10 +74,38 @@ public with sharing class DSALES_NuevaPoliza {
         return poliza;
         
         
+<<<<<<< HEAD
+>>>>>>> Deuda-Tecnica
+=======
+>>>>>>> Deuda-Tecnica
     }
     
     
     public static InsurancePolicy service(InsurancePolicy poliza){
+<<<<<<< HEAD
+<<<<<<< HEAD
+        String body = obtenerCampos(poliza);
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        String endpoint = DSALES_Utility.getEndpoint(NOMBRE_SERVICIO);
+        request.setEndpoint(endpoint);
+        request.setMethod('POST');
+        request.setBody(body);
+        HttpResponse response = http.send(request);
+        System.debug('responseGet: '+ response.getbody());
+        System.debug('Estatus despues de enviar datos: '+ poliza.DSALES_Estatusdepliza__c);
+        DSALES_PolizaWrapper.Application respuesta = (DSALES_PolizaWrapper.Application)JSON.deserialize(response.getbody(),DSALES_PolizaWrapper.Application.class);
+        if(response.getStatusCode() == 200 || response.getStatusCode() == 201 ){
+            InsurancePolicy newPoliza=respuestaExitosa(poliza);
+            return newPoliza;
+        }else{
+            List<DSALES_PolizaWrapper.Errors> errores = respuesta.data.errors;
+            System.debug('size: '+ errores.size());
+            System.System.debug('error: '+errores[0].service.message);
+            return null;
+=======
+=======
+>>>>>>> Deuda-Tecnica
        try{
             String body = obtenerCampos(poliza);
             Http http = new Http();
@@ -94,6 +146,10 @@ public with sharing class DSALES_NuevaPoliza {
             }
         }catch(Exception e){
             System.debug('error: '+e.getLineNumber()+e.getMessage());
+<<<<<<< HEAD
+>>>>>>> Deuda-Tecnica
+=======
+>>>>>>> Deuda-Tecnica
         }
         return poliza;
         return poliza;
@@ -125,7 +181,14 @@ public with sharing class DSALES_NuevaPoliza {
         objPost.contractor_email=obj.DSALES_CorreoElectronico__c;
         objPost.emision_date=String.valueOf( obj.Fecha_de_emisi_n__c);
         objPost.start_at=String.valueOf(obj.CreatedDate);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
         System.debug('poliza json:'+objPost);
+>>>>>>> Deuda-Tecnica
+=======
+        System.debug('poliza json:'+objPost);
+>>>>>>> Deuda-Tecnica
         String str = JSON.serialize(objPost);
         return str;  
     }

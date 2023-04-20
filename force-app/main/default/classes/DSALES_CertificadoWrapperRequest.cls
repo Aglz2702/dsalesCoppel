@@ -5,25 +5,25 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         
         DSALES_CertificadoWrapper.CertificadoResponse responsePayload = new DSALES_CertificadoWrapper.CertificadoResponse();
         if(RestContext.request != null){
-            String Body = System.RestContext.request.requestBody.toString();
+            String cuerpo = System.RestContext.request.requestBody.toString();
             
-            if(String.isNotBlank(Body)){
+            if(String.isNotBlank(cuerpo)){
                 try{
-                    DSALES_CertificadoWrapper.CertificadoRequest certificado = (DSALES_CertificadoWrapper.CertificadoRequest)JSON.deserialize(body, DSALES_CertificadoWrapper.CertificadoRequest.class);
+                    DSALES_CertificadoWrapper.CertificadoRequest certificado = (DSALES_CertificadoWrapper.CertificadoRequest)JSON.deserialize(cuerpo, DSALES_CertificadoWrapper.CertificadoRequest.class);
                     responsePayload = insertCertificado(certificado);
                 }
                 
                 catch(Exception.JSONException e)
                 {
                     responsePayload.exito = false;
-                    responsePayload.mensaje_error = DSALES_Utility.BAD_REQUEST_MSJ;
-                    responsePayload.codigo_error=String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
+                    responsePayload.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ;
+                    responsePayload.codigoError=String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
                     
                 }
                 catch(Exception e){
                     responsePayload.exito = false;
-                    responsePayload.mensaje_error = DSALES_Utility.INTERNAL_ERROR_MSJ;
-                    responsePayload.codigo_error=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+                    responsePayload.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    responsePayload.codigoError=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
                     
                     
                 }
@@ -34,25 +34,25 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         
     }
   
-    global static void  putCertificado(String id_universal,List<DSALES_CancelacionProductosWrapper.ListaProducto> listaProductos,String estatusGlobal,String motivoGlobal)
+    global static void  putCertificado(String idUniversal,List<DSALES_CancelacionProductosWrapper.ListaProducto> listaProductos,String estatusGlobal,String motivoGlobal)
     {
          List<OpportunityLineItem> listaOportunidades = new List<OpportunityLineItem>();
             List<Asset> listaAssetsModificar = new List<Asset>();
         List<DSALES_Certificado__c> listaCertificados = new List<DSALES_Certificado__c>();
         List<DSALES_Certificado__c> listaCertificadosModificar= new List<DSALES_Certificado__c>();
       List<DSALES_InformacionDePago__c> pago =[SELECT Id,DSALES_Oportunidad__c
-                                                    FROM DSALES_InformacionDePago__c WHERE   DSALES_IDUniversal1__c=:id_universal];
+                                                    FROM DSALES_InformacionDePago__c WHERE   DSALES_IDUniversal1__c=:idUniversal WITH SECURITY_ENFORCED];
         if(listaProductos.size()==0 || listaProductos==null)
         {
-            if(!String.isEmpty(id_universal))
+            if(!String.isEmpty(idUniversal))
             {
                 if(pago.size()>0)
                 {
                 Integer contador =0;
-                List<OpportunityLineItem> productoOpor= [SELECT DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c ]; 
+                List<OpportunityLineItem> productoOpor= [SELECT DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c  WITH SECURITY_ENFORCED]; 
                 List<DSALES_Certificado__c> certificados= [SELECT DSALES_Estatus__c FROM DSALES_Certificado__c WHERE
-                                                          DSALES_InformacionDePago__c=:pago[0].Id];
-                List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id ];
+                                                          DSALES_InformacionDePago__c=:pago[0].Id WITH SECURITY_ENFORCED];
+                List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
             	
                 for(OpportunityLineItem oportunidad:productoOpor)
                 {
@@ -85,9 +85,9 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             Map<String,DSALES_CertificadoWrapper.cancelacionGex> mapaCancela = new Map<String,DSALES_CertificadoWrapper.cancelacionGex>();
             if(pago.size()>0)
             {
-                     listaAssets=[SELECT Id,DSALES_SKU__c FROM Asset WHERE  DSales_Informacion_pago__c=:pago[0].id];
+                     listaAssets=[SELECT Id,DSALES_SKU__c FROM Asset WHERE  DSales_Informacion_pago__c=:pago[0].id WITH SECURITY_ENFORCED];
             listaCertificados= [SELECT Name, DSALES_Estatus__c, DSales_Motivo__c FROM
-                                                           DSALES_Certificado__c WHERE DSALES_InformacionDePago__c =:pago[0].id];
+                                                           DSALES_Certificado__c WHERE DSALES_InformacionDePago__c =:pago[0].id WITH SECURITY_ENFORCED];
             }
        
             List<String> idOportunidades= new List<String>(); 
@@ -109,17 +109,11 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                     listaOportunidades.add(oppor);
                    
                 }
-                else
-                {
-                    if(!String.isEmpty(lp.idCertificado))
-                    {
-                        
-                    }
-                }
+                
             }
             
             List<OpportunityLineItem> sku =[SELECT Id,Product2.StockKeepingUnit,DSALES_FolioCertificado__c FROM OpportunityLineItem
-                                           WHERE Id IN:idOportunidades];
+                                           WHERE Id IN:idOportunidades WITH SECURITY_ENFORCED];
            
            for(OpportunityLineItem s:sku)
            {
@@ -155,9 +149,8 @@ global with sharing class DSALES_CertificadoWrapperRequest {
            }
           
         }
-          update listaAssetsModificar;
-            update listaOportunidades;
-            update listaCertificadosModificar;
+
+          actualizaListas(listaAssetsModificar,listaOportunidades,listaCertificadosModificar);
         
         
         
@@ -166,7 +159,23 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         
     }
     
-   
+   public static void actualizaListas(List<Asset> listaAssetsModificar, List<OpportunityLineItem> listaOportunidades, List<DSALES_Certificado__c> listaCertificadosModificar)
+   {
+            if(Schema.sObjectType.Asset.isUpdateable())
+            {
+                update listaAssetsModificar;
+            }
+          
+            if(Schema.sObjectType.OpportunityLineItem.isUpdateable())
+            {
+                update listaOportunidades;
+            }
+           
+            if(Schema.sObjectType.DSALES_Certificado__c.isUpdateable())
+            {
+                update listaCertificadosModificar;
+            }
+   }
    
     
     global static DSALES_CertificadoWrapper.CertificadoResponse insertCertificado(DSALES_CertificadoWrapper.CertificadoRequest certificado){
@@ -175,46 +184,50 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         String message = '';
         String code='';
         try{
-            if(certificado.numero_cliente!=null)
+            if(certificado.numeroCliente!=null)
             {
-                Account cliente =[SELECT Id FROM ACCOUNT WHERE CP_WalletCustomerNumber__c=:Double.valueOf(certificado.numero_cliente) LIMIT 1]; 
+                Account cliente =[SELECT Id FROM ACCOUNT WHERE CP_WalletCustomerNumber__c=:Double.valueOf(certificado.numeroCliente) WITH SECURITY_ENFORCED LIMIT 1 ]; 
                 certificadoRecord.DSALES_Cliente__c=cliente.Id;
             }
             else
             {
-                certificadoRecord.DSALES_Cliente__c=certificado.id_cuenta;
+                certificadoRecord.DSALES_Cliente__c=certificado.idCuenta;
             }
             
-            certificadoRecord.DSALES_ProductoAdquirido__c=certificado.id_producto_adquirido;
+            certificadoRecord.DSALES_ProductoAdquirido__c=certificado.idProductoAdquirido;
             
-            certificadoRecord.DSALES_Ticket__c=certificado.id_factura;
-            certificadoRecord.DSALES_Tienda__c=certificado.clave_tienda;
-            certificadoRecord.DSALES_TiendaId__c=certificado.id_tienda;
-            certificadoRecord.DSALES_Caja_GEX__c=certificado.numero_caja_coppel;
-            certificadoRecord.DSALES_Numero_de_Vendedor__c=certificado.id_vendedor;
-            certificadoRecord.DSALES_Nombre_Vendedor__c=certificado.nombre_vendedor;	
-            certificadoRecord.DSALES_Domicilio_del_Client_e__c=certificado.direccion_cliente;
-            certificadoRecord.DSALES_Email__c=certificado.email_cliente;
-            certificadoRecord.DSALES_No_de_Telefono__c=certificado.telefono_cliente;
-            certificadoRecord.DSALES_Numero_celular__c=certificado.celular_cliente;
+            certificadoRecord.DSALES_Ticket__c=certificado.idFactura;
+            certificadoRecord.DSALES_Tienda__c=certificado.claveTienda;
+            certificadoRecord.DSALES_TiendaId__c=certificado.idTienda;
+            certificadoRecord.DSALES_Caja_GEX__c=certificado.numeroCajaCoppel;
+            certificadoRecord.DSALES_Numero_de_Vendedor__c=certificado.idVendedor;
+            certificadoRecord.DSALES_Nombre_Vendedor__c=certificado.nombreVendedor;	
+            certificadoRecord.DSALES_Domicilio_del_Client_e__c=certificado.direccionCliente;
+            certificadoRecord.DSALES_Email__c=certificado.emailCliente;
+            certificadoRecord.DSALES_No_de_Telefono__c=certificado.telefonoCliente;
+            certificadoRecord.DSALES_Numero_celular__c=certificado.celularCliente;
             certificadoRecord.DSALES_SKU__c=certificado.sku;	
-            certificadoRecord.DSALES_Modelo__c=certificado.modelo_tangible;	
-            certificadoRecord.DSALES_Marca__c=certificado.marca_tangible;	
-            certificadoRecord.DSALES_Numero_serie__c=certificado.numero_serie;	
-            certificadoRecord.DSALES_DescripcionDelArtculo__c=certificado.descripcion_tangible;
-            certificadoRecord.DSALES_Precio_del_Articulo__c=certificado.precio_tangible;
-            certificadoRecord.DSALES_Duracion_de_GEX__c=certificado.garantia_coppel_tangible;
-            certificadoRecord.DSales_Garantia_Coppel__c=certificado.garantia_coppel_producto;
-            certificadoRecord.DSALES_Fecha_de_compra_GEX__c=certificado.fecha_compra_garantia;	
-            certificadoRecord.DSALES_Fecha_Inicio_de_Vigencia__c=certificado.fecha_inicio_garantia_extendida;
-            certificadoRecord.DSALES_Costo_de_Garantia_Extendida__c=certificado.costo_garantia;
-            certificadoRecord.DSALES_Fecha_Fin_Vigencia__c=certificado.fecha_fin_garantia_extendida;
-            certificadoRecord.DSALES_Fecha_de_venta_del_articulo__c=certificado.fecha_venta;
-            certificadoRecord.DSALES_InformacionDePago__c=certificado.id_pago;
-            certificadoRecord.DSALES_ProductoAdquirido__c=certificado.id_producto_adquirido;
-            certificadoRecord.DSALES_SKUTangible__c=certificado.sku_de_tangible;
+            certificadoRecord.DSALES_Modelo__c=certificado.modeloTangible;	
+            certificadoRecord.DSALES_Marca__c=certificado.marcaTangible;	
+            certificadoRecord.DSALES_Numero_serie__c=certificado.numeroSerie;	
+            certificadoRecord.DSALES_DescripcionDelArtculo__c=certificado.descripcionTangible;
+            certificadoRecord.DSALES_Precio_del_Articulo__c=certificado.precioTangible;
+            certificadoRecord.DSALES_Duracion_de_GEX__c=certificado.garantiaCoppelTangible;
+            certificadoRecord.DSales_Garantia_Coppel__c=certificado.garantiaCoppelProducto;
+            certificadoRecord.DSALES_Fecha_de_compra_GEX__c=certificado.fechaCompraGarantia;	
+            certificadoRecord.DSALES_Fecha_Inicio_de_Vigencia__c=certificado.fechaInicioGarantiaExtendida;
+            certificadoRecord.DSALES_Costo_de_Garantia_Extendida__c=certificado.costoGarantia;
+            certificadoRecord.DSALES_Fecha_Fin_Vigencia__c=certificado.fechaFinGarantiaExtendida;
+            certificadoRecord.DSALES_Fecha_de_venta_del_articulo__c=certificado.fechaVenta;
+            certificadoRecord.DSALES_InformacionDePago__c=certificado.idPago;
+            certificadoRecord.DSALES_ProductoAdquirido__c=certificado.idProductoAdquirido;
+            certificadoRecord.DSALES_SKUTangible__c=certificado.skuDeTangible;
             
-            insert certificadoRecord;
+            if(Schema.sObjectType.DSALES_Certificado__c.isCreateable())
+            {
+                insert certificadoRecord;
+            }
+         
             
             success = true;
             message = '';
@@ -230,9 +243,9 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         
         DSALES_CertificadoWrapper.CertificadoResponse responsePayload = new DSALES_CertificadoWrapper.CertificadoResponse();
         responsePayload.exito = success;
-        responsePayload.mensaje_error = message;
-        responsePayload.codigo_error=code;
-        responsePayload.id_certificado = certificadoRecord.id;
+        responsePayload.mensajeError = message;
+        responsePayload.codigoError=code;
+        responsePayload.idCertificado = certificadoRecord.id;
         
         return responsePayload;
     }
