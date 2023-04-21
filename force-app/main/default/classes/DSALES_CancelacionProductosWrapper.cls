@@ -1,5 +1,6 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global with sharing class DSALES_CancelacionProductosWrapper {
-    global class request{
+    global class Request{
         global String canal { get; set; }
         global Date fechaCancelacion { get; set; }
         global String folioCancelacion { get; set; }
@@ -10,8 +11,8 @@ global with sharing class DSALES_CancelacionProductosWrapper {
         global String numeroVendedor { get; set; }
         global String estatus { get; set; }
         global String motivoCancelacion { get; set; }
-        global List<ListaProducto> ListaProductos { get; set; }
-        global List<DSALES_ReembolsoWrapper.ReembolsoRequest> ListaReembolso {get;set;}
+        global List<ListaProducto> listaProductos { get; set; }
+        global List<DSALES_ReembolsoWrapper.ReembolsoRequest> listaReembolso {get;set;}
     }
     global class ListaProducto
     {
@@ -21,7 +22,7 @@ global with sharing class DSALES_CancelacionProductosWrapper {
         global String idCertificado { get; set; }
     }
 
-    global class response{
+    global class Response{
         global Boolean success{get;set;}
         global Integer codigoError{set;get;}
         global String mensajeError{set;get;}
