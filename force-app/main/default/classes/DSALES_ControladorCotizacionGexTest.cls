@@ -87,7 +87,7 @@ public class DSALES_ControladorCotizacionGexTest {
         gen3.DSALES_Plantilla__c='Cotizacion';
         insert gen3;
    	}
-        @istest public  static void DSALES_ControladorCotizacionGex()
+        @istest public  static void controladorCotizacionGex()
         {
             Test.startTest();
             List<Product2> pd=[SELECT Name,Family, DSales_Tipo_de_Producto__c FROM Product2 WHERE DSales_Tipo_de_Producto__c='Producto' LIMIT 1];
@@ -107,8 +107,9 @@ public class DSALES_ControladorCotizacionGexTest {
             
            
             Test.stopTest();
+            System.assertEquals('quoteId', qt.Id, '');
         }
-     @istest public  static void DSALES_ControladorCotizacionSG()
+     @istest public  static void controladorCotizacionSG()
         {
             Test.startTest();
             List<Product2> pd=[SELECT Name,Family, DSales_Tipo_de_Producto__c FROM Product2 WHERE DSales_Tipo_de_Producto__c='Producto' LIMIT 1];
@@ -132,8 +133,9 @@ public class DSALES_ControladorCotizacionGexTest {
             
            
             Test.stopTest();
+            System.assertEquals('quoteId', qt.Id, '');
         }
-    @istest public  static void DSALES_ControladorCotizacionSG2()
+    @istest public  static void controladorCotizacionSG2()
         {
             Test.startTest();
             List<Product2> pd=[SELECT Name,Family, DSales_Tipo_de_Producto__c FROM Product2 WHERE DSales_Tipo_de_Producto__c='Producto' LIMIT 1];
@@ -156,6 +158,8 @@ public class DSALES_ControladorCotizacionGexTest {
             
            
             Test.stopTest();
+            System.assertEquals('quoteId', qt2.Id, '');
+
         }
         
 }
