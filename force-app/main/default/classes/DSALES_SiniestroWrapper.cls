@@ -19,6 +19,7 @@ global class DSALES_SiniestroWrapper {
         global String estatus { get; set;}
         global String salesforceid { get; set;}
     }
+
     global class Vehiculo{
         global String descripcion { get; set;}
         global String anio { get; set;}
@@ -55,8 +56,8 @@ global class DSALES_SiniestroWrapper {
         global String nombreConductor { get; set;}
         global String causa { get; set;}
 
-        global vehiculo vehiculo { get; set;}
-        global poliza poliza { get; set;}
+        global Vehiculo vehiculo { get; set;}
+        global Poliza poliza { get; set;}
 
         global String comoOcurrio { get; set;}
         global String ubicacion { get; set;}
@@ -82,9 +83,9 @@ global class DSALES_SiniestroWrapper {
         global String nombreConductor { get; set;}
         global String causa { get; set;}
 
-        global vehiculo vehiculo { get; set;}
-        global poliza poliza { get; set;}
-		global List<listaSiniestros> listSiniestro{get;set;}
+        global Vehiculo vehiculo { get; set;}
+        global Poliza poliza { get; set;}
+		global List<ListaSiniestros> listSiniestro{get;set;}
         global String comoOcurrio { get; set;}
         global String ubicacion { get; set;}
         global String municipio { get; set;}

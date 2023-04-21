@@ -30,7 +30,7 @@ public class DSALES_ConsultaListaNegraTest {
         RestResponse res3 = new RestResponse();
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(4)); 
-        DSALES_ConsultaListaNegra.listaNegra(cotizacion.Id);
+        DSALES_ConsultaListaNegra.callWebService('rfc','alberto');
 		Test.stopTest();
         System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }

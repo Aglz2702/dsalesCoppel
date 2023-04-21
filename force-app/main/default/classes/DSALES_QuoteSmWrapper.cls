@@ -1,14 +1,13 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global class DSALES_QuoteSmWrapper {
     global class QuoteSmRequest{
-        global String numerocliente {get;set;}
+        global String numeroCliente {get;set;}
         global String nombre {get; set;}
         global String apellidoMaterno {get;set;}
         global String apellidoPaterno {get;set;}
         global String idTienda {get; set;}
         global String sku {get;set;}
         //pedido por inter
-        
         global String tipoUso {get; set;}
         global String tipoVehiculo {get; set;}
         global String rfc {get; set;}
@@ -26,33 +25,32 @@ global class DSALES_QuoteSmWrapper {
     }
     global class QuotePostProvedor{
         //Inter Cotizacion
+        global String negocio {get; set;} //sales-fijo
+        global String aseguradora {get; set;} //sales-fijo
+        global String nombreCompleto {get; set;}//combinacion
+        global String metodoContacto {get; set;}//sales-fijo
+        global String telefonoContacto {get; set;}
+        global String correoContacto {get;set;}
+        global String generoContacto {get; set;}
+        global String fechaNacimientoContacto {get; set;}
+        global String cpContacto{get; set;}
+        global Boolean contactar {get; set;}//fijo-sales
+        global String idVehiculo {get; set;}
+        global String servicioVehiculo {get; set;}//fijo-sales
+        global String usoVehiculo {get; set;}//fijo-sales
+        global String tipoVehiculo {get; set;}//fijo-sales
+        global String opcionPago {get; set;}
+        global String paquete {get; set;}
+        global String codigoPromocion {get; set;}//fijo
+        global String idAsociado {get; set;}//fijo
+        global String fechaCotizacion {get; set;}//fecha creacion-sales
+        global String fechaInicio {get; set;}      
         global String plazo {get; set;}
-        global String business {get; set;} //sales-fijo
-        global String insurance {get; set;} //sales-fijo
-        global String contactName {get; set;}//combinacion
-        global String contactMethod {get; set;}//sales-fijo
-        global String contactPhone {get; set;}
-        global String contactEmail {get;set;}
-        global String contactGender {get; set;}
-        global String contactBirthDate {get; set;}
-        global String contactZipCode{get; set;}
-        global Boolean contactNow {get; set;}//fijo-sales
-        global String vehicleId {get; set;}
-        global String vehicleService {get; set;}//fijo-sales
-        global String vehicleUse {get; set;}//fijo-sales
-        global String vehicleType {get; set;}//fijo-sales
-        global String paymentOption {get; set;}
-        global String packagge {get; set;}
-        global String promotionCode {get; set;}//fijo
-        global String associateId {get; set;}//fijo
-        global String quoteDate {get; set;}//fecha creacion-sales
-        global String startAt {get; set;}
         global List<Plazo> listaPlazos {get; set;}
-        
     }
     global class Plazo {
-		global String producto {get;set;}
-        global String plazo {get;set;}
+		global String paquete {get;set;}
+        global String opcionPago {get;set;}
 	}
     
 	global class Product {
@@ -78,7 +76,7 @@ global class DSALES_QuoteSmWrapper {
 	}
     global class RespuestaPlazos{
         global String trackingId {get;set;}
-        global String nombreProducto {get;set;}
+        global String paquete {get;set;}
         global String vigencia {get;set;}  
         global String idpartida {get;set;}
         global String descripcion {get;set;}
@@ -95,7 +93,7 @@ global class DSALES_QuoteSmWrapper {
         global List<RespuestaPlazos> listaSeguros {get;set;}
         global RespuestaPlazos listaproducto {get;set;}
         global List<Campanias> campanias{get;set;}
-        global String idoportunidad{get;set;}   
+        global String idOportunidad{get;set;}   
     }
 
     global class CoveragesArray{
@@ -111,8 +109,8 @@ global class DSALES_QuoteSmWrapper {
         global List<Receipt> receipts {get;set;}
         global InsurancePremium insurancePremium {get;set;}
         global String policeId {get;set;}
-        global String companylogo {get;set;}
-        global List<PaymentOptionsJson> paymentPptionsJson {get;set;}
+        global String companyLogo {get;set;}
+        global List<PaymentOptionsJson> paymentOptionsJson {get;set;}
     }
     
     global class InsurancePremium{
