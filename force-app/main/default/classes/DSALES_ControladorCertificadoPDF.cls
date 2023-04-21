@@ -1,4 +1,4 @@
-public class DSALES_ControladorCertificadoPDF {
+public without sharing class DSALES_ControladorCertificadoPDF {
     
     public String html{get;set;}
     private static final String NOMBRE_OBJETO = 'DSALES_Certificado__c';
@@ -10,8 +10,6 @@ public class DSALES_ControladorCertificadoPDF {
     public DSALES_ControladorCertificadoPDF(){
         
         String recordId = ApexPages.currentPage().getParameters().get('certificadoId');
-        //Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename='+MY_FILE_NAME);
-        //html = [Select Id, HtmlValue, Subject from EmailTemplate Where DeveloperName = :NOMBRE_PLANTILLA].HtmlValue;
         html = [select Id, DSALES_Plantilla__c  from DSALES_Generador__c Where Name = :NOMBRE_PLANTILLA].DSALES_Plantilla__c;
         html = html.replace('border-color: #ffffff;', 'border-image: initial; border: 1px solid blue;');
         html=html.replace('p style="text-align:center"', 'p style="text-align:center; font-size:10px; color:rgb(0, 101, 173);"');

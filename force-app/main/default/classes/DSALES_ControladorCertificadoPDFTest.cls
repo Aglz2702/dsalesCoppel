@@ -14,15 +14,15 @@ public class DSALES_ControladorCertificadoPDFTest {
         DSALES_Generador__C genera= new DSALES_Generador__c(Name='Certificado PDF',DSALES_Plantilla__c='Name,DSALES_Duracion_de_GEX__c');
         insert genera;
     }
-    @isTest static void DSALES_ControladorCertificadoPDF()
+    @isTest 
+    static void dsalesControladorCertificadoPDF()
     {
         DSALES_Certificado__c certificado= [SELECT id FROM DSALES_Certificado__c];
         PageReference pageRef = Page.DSALES_CertificadoPDF;
         Test.setCurrentPage(pageRef);
-        // put the certificado id as a parameter
         ApexPages.currentPage().getParameters().put('certificadoId',certificado.Id);
-        // Call your apex method here and you will get code coverage
         DSALES_ControladorCertificadoPDF d = new DSALES_ControladorCertificadoPDF();
+        system.assertNotEquals(200, integer.valueof(d), 'la llamada no debe devolver un código 200');
         
     }
     

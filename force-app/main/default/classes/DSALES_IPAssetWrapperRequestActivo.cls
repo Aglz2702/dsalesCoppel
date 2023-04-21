@@ -13,18 +13,24 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         List<DSALES_IPAssetWrapper.ListaPartidasOportunidad> listaPartidas = new List<DSALES_IPAssetWrapper.ListaPartidasOportunidad>();
         DSALES_IPAssetWrapper.Seguro seguro = new DSALES_IPAssetWrapper.Seguro();
         if(RestContext.request != null){
-            String Body = System.RestContext.request.requestBody.toString();
-            if(String.isNotBlank(Body)){
+            String body = System.RestContext.request.requestBody.toString();
+            if(String.isNotBlank(body)){
                 try{
                     DSALES_IPAssetWrapper.IPAssetRequest policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
-                  	DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_IDUniversal__c,	DSALES_Oportunidad__c,DSALES_Motoentregada__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal];
-					pago.DSALES_Motoentregada__c=true;	
-                    for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
-                                          FROM OpportunityLineItem WHERE OpportunityId=:pago.DSALES_Oportunidad__c AND Product2.DSales_Tipo_de_Producto__c=:'Seguro']){
-                       if(partidasSeguro.DSALES_Estatus__c=='Devuelto' || partidasSeguro.DSALES_Estatus__c=='Cancelado' ){
-                        	      emitirPoliza=false;                    
-                       }                                             
+                    DSALES_InformacionDePago__c pago= new DSALES_InformacionDePago__c();
+                    if (Schema.sObjectType.DSALES_InformacionDePago__c.isQueryable()) {
+                        pago=[SELECT Id,DSALES_IDUniversal__c,	DSALES_Oportunidad__c,DSALES_Motoentregada__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal];
+                        pago.DSALES_Motoentregada__c=true;	
                     }
+					if (Schema.sObjectType.OpportunityLineItem.isQueryable()) {
+                        for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
+                            FROM OpportunityLineItem WHERE OpportunityId=:pago.DSALES_Oportunidad__c AND Product2.DSales_Tipo_de_Producto__c=:'Seguro']){
+                            if(partidasSeguro.DSALES_Estatus__c=='Devuelto' || partidasSeguro.DSALES_Estatus__c=='Cancelado' ){
+                                emitirPoliza=false;                    
+                            }                                             
+                        }
+                    }
+                   
                     
                     if(policyAsset.numeroSerie!=''){
                         InsurancePolicyAsset activo= insertIPAsset(policyAsset);
@@ -45,10 +51,16 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                                 
                             }
                             else{
-                                insert activo;
+                                if(Schema.sObjectType.InsurancePolicyAsset.isCreateable()) {
+                                    insert activo;
+                                }
+                                
                                 idActivo=activo.Id;
                                 //if(pago.DSALES_Poliza__c!=null){
-                                    InsurancePolicy polizaActivo = [SELECT Id FROM InsurancePolicy WHERE Id=:pago.DSALES_Poliza__c];//agregar datos de activo en póliza
+                                    InsurancePolicy polizaActivo=new InsurancePolicy();
+                                    if (Schema.sObjectType.InsurancePolicy.isQueryable()) {
+                                        polizaActivo = [SELECT Id FROM InsurancePolicy WHERE Id=:pago.DSALES_Poliza__c];
+                                    }
                                     polizaActivo.DSALES_Activodeplizadeseguro__c=activo.Id;
                                     polizaActivo.DSALES_Clavevehicular__c=activo.DSALES_Clavevehicular__c;
                                     polizaActivo.DSALES_Modelo__c=activo.DSALES_Modelo__c;
@@ -59,7 +71,10 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                                     polizaActivo.DSALES_Placas__c=activo.DSALES_Placas__c;
                                     polizaActivo.DSALES_Marca__c=activo.DSALES_Marca__c;
                                     polizaActivo.DSALES_Uso__c=activo.DSALES_Uso__c;
-                                    update polizaActivo;
+                                    if(InsurancePolicy.SObjectType.getDescribe().isUpdateable()) {
+                                        update polizaActivo;  
+                                    }
+                                    
                                     
                                // }
                             }
@@ -82,7 +97,10 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                             listaPartidas.add(listp);
                         }
                         success=true;
-                        update pago;
+                        if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
+                            update pago;  
+                        }
+                        
                     }    ///num-se
                 }catch(Exception.JSONException e)
                 {
@@ -117,54 +135,54 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         String message='';
         Integer code;
 
-        InsurancePolicyAsset IPassetRecord  = new InsurancePolicyAsset();
+        InsurancePolicyAsset ipAssetRecord  = new InsurancePolicyAsset();
         try {
             DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c,DSALES_Nombre_del_Vendedor__c,DSALES_Motoentregada__c, DSALES_Motoexterna__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal LIMIT 1];
             if(pago.DSALES_Seguro__c ==true ) {
-                IPassetRecord.DSALES_InformacionPago__c=pago.Id;
-                IPassetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
-                IPassetRecord.DSALES_Tienda__c=policyAsset.idTienda;
-                IPassetRecord.DSALES_Colaborador__c=pago.DSALES_Nombre_del_Vendedor__c;
-                IPassetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
-                IPassetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
-                IPassetRecord.InsurancePolicyId=pago.DSALES_Poliza__c;
-                IPassetRecord.Estatus__c='Activo';
-                IPassetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
-                IPassetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
-                IPassetRecord.DSALES_Modelo__c=policyAsset.modelo;
-                IPassetRecord.DSALES_Marca__c=policyAsset.marca;
-                IPassetRecord.DSALES_Numeromotor__c=policyAsset.numeroMotor;
-                IPassetRecord.DSALES_Numeroserie__c=policyAsset.numeroSerie;
-                IPassetRecord.DSALES_Placas__c=policyAsset.placas;
-                IPassetRecord.DSALES_Servicio__c=policyAsset.servicio;
-                IPassetRecord.DSALES_Uso__c  =policyAsset.uso;
-                IPassetRecord.AssetName=policyAsset.nombreActivo;
-                IPassetRecord.DSALES_emitir_poliza__c=policyAsset.emitirPoliza;            
+                ipAssetRecord.DSALES_InformacionPago__c=pago.Id;
+                ipAssetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
+                ipAssetRecord.DSALES_Tienda__c=policyAsset.idTienda;
+                ipAssetRecord.DSALES_Colaborador__c=pago.DSALES_Nombre_del_Vendedor__c;
+                ipAssetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
+                ipAssetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
+                ipAssetRecord.InsurancePolicyId=pago.DSALES_Poliza__c;
+                ipAssetRecord.Estatus__c='Activo';
+                ipAssetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
+                ipAssetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
+                ipAssetRecord.DSALES_Modelo__c=policyAsset.modelo;
+                ipAssetRecord.DSALES_Marca__c=policyAsset.marca;
+                ipAssetRecord.DSALES_Numeromotor__c=policyAsset.numeroMotor;
+                ipAssetRecord.DSALES_Numeroserie__c=policyAsset.numeroSerie;
+                ipAssetRecord.DSALES_Placas__c=policyAsset.placas;
+                ipAssetRecord.DSALES_Servicio__c=policyAsset.servicio;
+                ipAssetRecord.DSALES_Uso__c  =policyAsset.uso;
+                ipAssetRecord.AssetName=policyAsset.nombreActivo;
+                ipAssetRecord.DSALES_emitir_poliza__c=policyAsset.emitirPoliza;            
                 success = true; 
               
             }
             if(pago.DSALES_Seguro__c ==false ) {
                 InsurancePolicy poliza = [SELECT Id, Name  FROM InsurancePolicy where  Name=:DSALES_Utility.SEGURO_PREDETERMINADO];
                 System.debug('poliza domi'+poliza);
-                IPassetRecord.DSALES_InformacionPago__c=pago.Id;
-                IPassetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
-                IPassetRecord.DSALES_Tienda__c=policyAsset.idTienda;
-                IPassetRecord.DSALES_Colaborador__c=pago.DSALES_Nombre_del_Vendedor__c;
-                IPassetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
-                IPassetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
-                IPassetRecord.InsurancePolicyId= poliza.Id;
-                IPassetRecord.Estatus__c='Activo';
-                IPassetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
-                IPassetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
-                IPassetRecord.DSALES_Modelo__c=policyAsset.modelo;
-                IPassetRecord.DSALES_Marca__c=policyAsset.marca;
-                IPassetRecord.DSALES_Numeromotor__c=policyAsset.numeroMotor;
-                IPassetRecord.DSALES_Numeroserie__c=policyAsset.numeroSerie;
-                IPassetRecord.DSALES_Placas__c=policyAsset.placas;
-                IPassetRecord.DSALES_Servicio__c=policyAsset.servicio;
-                IPassetRecord.DSALES_Uso__c  =policyAsset.uso;
-                IPassetRecord.AssetName=policyAsset.nombreActivo;
-                IPassetRecord.DSALES_emitir_poliza__c=policyAsset.emitirPoliza;            
+                ipAssetRecord.DSALES_InformacionPago__c=pago.Id;
+                ipAssetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
+                ipAssetRecord.DSALES_Tienda__c=policyAsset.idTienda;
+                ipAssetRecord.DSALES_Colaborador__c=pago.DSALES_Nombre_del_Vendedor__c;
+                ipAssetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
+                ipAssetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
+                ipAssetRecord.InsurancePolicyId= poliza.Id;
+                ipAssetRecord.Estatus__c='Activo';
+                ipAssetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
+                ipAssetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
+                ipAssetRecord.DSALES_Modelo__c=policyAsset.modelo;
+                ipAssetRecord.DSALES_Marca__c=policyAsset.marca;
+                ipAssetRecord.DSALES_Numeromotor__c=policyAsset.numeroMotor;
+                ipAssetRecord.DSALES_Numeroserie__c=policyAsset.numeroSerie;
+                ipAssetRecord.DSALES_Placas__c=policyAsset.placas;
+                ipAssetRecord.DSALES_Servicio__c=policyAsset.servicio;
+                ipAssetRecord.DSALES_Uso__c  =policyAsset.uso;
+                ipAssetRecord.AssetName=policyAsset.nombreActivo;
+                ipAssetRecord.DSALES_emitir_poliza__c=policyAsset.emitirPoliza;            
                 success = true; 
               
             }
@@ -176,7 +194,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         }
 
 
-        return IPassetRecord;
+        return ipAssetRecord;
     }
     
 }

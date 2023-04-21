@@ -1,4 +1,4 @@
-public class DSALES_GexCotizacionesHelper {
+public without sharing class DSALES_GexCotizacionesHelper {
     //SG Template
     private static final String TEMPLETE_NAME = 'Envi_de_cotizaci_n_1660589806562';
     //GEX
