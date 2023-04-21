@@ -8,18 +8,6 @@
                     </div>
                 </template>
             </div>
-
-
-            <!-- <div class="slds-align_absolute-center">
-                <abbr class="slds-required" title="required">* </abbr> Tipo de compañía de seguros :
-                <div style="width:200px; padding:0.5rem;">
-                    <lightning-combobox onselectoption={handleSelectOption} options={options} value={selectedValue}
-                        onchange={handleChange} name="Tipo De Insurance"></lightning-combobox>
-                </div>
-            </div> -->
-
-
-            <!-- <template if:true={areDetailsVisible}> -->
             <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-label="">
                 <thead>
                     <tr class="slds-line-height_reset">
@@ -39,12 +27,11 @@
                 </thead>
 
 
-                <!-- <template if:true={isNameCorrection}> -->
 
                 <template for:each={dataFile} for:item="nm">
                     <tr class="slds-hint-parent" key={nm.Id}>
                         <th scope="row"> {nm.value} </th>
-                        <th>
+                        <th scope="row">
                             <lightning-file-upload name="fileUploader" accept={acceptedFormats} record-id={recordId}
                                 onuploadfinished={uploadFileData} data-item={nm.Id} multiple>
                             </lightning-file-upload>
@@ -62,9 +49,7 @@
                         </th>
                     </tr>
                 </template>
-                <!-- </template> -->
             </table>
-            <!-- </template> -->
 
         </div>
         <div slot="footer">
