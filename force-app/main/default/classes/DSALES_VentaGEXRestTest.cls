@@ -2,7 +2,7 @@
 public with sharing class DSALES_VentaGEXRestTest {
     
     @testSetup
-    static void SetUp(){
+    static void crearRegistro(){
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         String recordTypeQuoteId = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Garantía Extendida').getRecordTypeId();
         Tienda__c t = new Tienda__c();
@@ -67,7 +67,7 @@ public with sharing class DSALES_VentaGEXRestTest {
     }
     
     @isTest 
-    static void CreateSaleTest(){
+    static void crearVentaTest(){
         Quote cotiza=[SELECT id FROM Quote LIMIT 1];
         QuoteLineItem qt=[SELECT Id FROM QuoteLineItem LIMIT 1]; 
         RestRequest req = new RestRequest();
@@ -82,22 +82,23 @@ public with sharing class DSALES_VentaGEXRestTest {
         Test.startTest();
         DSALES_VentaGEX.VentaGexResponse ventaGex= new DSALES_VentaGEX.VentaGexResponse();
        DSALES_VentaGEX.OpporLineItem oporLine = new DSALES_VentaGEX.OpporLineItem();
-        oporLine.id_partida_de_oportunidad='test';
-        oporLine.nombre_producto='Test';
+        oporLine.idPartidaDeOportunidad='test';
+        oporLine.nombreProducto='Test';
         oporLine.sku='Test';
-        oporLine.tipo_producto='Test';
-        oporLine.id_producto_adquirido='Test';
+        oporLine.tipoProducto='Test';
+        oporLine.idProductoAdquirido='Test';
         DSALES_VentaGEX.ServicioCorrespondiente servicio = new  DSALES_VentaGEX.ServicioCorrespondiente();
-        servicio.folio_certificado='Test';
+        servicio.folioCertificado='Test';
         servicio.sku='Test';
-        servicio.tipo_producto='Test';
-        servicio.id_partida_de_oportunidad='Test';
+        servicio.tipoProducto='Test';
+        servicio.idPartidaDeOportunidad='Test';
         DSALES_VentaGEXRest.createVenta();
         Test.stopTest();
         RestContext.request = req;
         RestContext.response= res;
+        System.assertEquals(200, res.statusCode,'El status code no debería ser 200');
     }
-     static void CreateSaleTestWrong(){
+     static void crearVentaMalTest(){
         RestRequest req2= new RestRequest(); 
         RestResponse res2= new RestResponse();
         String body2 = '{"":stupurc: "Carl55 6666","movilPhone": "123 456 7890","price": 500,"cash_total": 500,"credit_VAT": 0,"electronic_money": 10,"paymentElectronic_money": 0,"cash_payment": 200,"change": 0,"wonElectronic_money": 1,"GEX_paid": false,"price_noVAT": 200,"price_DiscountVAT": 200,"price_DiscountNoVAT": 200,"sku": "123468901"}]}}';
@@ -111,6 +112,8 @@ public with sharing class DSALES_VentaGEXRestTest {
         Test.stopTest();
         RestContext.request = req2;
         RestContext.response= res2;
+        System.assertEquals(200, res2.statusCode,'El status code no debería ser 200');
+
     }
     
 }

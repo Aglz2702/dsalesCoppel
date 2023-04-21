@@ -9,17 +9,6 @@
  * 1.0   04-18-2023                       Initial Version
 **/
 @SuppressWarnings('PMD.AvoidGlobalModifier')
-/**
- * @description       : Test class for PaymentInfoWrapperGex
- * @author            : 
- * @group             : 
- * @last modified on  : 04-18-2023
- * @last modified by  : Juan Antonio Flores
- * Modifications Log 
- * Ver   Date          Author             Modification
- * 1.0   04-18-2023                       Initial Version  
-**/
-@SuppressWarnings('PMD.AvoidGlobalModifier')
 global class DSALES_PaymentInfoWrapper {
     global class PaymentRequest{
         global String idUniversal { get; set; }
@@ -31,6 +20,8 @@ global class DSALES_PaymentInfoWrapper {
         global String numeroCaja { get; set; }
         global String idOportunidad { get; set; }
         global String claveTienda { get; set; }
+
+        global Date fechaDeEntrega { get; set; }//pdf
         global Date fechaEntrega { get; set; }
         global Date fechaVenta { get; set; }
         global String sku { get; set; }
@@ -38,10 +29,14 @@ global class DSALES_PaymentInfoWrapper {
         global List<ListaDePago> listaDePagos { get; set; }
     }
     global class ListaDePago{
+        //public Integer num_pago { get; set; }
         global String metodoPago { get; set; }
         global Integer pago { get; set; }
     }
     global class PaymentResponse{
+        global String errorMessage {get;set;}
+        global Integer errorCode {get;set;}
+        global Boolean success {get;set;}
         global String mensajeError {get;set;}
         global Integer codigoError {get;set;}
         global Boolean exito {get;set;}
