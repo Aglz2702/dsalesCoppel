@@ -1,53 +1,16 @@
 import { LightningElement, api, wire, track } from "lwc";
 import { CloseActionScreenEvent } from "lightning/actions";
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
-import { deleteRecord } from 'lightning/uiRecordApi';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { getRecord, getFieldValue, deleteRecord } from 'lightning/uiRecordApi';
 import DSALES_TIPO_DE_ENDOSO__C from '@salesforce/schema/DSALES_Endoso__c.DSALES_Tipodeendoso__c';
 import DSALES_TIPO_DE_DOCUMENTOS__C from '@salesforce/schema/DSALES_Endoso__c.DSALES_Tipodedocumento__c';
 import endosoDocuments from '@salesforce/apex/endososControllerClass.endosoDocuments';
-const MAX_FILE_SIZE = 4500000;
 
 const fields = [DSALES_TIPO_DE_ENDOSO__C, DSALES_TIPO_DE_DOCUMENTOS__C];
-//import CLAIMTYPE_FIELD from '@salesforce/schema/Claim.ClaimType';
-
-/* const options = [
-     {'label':'MAPFRE','value':'MAPFRE'},
-    {'label':'QUALITAS','value':'QUALITAS'},
-    {'label':'GNP','value':'GNP'}
-    
- ];*/
 
 export default class QuickActionLWC extends LightningElement {
 
     @api recordId;
     @track error;
-
-
-
-    /*  @track selectedValue;
-     @track options = options;
-     areDetailsVisible= false;
-      
-     // //for single select picklist
-    handleSelectOption(event){
-        console.log(event.detail);
-          this.selectedValue = event.detail;
-      }
-      handleChange(event) {
-          this.selectedValue = event.target.value;
-          this.areDetailsVisible = event.target.value;
-     }
-     get isGNP() {
-         if (this.selectedValue === "GNP") {
-             return true;
-         }
-         console.log(options);
-     }
-     */
-
-
-
 
     @wire(getRecord, { recordId: '$recordId', fields })
     DSALES_Endoso__c;
@@ -124,28 +87,6 @@ export default class QuickActionLWC extends LightningElement {
             console.error('Error:', error);
         }
     }
-
-
-
-
-
-
-
-    //  @wire(getRecord, { recordId: '$recordId', claimFields })
-    //  claim;
-    //  get claimTypeField() {
-    //      return getFieldValue(this.claim.data, CLAIMTYPE_FIELD);
-    //  }
-    //  get TitleValue() {
-    //      if (this.claimTypeField === "Robo Total") {
-    //          return true;
-    //      }
-    //  }
-    //  get TypeValue() {
-    //      if (this.claimTypeField === "Perdida Total") {
-    //          return true;
-    //      }
-    //  }
 
 
 

@@ -9,6 +9,7 @@ public class endososControllerClassTest {
         Test.startTest();
         endososControllerClass.endosoDocuments('Cambio de dirección');    
         Test.stopTest();
+        System.assertNotEquals(label, values, 'debe ser diferente');
         
         
         
@@ -37,7 +38,7 @@ public class endososControllerClassTest {
                 endososControllerClass.endosoDocuments('');    
                 
             }catch(DmlException e){
-                System.assertNotEquals('Error', e.getMessage());
+                System.assertNotEquals('Error', e.getMessage(), 'Errors in DML');
                 
             }
             Test.stopTest();

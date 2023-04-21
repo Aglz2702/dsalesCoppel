@@ -11,8 +11,9 @@ public class DSALES_ControladorCotizacionGex {
     private static final String NOMBRE_Seguro2= 'DSALES_EnvioCotizacionSm' ;
     private static final String NOMBRE_DATE = 'DATE';
     private static final String NOMBRE_DOUBLE = 'DOUBLE';
-        private static final String myfilename = 'Cotizacion';
-    
+    private static final String myfilename = 'Cotizacion';
+    private static final String SEGURO_AMP='AMP';
+    private static final String SEGURO_RC='RC';
     public DSALES_ControladorCotizacionGex(){
         //Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=hey');
         String recordId = ApexPages.currentPage().getParameters().get('quoteId');
@@ -65,7 +66,7 @@ public class DSALES_ControladorCotizacionGex {
     
     public void replaceHtml(String templateName,Id recordId){ 
         Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Tienda__c,DSales_Vendedor__c,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId];
-        DSALES_InformacionDePago__c pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:cotizacion.OpportunityId LIMIT 1];
+        List<DSALES_InformacionDePago__c> pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:cotizacion.OpportunityId LIMIT 1];
         email=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Direccion_de_la_tienda__c FROM Quote WHERE ID=:recordId].DSALES_EmailNew__c;
        // cliente=[SELECT Name FROM Account WHERE Id=:cliente].Name;
         List<Tienda__c> tienda = new List<Tienda__c>();
@@ -357,9 +358,10 @@ public class DSALES_ControladorCotizacionGex {
         String rempConcepto2='<tr>';
         rempConcepto2+='<td colspan="1" rowspan="1" height="35px" style="background:rgb(0,72,118 );border:solid; border-color:white;color:white;padding-left:15px;"><strong>Concepto</strong></td>';
         rempConcepto2+='</tr>';
-        String rempSucSG='<tr>';
-        rempSucSG+='<td colspan="1" rowspan="1"style="font-size:15px"><b>Sucursal:</b><br />';
-        rempSucSG+= direccion + '</td>';
+        //String rempSucSG='<tr>';
+        String rempSucSG='<td colspan="1" rowspan="1"style="font-size:15px"><b>Sucursal:</b><br />';
+        //rempSucSG+='<td colspan="1" rowspan="1"style="font-size:15px"><b>Sucursal:</b><br />';
+        //rempSucSG+= direccion + '</td>';
         //rempSucSG+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:30%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha creaci&oacute;n:</strong></td>';
         //rempSucSG+='<td colspan="1" rowspan="1" height="35px"style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .2rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;width:30%;text-align:center; font-size:12px">'+fechaFormato +'</td>';
         rempSucSG+='</tr>';
@@ -369,8 +371,8 @@ public class DSALES_ControladorCotizacionGex {
         rempFecha+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:30%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha creaci&oacute;n:</strong></td>';
         rempFecha+='<td colspan="1" rowspan="1" height="35px"style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .2rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;width:30%;text-align:center; font-size:12px">'+fechaFormato +'</td>';
         rempFecha+='</tr>';
-        fechaFormato=cotizacion.ExpirationDate.format();
-        System.debug('fechaFormato2:'+fechaFormato);
+     //   fechaFormato=cotizacion.ExpirationDate.format();
+       // System.debug('fechaFormato2:'+fechaFormato);
         String rempSucSG1='<tr>';
         rempSucSG1+='<td colspan="1" rowspan="1" height="39px" style="font-size:15px;"><strong>Preparado por:</strong><br/>'+cotizacion.DSales_Vendedor__c+'</td>';
        // rempSucSG1+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209 );border-bottom: .2rem solid white;width:20%;border:solid; border-color:white; font-size:12px;padding-left:15px;"><strong>Fecha caducidad:</strong></td>';
@@ -418,7 +420,9 @@ public class DSALES_ControladorCotizacionGex {
             try{
                 String rempFechaSG='<tr>';
                 rempFechaSG+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209 );border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha de entrega estimada</strong></td>';
-                rempFechaSG+='<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;width:20%;"><strong>'+pago.DSALES_Fechadeentregaestimada__c.format()+'</strong></td>';
+                if(pago.size()>0)  
+                    rempFechaSG+='<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;width:20%;"><strong>'+pago[0].DSALES_Fechadeentregaestimada__c.format()+'</strong></td>';
+
                 rempFechaSG+='</tr>';
                 String rempImagen1='<tr>';
                 //rempImagen1+='<td colspan="1" rowspan="1" style="height:auto; width:70px;"></td>';
@@ -529,7 +533,7 @@ public class DSALES_ControladorCotizacionGex {
                         }
                         
                         if(producto.DSales_Tipo_de_Producto__c=='Seguro'){
-                            if(quote.DSALES_NombreProducto__c=='AMP Seguro de Moto'){
+                            if(quote.DSALES_NombreProducto__c==SEGURO_AMP){
                                 System.debug('amp:'+quote);
                                 String plazoSeg='';
                                 System.debug('Nombre de seguro:'+quote.DSALES_NombreProducto__c);
@@ -554,7 +558,7 @@ public class DSALES_ControladorCotizacionGex {
                                 
                                 
                             }
-                            if(quote.DSALES_NombreProducto__c=='RC Seguro de Moto'){
+                            if(quote.DSALES_NombreProducto__c==SEGURO_RC){
                                 String plazoSeg='';
                                 System.debug('Nombre de seguro:'+quote.DSALES_NombreProducto__c);
                                 for(Plazo__c pl:plazo){
@@ -820,9 +824,9 @@ public class DSALES_ControladorCotizacionGex {
             double discount=0;
             String tablaMoto='';
             //motos tablas sin formato
-            String tablaSucursal='<tr>';
-            tablaSucursal+='<td colspan="1" rowspan="1">Sucursal: Tienda</td>';
-            tablaSucursal+='</tr>';
+            //String tablaSucursal='<tr>';
+            String tablaSucursal='td colspan="1" rowspan="1">Sucursal:';
+           // tablaSucursal+='</tr>';
             String tablaSucursal2='<tr>';
             tablaSucursal2+='<td colspan="1" rowspan="1">Sucursal</td>';
             tablaSucursal2+='</tr>';
@@ -993,7 +997,7 @@ public class DSALES_ControladorCotizacionGex {
             rempConcepto2+='<td colspan="1" rowspan="1" height="35px" style="background:rgb(0,72,118 );border:solid; border-color:white;color:white;padding-left:15px;"><strong>Concepto</strong></td>';
             rempConcepto2+='</tr>';
             String rempSucSG='<tr>';
-            rempSucSG+='<td colspan="1" rowspan="1"style="font-size:15px"><b>Sucursal:</b><br />';
+            rempSucSG+='<td colspan="1" rowspan="1"style="font-size:15px"><strong>Sucursal:</strong><br />';
             rempSucSG+= direccion + '</td>';
             //rempSucSG+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:30%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha creaci&oacute;n:</strong></td>';
             //rempSucSG+='<td colspan="1" rowspan="1" height="35px"style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .2rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;width:30%;text-align:center; font-size:12px">'+fechaFormato +'</td>';
@@ -1143,7 +1147,7 @@ public class DSALES_ControladorCotizacionGex {
                         }
                         
                         if(producto.DSales_Tipo_de_Producto__c=='Seguro'){
-                            if(quote.DSALES_NombreProducto__c=='AMP Seguro de Moto'){
+                            if(quote.DSALES_NombreProducto__c==SEGURO_AMP){
                                 System.debug('amp:'+quote);
                                 String plazoSeg='';
                                 System.debug('Nombre de seguro:'+quote.DSALES_NombreProducto__c);
