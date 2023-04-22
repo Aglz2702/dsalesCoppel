@@ -1,4 +1,4 @@
-public class DSALES_ControladorMatrizTiempo {
+public without sharing class DSALES_ControladorMatrizTiempo {
     
     
     @AuraEnabled

@@ -43,22 +43,26 @@ public without sharing class DSALES_ClasificacionServicio {
         query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, DSALES_TipoServicio__c, DSALES_vehculo__c, DSALES_Noaplica__c, DSALES_NoaplicaServ__c, DSALES_NoaplicaSeg__c, RecordTypeId ';
         query += 'from Product2 Where RecordTypeId = :tipoRegistroId ';
        
-        if(opcion=='AllRecords'){
-            if(perfilUsuario== 'Administrador del sistema'){
-                query += 'and DSales_Servicio__c != true and DSales_Seguro__c!= true ';
+        switch on opcion {
+            when 'AllRecords' {
+                switch on perfilUsuario {
+                    when 'Administrador del sistema' {
+                        query += 'and DSales_Servicio__c != true and DSales_Seguro__c!= true ';
+                    }
+                    when 'Seguro de Motos' {
+                        query += ' And DSALES_NoaplicaSeg__c = false and DSales_Seguro__c= false ';
+                    }
+                    when 'Garantía Extendida' {
+                        query += ' And DSALES_NoaplicaServ__c = false and DSales_Servicio__c = false ';
+                    }
+                }
             }
-            else if (perfilUsuario== 'Seguro de Motos'){
-                query += ' And DSALES_NoaplicaSeg__c = false and DSales_Seguro__c= false ';
+            when else {
+                query += listCategorias.size() > 0 ? ' And DSales_Categoria__c in :listCategorias ' : '';
+                query += listSubCategorias.size() > 0 ? ' And DSALES_SubCategoria__c in :listSubCategorias ' : '';
+                query += listClases.size() > 0 ? ' And DSales_Clase__c in :listClases ' : '';
+                query += listFamilias.size() > 0 ? ' And DSALES_Familia__c in :listFamilias ' : '';
             }
-            else if (perfilUsuario== 'Garantía Extendida'){
-                query += ' And DSALES_NoaplicaServ__c = false and DSales_Servicio__c = false ';
-            }
-        }
-        else {
-            query += listCategorias.size() > 0 ? ' And DSales_Categoria__c in :listCategorias ' : '';
-            query += listSubCategorias.size() > 0 ? ' And DSALES_SubCategoria__c in :listSubCategorias ' : '';
-            query += listClases.size() > 0 ? ' And DSales_Clase__c in :listClases ' : '';
-            query += listFamilias.size() > 0 ? ' And DSALES_Familia__c in :listFamilias ' : '';
         }
         query += '  and DSales_Tipo_de_Producto__c= :producto';
         query += ' order by DSales_Servicio__c asc';
@@ -79,7 +83,7 @@ public without sharing class DSALES_ClasificacionServicio {
         query += 'from Product2 Where StockKeepingUnit LIKE \''+ sku + '%\' OR Name LIKE \'' + sku + '%\' ';
         query += ' order by DSales_Servicio__c asc';
         System.debug('Query: '+query);
-        return consultarProductos(DataBase.query(String.escapeSingleQuotes(query)));
+        return consultarProductos(DataBase.query(query));
     }
 
     @AuraEnabled
@@ -224,25 +228,6 @@ public without sharing class DSALES_ClasificacionServicio {
             upsert listInsertVinculacion;
         }
     }
-   /*
-   public static List<AsignarProductos> consultarAsignaciones(List<DSales_Asignacion_de_Productos__c> listAsignaciones){
-        List<AsignarProductos> listAsignarProductos = new List<AsignarProductos>();
-        for(DSales_Asignacion_de_Productos__c item: listAsignaciones ){
-            AsignarProductos asignarProductos = new AsignarProductos(); 
-            asignarProductos.id = item.Id;
-            asignarProductos.nombre = item.DSales_NombreProducto__c;
-            asignarProductos.servicio = item.DSales_Producto__c;
-            asignarProductos.sku = item.DSALES_SKU__c;
-            asignarProductos.departamento = item.DSALES_Departamento__c;
-            asignarProductos.familia = item.DSALES_Familia__c;
-            asignarProductos.clase = item.DSales_Clase__c;
-            asignarProductos.creadoPor = item.CreatedById;
-            asignarProductos.createdDate = item.CreatedDate;
-        
-        listAsignarProductos.add(asignarProductos); 
-    }
-    return listAsignarProductos;
-}*/
     
         public static List<Servicio> consultarProductos(List<Product2> listProductos){
         List<Servicio> listServicios = new List<Servicio>();
@@ -522,8 +507,9 @@ public without sharing class DSALES_ClasificacionServicio {
         List<String> categoriasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
+        String authorizationHeader = 'Bearer ' + EncodingUtil.base64Encode(DSALES_obtenerToken.getToken());
         request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT));
-        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setHeader('Authorization', System.label.BearerToken);
         request.setMethod('GET');
         HttpResponse response = https.send(request);
         system.debug('response '+response);
