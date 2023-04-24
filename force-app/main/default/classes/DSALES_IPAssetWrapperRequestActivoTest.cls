@@ -1,4 +1,5 @@
 @isTest
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
     @testSetup
     static void setUp(){
@@ -44,14 +45,13 @@ global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         request.requestBody=Blob.valueOf(body);
         RestContext.response=response;
         DSALES_IPAssetWrapper.IPAssetRequest policyAsset =  (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize (body,DSALES_IPAssetWrapper.IPAssetRequest.class);
-        //policyAsset.payment_info=pago.id;
         Test.startTest();
         DSALES_IPAssetWrapperRequestActivo.createIPAsset();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
-        
+        system.assertNotEquals(200, response.statusCode, 'la llamada no debe devolver un código 200');
     }
     
     @isTest 
@@ -66,14 +66,13 @@ global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         request.requestBody=Blob.valueOf(body);
         RestContext.response=response;
         DSALES_IPAssetWrapper.IPAssetRequest policyAsset =  (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize (body,DSALES_IPAssetWrapper.IPAssetRequest.class);
-        //policyAsset.payment_info=pago.id;
         Test.startTest();
         DSALES_IPAssetWrapperRequestActivo.createIPAsset();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
-        
+        system.assertNotEquals(200, response.statusCode, 'la llamada no debe devolver un código 200');
     }
     @isTest 
     public static void activoTest(){
@@ -87,17 +86,17 @@ global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         request.requestBody=Blob.valueOf(body);
         RestContext.response=response;
         DSALES_IPAssetWrapper.IPAssetRequest policyAsset =  (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize (body,DSALES_IPAssetWrapper.IPAssetRequest.class);
-        //policyAsset.payment_info=pago.id;
         Test.startTest();
         DSALES_IPAssetWrapperRequestActivo.createIPAsset();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
-        
+        system.assertNotEquals(200, response.statusCode, 'la llamada no debe devolver un código 200');
     }
     
-    @isTest static void CreateRecordErrorTest()
+    @isTest 
+    public static void createRecordErrorTest()
     {
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
@@ -109,14 +108,13 @@ global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         request.requestBody=Blob.valueOf(body);
         RestContext.response=response;
         DSALES_IPAssetWrapper.IPAssetRequest policyAsset =  (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize (body,DSALES_IPAssetWrapper.IPAssetRequest.class);
-        //policyAsset.payment_info=pago.id;
         Test.startTest();
         DSALES_IPAssetWrapperRequestActivo.createIPAsset();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
-        
+        system.assertNotEquals(200, response.statusCode, 'la llamada no debe devolver un código 200');
     }
     
 }

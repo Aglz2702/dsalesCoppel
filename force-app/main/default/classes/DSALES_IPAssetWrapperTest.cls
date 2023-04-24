@@ -1,7 +1,8 @@
 @isTest
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global with sharing class DSALES_IPAssetWrapperTest {
     @testSetup
-    static void SetUp(){
+    static void setUp(){
         Account ac= new Account(Name='DannyTest',CP_WalletCustomerNumber__c=90229562);  
         insert ac;
         Opportunity op = new Opportunity(Name='Danny',CloseDate=Date.today(),StageName='Nuevo');
@@ -16,7 +17,8 @@ global with sharing class DSALES_IPAssetWrapperTest {
         DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=ip.id,DSALES_Seguro__c=true);
         insert pago;
     }
-    @isTest static void CreateRecordTest()
+    @isTest 
+    static void createRecordTest()
     {
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
@@ -36,10 +38,10 @@ global with sharing class DSALES_IPAssetWrapperTest {
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
-        
+        system.assertNotEquals(200, response.statusCode, 'la llamada no debe devolver un código 200');
     }
     @isTest static 
-	void CreateRecordErrorTest(){
+	void createRecordErrorTest(){
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
         DSALES_InformaciondePago__c pago = [SELECT id,DSALES_Poliza__c FROM  DSALES_InformaciondePago__c  LIMIT 1];
@@ -58,7 +60,7 @@ global with sharing class DSALES_IPAssetWrapperTest {
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;
-        
+        system.assertNotEquals(200, response.statusCode, 'la llamada no debe devolver un código 200');
     }
     
 }

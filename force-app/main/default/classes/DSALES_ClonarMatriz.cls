@@ -28,7 +28,7 @@ public static String clonarMatriz(String recordId){
     
     query = query.substring(0, query.length()-1);
     query += ' From DSales_Matriz_GEX__c WHERE Id =: recordId'; 
-    DSales_Matriz_GEX__c matrizClone = Database.query(' From DSales_Matriz_GEX__c WHERE Id =: recordId');
+    DSales_Matriz_GEX__c matrizClone = Database.query(String.escapeSingleQuotes(query));
     matrizClone.Id = null;
     matrizClone.DSALES_EsClone__c = true;
     matrizClone.DSALES_CloneMatriz__c = recordId;

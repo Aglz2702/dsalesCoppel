@@ -1,7 +1,7 @@
 @isTest
 public class DSALES_CancelacionProductosRequest_Test {
 	@testSetup
-    static void SetUp(){
+    static void configuracionRegistro(){
         String tipoProducto = 'Producto';
         String message = '';
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Seguro_de_Moto').getRecordTypeId();
@@ -9,11 +9,9 @@ public class DSALES_CancelacionProductosRequest_Test {
 		String recordTypeIdPagoM = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
         String recordTypeIdPagoG = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_Pagos_en_NPV').getRecordTypeId();
 		String recordTypeIdAsset = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('Garantia Extendida').getRecordTypeId();
-        String recordTypeIdProd = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
+        String recordTypeIdProd = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSales_Garantia_Extendida').getRecordTypeId();
         String recordTypeProdMotos = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSales_Seguro_de_Motos').getRecordTypeId();
         String recordTypeProdSeg = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSALES_ProdIntangible').getRecordTypeId();
-
-        //DSALES_ProdIntangible
         Account acc = new Account();
         acc.Name='Sayra Martinez Quiroz';
         acc.CP_WalletCustomerNumber__c=45654;
@@ -112,10 +110,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         insert pago;
         DSALES_InformacionDePago__c pagoGex = new DSALES_InformacionDePago__c(RecordTypeId=recordTypeIdPagoG,DSALES_Oportunidad__c=oppGex.id,DSALES_Factura__c='1234',DSALES_Clave_Tienda__c='1',DSALES_IDUniversal1__c='11111111111111111110');
         insert pagoGex;
-        //System.debug('moto pago:'+pago);
-        System.debug('gex pago:'+pagoGex);
-        
-         Asset ass = new Asset(Name='Test',AccountId= acc.Id,ContactId=con.Id,DSALES_SKU__c='123450',DSales_Informacion_pago__c=pagoGex.Id,Product2Id=pr.id,DSALES_TipoProducto__c='Producto',RecordTypeId=recordTypeIdAsset);
+        Asset ass = new Asset(Name='Test',AccountId= acc.Id,ContactId=con.Id,DSALES_SKU__c='123450',DSales_Informacion_pago__c=pagoGex.Id,Product2Id=pr.id,DSALES_TipoProducto__c='Producto',RecordTypeId=recordTypeIdAsset);
         insert ass; 
         DSALES_Certificado__c certificado = new DSALES_Certificado__c(DSALES_Email__c='dsanmiguel@deloittemx.com',DSALES_ProductoAdquirido__c=ass.id,
                                                                      DSALES_InformacionDePago__c=pagoGex.id);
@@ -135,7 +130,6 @@ public class DSALES_CancelacionProductosRequest_Test {
         moto.UnitPrice = customPriceM.UnitPrice;
         moto.DSALES_Segurogratis__c=false;
         insert moto;
-        System.debug('moto?:'+moto);
         QuoteLineItem seguroAmp = new QuoteLineItem();
         seguroAmp.QuoteId = cotizacion.Id;
         seguroAmp.PricebookEntryId = customPrice.Id;
@@ -192,17 +186,14 @@ public class DSALES_CancelacionProductosRequest_Test {
     }
    
     @isTest
-    public static void CancelacionMotoySeguro(){
+    public static void cancelacionMotoySeguro(){
         RestRequest request=new RestRequest();
        	RestResponse response = new RestResponse();
         DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_Seguro__c=true];
-       	System.debug('pago en test:'+pago);
-        Product2 prod=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE Name='Moto Vento'];
-        System.debug('prod cancel poliza:'+prod);
+       	Product2 prod=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE Name='Moto Vento'];
         List<OpportunityLineItem> productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem  WHERE Product2.Name=:'Moto Vento'];
        	OpportunityLineItem prodSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Product2.Name='AMP'];
         productosSincro.add(prodSincro);
-        System.debug('Cancelacion poliza: '+productosSincro);
         String bodyJson='{"canal":".EXE","fechaCancelacion":"2023-03-22","folioCancelacion":"12876","idUniversal":"'+pago.DSALES_IDUniversal1__c+'","idTienda":"1","numeroCliente":"","nombreVendedor":"Luis Perez Sanchez","numeroVendedor":"1234","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","ListaProductos":[{"idPartidaOportunidad":"'+productosSincro[0].Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":""},{"idPartidaOportunidad":"'+productosSincro[1].Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":""}],"ListaReembolso":[{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"MOTO","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005},{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"AMP","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005}]}';
         request.requestURI='/apexrest/cancelacionProductos/*'; 
         request.httpMethod='POST'; 
@@ -213,19 +204,18 @@ public class DSALES_CancelacionProductosRequest_Test {
         RestContext.request = request;
         RestContext.response= response;
         Test.startTest();
-        DSALES_CancelacionProductosRequest.cancelar();
+        DSALES_CancelacionProductosRequest.servicioCancelar();
         Test.stopTest();
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
+
     } 
     @isTest
-    public static void DevolucionMotoySeguro(){
+    public static void devolucionMotoySeguro(){
         RestRequest request=new RestRequest();
        	RestResponse response = new RestResponse();
         DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_Seguro__c=true];
-        System.debug('pago en test:'+pago);
         List<Product2> productos=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2];
-        System.debug('prod:'+productos);
         List<OpportunityLineItem> productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Opportunity.Name='Venta moto'];
-        System.debug('Sincronizados dev motos: '+productosSincro);
         String bodyJson='{"canal":".EXE","fechaCancelacion":"2023-03-22","folioCancelacion":"12876","idUniversal":"'+pago.DSALES_IDUniversal1__c+'","idTienda":"1","numeroCliente":"","nombreVendedor":"Luis Perez Sanchez","numeroVendedor":"1234","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","ListaProductos":[{"idPartidaOportunidad":"'+productosSincro[0].Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":""},{"idPartidaOportunidad":"'+productosSincro[1].Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":""}],"ListaReembolso":[{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"MOTO","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005},{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"AMP","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005}]}';
         request.requestURI='/apexrest/cancelacionProductos/*'; 
         request.httpMethod='POST'; 
@@ -236,22 +226,21 @@ public class DSALES_CancelacionProductosRequest_Test {
         RestContext.request = request;
         RestContext.response= response;
         Test.startTest();
- 		DSALES_CancelacionProductosRequest.cancelar();
+ 		DSALES_CancelacionProductosRequest.servicioCancelar();
         Test.stopTest();
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
+
     } 
     @isTest
-    public static void DevolucionGex(){
+    public static void devolucionGex(){
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
         DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:'11111111111111111110'];
-        System.debug('pago en test:'+pago);
         DSALES_Certificado__c certificado  =[SELECT Id,Name FROM DSALES_Certificado__c LIMIT 1];
         Product2 producto =[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE Name='Lavadora'];
         List<Product2> productos=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE DSales_Tipo_de_Producto__c='Servicio'];
         productos.add(producto); 
-        System.debug('prod:'+productos); 
         OpportunityLineItem productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Opportunity.Name='GEX' AND Product2.Name=:'Gex' ];
-        System.debug('Sincronizados: '+productosSincro);
         String bodyJson='{"canal":".EXE","fechaCancelacion":"2023-03-22","folioCancelacion":"12876","idUniversal":"'+pago.DSALES_IDUniversal1__c+'","idTienda":"1","numeroCliente":"","nombreVendedor":"Luis Perez Sanchez","numeroVendedor":"1234","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","ListaProductos":[{"idPartidaOportunidad":"'+productosSincro.Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":"'+certificado.Name+'"}],"ListaReembolso":[{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"AMP","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005}]}';
         request.requestURI='/apexrest/cancelacionProductos/*'; 
         request.httpMethod='POST'; 
@@ -262,21 +251,20 @@ public class DSALES_CancelacionProductosRequest_Test {
         RestContext.request = request;
         RestContext.response= response;
         Test.startTest();
-        DSALES_CancelacionProductosRequest.cancelar();
+        DSALES_CancelacionProductosRequest.servicioCancelar();
         Test.stopTest();
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
+
     } 
     @isTest
-    public static void CancelacionGex(){
+    public static void cancelacionGex(){
         RestRequest request=new RestRequest();
        	RestResponse response = new RestResponse();
         DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:'11111111111111111110'];
-       	System.debug('pago en test:'+pago);
-        Product2 producto =[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE Name='Lavadora'];
+       	Product2 producto =[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE Name='Lavadora'];
         List<Product2> productos=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE DSales_Tipo_de_Producto__c='Servicio'];
         productos.add(producto);
-        System.debug('prod:'+productos);
         OpportunityLineItem productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Opportunity.Name='GEX' AND Product2.Name=:'Lavadora'];
-        System.debug('Sincronizados: '+productosSincro);
         String bodyJson='{"canal":".EXE","fechaCancelacion":"2023-03-22","folioCancelacion":"12876","idUniversal":"'+pago.DSALES_IDUniversal1__c+'","idTienda":"1","numeroCliente":"","nombreVendedor":"Luis Perez Sanchez","numeroVendedor":"1234","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","ListaProductos":[{"idPartidaOportunidad":"","estatus":"","motivoCancelacion":"","idCertificado":""},{"idPartidaOportunidad":"","estatus":"","motivoCancelacion":"","idCertificado":""}],"ListaReembolso":[{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"MOTO","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005}]}';
         request.requestURI='/apexrest/cancelacionProductos/*'; 
         request.httpMethod='POST'; 
@@ -287,8 +275,10 @@ public class DSALES_CancelacionProductosRequest_Test {
         RestContext.request = request;
         RestContext.response= response;
         Test.startTest();
-        DSALES_CancelacionProductosRequest.cancelar();
+        DSALES_CancelacionProductosRequest.servicioCancelar();
         Test.stopTest();
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
+
     }
     
     @isTest
@@ -299,16 +289,17 @@ public class DSALES_CancelacionProductosRequest_Test {
         req.motivoCancelacion='A petición del cliente';
         DSALES_CancelacionProductosWrapper.ListaProducto listaProducto = new DSALES_CancelacionProductosWrapper.ListaProducto();
         listaProducto.idCertificado='GEX-023';
+        System.assertNotEquals(null,listaProducto,'La lista no debe estar vacia');
+
     }    
     @isTest
     public static void polizaCancelada(){
 		DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:'11111111111111111110'];
-        System.debug('PAGO POLIZA CANCELADA:'+pago);
-		InsurancePolicy poliza=[SELECT Id,DSALES_Estatusdepliza__c,SourceOpportunityId,DSALES_Activodeplizadeseguro__c FROM InsurancePolicy WHERE Name='1234567890'];   
+        InsurancePolicy poliza=[SELECT Id,DSALES_Estatusdepliza__c,SourceOpportunityId,DSALES_Activodeplizadeseguro__c FROM InsurancePolicy WHERE Name='1234567890'];   
         poliza.DSALES_Estatusdepliza__c='Cancelada';
         update poliza;
-        System.debug('poliza en test:'+poliza);
-        System.debug('***************************************');
         DSALES_CancelacionProductosRequest.cancelarPartidaDeSeguro(poliza);
+        System.assertNotEquals(null, poliza, 'El registro no debe estar en null');
+
     }
 }
