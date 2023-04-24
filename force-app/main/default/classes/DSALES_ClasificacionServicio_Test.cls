@@ -107,7 +107,6 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_ClasificacionServicio.DSALES_ClasificacionServicioWrapper controller = DSALES_ClasificacionServicio.getPickListCategoria();
         controller.listCategorias[0].seleccionado = true;
         
-        
         controller = DSALES_ClasificacionServicio.getPicklistOptionsDependent(JSON.serialize(controller));
         controller.listSubCategorias[0].seleccionado = true;
         
@@ -143,10 +142,7 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_ClasificacionServicio.getTipoUso();
         DSALES_ClasificacionServicio.updateCampaigns('["'+idcamp.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
         DSALES_ClasificacionServicio.updateTipoUso('["'+idtp.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
-        System.assertEquals(controller.listServicios.size(), 1);
-        
-
-        
+        System.assertEquals(controller.listServicios.size(), 1, 'completado');
     }
 
     @isTest 
@@ -155,6 +151,7 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif());
         DSALES_ClasificacionServicio.getserviciocategorias('test');
         Test.stopTest();
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciocategorias('test').size()), 'la llamada no debe devolver un código 200');
         
         //System.assertNotEquals(null,result);  
     }   
@@ -165,7 +162,7 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif2());
         DSALES_ClasificacionServicio.getserviciosubcategorias('2');
         Test.stopTest();
-        
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosubcategorias('2').size()), 'la llamada no debe devolver un código 1000');
     }   
 
     @isTest 
@@ -174,6 +171,7 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif3());
         DSALES_ClasificacionServicio.getservicioclase('2','4');
         Test.stopTest();
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getservicioclase('2','4').size()), 'la llamada no debe devolver un código 1000');
         
     }  
     @isTest 
@@ -182,6 +180,7 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif4());
         DSALES_ClasificacionServicio.getserviciofamilia('2','4','178');
         Test.stopTest();
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciofamilia('2','4','178').size()), 'la llamada no debe devolver un código 1000');
         //System.assertNotEquals(null,result);  
     } 
     @isTest 
@@ -190,7 +189,7 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif5());
         DSALES_ClasificacionServicio.getserviciosku('2','4','178','2');
         Test.stopTest();
-        //System.assertNotEquals(null,result);  
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosku('2','4','178','2').size()), 'la llamada no debe devolver un código 1000'); 
     } 
     
     @isTest 
@@ -200,7 +199,7 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif6());
         DSALES_ClasificacionServicio.upsertRecord('[{"campanas":false,"id":"'+idproducto+'", "noAplica":false,"noAplicaSeguro":false,"noAplicaServicio":false,"nombre":"NotiPrueba","seguro":false,"servicio":true,"sku":"2122","tipoServicio":"2","tipoUso":false}]');
         Test.stopTest();
-        //System.assertNotEquals(null,result);  
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.upsertRecord('[{"campanas":false,"id":"'+idproducto+'", "noAplica":false,"noAplicaSeguro":false,"noAplicaServicio":false,"nombre":"NotiPrueba","seguro":false,"servicio":true,"sku":"2122","tipoServicio":"2","tipoUso":false}]').size()), 'la llamada no debe devolver un código 1000'); 
     } 
 
 private class DSALES_MockHttpClasif implements HttpCalloutMock {
