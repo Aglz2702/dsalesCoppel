@@ -6,8 +6,8 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         String message='';
         Integer code;
         Boolean emitirPoliza=true;
-        String idActivo='';
         final String ProdutoName='Producto';
+        IPAssetAux1Wrapper data=new IPAssetAux1Wrapper();
         DSALES_IPAssetWrapper.IPAssetResponse policyAssetRes= new DSALES_IPAssetWrapper.IPAssetResponse();
         DSALES_IPAssetWrapper.IPAssetResponse response = new DSALES_IPAssetWrapper.IPAssetResponse();
         List<DSALES_IPAssetWrapper.ListaPartidasOportunidad> listaPartidas = new List<DSALES_IPAssetWrapper.ListaPartidasOportunidad>();
@@ -25,68 +25,22 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
 					if (Schema.sObjectType.OpportunityLineItem.isQueryable()) {
                         for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
                             FROM OpportunityLineItem WHERE OpportunityId=:pago.DSALES_Oportunidad__c AND Product2.DSales_Tipo_de_Producto__c=:'Seguro']){
-                            if(partidasSeguro.DSALES_Estatus__c=='Devuelto' || partidasSeguro.DSALES_Estatus__c=='Cancelado' ){
-                                emitirPoliza=false;                    
-                            }                                             
+                                switch on partidasSeguro.DSALES_Estatus__c {
+                                    when 'Devuelto' {
+                                            emitirPoliza=false;
+                                    }
+                                }
+                                switch on partidasSeguro.DSALES_Estatus__c {
+                                    when 'Cancelado' {
+                                            emitirPoliza=false;
+                                    }
+                                }                                            
                         }
                     }
-                   
                     
                     if(policyAsset.numeroSerie!=''){
-                        InsurancePolicyAsset activo= insertIPAsset(policyAsset);
-                        if(pago.DSALES_Poliza__c!=null){
-                            if(policyAsset.emitirPoliza==true && emitirPoliza==true){
-                                if(pago.DSALES_Poliza__r.PolicyName!= DSALES_Utility.SEGURO_PREDETERMINADO){
-                                    if( activo!=null){
-                                        Insurancepolicy poliza=DSALES_NuevaPoliza.invokeService(activo);  
-                                        success=true;
-                                        seguro.poliza=poliza.Name;
-                                        seguro.urlPdfPoliza= poliza.DSALES_PDF_poliza__c;
-                                        System.debug('SEGURO:'+seguro);  
-                                        System.debug('POLIZA DESPUES DE EMITIR:'+poliza); 
-                                        idActivo=poliza.DSALES_Activodeplizadeseguro__c;
-                                        
-                                    }
-                                }
-                                
-                            }
-                            else{
-                                if(Schema.sObjectType.InsurancePolicyAsset.isCreateable()) {
-                                    insert activo;
-                                }
-                                
-                                idActivo=activo.Id;
-                                //if(pago.DSALES_Poliza__c!=null){
-                                    InsurancePolicy polizaActivo=new InsurancePolicy();
-                                    if (Schema.sObjectType.InsurancePolicy.isQueryable()) {
-                                        polizaActivo = [SELECT Id FROM InsurancePolicy WHERE Id=:pago.DSALES_Poliza__c];
-                                    }
-                                    polizaActivo.DSALES_Activodeplizadeseguro__c=activo.Id;
-                                    polizaActivo.DSALES_Clavevehicular__c=activo.DSALES_Clavevehicular__c;
-                                    polizaActivo.DSALES_Modelo__c=activo.DSALES_Modelo__c;
-                                    polizaActivo.DSALES_Numeroserie__c=activo.DSALES_Numeroserie__c;
-                                    polizaActivo.DSALES_Nmerodemotor__c=activo.DSALES_Numeromotor__c;
-                                    polizaActivo.DSALES_Descripcion__c=activo.DSALES_Descripcion__c;
-                                    polizaActivo.DSALES_Servicio__c=activo.DSALES_Servicio__c;
-                                    polizaActivo.DSALES_Placas__c=activo.DSALES_Placas__c;
-                                    polizaActivo.DSALES_Marca__c=activo.DSALES_Marca__c;
-                                    polizaActivo.DSALES_Uso__c=activo.DSALES_Uso__c;
-                                    if(InsurancePolicy.SObjectType.getDescribe().isUpdateable()) {
-                                        update polizaActivo;  
-                                    }
-                                    
-                                    
-                               // }
-                            }
-                            
-                        }
-                        else{
-                            insert activo;
-                            InsurancePolicy universalPoliza = [SELECT Id, Name  FROM InsurancePolicy where  Name=:DSALES_Utility.SEGURO_PREDETERMINADO];
-                            pago.DSALES_Poliza__c=universalPoliza.Id;
-                        }
-						
-                        
+                        //llamar metodo
+                        data=createIPAssetAux1(pago, policyAsset, emitirPoliza);
                         String idOportunidad=pago.DSALES_Oportunidad__c;
                         List<DSALES_VentaSMRest.WrapperDatosProductos> productosSincronisados=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(idOportunidad);
                         for(DSALES_VentaSMRest.WrapperDatosProductos listSin:productosSincronisados){
@@ -100,35 +54,91 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                         if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
                             update pago;  
                         }
-                        
-                    }    ///num-se
+                    }   
                 }catch(Exception.JSONException e)
                 {
                     policyAssetRes.success = false;
                     policyAssetRes.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ;
-                    policyAssetRes.codigoError=DSALES_Utility.BAD_REQUEST_CODE;
-                    
+                    policyAssetRes.codigoError=DSALES_Utility.BAD_REQUEST_CODE;   
                 }
                 catch(Exception e){
                     System.debug('**ERROR**'+e.getLineNumber()+ ': '+e.getMessage());
                     policyAssetRes.success = false;
                     policyAssetRes.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
-                    policyAssetRes.codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;
-                    
-                    
+                    policyAssetRes.codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;  
                 }
             }
         }
-
         policyAssetRes.success=success;
-        policyAssetRes.idActivo=idActivo;
+        policyAssetRes.idActivo=data.idActivo;
         policyAssetRes.ListaPartidasOportunidad=listaPartidas;
-        policyAssetRes.Seguro=seguro;
-        
+        policyAssetRes.Seguro=data.seguro;
         return policyAssetRes;
-       
     }	 
     
+    private static IPAssetAux1Wrapper createIPAssetAux1(DSALES_InformacionDePago__c pago, DSALES_IPAssetWrapper.IPAssetRequest policyAsset, Boolean emitirPoliza){
+        String idActivo='';
+        Boolean success=false;
+        IPAssetAux1Wrapper data = new IPAssetAux1Wrapper();
+        InsurancePolicyAsset activo= insertIPAsset(policyAsset);
+        DSALES_IPAssetWrapper.Seguro seguro = new DSALES_IPAssetWrapper.Seguro();
+        if(pago.DSALES_Poliza__c!=null){
+            if(policyAsset.emitirPoliza==true && emitirPoliza==true){
+                if(pago.DSALES_Poliza__r.PolicyName!= DSALES_Utility.SEGURO_PREDETERMINADO){
+                    switch on String.valueOf(activo) {
+                        when null {
+                            system.debug('Es nulo');
+                        }
+                        when else {
+                            Insurancepolicy poliza = DSales_NuevaPoliza.invokeService(activo);
+                            success = true;
+                            seguro.poliza = poliza.Name;
+                            seguro.urlPdfPoliza = poliza.DSALES_PDF_poliza__c;
+                            System.debug('SEGURO:' + seguro);
+                            System.debug('POLIZA DESPUES DE EMITIR:' + poliza);
+                            idActivo = poliza.DSALES_Activodeplizadeseguro__c;
+                        }
+                    }
+                }
+            }
+            else{
+                if(Schema.sObjectType.InsurancePolicyAsset.isCreateable()) {
+                    insert activo;
+                }
+                idActivo=activo.Id;
+                    InsurancePolicy polizaActivo=new InsurancePolicy();
+                    if (Schema.sObjectType.InsurancePolicy.isQueryable()) {
+                        polizaActivo = [SELECT Id FROM InsurancePolicy WHERE Id=:pago.DSALES_Poliza__c];
+                    }
+                    polizaActivo.DSALES_Activodeplizadeseguro__c=activo.Id;
+                    polizaActivo.DSALES_Clavevehicular__c=activo.DSALES_Clavevehicular__c;
+                    polizaActivo.DSALES_Modelo__c=activo.DSALES_Modelo__c;
+                    polizaActivo.DSALES_Numeroserie__c=activo.DSALES_Numeroserie__c;
+                    polizaActivo.DSALES_Nmerodemotor__c=activo.DSALES_Numeromotor__c;
+                    polizaActivo.DSALES_Descripcion__c=activo.DSALES_Descripcion__c;
+                    polizaActivo.DSALES_Servicio__c=activo.DSALES_Servicio__c;
+                    polizaActivo.DSALES_Placas__c=activo.DSALES_Placas__c;
+                    polizaActivo.DSALES_Marca__c=activo.DSALES_Marca__c;
+                    polizaActivo.DSALES_Uso__c=activo.DSALES_Uso__c;
+                    if(InsurancePolicy.SObjectType.getDescribe().isUpdateable()) {
+                        update polizaActivo;  
+                    }
+            }    
+        }
+        else{
+            insert activo;
+            InsurancePolicy universalPoliza = [SELECT Id, Name  FROM InsurancePolicy where  Name=:DSALES_Utility.SEGURO_PREDETERMINADO];
+            pago.DSALES_Poliza__c=universalPoliza.Id;
+        }
+        data.seguro=seguro;
+        data.idActivo=idActivo;
+        return data;
+    }
+
+    global class IPAssetAux1Wrapper{
+        global String idActivo {get;set;}
+        global DSALES_IPAssetWrapper.Seguro seguro {get;set;}
+    }
     
     global static InsurancePolicyAsset insertIPAsset(DSALES_IPAssetWrapper.IPAssetRequest policyAsset){
         Boolean success=false;
@@ -198,3 +208,4 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
     }
     
 }
+
