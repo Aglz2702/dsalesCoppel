@@ -1,10 +1,10 @@
 @RestResource(urlMapping='/insertQuoteSM/*')//
 global class DSALES_QuoteSmWrapperRequest {
     public static final String NOMBRE_SERVICIO = 'DSALES_QuoteSM';
-    public static final String valor = 'RC'; //nombre campaña
-    public static final String tipo = 'Seguro gratis'; //tipo de campaña
-    public static final String rc = 'RC';
-    public static final String amp = 'AMP';
+    public static final String VALOR = 'RC'; //nombre campaña
+    public static final String TIPO = 'Seguro gratis'; //tipo de campaña
+    public static final String RC = 'RC';
+    public static final String AMP = 'AMP';
     @HttpPost
     global static DSALES_QuoteSmWrapper.RespuestaParaNpv createQuoteSM(){
         String numeroCliente = DSALES_Utility.NUMERO_CLIENTE_GENERICO;
@@ -223,7 +223,11 @@ global class DSALES_QuoteSmWrapperRequest {
         cliente.PersonEmail = data.correoElectronico;
         cliente.AccountNumber = data.numeroCliente;
         cliente.PersonMobilePhone = data.telefonoCelular;
-        insert cliente;
+        if(Schema.sObjectType.Account.isCreateable())
+        {
+            insert cliente;
+        }
+       
         return cliente;
     }
 
@@ -242,7 +246,10 @@ global class DSALES_QuoteSmWrapperRequest {
         oppor.RecordTypeId = recordTypeId;
         oppor.DSALES_Tiend__c = tienda.Id;
         oppor.Pricebook2Id = precioLista.Id;
-        insert oppor;
+        if(Schema.sObjectType.Opportunity.isCreateable())
+        {
+            insert oppor;        
+        }
         return oppor;
     }
     
@@ -282,7 +289,12 @@ global class DSALES_QuoteSmWrapperRequest {
         cotiza.DSALES_Tipodeveihculo__c = tipoVehiculo.Id;
         cotiza.DSALES_RFC__c = data.rfc;
         cotiza.DSALES_Plazoacotizar__c= decimal.valueOf(data.plazoCotizar);
-        insert cotiza;
+        
+        if(Schema.sObjectType.Quote.isCreateable())
+        {
+            insert cotiza;        
+        }
+        
         return cotiza;
     }
     
@@ -326,7 +338,7 @@ global class DSALES_QuoteSmWrapperRequest {
             Product2 producto = [SELECT Id, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku WITH SECURITY_ENFORCED LIMIT 1];
             List <DSALES_AsociacionCampanias__c> listaCampanas = [SELECT Name, DSALES_Campania__c, DSALES_Producto__c FROM DSALES_AsociacionCampanias__c WHERE DSALES_Producto__c =:producto.Id WITH SECURITY_ENFORCED];
             for(DSALES_AsociacionCampanias__c asoCampana:listaCampanas){         
-                //Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Name=:valor];             
+                //Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Name=:VALOR];             
                 Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Id=:asoCampana.DSALES_Campania__c WITH SECURITY_ENFORCED];             
                 if(aux!=null){
                     if(aux.IsActive==true && aux.DSALES_Tipodecapana__c==tipo){
@@ -347,7 +359,7 @@ global class DSALES_QuoteSmWrapperRequest {
                 for(DSALES_AsociacionCampanias__c asoCampana:listaCampanas){                   
                 	Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Id=:asoCampana.DSALES_Campania__c WITH SECURITY_ENFORCED];             
                     if(aux!=null){
-                        if(aux.Name == valor && aux.Id== asoCampana.DSALES_Campania__c && aux.IsActive==true && aux.DSALES_Tipodecapana__c==tipo){
+                        if(aux.Name == VALOR && aux.Id== asoCampana.DSALES_Campania__c && aux.IsActive==true && aux.DSALES_Tipodecapana__c==tipo){
                             condicion = true;           
                         }
                     }    
@@ -370,7 +382,10 @@ global class DSALES_QuoteSmWrapperRequest {
             partidaM.DSALES_Segurogratis__c = Campana(rc, sku);
             DSALES_QuoteSmWrapper.RespuestaPlazos aux = new DSALES_QuoteSmWrapper.RespuestaPlazos(); 
             aux.paquete = productoMoto.Name;
-            insert partidaM;
+            if(Schema.sObjectType.QuoteLineItem.isCreateable())
+            {
+                insert partidaM;
+            }
             DSALES_QuoteSmWrapper.RespuestaPlazos moto = new DSALES_QuoteSmWrapper.RespuestaPlazos();
             moto.paquete = productoMoto.Name;
             moto.idpartida = partidaM.Id;

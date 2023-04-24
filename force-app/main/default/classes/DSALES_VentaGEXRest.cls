@@ -46,9 +46,9 @@ global with sharing class DSALES_VentaGEXRest {
                     }
                     
                     
-                    paymentIds=insertPaymentInfo(venta.pago, cliente.idCuenta, mapAssets, venta.quoteId);
-                    //DSALES_ValidarClienteHelper.deleteUnpurchasedItem(venta.listaDeProductos,venta.listaDeCertificados, venta.quoteId);
-                    //DSALES_ValidarClienteHelper.actualizarCotizacion(venta.quoteId,ventaGEX,mapAssets,mapCertifieds);
+                    paymentIds=insertPaymentInfo(venta.pago,  mapAssets, venta.quoteId);
+                    DSALES_ValidarClienteHelper.deleteUnpurchasedItem(venta.listaDeProductos,venta.listaDeCertificados, venta.quoteId);
+                    DSALES_ValidarClienteHelper.actualizarCotizacion(venta.quoteId,ventaGEX,mapAssets,mapCertifieds);
                     
 
                     success=true;
@@ -217,7 +217,7 @@ global with sharing class DSALES_VentaGEXRest {
         return mapCertifieds;
     }
     
-    public static List<String> insertPaymentInfo(DSALES_PaymentInfoWrapperGEX.PaymentGEXRequest paymentInformation, String accountId, Map<String, String> assetsId, String quoteId){
+    public static List<String> insertPaymentInfo(DSALES_PaymentInfoWrapperGEX.PaymentGEXRequest paymentInformation,Map<String, String> assetsId, String quoteId){
         Map<String, String> mapStores = new Map<String, String>();
         String stores = '';
         List<String> ids= new List<String>();
