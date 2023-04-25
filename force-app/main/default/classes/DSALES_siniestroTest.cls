@@ -55,6 +55,7 @@ public class DSALES_siniestroTest {
         req2.requestBody = Blob.valueof(body);
         DSALES_SiniestroWrapper.siniestroPostResponse response3 = DSALES_Siniestro.siniestroUpsert();
         Test.stopTest();
+        System.assertNotEquals('Test', body, 'La llamada no debe ser igual');
     }
 
 }
