@@ -55,7 +55,8 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                             update pago;  
                         }
                     }   
-                }catch(Exception.JSONException e)
+                }
+                catch(Exception.JSONException e)
                 {
                     policyAssetRes.success = false;
                     policyAssetRes.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ;
