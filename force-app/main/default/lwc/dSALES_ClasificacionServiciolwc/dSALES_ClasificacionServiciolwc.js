@@ -411,8 +411,10 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                         this.pushMessage('Advertencia', 'Warning', 'Operacion exitosa con los siguientes errores: '+result[0]);
                     }
                     insertListaPrecios({ idproductoservicio: 'opcion2', opcion: '2', json2: JSON.stringify(this.data.listServicios) })
-                        .then(result => {
+                        .then(result2 => {
+                            console.log(result2);
                         }).catch(error => {
+                            console.log(error);
                         });
                 }
                 else if (result[1]=='400'){
@@ -976,52 +978,39 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                 }
                 else {
                     this.guardarProductIntan();
-
                 }
-
             } else {
                 if (this.ValueCategoriaSelected == '' ||
                     this.pickList.ValueClasesSelected == '' ||
-                    // this.pickList.ValuefamiliasSelected=='' ||
                     this.pickList.Description == '' ||
                     this.pickList.Name == '' ||
                     this.pickList.StockKeepingUnit == '' ||
                     this.pickList.matrizSelected == ''
-
                 ) {
                     this.pushMessage('Advertencia', 'warning', 'Existen campos vacios o no seleccionados');
                 }
                 else {
                     this.guardarProductIntan();
-
                 }
             }
-
-
         } else {
-
-            this.data.confirmarGuardar = false;
-
-            if (this.ValueCategoriaSelected == '' ||
-                this.pickList.ValueClasesSelected == '' ||
-                // this.pickList.ValuefamiliasSelected=='' ||
-                this.pickList.Description == '' ||
-                this.pickList.Name == '' ||
-                this.pickList.StockKeepingUnit == ''
-
-
-            ) {
-                this.pushMessage('Advertencia', 'warning', 'Existen campos vacios o no seleccionados');
-
-            }
-            else {
-                this.guardarProductIntan();
-
-            }
-
+            this.confirmarGuardarAux();
         }
+    }
 
-
+    confirmarGuardarAux(){
+        this.data.confirmarGuardar = false;
+        if (this.ValueCategoriaSelected == '' ||
+            this.pickList.ValueClasesSelected == '' ||
+            this.pickList.Description == '' ||
+            this.pickList.Name == '' ||
+            this.pickList.StockKeepingUnit == ''
+        ) {
+            this.pushMessage('Advertencia', 'warning', 'Existen campos vacios o no seleccionados');
+        }
+        else {
+            this.guardarProductIntan();
+        }
     }
 
     guardarProductIntan() {
@@ -1039,37 +1028,45 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
             if (this.pickList.valueSelectedtipoProducto == 'Servicio') {
                 this.data.confirmarGuardar = true;
                 getidservicio({ sku: this.pickList.StockKeepingUnit })
-                    .then(result => {
-                        this.data.idservicio = result;
+                    .then(result2 => {
+                        this.data.idservicio = result2;
                         this.showSpinner = false;
                         if (this.showPorcentajeCobro === false) {
                             updateMatriz({ allData: JSON.stringify(this.pickList.matrizSelected), typeServicio: result })
-                                .then(result => {
+                                .then(result3 => {
+                                    console.log(result3);
                                 }).catch(error => {
                                     this.showSpinner = false;
+                                    console.log(error);
                                 });
                         }
                         else {
                             insertPocentajeCobro({ idservicio: result, jsonp: JSON.stringify(this.matrizPorcentaje) })
-                                .then(result => {
+                                .then(result4 => {
+                                    console.log(result4);
                                 }).catch(error => {
+                                    console.log(error);
                                     this.showSpinner = false;
                                 });
                         }
                     }).catch(error => {
+                        console.log(error);
                         this.showSpinner = false;
                     });
 
                 getidservicio({ sku: this.pickList.StockKeepingUnit })
-                    .then(result => {
-                        this.data.idservicio = result;
+                    .then(result11 => {
+                        this.data.idservicio = result11;
                         this.showSpinner = false;
                         insertListaPrecios({ idproductoservicio: result, opcion: '1', json2: JSON.stringify(this.data.listServicios) })
-                            .then(result => {
+                            .then(result22 => {
+                                console.log(result22);
                             }).catch(error => {
+                                console.log(error);
                             });
 
                     }).catch(error => {
+                        console.log(error);
                         this.showSpinner = false;
                     });
             }
@@ -1089,9 +1086,11 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
 
         insertVinculacion({ dataJSON: JSON.stringify(this.data.listaproductos), idservicio: this.data.idservicio })
             .then(result => {
+                console.log(result);
                 this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
                 this.onClickBuscarIntanProduct();
             }).catch(error => {
+                console.log(error);
                 this.showSpinner = false;
                 this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
             });
@@ -1117,6 +1116,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                     this.openTablaResultado = true;
                 }
             }).catch(error => {
+                console.log(error);
                 this.pushMessage('Advertencia', 'warning', 'Este Servicio no existe.');
                 this.showSpinner = false;
                 this.openTablaResultado = false;
@@ -1130,6 +1130,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                 this.data.idservicio = result;
                 this.showSpinner = false;
             }).catch(error => {
+                console.log(error);
                 this.showSpinner = false;
             });
     }
@@ -1157,9 +1158,11 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     updateVinculacion() {
         upsertVinculacion({ dataJSON: JSON.stringify(this.data.listasignacion) })
             .then(result => {
+                console.log(result);
                 this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
                 this.onClickBuscarIntanProduct();
             }).catch(error => {
+                console.log(error);
                 this.showSpinner = false;
                 this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
             });
@@ -1460,6 +1463,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                 this.data.idProducto = result;
                 this.getCampanas();
             }).catch(error => {
+                console.log(error);
             });
     }
 
@@ -1470,6 +1474,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                 this.data.idProducto = result;
                 this.getTiposUso();
             }).catch(error => {
+                console.log(error);
             });
     }
 
@@ -1548,8 +1553,10 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     getSkuforCampaings() {
         updateCampaigns({ allData: JSON.stringify(this.data.campanasSelected), idProducto: this.data.idProducto })
                         .then(result => {
+                            console.log(result);
                             this.pushMessage('Exitoso', 'success', 'Campañas actualizadas exitosamente.');
                         }).catch(error => {
+                            console.log(error);
                         });
                     this.closeformCampaignsTypes();
     }
@@ -1557,8 +1564,10 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     getSkuforTypes() {
         updateTipoUso({ allData: JSON.stringify(this.data.tiposUsoSelected), idProducto: this.data.idProducto })
                             .then(result => {
+                                console.log(result);
                                 this.pushMessage('Exitoso', 'success', 'Tipos de usos actualizados exitosamente.');
-                            }).catch(error => {                          
+                            }).catch(error => { 
+                                console.log(error);                         
                             });
                         this.closeformCampaignsTypes();
     }
@@ -1612,6 +1621,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         .then(result => {
             this.data.servicioCategoria= result;
         }).catch(error => {
+            console.log(error);
         });
     }
 
@@ -1621,6 +1631,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         .then(result => {
             this.data.servicioSubcategoria= result;
         }).catch(error => {
+            console.log(error);
         });
     }
 
@@ -1630,6 +1641,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         .then(result => {
             this.data.servicioClases= result;
         }).catch(error => {
+            console.log(error);
         });
     }
 
@@ -1639,6 +1651,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         .then(result => {
             this.data.servicioFamilias= result;
         }).catch(error => {
+            console.log(error);
         });
     }
 
@@ -1655,6 +1668,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
             .then(result => {
                 this.data.servicioSku= result;
             }).catch(error => {
+                console.log(error);
             });
         }
         

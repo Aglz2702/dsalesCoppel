@@ -163,7 +163,7 @@ public without sharing class DSALES_ClasificacionServicio {
         }
         if (Schema.sObjectType.Product2.isQueryable()) {
             for(Product2 item: [Select Id, (Select Id from Asignaciones_de_Productos1__r Where DSales_Producto__c = :servicio and DSALES_Activo__c=false), Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name,
-                DSALES_Familia__r.Name from Product2 Where DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and DSALES_Servicio__c = :boolserv and DSALES_Seguro__c= :boolseg order by Name asc])
+                DSALES_Familia__r.Name from Product2 Where DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and DSALES_Servicio__c = :boolserv and DSALES_Seguro__c= :boolseg WITH SECURITY_ENFORCED order by Name asc])
                 {
                     AsignarProductos asignarProductos = new AsignarProductos(); 
                     if(item.Asignaciones_de_Productos1__r.size()>0){
@@ -507,9 +507,9 @@ public without sharing class DSALES_ClasificacionServicio {
         List<String> categoriasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        String authorizationHeader = 'Bearer ' + EncodingUtil.base64Encode(DSALES_obtenerToken.getToken());
+        String authorizationHeader = 'Bearer ' + DSALES_obtenerToken.getToken();
         request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT));
-        request.setHeader('Authorization', System.label.BearerToken);
+        request.setHeader('Authorization', authorizationHeader);
         request.setMethod('GET');
         HttpResponse response = https.send(request);
         system.debug('response '+response);

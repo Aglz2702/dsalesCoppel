@@ -18,43 +18,13 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 try{
                     DSALES_IPAssetWrapper.IPAssetRequest policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
                     DSALES_InformacionDePago__c pago= new DSALES_InformacionDePago__c();
-                    if (Schema.sObjectType.DSALES_InformacionDePago__c.isQueryable()) {
-                        pago=[SELECT Id,DSALES_IDUniversal__c,	DSALES_Oportunidad__c,DSALES_Motoentregada__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal];
-                        pago.DSALES_Motoentregada__c=true;	
-                    }
-					if (Schema.sObjectType.OpportunityLineItem.isQueryable()) {
-                        for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
-                            FROM OpportunityLineItem WHERE OpportunityId=:pago.DSALES_Oportunidad__c AND Product2.DSales_Tipo_de_Producto__c=:'Seguro']){
-                                switch on partidasSeguro.DSALES_Estatus__c {
-                                    when 'Devuelto' {
-                                            emitirPoliza=false;
-                                    }
-                                }
-                                switch on partidasSeguro.DSALES_Estatus__c {
-                                    when 'Cancelado' {
-                                            emitirPoliza=false;
-                                    }
-                                }                                            
-                        }
-                    }
-                    
-                    if(policyAsset.numeroSerie!=''){
-                        //llamar metodo
-                        data=createIPAssetAux1(pago, policyAsset, emitirPoliza);
-                        String idOportunidad=pago.DSALES_Oportunidad__c;
-                        List<DSALES_VentaSMRest.WrapperDatosProductos> productosSincronisados=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(idOportunidad);
-                        for(DSALES_VentaSMRest.WrapperDatosProductos listSin:productosSincronisados){
-                            DSALES_IPAssetWrapper.ListaPartidasOportunidad listp= new  DSALES_IPAssetWrapper.ListaPartidasOportunidad ();
-                            listp.idPartidaDeOportunidad=listSin.oliId;
-                            listp.nombreProducto=listSin.nombreProducto;
-                            listp.sku=listSin.sku;
-                            listaPartidas.add(listp);
-                        }
-                        success=true;
-                        if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
-                            update pago;  
-                        }
-                    }   
+                    data=createIPAssetAux2(pago, policyAsset, emitirPoliza); 
+                    listaPartidas=data.listaPartidas;
+                    pago=data.pago;
+                    success=true;
+                    if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
+                        update pago;  
+                    } 
                 }
                 catch(Exception.JSONException e)
                 {
@@ -103,27 +73,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 }
             }
             else{
-                if(Schema.sObjectType.InsurancePolicyAsset.isCreateable()) {
-                    insert activo;
-                }
-                idActivo=activo.Id;
-                    InsurancePolicy polizaActivo=new InsurancePolicy();
-                    if (Schema.sObjectType.InsurancePolicy.isQueryable()) {
-                        polizaActivo = [SELECT Id FROM InsurancePolicy WHERE Id=:pago.DSALES_Poliza__c];
-                    }
-                    polizaActivo.DSALES_Activodeplizadeseguro__c=activo.Id;
-                    polizaActivo.DSALES_Clavevehicular__c=activo.DSALES_Clavevehicular__c;
-                    polizaActivo.DSALES_Modelo__c=activo.DSALES_Modelo__c;
-                    polizaActivo.DSALES_Numeroserie__c=activo.DSALES_Numeroserie__c;
-                    polizaActivo.DSALES_Nmerodemotor__c=activo.DSALES_Numeromotor__c;
-                    polizaActivo.DSALES_Descripcion__c=activo.DSALES_Descripcion__c;
-                    polizaActivo.DSALES_Servicio__c=activo.DSALES_Servicio__c;
-                    polizaActivo.DSALES_Placas__c=activo.DSALES_Placas__c;
-                    polizaActivo.DSALES_Marca__c=activo.DSALES_Marca__c;
-                    polizaActivo.DSALES_Uso__c=activo.DSALES_Uso__c;
-                    if(InsurancePolicy.SObjectType.getDescribe().isUpdateable()) {
-                        update polizaActivo;  
-                    }
+                createIPAssetAuxAux(activo,idActivo, pago);
             }    
         }
         else{
@@ -136,11 +86,74 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         return data;
     }
 
+    private static IPAssetAux1Wrapper createIPAssetAux2(DSALES_InformacionDePago__c pago, DSALES_IPAssetWrapper.IPAssetRequest policyAsset, Boolean emitirPoliza){
+        List<DSALES_IPAssetWrapper.ListaPartidasOportunidad> listaPartidas = new List<DSALES_IPAssetWrapper.ListaPartidasOportunidad>();
+        IPAssetAux1Wrapper data = new IPAssetAux1Wrapper();
+        if (Schema.sObjectType.DSALES_InformacionDePago__c.isQueryable()) {
+            pago=[SELECT Id,DSALES_IDUniversal__c,	DSALES_Oportunidad__c,DSALES_Motoentregada__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal];
+            pago.DSALES_Motoentregada__c=true;	
+        }
+        if (Schema.sObjectType.OpportunityLineItem.isQueryable()) {
+            for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
+                FROM OpportunityLineItem WHERE OpportunityId=:pago.DSALES_Oportunidad__c AND Product2.DSales_Tipo_de_Producto__c=:'Seguro']){
+                    switch on partidasSeguro.DSALES_Estatus__c {
+                        when 'Devuelto' {
+                                emitirPoliza=false;
+                        }
+                    }
+                    switch on partidasSeguro.DSALES_Estatus__c {
+                        when 'Cancelado' {
+                                emitirPoliza=false;
+                        }
+                    }                                            
+            }
+        }
+        
+        if(policyAsset.numeroSerie!=''){
+            //llamar metodo
+            data=createIPAssetAux1(pago, policyAsset, emitirPoliza);
+            String idOportunidad=pago.DSALES_Oportunidad__c;
+            List<DSALES_VentaSMRest.WrapperDatosProductos> productosSincronisados=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(idOportunidad);
+            for(DSALES_VentaSMRest.WrapperDatosProductos listSin:productosSincronisados){
+                DSALES_IPAssetWrapper.ListaPartidasOportunidad listp= new  DSALES_IPAssetWrapper.ListaPartidasOportunidad ();
+                listp.idPartidaDeOportunidad=listSin.oliId;
+                listp.nombreProducto=listSin.nombreProducto;
+                listp.sku=listSin.sku;
+                listaPartidas.add(listp);
+            }
+        } 
+        data.pago=pago;
+        data.listaPartidas=listaPartidas;
+        return data; 
+    }
+
+    private static void createIPAssetAuxAux(InsurancePolicyAsset activo, String idActivo, DSALES_InformacionDePago__c pago ){
+        if(Schema.sObjectType.InsurancePolicyAsset.isCreateable() && Schema.sObjectType.InsurancePolicy.isQueryable()&& InsurancePolicy.SObjectType.getDescribe().isUpdateable()) {
+            insert activo;
+            idActivo=activo.Id;
+            InsurancePolicy polizaActivo=new InsurancePolicy();
+                polizaActivo = [SELECT Id FROM InsurancePolicy WHERE Id=:pago.DSALES_Poliza__c];
+                polizaActivo.DSALES_Activodeplizadeseguro__c=activo.Id;
+                polizaActivo.DSALES_Clavevehicular__c=activo.DSALES_Clavevehicular__c;
+                polizaActivo.DSALES_Modelo__c=activo.DSALES_Modelo__c;
+                polizaActivo.DSALES_Numeroserie__c=activo.DSALES_Numeroserie__c;
+                polizaActivo.DSALES_Nmerodemotor__c=activo.DSALES_Numeromotor__c;
+                polizaActivo.DSALES_Descripcion__c=activo.DSALES_Descripcion__c;
+                polizaActivo.DSALES_Servicio__c=activo.DSALES_Servicio__c;
+                polizaActivo.DSALES_Placas__c=activo.DSALES_Placas__c;
+                polizaActivo.DSALES_Marca__c=activo.DSALES_Marca__c;
+                polizaActivo.DSALES_Uso__c=activo.DSALES_Uso__c;
+                update polizaActivo;  
+            }
+    }
+
     global class IPAssetAux1Wrapper{
         global String idActivo {get;set;}
         global DSALES_IPAssetWrapper.Seguro seguro {get;set;}
+        global List<DSALES_IPAssetWrapper.ListaPartidasOportunidad> listaPartidas {get;set;}
+        global DSALES_InformacionDePago__c pago {get;set;}  
     }
-    
+
     global static InsurancePolicyAsset insertIPAsset(DSALES_IPAssetWrapper.IPAssetRequest policyAsset){
         Boolean success=false;
         String message='';
