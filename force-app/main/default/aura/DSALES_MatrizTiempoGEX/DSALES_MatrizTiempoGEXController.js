@@ -1,11 +1,11 @@
 ({
     init: function(component, event, helper) {
-        var action = component.get("c.getRecords");
+        let action = component.get("c.getRecords");
         action.setParams({
             recordId : component.get("v.recordId")
         });  
         action.setCallback(this, function(response) {
-            var object = {};
+            let object = {};
             object.count = 0;
             object.listMatriz = response.getReturnValue();
             object.siguienteDes = object.listMatriz.length < 3;
@@ -20,9 +20,9 @@
         $A.enqueueAction(action);
     },
     agregarMatriz1: function(component, event, helper) {
-        var data = component.get("v.dataShow");
+        let data = component.get("v.dataShow");
         let name = event.getSource().get("v.name");
-        var object = {};
+        let object = {};
         object.rangoMenor = 0;
         object.rangoMayor = 0;
         object.precio = 0;
@@ -32,9 +32,9 @@
         component.set("v.dataShow", data);
     },
     agregarMatriz2: function(component, event, helper) {
-        var data = component.get("v.dataShow");
+        let data = component.get("v.dataShow");
         let name = event.getSource().get("v.name");
-        var object = {};
+        let object = {};
         object.rangoMenor = 0;
         object.rangoMayor = 0;
         object.precio = 0;
@@ -43,8 +43,8 @@
         data.matriz2.listMatriz.push(object);
         component.set("v.dataShow", data);
     },
-    siguiente: function(component, event, helper) {
-        var data = component.get("v.data");
+    siguiente: function(component, helper) {
+        let data = component.get("v.data");
         data.count += 2;
         data.siguienteDes = data.count + 2 >= data.listMatriz.length;
         data.anteriorDes = false;
@@ -52,8 +52,8 @@
         console.log(data.count);
         helper.asignarMatriz(component);
     },
-    anterior: function(component, event, helper) {
-        var data = component.get("v.data");
+    anterior: function(component, helper) {
+        let data = component.get("v.data");
         data.count -= 2;
         data.siguienteDes = false;
         data.anteriorDes = data.count == 0;
@@ -69,8 +69,8 @@
     seleccionPag1: function(component, event, helper) {
         var dataShow = component.get("v.dataShow");
         let selecionado = false;
-        for(let i=0; i<dataShow.matriz1.listMatriz.length; i++){
-            if(dataShow.matriz1.listMatriz[i].seleccionado){
+        for(const element of dataShow.matriz1.listMatriz){
+            if(element.seleccionado){
                 selecionado = true;
             }
         }
@@ -80,8 +80,8 @@
     seleccionPag2: function(component, event, helper) {
         var dataShow = component.get("v.dataShow");
         let selecionado = false;
-        for(let i=0; i<dataShow.matriz2.listMatriz.length; i++){
-            if(dataShow.matriz2.listMatriz[i].seleccionado){
+        for(const element of dataShow.matriz2.listMatriz){
+            if(element.seleccionado){
                 selecionado = true
             }
         }
@@ -90,15 +90,15 @@
     },
     seleccionTodosPag1: function(component, event, helper) {
         var dataShow = component.get("v.dataShow");
-        for(let i=0; i<dataShow.matriz1.listMatriz.length; i++){
-            dataShow.matriz1.listMatriz[i].seleccionado =  dataShow.seleccionadoPag1;
+        for(const element of dataShow.matriz1.listMatriz){
+            element.seleccionado =  dataShow.seleccionadoPag1;
         }
         component.set("v.dataShow", dataShow);
     },
     seleccionTodosPag2: function(component, event, helper) {
         var dataShow = component.get("v.dataShow");
-        for(let i=0; i<dataShow.matriz2.listMatriz.length; i++){
-            dataShow.matriz2.listMatriz[i].seleccionado =  dataShow.seleccionadoPag2;
+        for(const element of dataShow.matriz2.listMatriz){
+            element.seleccionado =  dataShow.seleccionadoPag2;
         }
         component.set("v.dataShow", dataShow);
     },
@@ -116,12 +116,12 @@
     },
     popGuardar: function(component, event, helper) {
         var data = component.get("v.data");
-        for(let i=0; i<data.listMatriz.length; i++){
-            for(let j=0; j<data.listMatriz[i].listMatriz.length; j++){
-                if(data.listMatriz[i].listMatriz[j].rangoMenor == 0 || data.listMatriz[i].listMatriz[j].rangoMenor == null ||
-                   data.listMatriz[i].listMatriz[j].rangoMayor == 0 || data.listMatriz[i].listMatriz[j].rangoMayor == null ||
-                   data.listMatriz[i].listMatriz[j].precio == 0 || data.listMatriz[i].listMatriz[j].precio == null ||
-                   data.listMatriz[i].listMatriz[j].codigo == null || data.listMatriz[i].listMatriz[j].codigo == ''){
+        for(const element of data.listMatriz){
+            for(let j=0; j<element.listMatriz.length; j++){
+                if(element.listMatriz[j].rangoMenor == 0 || element.listMatriz[j].rangoMenor == null ||
+                   element.listMatriz[j].rangoMayor == 0 || element.listMatriz[j].rangoMayor == null ||
+                   element.listMatriz[j].precio == 0 || element.listMatriz[j].precio == null ||
+                   element.listMatriz[j].codigo == null || element.listMatriz[j].codigo == ''){
                     helper.showMessage('error', "Por favor complete todos los campos.");
                     return;
                 }

@@ -1,4 +1,4 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import crearEndoso from '@salesforce/apex/DSALES_EndorsementController.crearEndoso';
@@ -19,24 +19,24 @@ export default class DSALES_Endorsementbutton extends LightningElement {
                 console.log(result);
                 if (result >= 1) {
                     crearEndoso({ idEndoso: this.recordId })
-                        .then(result => {
-                            this.estatus = result;
+                        .then(resultado => {
+                            this.estatus = resultado;
                             console.log(this.estatus);
                             this.pushMessage('Exitoso', 'success', 'Endoso Enviado exitosamente.');
                             this.dispatchEvent(new CloseActionScreenEvent());
 
                         }).catch(error => {
-                            console.log('Error en sendEndorsement');
+                            console.log('Error en sendEndorsement '+error);
                             console.log(this.estatus);
                             this.pushMessage('Error', 'error', 'Ha ocurrido un error, por favor contacte su administrador.');
                             this.dispatchEvent(new CloseActionScreenEvent());
                         });
                 } else {
-                    this.pushMessage('Error', 'error', 'Faltan documentos por subir.');
+                    this.pushMessage('Error', 'error', 'Faltan por cargar documentos.');
                     this.dispatchEvent(new CloseActionScreenEvent());
                 }
-            }).catch(error => {
-                console.log('Error en enviar Siniestro');
+            }).catch(error2 => {
+                console.log('Error en enviar Siniestro' + error2);
                 console.log(this.estatus);
                 this.pushMessage('Error', 'error', 'Ha ocurrido un error, por favor contacte su administrador.');
                 this.dispatchEvent(new CloseActionScreenEvent());
