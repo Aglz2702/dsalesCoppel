@@ -6,7 +6,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
         List<QuoteLineItem> unpurchasedItems= new List<QuoteLineItem>();        
         List<String> productSKUs = new List<String>();
         for(DSALES_AssetWrapper.AssetRequest a:listAssets){
-            productSKUs.add(a.sku_de_tangible);
+            productSKUs.add(a.skuDeTangible);
         }
         If(listAssets!= null){
             List<QuoteLineItem>quoteLineMap= [SELECT Id,Quantity,PricebookEntryId,UnitPrice,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Producto'AND DSALES_SKU__c NOT IN:productSKUs WITH SECURITY_ENFORCED]; 
@@ -25,7 +25,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
         List<String> lstwotId = new List<String>();
         
         for(DSALES_CertificadoWrapper.CertificadoRequest cer:certificado){
-            quoteLineItemId.add(cer.id_partida_presupuesto);
+            quoteLineItemId.add(cer.idPartidaPresupuesto);
             lstSku.add(cer.sku);
         }
         List<QuoteLineItem>warrantyMap= [SELECT Id,Quantity,PricebookEntryId,UnitPrice,Product2.StockKeepingUnit,Product2Id, DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Servicio'AND Id NOT IN:quoteLineItemId AND DSALES_SKU__c  IN:lstSku WITH SECURITY_ENFORCED ];
@@ -136,13 +136,13 @@ public without sharing class  DSALES_ValidarClienteHelper {
                            system.debug('Cúantas veces pasó??? ');
                            DSALES_VentaGEX.ServicioCorrespondiente servicioGex= new DSALES_VentaGEX.ServicioCorrespondiente();
                             DSALES_VentaGEX.OpporLineItem opportunityLine = new DSALES_VentaGEX.OpporLineItem();
-                           servicioGex.id_partida_de_oportunidad=op.Id;
+                           servicioGex.idPartidaDeOportunidad=op.Id;
                            OportunidadLineMap.put(op.Product2.StockKeepingUnit,servicioGex);
-                         opportunityLine.id_partida_de_oportunidad=op.Id;
-                         opportunityLine.nombre_producto=op.Product2.Name;
+                         opportunityLine.idPartidaDeOportunidad=op.Id;
+                         opportunityLine.nombreProducto=op.Product2.Name;
                        	opportunityLine.sku=op.Product2.StockKeepingUnit;
-                       	opportunityLine.tipo_producto='Producto';
-                        opportunityLine.id_producto_adquirido=mapAssets.get(op.Product2.StockKeepingUnit); 
+                       	opportunityLine.tipoProducto='Producto';
+                        opportunityLine.idProductoAdquirido=mapAssets.get(op.Product2.StockKeepingUnit); 
                          
                            for(String b :mapaNombreCertificado.keySet())
                         {
@@ -155,24 +155,24 @@ public without sharing class  DSALES_ValidarClienteHelper {
                                 system.debug('Cúantas veces pasó??? hijo ');
                                  
                              
-                                servicioCo.folio_certificado=mapaNombreCertificado.get(b).Name;
-                                servicioCo.id_partida_de_oportunidad=op.Id;
-                                servicioGex.id_partida_de_oportunidad=op.id;
-                                servicioGex.folio_certificado=servicioCo.folio_certificado;
+                                servicioCo.folioCertificado=mapaNombreCertificado.get(b).Name;
+                                servicioCo.idPartidaDeOportunidad=op.Id;
+                                servicioGex.idPartidaDeOportunidad=op.id;
+                                servicioGex.folioCertificado=servicioCo.folioCertificado;
                                 servicioCo.sku=mapaNombreCertificado.get(b).DSALES_SKU__c;
                                 OportunidadLineMap.put(servicioCo.sku,servicioGex);
-                                servicioCo.tipo_producto='Servicio';
+                                servicioCo.tipoProducto='Servicio';
                                
                                  if(OportunidadLineMap.containsKey(servicioCo.sku))
                                 {
-                                    servicioCo.id_partida_de_oportunidad=OportunidadLineMap.get(servicioCo.sku).id_partida_de_oportunidad;
+                                    servicioCo.idPartidaDeOportunidad=OportunidadLineMap.get(servicioCo.sku).idPartidaDeOportunidad;
                                    
                                 }
                                     for(QuoteLineItem p:partida)
                         {
                             if(p.DSALES_SKU__c==servicioCo.sku)
                             {
-                                servicioCo.nombre_producto=p.DSALES_NombreProductoServicio__c;
+                                servicioCo.nombreProducto=p.DSALES_NombreProductoServicio__c;
                                 
                                 
                             }
@@ -190,11 +190,10 @@ public without sharing class  DSALES_ValidarClienteHelper {
                         else
                         {
                             DSALES_VentaGEX.ServicioCorrespondiente servicioGex= new DSALES_VentaGEX.ServicioCorrespondiente();
-                            servicioGex.id_partida_de_oportunidad=op.Id;
-                            if(!OportunidadLineMap.isEmpty()){
-                           servicioGex.folio_certificado=OportunidadLineMap.get(op.Product2.StockKeepingUnit).folio_certificado;
+                            servicioGex.idPartidaDeOportunidad=op.Id;
+                            if(!OportunidadLineMap.isEmpty())
+                           servicioGex.folioCertificado=OportunidadLineMap.get(op.Product2.StockKeepingUnit).folioCertificado;
                              OportunidadLineMap.put(op.Product2.StockKeepingUnit,servicioGex);
-                            }
                         }
                         
                          
@@ -208,11 +207,11 @@ public without sharing class  DSALES_ValidarClienteHelper {
                     {
                         if(OportunidadLineMap.containsKey(listaServicio.sku))
                         {
-                            listaServicio.id_partida_de_oportunidad=OportunidadLineMap.get(listaServicio.sku).id_partida_de_oportunidad;
+                            listaServicio.idPartidaDeOportunidad=OportunidadLineMap.get(listaServicio.sku).idPartidaDeOportunidad;
                          opportunityLineItem opporLine = new opportunityLineItem();
-                            opporLine.id= listaServicio.id_partida_de_oportunidad;
+                            opporLine.id= listaServicio.idPartidaDeOportunidad;
 
-                            opporLine.DSALES_FolioCertificado__c=OportunidadLineMap.get(listaServicio.sku).folio_certificado;
+                            opporLine.DSALES_FolioCertificado__c=OportunidadLineMap.get(listaServicio.sku).folioCertificado;
                             system.debug('Ids Certificados: '+OportunidadLineMap.keySet());
       						listActualizarOp.add(opporLine);
                         }
@@ -223,8 +222,16 @@ public without sharing class  DSALES_ValidarClienteHelper {
                 
             }
             try{
-                Update oppor;
-                Update listActualizarOp;
+                
+
+                if(Schema.sObjectType.opportunityLineItem.isUpdateable()) {
+                    Update oppor;
+                    Update listActualizarOp;
+                    }else{
+                    
+                    System.debug('Permisos insuficientes para actualizar');
+                    }
+                
                 
             }catch(DmlException e){
                 System.debug('Error occured: ' + e);  
