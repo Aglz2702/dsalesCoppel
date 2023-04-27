@@ -1,5 +1,4 @@
-import { LightningElement, track, api } from 'lwc';
-import { CloseActionScreenEvent } from 'lightning/actions';
+import { LightningElement, api } from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import crearSiniestro from '@salesforce/apex/DSALES_SiniestroController.Siniestro';  
 import validateDocs from '@salesforce/apex/DSALES_SiniestroController.validarDoc';  
@@ -16,19 +15,19 @@ export default class dSALES_SiniestroButton extends LightningElement {
     sendSiniestro() {
 
         validateDocs({ idObject: this.recordId })
-            .then(result => {
-                this.resul = result;
-                console.log(result);
-                if (result >= 18) {
+            .then(numeroDocs => {
+                this.resul = numeroDocs;
+                console.log(numeroDocs);
+                if (numeroDocs >= 18) {
                     crearSiniestro({ idSiniestro: this.recordId })
-                        .then(result => {
-                            this.resul = result;
-                            console.log(result);
+                        .then(resultado => {
+                            this.resul = resultado;
+                            console.log(resultado);
                             this.pushMessage('Exitoso', 'success', 'Siniestro Enviado exitosamente.');
                             eval("$A.get('e.force:refreshView').fire();");
 
-                        }).catch(error => {
-                            console.log('Error en enviar Siniestro');
+                        }).catch(error2 => {
+                            console.log('Error en enviar Siniestro'+ error2);
                             console.log(this.estatus);
                             this.pushMessage('Error', 'error', 'Ha ocurrido un error, por favor contacte su administrador.');
                         });
@@ -40,7 +39,7 @@ export default class dSALES_SiniestroButton extends LightningElement {
 
 
     }).catch(error => {
-        console.log('Error en enviar Siniestro');
+        console.log('Error en enviar Siniestro'+ error);
 console.log(this.estatus);
 this.pushMessage('Error', 'error', 'Ha ocurrido un error, por favor contacte su administrador.');
             });
@@ -55,9 +54,9 @@ this.pushMessage('Error', 'error', 'Ha ocurrido un error, por favor contacte su 
                 this.pushMessage('Exitoso', 'success', 'Siniestro Enviado exitosamente.');
                 eval("$A.get('e.force:refreshView').fire();");
 
-            }).catch(error => {
+            }).catch(error3 => {
                 console.log('Error en enviar Siniestro');
-                console.log(this.estatus);
+                console.log(this.estatus, error3);
                 this.pushMessage('Error', 'error', 'Ha ocurrido un error, por favor contacte su administrador.');
             });
     }

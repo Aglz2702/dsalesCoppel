@@ -1,5 +1,5 @@
-public class DSALES_CreateDocument {
-    public static ContentVersion CreaDocument(String fileBody, String fileName ) {
+public without sharing  class DSALES_CreateDocument {
+    public static ContentVersion creaDocument(String fileBody, String fileName ) {
         ContentVersion cv = new ContentVersion();
         cv.ContentLocation = 'S';
         cv.ContentDocumentId = null;
@@ -10,7 +10,7 @@ public class DSALES_CreateDocument {
         return cv;
     }
 
-    public static ContentDocumentLink Crealink(ContentVersion cv, Id siniestroId ) {
+    public static ContentDocumentLink crealink(ContentVersion cv, Id siniestroId ) {
         ContentDocumentLink cdl = new ContentDocumentLink();
         cdl.ContentDocumentId = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id =: cv.Id].ContentDocumentId;
         cdl.LinkedEntityId = siniestroId; // id del caso
