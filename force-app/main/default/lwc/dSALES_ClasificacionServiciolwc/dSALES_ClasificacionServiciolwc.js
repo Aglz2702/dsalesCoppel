@@ -1674,16 +1674,12 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         
     }
 
-    
-
-
-
-
-
-
-
-
-
-
+    handleKeyDownSearch(event) {
+        if (event.key === 'Enter') {
+            this.search();
+          // Aquí puedes llamar a la función que quieres ejecutar cuando se presiona Enter
+          console.log('Enter presionado');
+        }
+      }
 
 }
