@@ -46,34 +46,40 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         {
             if(!String.isEmpty(idUniversal))
             {
-                if(pago.size()>0)
-                {
-                Integer contador =0;
-                List<OpportunityLineItem> productoOpor= [SELECT DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c  WITH SECURITY_ENFORCED]; 
-                List<DSALES_Certificado__c> certificados= [SELECT DSALES_Estatus__c FROM DSALES_Certificado__c WHERE
-                                                          DSALES_InformacionDePago__c=:pago[0].Id WITH SECURITY_ENFORCED];
-                List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
-            	
-                for(OpportunityLineItem oportunidad:productoOpor)
-                {
-                    oportunidad.DSALES_Estatus__c=estatusGlobal;
-                    listaOportunidades.add(oportunidad);
-                    if(certificados.size()>contador)
+                switch on pago.size() {
+                    when 0  {
+                        break;
+                    }
+                    when else {
+                        Integer contador =0;
+                        List<OpportunityLineItem> productoOpor= [SELECT DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c  WITH SECURITY_ENFORCED]; 
+                        List<DSALES_Certificado__c> certificados= [SELECT DSALES_Estatus__c FROM DSALES_Certificado__c WHERE
+                                                                  DSALES_InformacionDePago__c=:pago[0].Id WITH SECURITY_ENFORCED];
+                        List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
+                        
+                        for(OpportunityLineItem oportunidad:productoOpor)
                         {
-                            certificados[contador].DSALES_Estatus__c =estatusGlobal;
-                            certificados[contador].DSales_Motivo__c=motivoGlobal;
-                            listaCertificadosModificar.add(certificados[contador]);
+                            oportunidad.DSALES_Estatus__c=estatusGlobal;
+                            listaOportunidades.add(oportunidad);
+                            if(certificados.size()>contador)
+                                {
+                                    certificados[contador].DSALES_Estatus__c =estatusGlobal;
+                                    certificados[contador].DSales_Motivo__c=motivoGlobal;
+                                    listaCertificadosModificar.add(certificados[contador]);
+                                }
+                           
+                             if(productos.size()>contador)
+                                {
+                                    productos[contador].Status =estatusGlobal;
+                                     productos[contador].DSALES_Motivo__c=motivoGlobal;
+                                    listaAssetsModificar.add(productos[contador]);
+                                }
+                            contador++;
                         }
-                   
-                     if(productos.size()>contador)
-                        {
-                            productos[contador].Status =estatusGlobal;
-                             productos[contador].DSALES_Motivo__c=motivoGlobal;
-                            listaAssetsModificar.add(productos[contador]);
-                        }
-                    contador++;
+                        
+                    }
                 }
-            }
+              
                 }
         }
         else
