@@ -37,8 +37,12 @@ public with sharing class DSALES_QuotePagoSM {
                 for(Integer i=0;i<2;i++){
                     idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
                     listIdCotiza.add(idCotizacion);
-                }  
-                String idCotSin=crear2CotPartidas(beforeCot.Id,listIdCotiza,Integer.valueOf(pago.DSALES_Plazodecomprademoto__c), partidasSeleccionadas,skuMoto);
+                } 
+                Map<String, Object> stringData=new Map<String, String>();
+                stringData.put('beCot',beforeCot.Id);
+                stringData.put('skuMoto',skuMoto);
+                stringData.put('plazo',Integer.valueOf(pago.DSALES_Plazodecomprademoto__c));
+                String idCotSin=crear2CotPartidas(/*beforeCot.Id,skuMoto,Integer.valueOf(pago.DSALES_Plazodecomprademoto__c),*/stringData, listIdCotiza, partidasSeleccionadas);
                 if(idCotSin!=null|| idCotSin!=''){
                     sincronizarOportunidad(idCotSin);
                 } 
@@ -282,9 +286,12 @@ public with sharing class DSALES_QuotePagoSM {
     }*/
 
     /////////////****------ 5 -----------****///////////////
-    public static String crear2CotPartidas(String idCot,List<String> listCotNew,Integer plazo,List<String> partidasSeleccionadas,String skuMoto){
+    public static String crear2CotPartidas(/*String idCot, String skuMoto, Integer plazo,*/Map<String, Object> stringData, List<String> listCotNew, List<String> partidasSeleccionadas){
         try{
             System.debug('lista de new cotiza: '+ listCotNew.size());
+            String idCot=(String)stringData.get('beCot');
+            String skuMoto=(String)stringData.get('skuMoto');
+            Integer plazo=(Integer)stringData.get('plazo');
             List<String> listIdProd = new List<String>();
             List<QuoteLineItem> listPartidas = new List<QuoteLineItem>();
             List<QuoteLineItem> listSeguros = new List<QuoteLineItem>();
@@ -351,7 +358,7 @@ public with sharing class DSALES_QuotePagoSM {
                             }
                         }
                         if(ql.DSALES_Segurogratis__c!=null){
-                            partida.DSALES_Segurogratis__c=ql.DSALES_Segurogratis__c;
+                            partida.DSALES_Segurogratis__c=ql.DSALES_Segurogratis__c; 
                         }
                         partida.Quantity = 1;
                         partida.DSALES_Fechadeinicio__c = ql.DSALES_Fechadeinicio__c;
@@ -385,7 +392,8 @@ public with sharing class DSALES_QuotePagoSM {
                         update cotizacionEnviar;  
                     }else{
                         System.debug('Permisos insuficientes para actualizar');   
-                    }   
+                    }  
+                    Map<String, List<Object>> mapData =new Map<String, List<Object>>(); 
                     for(QuoteLineItem q:listMotoRc){
                         QuoteLineItem part = new QuoteLineItem();
                         //for(PricebookEntry pr:precios){
@@ -417,7 +425,9 @@ public with sharing class DSALES_QuotePagoSM {
                             //part=part;   
                         //}
                         //listPartInsert.add(part);
-                        listPartInsert.add(productoIf(precios, q, listCotNew, plazos)); 
+                        mapData.put('listCotNew',listCotNew);
+                        mapData.put('plazos',plazos);
+                        listPartInsert.add(DSALES_QuotePagoSMHelper.productoIf(precios, q, /*listCotNew, plazos*/ mapData)); 
                     }
                     System.debug('listPartInsert:'+listPartInsert.size());
                     System.debug('listPartInsert:'+listPartInsert);
@@ -444,7 +454,7 @@ public with sharing class DSALES_QuotePagoSM {
                     for(QuoteLineItem ql:partidasNuevas){
                         for(QuoteLineItem q:listMotoRc){
                             if( ql.DSALES_Plazo__c == q.DSALES_Plazo__c){
-                                if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
+                                /*if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
                                     ql.UnitPrice=0;
                                     ql.DSALES_Gastosdeoperacindelrecibo__c=0;
                                     ql.DSALES_Primaneta__c=0;
@@ -453,10 +463,10 @@ public with sharing class DSALES_QuotePagoSM {
                                     ql.DSALES_Recargos__c=0;
                                     ql.DSALES_Impuestos__c=0;
                                     ql.DSALES_Pagomensual__c=0;
-                                
                                 }else{
                                     ql.UnitPrice=q.UnitPrice;
-                                }  
+                                }*/ 
+                                ql=DSALES_QuotePagoSMHelper.quoteIf(ql, q);
                             }
                         }
                         idNuevos.add(ql);
@@ -598,40 +608,6 @@ public with sharing class DSALES_QuotePagoSM {
         }
     }
 
-    ///////////////////--------- NEW -------------/////////////////////////
-
-    public static QuoteLineItem productoIf(List<PricebookEntry> precios, QuoteLineItem q, List<String> listCotNew, List<Plazo__c> plazos){
-        QuoteLineItem part = new QuoteLineItem();
-        for(PricebookEntry pr:precios){
-            if(pr.Name==q.DSALES_NombreProducto__c){
-                part.QuoteId = listCotNew[1]; 
-                part.PricebookEntryId = pr.Id;
-                part.UnitPrice=pr.UnitPrice;
-                if(part.DSALES_Segurogratis__c!=null){
-                    part.DSALES_Segurogratis__c=q.DSALES_Segurogratis__c;
-                }
-                part.Quantity = 1;
-                part.DSALES_Fechadeinicio__c = q.DSALES_Fechadeinicio__c;
-                part.DSALES_Fechadetermino__c = q.DSALES_Fechadetermino__c;
-                part.DSALES_Primaneta__c = q.DSALES_Primaneta__c;
-                part.DSALES_Derechosdepliza__c = q.DSALES_Derechosdepliza__c;
-                part.DSALES_Gastosdeoperacindelrecibo__c = q.DSALES_Gastosdeoperacindelrecibo__c;
-                part.DSALES_Impuestos__c = q.DSALES_Impuestos__c;
-                part.DSALES_TrackingID__c=q.DSALES_TrackingID__c;
-                part.DSALES_Comision__c=q.DSALES_Comision__c;
-                part.DSALES_Recargos__c=q.DSALES_Recargos__c;
-                part.DSALES_Descripcion__c=q.DSALES_Descripcion__c;
-                part.DSALES_Pagomensual__c=q.DSALES_Pagomensual__c;
-                for(Plazo__c p:plazos){
-                    if(q.DSALES_Plazo__c!=null && p.Id==q.DSALES_Plazo__c){
-                        part.DSALES_Plazo__c=q.Dsales_Plazo__c;
-                    }
-                }
-            }
-        }
-        //listPartInsert.add(part);
-        return part;
-    }
 
     /////////////****------ 6 -----------****///////////////
     public static void sincronizarOportunidad(String quoteId){
