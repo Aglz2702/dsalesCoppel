@@ -1,7 +1,7 @@
 public with sharing class DSALES_obtenerToken {
     public static final String NOMBRE_SERVICIO = System.Label.TOKEN;
     public static String getToken(){
-        String access_token;
+        String accessToken;
         Http https = new Http();
         HttpRequest request = new HttpRequest();
         String endpoint = DSALES_Utility.getEndpoint(NOMBRE_SERVICIO);
@@ -14,11 +14,10 @@ public with sharing class DSALES_obtenerToken {
         httpResponse response = https.send(request);
         if (response.getStatusCode() == 200) {
             Map<String, Object> tokenResponse = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
-            access_token = (String) tokenResponse.get('access_token');
-            System.debug('Access Token: ' + access_token);
+            accessToken = (String) tokenResponse.get('access_token');
         } else {
             System.debug('Error al obtener el token de acceso: ' + response.getBody());
         }
-        return access_token;
+        return accessToken;
     }
 }
