@@ -142,8 +142,4 @@ public without sharing class DSALES_ControladorMatrizTiempo {
         @AuraEnabled public Boolean seleccionado {get;set;}
     }
     
-    /*public class ClaseClone{
-        @AuraEnabled public Boolean esClone {get;set;}
-    }*/
-    
 }

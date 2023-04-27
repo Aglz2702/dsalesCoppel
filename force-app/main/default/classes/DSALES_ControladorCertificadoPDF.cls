@@ -8,7 +8,6 @@ public without sharing class DSALES_ControladorCertificadoPDF {
     private static final String MY_FILE_NAME='Cotizacion';
     
     public DSALES_ControladorCertificadoPDF(){
-        
         String recordId = ApexPages.currentPage().getParameters().get('certificadoId');
         html = [select Id, DSALES_Plantilla__c  from DSALES_Generador__c Where Name = :NOMBRE_PLANTILLA].DSALES_Plantilla__c;
         html = html.replace('border-color: #ffffff;', 'border-image: initial; border: 1px solid blue;');
@@ -26,9 +25,7 @@ public without sharing class DSALES_ControladorCertificadoPDF {
         if (Schema.sObjectType.DSALES_Certificado__c.isQueryable()) {
             certificado = DataBase.query(String.escapeSingleQuotes(query));
         }  
-        if (Schema.sObjectType.Tienda__c.isQueryable()) {
-            tienda=[SELECT name FROM Tienda__c WHERE DSales_TiendaID__c=:certificado.DSALES_Tienda__c LIMIT 1];
-        }
+        tienda=[SELECT name FROM Tienda__c WHERE DSales_TiendaID__c=:certificado.DSALES_Tienda__c  WITH SECURITY_ENFORCED LIMIT 1];
         html=html.replace('DSALES_Tienda__c', tienda.Name);
         html = html.replace('certificado.', '');
         for(String item: mapCampos.keySet()){
@@ -46,8 +43,9 @@ public without sharing class DSALES_ControladorCertificadoPDF {
                 html = html.replace(item, replace);
             }
         }
+        
     }
-    
+  
     
     private static Map<String, String> getField(String objName){
         Map<String, String> mapCampos = new Map<String, String>();

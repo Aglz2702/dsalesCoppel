@@ -34,7 +34,7 @@ export default class QuickActionLWC extends LightningElement {
 
     uploadFileData(event) {
         console.log(event.target.dataset.item);
-        let fl = event.detail.files;// documentId
+        let fl = event.detail.files; 
         console.log(fl[0]);
         if (this.dataFile) {
             for (let i in this.dataFile) {
