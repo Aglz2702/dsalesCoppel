@@ -224,13 +224,18 @@ public without sharing class  DSALES_ValidarClienteHelper {
             try{
                 
 
-                if(Schema.sObjectType.opportunityLineItem.isUpdateable()) {
+                if(Schema.sObjectType.Opportunity.isUpdateable()) {
                     Update oppor;
-                    Update listActualizarOp;
                     }else{
                     
                     System.debug('Permisos insuficientes para actualizar');
                     }
+                    if(Schema.sObjectType.OpportunityLineItem.isUpdateable()) {
+                        Update listActualizarOp;
+                        }else{
+                        
+                        System.debug('Permisos insuficientes para actualizar');
+                        }
                 
                 
             }catch(DmlException e){

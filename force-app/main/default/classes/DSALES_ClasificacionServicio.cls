@@ -2,6 +2,7 @@ public without sharing class DSALES_ClasificacionServicio {
     
     private static final String NOMBRE_OBJETO_CS = 'DSales_ClasificacionDeServicio__c';
     private static final String NOMBRE_SERVICIO_CAT= 'DSALES_accesoCategorias';
+    private static final String NOMBRE_SERVICIO_COD= 'DSALES_AccesoCodigos';
     @AuraEnabled
     public static DSALES_ClasificacionServicioWrapper getPickListCategoria(){
         DSALES_ClasificacionServicioWrapper respuesta = new DSALES_ClasificacionServicioWrapper();
@@ -271,7 +272,7 @@ public without sharing class DSALES_ClasificacionServicio {
         String cuerpoJson = JSON.serialize(listaJson);
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/codigos');
+        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_COD));
         request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
         request.setBody(cuerpoJson); 
         request.setHeader('Content-Type', 'application/json'); 
