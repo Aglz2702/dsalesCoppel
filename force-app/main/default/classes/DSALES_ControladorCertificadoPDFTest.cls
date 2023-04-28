@@ -21,7 +21,10 @@ public class DSALES_ControladorCertificadoPDFTest {
         PageReference pageRef = Page.DSALES_CertificadoPDF;
         Test.setCurrentPage(pageRef);
         ApexPages.currentPage().getParameters().put('certificadoId',certificado.Id);
+        String certificadoId = pageRef.getParameters().get('certificadoId');
         DSALES_ControladorCertificadoPDF d = new DSALES_ControladorCertificadoPDF();
+        System.assertEquals(certificado.Id, certificadoId, 'Iguales');
+        
         
     }
     

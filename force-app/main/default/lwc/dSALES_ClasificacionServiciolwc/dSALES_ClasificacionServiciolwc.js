@@ -1157,12 +1157,12 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
 
     updateVinculacion() {
         upsertVinculacion({ dataJSON: JSON.stringify(this.data.listasignacion) })
-            .then(result => {
-                console.log(result);
+            .then(resultid => {
+                console.log(resultid);
                 this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
                 this.onClickBuscarIntanProduct();
-            }).catch(error => {
-                console.log(error);
+            }).catch(errorc => {
+                console.log(errorc);
                 this.showSpinner = false;
                 this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
             });
@@ -1674,16 +1674,12 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         
     }
 
-    
-
-
-
-
-
-
-
-
-
-
+    handleKeyDownSearch(event) {
+        if (event.key === 'Enter') {
+            this.search();
+          // Aquí puedes llamar a la función que quieres ejecutar cuando se presiona Enter
+          console.log('Enter presionado');
+        }
+      }
 
 }

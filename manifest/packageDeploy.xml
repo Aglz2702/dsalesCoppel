@@ -151,7 +151,6 @@
 	<members>DSALES_MatrizTrigger</members>
 	<members>DSALES_ResumenDePagos</members>
 	<members>Product2</members>
-	<!--<members>DSALES_UpdateCliente</members>-->
 	<name>ApexTrigger</name>
 </types>
 <types>
@@ -753,11 +752,6 @@
 	<name>CustomMetadata</name>
 </types>
 <types>
-<!--members>DSALES_ReportedeEndosos</members>
-	<members>DSALES_ReportedeEndosos/XhYEjwaChGCwQkncVxUjtfkRWoloeo</members>
-	<members>TablerosdeEndosodeSM</members>
-	<members>TablerosdeEndosodeSM/XhYEjwaChGCwQkncVxUjtfkRWoloeo1</members>
-	<members>COPPELPISyS</members-->
 	<members>COPPELPISyS</members>
 	<members>COPPELPISyS/Garantaextendida</members>
 	<members>COPPELPISyS/Segurosdemotos</members>
@@ -821,7 +815,6 @@
 	<members>DSALES_Endoso__c-es_MX</members>
 	<members>DSALES_Familia__c-es_MX</members>
 	<members>DSALES_Generador__c-es_MX</members>
-	<!--members>DSALES_InformacionDePago__c-es_MX</members-->
 	<members>DSALES_Matriz_de_Cotizacion__c-es_MX</members>
 	<members>DSALES_SubCategoria__c-es_MX</members>
 	<members>DSales_Matriz_GEX__c-es_MX</members>
@@ -849,9 +842,7 @@
 </types>
 <types>
 	<members>DSALES_PISYS</members>
-	<!--members>dupcheck__dcDocuments</members-->
 	<members>Experiences_Shared_Document_Folder</members>
-	<!--<members>DSALES_PISYS/DALES_LogoIGEX</members>-->
 	<members>DSALES_PISYS/DSALES_LogoFGEX</members>
 	<members>DSALES_PISYS/DSALES_hr</members>
 	<members>DSALES_PISYS/DSALES_hrAmarillo</members>
@@ -1203,7 +1194,6 @@
 	<members>DSALES_ReportesdeVentasGEX/DSales_Resultado_GEX_DivisionRegion_I6Q</members>
 	<members>DSALES_ReportesdeVentasGEX/DSales_Resultado_GEX_Region_qfw</members>
 	<members>DSALES_ReportesdeVentasGEX/DSales_Resultado_GEX_Zonas_g9H</members>
-	<!--members>DSALES_ReportesdeVentasGEX/DSales_Resultados_GEX_por_Tiendas_Udp</members-->
 	<members>CoppelPISyS</members>
 	<members>CoppelPISyS/SegurosdeMotos/DSALES_Venta_Total_por_Mes_59p</members>
 	<members>CoppelPISyS/SegurosdeMotos</members>
@@ -1318,7 +1308,6 @@
 	<name>Workflow</name>
 </types>
 <types>
-	<!--members>Claim.DSALES_Informa_Siniestro_En_Tramite</members-->
 	<members>DSALES_Endoso__c.DSALES_Alerta_de_correo_de_cambio_de_estatus_a_completado</members>
 	<members>Claim.DSALES_Informa_Siniestro_En_Tramite</members>
 	<members>Claim.Informa_Nuevo_Siniestro</members>
