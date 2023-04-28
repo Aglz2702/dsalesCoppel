@@ -56,7 +56,8 @@
         let data = component.get("v.data");
         data.count -= 2;
         data.siguienteDes = false;
-        data.anteriorDes = data.count == 0;
+        let num=0;
+        data.anteriorDes = num;
         component.set("v.data", data);
         helper.asignarMatriz(component);
     },
