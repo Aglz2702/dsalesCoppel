@@ -128,7 +128,6 @@ global class DSALES_QuoteSmWrapperRequest {
                             }       
                         }
                     }
-                   
                 }catch(Exception.JSONException jsonException){
                     message = DSALES_Utility.BAD_REQUEST_MSJ;
                     errorCode = DSALES_Utility.BAD_REQUEST_CODE;
@@ -143,7 +142,6 @@ global class DSALES_QuoteSmWrapperRequest {
             }
         }
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = new DSALES_QuoteSmWrapper.RespuestaParaNpv();
-        DSALES_QuoteSmWrapper.ReceiptEspa traduccion = new DSALES_QuoteSmWrapper.ReceiptEspa();
         response.mensaje =  message;
         response.codigoError = errorCode;
         response.success = succes;
@@ -163,7 +161,7 @@ global class DSALES_QuoteSmWrapperRequest {
         try{
             Product2 productoMoto = [SELECT Id, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku WITH SECURITY_ENFORCED LIMIT 1];
             List<DSALES_AsociacionCampanias__c> lista = [SELECT Name, DSALES_Campania__c, DSALES_Producto__c FROM DSALES_AsociacionCampanias__c WHERE DSALES_Producto__c =:productoMoto.Id WITH SECURITY_ENFORCED];
-           List<String> idCampaings= new List<String>();
+            List<String> idCampaings= new List<String>();
 
             for(DSALES_AsociacionCampanias__c item:lista)
            {
@@ -247,7 +245,7 @@ global class DSALES_QuoteSmWrapperRequest {
         return cliente;
     }
 
-    public static Opportunity creaOportunidad (DSALES_QuoteSmWrapper.QuoteSmRequest data, Id clienteId, String firstName,Tienda__c tienda){
+    public static Opportunity creaOportunidad (DSALES_QuoteSmWrapper.QuoteSmRequest data, Id clienteId, String firstName,String suffix, String lastName,Tienda__c tienda){
         Opportunity oppor = new Opportunity();
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Seguro de Moto').getRecordTypeId();
         Pricebook2 precioLista = [SELECT id,Name FROM Pricebook2 WHERE Name= 'Standard Price Book' and IsActive=true WITH SECURITY_ENFORCED LIMIT 1];
@@ -324,26 +322,26 @@ global class DSALES_QuoteSmWrapperRequest {
             partida.Product2Id = precio.Product2Id;
             partida.Quantity = 1;
             partida.UnitPrice = precio.UnitPrice;
-            partida.DSALES_Fechadeinicio__c = Date.valueOf(data.data.receipts[0].startDate);
-            partida.DSALES_Fechadetermino__c = Date.valueOF(data.data.receipts[0].endDate);
-            partida.DSALES_Primaneta__c = decimal.valueOf(data.data.insurancePremium.netPremium);
-            partida.UnitPrice = decimal.valueOf(data.data.receipts[0].totalPremium);
-            partida.DSALES_Derechosdepliza__c = decimal.valueOf(data.data.insurancePremium.right);
-            partida.DSALES_Gastosdeoperacindelrecibo__c = decimal.valueOf(data.data.insurancePremium.surcharge);
-            partida.DSALES_Impuestos__c = decimal.valueOf(data.data.insurancePremium.tax);
+            partida.DSALES_Fechadeinicio__c = Date.valueOf(data.data.recibos[0].fechaInicio);
+            partida.DSALES_Fechadetermino__c = Date.valueOF(data.data.recibos[0].fechaTermino);
+            partida.DSALES_Primaneta__c = decimal.valueOf(data.data.primaSeguro.primaNeta);
+            partida.UnitPrice = decimal.valueOf(data.data.recibos[0].primaTotal);
+            partida.DSALES_Derechosdepliza__c = decimal.valueOf(data.data.primaSeguro.derecho);
+            partida.DSALES_Gastosdeoperacindelrecibo__c = decimal.valueOf(data.data.primaSeguro.recargo);
+            partida.DSALES_Impuestos__c = decimal.valueOf(data.data.primaSeguro.impuestos);
             partida.DSALES_TrackingID__c = data.trackingId;
         	partida.DSALES_Plazo__c = plazo.Id;
-        	partida.DSALES_Comision__c = decimal.valueOf(data.data.insurancePremium.commission);
-            partida.DSALES_Recargos__c = decimal.valueOf(data.data.receipts[0].recharge);
+        	partida.DSALES_Comision__c = decimal.valueOf(data.data.primaSeguro.comision);
+            partida.DSALES_Recargos__c = decimal.valueOf(data.data.recibos[0].recargo);
         	partida.DSALES_Descripcion__c='Esta cobertura ampara la responsabilidad civil por el tránsito de vehículos en territorio nacional, en que incurra el Asegurado o cualquier persona que con consentimiento del Asegurado use o posea el vehículo descrito en la Póliza con el límite de responsabilidad establecido en la misma, siempre que a consecuencia de dicho uso o posesión, cause a Terceros daños materiales en sus bienes, lesiones corporales, incapacidades temporales y/o permanentes o la muerte, distintos de los ocupantes de dicho vehículo, que considera la Responsabilidad Civil a que se refiere el artículo 63 Bis de la Ley de Caminos, Puentes y Autotransporte Federal.';
-            partida.DSALES_Descripcion__c = Coberturas(data.data.coveragesArray);
+            partida.DSALES_Descripcion__c = Coberturas(data.data.listaCoberturas);
         	partida.DSALES_Segurogratis__c = Campana(producto.Name, sku);
             return partida;
     }
     public static String coberturas(List<DSALES_QuoteSmWrapper.CoveragesArray> coberturas){
         String body='';
         for(DSALES_QuoteSmWrapper.CoveragesArray item: coberturas){
-            body+=', '+item.name;
+            body+=', '+item.nombre;
         }
         return body;
     }
@@ -412,17 +410,12 @@ global class DSALES_QuoteSmWrapperRequest {
                 }
                 }
             }
-        }
-       
+        } 
         return condicion;
     }
-    public static Boolean validaListaNegra()
-    {
-        return listaNegra;
-    }
-    public static DSALES_QuoteSmWrapper.RespuestaPlazos creaPartidaM(Quote cotiza, String sku, String precio){      
+    public static DSALES_QuoteSmWrapper.RespuestaPlazos creaPartidaM(Quote cotiza, String sku, Boolean listaNegra, String precio){      
         DSALES_QuoteSmWrapper.RespuestaPlazos motoVacia = new DSALES_QuoteSmWrapper.RespuestaPlazos();
-        if(sku!=null && sku!='' && validaListaNegra()!=true){
+        if(sku!=null && sku!='' && listaNegra!=true){
             Product2 productoMoto = [SELECT Id, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku WITH SECURITY_ENFORCED LIMIT 1];
         	PricebookEntry precioM = [SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Product2Id =:productoMoto.Id WITH SECURITY_ENFORCED LIMIT 1];
         	QuoteLineItem partidaM = new QuoteLineItem();
@@ -452,13 +445,13 @@ global class DSALES_QuoteSmWrapperRequest {
         List<QuoteLineItem> listaPartidas = new List<QuoteLineItem>();
         List<DSALES_QuoteSmWrapper.RespuestaPlazos> listaSeguros = new List<DSALES_QuoteSmWrapper.RespuestaPlazos>();
         for(Integer i=0; i<plazos.size(); i++){
-            listaPartidas.add(creaPartida(plazos[i].name, cotiza, plazos[i],sku));
+            listaPartidas.add(creaPartida(plazos[i].nombre, cotiza, plazos[i],sku));
             DSALES_QuoteSmWrapper.RespuestaPlazos aux = new DSALES_QuoteSmWrapper.RespuestaPlazos();
             aux.trackingId = plazos[i].trackingId;
-            aux.paquete = plazos[i].name;
+            aux.paquete = plazos[i].nombre;
             aux.vigencia = plazos[i].plazo;
             //aux.costos = traduccion(plazos[i].data.receipts[0]);
-            //aux.data = plazos[i].data;
+            aux.data = plazos[i].data;
             listaSeguros.add(aux);
         }
         insert listaPartidas;
@@ -469,20 +462,5 @@ global class DSALES_QuoteSmWrapperRequest {
 
         }
         return listaSeguros;     
-    }
-    public static DSALES_QuoteSmWrapper.ReceiptEspa traduccion(DSALES_QuoteSmWrapper.Receipt original){
-        DSALES_QuoteSmWrapper.ReceiptEspa aux = new DSALES_QuoteSmWrapper.ReceiptEspa();
-        aux.numero = original.numbere;
-        aux.fechaInicio = original.startDate;
-        aux.fechaTermino = original.endDate;
-        aux.primaNeta = original.netPremium;
-        aux.precioVenta = original.totalPremium;
-        aux.derechosPoliza = original.right;
-        aux.recargos = original.recharge;
-        aux.impuestos = original.tax;
-        aux.comision = original.commission;
-        aux.pagoTotalEfectivo = original.pagoTotalEfectivo;
-        aux.pagoMensual = original.pagoMensual;
-        return aux;
     }
 }
