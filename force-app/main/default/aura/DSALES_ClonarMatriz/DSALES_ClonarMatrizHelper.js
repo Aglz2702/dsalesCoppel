@@ -4,7 +4,7 @@
         navEvt.setParams({
             "recordId": recordId
         });
-        navEvt.fire(); 
+        navEvt.fire();
     },
     hCancelar : function(){
         $A.get("e.force:closeQuickAction").fire();

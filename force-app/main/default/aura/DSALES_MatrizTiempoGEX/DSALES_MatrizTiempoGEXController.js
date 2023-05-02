@@ -1,11 +1,11 @@
 ({
     init: function(component, event, helper) {
-        let action = component.get("c.getRecords");
+        var action = component.get("c.getRecords");
         action.setParams({
             recordId : component.get("v.recordId")
         });  
         action.setCallback(this, function(response) {
-            let object = {};
+            var object = {};
             object.count = 0;
             object.listMatriz = response.getReturnValue();
             object.siguienteDes = object.listMatriz.length < 3;
@@ -20,9 +20,9 @@
         $A.enqueueAction(action);
     },
     agregarMatriz1: function(component, event, helper) {
-        let data = component.get("v.dataShow");
+        var data = component.get("v.dataShow");
         let name = event.getSource().get("v.name");
-        let object = {};
+        var object = {};
         object.rangoMenor = 0;
         object.rangoMayor = 0;
         object.precio = 0;
@@ -32,9 +32,9 @@
         component.set("v.dataShow", data);
     },
     agregarMatriz2: function(component, event, helper) {
-        let data = component.get("v.dataShow");
+        var data = component.get("v.dataShow");
         let name = event.getSource().get("v.name");
-        let object = {};
+        var object = {};
         object.rangoMenor = 0;
         object.rangoMayor = 0;
         object.precio = 0;
@@ -43,8 +43,8 @@
         data.matriz2.listMatriz.push(object);
         component.set("v.dataShow", data);
     },
-    siguiente: function(component, helper) {
-        let data = component.get("v.data");
+    siguiente: function(component, event, helper) {
+        var data = component.get("v.data");
         data.count += 2;
         data.siguienteDes = data.count + 2 >= data.listMatriz.length;
         data.anteriorDes = false;
@@ -52,11 +52,12 @@
         console.log(data.count);
         helper.asignarMatriz(component);
     },
-    anterior: function(component, helper) {
-        let data = component.get("v.data");
+    anterior: function(component, event, helper) {
+        var data = component.get("v.data");
         data.count -= 2;
         data.siguienteDes = false;
-        data.anteriorDes = data.count == 0;
+        let num=0;
+        data.anteriorDes = num;
         component.set("v.data", data);
         helper.asignarMatriz(component);
     },
