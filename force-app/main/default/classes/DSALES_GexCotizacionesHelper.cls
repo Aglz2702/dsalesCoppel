@@ -20,22 +20,23 @@ public without sharing class DSALES_GexCotizacionesHelper {
             for(Quote item: sObjectList){
                 mapAccount.put(item.AccountId, new Account());  
             }
-            if (Schema.sObjectType.Account.isQueryable()) {
-                for(Account item: [Select Id,Name,PersonContactId, PersonEmail from Account where Id in : mapAccount.keySet()]){
+            
+                for(Account item: [Select Id,Name,PersonContactId, PersonEmail from Account where Id in : mapAccount.keySet() WITH SECURITY_ENFORCED]){
                     mapAccount.put(item.Id, item);
                 }
-            }
-            if (Schema.sObjectType.EmailTemplate.isQueryable()) {
-                templete = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :TEMPLETE_NAME];
-                system.debug('Template name------->' +templete.DeveloperName);
-                templeteGEX = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :GEX_TEMPLATE];     // Namrata added
-                system.debug('Template name------->'  +templeteGEX.DeveloperName);
-            }
-            if (Schema.sObjectType.OrgWideEmailAddress.isQueryable()) {
-                owa = [Select Id,Address From OrgWideEmailAddress Where Address = :DIRECCION_CORREO LIMIT 1];
-            }
-            List<Messaging.SingleEmailMessage> messageList = new List<Messaging.SingleEmailMessage>();
             
+            
+                templete = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :TEMPLETE_NAME WITH SECURITY_ENFORCED];
+                system.debug('Template name------->' +templete.DeveloperName);
+                templeteGEX = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :GEX_TEMPLATE WITH SECURITY_ENFORCED];     // Namrata added
+                system.debug('Template name------->'  +templeteGEX.DeveloperName);
+            
+          
+                owa = [Select Id,Address From OrgWideEmailAddress Where Address = :DIRECCION_CORREO WITH SECURITY_ENFORCED LIMIT 1];
+            
+            List<Messaging.SingleEmailMessage> messageList = new List<Messaging.SingleEmailMessage>();
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            String recordID='';
             for(Quote item: sObjectList){
                 system.debug('Id: del Coti: '+item.Id);
                 system.debug('Enviar Coti: '+item.DSALES_Enviarcotizacion__c);
@@ -46,20 +47,10 @@ public without sharing class DSALES_GexCotizacionesHelper {
                     system.debug('Entró');
                     String correo = item.DSALES_Contado__c ? item.DSALES_EmailNew__c : item.Email ;
                     Account acc = mapAccount.get(item.AccountId); 
-                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.setToAddresses(new string[] {correo});
                     system.debug('Email: '+correo);
                     //  Namrata changes start
-                        RECORDTYPE motos= [SELECT Id, Name FROM RECORDTYPE WHERE Id=:item.RecordTypeId ];
-                    
-                    if(motos.Name=='Venta de Seguro de Motos'){          
-                        mail.setHtmlBody(templete.HtmlValue);
-                        mail.setSubject(templete.Subject);
-                    }
-                    else if(motos.Name=='Venta de Garantía Extendida'){
-                        mail.setHtmlBody(templeteGEX.HtmlValue);
-                        mail.setSubject(templeteGEX.Subject);
-                    }  
+                    recordID=item.RecordTypeId;
                     //Namrata changes end
                     mail.setOrgWideEmailAddressId(owa.Id);
                     
@@ -78,6 +69,16 @@ public without sharing class DSALES_GexCotizacionesHelper {
                     system.debug('NO Entró');
                 }
             }
+            RECORDTYPE motos= [SELECT Id, Name FROM RECORDTYPE WHERE Id=:recordID WITH SECURITY_ENFORCED ];
+            if(motos.Name=='Venta de Seguro de Motos'){          
+                mail.setHtmlBody(templete.HtmlValue);
+                mail.setSubject(templete.Subject);
+            }
+            else if(motos.Name=='Venta de Garantía Extendida'){
+                mail.setHtmlBody(templeteGEX.HtmlValue);
+                mail.setSubject(templeteGEX.Subject);
+            }  
+
             if(messageList.Size()!=0)
             {
                 Messaging.sendEmail(messageList, false);

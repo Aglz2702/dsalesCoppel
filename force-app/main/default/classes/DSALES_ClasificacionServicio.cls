@@ -81,7 +81,7 @@ public without sharing class DSALES_ClasificacionServicio {
         //String tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSales_Tipo_de_Producto__c').getRecordTypeId();
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
         query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, RecordTypeId, DSALES_vehculo__c, DSALES_TipoServicio__c, DSALES_Noaplica__c, DSALES_NoaplicaServ__c, DSALES_NoaplicaSeg__c ';
-        query += 'from Product2 Where StockKeepingUnit LIKE \''+ sku + '%\' OR Name LIKE \'' + sku + '%\' ';
+        query += 'from Product2 Where StockKeepingUnit LIKE \''+ sku + '%\' OR Name LIKE \'' + sku + '%\'';
         query += ' order by DSales_Servicio__c asc';
         System.debug('Query: '+query);
         return consultarProductos(DataBase.query(query));
@@ -354,22 +354,23 @@ public without sharing class DSALES_ClasificacionServicio {
             else if(item.seguro==true && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
              listProductosServicio.put(item.sku, 1);
             }
-            else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== false){
-             listProductosServicio.put(item.sku, 0);
-            }
-            else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== true){
-             listProductosServicio.put(item.sku, 0);
-            }
-            else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== true){
-                 listProductosServicio.put(item.sku, 0);
-            }
-            else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
-             listProductosServicio.put(item.sku, 0);
-        }        
+            upsertRecordAux2(item,listProductosServicio);         
      }
+     
     }
-    public static void upsertRecordAux2(List<Servicio> objeto, Map<String, Integer> listProductosServicio){
-        
+    public static void upsertRecordAux2(Servicio item, Map<String, Integer> listProductosServicio){
+            if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== false){
+            listProductosServicio.put(item.sku, 0);
+           }
+           else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== true){
+            listProductosServicio.put(item.sku, 0);
+           }
+           else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== true){
+                listProductosServicio.put(item.sku, 0);
+           }
+           else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
+            listProductosServicio.put(item.sku, 0);
+           }
     }
     public static List<String> itemSeleccionados(List<PicklistOption> listPickList){
         List<String> listItems = new List <String>();
