@@ -40,17 +40,20 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     }else{
                         if(data.numeroCliente != DSALES_Utility.NUMERO_CLIENTE_GENERICO){
                             List<Account> result = [Select Id,FirstName,MiddleName,LastName from Account WHERE CP_WalletCustomerNumber__c =:Decimal.valueOf(data.numeroCliente) WITH SECURITY_ENFORCED];
-                            if(result.size()!= 0){
-                                clienteId = result[0].Id;
-                                oppor = crearOportunidad(data, clienteId, result[0].FirstName, result[0].LastName,tienda);
-                                cotiza = crearCotizacion(data, oppor.Id, result[0].FirstName, result[0].LastName, tienda);
-                        		listaPartida = crearPartidas(data, cotiza.Id);
-                            }else{
-                                cliente = crearCliente(data);
-                                clienteId = cliente.Id;
-                                oppor = crearOportunidad(data, clienteId, cliente.FirstName,cliente.LastName,tienda);
-                                cotiza = crearCotizacion(data, oppor.Id, cliente.FirstName, cliente.LastName, tienda);
-                        		listaPartida = crearPartidas(data, cotiza.Id);
+                            switch on result.size() {
+                                when 1 {
+                                    clienteId = result[0].Id;
+                                    oppor = crearOportunidad(data, clienteId, result[0].FirstName, result[0].LastName,tienda);
+                                    cotiza = crearCotizacion(data, oppor.Id, result[0].FirstName, result[0].LastName, tienda);
+                        		    listaPartida = crearPartidas(data, cotiza.Id);
+                                }
+                                when 0 {
+                                    cliente = crearCliente(data);
+                                    clienteId = cliente.Id;
+                                    oppor = crearOportunidad(data, clienteId, cliente.FirstName,cliente.LastName,tienda);
+                                    cotiza = crearCotizacion(data, oppor.Id, cliente.FirstName, cliente.LastName, tienda);
+                                    listaPartida = crearPartidas(data, cotiza.Id);
+                                }
                             }
                         }else{
                             clienteId = universalAccount.Id;
@@ -120,8 +123,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         if(resIntangible.Product2.DSales_Aplicaporcentajecobro__c==true){
                              responsePayload.skuDePrecio = null;
                         }else{
-                            DSALES_Matriz_de_Cotizacion__c skuPrecio =[Select id, Name,DSALES_Rango_interior_GEX__c,DSALES_Rango_Superior_GEX__c,DSALES_Tiempo_de_Garantia_Extendida_GEX__c,SALES_Precio_GEX__c,DSales_Matriz_GEX__c From DSALES_Matriz_de_Cotizacion__c WHERE SALES_Precio_GEX__c=: resIntangible.UnitPrice AND DSales_Matriz_GEX__r.DSALES_Activo__c=true AND DSALES_Rango_Superior_GEX__c>=: resTangible.UnitPrice WITH SECURITY_ENFORCED LIMIT 1];
-                        	 responsePayload.skuDePrecio = skuPrecio.Name;
+                            DSALES_Matriz_de_Cotizacion__c skuPrecio = obtenerSkuPrecio(resIntangible.UnitPrice, resTangible.UnitPrice);
+                            responsePayload.skuDePrecio = skuPrecio.Name;
+
                         }
                         responsePayload.skuDeServicio = resIntangible.DSALES_SKU__c;
                         responsePayload.mesesCobertura = resIntangible.Vigencia_meses__c;
@@ -257,7 +261,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     Double price6=0;
                     
                     if(item2.Product2.DSales_Aplicaporcentajecobro__c==true){
-                        List<DASALES_Porcentajedecobro__c> porcent = [SELECT Id, Name, DSALES_Anios__c, DSALES_Porcentaje__c FROM DASALES_Porcentajedecobro__c WHERE DSALES_Product__c=: intangibleId WITH SECURITY_ENFORCED];
+                        List<DASALES_Porcentajedecobro__c> porcent = obtenerPorcentajeCobro(intangibleId);
                         for(DASALES_Porcentajedecobro__c percent: porcent){
                             Integer year = Integer.valueOf(percent.DSALES_Anios__c);
                             Decimal price = (p.precioTangible * percent.DSALES_Porcentaje__c)/100;
@@ -432,4 +436,19 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         }
         return response;
     }
+    public static DSALES_Matriz_de_Cotizacion__c obtenerSkuPrecio(Decimal resIntangible, Decimal resTangible) {
+        return [SELECT Id, Name, DSALES_Rango_interior_GEX__c, DSALES_Rango_Superior_GEX__c, DSALES_Tiempo_de_Garantia_Extendida_GEX__c, SALES_Precio_GEX__c, DSales_Matriz_GEX__c 
+                FROM DSALES_Matriz_de_Cotizacion__c 
+                WHERE SALES_Precio_GEX__c = :resIntangible 
+                    AND DSales_Matriz_GEX__r.DSALES_Activo__c = true 
+                    AND DSALES_Rango_Superior_GEX__c >= :resTangible 
+                WITH SECURITY_ENFORCED 
+                LIMIT 1];
+    }
+
+    public static List<DASALES_Porcentajedecobro__c> obtenerPorcentajeCobro(Id intangibleId) {
+        List<DASALES_Porcentajedecobro__c> porcent = [SELECT Id, Name, DSALES_Anios__c, DSALES_Porcentaje__c FROM DASALES_Porcentajedecobro__c WHERE DSALES_Product__c=:intangibleId WITH SECURITY_ENFORCED];
+        return porcent;
+    }
+    
 }
