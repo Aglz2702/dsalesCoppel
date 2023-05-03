@@ -142,7 +142,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         cliente.LastName = data.apellidoPaterno;
         cliente.Suffix =  data.apellidoMaterno;
         cliente.PersonEmail = data.correoElectronico;
-        insert cliente;
+        if (Schema.sObjectType.Account.isCreateable()) {
+            insert cliente;
+        }
         return cliente;
     }
     
@@ -162,7 +164,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         oppor.RecordTypeId = recordTypeId;
         oppor.DSALES_Tiend__c = tienda.Id;
         oppor.Pricebook2Id = precioLista.Id;
-        insert oppor;
+        if (Schema.sObjectType.Opportunity.isCreateable()) {
+            insert oppor;
+        }
         return oppor;
     }
     
@@ -180,7 +184,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         cotiza.DSales_ID_Tienda__c = data.idTienda;
         cotiza.DSales_Tienda__c = tienda.Id;
         cotiza.ExpirationDate = date.today()+14;
-        insert cotiza;
+        if (Schema.sObjectType.Quote.isCreateable()) {
+            insert cotiza;
+        }
         return cotiza;
     }
     
@@ -386,7 +392,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 }
             }
         }
-        insert listaPartida;
+        if (Schema.sObjectType.QuoteLineItem.isCreateable()) {
+            insert listaPartida;
+        }
         return listaPartida;
     }
     
