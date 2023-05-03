@@ -191,9 +191,10 @@ public without sharing class  DSALES_ValidarClienteHelper {
                         {
                             DSALES_VentaGEX.ServicioCorrespondiente servicioGex= new DSALES_VentaGEX.ServicioCorrespondiente();
                             servicioGex.idPartidaDeOportunidad=op.Id;
-                            if(!OportunidadLineMap.isEmpty())
+                            if(!OportunidadLineMap.isEmpty()){
                            servicioGex.folioCertificado=OportunidadLineMap.get(op.Product2.StockKeepingUnit).folioCertificado;
                              OportunidadLineMap.put(op.Product2.StockKeepingUnit,servicioGex);
+                            }
                         }
                         
                          
