@@ -15,7 +15,6 @@
 		helper.hCancelar();
 	},
     clonar : function(component, event, helper) {
-        let esClone = component.get("v.esClone");
         let cloneId = component.get("v.cloneId");
         if(cloneId == null){
             var action = component.get("c.clonarMatriz");
