@@ -4,10 +4,10 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import crearEndoso from '@salesforce/apex/DSALES_EndorsementController.crearEndoso';
 import validarDoc from '@salesforce/apex/DSALES_EndorsementController.validarDoc';
 
-export default class DSALES_Endorsementbutton extends LightningElement {
+export default class dSALES_Endorsementbutton extends LightningElement {
     @api recordId;
     estatus = true;
-    isModalOpen = true;
+    isModalOpen = true; 
     result = '';
     closeAction() {
         this.dispatchEvent(new CloseActionScreenEvent());
