@@ -48,6 +48,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                 when 1 {
                                     clienteId = result[0].Id;
 <<<<<<< HEAD
+<<<<<<< HEAD
                                     mapNomyId.put('firstName',result[0].FirstName);
                                     mapNomyId.put('lastName',result[0].LastName);
                                     mapNomyId.put('clienteId',clienteId);
@@ -58,11 +59,16 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                     oppor = crearOportunidad(data, clienteId, result[0].FirstName, result[0].LastName,tienda);
                                     cotiza = crearCotizacion(data, oppor.Id, result[0].FirstName, result[0].LastName, tienda);
 >>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
+=======
+                                    oppor = crearOportunidad(data, clienteId, result[0].FirstName, result[0].LastName,tienda);
+                                    cotiza = crearCotizacion(data, oppor.Id, result[0].FirstName, result[0].LastName, tienda);
+>>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
                         		    listaPartida = crearPartidas(data, cotiza.Id);
                                 }
                                 when 0 {
                                     cliente = crearCliente(data);
                                     clienteId = cliente.Id;
+<<<<<<< HEAD
 <<<<<<< HEAD
                                     mapNomyId.put('firstName',cliente.FirstName);
                                     mapNomyId.put('lastName',cliente.LastName);
@@ -70,6 +76,10 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                     oppor = crearOportunidad(data, /*clienteId, cliente.FirstName,cliente.LastName*/mapNomyId, tienda);
                                     mapNomyId.put('oportunidadId',oppor.Id);
                                     cotiza = crearCotizacion(data, /*oppor.Id, cliente.FirstName, cliente.LastName*/mapNomyId, tienda);
+=======
+                                    oppor = crearOportunidad(data, clienteId, cliente.FirstName,cliente.LastName,tienda);
+                                    cotiza = crearCotizacion(data, oppor.Id, cliente.FirstName, cliente.LastName, tienda);
+>>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
 =======
                                     oppor = crearOportunidad(data, clienteId, cliente.FirstName,cliente.LastName,tienda);
                                     cotiza = crearCotizacion(data, oppor.Id, cliente.FirstName, cliente.LastName, tienda);
