@@ -1,28 +1,29 @@
+@SuppressWarnings('PMD.AvoidGlobalModifier')
 global class DSALES_EndorsementWrapper {
-    public class Documento {
-        public String idDocumento{ get; set; }
-        public String tipoDocumento{ get; set; }
-        public String documento{ get; set; }   
+    global class Documento {
+        global String idDocumento{ get; set; }
+        global String tipoDocumento{ get; set; }
+        global String documento{ get; set; }   
     }
     
-    public class Dato {
-        public String idDato {get; set;}
-        public String tipoDato {get; set;}
-        public String valor {get; set;}
+    global class Dato {
+        global String idDato {get; set;}
+        global String tipoDato {get; set;}
+        global String valor {get; set;}
     }
     
-    public class EndorsementRequest {
-        public String uid{ get; set; }
-        public String numeroPoliza { get; set; }
-        public String tipoEndoso { get; set; }
-        public String tipoDocumento { get; set; }
-        public Date fechaEndoso { get; set; }
-        public String estatus { get; set; }
-        public String estatusComentario{get; set;}
-        public String solucion {get; set;}
-        public Decimal montoDevolucion {get; set;}
-        public Dato datos { get; set; } 
-        public String salesforceId { get; set; } 
+    global class EndorsementRequest {
+        global String uid{ get; set; }
+        global String numeroPoliza { get; set; }
+        global String tipoEndoso { get; set; }
+        global String tipoDocumento { get; set; }
+        global Date fechaEndoso { get; set; }
+        global String estatus { get; set; }
+        global String estatusComentario{get; set;}
+        global String solucion {get; set;}
+        global Decimal montoDevolucion {get; set;}
+        global Dato datos { get; set; } 
+        global String salesforceId { get; set; } 
     }
     
     global class EndorsementResponse{
