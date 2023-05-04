@@ -3,11 +3,11 @@ import { CloseActionScreenEvent } from "lightning/actions";
 import { getRecord, getFieldValue, deleteRecord } from 'lightning/uiRecordApi';
 import DSALES_TIPO_DE_ENDOSO__C from '@salesforce/schema/DSALES_Endoso__c.DSALES_Tipodeendoso__c';
 import DSALES_TIPO_DE_DOCUMENTOS__C from '@salesforce/schema/DSALES_Endoso__c.DSALES_Tipodedocumento__c';
-import endosoDocuments from '@salesforce/apex/endososControllerClass.endosoDocuments';
+import endosoDocuments from '@salesforce/apex/EndososControllerClass.endosoDocuments';
 
 const fields = [DSALES_TIPO_DE_ENDOSO__C, DSALES_TIPO_DE_DOCUMENTOS__C];
 
-export default class cargarDocumentos extends LightningElement {
+export default class CargarDocumentos extends LightningElement { 
 
     @api recordId;
     @track error;

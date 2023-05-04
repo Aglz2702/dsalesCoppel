@@ -1,5 +1,5 @@
 @isTest
-public class endososControllerClassTest {
+public class EndososControllerClassTest {
     
     @isTest static void configSetupTest () { 
         
@@ -7,7 +7,7 @@ public class endososControllerClassTest {
         String values = '{"Tipo_de_endoso__c":"Cambio de placas", "ClaimType__c": "Robo Total"}';
         Map<String, Object> endosoValue = (Map<String, Object>)JSON.deserializeUntyped(values);    
         Test.startTest();
-        endososControllerClass.endosoDocuments('Cambio de dirección');    
+        EndososControllerClass.endosoDocuments('Cambio de dirección');    
         Test.stopTest();
         System.assertNotEquals(label, values, 'debe ser diferente');
         
@@ -35,7 +35,7 @@ public class endososControllerClassTest {
             Test.startTest();
             try{
                 
-                endososControllerClass.endosoDocuments('');    
+                EndososControllerClass.endosoDocuments('');    
                 
             }catch(DmlException e){
                 System.assertNotEquals('Error', e.getMessage(), 'Errors in DML');
