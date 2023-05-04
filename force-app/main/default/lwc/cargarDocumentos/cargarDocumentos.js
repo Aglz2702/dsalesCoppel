@@ -7,7 +7,7 @@ import endosoDocuments from '@salesforce/apex/endososControllerClass.endosoDocum
 
 const fields = [DSALES_TIPO_DE_ENDOSO__C, DSALES_TIPO_DE_DOCUMENTOS__C];
 
-export default class QuickActionLWC extends LightningElement {
+export default class cargarDocumentos extends LightningElement {
 
     @api recordId;
     @track error;
