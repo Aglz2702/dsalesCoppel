@@ -1,4 +1,4 @@
-public with sharing class endososControllerClass {
+public with sharing class EndososControllerClass {
     
     @AuraEnabled(cacheable= true)
     public static Map<Id, string> endosoDocuments (string tipoDeEndoso){

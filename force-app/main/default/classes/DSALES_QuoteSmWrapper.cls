@@ -51,21 +51,18 @@ global class DSALES_QuoteSmWrapper {
     global class Plazo {
 		global String paquete {get;set;}
         global String opcionPago {get;set;}
-	}
-    
+	}  
 	global class Product {
 		global String sku {get;set;}
-	}
-    
+	}   
     global class RespuestaDelProveedor{
-		global Integer code {get;set;}
+		global Integer codigo {get;set;}
         global Boolean success {get;set;}
         global List<ArmadoMuleSoft> plazos {get;set;}
-	}
-    
+	}    
     global class ArmadoMuleSoft{
         global String trackingId {get;set;}
-        global String name {get;set;}
+        global String nombre {get;set;}
         global String plazo {get;set;}
         global Data data {get;set;}
 	}
@@ -81,9 +78,9 @@ global class DSALES_QuoteSmWrapper {
         global String idpartida {get;set;}
         global String descripcion {get;set;}
         global Boolean seguroGratis {get;set;}
-        global ReceiptEspa costos {get;set;}
+        global Data data {get;set;}
+        
 	}
-
     global class RespuestaParaNpv{
         global String idCotizacion {get;set;}
         global String mensaje {get;set;}
@@ -93,61 +90,42 @@ global class DSALES_QuoteSmWrapper {
         global List<RespuestaPlazos> listaSeguros {get;set;}
         global RespuestaPlazos listaproducto {get;set;}
         global List<Campanias> campanias{get;set;}
-        global String idOportunidad{get;set;}   
+        global String idOportunidad{get;set;}
     }
-
     global class CoveragesArray{
-        global String code {get;set;}
-        global String name {get;set;}
-        global Integer deductive {get;set;}
-        global String sumAssured {get;set;}
-    }
-    
+        global String codigo {get;set;}
+        global String nombre {get;set;}
+        global Integer deducible {get;set;}
+        global String sumaAsegurada {get;set;}
+    }  
     global class Data{
-        global List<CoveragesArray> coveragesArray {get;set;}
-        global String quoteId {get;set;}
-        global List<Receipt> receipts {get;set;}
-        global InsurancePremium insurancePremium {get;set;}
-        global String policeId {get;set;}
-        global String companyLogo {get;set;}
+        global List<CoveragesArray> listaCoberturas {get;set;}
+        global String idCotizacion {get;set;}
+        global List<Receipt> recibos {get;set;}
+        global InsurancePremium primaSeguro {get;set;}
+        global String idPoliza {get;set;}
+        global String logotipoEmpresa {get;set;}
         global List<PaymentOptionsJson> paymentOptionsJson {get;set;}
-    }
-    
+    }   
     global class InsurancePremium{
-        global Double netPremium {get;set;}
-        global Integer commission {get;set;}
-        global Double surcharge {get;set;}
-        global Double tax {get;set;}
-        global Double right {get;set;}
-    }
-    
+        global Double primaNeta {get;set;}
+        global Integer comision {get;set;}
+        global Double recargo {get;set;}
+        global Double impuestos {get;set;}
+        global Double derecho {get;set;}
+    }   
     global class PaymentOptionsJson{
         global String value {get;set;}
         global String label {get;set;}
     }
-    
     global class Receipt{
-        global Integer numbere {get;set;}
-        global String startDate {get;set;}
-        global String endDate {get;set;}
-        global String netPremium {get;set;}
-        global String totalPremium {get;set;}
-        global String right {get;set;}
-        global String recharge {get;set;}
-        global String tax {get;set;}
-        global String commission {get;set;}
-        global String pagoTotalEfectivo {get;set;}
-        global String pagoMensual {get;set;}
-        
-    }
-    global class ReceiptEspa{
         global Integer numero {get;set;}
         global String fechaInicio {get;set;}
         global String fechaTermino {get;set;}
         global String primaNeta {get;set;}
-        global String precioVenta {get;set;}
+        global String primaTotal {get;set;}//precioVenta
         global String derechosPoliza {get;set;}
-        global String recargos {get;set;}
+        global String recargo {get;set;}
         global String impuestos {get;set;}
         global String comision {get;set;}
         global String pagoTotalEfectivo {get;set;}
