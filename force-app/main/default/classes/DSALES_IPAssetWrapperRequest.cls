@@ -19,10 +19,16 @@ global with sharing class DSALES_IPAssetWrapperRequest {
             if(String.isNotBlank(body)){
                 try{
                     DSALES_IPAssetWrapper.IPAssetRequest policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
-                    if(policyAsset.numeroSerie!=''){
+                   switch on policyAsset.numeroSerie {
+                    when '',null  {
+                        System.debug('Error: Está nulo');
+                    }
+                    when else {
                         processPolicyAsset(policyAsset);
                         //varoables prueba= processPolicyAsset(policyAsset);
-                    }              
+                    }
+                   }
+                               
             }catch(Exception.JSONException e){
                     policyAssetRes.success = false;
                     policyAssetRes.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ;
@@ -76,12 +82,7 @@ global with sharing class DSALES_IPAssetWrapperRequest {
                 //System.debug('***pago actualizado:***'+pago.DSALES_Motoentregada__c);
                 if(policyAsset.bajoDemanda==true){
                     pago.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
-                    if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
-                        update pago;   
-                    }
-                    else{
-                        System.debug('Permisos insuficientes para actualizar');   
-                    } 
+                    actualizarPago(pago);
                 }
                 if(Schema.sObjectType.InsurancePolicyAsset.isCreateable()) {
                     insert ipAssetRecord;
@@ -111,7 +112,15 @@ global with sharing class DSALES_IPAssetWrapperRequest {
         //prueba.listaPartidasOportunidad.idPartidaDeOportunidad
         return prueba;
     }
-    
+    public static void actualizarPago(DSALES_InformacionDePago__c pago)
+    {
+        if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
+            update pago;   
+        }
+        else{
+            System.debug('Permisos insuficientes para actualizar');   
+        } 
+    }
     public static void processInformacionDePago(DSALES_InformacionDePago__c pago, InsurancePolicyAsset activo, DSALES_IPAssetWrapper.IPAssetRequest policyAsset) {
         Boolean success=false;
         DSALES_IPAssetWrapper.Seguro seguro = new DSALES_IPAssetWrapper.Seguro();
