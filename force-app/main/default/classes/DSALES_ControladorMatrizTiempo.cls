@@ -106,7 +106,7 @@ public without sharing class DSALES_ControladorMatrizTiempo {
         return getRecords(recordId);
     }
     
-    public static Map<String, ResultWrapper> getPicklistOptions(String objApiName, String fieldApiName, String tiempo){
+    private static Map<String, ResultWrapper> getPicklistOptions(String objApiName, String fieldApiName, String tiempo){
         Map<String, ResultWrapper> mapMatriz = new Map<String, ResultWrapper>();
         SObjectType objectType = Schema.getGlobalDescribe().get(objApiName);
         List<Schema.PicklistEntry> ple = objectType.getDescribe()
