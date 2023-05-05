@@ -12,8 +12,6 @@ public with sharing class DSALES_QuotePagoSMHelper {
 
     private static final  String RC_GRATIS='RC';
 
-    /////////////////////////////-----NEW------/////////////////////////////
-
     public static void crearCotizacionesNuevas(String idPago, List<String> partidasSeleccionadas, String skuMoto){
         if(skuMoto!=null){
             crearCotNueva2(idPago, partidasSeleccionadas, skuMoto);
@@ -23,16 +21,13 @@ public with sharing class DSALES_QuotePagoSMHelper {
         }
     }
 
-
     public static void crearCotNueva2(String idPago, List<String> partidasSeleccionadas, String skuMoto){
-        ////////////////////////
         List<String> listIdCotiza = new List<String>();
         DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Seguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
                                         FROM DSALES_InformacionDePago__c 
                                         WHERE Id=:idPago WITH SECURITY_ENFORCED];
         Quote beforeCot = [SELECT Id,OpportunityId,AccountId FROM Quote WHERE OpportunityId =:pago.DSALES_Oportunidad__c WITH SECURITY_ENFORCED];
         QuoteLineItem producto =[SELECT Id,DSALES_NombreProducto__c, DSALES_Segurogratis__c FROM QuoteLineItem  WHERE DSALES_SKU__c=:skuMoto  AND quoteId=:beforeCot.Id WITH SECURITY_ENFORCED LIMIT 1];
-        ////////////////////////
         if(producto.DSALES_Segurogratis__c==true && partidasSeleccionadas!=null && partidasSeleccionadas.size()==1){
             for(Integer i=0;i<2;i++){
                 String idCotizacion=DSALES_QuotePagoSM.crearCotizacion(beforeCot.Id,pago.Id);
@@ -57,14 +52,11 @@ public with sharing class DSALES_QuotePagoSMHelper {
         }
     }
 
-
     public static void creacionDePartida(String idPago, List<String> partidasSeleccionadas, String skuMoto){
-        ///////////////
         DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Seguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
                                         FROM DSALES_InformacionDePago__c 
                                         WHERE Id=:idPago WITH SECURITY_ENFORCED];
         Quote beforeCot = [SELECT Id,OpportunityId,AccountId FROM Quote WHERE OpportunityId =:pago.DSALES_Oportunidad__c WITH SECURITY_ENFORCED];
-        ///////////////
         String idCotizacion=DSALES_QuotePagoSM.crearCotizacion(beforeCot.Id,pago.Id);
         Map<String, String> ambasCotizaciones=new Map<String, String>();
         ambasCotizaciones.put('beCot',beforeCot.Id);
@@ -97,8 +89,6 @@ public with sharing class DSALES_QuotePagoSMHelper {
         }  
         return newpartida;
     }
-
-    ///////////////////--------- NEW -------------/////////////////////////
 
     public static QuoteLineItem productoIf(List<PricebookEntry> precios, QuoteLineItem q, /*List<String> listCotNew, List<Plazo__c> plazos*/ Map<String, List<Object>> mapData){
         

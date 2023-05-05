@@ -109,6 +109,7 @@
 	<members>DSALES_obtenerToken</members>
 	<members>DSALES_obtenerToken_Test</members>
 	<members>DSALES_QuotePagoSM</members>
+	<members>DSALES_QuotePagoSMHelper</members>
 	<members>DSALES_QuotePagoSmTest</members>
 	<members>DSALES_QuoteSmWrapper</members>
 	<members>DSALES_QuoteSmWrapperRequest</members>
