@@ -20,20 +20,14 @@ public without sharing class DSALES_GexCotizacionesHelper {
             for(Quote item: sObjectList){
                 mapAccount.put(item.AccountId, new Account());  
             }
-            
                 for(Account item: [Select Id,Name,PersonContactId, PersonEmail from Account where Id in : mapAccount.keySet() WITH SECURITY_ENFORCED]){
                     mapAccount.put(item.Id, item);
                 }
-            
-            
                 templete = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :TEMPLETE_NAME WITH SECURITY_ENFORCED];
                 system.debug('Template name------->' +templete.DeveloperName);
                 templeteGEX = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :GEX_TEMPLATE WITH SECURITY_ENFORCED];     // Namrata added
                 system.debug('Template name------->'  +templeteGEX.DeveloperName);
-            
-          
                 owa = [Select Id,Address From OrgWideEmailAddress Where Address = :DIRECCION_CORREO WITH SECURITY_ENFORCED LIMIT 1];
-            
             List<Messaging.SingleEmailMessage> messageList = new List<Messaging.SingleEmailMessage>();
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             String recordID='';
@@ -43,7 +37,6 @@ public without sharing class DSALES_GexCotizacionesHelper {
                 system.debug('Mapa Coti: '+mapQuote.get(item.Id).DSALES_Enviarcotizacion__c);
                 if(item.DSALES_Enviarcotizacion__c==true && mapQuote.get(item.Id).DSALES_Enviarcotizacion__c==false)
                 {
-                    
                     system.debug('Entró');
                     String correo = item.DSALES_Contado__c ? item.DSALES_EmailNew__c : item.Email ;
                     Account acc = mapAccount.get(item.AccountId); 
@@ -52,10 +45,8 @@ public without sharing class DSALES_GexCotizacionesHelper {
                     //  Namrata changes start
                     recordID=item.RecordTypeId;
                     //Namrata changes end
-                    mail.setOrgWideEmailAddressId(owa.Id);
-                    
+                    mail.setOrgWideEmailAddressId(owa.Id);     
                     Blob b = generarPFD(item.Id); 
-                    
                     Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
                     efa.setContentType('application/pdf');
                     efa.setInline(False);
@@ -78,14 +69,11 @@ public without sharing class DSALES_GexCotizacionesHelper {
                 mail.setHtmlBody(templeteGEX.HtmlValue);
                 mail.setSubject(templeteGEX.Subject);
             }  
-
             if(messageList.Size()!=0)
             {
                 Messaging.sendEmail(messageList, false);
             }
             System.debug('Correo enviado');
-            
-        
         }catch(Exception ex){
             System.debug('Error: '+ex.getMessage() + ', Línea: '+ex.getLineNumber());
         }
