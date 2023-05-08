@@ -19,9 +19,16 @@ global with sharing class DSALES_IPAssetWrapperRequest {
             if(String.isNotBlank(body)){
                 try{
                     DSALES_IPAssetWrapper.IPAssetRequest policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
-                    if(policyAsset.numeroSerie!=''){
+                   switch on policyAsset.numeroSerie {
+                    when '',null  {
+                        System.debug('Error: Está nulo');
+                    }
+                    when else {
                         processPolicyAsset(policyAsset);
-                    }              
+                        //varoables prueba= processPolicyAsset(policyAsset);
+                    }
+                   }
+                               
             }catch(Exception.JSONException e){
                     policyAssetRes.success = false;
                     policyAssetRes.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ;
@@ -38,7 +45,7 @@ global with sharing class DSALES_IPAssetWrapperRequest {
                 }
             }
         }
-
+        //policyAssetRes=prueba.seguro.poliza;
         return policyAssetRes;
        
     }	 
@@ -75,12 +82,7 @@ global with sharing class DSALES_IPAssetWrapperRequest {
                 //System.debug('***pago actualizado:***'+pago.DSALES_Motoentregada__c);
                 if(policyAsset.bajoDemanda==true){
                     pago.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
-                    if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
-                        update pago;   
-                    }
-                    else{
-                        System.debug('Permisos insuficientes para actualizar');   
-                    } 
+                    actualizarPago(pago);
                 }
                 if(Schema.sObjectType.InsurancePolicyAsset.isCreateable()) {
                     insert ipAssetRecord;
@@ -96,15 +98,29 @@ global with sharing class DSALES_IPAssetWrapperRequest {
         return ipAssetRecord;
     }
 
-    public static void processPolicyAsset(DSALES_IPAssetWrapper.IPAssetRequest policyAsset) {
-        InsurancePolicyAsset activo = insertIPAsset(policyAsset, '');
-        DSALES_InformacionDePago__c pago = [SELECT Id, DSALES_IDUniversal__c, DSALES_Motoexterna__c, DSALES_Poliza__c, DSALES_Poliza__r.PolicyName FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal__c = :policyAsset.idUniversal WITH SECURITY_ENFORCED];
-    
+    public static WrapperReturn processPolicyAsset(DSALES_IPAssetWrapper.IPAssetRequest policyAsset) {
+        DSALES_IPAssetWrapper seguro = new DSALES_IPAssetWrapper();
+        WrapperReturn prueba= new WrapperReturn();
+        DSALES_InformacionDePago__c pago = [SELECT Id, DSALES_IDUniversal__c, DSALES_Motoexterna__c, DSALES_Poliza__c, DSALES_Poliza__r.PolicyName FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c = :policyAsset.idUniversal WITH SECURITY_ENFORCED];
+        InsurancePolicyAsset activo = insertIPAsset(policyAsset, pago.Id);
         if (pago.DSALES_Poliza__c != null && pago.DSALES_Poliza__r.PolicyName != DSALES_Utility.SEGURO_PREDETERMINADO) {
             processInformacionDePago(pago, activo, policyAsset);
+            
         }
+        // call method DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad
+        //and return this values with variable seguro
+        //prueba.listaPartidasOportunidad.idPartidaDeOportunidad
+        return prueba;
     }
-    
+    public static void actualizarPago(DSALES_InformacionDePago__c pago)
+    {
+        if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
+            update pago;   
+        }
+        else{
+            System.debug('Permisos insuficientes para actualizar');   
+        } 
+    }
     public static void processInformacionDePago(DSALES_InformacionDePago__c pago, InsurancePolicyAsset activo, DSALES_IPAssetWrapper.IPAssetRequest policyAsset) {
         Boolean success=false;
         DSALES_IPAssetWrapper.Seguro seguro = new DSALES_IPAssetWrapper.Seguro();
@@ -116,6 +132,12 @@ global with sharing class DSALES_IPAssetWrapperRequest {
             System.debug('SEGURO:' + seguro);
             success = true;
         }
+
+        //return seguro;
     }
  
+    public class WrapperReturn{
+        DSALES_IPAssetWrapper.ListaPartidasOportunidad listaPartidasOportunidad{get;set;}
+        DSALES_IPAssetWrapper.Seguro seguro {get;set;}
+    }
 }
