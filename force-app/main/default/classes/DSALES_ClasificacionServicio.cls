@@ -268,12 +268,12 @@ public without sharing class DSALES_ClasificacionServicio {
         String cuerpoJson = JSON.serialize(listaJson);
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('callout:DSALES_AutorizacionToken '+DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_COD));
+        request.setEndpoint('callout:DSALES_AutorizacionToken/'+DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_COD));
         request.setBody(cuerpoJson);
         request.setHeader('Content-Type', 'application/json');
         request.setHeader('X-HTTP-Method-Override','PATCH');
         request.setMethod('PATCH');
-        request.setHeader('Authorization', 'Bearer {!$Credential.Tokensss.AccessToken}');
+        //request.setHeader('Authorization', 'Bearer {!$Credential.Tokensss.AccessToken}');
         //request.setHeader('Authorization', 'Bearer ' + Credential.getName('DSALES_AutorizacionToken').AccessToken);
         HttpResponse response = https.send(request);        
         Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
@@ -523,10 +523,16 @@ public without sharing class DSALES_ClasificacionServicio {
         List<String> categoriasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        String authorizationHeader = 'Bearer ' + DSALES_obtenerToken.getToken();
+        Blob credential= Blob.valueOf(DSALES_obtenerToken.getToken());
+        String authorizationHeader = 'Bearer ' + '{!$Credential.Tokensss.AccessToken}';
+
         request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT));
         request.setHeader('Authorization', authorizationHeader);
+        //request.setEndpoint('callout:AutorizacionToken2/some_path');
+        //request.setEndpoint('callout:DSALES_AutorizacionToken2');
+        //request.setHeader('Authorization',  EncodingUtil.base64Decode(authorizationHeader));
         request.setMethod('GET');
+        system.debug('request: '+ request);
         HttpResponse response = https.send(request);
         system.debug('response '+response);
         if (response.getStatusCode() == 200) {
@@ -664,7 +670,7 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
-    public static List<AsignarProductos> getserviciosku(String valueCategoria, String valueSubcategoria, String valueClases, String valueFamilias){   
+    public static List<AsignarProductos> getserviciosku(String valueCategoria, String valueSubcategoria, List<String> valueClasesFamilias){   
         List<String> skus = new List<String>();
         List<String> skusNombres = new List<String>();
         List<String> tiposervicio= new  List<String>();
@@ -672,7 +678,7 @@ public without sharing class DSALES_ClasificacionServicio {
         String nombreTipoServicio;
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClases+'/familias/'+valueFamilias+'/codigos');
+        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClasesFamilias+'/familias/'+valueClasesFamilias+'/codigos');
         request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
         request.setMethod('GET');
         HttpResponse response = https.send(request);
