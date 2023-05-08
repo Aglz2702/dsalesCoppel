@@ -1,6 +1,6 @@
 @RestResource(urlMapping='/insertPaymentInformationSM/*')
 global with sharing class DSALES_PaymentInfoWrapperRequest {
-    
+    /*
     @HttpPost
     global static DSALES_PaymentInfoWrapper.PaymentResponse crearPago(){
         DSALES_PaymentInfoWrapper.PaymentResponse responsePago = new DSALES_PaymentInfoWrapper.PaymentResponse();      
@@ -12,6 +12,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
                 String body = System.RestContext.request.requestBody.toString();
                 if(String.isNotBlank(body)){
                     DSALES_PaymentInfoWrapper.PaymentRequest pago = (DSALES_PaymentInfoWrapper.PaymentRequest)JSON.deserialize(body, DSALES_PaymentInfoWrapper.PaymentRequest.class);            
+                    System.debug('prueba');
                     responsePago = insertarPago(pago);
                     exito=true;
                 }
@@ -68,7 +69,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             if(Schema.sObjectType.DSALES_InformacionDePago__c.isCreateable()) {
                 insert nuevoPago;
             }else{
-                System.debug('Permisos insuficientes para insertar'); 
+                System.debug('Permisos insuficientes para insertar');
             }
             if(pago.ListaDePagos!=null){
                 for(DSALES_PaymentInfoWrapper.listaDePago part : pago.listaDePagos){
@@ -100,4 +101,5 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
         
         return responsePago;
     }
+    */
 }

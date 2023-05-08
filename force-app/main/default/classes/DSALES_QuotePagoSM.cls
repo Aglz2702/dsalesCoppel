@@ -10,10 +10,11 @@
 **/
 
 public with sharing class DSALES_QuotePagoSM { 
-
+/*
     private static final  String RC_GRATIS='RC';
 
     /////////////****------ 1 -----------****///////////////
+   /*
     public static void cotizacionesNuevas(String idPago, List<String> partidasSeleccionadas, String skuMoto){
         try {
             String idCotizacion='';
@@ -42,7 +43,8 @@ public with sharing class DSALES_QuotePagoSM {
                 stringData.put('beCot',beforeCot.Id);
                 stringData.put('skuMoto',skuMoto);
                 stringData.put('plazo',Integer.valueOf(pago.DSALES_Plazodecomprademoto__c));
-                String idCotSin=crear2CotPartidas(/*beforeCot.Id,skuMoto,Integer.valueOf(pago.DSALES_Plazodecomprademoto__c),*/stringData, listIdCotiza, partidasSeleccionadas);
+                String idCotSin=crear2CotPartidas(/*beforeCot.Id,skuMoto,Integer.valueOf(pago.DSALES_Plazodecomprademoto__c),*//*stringData, listIdCotiza, partidasSeleccionadas);
+                /*
                 if(idCotSin!=null|| idCotSin!=''){
                     sincronizarOportunidad(idCotSin);
                 } 
@@ -84,7 +86,7 @@ public with sharing class DSALES_QuotePagoSM {
                         if(idCotizacion!=null || idCotizacion!=''){
                             sincronizarOportunidad(idCotizacion);
                         } 
-            }*/
+            }*//*
         }   
         } catch (Exception e) {
             System.debug('Error en método principal de cotización');
@@ -95,6 +97,7 @@ public with sharing class DSALES_QuotePagoSM {
     
 
     /////////////****------ 2 -----------****///////////////
+    /*
     public static String crearCotizacion(String idCotizacion,String idPago){
         try{
             Quote beforeCot = [SELECT Id,OpportunityId,Name,DSALES_Fechadenacimiento__c,Email,DSALES_Cobertura__c,DSALES_Opcindepago__c,DSALES_Gnero__c,Phone,DSALES_Cdigopostal__c,DSALES_Fechadecomienzodepliza__c,
@@ -149,6 +152,7 @@ public with sharing class DSALES_QuotePagoSM {
     }
 
     /////////////****------ 3 ----------****///////////////
+   /*
     public static void crearPartidas(Map<String, String> cotizaciones,List<String> partidasSeleccionadas, String skuMoto){
         try{
             String idCot=(String)cotizaciones.get('beCot');
@@ -216,7 +220,7 @@ public with sharing class DSALES_QuotePagoSM {
                             }
                             idNuevos.add(ql);
                         }
-                    } */
+                    } */ /*
                     idNuevos.add(DSALES_QuotePagoSMHelper.llenarPartida(ql,q));
                 }
             }
@@ -235,6 +239,7 @@ public with sharing class DSALES_QuotePagoSM {
  
      
     /////////////****------ 4 -----------****///////////////
+    /*
     /*private static List<QuoteLineItem> mapeoPartidas(WrapperListaPartidas listaPrueba,String idCotizacion){
         List<QuoteLineItem> listPartidas = new List<QuoteLineItem>();
         for(QuoteLineItem q:listaPrueba.partidas){
@@ -286,8 +291,9 @@ public with sharing class DSALES_QuotePagoSM {
     }*/
 
     /////////////****------ 5 -----------****///////////////
-    public static String crear2CotPartidas(/*String idCot, String skuMoto, Integer plazo,*/Map<String, Object> stringData, List<String> listCotNew, List<String> partidasSeleccionadas){
-        try{
+   /*
+    public static String crear2CotPartidas(/*String idCot, String skuMoto, Integer plazo,*//*Map<String, Object> stringData, List<String> listCotNew, List<String> partidasSeleccionadas){
+      /*  try{
             System.debug('lista de new cotiza: '+ listCotNew.size());
             String idCot=(String)stringData.get('beCot');
             String skuMoto=(String)stringData.get('skuMoto');
@@ -425,10 +431,10 @@ public with sharing class DSALES_QuotePagoSM {
                             //part=part;   
                         //}
                         //listPartInsert.add(part);
-                        mapData.put('listCotNew',listCotNew);
+                       /* mapData.put('listCotNew',listCotNew);
                         mapData.put('plazos',plazos);
-                        listPartInsert.add(DSALES_QuotePagoSMHelper.productoIf(precios, q, /*listCotNew, plazos*/ mapData)); 
-                    }
+                        listPartInsert.add(DSALES_QuotePagoSMHelper.productoIf(precios, q, /*listCotNew, plazos*/ /*mapData)); 
+                   /* }
                     System.debug('listPartInsert:'+listPartInsert.size());
                     System.debug('listPartInsert:'+listPartInsert);
                     try{
@@ -466,7 +472,7 @@ public with sharing class DSALES_QuotePagoSM {
                                 }else{
                                     ql.UnitPrice=q.UnitPrice;
                                 }*/ 
-                                ql=DSALES_QuotePagoSMHelper.quoteIf(ql, q);
+                               /* ql=DSALES_QuotePagoSMHelper.quoteIf(ql, q);
                             }
                         }
                         idNuevos.add(ql);
@@ -610,7 +616,7 @@ public with sharing class DSALES_QuotePagoSM {
 
 
     /////////////****------ 6 -----------****///////////////
-    public static void sincronizarOportunidad(String quoteId){
+    /*public static void sincronizarOportunidad(String quoteId){
         try{
             Quote cotizacion = [SELECT Id,OpportunityId,DSALES_Enviarcotizacion__c FROM Quote WHERE Id= :quoteId WITH SECURITY_ENFORCED LIMIT 1];
             Opportunity opp = [SELECT Id, StageName,SyncedQuoteId FROM opportunity WHERE Id=:cotizacion.OpportunityId WITH SECURITY_ENFORCED LIMIT 1];
@@ -649,4 +655,5 @@ public with sharing class DSALES_QuotePagoSM {
         List<String> partidasSeleccionadas{get;set;}
         String skuMoto{get;set;}
     }
+    */
 }

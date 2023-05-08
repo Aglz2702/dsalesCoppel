@@ -85,7 +85,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     resultPerfil = false;
     campanasSelected = [];
     tiposUsoSelected = [];
-
+    listaClaseFamilia= [];
     connectedCallback() {
         this.init();
         this.ProfileChecker();
@@ -1664,14 +1664,16 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
             this.pushMessage('Advertencia', 'warning', 'Existen campos vacios o no seleccionados');
         }
         else{
-            getserviciosku({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, valueClases: this.data.valueClassService, valueFamilias: this.data.valueFamilyService})
+            this.listaClaseFamilia.push(this.data.valueClassService);
+            this.listaClaseFamilia.push(this.data.valueFamilyService);
+            getserviciosku({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, valueClases: this.listaClaseFamilia})
             .then(result => {
                 this.data.servicioSku= result;
             }).catch(error => {
                 console.log(error);
             });
         }
-        
+
     }
 
     handleKeyDownSearch(event) {

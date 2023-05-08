@@ -10,7 +10,7 @@
 **/
 public with sharing class DSALES_QuotePagoSMHelper {
 
-    private static final  String RC_GRATIS='RC';
+  /*  private static final  String RC_GRATIS='RC';
 
     public static void crearCotizacionesNuevas(String idPago, List<String> partidasSeleccionadas, String skuMoto){
         if(skuMoto!=null){
@@ -90,9 +90,9 @@ public with sharing class DSALES_QuotePagoSMHelper {
         return newpartida;
     }
 
-    public static QuoteLineItem productoIf(List<PricebookEntry> precios, QuoteLineItem q, /*List<String> listCotNew, List<Plazo__c> plazos*/ Map<String, List<Object>> mapData){
+    public static QuoteLineItem productoIf(List<PricebookEntry> precios, QuoteLineItem q, /*List<String> listCotNew, List<Plazo__c> plazos*//* Map<String, List<Object>> mapData){
         
-        List<String> listCotNew=(List<String>)mapData.get('listCotNew');
+        /*List<String> listCotNew=(List<String>)mapData.get('listCotNew');
         List<Plazo__c> plazos=(List<Plazo__c>)mapData.get('plazos');
         QuoteLineItem part = new QuoteLineItem();
         for(PricebookEntry pr:precios){
@@ -141,4 +141,5 @@ public with sharing class DSALES_QuotePagoSMHelper {
         }  
         return ql;
     }
+    */
 }
