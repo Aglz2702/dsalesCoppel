@@ -14,31 +14,38 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         DSALES_IPAssetWrapper.Seguro seguro = new DSALES_IPAssetWrapper.Seguro();
         if(RestContext.request != null){
             String body = System.RestContext.request.requestBody.toString();
-            if(String.isNotBlank(body)){
-                try{
-                    DSALES_IPAssetWrapper.IPAssetRequest policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
-                    DSALES_InformacionDePago__c pago= new DSALES_InformacionDePago__c();
-                    data=createIPAssetAux2(pago, policyAsset, emitirPoliza); 
-                    listaPartidas=data.listaPartidas;
-                    pago=data.pago;
-                    success=true;
-                    if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
-                        update pago;  
-                    } 
+            switch on body {
+                when '',null  {
+                    System.debug('Error: Viene vacío');
                 }
-                catch(Exception.JSONException e)
-                {
-                    policyAssetRes.success = false;
-                    policyAssetRes.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ;
-                    policyAssetRes.codigoError=DSALES_Utility.BAD_REQUEST_CODE;   
-                }
-                catch(Exception e){
-                    System.debug('**ERROR**'+e.getLineNumber()+ ': '+e.getMessage());
-                    policyAssetRes.success = false;
-                    policyAssetRes.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
-                    policyAssetRes.codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;  
+                when else {
+                    try{
+                        DSALES_IPAssetWrapper.IPAssetRequest policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
+                        DSALES_InformacionDePago__c pago= new DSALES_InformacionDePago__c();
+                        data=createIPAssetAux2(pago, policyAsset, emitirPoliza); 
+                        listaPartidas=data.listaPartidas;
+                        pago=data.pago;
+                        success=true;
+                        if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
+                            update pago;  
+                        } 
+                    }
+                    catch(Exception.JSONException e)
+                    {
+                        policyAssetRes.success = false;
+                        policyAssetRes.mensajeError = DSALES_Utility.BAD_REQUEST_MSJ;
+                        policyAssetRes.codigoError=DSALES_Utility.BAD_REQUEST_CODE;   
+                    }
+                    catch(Exception e){
+                        System.debug('**ERROR**'+e.getLineNumber()+ ': '+e.getMessage());
+                        policyAssetRes.success = false;
+                        policyAssetRes.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                        policyAssetRes.codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;  
+                  }
+                
                 }
             }
+         
         }
         policyAssetRes.success=success;
         policyAssetRes.idActivo=data.idActivo;
@@ -53,7 +60,16 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         IPAssetAux1Wrapper data = new IPAssetAux1Wrapper();
         InsurancePolicyAsset activo= insertIPAsset(policyAsset);
         DSALES_IPAssetWrapper.Seguro seguro = new DSALES_IPAssetWrapper.Seguro();
-        if(pago.DSALES_Poliza__c!=null){
+        switch on String.valueOf(pago.DSALES_Poliza__c) {
+        when null,'' {
+            if(Schema.sObjectType.InsurancePolicyAsset.isCreateable())
+            {
+                insert activo;
+            }
+            InsurancePolicy universalPoliza = [SELECT Id, Name  FROM InsurancePolicy where  Name=:DSALES_Utility.SEGURO_PREDETERMINADO WITH SECURITY_ENFORCED];
+            pago.DSALES_Poliza__c=universalPoliza.Id;
+        }
+        when else {
             if(policyAsset.emitirPoliza==true && emitirPoliza==true){
                 if(pago.DSALES_Poliza__r.PolicyName!= DSALES_Utility.SEGURO_PREDETERMINADO){
                     switch on String.valueOf(activo) {
@@ -74,13 +90,13 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             }
             else{
                 createIPAssetAuxAux(activo,idActivo, pago);
-            }    
+            }
         }
-        else{
-            insert activo;
-            InsurancePolicy universalPoliza = [SELECT Id, Name  FROM InsurancePolicy where  Name=:DSALES_Utility.SEGURO_PREDETERMINADO];
-            pago.DSALES_Poliza__c=universalPoliza.Id;
-        }
+       }
+        
+                
+        
+       
         data.seguro=seguro;
         data.idActivo=idActivo;
         return data;
@@ -222,4 +238,3 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
     }
     
 }
-
