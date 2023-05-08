@@ -1,6 +1,6 @@
 public without sharing class DSALES_ClasificacionServicio {
     
-    private static final String NOMBRE_OBJETO_CS = 'DSales_ClasificacionDeServicio__c';
+    /*private static final String NOMBRE_OBJETO_CS = 'DSales_ClasificacionDeServicio__c';
     private static final String NOMBRE_SERVICIO_CAT= 'DSALES_accesoCategorias';
     private static final String NOMBRE_SERVICIO_COD= 'DSALES_AccesoCodigos';
     @AuraEnabled
@@ -258,27 +258,24 @@ public without sharing class DSALES_ClasificacionServicio {
     
     @AuraEnabled
     public static List<String> upsertRecord(String allData){
-        system.debug(allData);
         List<Servicio> objeto= (List<Servicio>) JSON.deserialize(allData, List<Servicio>.class);
         List<Product2> listProductos= new List<Product2>();
         Map<String, Integer> listProductosServicio= new Map<String, Integer>();
         List<String> tipoServicio= new List<String>();
         List<Object> listaJson = new List<Object>();
-        upsertRecordAux(objeto, listProductosServicio);
-        for(String sku : listProductosServicio.keySet()) {
-            Integer codigoServicio = Integer.valueOf(listProductosServicio.get(sku));
-            listaJson.add(new Map<String, Object>{'codigo' => integer.valueof(sku), 'codigoServicio' => integer.valueof(codigoServicio)});
-        }
+        listProductosServicio.putAll(upsertRecordAux(objeto, listProductosServicio));
+        listaJson.addAll(upsertRecordAux4(listaJson, listProductosServicio));
         String cuerpoJson = JSON.serialize(listaJson);
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_COD));
-        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
-        request.setBody(cuerpoJson); 
-        request.setHeader('Content-Type', 'application/json'); 
+        request.setEndpoint('callout:DSALES_AutorizacionToken/'+DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_COD));
+        request.setBody(cuerpoJson);
+        request.setHeader('Content-Type', 'application/json');
         request.setHeader('X-HTTP-Method-Override','PATCH');
         request.setMethod('PATCH');
-        HttpResponse response = https.send(request);
+        //request.setHeader('Authorization', 'Bearer {!$Credential.Tokensss.AccessToken}');
+        //request.setHeader('Authorization', 'Bearer ' + Credential.getName('DSALES_AutorizacionToken').AccessToken);
+        HttpResponse response = https.send(request);        
         Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
         List<Object> dataList = (List<Object>) responseMap.get('data');
         Map<Integer, Integer> codeStatusMap = new Map<Integer, Integer>();
@@ -294,31 +291,17 @@ public without sharing class DSALES_ClasificacionServicio {
             {
                 listCompleted.add(code);
             }
-            if(statusCode==404)
+            else if(statusCode==404)
             {
                 listError404.add(code);
             }
-            if(statusCode==500)
+            else if(statusCode==500)
             {
                 listError500.add(code);
             }
             codeStatusMap.put(code, statusCode);
         }
-        if(listError404.size()>0){
-            if(listError500.size()>0){
-                status.add('Error 404 "No se encontró el recurso solicitado" en: '+listError404+ ', Error 500 en: ' +listError500);
-            }
-            status.add('Error 404 "No se encontró el recurso solicitado" en: '+listError404);
-        }
-        else if(listError500.size()>0){
-            if(listError404.size()>0){
-                status.add('Error 500 en: '+listError404+ ', Error 404 "No se encontró el recurso solicitado" en: ' +listError500);
-            }
-            status.add('Error 500 en: '+listError500);
-        }
-        else{
-            status.add('sin errores');
-        }
+        status=upsertRecordAux3(listError404,listError500);
         system.debug(listCompleted);
         System.debug('Mapa de código y estado: ' + codeStatusMap);
         for(Servicio item: objeto){
@@ -336,7 +319,7 @@ public without sharing class DSALES_ClasificacionServicio {
         status.add(String.valueof(response.getStatusCode())) ;       
         return status;
     }
-    public static void upsertRecordAux(List<Servicio> objeto, Map<String, Integer> listProductosServicio){
+    public static Map<String, Integer> upsertRecordAux(List<Servicio> objeto, Map<String, Integer> listProductosServicio){
         for(Servicio item: objeto){
             if(item.seguro==false && item.servicio==true && item.noAplicaServicio == false && item.noAplicaSeguro== true){
              listProductosServicio.put(item.sku, 2);
@@ -354,11 +337,12 @@ public without sharing class DSALES_ClasificacionServicio {
             else if(item.seguro==true && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
              listProductosServicio.put(item.sku, 1);
             }
-            upsertRecordAux2(item,listProductosServicio);         
+            listProductosServicio.putAll(upsertRecordAux2(item,listProductosServicio));      
      }
-     
+     return listProductosServicio; 
     }
-    public static void upsertRecordAux2(Servicio item, Map<String, Integer> listProductosServicio){
+
+    public static Map<String, Integer> upsertRecordAux2(Servicio item, Map<String, Integer> listProductosServicio){
             if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== false){
             listProductosServicio.put(item.sku, 0);
            }
@@ -371,7 +355,37 @@ public without sharing class DSALES_ClasificacionServicio {
            else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
             listProductosServicio.put(item.sku, 0);
            }
+           return listProductosServicio;
     }
+
+    public static List<String> upsertRecordAux3(List<Integer> listError404, List<Integer> listError500){
+        List<String> status= new List<String> ();
+        if(listError404.size()>0){
+            if(listError500.size()>0){
+                status.add('Error 404 "No se encontró el recurso solicitado" en: '+listError404+ ', Error 500 en: ' +listError500);
+            }
+            status.add('Error 404 "No se encontró el recurso solicitado" en: '+listError404);
+        }
+        else if(listError500.size()>0){
+            if(listError404.size()>0){
+                status.add('Error 500 en: '+listError404+ ', Error 404 "No se encontró el recurso solicitado" en: ' +listError500);
+            }
+            status.add('Error 500 en: '+listError500);
+        }
+        else{
+            status.add('sin errores');
+        }
+        return status;
+    }
+
+    public static List<Object> upsertRecordAux4(List<Object> listaJson , Map<String, Integer> listProductosServicio){
+        for(String sku : listProductosServicio.keySet()) {
+            Integer codigoServicio = Integer.valueOf(listProductosServicio.get(sku));
+            listaJson.add(new Map<String, Object>{'codigo' => integer.valueof(sku), 'codigoServicio' => integer.valueof(codigoServicio)});
+        }
+        return listaJson;
+    }
+
     public static List<String> itemSeleccionados(List<PicklistOption> listPickList){
         List<String> listItems = new List <String>();
         for(PicklistOption item: listPickList){
@@ -509,10 +523,16 @@ public without sharing class DSALES_ClasificacionServicio {
         List<String> categoriasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        String authorizationHeader = 'Bearer ' + DSALES_obtenerToken.getToken();
+        Blob credential= Blob.valueOf(DSALES_obtenerToken.getToken());
+        String authorizationHeader = 'Bearer ' + '{!$Credential.Tokensss.AccessToken}';
+
         request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT));
         request.setHeader('Authorization', authorizationHeader);
+        //request.setEndpoint('callout:AutorizacionToken2/some_path');
+        //request.setEndpoint('callout:DSALES_AutorizacionToken2');
+        //request.setHeader('Authorization',  EncodingUtil.base64Decode(authorizationHeader));
         request.setMethod('GET');
+        system.debug('request: '+ request);
         HttpResponse response = https.send(request);
         system.debug('response '+response);
         if (response.getStatusCode() == 200) {
@@ -650,7 +670,7 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
-    public static List<AsignarProductos> getserviciosku(String valueCategoria, String valueSubcategoria, String valueClases, String valueFamilias){   
+    public static List<AsignarProductos> getserviciosku(String valueCategoria, String valueSubcategoria, List<String> valueClasesFamilias){   
         List<String> skus = new List<String>();
         List<String> skusNombres = new List<String>();
         List<String> tiposervicio= new  List<String>();
@@ -658,7 +678,7 @@ public without sharing class DSALES_ClasificacionServicio {
         String nombreTipoServicio;
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClases+'/familias/'+valueFamilias+'/codigos');
+        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClasesFamilias+'/familias/'+valueClasesFamilias+'/codigos');
         request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
         request.setMethod('GET');
         HttpResponse response = https.send(request);
@@ -1158,5 +1178,5 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public integer anio4;
         @AuraEnabled public integer anio5;
         @AuraEnabled public integer anio6;      
-    }
+    }*/
 }

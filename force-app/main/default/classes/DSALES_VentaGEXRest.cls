@@ -1,7 +1,6 @@
-
 @RestResource(urlMapping='/ventaGex/*')
 global with sharing class DSALES_VentaGEXRest {
-    
+    /*
     @HttpPost
     global static DSALES_VentaGEX.VentaGexResponse createVenta() {
         List<String> assetsId = new List<String>();
@@ -299,4 +298,5 @@ global with sharing class DSALES_VentaGEXRest {
         venta.pago.idVendedor=venta.idVendedor;
         venta.pago.nombreVendedor=venta.nombreVendedor;              
     }
+*/
 }

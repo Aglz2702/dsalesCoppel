@@ -1,4 +1,5 @@
 public without sharing class DSALES_ClonarMatriz {
+    /*
 private static final String OBJETO_PADRE = 'DSales_Matriz_GEX__c';
 private static final String OBJETO_HIJO = 'DSALES_Matriz_de_Cotizacion__c';
     private static final String TEXT_CLON = ' - Clon';
@@ -121,5 +122,6 @@ public static void compararEliminados(Id original, Id clone){
             else {
             System.debug('Permisos insuficientes para borrar');
             }
-}   
+}
+*/
 }

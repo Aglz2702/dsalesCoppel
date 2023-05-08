@@ -1,4 +1,5 @@
-public without sharing class  DSALES_ValidarClienteHelper {    
+public without sharing class  DSALES_ValidarClienteHelper {
+/*    
     public static void deleteUnpurchasedItem(List<DSALES_AssetWrapper.AssetRequest> listAssets, List<DSALES_CertificadoWrapper.CertificadoRequest> certificado, String quoteId) {
         Quote originalQuote = [SELECT Id, Name,OpportunityId, DSALES_EmailNew__c, Pricebook2Id, RecordTypeId, Status, DSALES_Enviarcotizacion__c, DSales_Tienda__c, DSales_Vendedor__c,
                                DSALES_Fechadecreacionpresupuesto__c, ExpirationDate, DSALES_esClon__c FROM Quote WHERE Id = :quoteId WITH SECURITY_ENFORCED]; 
@@ -191,10 +192,9 @@ public without sharing class  DSALES_ValidarClienteHelper {
                         {
                             DSALES_VentaGEX.ServicioCorrespondiente servicioGex= new DSALES_VentaGEX.ServicioCorrespondiente();
                             servicioGex.idPartidaDeOportunidad=op.Id;
-                            if(!OportunidadLineMap.isEmpty()){
+                            if(!OportunidadLineMap.isEmpty())
                            servicioGex.folioCertificado=OportunidadLineMap.get(op.Product2.StockKeepingUnit).folioCertificado;
                              OportunidadLineMap.put(op.Product2.StockKeepingUnit,servicioGex);
-                            }
                         }
                         
                          
@@ -225,18 +225,13 @@ public without sharing class  DSALES_ValidarClienteHelper {
             try{
                 
 
-                if(Schema.sObjectType.Opportunity.isUpdateable()) {
+                if(Schema.sObjectType.opportunityLineItem.isUpdateable()) {
                     Update oppor;
+                    Update listActualizarOp;
                     }else{
                     
                     System.debug('Permisos insuficientes para actualizar');
                     }
-                    if(Schema.sObjectType.OpportunityLineItem.isUpdateable()) {
-                        Update listActualizarOp;
-                        }else{
-                        
-                        System.debug('Permisos insuficientes para actualizar');
-                        }
                 
                 
             }catch(DmlException e){
@@ -246,6 +241,6 @@ public without sharing class  DSALES_ValidarClienteHelper {
     }
     
        
-    
+    */
     
 }

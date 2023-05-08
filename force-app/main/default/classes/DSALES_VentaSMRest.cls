@@ -1,6 +1,7 @@
 @RestResource(urlMapping='/ventaSM/*')
 global without sharing class DSALES_VentaSMRest {
     public static final String NOMBRE_SERVICIO = 'DSALES_createPoliza';
+    /*
     @HttpPost
     global static DSALES_VentaSM.VentaSMResponse crearVenta() {
         String idCliente='';
@@ -168,4 +169,5 @@ global without sharing class DSALES_VentaSMRest {
         public String nombreProducto { get; set; }
         public String sku {get;set;}
     }
+*/
 }

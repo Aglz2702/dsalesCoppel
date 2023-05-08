@@ -1,5 +1,6 @@
 @istest
 public with sharing class DSALES_VentaSMRestTest {
+    /*
    @testSetup
     static void creacionRegistros(){
         String tipoProducto = 'Producto';
@@ -26,8 +27,8 @@ public with sharing class DSALES_VentaSMRestTest {
         
         Product2 prodM = new Product2(Name ='Moto',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='12121212',DSales_Tipo_de_Producto__c='Producto',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40,IsActive=true);
 		insert prodM;
-         /* Product2 prodM2 = new Product2(Name ='Moto Vento',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='1225473',DSales_Tipo_de_Producto__c='Producto',IsActive=true);
-		insert prodM2;*/
+         Product2 prodM2 = new Product2(Name ='Moto Vento',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='1225473',DSales_Tipo_de_Producto__c='Producto',IsActive=true);
+		insert prodM2;
         
         Id pricebookId = Test.getStandardPricebookId();
         
@@ -52,12 +53,12 @@ public with sharing class DSALES_VentaSMRestTest {
         standardPriceMoto.IsActive = true;
         insert standardPriceMoto;
         
-        /*PricebookEntry standardPriceMoto2 = new PricebookEntry();
+        PricebookEntry standardPriceMoto2 = new PricebookEntry();
         standardPriceMoto2.Pricebook2Id = pricebookId;
         standardPriceMoto2.Product2Id = prodM2.Id;
         standardPriceMoto2.UnitPrice = 1000;
         standardPriceMoto2.IsActive = true;
-        insert standardPriceMoto2;*/
+        insert standardPriceMoto2;
         
         Pricebook2 customPB = new Pricebook2();
         customPB.Name='Standard Price Book';
@@ -85,12 +86,12 @@ public with sharing class DSALES_VentaSMRestTest {
         customPriceMoto.IsActive = true;
         insert customPriceMoto;
         
-        /*PricebookEntry customPriceMoto2 = new PricebookEntry();
+        PricebookEntry customPriceMoto2 = new PricebookEntry();
         customPriceMoto2.Pricebook2Id = customPB.Id;
         customPriceMoto2.Product2Id = prodM2.Id;
         customPriceMoto2.UnitPrice = 2000;
         customPriceMoto2.IsActive = true;
-        insert customPriceMoto2;*/
+        insert customPriceMoto2;
 		
         
         
@@ -151,7 +152,7 @@ public with sharing class DSALES_VentaSMRestTest {
          Plazo__c plazoAMP18 = new Plazo__c(Name='18',Dsales_Plazo__c='18',DSALES_Seguro__c=prodAmp.Id,DSALES_Activo__c=true);
         insert plazoAMP18;
         
-        /*QuoteLineItem moto = new QuoteLineItem();
+        QuoteLineItem moto = new QuoteLineItem();
         moto.QuoteId = cotizacion.Id;
         moto.PricebookEntryId = customPrice.Id;
         moto.Product2Id = prodM.Id;
@@ -159,8 +160,8 @@ public with sharing class DSALES_VentaSMRestTest {
         moto.UnitPrice = customPrice.UnitPrice;
         moto.DSALES_Segurogratis__c=true;
         //moto.DSALES_Tipodeproducto__c = 'Producto';
-        insert moto;*/
-        /*QuoteLineItem moto2 = new QuoteLineItem();
+        insert moto;
+        QuoteLineItem moto2 = new QuoteLineItem();
         moto2.QuoteId = cotizacion.Id;
         moto2.PricebookEntryId = customPrice.Id;
         moto2.Product2Id = prodM2.Id;
@@ -168,9 +169,9 @@ public with sharing class DSALES_VentaSMRestTest {
         moto2.UnitPrice = customPrice.UnitPrice;
         moto2.DSALES_Segurogratis__c=false;
         //moto.DSALES_Tipodeproducto__c = 'Producto';
-        insert moto2;*/
+        insert moto2;
         
-        /*QuoteLineItem seguroRc = new QuoteLineItem();
+        QuoteLineItem seguroRc = new QuoteLineItem();
         seguroRc.QuoteId = cotizacion.Id;
         seguroRc.PricebookEntryId = customPrice.Id;
         seguroRc.Product2Id = prodRc.Id;
@@ -179,7 +180,7 @@ public with sharing class DSALES_VentaSMRestTest {
         //seguroRc.DSALES_Tipodeproducto__c = 'Producto';
         seguroRc.DSALES_Plazo__c=plazoRC18.Id;
         seguroRc.DSALES_Segurogratis__c=false;
-        insert seguroRc;*/
+        insert seguroRc;
         
         QuoteLineItem seguroRcG = new QuoteLineItem();
         seguroRcG.QuoteId = cotizacion.Id;
@@ -204,7 +205,7 @@ public with sharing class DSALES_VentaSMRestTest {
         insert seguroAmp;
     }
     
-    /*@isTest
+    @isTest
     public static void ventaTest(){
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
@@ -231,7 +232,7 @@ public with sharing class DSALES_VentaSMRestTest {
         RestContext.request = request;
         RestContext.response= response;
 
-    }*/
+}
     
      @isTest
     public static void ventaExternaTest(){
@@ -262,4 +263,5 @@ public with sharing class DSALES_VentaSMRestTest {
         RestContext.response= response;
         System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
     }
+*/
 }

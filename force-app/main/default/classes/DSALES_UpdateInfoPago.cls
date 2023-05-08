@@ -4,6 +4,7 @@ public without sharing class DSALES_UpdateInfoPago {
                 DSALES_CreateInsurancePolicy.updateInfoPago(p);
         }
     }*/
+    /*
     public static void cancelarPoliza(Map<Id,SObject> existingRecords,List<InsurancePolicy> records){
         List<InsurancePolicy> listRecord = (LIst<InsurancePolicy>)records;
         for(InsurancePolicy poliza :listRecord){
@@ -17,7 +18,7 @@ public without sharing class DSALES_UpdateInfoPago {
         }  
        
     }
-    
+    */
 
     
     
