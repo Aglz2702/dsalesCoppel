@@ -10,8 +10,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         Opportunity oppor = new Opportunity();
         Quote cotiza = new Quote();
         List<QuoteLineItem> listaPartida = new List<QuoteLineItem>();
-        List<DSales_Asignacion_de_Productos__c> productAsig = new List<DSales_Asignacion_de_Productos__c>();
-        
+        List<DSales_Asignacion_de_Productos__c> productAsig = new List<DSales_Asignacion_de_Productos__c>();  
         if(RestContext.request != null){
             String body = System.RestContext.request.requestBody.toString();
             if(String.isNotBlank(body)){
@@ -31,11 +30,16 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     Tienda__c tienda = [Select Id from Tienda__c WHERE DSales_TiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
                     
                     Id clienteId=null; 
+                    Map<String, String> mapNomyId=new Map<String, String>();
                     if(data.numeroCliente == '' || data.numeroCliente == null ){
                         List<Account> clienteContado = [SELECT Id,FirstName,LastName FROM Account WHERE FirstName=: data.nombre and LastName=: data.apellidoPaterno and PersonEmail= :data.correoElectronico WITH SECURITY_ENFORCED];
                         clienteId = clienteContado[0].Id;
-                        oppor = crearOportunidad(data, clienteId, clienteContado[0].FirstName, clienteContado[0].LastName,tienda);
-                        cotiza = crearCotizacion(data, oppor.Id, clienteContado[0].FirstName, clienteContado[0].LastName, tienda);
+                        mapNomyId.put('firstName',clienteContado[0].FirstName);
+                        mapNomyId.put('lastName',clienteContado[0].LastName);
+                        mapNomyId.put('clienteId',clienteId);
+                        oppor = crearOportunidad(data, /*clienteId, clienteContado[0].FirstName, clienteContado[0].LastName,*/mapNomyId ,tienda);
+                        mapNomyId.put('oportunidadId',oppor.Id);
+                        cotiza = crearCotizacion(data, /*oppor.Id, clienteContado[0].FirstName, clienteContado[0].LastName,*/ mapNomyId ,tienda);
                         listaPartida = crearPartidas(data, cotiza.Id);
                     }else{
                         if(data.numeroCliente != DSALES_Utility.NUMERO_CLIENTE_GENERICO){
@@ -43,22 +47,54 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             switch on result.size() {
                                 when 1 {
                                     clienteId = result[0].Id;
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                    mapNomyId.put('firstName',result[0].FirstName);
+                                    mapNomyId.put('lastName',result[0].LastName);
+                                    mapNomyId.put('clienteId',clienteId);
+                                    oppor = crearOportunidad(data, /*clienteId, result[0].FirstName, result[0].LastName*/ mapNomyId,tienda);
+                                    mapNomyId.put('oportunidadId',oppor.Id);
+                                    cotiza = crearCotizacion(data, /*oppor.Id, result[0].FirstName, result[0].LastName*/ mapNomyId, tienda);
+=======
                                     oppor = crearOportunidad(data, clienteId, result[0].FirstName, result[0].LastName,tienda);
                                     cotiza = crearCotizacion(data, oppor.Id, result[0].FirstName, result[0].LastName, tienda);
+>>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
+=======
+                                    oppor = crearOportunidad(data, clienteId, result[0].FirstName, result[0].LastName,tienda);
+                                    cotiza = crearCotizacion(data, oppor.Id, result[0].FirstName, result[0].LastName, tienda);
+>>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
                         		    listaPartida = crearPartidas(data, cotiza.Id);
                                 }
                                 when 0 {
                                     cliente = crearCliente(data);
                                     clienteId = cliente.Id;
+<<<<<<< HEAD
+<<<<<<< HEAD
+                                    mapNomyId.put('firstName',cliente.FirstName);
+                                    mapNomyId.put('lastName',cliente.LastName);
+                                    mapNomyId.put('clienteId',clienteId);
+                                    oppor = crearOportunidad(data, /*clienteId, cliente.FirstName,cliente.LastName*/mapNomyId, tienda);
+                                    mapNomyId.put('oportunidadId',oppor.Id);
+                                    cotiza = crearCotizacion(data, /*oppor.Id, cliente.FirstName, cliente.LastName*/mapNomyId, tienda);
+=======
                                     oppor = crearOportunidad(data, clienteId, cliente.FirstName,cliente.LastName,tienda);
                                     cotiza = crearCotizacion(data, oppor.Id, cliente.FirstName, cliente.LastName, tienda);
+>>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
+=======
+                                    oppor = crearOportunidad(data, clienteId, cliente.FirstName,cliente.LastName,tienda);
+                                    cotiza = crearCotizacion(data, oppor.Id, cliente.FirstName, cliente.LastName, tienda);
+>>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
                                     listaPartida = crearPartidas(data, cotiza.Id);
                                 }
                             }
                         }else{
                             clienteId = universalAccount.Id;
-                            oppor = crearOportunidad(data, clienteId, data.nombre,data.apellidoPaterno,tienda);
-                            cotiza = crearCotizacion(data, oppor.Id, data.nombre, data.apellidoPaterno, tienda);
+                            mapNomyId.put('firstName',data.nombre);
+                            mapNomyId.put('lastName',data.apellidoPaterno);
+                            mapNomyId.put('clienteId',clienteId);
+                            oppor = crearOportunidad(data,/* clienteId, data.nombre,data.apellidoPaterno*/mapNomyId,tienda);
+                            mapNomyId.put('oportunidadId',oppor.Id);
+                            cotiza = crearCotizacion(data, /* oppor.Id, data.nombre, data.apellidoPaterno*/mapNomyId, tienda);
                         	listaPartida = crearPartidas(data, cotiza.Id);
                         }
                     }    
@@ -152,8 +188,11 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return cliente;
     }
     
-    public static Opportunity crearOportunidad (DSALES_QuoteGexWrapper.QuoteGexRequest data, Id clienteId, String firstName, String lastName,Tienda__c tienda){
+    public static Opportunity crearOportunidad (DSALES_QuoteGexWrapper.QuoteGexRequest data,/*Id clienteId, String firstName, String lastName*/ Map<String, String> mapNomyId, Tienda__c tienda){
         Opportunity oppor = new Opportunity();
+        String clienteId=(String)mapNomyId.get('clienteId');
+        String firstName=(String)mapNomyId.get('firstName');
+        String lastName=(String)mapNomyId.get('lastName');
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         Pricebook2 precioLista = [SELECT id,Name FROM Pricebook2 WHERE Name= 'Standard Price Book' and IsActive=true WITH SECURITY_ENFORCED LIMIT 1];
         oppor.AccountId = clienteId;
@@ -174,8 +213,11 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return oppor;
     }
     
-    public static Quote crearCotizacion (DSALES_QuoteGexWrapper.QuoteGexRequest data, Id oportunidadId, String firstName, String lastName, Tienda__c tienda){
+    public static Quote crearCotizacion (DSALES_QuoteGexWrapper.QuoteGexRequest data,/*Id oportunidadId, String firstName, String lastName*/ Map<String, String> mapNomyId, Tienda__c tienda){
         Quote cotiza = new Quote();
+        String oportunidadId=(String)mapNomyId.get('oportunidadId');
+        String firstName=(String)mapNomyId.get('firstName');
+        String lastName=(String)mapNomyId.get('lastName');
         String recordTypeId = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Garantía Extendida').getRecordTypeId();
         cotiza.Name = firstName;
         if(LastName != null ){

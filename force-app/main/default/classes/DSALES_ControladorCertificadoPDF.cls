@@ -1,7 +1,7 @@
 public without sharing class DSALES_ControladorCertificadoPDF {
     
     public String html{get;set;}
-    private static final String NOMBRE_OBJETO = 'DSALES_Certificado__c';
+    private static final String NOMBRE_OBJETO = 'DSALES_Certificado__c'; 
     private static final String NOMBRE_PLANTILLA = 'Certificado PDF';
     private static final String NOMBRE_DATE = 'DATE';
     private static final String NOMBRE_DOUBLE = 'DOUBLE';
@@ -28,6 +28,26 @@ public without sharing class DSALES_ControladorCertificadoPDF {
         tienda=[SELECT name FROM Tienda__c WHERE DSales_TiendaID__c=:certificado.DSALES_Tienda__c  WITH SECURITY_ENFORCED LIMIT 1];
         html=html.replace('DSALES_Tienda__c', tienda.Name);
         html = html.replace('certificado.', '');
+        /*for(String item: mapCampos.keySet()){
+            if(html.contains(item)){
+                String replace = '';
+                if(certificado.get(item)!= null){
+                    if(mapCampos.get(item) == NOMBRE_DATE){
+                        replace = String.valueOf(Date.valueOf(certificado.get(item)).format());
+                    }else if (mapCampos.get(item) == NOMBRE_DOUBLE ){
+                        replace = String.valueOf(Decimal.valueOf( String.valueOf(certificado.get(item)) ).format());
+                    }else{
+                        replace = String.valueOf(certificado.get(item));
+                    }
+                }
+                html = html.replace(item, replace);
+            }
+        }*/
+        conCertificadoFor(mapCampos, certificado, html);
+    }
+
+
+    public static void conCertificadoFor(Map<String, String> mapCampos, DSALES_Certificado__c certificado, String html) {
         for(String item: mapCampos.keySet()){
             if(html.contains(item)){
                 String replace = '';
@@ -43,9 +63,7 @@ public without sharing class DSALES_ControladorCertificadoPDF {
                 html = html.replace(item, replace);
             }
         }
-        
     }
-  
     
     private static Map<String, String> getField(String objName){
         Map<String, String> mapCampos = new Map<String, String>();
@@ -56,6 +74,4 @@ public without sharing class DSALES_ControladorCertificadoPDF {
         }
         return mapCampos;
     }
-
-
 }
