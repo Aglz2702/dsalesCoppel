@@ -14,7 +14,7 @@ public without sharing class DSALES_CreateInsurancePolicy {
             poliza.PolicyName='0001';
             poliza.Name='0001';
             poliza.NameInsuredId=cliente.Id;
-            poliza.DSALES_Estatusdepliza__c='Prepoliza';
+            poliza.dsalesEstatusPoliza__c='Prepoliza';
             poliza.DSALES_CorreoElectronico__c=cliente.PersonEmail;
             String recordTypeId =Schema.SObjectType.Account.getRecordTypeInfosByName().get('Cuenta personal').getRecordTypeId();
             if(cliente.RecordTypeId==recordTypeId){
@@ -24,7 +24,7 @@ public without sharing class DSALES_CreateInsurancePolicy {
             }
             poliza.SourceOpportunityId=oportunidad.Id;
             poliza.SourceQuoteId=cotizacion.Id;
-            poliza.Fecha_de_emisi_n__c=Date.today();
+            poliza.dsalesFechaDeEmision__c=Date.today();
             if(partidas.size()==1){
                 if(partidas[0].DSALES_NombreProducto__c==SEGURO_AMP){
                     poliza.DSALES_Cobertura__c='PLUS';
@@ -75,15 +75,15 @@ public without sharing class DSALES_CreateInsurancePolicy {
     public static InsurancePolicy agregarDatosDeActivo(InsurancePolicyAsset activo,String idPoliza){
         InsurancePolicy poliza = new InsurancePolicy();
         if(activo!=null){
-        poliza= [SELECT Id,DSALES_Activodeplizadeseguro__c,DSALES_Clavevehicular__c,DSALES_Modelo__c,DSALES_Numeroserie__c,DSALES_Nmerodemotor__c,DSALES_Descripcion__c,
+        poliza= [SELECT Id,dsalesActivoPolizaSeguro__c,DSALES_Clavevehicular__c,DSALES_Modelo__c,DSALES_Numeroserie__c,dsalesNumeroDeMotor__c,DSALES_Descripcion__c,
                                 DSALES_Servicio__c,DSALES_Placas__c,DSALES_Marca__c,DSALES_Uso__c,DSALES_ClaveAMIS__c
                                 FROM InsurancePolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED];
             
-            poliza.DSALES_Activodeplizadeseguro__c=activo.Id;
+            poliza.dsalesActivoPolizaSeguro__c=activo.Id;
             poliza.DSALES_Clavevehicular__c=activo.DSALES_Clavevehicular__c;
             poliza.DSALES_Modelo__c=activo.DSALES_Modelo__c;
             poliza.DSALES_Numeroserie__c=activo.DSALES_Numeroserie__c;
-            poliza.DSALES_Nmerodemotor__c=activo.DSALES_Numeromotor__c;
+            poliza.dsalesNumeroDeMotor__c=activo.DSALES_Numeromotor__c;
             poliza.DSALES_Descripcion__c=activo.DSALES_Descripcion__c;
             poliza.DSALES_Servicio__c=activo.DSALES_Servicio__c;
             poliza.DSALES_Placas__c=activo.DSALES_Placas__c;
@@ -101,9 +101,9 @@ public without sharing class DSALES_CreateInsurancePolicy {
     }
 
     public static void cambiarEstatusPoliza(String idPoliza){
-        InsurancePolicy poliza=[SELECT Id,DSALES_VigenciacumplidaSM__c,DSALES_Estatusdepliza__c,EffectiveDate FROM InsurancePolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED];
+        InsurancePolicy poliza=[SELECT Id,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c,EffectiveDate FROM InsurancePolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED];
         if(poliza.DSALES_VigenciacumplidaSM__c==true){
-            poliza.DSALES_Estatusdepliza__c='Vencida';
+            poliza.dsalesEstatusPoliza__c='Vencida';
             if(InsurancePolicy.SObjectType.getDescribe().isUpdateable()) {
                 update poliza;
             }else{

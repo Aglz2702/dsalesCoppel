@@ -191,7 +191,7 @@
 		<members>InsurancePolicy.DSALES_CorreoElectronico__c</members>
 		<members>InsurancePolicy.DSALES_Descripcion__c</members>
 		<members>InsurancePolicy.DSALES_Modelo__c</members>
-		<members>InsurancePolicy.DSALES_Nmerodemotor__c</members>
+		<members>InsurancePolicy.dsalesNumeroDeMotor__c</members>
 		<members>InsurancePolicy.DSALES_Numeroserie__c</members>
 		<members>InsurancePolicy.DSALES_Oportunidad__c</members>
 		<members>InsurancePolicy.DSALES_PDFpoliza__c</members>

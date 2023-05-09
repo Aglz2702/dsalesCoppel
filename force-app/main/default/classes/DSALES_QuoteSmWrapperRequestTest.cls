@@ -136,13 +136,13 @@ public class DSALES_QuoteSmWrapperRequestTest {
         
         Campaign camapna = new Campaign();
         camapna.Name='RC';
-        camapna.DSALES_Tipodecapana__c = 'Seguro gratis';
+        camapna.dsalesTipoCampana__c = 'Seguro gratis';
         camapna.IsActive = true;
         insert camapna;
         
         Campaign camapnaAmp = new Campaign();
         camapnaAmp.Name='A';
-        camapnaAmp.DSALES_Tipodecapana__c = 'Seguro gratis';
+        camapnaAmp.dsalesTipoCampana__c = 'Seguro gratis';
         camapnaAmp.IsActive = true;
         insert camapnaAmp;
         

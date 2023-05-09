@@ -15,7 +15,7 @@ public class DSALES_EndosoWrapperRequestTest {
         poliza.DSALES_NombredelAsegurado__c = 'John Doe';
         poliza.DSALES_Placas__c = 'ABC123';
         poliza.DSALES_Numeroserie__c = '1234567890';
-        poliza.DSALES_Nmerodemotor__c = '0987654321';
+        poliza.dsalesNumeroDeMotor__c = '0987654321';
         insert poliza;
         
         DSALES_Endoso__c endoso = new DSALES_Endoso__c();
@@ -95,7 +95,7 @@ public class DSALES_EndosoWrapperRequestTest {
                                    DSALES_MotivoRechazo__c,DSALES_MotivoDevolucion__c, DSALES_SolucionDevolucion__c FROM DSALES_Endoso__c WHERE DSALES_Estatus__c = 'Nuevo' LIMIT 1];
         
         InsurancePolicy poliza = [SELECT Id, DSALES_TelefonoContacto__c, DSALES_CorreoElectronico__c,DSALES_NombredelAsegurado__c, DSALES_Placas__c, DSALES_Numeroserie__c,
-                                  DSALES_Nmerodemotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=:endoso.DSALES_Poliza__c];
+                                  dsalesNumeroDeMotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=:endoso.DSALES_Poliza__c];
         
         // Test update with 'En tramite' status
         DSALES_EndorsementWrapper.endorsementRequest request1 = new DSALES_EndorsementWrapper.endorsementRequest();
@@ -181,8 +181,8 @@ public class DSALES_EndosoWrapperRequestTest {
         endosos.tipoEndoso = 'Cambio de número de motor';
         endosos.datos.valor = 'TVS100';
         DSALES_EndosoWrapperRequestHelper.updatePolicy(endosos);
-        poliza = [SELECT DSALES_Nmerodemotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id = :poliza.Id LIMIT 1];
-        System.assertEquals('TVS100', poliza.DSALES_Nmerodemotor__c, 'Póliza de seguro Nmerodemotor es TVS100');
+        poliza = [SELECT dsalesNumeroDeMotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id = :poliza.Id LIMIT 1];
+        System.assertEquals('TVS100', poliza.dsalesNumeroDeMotor__c, 'Póliza de seguro Nmerodemotor es TVS100');
         System.assertEquals('Endosada', poliza.ChangeSubtype, 'ChangeSubtype de póliza de seguro es Endosada');
         
         

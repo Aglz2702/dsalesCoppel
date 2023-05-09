@@ -60,7 +60,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DSALES_Tipodecapana__c</picklist>
+        <picklist>dsalesTipoCampana__c</picklist>
         <values>
             <fullName>Informativo</fullName>
             <default>false</default>

@@ -14,7 +14,7 @@ public class DSALES_siniestroTest {
         InsurancePolicy poli = new InsurancePolicy();
         poli.NameInsuredId=acc.Id;
         poli.DSALES_CorreoElectronico__c='asa@as.co';
-        poli.DSALES_Estatusdepliza__c = 'Vigente';
+        poli.dsalesEstatusPoliza__c = 'Vigente';
         poli.Name = '2345';
         insert poli;
         

@@ -111,7 +111,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
     public static void prepolizaTest(){
         DSALES_InformaciondePago__c pago = [SELECT Id,DSALES_Oportunidad__c FROM DSALES_InformaciondePago__c LIMIT 1];
         DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
-        InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,DSALES_Estatusdepliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
+        InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
 		DSALES_CreateInsurancePolicy.relacionarPolizaAPago(poliza);
         InsurancePolicyAsset activo = new InsurancePolicyAsset(
             		InsurancePolicyId=poliza.Id,
@@ -138,7 +138,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         DSALES_InformaciondePago__c pago = [SELECT Id,DSALES_Oportunidad__c FROM DSALES_InformaciondePago__c LIMIT 1];
         Test.startTest();
         DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
-        InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,DSALES_Estatusdepliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
+        InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
 		poliza.ExpirationDate=DateTime.now();
         update poliza;
         DSALES_CreateInsurancePolicy.cambiarEstatusPoliza(poliza.Id);
