@@ -244,7 +244,7 @@
 	<members>Claim.DSALES_Ano__c</members>
 	<members>Claim.DSALES_Causa__c</members>
 	<members>Claim.DSALES_Descripcion__c</members>
-	<members>Claim.Correo_electr_nico__c</members>
+	<members>Claim.dsalesCorreoElectronico__c</members>
 	<members>Claim.DSALES_Estatus__c</members>
 	<members>Claim.DSALES_Indemnizacionaprobada__c</members>
 	<members>Claim.DSALES_Marca__c</members>
@@ -258,7 +258,7 @@
 	<members>Claim.DSALES_Serie__c</members>
 	<members>Claim.DSALES_SiniestroUid__c</members>
 	<members>Claim.DSALES_SolucionDevolver__c</members>
-	<members>Claim.DSALES_SolucionaDevoluci_n__c</members>
+	<members>Claim.dsalesSolucionaDevolucion__c</members>
 	<members>Claim.N_mero_de_Siniestro__c</members>
 	<members>ClaimPaymentSummary.DSALES_Tipopago__c</members>
 	<members>Contact.DSALES_Metodocontacto__c</members>
@@ -580,7 +580,7 @@
 	<members>Product2.DSALES_NoaplicaSeg__c</members>
 	<members>Product2.DSALES_NoaplicaServ__c</members>
 	<members>Product2.DSALES_SubCategorias__c</members>
-	<members>Product2.DSALES_vehculo__c</members>
+	<members>Product2.dsalesVehiculo__c</members>
 	<members>Quote.DSALES_AdquiriopolizaSM__c</members>
 	<members>Quote.DSALES_Cdigodeestado__c</members>
 	<members>Quote.DSALES_Cdigodemunicipio__c</members>

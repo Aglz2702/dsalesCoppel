@@ -36,7 +36,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Correo_electr_nico__c</field>
+            <field>dsalesCorreoElectronico__c</field>
             <value>
                 <elementReference>$Record.PolicyNumber.DSALES_CorreoElectronico__c</elementReference>
             </value>
