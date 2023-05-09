@@ -72,7 +72,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         insert t;
         DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=oportunidad.id,DSALES_Cliente__c=acc.Id,dsalesSeguro__c=true);
         insert pago;
-        Quote cotizacion = new Quote(opportunityId=oportunidad.Id,Name='test',DSales_Tienda__c=t.Id);
+        Quote cotizacion = new Quote(opportunityId=oportunidad.Id,Name='test',dsalesTienda=t.Id);
         insert cotizacion;
         dsalesTipoUso__c tipoUso = new dsalesTipoUso__c(Name='Comercial');
         insert tipoUso;
