@@ -52,18 +52,18 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                     }
                     when else {
                         Integer contador =0;
-                        List<OpportunityLineItem> productoOpor= [SELECT dsalesEstatus FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c  WITH SECURITY_ENFORCED]; 
-                        List<DSALES_Certificado__c> certificados= [SELECT dsalesEstatus FROM DSALES_Certificado__c WHERE
+                        List<OpportunityLineItem> productoOpor= [SELECT DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c  WITH SECURITY_ENFORCED]; 
+                        List<DSALES_Certificado__c> certificados= [SELECT DSALES_Estatus__c FROM DSALES_Certificado__c WHERE
                                                                   DSALES_InformacionDePago__c=:pago[0].Id WITH SECURITY_ENFORCED];
                         List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
                         
                         for(OpportunityLineItem oportunidad:productoOpor)
                         {
-                            oportunidad.dsalesEstatus=estatusGlobal;
+                            oportunidad.DSALES_Estatus__c=estatusGlobal;
                             listaOportunidades.add(oportunidad);
                             if(certificados.size()>contador)
                                 {
-                                    certificados[contador].dsalesEstatus =estatusGlobal;
+                                    certificados[contador].DSALES_Estatus__c =estatusGlobal;
                                     certificados[contador].DSales_Motivo__c=motivoGlobal;
                                     listaCertificadosModificar.add(certificados[contador]);
                                 }
@@ -92,7 +92,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             if(pago.size()>0)
             {
                      listaAssets=[SELECT Id,DSALES_SKU__c FROM Asset WHERE  DSales_Informacion_pago__c=:pago[0].id WITH SECURITY_ENFORCED];
-            listaCertificados= [SELECT Name, dsalesEstatus, DSales_Motivo__c FROM
+            listaCertificados= [SELECT Name, DSALES_Estatus__c, DSales_Motivo__c FROM
                                                            DSALES_Certificado__c WHERE DSALES_InformacionDePago__c =:pago[0].id WITH SECURITY_ENFORCED];
             }
        
@@ -106,7 +106,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                     OpportunityLineItem oppor = new OpportunityLineItem();
                   
                     oppor.Id=lp.idPartidaOportunidad;
-                    oppor.dsalesEstatus=lp.estatus;
+                    oppor.DSALES_Estatus__c=lp.estatus;
                     DSALES_CertificadoWrapper.cancelacionGex cancelacion = new DSALES_CertificadoWrapper.cancelacionGex();
                     idOportunidades.add(lp.idPartidaOportunidad);
                     cancelacion.estatus=lp.estatus;
@@ -144,7 +144,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                                    mapaCancela.get(s.Id).idProducto=c.Id;
                            DSALES_Certificado__c certificado = new DSALES_Certificado__c();
                            certificado.id=c.Id;
-                           certificado.dsalesEstatus=mapaCancela.get(s.Id).estatus;
+                           certificado.DSALES_Estatus__c=mapaCancela.get(s.Id).estatus;
                            certificado.DSales_Motivo__c=mapaCancela.get(s.id).motivoCancelacion;
                            listaCertificadosModificar.add(certificado);
                                }

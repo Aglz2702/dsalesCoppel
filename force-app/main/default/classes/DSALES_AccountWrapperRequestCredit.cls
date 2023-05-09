@@ -21,7 +21,7 @@ global with sharing class DSALES_AccountWrapperRequestCredit {
                     accountRecord.Suffix = clienteCredito.suffix;
                     accountRecord.PersonMobilePhone = clienteCredito.telephone;
                     accountRecord.PersonEmail = clienteCredito.email;
-                    accountRecord.dsalesMetodoContacto = clienteCredito.contact_method;
+                    accountRecord.DSALES_Metodocontacto__pc = clienteCredito.contact_method;
                     accountRecord.CP_Gender__pc = clienteCredito.gender;
                     accountRecord.PersonBirthdate = clienteCredito.birthdate;
                     accountRecord.BillingState = clienteCredito.state_code;

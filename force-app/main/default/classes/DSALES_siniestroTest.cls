@@ -23,7 +23,7 @@ public class DSALES_siniestroTest {
         siniestro.PolicyNumberId = poli.Id;
         siniestro.P_liza__c = poli.Id;
         siniestro.DSALES_SiniestroUid__c = 'iszxxzxaxa';
-        siniestro.dsalesEstatus = 'En trámite';
+        siniestro.DSALES_Estatus__c = 'En trámite';
         siniestro.ClaimType ='Robo total';
         siniestro.ClaimReason='sdsvs';       
         insert siniestro;    

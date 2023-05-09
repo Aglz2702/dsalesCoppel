@@ -26,7 +26,7 @@ public class DSALES_ReembolsoWrapperTest {
             DSALES_Canal__c= '.EXE',
             DSALES_FechaCancelacion__c =Date.today(),
             DSALES_FolioCancelacion__c ='76543',
-            dsalesEstatus='Cancelado',
+            DSALES_Estatus__c='Cancelado',
             DSALES_MotivoCancelacion__c='A petición del cliente',
             DSALES_NumeroVendedor__c='12',
             DSALES_NombreVendedor__c = 'Sayra Martinez',
@@ -39,7 +39,7 @@ public class DSALES_ReembolsoWrapperTest {
     @isTest 
     //global static void createRecordTest() {
     public static void createRecordTest() {
-        DSALES_Cancelacion__c cancelacion= [SELECT Id FROM DSALES_Cancelacion__c WHERE dsalesEstatus='Cancelado' LIMIT 1];
+        DSALES_Cancelacion__c cancelacion= [SELECT Id FROM DSALES_Cancelacion__c WHERE DSALES_Estatus__c='Cancelado' LIMIT 1];
         RestRequest request = new RestRequest();
         RestResponse response= new RestResponse();
         request.requestURI='/apexrest/insertReembolso';
@@ -63,7 +63,7 @@ public class DSALES_ReembolsoWrapperTest {
     @isTest 
     //global static void errorTest() {
     public static void errorTest() {
-        DSALES_Cancelacion__c cancelacion= [SELECT Id FROM DSALES_Cancelacion__c WHERE dsalesEstatus='Cancelado' LIMIT 1];
+        DSALES_Cancelacion__c cancelacion= [SELECT Id FROM DSALES_Cancelacion__c WHERE DSALES_Estatus__c='Cancelado' LIMIT 1];
         RestRequest request = new RestRequest();
         RestResponse response= new RestResponse();
         request.requestURI='/apexrest/insertReembolso';

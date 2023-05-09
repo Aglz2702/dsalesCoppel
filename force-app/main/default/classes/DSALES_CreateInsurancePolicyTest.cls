@@ -63,7 +63,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         Account acc = new Account();
         acc.Name='Sayra Martinez Quiroz';
         acc.CP_WalletCustomerNumber__c=45654;
-        acc.dsalesClienteCoppel='90001';
+        acc.DSALES_ClienteCoppel__c='90001';
         insert acc;
         Opportunity oportunidad = new Opportunity(Name='Testoportunidadortunity', AccountId=acc.Id, CloseDate=Date.Today(), StageName='Nuevo', Pricebook2Id=customPB.Id,RecordTypeId=recordTypeId);
         insert oportunidad;

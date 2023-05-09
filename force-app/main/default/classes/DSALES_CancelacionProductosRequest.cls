@@ -44,7 +44,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
         for (DSALES_CancelacionProductosWrapper.listaProducto producto : productosSincro) {
             mapaProductos.put(producto.idPartidaOportunidad, producto.estatus);
         }
-        List<OpportunityLineItem> olis = [SELECT Id,Name, OpportunityId, Product2Id, Product2.DSales_Tipo_de_Producto__c, dsalesEstatus
+        List<OpportunityLineItem> olis = [SELECT Id,Name, OpportunityId, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
                                           FROM OpportunityLineItem
                                           WHERE Id IN :mapaProductos.keySet() WITH SECURITY_ENFORCED]; 
         activo =DSALES_CancelacionController.obtenerActivo(olis);
@@ -52,7 +52,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
         if(olis!=null){
             for (OpportunityLineItem oli : olis) {
                 String estatus = mapaProductos.get(oli.Id);
-                oli.dsalesEstatus = estatus;
+                oli.DSALES_Estatus__c = estatus;
                 if(activo!=null && idPaOp!=''){
                     activo.Estatus__c=estatus;
                     if(oli.Id==idPaOp){
@@ -112,11 +112,11 @@ global with sharing class DSALES_CancelacionProductosRequest {
             dsalesTienda=tienda.Id
         ) ;
         if(datos.ListaProductos.size()>0){
-            cancelacion.dsalesEstatus=datos.ListaProductos[0].estatus;
+            cancelacion.DSALES_Estatus__c=datos.ListaProductos[0].estatus;
             cancelacion.DSALES_MotivoCancelacion__c=datos.ListaProductos[0].motivoCancelacion;
         }
         else{
-            cancelacion.dsalesEstatus=datos.estatus;
+            cancelacion.DSALES_Estatus__c=datos.estatus;
             cancelacion.DSALES_MotivoCancelacion__c=datos.motivoCancelacion;
         }
             
@@ -143,11 +143,11 @@ global with sharing class DSALES_CancelacionProductosRequest {
             List<OpportunityLineItem> partidasActualizadas = new List<OpportunityLineItem>();
             Set<Id> oliIds = new Set<Id>(); 
             
-            for(OpportunityLineItem oli: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, dsalesEstatus
+            for(OpportunityLineItem oli: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
                                           FROM OpportunityLineItem
                                           WHERE OpportunityId=:poliza.SourceOpportunityId  WITH SECURITY_ENFORCED]){
                 if(oli.Product2.DSales_Tipo_de_Producto__c=='Seguro'){
-                    oli.dsalesEstatus='Cancelado';
+                    oli.DSALES_Estatus__c='Cancelado';
                     oliIds.add(oli.Id);
                 }
                 partidasActualizadas.add(oli);

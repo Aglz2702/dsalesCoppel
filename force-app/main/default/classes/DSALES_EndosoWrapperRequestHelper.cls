@@ -53,8 +53,8 @@ public static DSALES_EndorsementWrapper.EndorsementResponse insertEndoso(DSALES_
         endosoRecord.DSALES_Tipodedocumento__c = endosos.tipoDocumento;
         endosoRecord.DSALES_Tipodedato__c = endosos.datos.tipoDato;
         endosoRecord.DSALES_Valor__c = endosos.datos.valor;
-        endosoRecord.dsalesEstatus = 'Nuevo';
-        endosoRecord.dsalesFechaCreacion__c = endosos.fechaEndoso;
+        endosoRecord.DSALES_Estatus__c = 'Nuevo';
+        endosoRecord.DSALES_Fecha_creacion__c = endosos.fechaEndoso;
         endosoRecord.DSALES_MotivoDevolucion__c = endosos.estatusComentario;
         endosoRecord.DSALES_SolucionDevolucion__c = endosos.solucion;
         endosoRecord.DSALES_MotivoRechazo__c = endosos.estatusComentario;
@@ -106,7 +106,7 @@ public static DSALES_EndorsementWrapper.EndorsementResponse updateEndoso(DSALES_
         endosoRecord = [SELECT Id, DSALES_Poliza__c, DSALES_Poliza__r.Name, DSALES_uid__c FROM DSALES_Endoso__c WHERE DSALES_uid__c=: endosos.uid WITH SECURITY_ENFORCED LIMIT 1];
         switch on endosos.estatus{
             when 'En proceso'{
-                endosoRecord.dsalesEstatus = 'En tramite';
+                endosoRecord.DSALES_Estatus__c = 'En tramite';
                 if (DSALES_Endoso__c.SObjectType.getDescribe().isUpdateable()) {
                     upsert endosoRecord;
                     } 
@@ -115,18 +115,18 @@ public static DSALES_EndorsementWrapper.EndorsementResponse updateEndoso(DSALES_
                     }
             }
             when 'Pendiente de información'{
-                endosoRecord.dsalesEstatus = 'Requerimiento de Información';
+                endosoRecord.DSALES_Estatus__c = 'Requerimiento de Información';
                 endosoRecord.DSALES_MotivoDevolucion__c = endosos.estatusComentario;
                 endosoRecord.DSALES_SolucionDevolucion__c = endosos.solucion;
                 upsert endosoRecord;
             }
             when 'Rechazo'{
-                endosoRecord.dsalesEstatus = 'Rechazado';
+                endosoRecord.DSALES_Estatus__c = 'Rechazado';
                 endosoRecord.DSALES_MotivoRechazo__c = endosos.estatusComentario;
                 upsert endosoRecord;
             }
             when 'Finalizado'{
-                endosoRecord.dsalesEstatus = 'Autorizado';
+                endosoRecord.DSALES_Estatus__c = 'Autorizado';
                 endosoRecord.DSALES_MontoaDevolver__c = endosos.montoDevolucion;
                 upsert endosoRecord;
                 updatePolicy(endosos);                    

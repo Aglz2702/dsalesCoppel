@@ -16,13 +16,13 @@ public class DSALES_CreateDocumentTest {
         poli.DSALES_CorreoElectronico__c='nuevo@gma.com';
         insert poli;
         
-        String query = 'SELECT Id, Name, DSALES_SiniestroUid__c,DSALES_Reporte__c,IncidentSiteStreet,IncidentSiteState,IncidentSiteCountry, ClaimType, CreatedDate, DSALES_Nombre_conductor__c, DSALES_Causa__c, DSALES_Descripcion__c, DSALES_Ano__c, DSALES_Marca__c, DSALES_Serie__c, InitiationDate, FinalizedDate, Cliente__r.Name, P_liza__r.Name, ClaimReason, dsalesEstatus FROM Claim WHERE Id = \'';
+        String query = 'SELECT Id, Name, DSALES_SiniestroUid__c,DSALES_Reporte__c,IncidentSiteStreet,IncidentSiteState,IncidentSiteCountry, ClaimType, CreatedDate, DSALES_Nombre_conductor__c, DSALES_Causa__c, DSALES_Descripcion__c, DSALES_Ano__c, DSALES_Marca__c, DSALES_Serie__c, InitiationDate, FinalizedDate, Cliente__r.Name, P_liza__r.Name, ClaimReason, DSALES_Estatus__c FROM Claim WHERE Id = \'';
         Claim tempo = new Claim();
         tempo.Name='covertura';
         tempo.PolicyNumberId = poli.Id;
         tempo.P_liza__c = poli.Id;
         tempo.DSALES_SiniestroUid__c = 'iszxxzxaxa';
-        tempo.dsalesEstatus = 'Nuevo';
+        tempo.DSALES_Estatus__c = 'Nuevo';
         tempo.ClaimType ='Robo total';
         tempo.ClaimReason='sdsvs';  
         insert tempo;

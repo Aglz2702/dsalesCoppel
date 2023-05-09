@@ -6,7 +6,7 @@ public class DSALES_AccountWrapperReques_Test{
         Account acc = new Account();
         acc.Name='test';
         acc.CP_WalletCustomerNumber__c=87654;
-        acc.dsalesClienteCoppel='90001';
+        acc.DSALES_ClienteCoppel__c='90001';
         insert acc;
         
         Account accContado = new Account();

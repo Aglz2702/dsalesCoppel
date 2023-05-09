@@ -26,7 +26,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     for(DSales_Asignacion_de_Productos__c da : productAsig){
                         dsalesProductoSetId.add(da.dsalesProducto__c);
                     }
-                    Account universalAccount = [Select Id from Account WHERE dsalesClienteCoppel = :DSALES_Utility.NUMERO_CLIENTE_GENERICO WITH SECURITY_ENFORCED LIMIT 1];
+                    Account universalAccount = [Select Id from Account WHERE DSALES_ClienteCoppel__c = :DSALES_Utility.NUMERO_CLIENTE_GENERICO WITH SECURITY_ENFORCED LIMIT 1];
                     Tienda__c tienda = [Select Id from Tienda__c WHERE dsalesTiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
                     
                     Id clienteId=null; 

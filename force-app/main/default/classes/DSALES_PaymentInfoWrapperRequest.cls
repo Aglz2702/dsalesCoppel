@@ -47,7 +47,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             nuevoPago.DSALES_Cliente__c=cliente.Id;
             nuevoPago.DSALES_Oportunidad__c=pago.idOportunidad;
             nuevoPago.RecordTypeId=recordTypePago;
-            nuevoPago.dsalesEstatus='Acreditado';
+            nuevoPago.DSALES_Estatus__c='Acreditado';
             nuevoPago.DSALES_SKU__c=pago.sku;
             nuevoPago.DSALES_Montototal__c=pago.totalFactura;
             nuevoPago.DSALES_Nombre_del_Vendedor__c=pago.nombreVendedor;

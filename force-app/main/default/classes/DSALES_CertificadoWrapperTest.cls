@@ -87,7 +87,7 @@ public with sharing class DSALES_CertificadoWrapperTest {
                                             DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c='11111111111111111110' ];
         DSALES_Certificado__c certi= [SELECT Name FROM DSALES_Certificado__c WHERE DSALES_Email__c='dsanmiguel@deloittemx.com' LIMIT 1];
         List<String> c = new List<String>();
-        OpportunityLineItem productosSincro =[SELECT Id,Name,dsalesEstatus FROM OpportunityLineItem WHERE OpportunityId=:pago.DSALES_Oportunidad__c AND Product2.Name='Lavadora' LIMIT 1];
+        OpportunityLineItem productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago.DSALES_Oportunidad__c AND Product2.Name='Lavadora' LIMIT 1];
         List<DSALES_CancelacionProductosWrapper.ListaProducto> listGex= new List<DSALES_CancelacionProductosWrapper.ListaProducto>();
         DSALES_CancelacionProductosWrapper.ListaProducto servicioGex= new DSALES_CancelacionProductosWrapper.ListaProducto();
          List<DSALES_CancelacionProductosWrapper.ListaProducto> listGex2= new List<DSALES_CancelacionProductosWrapper.ListaProducto>();
