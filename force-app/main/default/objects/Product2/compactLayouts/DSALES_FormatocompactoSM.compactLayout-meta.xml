@@ -5,7 +5,7 @@
     <fields>DSales_Tipo_de_Producto__c</fields>
     <fields>IsActive</fields>
     <fields>StockKeepingUnit</fields>
-    <fields>DSALES_vehculo__c</fields>
+    <fields>dsalesVehiculo__c</fields>
     <fields>DSALES_Vigencia__c</fields>
     <label>Formato compacto SM</label>
 </CompactLayout>

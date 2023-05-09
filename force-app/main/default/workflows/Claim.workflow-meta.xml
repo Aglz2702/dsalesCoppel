@@ -5,7 +5,7 @@
         <description>Informa Nuevo Siniestro</description>
         <protected>false</protected>
         <recipients>
-            <field>Correo_electr_nico__c</field>
+            <field>dsalesCorreoElectronico__c</field>
             <type>email</type>
         </recipients>
         <senderAddress>atencion@coppel.com</senderAddress>
@@ -17,7 +17,7 @@
         <description>Informa Siniestro Completado</description>
         <protected>false</protected>
         <recipients>
-            <field>Correo_electr_nico__c</field>
+            <field>dsalesCorreoElectronico__c</field>
             <type>email</type>
         </recipients>
         <senderAddress>atencion@coppel.com</senderAddress>
@@ -29,7 +29,7 @@
         <description>Informa Siniestro Rechazado</description>
         <protected>false</protected>
         <recipients>
-            <field>Correo_electr_nico__c</field>
+            <field>dsalesCorreoElectronico__c</field>
             <type>email</type>
         </recipients>
         <senderAddress>atencion@coppel.com</senderAddress>

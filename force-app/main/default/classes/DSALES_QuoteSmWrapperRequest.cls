@@ -39,8 +39,8 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                     }            
                     DSALES_QuoteSmWrapper.QuotePostProvedor datosEnviar = new DSALES_QuoteSmWrapper.QuotePostProvedor();
                     if(data.sku!=''){
-                        Product2 temporal = [SELECT Id,DSALES_vehculo__c, Name, StockKeepingUnit, dsalesSeguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:data.sku WITH SECURITY_ENFORCED LIMIT 1];
-                        data.idVehiculo=temporal.DSALES_vehculo__c;  
+                        Product2 temporal = [SELECT Id,dsalesVehiculo__c, Name, StockKeepingUnit, dsalesSeguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:data.sku WITH SECURITY_ENFORCED LIMIT 1];
+                        data.idVehiculo=temporal.dsalesVehiculo__c;  
                     }
                     datosEnviar.negocio = Label.DSALES_business;
                     datosEnviar.aseguradora = Label.DSALES_NombreAseguradora; //sales-fijo

@@ -19,10 +19,10 @@ public class DSALES_CancelacionProductosRequest_Test {
         insert acc;
         Contact con = new Contact(lastname= 'Test', AccountId= acc.Id, Email= 'johndoeus@salesforce.com');
         insert con;
-        Product2 prodAmp = new Product2(Name ='AMP',DSALES_vehculo__c='23d23d23', StockKeepingUnit='123444',DSales_Tipo_de_Producto__c='Seguro',IsActive=true,RecordTypeId=recordTypeProdSeg);
+        Product2 prodAmp = new Product2(Name ='AMP',dsalesVehiculo__c='23d23d23', StockKeepingUnit='123444',DSales_Tipo_de_Producto__c='Seguro',IsActive=true,RecordTypeId=recordTypeProdSeg);
 		insert prodAmp;
         
-        Product2 prodM = new Product2(Name ='Moto Vento',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='121213',DSales_Tipo_de_Producto__c='Producto',IsActive=true );
+        Product2 prodM = new Product2(Name ='Moto Vento',dsalesVehiculo__c='lasicndsldicsid',StockKeepingUnit='121213',DSales_Tipo_de_Producto__c='Producto',IsActive=true );
 		insert prodM;
         
         Product2 pr= new Product2(Name='Lavadora',StockKeepingUnit='123451',DSales_Tipo_de_Producto__c='Producto',RecordTypeId=recordTypeIdProd,IsActive=true);
