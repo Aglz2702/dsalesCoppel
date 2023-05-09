@@ -98,7 +98,7 @@ public with sharing class DSALES_VentaSMRestTest {
         Account acc = new Account();
         acc.Name='Sayra Martinez Quiroz';
         acc.CP_WalletCustomerNumber__c=45654;
-        acc.DSALES_ClienteCoppel__c='90001';
+        acc.dsalesClienteCoppel='90001';
         insert acc;
         
         Account accContado = new Account();

@@ -15,7 +15,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         Account acc = new Account();
         acc.Name='Sayra Martinez Quiroz';
         acc.CP_WalletCustomerNumber__c=45654;
-        acc.DSALES_ClienteCoppel__c='90001';
+        acc.dsalesClienteCoppel='90001';
         insert acc;
         Contact con = new Contact(lastname= 'Test', AccountId= acc.Id, Email= 'johndoeus@salesforce.com');
         insert con;

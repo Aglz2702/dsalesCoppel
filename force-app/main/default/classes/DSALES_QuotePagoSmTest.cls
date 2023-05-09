@@ -82,7 +82,7 @@ public with sharing class DSALES_QuotePagoSmTest {
         Account acc = new Account();
         acc.Name='test';
         acc.CP_WalletCustomerNumber__c=45654;
-        acc.DSALES_ClienteCoppel__c='90001';
+        acc.dsalesClienteCoppel='90001';
         insert acc;
         
         Account accContado = new Account();

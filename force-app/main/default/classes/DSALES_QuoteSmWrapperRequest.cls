@@ -68,7 +68,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                     if(!listaNegra){
                         respuestaDeProveedor = crearQuoteSm(datosEnviar);
                     }
-                    Account universalAccount = [Select Id from Account WHERE DSALES_ClienteCoppel__c = :numeroCliente WITH SECURITY_ENFORCED LIMIT 1];
+                    Account universalAccount = [Select Id from Account WHERE dsalesClienteCoppel = :numeroCliente WITH SECURITY_ENFORCED LIMIT 1];
                     Tienda__c tienda = [Select Id from Tienda__c WHERE dsalesTiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
                     Id clienteId=null; 
                     if(data.numeroCliente == null || data.numeroCliente=='' ||data.numeroCliente==numeroCliente ){
