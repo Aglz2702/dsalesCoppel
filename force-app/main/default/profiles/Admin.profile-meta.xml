@@ -3156,7 +3156,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>InsurancePolicyAsset.DSALES_Account__c</field>
+        <field>InsurancePolicyAsset.dsalesCliente__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

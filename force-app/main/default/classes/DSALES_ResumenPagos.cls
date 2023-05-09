@@ -3,7 +3,7 @@
  * @author            : 
  * @group             : 
  * @last modified on  : 04-18-2023
- * @last modified by  : Juan Antonio Flores 
+ * @last modified by  : Juan Antonio Flores
  * Modifications Log 
  * Ver   Date          Author             Modification
  * 1.0   04-18-2023                       Initial Version
@@ -20,7 +20,7 @@ public class DSALES_ResumenPagos extends fflib_SObjectDomain {
             return new DSALES_ResumenPagos(sObjectList);
         }
     }
-          
+    /*      
     public override void onAfterInsert() {
         List<ClaimPaymentSummary> listRecord = (List<ClaimPaymentSummary>)records;
         List<ClaimPaymentSummary> listPagos = new List<ClaimPaymentSummary>();
@@ -34,4 +34,5 @@ public class DSALES_ResumenPagos extends fflib_SObjectDomain {
         	DSALES_SiniestrosHelper.actualizarDatos(JSON.serialize(listPagos));
         }
    }
+   */
 }

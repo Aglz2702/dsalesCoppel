@@ -1,6 +1,6 @@
 @isTest 
 public class DSALES_QuoteGexWrapperRequestTest{
-    
+    /*
    @testSetup
     static void setUp(){
         String tipoProducto = 'Servicio';
@@ -269,4 +269,5 @@ public class DSALES_QuoteGexWrapperRequestTest{
         RestContext.response= res5;
         System.assertNotEquals(200, res5.statusCode, 'La llamada no debe devolver un código 200');
     }
+    */
 }

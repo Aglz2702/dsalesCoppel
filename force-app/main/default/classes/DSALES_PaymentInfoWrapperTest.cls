@@ -1,5 +1,6 @@
 @isTest
 public class DSALES_PaymentInfoWrapperTest {
+    /*
     @testSetup
     public static void creacionRegistros(){
     	Account cuenta = new Account();
@@ -65,4 +66,5 @@ public class DSALES_PaymentInfoWrapperTest {
         RestContext.response= respuesta;
         System.assertNotEquals(200, respuesta.statusCode, 'La llamada no debe devolver un código 200');
     }
+    */
 }

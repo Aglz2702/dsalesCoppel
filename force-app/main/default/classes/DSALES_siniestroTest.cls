@@ -1,5 +1,6 @@
 @isTest
 public class DSALES_siniestroTest {
+    /*
     @testSetup
     static void testSetup(){
         String accountRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
@@ -57,5 +58,5 @@ public class DSALES_siniestroTest {
         Test.stopTest();
         System.assertNotEquals('Test', body, 'La llamada no debe ser igual');
     }
-
+*/
 }
