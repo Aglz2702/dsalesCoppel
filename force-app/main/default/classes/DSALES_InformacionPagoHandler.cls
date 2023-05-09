@@ -8,12 +8,12 @@ public without sharing class DSALES_InformacionPagoHandler {
                 clienteIds.add(info.DSALES_Cliente__c);
             }
         }
-        Map<Id, Account> clienteMap = new Map<Id, Account>([SELECT Id, FinServ__Status__c FROM Account WHERE Id IN :clienteIds WITH SECURITY_ENFORCED]);
+        Map<Id, Account> clienteMap = new Map<Id, Account>([SELECT Id, dsalesFinServStatus FROM Account WHERE Id IN :clienteIds WITH SECURITY_ENFORCED]);
         for(DSALES_InformacionDePago__c info: listaCliente){
             if(info.RecordType.DeveloperName == 'DSALES_PagosdeVentaenNPVSM_c' && info.DSALES_Estatus__c == 'Acreditado'){
                 Account aux = clienteMap.get(info.DSALES_Cliente__c);
                 if(aux != null){
-                    aux.FinServ__Status__c = 'Cautivo';
+                    aux.dsalesFinServStatus = 'Cautivo';
                     clientes.add(aux); 
                 }
             }
