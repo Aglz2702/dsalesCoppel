@@ -42,7 +42,7 @@
             <name>Poliza_cancelada</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.DSALES_Estatusdepliza__c</leftValueReference>
+                <leftValueReference>$Record.dsalesEstatusPoliza__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Cancelada</stringValue>
@@ -57,7 +57,7 @@
             <name>enviar_poliza</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.DSALES_Estatusdepliza__c</leftValueReference>
+                <leftValueReference>$Record.dsalesEstatusPoliza__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Vigente</stringValue>

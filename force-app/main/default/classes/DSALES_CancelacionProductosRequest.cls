@@ -139,7 +139,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
     
     public static void cancelarPartidaDeSeguro(InsurancePolicy poliza){
         InsurancePolicyAsset activo = new InsurancePolicyAsset();
-        if(poliza.DSALES_Estatusdepliza__c ==ESTATUS_POLIZA ){
+        if(poliza.dsalesEstatusPoliza__c ==ESTATUS_POLIZA ){
             List<OpportunityLineItem> partidasActualizadas = new List<OpportunityLineItem>();
             Set<Id> oliIds = new Set<Id>(); 
             

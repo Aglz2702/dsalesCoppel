@@ -73,7 +73,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>DSALES_Estatusdepliza__c</field>
+            <field>dsalesEstatusPoliza__c</field>
             <value>
                 <stringValue>Cancelada</stringValue>
             </value>

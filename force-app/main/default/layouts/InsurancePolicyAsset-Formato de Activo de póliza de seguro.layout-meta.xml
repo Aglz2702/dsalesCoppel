@@ -140,9 +140,9 @@
     <relatedLists>
         <fields>Name</fields>
         <fields>NameInsured</fields>
-        <fields>DSALES_Estatusdepliza__c</fields>
+        <fields>dsalesEstatusPoliza__c</fields>
         <fields>ExpirationDate</fields>
-        <relatedList>InsurancePolicy.DSALES_Activodeplizadeseguro__c</relatedList>
+        <relatedList>InsurancePolicy.dsalesActivoPolizaSeguro__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>

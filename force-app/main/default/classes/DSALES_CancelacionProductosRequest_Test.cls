@@ -160,7 +160,7 @@ public class DSALES_CancelacionProductosRequest_Test {
        	update oppGex;
       	InsurancePolicy poliza = new InsurancePolicy(
 				SourceOpportunityId=opp.Id,
-            	DSALES_Estatusdepliza__c='Vigente',
+            	dsalesEstatusPoliza__c='Vigente',
         		NameInsuredId=acc.Id,
                 DSALES_Tipodepersona__c='Física',
             	DSALES_CorreoElectronico__c='saymartinez@deloittemx.com',
@@ -180,7 +180,7 @@ public class DSALES_CancelacionProductosRequest_Test {
             					DSALES_Motoexterna__c=true
         );
         insert activo;
-        poliza.DSALES_Activodeplizadeseguro__c=activo.Id;
+        poliza.dsalesActivoPolizaSeguro__c=activo.Id;
         update poliza;
         
     }
@@ -295,8 +295,8 @@ public class DSALES_CancelacionProductosRequest_Test {
     @isTest
     public static void polizaCancelada(){
 		DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:'11111111111111111110'];
-        InsurancePolicy poliza=[SELECT Id,DSALES_Estatusdepliza__c,SourceOpportunityId,DSALES_Activodeplizadeseguro__c FROM InsurancePolicy WHERE Name='1234567890'];   
-        poliza.DSALES_Estatusdepliza__c='Cancelada';
+        InsurancePolicy poliza=[SELECT Id,dsalesEstatusPoliza__c,SourceOpportunityId,dsalesActivoPolizaSeguro__c FROM InsurancePolicy WHERE Name='1234567890'];   
+        poliza.dsalesEstatusPoliza__c='Cancelada';
         update poliza;
         DSALES_CancelacionProductosRequest.cancelarPartidaDeSeguro(poliza);
         System.assertNotEquals(null, poliza, 'El registro no debe estar en null');

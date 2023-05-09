@@ -23,7 +23,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         insert pago3;
         InsurancePolicy poliza = new InsurancePolicy(
 				SourceOpportunityId=op.Id,
-            	DSALES_Estatusdepliza__c='Vigente',
+            	dsalesEstatusPoliza__c='Vigente',
         		NameInsuredId=ac.Id,
                 DSALES_Tipodepersona__c='Física',
             	DSALES_CorreoElectronico__c='saymartinez@deloittemx.com',

@@ -167,7 +167,7 @@ public static void updatePolicy(DSALES_EndorsementWrapper.EndorsementRequest end
     try{
         DSALES_Endoso__c endosoRecord = [SELECT Id, DSALES_Poliza__c, DSALES_Poliza__r.Name, DSALES_uid__c FROM DSALES_Endoso__c WHERE DSALES_uid__c=: endosos.uid WITH SECURITY_ENFORCED LIMIT 1];
         InsurancePolicy poliza = [SELECT Id, DSALES_TelefonoContacto__c, DSALES_CorreoElectronico__c,DSALES_NombredelAsegurado__c, DSALES_Placas__c, DSALES_Numeroserie__c,
-                                    DSALES_Nmerodemotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=: endosoRecord.DSALES_Poliza__c WITH SECURITY_ENFORCED LIMIT 1];
+                                    dsalesNumeroDeMotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=: endosoRecord.DSALES_Poliza__c WITH SECURITY_ENFORCED LIMIT 1];
         switch on endosos.tipoEndoso{
             when 'Actualización de correo electrónico'{
                 poliza.DSALES_CorreoElectronico__c = endosos.datos.valor;
@@ -201,7 +201,7 @@ public static void updatePolicy(DSALES_EndorsementWrapper.EndorsementRequest end
                 update poliza; 
             }
             when 'Cambio de número de motor'{
-                poliza.DSALES_Nmerodemotor__c = endosos.datos.valor;
+                poliza.dsalesNumeroDeMotor__c = endosos.datos.valor;
                 poliza.ChangeSubtype = 'Endosada';
                 update poliza; 
             }

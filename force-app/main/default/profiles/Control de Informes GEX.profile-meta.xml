@@ -1357,7 +1357,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Campaign.DSALES_Tipodecapana__c</field>
+        <field>Campaign.dsalesTipoCampana__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

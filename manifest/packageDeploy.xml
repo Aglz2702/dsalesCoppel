@@ -235,7 +235,7 @@
 	<members>Asset.DSALES_TipoSeguro__c</members>
 	<members>Asset.DSALES_TipoServicio__c</members>
 	<members>Asset.DSales_Fecha_compra__c</members>
-	<members>Campaign.DSALES_Tipodecapana__c</members>
+	<members>Campaign.dsalesTipoCampana__c</members>
 	<members>Claim.Cliente__c</members>
 	<members>Claim.DSALES_MotivodeDevolucion__c</members>
 	<members>Claim.DSALES_Monto__c</members>
@@ -436,7 +436,7 @@
 	<members>DASALES_Porcentajedecobro__c.DSALES_Product__c</members>
 	
 	<members>InsurancePolicy.DSALES_Aseguradora__c</members>
-	<members>InsurancePolicy.DSALES_Activodeplizadeseguro__c</members>
+	<members>InsurancePolicy.dsalesActivoPolizaSeguro__c</members>
 	<members>InsurancePolicy.DSALES_Armadora__c</members>
 	<members>InsurancePolicy.DSALES_Asegurado__c</members>
 	<members>InsurancePolicy.DSALES_Clavevehicular__c</members>
@@ -448,7 +448,7 @@
 	<members>InsurancePolicy.DSALES_Codigomunicipio__c</members>
 	<members>InsurancePolicy.DSALES_Codigopostal__c</members>
 	<members>InsurancePolicy.DSALES_Descripcion__c</members>
-	<members>InsurancePolicy.DSALES_Estatusdepliza__c</members>
+	<members>InsurancePolicy.dsalesEstatusPoliza__c</members>
 	<members>InsurancePolicy.DSALES_Fechanacimiento__c</members>
 	<members>InsurancePolicy.DSALES_Genero__c</members>
 	<members>InsurancePolicy.DSALES_Gastos_expedicion__c</members>
@@ -456,7 +456,7 @@
 	<members>InsurancePolicy.DSALES_IDemision__c</members>
 	<members>InsurancePolicy.DSALES_Modelo__c</members>
 	<members>InsurancePolicy.DSALES_Marca__c</members>
-	<members>InsurancePolicy.DSALES_Nmerodemotor__c</members>
+	<members>InsurancePolicy.dsalesNumeroDeMotor__c</members>
 	<members>InsurancePolicy.DSALES_Negocio__c</members>
 	<members>InsurancePolicy.DSALES_Numeroseguimiento__c</members>
 	<members>InsurancePolicy.DSALES_Numeroserie__c</members>
@@ -476,7 +476,7 @@
 	<members>InsurancePolicy.DSALES_Tipodepersona__c</members>
 	<members>InsurancePolicy.DSALES_Uso__c</members>
 	<members>InsurancePolicy.DSALES_VigenciacumplidaSM__c</members>
-	<members>InsurancePolicy.Fecha_de_emisi_n__c</members>
+	<members>InsurancePolicy.dsalesFechaDeEmision__c</members>
 	<members>InsurancePolicyAsset.dsalesCliente__c</members>
 	<members>InsurancePolicyAsset.DSALES_ClaveAMIS__c</members>
 	<members>InsurancePolicyAsset.DSALES_Clavevehicular__c</members>

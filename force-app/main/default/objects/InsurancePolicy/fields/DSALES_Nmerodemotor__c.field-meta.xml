@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSALES_Nmerodemotor__c</fullName>
+    <fullName>dsalesNumeroDeMotor__c</fullName>
     <description>Campo para ingresar el número de motor</description>
     <externalId>false</externalId>
     <label>Número de motor</label>
