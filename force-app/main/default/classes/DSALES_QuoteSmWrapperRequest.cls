@@ -243,7 +243,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         oppor.CloseDate = date.today()+30;
         oppor.StageName = 'Nuevo';
         oppor.RecordTypeId = recordTypeId;
-        oppor.DSALES_Tiend__c = tienda.Id;
+        oppor.dsalesTienda = tienda.Id;
         oppor.Pricebook2Id = precioLista.Id;
         if(Schema.sObjectType.Opportunity.isCreateable())
         {
