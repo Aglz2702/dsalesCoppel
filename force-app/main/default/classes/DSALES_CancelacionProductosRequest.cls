@@ -54,9 +54,9 @@ global with sharing class DSALES_CancelacionProductosRequest {
                 String estatus = mapaProductos.get(oli.Id);
                 oli.DSALES_Estatus__c = estatus;
                 if(activo!=null && idPaOp!=''){
-                    activo.Estatus__c=estatus;
+                    activo.dsalesEstatus__c=estatus;
                     if(oli.Id==idPaOp){
-                        activo.Estatus__c=estatus;
+                        activo.dsalesEstatus__c=estatus;
                     }  
                 }
             }

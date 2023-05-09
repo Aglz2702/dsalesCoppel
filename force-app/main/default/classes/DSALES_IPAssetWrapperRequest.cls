@@ -60,13 +60,13 @@ global with sharing class DSALES_IPAssetWrapperRequest {
             System.debug('pago:'+pago);
             if(pago.dsalesSeguro__c ==true) {
                 ipAssetRecord.DSALES_InformacionPago__c=pago.Id;
-                iPAssetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
+                iPAssetRecord.dsalesCliente__c=pago.DSALES_Cliente__c;
                 ipAssetRecord.DSALES_Tienda__c=policyAsset.idTienda;
                 ipAssetRecord.DSALES_Colaborador__c=pago.DSALES_Nombre_del_Vendedor__c;
                 ipAssetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
                 ipAssetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
                 ipAssetRecord.InsurancePolicyId=pago.DSALES_Poliza__c;
-                ipAssetRecord.Estatus__c='Activo';
+                ipAssetRecord.dsalesEstatus__c='Activo';
                 // ipAssetRecord.DSALES_ClaveAMIS__c=policyAsset.key_amis;
                 ipAssetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
                 ipAssetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
