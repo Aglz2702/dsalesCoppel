@@ -175,8 +175,8 @@ public class DSALES_CancelacionProductosRequest_Test {
                             	InsurancePolicyId=poliza.Id,
             					AssetName='MOTO VENTO',
             					DSALES_InformacionPago__c=pago.Id,
-            					DSALES_Account__c=acc.Id,
-            					Estatus__c='Activo',
+            					dsalesCliente__c=acc.Id,
+            					dsalesEstatus__c='Activo',
             					DSALES_Motoexterna__c=true
         );
         insert activo;

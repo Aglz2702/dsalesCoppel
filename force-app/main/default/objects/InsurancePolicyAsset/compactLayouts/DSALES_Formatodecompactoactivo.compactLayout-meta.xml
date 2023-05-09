@@ -7,6 +7,6 @@
     <fields>DSALES_Numeromotor__c</fields>
     <fields>DSALES_Motoexterna__c</fields>
     <fields>DSALES_Valorfactura__c</fields>
-    <fields>Estatus__c</fields>
+    <fields>dsalesEstatus__c</fields>
     <label>Formato de compacto activo</label>
 </CompactLayout>
