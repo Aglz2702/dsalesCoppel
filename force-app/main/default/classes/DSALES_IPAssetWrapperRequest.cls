@@ -60,7 +60,7 @@ global with sharing class DSALES_IPAssetWrapperRequest {
             System.debug('pago:'+pago);
             if(pago.DSALES_Seguro__c ==true) {
                 ipAssetRecord.DSALES_InformacionPago__c=pago.Id;
-                iPAssetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
+                iPAssetRecord.dsalesCliente__c=pago.DSALES_Cliente__c;
                 ipAssetRecord.DSALES_Tienda__c=policyAsset.idTienda;
                 ipAssetRecord.DSALES_Colaborador__c=pago.DSALES_Nombre_del_Vendedor__c;
                 ipAssetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 

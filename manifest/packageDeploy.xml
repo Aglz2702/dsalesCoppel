@@ -477,7 +477,7 @@
 	<members>InsurancePolicy.DSALES_Uso__c</members>
 	<members>InsurancePolicy.DSALES_VigenciacumplidaSM__c</members>
 	<members>InsurancePolicy.Fecha_de_emisi_n__c</members>
-	<members>InsurancePolicyAsset.DSALES_Account__c</members>
+	<members>InsurancePolicyAsset.dsalesCliente__c</members>
 	<members>InsurancePolicyAsset.DSALES_ClaveAMIS__c</members>
 	<members>InsurancePolicyAsset.DSALES_Clavevehicular__c</members>
 	<members>InsurancePolicyAsset.DSALES_Colaborador__c</members>

@@ -2313,7 +2313,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InsurancePolicyAsset.DSALES_Account__c</field>
+        <field>InsurancePolicyAsset.dsalesCliente__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
