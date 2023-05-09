@@ -100,7 +100,7 @@ public with sharing class DSALES_QuotePagoSM {
     /*
     public static String crearCotizacion(String idCotizacion,String idPago){
         try{
-            Quote beforeCot = [SELECT Id,OpportunityId,Name,DSALES_Fechadenacimiento__c,Email,DSALES_Cobertura__c,DSALES_Opcindepago__c,dsalesGenero,Phone,dsalesCodigoPostal__c,DSALES_Fechadecomienzodepliza__c,
+            Quote beforeCot = [SELECT Id,OpportunityId,Name,dsalesFechaDeNacimiento,Email,DSALES_Cobertura__c,DSALES_Opcindepago__c,dsalesGenero,Phone,dsalesCodigoPostal__c,DSALES_Fechadecomienzodepliza__c,
                             Lista_negra__c,Motivo_de_lista_negra__c,DSALES_TrakingID__c,DSALES_NombreCliente__c,DSALES_Enviarcotizacion__c,GrandTotal,Tax,DSales_Vendedor__c,ExpirationDate,DSALES_IDdelvehculo__c,
                             DSales_Tienda__c,DSALES_Plazoacotizar__c,DSALES_PlazoacotizarRC__c,dsalesTipoUso__c,DSALES_RFC__c,DSALES_TipoUso__c,DSALES_Tipodeveihculo__c
                             FROM Quote WHERE Id=:idCotizacion WITH SECURITY_ENFORCED];
@@ -109,7 +109,7 @@ public with sharing class DSALES_QuotePagoSM {
             Quote cotizacion = new Quote();
             cotizacion.OpportunityId=beforeCot.OpportunityId;
             cotizacion.Name=beforeCot.Name;
-            cotizacion.DSALES_Fechadenacimiento__c=beforeCot.DSALES_Fechadenacimiento__c;
+            cotizacion.dsalesFechaDeNacimiento=beforeCot.dsalesFechaDeNacimiento;
             cotizacion.Email=beforeCot.Email;
             cotizacion.DSALES_Cobertura__c=beforeCot.DSALES_Cobertura__c;
             cotizacion.DSALES_Opcindepago__c=beforeCot.DSALES_Opcindepago__c;

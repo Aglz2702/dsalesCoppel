@@ -275,7 +275,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.Lista_negra__c = listaNegra;
         cotiza.Motivo_de_lista_negra__c= 'Sin Definir';
         cotiza.Phone = data.telefonoCelular;
-        cotiza.DSALES_Fechadenacimiento__c = data.fechaNacimiento;
+        cotiza.dsalesFechaDeNacimiento = data.fechaNacimiento;
         cotiza.dsalesCodigoPostal__c = data.codigoPostal;
         cotiza.DSALES_IDdelvehculo__c = data.idVehiculo;
         cotiza.DSALES_Opcindepago__c = data.opcionPago;
