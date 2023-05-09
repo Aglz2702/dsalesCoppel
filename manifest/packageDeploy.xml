@@ -585,7 +585,7 @@
 	<members>Quote.DSALES_Cdigodeestado__c</members>
 	<members>Quote.DSALES_Cdigodemunicipio__c</members>
 	<members>Quote.dsalesCodigoPostal__c</members>
-	<members>Quote.DSALES_Cdigodepromocin__c</members>
+	<members>Quote.dsalesCodigoDePromocion__c</members>
 	<members>Quote.DSALES_Contactarsolicitante__c</members>
 	<members>Quote.DSALES_Cobertura__c</members>
 	<members>Quote.DSALES_CorreoEnviado__c</members>
@@ -594,18 +594,18 @@
 	<members>Quote.DSALES_EmailCliente__c</members>
 	<members>Quote.DSALES_EmailNew__c</members>
 	<members>Quote.DSALES_Enviarcotizacion__c</members>
-	<members>Quote.DSALES_Fechadecomienzodepliza__c</members>
+	<members>Quote.dsalesFechaDeComienzoDePoliza__c</members>
 	<members>Quote.DSALES_Fechadecreacionpresupuesto__c</members>
 	<members>Quote.DSALES_Fechadenacimiento__c</members>
 	<members>Quote.DSALES_fechadecreacion__c</members>
 	<members>Quote.DSALES_FormadePago__c</members>
-	<members>Quote.DSALES_Gnero__c</members>
-	<members>Quote.DSALES_IDdelvehculo__c</members>
+	<members>Quote.dsalesGenero__c</members>
+	<members>Quote.dsalesIdDeVehiculo__c</members>
 	<members>Quote.DSALES_IDdelasociado__c</members>
 	<members>Quote.DSALES_NombreCliente__c</members>
 	<members>Quote.DSALES_Nombredelsolicitante__c</members>
-	<members>Quote.DSALES_Mtododecontacto__c</members>
-	<members>Quote.DSALES_Opcindepago__c</members>
+	<members>Quote.dsalesMetodoDeContacto__c</members>
+	<members>Quote.dsalesOpcionDePago__c</members>
 	<members>Quote.DSALES_Plazoacotizar__c</members>
 	<members>Quote.dsalesRegion__c</members>
 	<members>Quote.DSALES_Suburbcode__c</members>
@@ -614,9 +614,9 @@
 	<members>Quote.DSales_ID_Tienda__c</members>
 	<members>Quote.DSALES_RFC__c</members>
 	<members>Quote.DSALES_TipoUso__c</members>
-	<members>Quote.DSALES_Tipodeveihculo__c</members>
+	<members>Quote.dsalesTipoDeVehiculo__c</members>
 	<members>Quote.DSales_Tienda__c</members>
-	<members>Quote.DSALES_Tipodeserviciodelvehculo__c</members>
+	<members>Quote.dsalesTipoDeServicioDelVehiculo__c</members>
 	<members>Quote.DSALES_Tipodevehculo__c</members>
 	<members>Quote.DSALES_TrakingID__c</members>
 	<members>Quote.DSALES_Usodelvehculo__c</members>
@@ -633,7 +633,7 @@
 	<members>Quote.Tiempo_transcurrido__c</members>
 	<members>Quote.DSALES_esClon__c</members>
 	<members>QuoteLineItem.DSALES_Comision__c</members>
-	<members>QuoteLineItem.DSALES_Derechosdepliza__c</members>
+	<members>QuoteLineItem.dsalesDerechosDePoliza__c</members>
 	<members>QuoteLineItem.DSALES_Descripcion__c</members>
 	<members>QuoteLineItem.DSALES_Fechadecompra__c</members>
 	<members>QuoteLineItem.DSALES_Fechadeinicio__c</members>
@@ -641,7 +641,7 @@
 	<members>QuoteLineItem.DSALES_Nombre__c</members>
 	<members>QuoteLineItem.DSALES_PagoContado__c</members>
 	<members>QuoteLineItem.DSALES_Pagomensual__c</members>
-	<members>QuoteLineItem.DSALES_Gastosdeoperacindelrecibo__c</members>
+	<members>QuoteLineItem.dsalesGastosDeOperacionDelRecibo__c</members>
 	<members>QuoteLineItem.DSALES_Impuestos__c</members>
 	<members>QuoteLineItem.DSALES_ListaArticulo__c</members>
 	<members>QuoteLineItem.DSALES_NombreProducto__c</members>

@@ -154,7 +154,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DSALES_Gnero__c</picklist>
+        <picklist>dsalesGenero__c</picklist>
         <values>
             <fullName>Femenino</fullName>
             <default>false</default>
@@ -165,7 +165,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DSALES_Mtododecontacto__c</picklist>
+        <picklist>dsalesMetodoDeContacto__c</picklist>
         <values>
             <fullName>Email</fullName>
             <default>true</default>
@@ -183,7 +183,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DSALES_Opcindepago__c</picklist>
+        <picklist>dsalesOpcionDePago__c</picklist>
         <values>
             <fullName>Anual</fullName>
             <default>false</default>
@@ -305,7 +305,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DSALES_Tipodeserviciodelvehculo__c</picklist>
+        <picklist>dsalesTipoDeServicioDelVehiculo__c</picklist>
         <values>
             <fullName>Particular</fullName>
             <default>true</default>

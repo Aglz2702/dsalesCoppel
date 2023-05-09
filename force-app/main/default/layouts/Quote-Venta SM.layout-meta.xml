@@ -23,7 +23,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_Gnero__c</field>
+                <field>dsalesGenero__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -31,7 +31,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Lista_negra__c</field>
+                <field>dsalesListaNegra__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -49,7 +49,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Motivo_de_lista_negra__c</field>
+                <field>dsalesMotivoDeListaNegra__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -78,11 +78,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_Fechadecomienzodepliza__c</field>
+                <field>dsalesFechaDeComienzoDePoliza__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_Opcindepago__c</field>
+                <field>dsalesOpcionDePago__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -117,7 +117,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_IDdelvehculo__c</field>
+                <field>dsalesIdDeVehiculo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -127,7 +127,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_Tipodeveihculo__c</field>
+                <field>dsalesTipoDeVehiculo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
