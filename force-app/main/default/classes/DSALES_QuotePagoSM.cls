@@ -102,7 +102,7 @@ public with sharing class DSALES_QuotePagoSM {
         try{
             Quote beforeCot = [SELECT Id,OpportunityId,Name,dsalesFechaDeNacimiento,Email,DSALES_Cobertura__c,DSALES_Opcindepago__c,dsalesGenero,Phone,dsalesCodigoPostal__c,DSALES_Fechadecomienzodepliza__c,
                             dsalesListaNegra,dsalesMotivoDeListaNegra,DSALES_TrakingID__c,DSALES_NombreCliente__c,DSALES_Enviarcotizacion__c,GrandTotal,Tax,DSales_Vendedor__c,ExpirationDate,DSALES_IDdelvehculo__c,
-                            DSales_Tienda__c,DSALES_Plazoacotizar__c,DSALES_PlazoacotizarRC__c,dsalesTipoUso__c,DSALES_RFC__c,DSALES_TipoUso__c,DSALES_Tipodeveihculo__c
+                            DSales_Tienda__c,DSALES_Plazoacotizar__c,DSALES_PlazoacotizarRC__c,dsalesTipoUso__c,dsalesRfc,DSALES_TipoUso__c,DSALES_Tipodeveihculo__c
                             FROM Quote WHERE Id=:idCotizacion WITH SECURITY_ENFORCED];
             DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
                                             FROM DSALES_InformacionDePago__c WHERE Id=:idPago WITH SECURITY_ENFORCED];
@@ -133,7 +133,7 @@ public with sharing class DSALES_QuotePagoSM {
             cotizacion.DSALES_Plazoacotizar__c=pago.DSALES_Plazodecomprademoto__c;
             cotizacion.DSALES_PlazoacotizarRC__c=beforeCot.DSALES_PlazoacotizarRC__c;
             cotizacion.dsalesTipoUso__c=beforeCot.dsalesTipoUso__c;
-            cotizacion.DSALES_RFC__c=beforeCot.DSALES_RFC__c;
+            cotizacion.dsalesRfc=beforeCot.dsalesRfc;
             cotizacion.DSALES_TipoUso__c=beforeCot.DSALES_TipoUso__c;
             cotizacion.DSALES_Tipodeveihculo__c=beforeCot.DSALES_Tipodeveihculo__c;
             cotizacion.ExpirationDate=beforeCot.ExpirationDate;

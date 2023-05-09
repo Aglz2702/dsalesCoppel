@@ -286,7 +286,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.Email = data.correoElectronico;
         cotiza.DSALES_TipoUso__c = tipoUso.Id;
         cotiza.DSALES_Tipodeveihculo__c = tipoVehiculo.Id;
-        cotiza.DSALES_RFC__c = data.rfc;
+        cotiza.dsalesRfc = data.rfc;
         cotiza.DSALES_Plazoacotizar__c= decimal.valueOf(data.plazoCotizar);
         
         if(Schema.sObjectType.Quote.isCreateable())
