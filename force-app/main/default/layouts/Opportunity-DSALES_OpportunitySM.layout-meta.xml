@@ -76,7 +76,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Tiend__c</field>
+                <field>dsalesTienda__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

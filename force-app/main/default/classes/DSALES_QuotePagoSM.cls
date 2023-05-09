@@ -97,9 +97,9 @@ public with sharing class DSALES_QuotePagoSM {
     
 
     /////////////****------ 2 -----------****///////////////
-    /*
+    /*     
     public static String crearCotizacion(String idCotizacion,String idPago){
-        try{
+        try{   
             Quote beforeCot = [SELECT Id,OpportunityId,Name,DSALES_Fechadenacimiento__c,Email,DSALES_Cobertura__c,dsalesOpcionDePago__c,dsalesGenero__c,Phone,dsalesCodigoPostal__c,dsalesFechaDeComienzoDePoliza__c,
                             dsalesListaNegra__c,dsalesMotivoDeListaNegra__c,DSALES_TrakingID__c,DSALES_NombreCliente__c,DSALES_Enviarcotizacion__c,GrandTotal,Tax,DSales_Vendedor__c,ExpirationDate,dsalesIdDeVehiculo__c,
                             DSales_Tienda__c,DSALES_Plazoacotizar__c,DSALES_PlazoacotizarRC__c,dsalesTipoUso__c,DSALES_RFC__c,DSALES_TipoUso__c,dsalesTipoDeVehiculo__c
@@ -114,7 +114,7 @@ public with sharing class DSALES_QuotePagoSM {
             cotizacion.DSALES_Cobertura__c=beforeCot.DSALES_Cobertura__c;
             cotizacion.dsalesOpcionDePago__c=beforeCot.dsalesOpcionDePago__c;
             cotizacion.dsalesGenero__c=beforeCot.dsalesGenero__c;
-            cotizacion.Phone=beforeCot.Phone;
+            cotizacion.Phone=beforeCot.Phone; 
             cotizacion.dsalesCodigoPostal__c=beforeCot.dsalesCodigoPostal__c;
             cotizacion.dsalesFechaDeComienzoDePoliza__c=beforeCot.dsalesFechaDeComienzoDePoliza__c;
             cotizacion.dsalesListaNegra__c=beforeCot.dsalesListaNegra__c;
@@ -161,7 +161,7 @@ public with sharing class DSALES_QuotePagoSM {
             List<QuoteLineItem> listPartidas = new List<QuoteLineItem>();
             List<QuoteLineItem> partidas = new List<QuoteLineItem>();
             QuoteLineItem part;
-            //trae la moto
+            //trae la moto 
             //amp y rc al plazo indicado
             for(List<QuoteLineItem> partida: [SELECT Id,DSALES_Descripcion__c,DSALES_TrackingID__c,DSALES_Pagomensual__c,DSALES_SKU__c,DSALES_Recargos__c,QuoteId,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
                                     dsalesGastosDeOperacionDelRecibo__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
@@ -171,7 +171,7 @@ public with sharing class DSALES_QuotePagoSM {
                 partidas=partida;
             }
             if(skuMoto!=null ){
-                QuoteLineItem producto =[SELECT Id,QuoteId,DSALES_Segurogratis__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_TrackingID__c,DSALES_Comision__c,DSALES_NombreProducto__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+                QuoteLineItem producto =[SELECT Id,QuoteId,DSALES_Segurogratis__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_TrackingID__c,DSALES_Comision__c,DSALES_NombreProducto__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c, 
                             dsalesGastosDeOperacionDelRecibo__c,DSALES_Impuestos__c,DSALES_Recargos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                             FROM QuoteLineItem  WHERE QuoteId=:idCot  AND DSALES_SKU__c=:skuMoto WITH SECURITY_ENFORCED LIMIT 1]; 
                 System.debug('moto:'+producto);

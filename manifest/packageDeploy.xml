@@ -510,7 +510,7 @@
 	<members>Opportunity.DSALES_No_Presupuesto__c</members>
 	<members>Opportunity.DSALES_Nombredelsolicitante__c</members>
 	<members>Opportunity.DSALES_Periodo__c</members>
-	<members>Opportunity.DSALES_Tiend__c</members>
+	<members>Opportunity.dsalesTienda__c</members>
 	<members>Opportunity.DSALES_Tienda__c</members>
 	<members>Opportunity.DSales_Cotizacion_Entregada__c</members>
 	<members>Opportunity.DSales_Duracion_de_Garantia__c</members>

@@ -23,7 +23,7 @@ public class DSALES_ConsultaListaNegraTest {
         
         
     }
-    
+     
     @isTest 
     static void testListaNegra(){
         Quote cotizacion = [Select Id, Name FROM Quote WHERE Name = 'Nueva' LIMIT 1];

@@ -272,20 +272,20 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.RecordTypeId = recordTypeId;
         date aux = date.today();
         cotiza.DSALES_Fechadecreacionpresupuesto__c = date.newInstance(aux.year(), aux.month(), aux.day());
-        cotiza.dsalesListaNegra__c = listaNegra;
-        cotiza.dsalesMotivoDeListaNegra__c= 'Sin Definir';
+        cotiza.dsalesListaNegra__c = listaNegra; 
+        cotiza.dsalesMotivoDeListaNegra__c= 'Sin Definir'; 
         cotiza.Phone = data.telefonoCelular;
         cotiza.DSALES_Fechadenacimiento__c = data.fechaNacimiento;
-        cotiza.dsalesCodigoPostal__c = data.codigoPostal;
+        cotiza.dsalesCodigoPostal__c = data.codigoPostal; 
         cotiza.dsalesIdDeVehiculo__c = data.idVehiculo;
-        cotiza.dsalesOpcionDePago__c = data.opcionPago;
+        cotiza.dsalesOpcionDePago__c = data.opcionPago;  
         cotiza.DSALES_Cobertura__c = '';
         cotiza.DSales_Vendedor__c = data.nombreVendedor;
-        cotiza.dsalesGenero__c = data.generoContacto;
-        cotiza.dsalesFechaDeComienzoDePoliza__c = data.fechaInicio;
+        cotiza.dsalesGenero__c = data.generoContacto; 
+        cotiza.dsalesFechaDeComienzoDePoliza__c = data.fechaInicio; 
         cotiza.Email = data.correoElectronico;
-        cotiza.DSALES_TipoUso__c = tipoUso.Id;
-        cotiza.dsalesTipoDeVehiculo__c = tipoVehiculo.Id;
+        cotiza.DSALES_TipoUso__c = tipoUso.Id; 
+        cotiza.dsalesTipoDeVehiculo__c = tipoVehiculo.Id; 
         cotiza.DSALES_RFC__c = data.rfc;
         cotiza.DSALES_Plazoacotizar__c= decimal.valueOf(data.plazoCotizar);
         
@@ -315,7 +315,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             partida.dsalesGastosDeOperacionDelRecibo__c = decimal.valueOf(data.data.primaSeguro.recargo);
             partida.DSALES_Impuestos__c = decimal.valueOf(data.data.primaSeguro.impuestos);
             partida.DSALES_TrackingID__c = data.trackingId;
-        	partida.dsalesPlazo__c = plazo.Id;
+        	partida.dsalesPlazo__c = plazo.Id;  
         	partida.DSALES_Comision__c = decimal.valueOf(data.data.primaSeguro.comision);
             partida.DSALES_Recargos__c = decimal.valueOf(data.data.recibos[0].recargo);
         	partida.DSALES_Descripcion__c='Esta cobertura ampara la responsabilidad civil por el tránsito de vehículos en territorio nacional, en que incurra el Asegurado o cualquier persona que con consentimiento del Asegurado use o posea el vehículo descrito en la Póliza con el límite de responsabilidad establecido en la misma, siempre que a consecuencia de dicho uso o posesión, cause a Terceros daños materiales en sus bienes, lesiones corporales, incapacidades temporales y/o permanentes o la muerte, distintos de los ocupantes de dicho vehículo, que considera la Responsabilidad Civil a que se refiere el artículo 63 Bis de la Ley de Caminos, Puentes y Autotransporte Federal.';

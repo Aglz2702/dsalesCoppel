@@ -2574,7 +2574,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Opportunity.DSALES_Tiend__c</field>
+        <field>Opportunity.dsalesTienda__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

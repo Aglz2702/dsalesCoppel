@@ -73,9 +73,9 @@ public with sharing class DSALES_QuotePagoSMHelper {
             if( ql.dsalesPlazo__c == q.dsalesPlazo__c){
                 if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
                     ql.UnitPrice=0;
-                    ql.dsalesGastosDeOperacionDelRecibo__c=0;
+                    ql.dsalesGastosDeOperacionDelRecibo__c=0; 
                     ql.DSALES_Primaneta__c=0;
-                    ql.dsalesDerechosDePoliza__c=0;
+                    ql.dsalesDerechosDePoliza__c=0; 
                     ql.DSALES_Comision__c=0;
                     ql.DSALES_Recargos__c=0;
                     ql.DSALES_Impuestos__c=0;
