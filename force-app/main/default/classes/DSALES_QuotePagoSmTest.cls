@@ -108,15 +108,15 @@ public with sharing class DSALES_QuotePagoSmTest {
         insert opp3;
         
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  'CPPL-UGARTE';
+        t.DSales_Tienda__cID__c =  'CPPL-UGARTE';
         insert t;
         
-        Quote cotizacion = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp3.Id,Name='test3',dsalesTienda=t.Id);
+        Quote cotizacion = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp3.Id,Name='test3',DSales_Tienda__c=t.Id);
         insert cotizacion;
         
-        Quote cotMS = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp2.Id,Name='test2',dsalesTienda=t.Id);
+        Quote cotMS = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp2.Id,Name='test2',DSales_Tienda__c=t.Id);
         insert cotMS;
-        Quote cotMRc = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp.Id,Name='test1',dsalesTienda=t.Id);
+        Quote cotMRc = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp.Id,Name='test1',DSales_Tienda__c=t.Id);
         insert cotMRc;
         
         dsalesTipoUso__c tipoUso = new dsalesTipoUso__c(Name='Comercial');
@@ -270,7 +270,7 @@ public with sharing class DSALES_QuotePagoSmTest {
     }
     @isTest 
     public static void ventaMotoYSeguroTest(){
-        Quote cotizacion=[SELECT Id,dsalesVendedor,OpportunityId FROM Quote WHERE Name='test2' LIMIT 1 ];
+        Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test2' LIMIT 1 ];
         Plazo__c pl =[SELECT Id,dsalesPlazo__c FROM Plazo__c  WHERE dsalesPlazo__c='18' AND DSALES_Seguro__r.Name='AMP' LIMIT 1];
         System.debug('plazo de partida:'+ pl);
         List<QuoteLineItem> partidas =[SELECT Id,DSALES_SKU__c,dsalesPlazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro'  AND dsalesPlazo__c=:pl.Id AND quoteId=:cotizacion.Id LIMIT 1];
@@ -292,14 +292,14 @@ public with sharing class DSALES_QuotePagoSmTest {
         pago2.dsalesSeguro__c=true;
         pago2.DSALES_Factura__c='123';
         pago2.DSALES_Nombre_del_Vendedor__c='Cristian';
-        //pago2.dsalesTienda=t.Id;
+        //pago2.DSales_Tienda__c=t.Id;
         insert pago2;
         DSALES_QuotePagoSM.cotizacionesNuevas(pago2.Id, idsPartidas, moto.DSALES_SKU__c);
         Test.stopTest();
     }
     @isTest 
     public static void ventaMotoRcGratisTest(){
-        Quote cotizacion=[SELECT Id,dsalesVendedor,OpportunityId FROM Quote WHERE Name='test1'  LIMIT 1];
+        Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test1'  LIMIT 1];
         //Plazo__c pl =[SELECT Id,dsalesPlazo__c FROM Plazo__c  WHERE dsalesPlazo__c='18' LIMIT 1];
         List<QuoteLineItem> partidas =[SELECT Id,dsalesPlazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro' AND DSALES_Segurogratis__c=true AND quoteId=:cotizacion.Id LIMIT 1];
         QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,dsalesPlazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=true AND quoteId=:cotizacion.Id LIMIT 1];
@@ -317,7 +317,7 @@ public with sharing class DSALES_QuotePagoSmTest {
         pago.dsalesSeguro__c=true;
         pago.DSALES_Factura__c='123';
         pago.DSALES_Nombre_del_Vendedor__c='Sayra Martinez';
-        //pago.dsalesTienda=t.Id;
+        //pago.DSales_Tienda__c=t.Id;
         insert pago;
         System.debug('*********SEGURO GRATIS*****************');
         DSALES_QuotePagoSM.cotizacionesNuevas(pago.Id, idsPartidas,moto.DSALES_SKU__c);
@@ -326,7 +326,7 @@ public with sharing class DSALES_QuotePagoSmTest {
     
     @isTest 
     public static void ventaSoloMotoTest(){
-        Quote cot=[SELECT Id,dsalesVendedor,OpportunityId FROM Quote WHERE Name='test3'  LIMIT 1];
+        Quote cot=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test3'  LIMIT 1];
         //List<QuoteLineItem> partidas =[SELECT Id,DSALES_Segurogratis__c,dsalesPlazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro' AND DSALES_Segurogratis__c=false AND DSALES_NombreProducto__c='AMP' AND quoteId=:cot.Id  LIMIT 1];
         QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,dsalesPlazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=false  AND quoteId=:cot.Id LIMIT 1];
         //DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE dsalesSeguro__c=false AND DSALES_Oportunidad__c=:cot.OpportunityId LIMIT 1];
@@ -339,7 +339,7 @@ public with sharing class DSALES_QuotePagoSmTest {
         pago3.dsalesSeguro__c=false;
         pago3.DSALES_Factura__c='123';
         pago3.DSALES_Nombre_del_Vendedor__c='Cristian';
-        //pago3.dsalesTienda=t.Id;
+        //pago3.DSales_Tienda__c=t.Id;
         insert pago3;
         System.debug('********* SOLO MOTO*****************');
         DSALES_QuotePagoSM.cotizacionesNuevas(pago3.Id, null,moto.DSALES_SKU__c);

@@ -10,7 +10,7 @@ global with sharing class DSALES_IPAssetWrapperTest {
          InsurancePolicy ip = new InsurancePolicy(Name='Danny',NameInsuredId=ac.id,DSALES_CorreoElectronico__c='kvothe.sanmiguel@gmail.com');
         insert ip;
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  'CPPL-UGARTE';
+        t.DSales_Tienda__cID__c =  'CPPL-UGARTE';
         insert t;
         /*Asset producto= new Asset(Name='Danny',AccountId=ac.id);
         insert producto;*/

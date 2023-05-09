@@ -144,10 +144,10 @@ public class DSALES_QuoteGexWrapperRequestTest{
         insert opp;
         
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  '21';
+        t.DSales_Tienda__cID__c =  '21';
         insert t;
         
-        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',dsalesTienda=t.Id);
+        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
         insert cotizacion;
 
         QuoteLineItem presupuesto = new QuoteLineItem();

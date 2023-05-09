@@ -62,14 +62,14 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                     datosEnviar.idAsociado='0';//fijo
                     date aux = date.today();
                     aux = date.newInstance(aux.year(), aux.month(), aux.day());
-                    datosEnviar.fechaCotizacion = aux.format(); //cotiza.dsalesFechaDeCreacionPresupuesto.format();//fecha creacion-sales
+                    datosEnviar.fechaCotizacion = aux.format(); //cotiza.DSALES_Fechadecreacionpresupuesto__c.format();//fecha creacion-sales
                     datosEnviar.fechaInicio = data.fechaInicio.format(); //Nuevo revisar
                     datosEnviar.listaPlazos = plazosActivos(data.plazoCotizar);
                     if(!listaNegra){
                         respuestaDeProveedor = crearQuoteSm(datosEnviar);
                     }
                     Account universalAccount = [Select Id from Account WHERE DSALES_ClienteCoppel__c = :numeroCliente WITH SECURITY_ENFORCED LIMIT 1];
-                    Tienda__c tienda = [Select Id from Tienda__c WHERE dsalesTiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
+                    Tienda__c tienda = [Select Id from Tienda__c WHERE DSales_Tienda__cID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
                     Id clienteId=null; 
                     if(data.numeroCliente == null || data.numeroCliente=='' ||data.numeroCliente==numeroCliente ){
                         List<Account> resul = [Select Id, firstName, suffix, lastName, Fecha_de_Nacimiento__c, Phone, PersonEmail from Account WHERE firstName=:data.nombre AND suffix=:data.apellidoMaterno AND lastName=:data.apellidoPaterno WITH SECURITY_ENFORCED];
@@ -243,7 +243,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         oppor.CloseDate = date.today()+30;
         oppor.StageName = 'Nuevo';
         oppor.RecordTypeId = recordTypeId;
-        oppor.dsalesTienda = tienda.Id;
+        oppor.DSales_Tienda__c = tienda.Id;
         oppor.Pricebook2Id = precioLista.Id;
         if(Schema.sObjectType.Opportunity.isCreateable())
         {
@@ -267,26 +267,26 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.OpportunityId = oportunidadId;
         //cotiza.DSALES_FormadePago__c = data.method_payment;
         cotiza.DSales_ID_Tienda__c = data.idTienda;
-        cotiza.dsalesTienda = tienda.Id;
+        cotiza.DSales_Tienda__c = tienda.Id;
         cotiza.ExpirationDate = date.today()+30;
         cotiza.RecordTypeId = recordTypeId;
         date aux = date.today();
-        cotiza.dsalesFechaDeCreacionPresupuesto = date.newInstance(aux.year(), aux.month(), aux.day());
-        cotiza.dsalesListaNegra = listaNegra;
-        cotiza.dsalesMotivoDeListaNegra= 'Sin Definir';
+        cotiza.DSALES_Fechadecreacionpresupuesto__c = date.newInstance(aux.year(), aux.month(), aux.day());
+        cotiza.dsalesListaNegra__c = listaNegra;
+        cotiza.dsalesMotivoDeListaNegra__c= 'Sin Definir';
         cotiza.Phone = data.telefonoCelular;
-        cotiza.dsalesFechaDeNacimiento = data.fechaNacimiento;
+        cotiza.DSALES_Fechadenacimiento__c = data.fechaNacimiento;
         cotiza.dsalesCodigoPostal__c = data.codigoPostal;
-        cotiza.DSALES_IDdelvehculo__c = data.idVehiculo;
-        cotiza.dsalesOpcionDePago = data.opcionPago;
+        cotiza.dsalesIdDeVehiculo__c = data.idVehiculo;
+        cotiza.dsalesOpcionDePago__c = data.opcionPago;
         cotiza.DSALES_Cobertura__c = '';
-        cotiza.dsalesVendedor = data.nombreVendedor;
-        cotiza.dsalesGenero = data.generoContacto;
-        cotiza.dsalesFechaDeComienzoDePoliza = data.fechaInicio;
+        cotiza.DSales_Vendedor__c = data.nombreVendedor;
+        cotiza.dsalesGenero__c = data.generoContacto;
+        cotiza.dsalesFechaDeComienzoDePoliza__c = data.fechaInicio;
         cotiza.Email = data.correoElectronico;
         cotiza.DSALES_TipoUso__c = tipoUso.Id;
-        cotiza.DSALES_Tipodeveihculo__c = tipoVehiculo.Id;
-        cotiza.dsalesRfc = data.rfc;
+        cotiza.dsalesTipoDeVehiculo__c = tipoVehiculo.Id;
+        cotiza.DSALES_RFC__c = data.rfc;
         cotiza.DSALES_Plazoacotizar__c= decimal.valueOf(data.plazoCotizar);
         
         if(Schema.sObjectType.Quote.isCreateable())
@@ -311,8 +311,8 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             partida.DSALES_Fechadetermino__c = Date.valueOF(data.data.recibos[0].fechaTermino);
             partida.DSALES_Primaneta__c = decimal.valueOf(data.data.primaSeguro.primaNeta);
             partida.UnitPrice = decimal.valueOf(data.data.recibos[0].primaTotal);
-            partida.DSALES_Derechosdepliza__c = decimal.valueOf(data.data.primaSeguro.derecho);
-            partida.DSALES_Gastosdeoperacindelrecibo__c = decimal.valueOf(data.data.primaSeguro.recargo);
+            partida.dsalesDerechosDePoliza__c = decimal.valueOf(data.data.primaSeguro.derecho);
+            partida.dsalesGastosDeOperacionDelRecibo__c = decimal.valueOf(data.data.primaSeguro.recargo);
             partida.DSALES_Impuestos__c = decimal.valueOf(data.data.primaSeguro.impuestos);
             partida.DSALES_TrackingID__c = data.trackingId;
         	partida.dsalesPlazo__c = plazo.Id;

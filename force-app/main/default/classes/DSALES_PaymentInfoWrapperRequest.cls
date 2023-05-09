@@ -42,7 +42,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
         try{
             String recordTypePago = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
             Opportunity oportunidad =[SELECT Id,AccountId FROM Opportunity WHERE Id=:pago.idOportunidad WITH SECURITY_ENFORCED];
-            Tienda__c tienda =[SELECT Id,dsalesTiendaID__c FROM Tienda__c WHERE dsalesTiendaID__c=:pago.claveTienda WITH SECURITY_ENFORCED];
+            Tienda__c tienda =[SELECT Id,DSales_Tienda__cID__c FROM Tienda__c WHERE DSales_Tienda__cID__c=:pago.claveTienda WITH SECURITY_ENFORCED];
             Account cliente=[SELECT Id,	FinServ__BillingAddress__pc FROM Account WHERE Id=:oportunidad.AccountId WITH SECURITY_ENFORCED];
             nuevoPago.DSALES_Cliente__c=cliente.Id;
             nuevoPago.DSALES_Oportunidad__c=pago.idOportunidad;
@@ -58,7 +58,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
               nuevoPago.DSALES_Fechadeentregaestimada__c=pago.fechaEntrega;   
             }
             nuevoPago.DSALES_Fecha__c=pago.fechaVenta;
-           	nuevoPago.dsalesTienda=tienda.Id;
+           	nuevoPago.DSales_Tienda__c=tienda.Id;
             nuevoPago.DSALES_IDUniversal1__c=pago.idUniversal;
             nuevoPago.DSALES_FolioTransaccion__c=pago.folioTransaccion;
             nuevoPago.DSALES_TipoFolio__c=pago.tipoFolio;

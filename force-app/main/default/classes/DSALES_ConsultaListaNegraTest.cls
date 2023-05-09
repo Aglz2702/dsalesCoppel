@@ -18,7 +18,7 @@ public class DSALES_ConsultaListaNegraTest {
         insert op;
         
         
-        Quote cotizacion = new Quote(Name='Nueva', dsalesMotivoDeListaNegra='no hay',DSALES_AdquiriopolizaSM__c=true, OpportunityId=op.Id);
+        Quote cotizacion = new Quote(Name='Nueva', dsalesMotivoDeListaNegra__c='no hay',DSALES_AdquiriopolizaSM__c=true, OpportunityId=op.Id);
         insert cotizacion; 
         
         

@@ -102,14 +102,14 @@ global with sharing class DSALES_CancelacionProductosRequest {
     
     public static String crearCancelacion(DSALES_CancelacionProductosWrapper.Request datos){
         DSALES_InformacionDePago__c pago = [SELECT Id FROM 	DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c =:datos.idUniversal WITH SECURITY_ENFORCED];
-        Tienda__c tienda =[SELECT Id FROM Tienda__c WHERE dsalesTiendaID__c=:datos.idTienda WITH SECURITY_ENFORCED];
+        Tienda__c tienda =[SELECT Id FROM Tienda__c WHERE DSales_Tienda__cID__c=:datos.idTienda WITH SECURITY_ENFORCED];
         DSALES_Cancelacion__c cancelacion = new DSALES_Cancelacion__c(
             DSALES_Canal__c= datos.canal,
             DSALES_FechaCancelacion__c =datos.fechaCancelacion,
             DSALES_FolioCancelacion__c =datos.folioCancelacion,    
             DSALES_NumeroVendedor__c=datos.numeroVendedor,
             DSALES_NombreVendedor__c = datos.nombreVendedor,
-            dsalesTienda=tienda.Id
+            DSales_Tienda__c=tienda.Id
         ) ;
         if(datos.ListaProductos.size()>0){
             cancelacion.DSALES_Estatus__c=datos.ListaProductos[0].estatus;

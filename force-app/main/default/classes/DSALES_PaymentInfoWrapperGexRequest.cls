@@ -51,14 +51,14 @@ global with sharing class DSALES_PaymentInfoWrapperGexRequest {
                     List<Tienda__c> idTienda = new List<Tienda__c>();
                     List<Opportunity> cliente = new List<Opportunity>();
                     if(Opportunity.SObjectType.getDescribe().isAccessible() && Tienda__c.SObjectType.getDescribe().isAccessible()){
-                        idTienda = [SELECT id FROM Tienda__c WHERE dsalesTiendaID__c =:payment.claveTienda LIMIT 1];
+                        idTienda = [SELECT id FROM Tienda__c WHERE DSales_Tienda__cID__c =:payment.claveTienda LIMIT 1];
                         cliente = [SELECT id,AccountId,Account.Name,Account.BillingStreet,Account.BillingCity,Account.BillingState,Account.BillingCountry,Account.BillingPostalCode,Account.AccountNumber,Account.PersonMobilePhone FROM Opportunity WHERE Id=:payment.opportunityId LIMIT 1];
                     }
                     system.debug('pagoss 222:  '+payment.PartidasDePago);
                     info.RecordTypeId = recordTypeId;
                     info.DSALES_Fecha__c = payment.fechaVenta;
                     info.DSALES_Clave_Tienda__c = payment.claveTienda;
-                    info.dsalesTienda = idTienda[0].Id;
+                    info.DSales_Tienda__c = idTienda[0].Id;
                     info.DSALES_Estatus__c = 'Acreditado';
                     info.DSALES_Factura__c = payment.idFactura;
                     info.DSALES_TotalContado__c = payment.precioTotal;
@@ -68,7 +68,7 @@ global with sharing class DSALES_PaymentInfoWrapperGexRequest {
                     info.DSALES_No_de_cliente__c = cliente[0].Account.AccountNumber;
                     info.DSALES_TelefonoCliente__c = cliente[0].Account.PersonMobilePhone;
                     info.DSALES_Nombre_del_Vendedor__c= payment.nombreVendedor;
-                    info.dsalesVendedor=payment.idVendedor;
+                    info.DSales_Vendedor__c=payment.idVendedor;
                     info.DSALES_Caja__c=payment.caja;
                     info.DSALES_Factura__c=payment.idFactura;
                     info.DSALES_Oportunidad__c = payment.opportunityId;

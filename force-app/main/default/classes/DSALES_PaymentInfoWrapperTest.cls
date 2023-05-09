@@ -20,7 +20,7 @@ public class DSALES_PaymentInfoWrapperTest {
         insert oportunidad;
         
         Tienda__c tienda = new Tienda__c();
-        tienda.dsalesTiendaID__c =  '1';
+        tienda.DSales_Tienda__cID__c =  '1';
         insert tienda;
     }
     

@@ -96,7 +96,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         insert oppGex;
         
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  '1';
+        t.DSales_Tienda__cID__c =  '1';
         insert t;
         DSALES_InformacionDePago__c pago = new DSALES_InformacionDePago__c(
                                       	DSALES_IDUniversal1__c='0000000000000000000001',
@@ -115,9 +115,9 @@ public class DSALES_CancelacionProductosRequest_Test {
         DSALES_Certificado__c certificado = new DSALES_Certificado__c(DSALES_Email__c='dsanmiguel@deloittemx.com',DSALES_ProductoAdquirido__c=ass.id,
                                                                      DSALES_InformacionDePago__c=pagoGex.id);
         insert certificado;
-        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',dsalesTienda=t.Id);
+        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
         insert cotizacion;
-        Quote cotGex = new Quote(OpportunityId=oppGex.Id,Name='GEX',dsalesTienda=t.Id);
+        Quote cotGex = new Quote(OpportunityId=oppGex.Id,Name='GEX',DSales_Tienda__c=t.Id);
         insert cotGex;
 		Plazo__c plazoAMP12 = new Plazo__c(Name='12',dsalesPlazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
         insert plazoAMP12;

@@ -8,9 +8,9 @@ public without sharing class DSALES_CreateInsurancePolicy {
             DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Oportunidad__c,DSALES_Motoexterna__c,DSALES_Poliza__c FROM DSALES_InformacionDePago__c WHERE Id=:idPago WITH SECURITY_ENFORCED];
             Opportunity oportunidad =[SELECT Id,AccountId,SyncedQuoteId FROM Opportunity WHERE Id=:pago.DSALES_Oportunidad__c WITH SECURITY_ENFORCED];
             Account cliente =[SELECT Id,RecordTypeId, Name,FirstName,MiddleName,LastName,Suffix,PersonEmail,Fecha_de_Nacimiento__c,CP_Gender__pc FROM Account WHERE Id=:oportunidad.AccountId WITH SECURITY_ENFORCED];
-            Quote cotizacion=[SELECT Id,dsalesRfc FROM Quote WHERE Id=:oportunidad.SyncedQuoteId WITH SECURITY_ENFORCED LIMIT 1 ]; 
+            Quote cotizacion=[SELECT Id,DSALES_RFC__c FROM Quote WHERE Id=:oportunidad.SyncedQuoteId WITH SECURITY_ENFORCED LIMIT 1 ]; 
             List<QuoteLineItem> partidas =[SELECT Id,DSALES_Tipodeproducto__c,DSALES_NombreProducto__c FROM QuoteLineItem WHERE QuoteId=:cotizacion.Id AND DSALES_Tipodeproducto__c='Seguro' WITH SECURITY_ENFORCED];
-            poliza.dsalesRfc=cotizacion.dsalesRfc;
+            poliza.DSALES_RFC__c=cotizacion.DSALES_RFC__c;
             poliza.PolicyName='0001';
             poliza.Name='0001';
             poliza.NameInsuredId=cliente.Id;

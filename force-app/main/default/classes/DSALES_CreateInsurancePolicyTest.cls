@@ -68,11 +68,11 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         Opportunity oportunidad = new Opportunity(Name='Testoportunidadortunity', AccountId=acc.Id, CloseDate=Date.Today(), StageName='Nuevo', Pricebook2Id=customPB.Id,RecordTypeId=recordTypeId);
         insert oportunidad;
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  'T-0001';
+        t.DSales_Tienda__cID__c =  'T-0001';
         insert t;
         DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=oportunidad.id,DSALES_Cliente__c=acc.Id,dsalesSeguro__c=true);
         insert pago;
-        Quote cotizacion = new Quote(opportunityId=oportunidad.Id,Name='test',dsalesTienda=t.Id);
+        Quote cotizacion = new Quote(opportunityId=oportunidad.Id,Name='test',DSales_Tienda__c=t.Id);
         insert cotizacion;
         dsalesTipoUso__c tipoUso = new dsalesTipoUso__c(Name='Comercial');
         insert tipoUso;

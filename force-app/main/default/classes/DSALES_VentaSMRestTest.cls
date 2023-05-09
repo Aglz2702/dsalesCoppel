@@ -122,10 +122,10 @@ public with sharing class DSALES_VentaSMRestTest {
         insert opp;
         
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  '1';
+        t.DSales_Tienda__cID__c =  '1';
         insert t;
         
-        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',dsalesTienda=t.Id);
+        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
         insert cotizacion;
         
         dsalesTipoUso__c tipoUso = new dsalesTipoUso__c(Name='Comercial');

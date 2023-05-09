@@ -20,7 +20,7 @@ public with sharing class DSALES_QuotePagoSM {
             String idCotizacion='';
             List<String> listIdCotiza = new List<String>();
             List<QuoteLineItem> listPartidasCreadas = new List<QuoteLineItem>();
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,dsalesSeguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,dsalesTienda,DSALES_SKU__c  
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,dsalesSeguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
                                             FROM DSALES_InformacionDePago__c 
                                             WHERE Id=:idPago WITH SECURITY_ENFORCED];
             
@@ -100,42 +100,42 @@ public with sharing class DSALES_QuotePagoSM {
     /*
     public static String crearCotizacion(String idCotizacion,String idPago){
         try{
-            Quote beforeCot = [SELECT Id,OpportunityId,Name,dsalesFechaDeNacimiento,Email,DSALES_Cobertura__c,dsalesOpcionDePago,dsalesGenero,Phone,dsalesCodigoPostal__c,dsalesFechaDeComienzoDePoliza,
-                            dsalesListaNegra,dsalesMotivoDeListaNegra,DSALES_TrakingID__c,DSALES_NombreCliente__c,DSALES_Enviarcotizacion__c,GrandTotal,Tax,dsalesVendedor,ExpirationDate,DSALES_IDdelvehculo__c,
-                            dsalesTienda,DSALES_Plazoacotizar__c,DSALES_PlazoacotizarRC__c,dsalesTipoUso__c,dsalesRfc,DSALES_TipoUso__c,DSALES_Tipodeveihculo__c
+            Quote beforeCot = [SELECT Id,OpportunityId,Name,DSALES_Fechadenacimiento__c,Email,DSALES_Cobertura__c,dsalesOpcionDePago__c,dsalesGenero__c,Phone,dsalesCodigoPostal__c,dsalesFechaDeComienzoDePoliza__c,
+                            dsalesListaNegra__c,dsalesMotivoDeListaNegra__c,DSALES_TrakingID__c,DSALES_NombreCliente__c,DSALES_Enviarcotizacion__c,GrandTotal,Tax,DSales_Vendedor__c,ExpirationDate,dsalesIdDeVehiculo__c,
+                            DSales_Tienda__c,DSALES_Plazoacotizar__c,DSALES_PlazoacotizarRC__c,dsalesTipoUso__c,DSALES_RFC__c,DSALES_TipoUso__c,dsalesTipoDeVehiculo__c
                             FROM Quote WHERE Id=:idCotizacion WITH SECURITY_ENFORCED];
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,dsalesTienda,DSALES_SKU__c  
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
                                             FROM DSALES_InformacionDePago__c WHERE Id=:idPago WITH SECURITY_ENFORCED];
             Quote cotizacion = new Quote();
             cotizacion.OpportunityId=beforeCot.OpportunityId;
             cotizacion.Name=beforeCot.Name;
-            cotizacion.dsalesFechaDeNacimiento=beforeCot.dsalesFechaDeNacimiento;
+            cotizacion.DSALES_Fechadenacimiento__c=beforeCot.DSALES_Fechadenacimiento__c;
             cotizacion.Email=beforeCot.Email;
             cotizacion.DSALES_Cobertura__c=beforeCot.DSALES_Cobertura__c;
-            cotizacion.dsalesOpcionDePago=beforeCot.dsalesOpcionDePago;
-            cotizacion.dsalesGenero=beforeCot.dsalesGenero;
+            cotizacion.dsalesOpcionDePago__c=beforeCot.dsalesOpcionDePago__c;
+            cotizacion.dsalesGenero__c=beforeCot.dsalesGenero__c;
             cotizacion.Phone=beforeCot.Phone;
             cotizacion.dsalesCodigoPostal__c=beforeCot.dsalesCodigoPostal__c;
-            cotizacion.dsalesFechaDeComienzoDePoliza=beforeCot.dsalesFechaDeComienzoDePoliza;
-            cotizacion.dsalesListaNegra=beforeCot.dsalesListaNegra;
-            cotizacion.dsalesMotivoDeListaNegra=beforeCot.dsalesMotivoDeListaNegra;
+            cotizacion.dsalesFechaDeComienzoDePoliza__c=beforeCot.dsalesFechaDeComienzoDePoliza__c;
+            cotizacion.dsalesListaNegra__c=beforeCot.dsalesListaNegra__c;
+            cotizacion.dsalesMotivoDeListaNegra__c=beforeCot.dsalesMotivoDeListaNegra__c;
             cotizacion.DSALES_TrakingID__c=beforeCot.DSALES_TrakingID__c;
             if(pago.DSALES_Nombre_del_Vendedor__c!=null){
-                cotizacion.dsalesVendedor=pago.DSALES_Nombre_del_Vendedor__c;
+                cotizacion.DSales_Vendedor__c=pago.DSALES_Nombre_del_Vendedor__c;
             }
-            cotizacion.dsalesVendedor=beforeCot.dsalesVendedor;
-            if(pago.dsalesTienda!=null){
-                cotizacion.dsalesTienda=pago.dsalesTienda;
+            cotizacion.DSales_Vendedor__c=beforeCot.DSales_Vendedor__c;
+            if(pago.DSales_Tienda__c!=null){
+                cotizacion.DSales_Tienda__c=pago.DSales_Tienda__c;
             }
-            cotizacion.dsalesTienda=beforeCot.dsalesTienda;
+            cotizacion.DSales_Tienda__c=beforeCot.DSales_Tienda__c;
             cotizacion.Tax=beforeCot.Tax;
-            cotizacion.DSALES_IDdelvehculo__c=beforeCot.DSALES_IDdelvehculo__c;
+            cotizacion.dsalesIdDeVehiculo__c=beforeCot.dsalesIdDeVehiculo__c;
             cotizacion.DSALES_Plazoacotizar__c=pago.DSALES_Plazodecomprademoto__c;
             cotizacion.DSALES_PlazoacotizarRC__c=beforeCot.DSALES_PlazoacotizarRC__c;
             cotizacion.dsalesTipoUso__c=beforeCot.dsalesTipoUso__c;
-            cotizacion.dsalesRfc=beforeCot.dsalesRfc;
+            cotizacion.DSALES_RFC__c=beforeCot.DSALES_RFC__c;
             cotizacion.DSALES_TipoUso__c=beforeCot.DSALES_TipoUso__c;
-            cotizacion.DSALES_Tipodeveihculo__c=beforeCot.DSALES_Tipodeveihculo__c;
+            cotizacion.dsalesTipoDeVehiculo__c=beforeCot.dsalesTipoDeVehiculo__c;
             cotizacion.ExpirationDate=beforeCot.ExpirationDate;
             if(Schema.sObjectType.Quote.isCreateable()) {
                 insert cotizacion;  
@@ -163,16 +163,16 @@ public with sharing class DSALES_QuotePagoSM {
             QuoteLineItem part;
             //trae la moto
             //amp y rc al plazo indicado
-            for(List<QuoteLineItem> partida: [SELECT Id,DSALES_Descripcion__c,DSALES_TrackingID__c,DSALES_Pagomensual__c,DSALES_SKU__c,DSALES_Recargos__c,QuoteId,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,DSALES_Derechosdepliza__c,
-                                    DSALES_Gastosdeoperacindelrecibo__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
+            for(List<QuoteLineItem> partida: [SELECT Id,DSALES_Descripcion__c,DSALES_TrackingID__c,DSALES_Pagomensual__c,DSALES_SKU__c,DSALES_Recargos__c,QuoteId,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+                                    dsalesGastosDeOperacionDelRecibo__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                                     FROM QuoteLineItem WHERE Id IN:partidasSeleccionadas
                                     WITH SECURITY_ENFORCED])
             {
                 partidas=partida;
             }
             if(skuMoto!=null ){
-                QuoteLineItem producto =[SELECT Id,QuoteId,DSALES_Segurogratis__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_TrackingID__c,DSALES_Comision__c,DSALES_NombreProducto__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,DSALES_Derechosdepliza__c,
-                            DSALES_Gastosdeoperacindelrecibo__c,DSALES_Impuestos__c,DSALES_Recargos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
+                QuoteLineItem producto =[SELECT Id,QuoteId,DSALES_Segurogratis__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_TrackingID__c,DSALES_Comision__c,DSALES_NombreProducto__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+                            dsalesGastosDeOperacionDelRecibo__c,DSALES_Impuestos__c,DSALES_Recargos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                             FROM QuoteLineItem  WHERE QuoteId=:idCot  AND DSALES_SKU__c=:skuMoto WITH SECURITY_ENFORCED LIMIT 1]; 
                 System.debug('moto:'+producto);
                 partidas.add(producto);   
@@ -200,16 +200,16 @@ public with sharing class DSALES_QuotePagoSM {
                 System.debug('Permisos insuficientes para insertar');
             }
             List<QuoteLineItem> idNuevos = new List<QuoteLineItem>();
-            List<QuoteLineItem> partidasNuevas =[SELECT Id, UnitPrice,DSALES_Tipodeproducto__c,ListPrice,DSALES_Pagomensual__c,TotalPrice,DSALES_Impuestos__c,DSALES_Recargos__c,DSALES_Derechosdepliza__c,DSALES_Primaneta__c,DSALES_Gastosdeoperacindelrecibo__c,dsalesPlazo__c,DSALES_Segurogratis__c,DSALES_NombreProducto__c FROM QuoteLineItem WHERE Id IN:listPartidas WITH SECURITY_ENFORCED];
+            List<QuoteLineItem> partidasNuevas =[SELECT Id, UnitPrice,DSALES_Tipodeproducto__c,ListPrice,DSALES_Pagomensual__c,TotalPrice,DSALES_Impuestos__c,DSALES_Recargos__c,dsalesDerechosDePoliza__c,DSALES_Primaneta__c,dsalesGastosDeOperacionDelRecibo__c,dsalesPlazo__c,DSALES_Segurogratis__c,DSALES_NombreProducto__c FROM QuoteLineItem WHERE Id IN:listPartidas WITH SECURITY_ENFORCED];
             for(QuoteLineItem ql:partidasNuevas){
                 for(QuoteLineItem q:partidas){
                     /*if(ql.DSALES_NombreProducto__c == q.DSALES_NombreProducto__c){
                         if( ql.dsalesPlazo__c == q.dsalesPlazo__c){
                             if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
                                 ql.UnitPrice=0;
-                                ql.DSALES_Gastosdeoperacindelrecibo__c=0;
+                                ql.dsalesGastosDeOperacionDelRecibo__c=0;
                                 ql.DSALES_Primaneta__c=0;
-                                ql.DSALES_Derechosdepliza__c=0;
+                                ql.dsalesDerechosDePoliza__c=0;
                                 ql.DSALES_Comision__c=0;
                                 ql.DSALES_Recargos__c=0;
                                 ql.DSALES_Impuestos__c=0;
@@ -276,8 +276,8 @@ public with sharing class DSALES_QuotePagoSM {
         nuevaPartida.DSALES_Fechadetermino__c = prueba.q.DSALES_Fechadetermino__c;
         nuevaPartida.DSALES_Primaneta__c = prueba.q.DSALES_Primaneta__c;
         nuevaPartida.UnitPrice = prueba.q.UnitPrice;
-        nuevaPartida.DSALES_Derechosdepliza__c = prueba.q.DSALES_Derechosdepliza__c;
-        nuevaPartida.DSALES_Gastosdeoperacindelrecibo__c = prueba.q.DSALES_Gastosdeoperacindelrecibo__c;
+        nuevaPartida.dsalesDerechosDePoliza__c = prueba.q.dsalesDerechosDePoliza__c;
+        nuevaPartida.dsalesGastosDeOperacionDelRecibo__c = prueba.q.dsalesGastosDeOperacionDelRecibo__c;
         nuevaPartida.DSALES_Impuestos__c = prueba.q.DSALES_Impuestos__c;
         nuevaPartida.DSALES_Comision__c=prueba.q.DSALES_Comision__c;
         nuevaPartida.DSALES_TrackingID__c=prueba.q.DSALES_TrackingID__c;
@@ -311,21 +311,21 @@ public with sharing class DSALES_QuotePagoSM {
             String idCotSincronizar='';
             
             //trae la moto
-            QuoteLineItem producto =[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Segurogratis__c,DSALES_Comision__c,DSALES_NombreProducto__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,DSALES_Derechosdepliza__c,
-                                    DSALES_Gastosdeoperacindelrecibo__c,DSALES_Recargos__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
+            QuoteLineItem producto =[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Segurogratis__c,DSALES_Comision__c,DSALES_NombreProducto__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+                                    dsalesGastosDeOperacionDelRecibo__c,DSALES_Recargos__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                                     FROM QuoteLineItem  WHERE QuoteId=:idCot  AND DSALES_SKU__c=:skuMoto WITH SECURITY_ENFORCED LIMIT 1]; 
             System.debug('moto:'+producto);
             if(producto!=null){
                 if(producto.DSALES_Segurogratis__c==true){
-                    for(QuoteLineItem partida: [SELECT Id,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_SKU__c,QuoteId,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,DSALES_Derechosdepliza__c,
-                                        DSALES_Gastosdeoperacindelrecibo__c,DSALES_Recargos__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
+                    for(QuoteLineItem partida: [SELECT Id,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_SKU__c,QuoteId,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+                                        dsalesGastosDeOperacionDelRecibo__c,DSALES_Recargos__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                                         FROM QuoteLineItem WHERE Id IN:partidasSeleccionadas WITH SECURITY_ENFORCED LIMIT 1
                                         ])
                     {
                         seguroGratis=partida; //SOLO ID DE RC    
                     }
-                    seguro=[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Recargos__c,DSALES_SKU__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,DSALES_Derechosdepliza__c,
-                                DSALES_Gastosdeoperacindelrecibo__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
+                    seguro=[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Recargos__c,DSALES_SKU__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+                                dsalesGastosDeOperacionDelRecibo__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                                 FROM QuoteLineItem WHERE QuoteId=:idCot AND DSALES_Segurogratis__c!=true AND DSALES_Plazo__r.dsalesPlazo__c =:String.valueOf(plazo) AND Id!=:seguroGratis.Id WITH SECURITY_ENFORCED LIMIT 1
                                 ];
                     System.debug('seguro amp:'+seguro);
@@ -371,8 +371,8 @@ public with sharing class DSALES_QuotePagoSM {
                         partida.DSALES_Fechadetermino__c = ql.DSALES_Fechadetermino__c;
                         partida.DSALES_Primaneta__c = ql.DSALES_Primaneta__c;
                         partida.UnitPrice = ql.UnitPrice;
-                        partida.DSALES_Derechosdepliza__c = ql.DSALES_Derechosdepliza__c;
-                        partida.DSALES_Gastosdeoperacindelrecibo__c = ql.DSALES_Gastosdeoperacindelrecibo__c;
+                        partida.dsalesDerechosDePoliza__c = ql.dsalesDerechosDePoliza__c;
+                        partida.dsalesGastosDeOperacionDelRecibo__c = ql.dsalesGastosDeOperacionDelRecibo__c;
                         partida.DSALES_Impuestos__c = ql.DSALES_Impuestos__c;
                         partida.DSALES_Comision__c=ql.DSALES_Comision__c;
                         partida.DSALES_TrackingID__c=ql.DSALES_TrackingID__c;
@@ -414,8 +414,8 @@ public with sharing class DSALES_QuotePagoSM {
                                 part.DSALES_Fechadeinicio__c = q.DSALES_Fechadeinicio__c;
                                 part.DSALES_Fechadetermino__c = q.DSALES_Fechadetermino__c;
                                 part.DSALES_Primaneta__c = q.DSALES_Primaneta__c;
-                                part.DSALES_Derechosdepliza__c = q.DSALES_Derechosdepliza__c;
-                                part.DSALES_Gastosdeoperacindelrecibo__c = q.DSALES_Gastosdeoperacindelrecibo__c;
+                                part.dsalesDerechosDePoliza__c = q.dsalesDerechosDePoliza__c;
+                                part.dsalesGastosDeOperacionDelRecibo__c = q.dsalesGastosDeOperacionDelRecibo__c;
                                 part.DSALES_Impuestos__c = q.DSALES_Impuestos__c;
                                 part.DSALES_TrackingID__c=q.DSALES_TrackingID__c;
                                 part.DSALES_Comision__c=q.DSALES_Comision__c;
@@ -454,7 +454,7 @@ public with sharing class DSALES_QuotePagoSM {
                     
                     List<QuoteLineItem> idNuevos = new List<QuoteLineItem>();
                     List<QuoteLineItem> partidasNuevas =[SELECT Id,DSALES_Tipodeproducto__c,DSALES_Impuestos__c,DSALES_Pagomensual__c,DSALES_Recargos__c,DSALES_Comision__c,
-                            DSALES_Derechosdepliza__c, UnitPrice,DSALES_Gastosdeoperacindelrecibo__c,DSALES_Primaneta__c,dsalesPlazo__c,DSALES_NombreProducto__c,DSALES_Segurogratis__c 
+                            dsalesDerechosDePoliza__c, UnitPrice,dsalesGastosDeOperacionDelRecibo__c,DSALES_Primaneta__c,dsalesPlazo__c,DSALES_NombreProducto__c,DSALES_Segurogratis__c 
                             FROM QuoteLineItem WHERE Id IN:listPartInsert WITH SECURITY_ENFORCED];
                     System.debug('nuevas:'+partidasNuevas.size());
                     for(QuoteLineItem ql:partidasNuevas){
@@ -462,9 +462,9 @@ public with sharing class DSALES_QuotePagoSM {
                             if( ql.dsalesPlazo__c == q.dsalesPlazo__c){
                                 /*if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
                                     ql.UnitPrice=0;
-                                    ql.DSALES_Gastosdeoperacindelrecibo__c=0;
+                                    ql.dsalesGastosDeOperacionDelRecibo__c=0;
                                     ql.DSALES_Primaneta__c=0;
-                                    ql.DSALES_Derechosdepliza__c=0;
+                                    ql.dsalesDerechosDePoliza__c=0;
                                     ql.DSALES_Comision__c=0;
                                     ql.DSALES_Recargos__c=0;
                                     ql.DSALES_Impuestos__c=0;
@@ -489,14 +489,14 @@ public with sharing class DSALES_QuotePagoSM {
                     idCotSincronizar= listPartInsert[0].QuoteId;
                 }
                 else{ // no aplica seguro gratis
-                    listSeguros=[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,DSALES_Derechosdepliza__c,
-                                DSALES_Gastosdeoperacindelrecibo__c,DSALES_Pagomensual__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
+                    listSeguros=[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+                                dsalesGastosDeOperacionDelRecibo__c,DSALES_Pagomensual__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                                 FROM QuoteLineItem WHERE  QuoteId=:idCot AND DSALES_Tipodeproducto__c='Seguro' AND DSALES_Plazo__r.dsalesPlazo__c =:String.valueOf(plazo) WITH SECURITY_ENFORCED];
                     System.debug('Seguro con plazo correcto:'+listSeguros);
                     System.debug('Seguro size:'+listSeguros.size());
                     if(listSeguros!=null && listSeguros.size()==1){
-                        seguro=[SELECT Id,QuoteId,DSALES_Plazo__r.dsalesPlazo__c,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,DSALES_Derechosdepliza__c,
-                                DSALES_Gastosdeoperacindelrecibo__c,DSALES_Pagomensual__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
+                        seguro=[SELECT Id,QuoteId,DSALES_Plazo__r.dsalesPlazo__c,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,dsalesPlazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+                                dsalesGastosDeOperacionDelRecibo__c,DSALES_Pagomensual__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                                 FROM QuoteLineItem WHERE  QuoteId=:idCot AND DSALES_Tipodeproducto__c='Seguro' AND DSALES_NombreProducto__c=:RC_GRATIS WITH SECURITY_ENFORCED ORDER BY DSALES_Plazo__r.dsalesPlazo__c DESC LIMIT 1]; 
                         listSeguros.add(seguro);
                         System.debug('Seguros:'+listSeguros);
@@ -532,8 +532,8 @@ public with sharing class DSALES_QuotePagoSM {
                     partida.DSALES_Fechadetermino__c = producto.DSALES_Fechadetermino__c;
                     partida.DSALES_Primaneta__c = producto.DSALES_Primaneta__c;
                     partida.UnitPrice = producto.UnitPrice;
-                    partida.DSALES_Derechosdepliza__c = producto.DSALES_Derechosdepliza__c;
-                    partida.DSALES_Gastosdeoperacindelrecibo__c = producto.DSALES_Gastosdeoperacindelrecibo__c;
+                    partida.dsalesDerechosDePoliza__c = producto.dsalesDerechosDePoliza__c;
+                    partida.dsalesGastosDeOperacionDelRecibo__c = producto.dsalesGastosDeOperacionDelRecibo__c;
                     partida.DSALES_Impuestos__c = producto.DSALES_Impuestos__c;
                     partida.DSALES_Comision__c=producto.DSALES_Comision__c;
                     partida.DSALES_TrackingID__c=producto.DSALES_TrackingID__c;
@@ -568,8 +568,8 @@ public with sharing class DSALES_QuotePagoSM {
                                     part.DSALES_Primaneta__c = q.DSALES_Primaneta__c;
                                     partida.UnitPrice = q.UnitPrice;
                                     System.debug('precio de seguro:'+partida.UnitPrice);
-                                    part.DSALES_Derechosdepliza__c = q.DSALES_Derechosdepliza__c;
-                                    part.DSALES_Gastosdeoperacindelrecibo__c = q.DSALES_Gastosdeoperacindelrecibo__c;
+                                    part.dsalesDerechosDePoliza__c = q.dsalesDerechosDePoliza__c;
+                                    part.dsalesGastosDeOperacionDelRecibo__c = q.dsalesGastosDeOperacionDelRecibo__c;
                                     part.DSALES_Impuestos__c = q.DSALES_Impuestos__c;
                                     part.DSALES_TrackingID__c=q.DSALES_TrackingID__c;
                                     part.DSALES_Recargos__c=q.DSALES_Recargos__c;

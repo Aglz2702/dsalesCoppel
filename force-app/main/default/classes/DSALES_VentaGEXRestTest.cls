@@ -6,7 +6,7 @@ public with sharing class DSALES_VentaGEXRestTest {
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         String recordTypeQuoteId = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Garantía Extendida').getRecordTypeId();
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  'CPPL-UGARTE';
+        t.DSales_Tienda__cID__c =  'CPPL-UGARTE';
         insert t;
 
         Account acc = new Account();
@@ -21,7 +21,7 @@ public with sharing class DSALES_VentaGEXRestTest {
         oppor.CloseDate = date.today()+30;
         oppor.StageName = 	'Nuevo';
         oppor.RecordTypeId = recordTypeId;
-        oppor.dsalesTienda = t.Id;
+        oppor.DSales_Tienda__c = t.Id;
         insert oppor;
          Product2 prod2 = new Product2();
         prod2.Name='Testing Test2';
@@ -49,7 +49,7 @@ public with sharing class DSALES_VentaGEXRestTest {
         cotiza.Name = 'GEX';
         cotiza.OpportunityId = oppor.Id;
         cotiza.RecordTypeId =recordTypeQuoteId;
-        cotiza.dsalesTienda = t.Id;
+        cotiza.DSales_Tienda__c = t.Id;
         cotiza.PriceBook2Id=pb2Id;
        // cotiza.DSALES_Regioon__c = 'HERMOSILLO';
         cotiza.DSales_Division__c= '4';
