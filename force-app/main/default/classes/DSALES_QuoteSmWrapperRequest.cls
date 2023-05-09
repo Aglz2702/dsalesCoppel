@@ -280,7 +280,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.DSALES_IDdelvehculo__c = data.idVehiculo;
         cotiza.DSALES_Opcindepago__c = data.opcionPago;
         cotiza.DSALES_Cobertura__c = '';
-        cotiza.DSales_Vendedor__c = data.nombreVendedor;
+        cotiza.dsalesVendedor = data.nombreVendedor;
         cotiza.dsalesGenero = data.generoContacto;
         cotiza.DSALES_Fechadecomienzodepliza__c = data.fechaInicio;
         cotiza.Email = data.correoElectronico;

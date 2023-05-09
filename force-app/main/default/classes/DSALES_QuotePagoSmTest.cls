@@ -270,7 +270,7 @@ public with sharing class DSALES_QuotePagoSmTest {
     }
     @isTest 
     public static void ventaMotoYSeguroTest(){
-        Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test2' LIMIT 1 ];
+        Quote cotizacion=[SELECT Id,dsalesVendedor,OpportunityId FROM Quote WHERE Name='test2' LIMIT 1 ];
         Plazo__c pl =[SELECT Id,dsalesPlazo__c FROM Plazo__c  WHERE dsalesPlazo__c='18' AND DSALES_Seguro__r.Name='AMP' LIMIT 1];
         System.debug('plazo de partida:'+ pl);
         List<QuoteLineItem> partidas =[SELECT Id,DSALES_SKU__c,dsalesPlazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro'  AND dsalesPlazo__c=:pl.Id AND quoteId=:cotizacion.Id LIMIT 1];
@@ -299,7 +299,7 @@ public with sharing class DSALES_QuotePagoSmTest {
     }
     @isTest 
     public static void ventaMotoRcGratisTest(){
-        Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test1'  LIMIT 1];
+        Quote cotizacion=[SELECT Id,dsalesVendedor,OpportunityId FROM Quote WHERE Name='test1'  LIMIT 1];
         //Plazo__c pl =[SELECT Id,dsalesPlazo__c FROM Plazo__c  WHERE dsalesPlazo__c='18' LIMIT 1];
         List<QuoteLineItem> partidas =[SELECT Id,dsalesPlazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro' AND DSALES_Segurogratis__c=true AND quoteId=:cotizacion.Id LIMIT 1];
         QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,dsalesPlazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=true AND quoteId=:cotizacion.Id LIMIT 1];
@@ -326,7 +326,7 @@ public with sharing class DSALES_QuotePagoSmTest {
     
     @isTest 
     public static void ventaSoloMotoTest(){
-        Quote cot=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test3'  LIMIT 1];
+        Quote cot=[SELECT Id,dsalesVendedor,OpportunityId FROM Quote WHERE Name='test3'  LIMIT 1];
         //List<QuoteLineItem> partidas =[SELECT Id,DSALES_Segurogratis__c,dsalesPlazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro' AND DSALES_Segurogratis__c=false AND DSALES_NombreProducto__c='AMP' AND quoteId=:cot.Id  LIMIT 1];
         QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,dsalesPlazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=false  AND quoteId=:cot.Id LIMIT 1];
         //DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE dsalesSeguro__c=false AND DSALES_Oportunidad__c=:cot.OpportunityId LIMIT 1];

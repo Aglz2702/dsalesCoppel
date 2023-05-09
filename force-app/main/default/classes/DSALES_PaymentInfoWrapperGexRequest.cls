@@ -68,7 +68,7 @@ global with sharing class DSALES_PaymentInfoWrapperGexRequest {
                     info.DSALES_No_de_cliente__c = cliente[0].Account.AccountNumber;
                     info.DSALES_TelefonoCliente__c = cliente[0].Account.PersonMobilePhone;
                     info.DSALES_Nombre_del_Vendedor__c= payment.nombreVendedor;
-                    info.DSALES_Vendedor__c=payment.idVendedor;
+                    info.dsalesVendedor=payment.idVendedor;
                     info.DSALES_Caja__c=payment.caja;
                     info.DSALES_Factura__c=payment.idFactura;
                     info.DSALES_Oportunidad__c = payment.opportunityId;
