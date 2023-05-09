@@ -56,7 +56,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_vehculo__c</field>
+                <field>dsalesVehiculo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

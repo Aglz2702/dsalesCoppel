@@ -65,12 +65,12 @@ global with sharing class DSALES_Siniestro {
     }
     public static String actualizaSiniestro(DSALES_SiniestroWrapper.SiniestroGet data){
         List<ClaimPaymentSummary> listaPagos = new List<ClaimPaymentSummary>();
-        Claim siniestro = [SELECT Id,ClaimType,PolicyNumberId,DSALES_Estatus__c,DSALES_SolucionaDevoluci_n__c,DSALES_MotivodeDevolucion__c 
+        Claim siniestro = [SELECT Id,ClaimType,PolicyNumberId,DSALES_Estatus__c,dsalesSolucionaDevolucion__c,DSALES_MotivodeDevolucion__c 
                            FROM Claim WHERE DSALES_SiniestroUid__c =:data.uid WITH SECURITY_ENFORCED LIMIT 1];
         if(data.estatus =='En requerimiento de información'){
             siniestro.DSALES_Estatus__c = data.estatus;
             siniestro.DSALES_MotivodeDevolucion__c = data.motivoDevolucion;
-            siniestro.DSALES_SolucionaDevoluci_n__c = data.solucionDevolucion;
+            siniestro.dsalesSolucionaDevolucion__c = data.solucionDevolucion;
         }
         if(data.estatus =='Pendiente de información'){
             siniestro.DSALES_Estatus__c = data.estatus;
