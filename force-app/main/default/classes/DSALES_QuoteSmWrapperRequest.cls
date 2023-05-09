@@ -267,7 +267,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.OpportunityId = oportunidadId;
         //cotiza.DSALES_FormadePago__c = data.method_payment;
         cotiza.DSales_ID_Tienda__c = data.idTienda;
-        cotiza.DSales_Tienda__c = tienda.Id;
+        cotiza.dsalesTienda = tienda.Id;
         cotiza.ExpirationDate = date.today()+30;
         cotiza.RecordTypeId = recordTypeId;
         date aux = date.today();

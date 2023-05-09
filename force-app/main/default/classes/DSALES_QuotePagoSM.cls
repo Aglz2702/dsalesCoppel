@@ -20,7 +20,7 @@ public with sharing class DSALES_QuotePagoSM {
             String idCotizacion='';
             List<String> listIdCotiza = new List<String>();
             List<QuoteLineItem> listPartidasCreadas = new List<QuoteLineItem>();
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,dsalesSeguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,dsalesSeguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,dsalesTienda,DSALES_SKU__c  
                                             FROM DSALES_InformacionDePago__c 
                                             WHERE Id=:idPago WITH SECURITY_ENFORCED];
             
@@ -102,9 +102,9 @@ public with sharing class DSALES_QuotePagoSM {
         try{
             Quote beforeCot = [SELECT Id,OpportunityId,Name,dsalesFechaDeNacimiento,Email,DSALES_Cobertura__c,DSALES_Opcindepago__c,dsalesGenero,Phone,dsalesCodigoPostal__c,DSALES_Fechadecomienzodepliza__c,
                             dsalesListaNegra,dsalesMotivoDeListaNegra,DSALES_TrakingID__c,DSALES_NombreCliente__c,DSALES_Enviarcotizacion__c,GrandTotal,Tax,dsalesVendedor,ExpirationDate,DSALES_IDdelvehculo__c,
-                            DSales_Tienda__c,DSALES_Plazoacotizar__c,DSALES_PlazoacotizarRC__c,dsalesTipoUso__c,dsalesRfc,DSALES_TipoUso__c,DSALES_Tipodeveihculo__c
+                            dsalesTienda,DSALES_Plazoacotizar__c,DSALES_PlazoacotizarRC__c,dsalesTipoUso__c,dsalesRfc,DSALES_TipoUso__c,DSALES_Tipodeveihculo__c
                             FROM Quote WHERE Id=:idCotizacion WITH SECURITY_ENFORCED];
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,dsalesTienda,DSALES_SKU__c  
                                             FROM DSALES_InformacionDePago__c WHERE Id=:idPago WITH SECURITY_ENFORCED];
             Quote cotizacion = new Quote();
             cotizacion.OpportunityId=beforeCot.OpportunityId;
@@ -124,10 +124,10 @@ public with sharing class DSALES_QuotePagoSM {
                 cotizacion.dsalesVendedor=pago.DSALES_Nombre_del_Vendedor__c;
             }
             cotizacion.dsalesVendedor=beforeCot.dsalesVendedor;
-            if(pago.DSales_Tienda__c!=null){
-                cotizacion.DSales_Tienda__c=pago.DSales_Tienda__c;
+            if(pago.dsalesTienda!=null){
+                cotizacion.dsalesTienda=pago.dsalesTienda;
             }
-            cotizacion.DSales_Tienda__c=beforeCot.DSales_Tienda__c;
+            cotizacion.dsalesTienda=beforeCot.dsalesTienda;
             cotizacion.Tax=beforeCot.Tax;
             cotizacion.DSALES_IDdelvehculo__c=beforeCot.DSALES_IDdelvehculo__c;
             cotizacion.DSALES_Plazoacotizar__c=pago.DSALES_Plazodecomprademoto__c;

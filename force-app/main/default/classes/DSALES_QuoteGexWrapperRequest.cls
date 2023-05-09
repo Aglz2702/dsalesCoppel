@@ -215,7 +215,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         cotiza.OpportunityId = oportunidadId;
         cotiza.RecordTypeId = recordTypeId;
         cotiza.DSales_ID_Tienda__c = data.idTienda;
-        cotiza.DSales_Tienda__c = tienda.Id;
+        cotiza.dsalesTienda = tienda.Id;
         cotiza.ExpirationDate = date.today()+14;
         if (Schema.sObjectType.Quote.isCreateable()) {
             insert cotiza;

@@ -111,12 +111,12 @@ public with sharing class DSALES_QuotePagoSmTest {
         t.dsalesTiendaID__c =  'CPPL-UGARTE';
         insert t;
         
-        Quote cotizacion = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp3.Id,Name='test3',DSales_Tienda__c=t.Id);
+        Quote cotizacion = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp3.Id,Name='test3',dsalesTienda=t.Id);
         insert cotizacion;
         
-        Quote cotMS = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp2.Id,Name='test2',DSales_Tienda__c=t.Id);
+        Quote cotMS = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp2.Id,Name='test2',dsalesTienda=t.Id);
         insert cotMS;
-        Quote cotMRc = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp.Id,Name='test1',DSales_Tienda__c=t.Id);
+        Quote cotMRc = new Quote( RecordTypeId=recordTypeQuoteId,OpportunityId=opp.Id,Name='test1',dsalesTienda=t.Id);
         insert cotMRc;
         
         dsalesTipoUso__c tipoUso = new dsalesTipoUso__c(Name='Comercial');
@@ -292,7 +292,7 @@ public with sharing class DSALES_QuotePagoSmTest {
         pago2.dsalesSeguro__c=true;
         pago2.DSALES_Factura__c='123';
         pago2.DSALES_Nombre_del_Vendedor__c='Cristian';
-        //pago2.DSales_Tienda__c=t.Id;
+        //pago2.dsalesTienda=t.Id;
         insert pago2;
         DSALES_QuotePagoSM.cotizacionesNuevas(pago2.Id, idsPartidas, moto.DSALES_SKU__c);
         Test.stopTest();
@@ -317,7 +317,7 @@ public with sharing class DSALES_QuotePagoSmTest {
         pago.dsalesSeguro__c=true;
         pago.DSALES_Factura__c='123';
         pago.DSALES_Nombre_del_Vendedor__c='Sayra Martinez';
-        //pago.DSales_Tienda__c=t.Id;
+        //pago.dsalesTienda=t.Id;
         insert pago;
         System.debug('*********SEGURO GRATIS*****************');
         DSALES_QuotePagoSM.cotizacionesNuevas(pago.Id, idsPartidas,moto.DSALES_SKU__c);
@@ -339,7 +339,7 @@ public with sharing class DSALES_QuotePagoSmTest {
         pago3.dsalesSeguro__c=false;
         pago3.DSALES_Factura__c='123';
         pago3.DSALES_Nombre_del_Vendedor__c='Cristian';
-        //pago3.DSales_Tienda__c=t.Id;
+        //pago3.dsalesTienda=t.Id;
         insert pago3;
         System.debug('********* SOLO MOTO*****************');
         DSALES_QuotePagoSM.cotizacionesNuevas(pago3.Id, null,moto.DSALES_SKU__c);

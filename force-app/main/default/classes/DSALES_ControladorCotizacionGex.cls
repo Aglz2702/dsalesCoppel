@@ -65,13 +65,13 @@ public without sharing class DSALES_ControladorCotizacionGex {
    
     
     public void replaceHtml(String templateName, Id recordId){ 
-        Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Tienda__c,dsalesVendedor,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED];
+        Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,dsalesTienda,dsalesVendedor,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED];
         List<DSALES_InformacionDePago__c> pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:cotizacion.OpportunityId WITH SECURITY_ENFORCED LIMIT 1];
         email=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Direccion_de_la_tienda__c FROM Quote WHERE ID=:recordId].DSALES_EmailNew__c;
        // cliente=[SELECT Name FROM Account WHERE Id=:cliente].Name;
         List<Tienda__c> tienda = new List<Tienda__c>();
-           //tienda=[SELECT dsalesDireccion__c FROM Tienda__c WHERE Id=:String.ValueOf(cotizacion.DSales_Tienda__c) Limit 1].dsalesDireccion__c;
-           tienda=[SELECT dsalesDireccion__c,dsalesCodigoPostal__c,dsalesCiudad__c,dsalesEstado__c FROM Tienda__c WHERE Id=:cotizacion.DSales_Tienda__c WITH SECURITY_ENFORCED Limit 1];
+           //tienda=[SELECT dsalesDireccion__c FROM Tienda__c WHERE Id=:String.ValueOf(cotizacion.dsalesTienda) Limit 1].dsalesDireccion__c;
+           tienda=[SELECT dsalesDireccion__c,dsalesCodigoPostal__c,dsalesCiudad__c,dsalesEstado__c FROM Tienda__c WHERE Id=:cotizacion.dsalesTienda WITH SECURITY_ENFORCED Limit 1];
         String direccion='';
         for(Tienda__c t: tienda)
         {
@@ -721,13 +721,13 @@ public without sharing class DSALES_ControladorCotizacionGex {
 
     public  void replaceSecondPlantilla(String templateName, Id recordId){ 
         try{
-            Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Tienda__c,dsalesVendedor,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED];
+            Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,dsalesTienda,dsalesVendedor,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED];
             DSALES_InformacionDePago__c pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:cotizacion.OpportunityId WITH SECURITY_ENFORCED LIMIT 1];
             email=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Direccion_de_la_tienda__c FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED].DSALES_EmailNew__c;
             // cliente=[SELECT Name FROM Account WHERE Id=:cliente].Name;
             List<Tienda__c> tienda = new List<Tienda__c>();
-                //tienda=[SELECT dsalesDireccion__c FROM Tienda__c WHERE Id=:String.ValueOf(cotizacion.DSales_Tienda__c) Limit 1].dsalesDireccion__c;
-                tienda=[SELECT dsalesDireccion__c,dsalesCodigoPostal__c,dsalesCiudad__c,dsalesEstado__c FROM Tienda__c WHERE Id=:cotizacion.DSales_Tienda__c WITH SECURITY_ENFORCED Limit 1];
+                //tienda=[SELECT dsalesDireccion__c FROM Tienda__c WHERE Id=:String.ValueOf(cotizacion.dsalesTienda) Limit 1].dsalesDireccion__c;
+                tienda=[SELECT dsalesDireccion__c,dsalesCodigoPostal__c,dsalesCiudad__c,dsalesEstado__c FROM Tienda__c WHERE Id=:cotizacion.dsalesTienda WITH SECURITY_ENFORCED Limit 1];
             String direccion='';
             for(Tienda__c t: tienda)
             {

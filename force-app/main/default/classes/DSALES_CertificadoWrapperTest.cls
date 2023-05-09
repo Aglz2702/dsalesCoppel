@@ -42,7 +42,7 @@ public with sharing class DSALES_CertificadoWrapperTest {
         DSALES_Certificado__c certificado = new DSALES_Certificado__c(DSALES_Email__c='dsanmiguel@deloittemx.com',DSALES_ProductoAdquirido__c=ass.id,
                                                                      DSALES_InformacionDePago__c=pago.id);
         insert certificado;
-        Quote cotGex = new Quote(OpportunityId=opp.Id,Name='GEX',DSales_Tienda__c=tienda.Id);
+        Quote cotGex = new Quote(OpportunityId=opp.Id,Name='GEX',dsalesTienda=tienda.Id);
         insert cotGex;
        
         QuoteLineItem lavadora = new QuoteLineItem();

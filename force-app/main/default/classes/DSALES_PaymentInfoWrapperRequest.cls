@@ -58,7 +58,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
               nuevoPago.DSALES_Fechadeentregaestimada__c=pago.fechaEntrega;   
             }
             nuevoPago.DSALES_Fecha__c=pago.fechaVenta;
-           	nuevoPago.DSales_Tienda__c=tienda.Id;
+           	nuevoPago.dsalesTienda=tienda.Id;
             nuevoPago.DSALES_IDUniversal1__c=pago.idUniversal;
             nuevoPago.DSALES_FolioTransaccion__c=pago.folioTransaccion;
             nuevoPago.DSALES_TipoFolio__c=pago.tipoFolio;

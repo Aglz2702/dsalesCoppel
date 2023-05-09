@@ -109,7 +109,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
             DSALES_FolioCancelacion__c =datos.folioCancelacion,    
             DSALES_NumeroVendedor__c=datos.numeroVendedor,
             DSALES_NombreVendedor__c = datos.nombreVendedor,
-            DSALES_Tienda__c=tienda.Id
+            dsalesTienda=tienda.Id
         ) ;
         if(datos.ListaProductos.size()>0){
             cancelacion.dsalesEstatus=datos.ListaProductos[0].estatus;

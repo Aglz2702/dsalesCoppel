@@ -21,7 +21,7 @@ public with sharing class DSALES_VentaGEXRestTest {
         oppor.CloseDate = date.today()+30;
         oppor.StageName = 	'Nuevo';
         oppor.RecordTypeId = recordTypeId;
-        oppor.DSALES_Tienda__c = t.Id;
+        oppor.dsalesTienda = t.Id;
         insert oppor;
          Product2 prod2 = new Product2();
         prod2.Name='Testing Test2';
@@ -49,7 +49,7 @@ public with sharing class DSALES_VentaGEXRestTest {
         cotiza.Name = 'GEX';
         cotiza.OpportunityId = oppor.Id;
         cotiza.RecordTypeId =recordTypeQuoteId;
-        cotiza.DSales_Tienda__c = t.Id;
+        cotiza.dsalesTienda = t.Id;
         cotiza.PriceBook2Id=pb2Id;
        // cotiza.DSALES_Regioon__c = 'HERMOSILLO';
         cotiza.DSales_Division__c= '4';

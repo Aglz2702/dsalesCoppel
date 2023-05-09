@@ -23,7 +23,7 @@ public with sharing class DSALES_QuotePagoSMHelper {
 
     public static void crearCotNueva2(String idPago, List<String> partidasSeleccionadas, String skuMoto){
         List<String> listIdCotiza = new List<String>();
-        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,dsalesSeguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
+        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,dsalesSeguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,dsalesTienda,DSALES_SKU__c  
                                         FROM DSALES_InformacionDePago__c 
                                         WHERE Id=:idPago WITH SECURITY_ENFORCED];
         Quote beforeCot = [SELECT Id,OpportunityId,AccountId FROM Quote WHERE OpportunityId =:pago.DSALES_Oportunidad__c WITH SECURITY_ENFORCED];
@@ -53,7 +53,7 @@ public with sharing class DSALES_QuotePagoSMHelper {
     }
 
     public static void creacionDePartida(String idPago, List<String> partidasSeleccionadas, String skuMoto){
-        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,dsalesSeguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
+        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,dsalesSeguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,dsalesTienda,DSALES_SKU__c  
                                         FROM DSALES_InformacionDePago__c 
                                         WHERE Id=:idPago WITH SECURITY_ENFORCED];
         Quote beforeCot = [SELECT Id,OpportunityId,AccountId FROM Quote WHERE OpportunityId =:pago.DSALES_Oportunidad__c WITH SECURITY_ENFORCED];

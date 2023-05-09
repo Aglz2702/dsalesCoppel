@@ -58,7 +58,7 @@ global with sharing class DSALES_PaymentInfoWrapperGexRequest {
                     info.RecordTypeId = recordTypeId;
                     info.DSALES_Fecha__c = payment.fechaVenta;
                     info.DSALES_Clave_Tienda__c = payment.claveTienda;
-                    info.DSales_Tienda__c = idTienda[0].Id;
+                    info.dsalesTienda = idTienda[0].Id;
                     info.dsalesEstatus = 'Acreditado';
                     info.DSALES_Factura__c = payment.idFactura;
                     info.DSALES_TotalContado__c = payment.precioTotal;

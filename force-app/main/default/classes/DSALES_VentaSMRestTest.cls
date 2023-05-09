@@ -125,7 +125,7 @@ public with sharing class DSALES_VentaSMRestTest {
         t.dsalesTiendaID__c =  '1';
         insert t;
         
-        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
+        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',dsalesTienda=t.Id);
         insert cotizacion;
         
         dsalesTipoUso__c tipoUso = new dsalesTipoUso__c(Name='Comercial');

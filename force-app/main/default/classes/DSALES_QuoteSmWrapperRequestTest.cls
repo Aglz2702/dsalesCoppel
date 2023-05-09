@@ -107,7 +107,7 @@ public class DSALES_QuoteSmWrapperRequestTest {
         t.dsalesTiendaID__c =  'CPPL-UGARTE';
         insert t;
         
-        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
+        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',dsalesTienda=t.Id);
         insert cotizacion;
 
         QuoteLineItem presupuesto = new QuoteLineItem();
