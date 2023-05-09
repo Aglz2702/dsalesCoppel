@@ -110,14 +110,14 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             pago.DSALES_Motoentregada__c=true;	
         }
         if (Schema.sObjectType.OpportunityLineItem.isQueryable()) {
-            for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
+            for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, dsalesEstatus
                 FROM OpportunityLineItem WHERE OpportunityId=:pago.DSALES_Oportunidad__c AND Product2.DSales_Tipo_de_Producto__c=:'Seguro']){
-                    switch on partidasSeguro.DSALES_Estatus__c {
+                    switch on partidasSeguro.dsalesEstatus {
                         when 'Devuelto' {
                                 emitirPoliza=false;
                         }
                     }
-                    switch on partidasSeguro.DSALES_Estatus__c {
+                    switch on partidasSeguro.dsalesEstatus {
                         when 'Cancelado' {
                                 emitirPoliza=false;
                         }

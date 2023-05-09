@@ -51,7 +51,7 @@ global with sharing class DSALES_Siniestro {
         siniestro.ClaimType = data.tipoSiniestro;
         siniestro.ClaimReason = data.causa;
         siniestro.PolicyNumberId = poliza.Id;
-        siniestro.DSALES_Estatus__c = 'Nuevo';
+        siniestro.dsalesEstatus = 'Nuevo';
         siniestro.DSALES_SiniestroUid__c = data.uid;
         siniestro.DSALES_Ano__c=data.vehiculo.anio;
         siniestro.DSALES_Serie__c=data.vehiculo.serie;
@@ -66,23 +66,23 @@ global with sharing class DSALES_Siniestro {
     }
     public static String actualizaSiniestro(DSALES_SiniestroWrapper.SiniestroGet data){
         List<ClaimPaymentSummary> listaPagos = new List<ClaimPaymentSummary>();
-        Claim siniestro = [SELECT Id,ClaimType,PolicyNumberId,DSALES_Estatus__c,DSALES_SolucionaDevoluci_n__c,DSALES_MotivodeDevolucion__c 
+        Claim siniestro = [SELECT Id,ClaimType,PolicyNumberId,dsalesEstatus,DSALES_SolucionaDevoluci_n__c,DSALES_MotivodeDevolucion__c 
                            FROM Claim WHERE DSALES_SiniestroUid__c =:data.uid WITH SECURITY_ENFORCED LIMIT 1];
         if(data.estatus =='En requerimiento de información'){
-            siniestro.DSALES_Estatus__c = data.estatus;
+            siniestro.dsalesEstatus = data.estatus;
             siniestro.DSALES_MotivodeDevolucion__c = data.comentarioDeEstatus;
             siniestro.DSALES_SolucionaDevoluci_n__c = data.solucion;
         }
         if(data.estatus =='Pendiente de información'){
-            siniestro.DSALES_Estatus__c = data.estatus;
+            siniestro.dsalesEstatus = data.estatus;
             siniestro.DSALES_SolucionDevolver__c = data.solucion;
         }
         if(data.estatus =='Rechazado'){
-            siniestro.DSALES_Estatus__c = data.estatus;
+            siniestro.dsalesEstatus = data.estatus;
             siniestro.DSALES_Motivo_rechazo__c = data.motivoRechazo;
         }
         if(data.estatus =='En solicitud de saldo insoluto'){
-            siniestro.DSALES_Estatus__c = data.estatus;
+            siniestro.dsalesEstatus = data.estatus;
             siniestro.DSALES_SaldoInsoluto__c = Double.ValueOf(data.saldoinsoluto);
         }
         if(data.estatus =='Pagado'){ 

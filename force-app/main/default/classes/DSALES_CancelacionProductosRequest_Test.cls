@@ -191,8 +191,8 @@ public class DSALES_CancelacionProductosRequest_Test {
        	RestResponse response = new RestResponse();
         DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE dsalesSeguro__c=true];
        	Product2 prod=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE Name='Moto Vento'];
-        List<OpportunityLineItem> productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem  WHERE Product2.Name=:'Moto Vento'];
-       	OpportunityLineItem prodSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Product2.Name='AMP'];
+        List<OpportunityLineItem> productosSincro =[SELECT Id,Name,dsalesEstatus FROM OpportunityLineItem  WHERE Product2.Name=:'Moto Vento'];
+       	OpportunityLineItem prodSincro =[SELECT Id,Name,dsalesEstatus FROM OpportunityLineItem WHERE Product2.Name='AMP'];
         productosSincro.add(prodSincro);
         String bodyJson='{"canal":".EXE","fechaCancelacion":"2023-03-22","folioCancelacion":"12876","idUniversal":"'+pago.DSALES_IDUniversal1__c+'","idTienda":"1","numeroCliente":"","nombreVendedor":"Luis Perez Sanchez","numeroVendedor":"1234","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","ListaProductos":[{"idPartidaOportunidad":"'+productosSincro[0].Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":""},{"idPartidaOportunidad":"'+productosSincro[1].Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":""}],"ListaReembolso":[{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"MOTO","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005},{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"AMP","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005}]}';
         request.requestURI='/apexrest/cancelacionProductos/*'; 
@@ -215,7 +215,7 @@ public class DSALES_CancelacionProductosRequest_Test {
        	RestResponse response = new RestResponse();
         DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE dsalesSeguro__c=true];
         List<Product2> productos=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2];
-        List<OpportunityLineItem> productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Opportunity.Name='Venta moto'];
+        List<OpportunityLineItem> productosSincro =[SELECT Id,Name,dsalesEstatus FROM OpportunityLineItem WHERE Opportunity.Name='Venta moto'];
         String bodyJson='{"canal":".EXE","fechaCancelacion":"2023-03-22","folioCancelacion":"12876","idUniversal":"'+pago.DSALES_IDUniversal1__c+'","idTienda":"1","numeroCliente":"","nombreVendedor":"Luis Perez Sanchez","numeroVendedor":"1234","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","ListaProductos":[{"idPartidaOportunidad":"'+productosSincro[0].Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":""},{"idPartidaOportunidad":"'+productosSincro[1].Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":""}],"ListaReembolso":[{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"MOTO","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005},{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"AMP","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005}]}';
         request.requestURI='/apexrest/cancelacionProductos/*'; 
         request.httpMethod='POST'; 
@@ -240,7 +240,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         Product2 producto =[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE Name='Lavadora'];
         List<Product2> productos=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE DSales_Tipo_de_Producto__c='Servicio'];
         productos.add(producto); 
-        OpportunityLineItem productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Opportunity.Name='GEX' AND Product2.Name=:'Gex' ];
+        OpportunityLineItem productosSincro =[SELECT Id,Name,dsalesEstatus FROM OpportunityLineItem WHERE Opportunity.Name='GEX' AND Product2.Name=:'Gex' ];
         String bodyJson='{"canal":".EXE","fechaCancelacion":"2023-03-22","folioCancelacion":"12876","idUniversal":"'+pago.DSALES_IDUniversal1__c+'","idTienda":"1","numeroCliente":"","nombreVendedor":"Luis Perez Sanchez","numeroVendedor":"1234","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","ListaProductos":[{"idPartidaOportunidad":"'+productosSincro.Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":"'+certificado.Name+'"}],"ListaReembolso":[{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"AMP","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005}]}';
         request.requestURI='/apexrest/cancelacionProductos/*'; 
         request.httpMethod='POST'; 
@@ -264,7 +264,7 @@ public class DSALES_CancelacionProductosRequest_Test {
        	Product2 producto =[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE Name='Lavadora'];
         List<Product2> productos=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE DSales_Tipo_de_Producto__c='Servicio'];
         productos.add(producto);
-        OpportunityLineItem productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Opportunity.Name='GEX' AND Product2.Name=:'Lavadora'];
+        OpportunityLineItem productosSincro =[SELECT Id,Name,dsalesEstatus FROM OpportunityLineItem WHERE Opportunity.Name='GEX' AND Product2.Name=:'Lavadora'];
         String bodyJson='{"canal":".EXE","fechaCancelacion":"2023-03-22","folioCancelacion":"12876","idUniversal":"'+pago.DSALES_IDUniversal1__c+'","idTienda":"1","numeroCliente":"","nombreVendedor":"Luis Perez Sanchez","numeroVendedor":"1234","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","ListaProductos":[{"idPartidaOportunidad":"","estatus":"","motivoCancelacion":"","idCertificado":""},{"idPartidaOportunidad":"","estatus":"","motivoCancelacion":"","idCertificado":""}],"ListaReembolso":[{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"MOTO","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005}]}';
         request.requestURI='/apexrest/cancelacionProductos/*'; 
         request.httpMethod='POST'; 

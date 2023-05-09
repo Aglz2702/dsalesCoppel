@@ -22,7 +22,7 @@ public class DSALES_EndosoWrapperRequest_Test {
         endoso.DSALES_uid__c = 'testUid';
         endoso.DSALES_Cliente__c = ac.Id;
         endoso.DSALES_Poliza__c = poliza.Id;
-        endoso.DSALES_Estatus__c = 'Nuevo';
+        endoso.dsalesEstatus = 'Nuevo';
         endoso.DSALES_MotivoRechazo__c ='Test';
         endoso.DSALES_MotivoDevolucion__c ='test';
         endoso.DSALES_SolucionDevolucion__c ='test';
@@ -94,8 +94,8 @@ public class DSALES_EndosoWrapperRequest_Test {
     
     @isTest 
     static void testUpdateEndoso() {
-        DSALES_Endoso__c endoso = [SELECT Id,DSALES_Poliza__c,DSALES_uid__c,DSALES_Valor__c,DSALES_Tipodedato__c,DSALES_CorreoElectronico__c, DSALES_MontoaDevolver__c,DSALES_Estatus__c, 
-                                   DSALES_MotivoRechazo__c,DSALES_MotivoDevolucion__c, DSALES_SolucionDevolucion__c FROM DSALES_Endoso__c WHERE DSALES_Estatus__c = 'Nuevo' LIMIT 1];
+        DSALES_Endoso__c endoso = [SELECT Id,DSALES_Poliza__c,DSALES_uid__c,DSALES_Valor__c,DSALES_Tipodedato__c,DSALES_CorreoElectronico__c, DSALES_MontoaDevolver__c,dsalesEstatus, 
+                                   DSALES_MotivoRechazo__c,DSALES_MotivoDevolucion__c, DSALES_SolucionDevolucion__c FROM DSALES_Endoso__c WHERE dsalesEstatus = 'Nuevo' LIMIT 1];
         
         InsurancePolicy poliza = [SELECT Id, DSALES_TelefonoContacto__c, DSALES_CorreoElectronico__c,DSALES_NombredelAsegurado__c, DSALES_Placas__c, DSALES_Numeroserie__c,
                                   DSALES_Nmerodemotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=: endoso.DSALES_Poliza__c];
@@ -115,8 +115,8 @@ public class DSALES_EndosoWrapperRequest_Test {
         requestReq.solucionDevolucion = 'Test Solucion Devolucion';
         DSALES_EndorsementWrapper.EndorsementResponse responseRes = DSALES_EndosoWrapperRequestHelper.updateEndoso(requestReq);
         System.assertEquals(true, responseRes.success, 'El registro se ha creado correctamente');      
-        endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MotivoDevolucion__c, DSALES_SolucionDevolucion__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
-        System.assertEquals('Requerimiento de Información', endoso.DSALES_Estatus__c, 'El estado de endoso es Requerimiento de Información');
+        endoso = [SELECT Id, dsalesEstatus, DSALES_MotivoDevolucion__c, DSALES_SolucionDevolucion__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
+        System.assertEquals('Requerimiento de Información', endoso.dsalesEstatus, 'El estado de endoso es Requerimiento de Información');
         System.assertEquals('Test Motivo Devolucion', endoso.DSALES_MotivoDevolucion__c, 'El MotivoDevolucion de endoso es Test Motivo Devolucion');
         System.assertEquals('Test Solucion Devolucion', endoso.DSALES_SolucionDevolucion__c, 'El SolucionDevolucion de endoso es Test Solucion Devolucion');
         
@@ -127,8 +127,8 @@ public class DSALES_EndosoWrapperRequest_Test {
         requestRech.motivoRechazo = 'Test Motivo Rechazo';
         DSALES_EndorsementWrapper.EndorsementResponse responseRech = DSALES_EndosoWrapperRequestHelper.updateEndoso(requestRech);
         System.assertEquals(true, responseRech.success, 'El registro se ha creado correctamente');
-        endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MotivoRechazo__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
-        System.assertEquals('Rechazado', endoso.DSALES_Estatus__c, 'El estado de endoso es Rechazado');
+        endoso = [SELECT Id, dsalesEstatus, DSALES_MotivoRechazo__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
+        System.assertEquals('Rechazado', endoso.dsalesEstatus, 'El estado de endoso es Rechazado');
         System.assertEquals('Test Motivo Rechazo', endoso.DSALES_MotivoRechazo__c, 'El MotivoRechazo de endoso es Test Motivo Rechazo');
         
         // Test update with 'Autorizado' status
@@ -137,8 +137,8 @@ public class DSALES_EndosoWrapperRequest_Test {
         requestAuto.estatus = 'Autorizado';
         requestAuto.montoDevolver = 4.55;
         DSALES_EndosoWrapperRequestHelper.updateEndoso(requestAuto);
-        endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MontoaDevolver__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
-        System.assertEquals('Autorizado', endoso.DSALES_Estatus__c, 'El estado de endoso es Autorizado');
+        endoso = [SELECT Id, dsalesEstatus, DSALES_MontoaDevolver__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
+        System.assertEquals('Autorizado', endoso.dsalesEstatus, 'El estado de endoso es Autorizado');
         System.assertEquals(4.55, endoso.DSALES_MontoaDevolver__c, 'El MontoaDevolver de endoso es 4.55');
         
         DSALES_EndorsementWrapper.EndorsementRequest endosos = new DSALES_EndorsementWrapper.EndorsementRequest();
