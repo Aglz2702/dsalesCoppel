@@ -2412,7 +2412,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>InsurancePolicyAsset.Estatus__c</field>
+        <field>InsurancePolicyAsset.dsalesEstatus__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

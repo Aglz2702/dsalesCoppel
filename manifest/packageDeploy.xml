@@ -493,7 +493,7 @@
 	<members>InsurancePolicyAsset.DSALES_Tienda__c</members>
 	<members>InsurancePolicyAsset.DSALES_Uso__c</members>
 	<members>InsurancePolicyAsset.DSALES_Valorfactura__c</members>
-	<members>InsurancePolicyAsset.Estatus__c</members>
+	<members>InsurancePolicyAsset.dsalesEstatus__c</members>
 	<members>InsurancePolicyAsset.DSALES_Factura__c</members>
 	<members>Opportunity.DSALES_Certificado__c</members>
 	<members>Opportunity.A_o_anterior__c</members>

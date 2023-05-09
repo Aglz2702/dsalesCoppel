@@ -186,7 +186,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 ipAssetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
                 ipAssetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
                 ipAssetRecord.InsurancePolicyId=pago.DSALES_Poliza__c;
-                ipAssetRecord.Estatus__c='Activo';
+                ipAssetRecord.dsalesEstatus__c='Activo';
                 ipAssetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
                 ipAssetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
                 ipAssetRecord.DSALES_Modelo__c=policyAsset.modelo;
@@ -211,7 +211,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 ipAssetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
                 ipAssetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
                 ipAssetRecord.InsurancePolicyId= poliza.Id;
-                ipAssetRecord.Estatus__c='Activo';
+                ipAssetRecord.dsalesEstatus__c='Activo';
                 ipAssetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
                 ipAssetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
                 ipAssetRecord.DSALES_Modelo__c=policyAsset.modelo;

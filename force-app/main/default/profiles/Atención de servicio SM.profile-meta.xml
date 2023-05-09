@@ -3234,7 +3234,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InsurancePolicyAsset.Estatus__c</field>
+        <field>InsurancePolicyAsset.dsalesEstatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -176,7 +176,7 @@ public class DSALES_CancelacionProductosRequest_Test {
             					AssetName='MOTO VENTO',
             					DSALES_InformacionPago__c=pago.Id,
             					dsalesCliente__c=acc.Id,
-            					Estatus__c='Activo',
+            					dsalesEstatus__c='Activo',
             					DSALES_Motoexterna__c=true
         );
         insert activo;

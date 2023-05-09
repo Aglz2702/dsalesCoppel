@@ -66,7 +66,7 @@ global with sharing class DSALES_IPAssetWrapperRequest {
                 ipAssetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
                 ipAssetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
                 ipAssetRecord.InsurancePolicyId=pago.DSALES_Poliza__c;
-                ipAssetRecord.Estatus__c='Activo';
+                ipAssetRecord.dsalesEstatus__c='Activo';
                 // ipAssetRecord.DSALES_ClaveAMIS__c=policyAsset.key_amis;
                 ipAssetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
                 ipAssetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
