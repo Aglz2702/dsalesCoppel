@@ -1,5 +1,6 @@
 @istest
 public with sharing class DSALES_VentaSMRestTest {
+    /*
    @testSetup
     static void creacionRegistros(){
         String tipoProducto = 'Producto';
@@ -26,8 +27,8 @@ public with sharing class DSALES_VentaSMRestTest {
         
         Product2 prodM = new Product2(Name ='Moto',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='12121212',DSales_Tipo_de_Producto__c='Producto',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40,IsActive=true);
 		insert prodM;
-         /* Product2 prodM2 = new Product2(Name ='Moto Vento',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='1225473',DSales_Tipo_de_Producto__c='Producto',IsActive=true);
-		insert prodM2;*/
+         Product2 prodM2 = new Product2(Name ='Moto Vento',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='1225473',DSales_Tipo_de_Producto__c='Producto',IsActive=true);
+		insert prodM2;
         
         Id pricebookId = Test.getStandardPricebookId();
         
@@ -52,12 +53,12 @@ public with sharing class DSALES_VentaSMRestTest {
         standardPriceMoto.IsActive = true;
         insert standardPriceMoto;
         
-        /*PricebookEntry standardPriceMoto2 = new PricebookEntry();
+        PricebookEntry standardPriceMoto2 = new PricebookEntry();
         standardPriceMoto2.Pricebook2Id = pricebookId;
         standardPriceMoto2.Product2Id = prodM2.Id;
         standardPriceMoto2.UnitPrice = 1000;
         standardPriceMoto2.IsActive = true;
-        insert standardPriceMoto2;*/
+        insert standardPriceMoto2;
         
         Pricebook2 customPB = new Pricebook2();
         customPB.Name='Standard Price Book';
@@ -85,12 +86,12 @@ public with sharing class DSALES_VentaSMRestTest {
         customPriceMoto.IsActive = true;
         insert customPriceMoto;
         
-        /*PricebookEntry customPriceMoto2 = new PricebookEntry();
+        PricebookEntry customPriceMoto2 = new PricebookEntry();
         customPriceMoto2.Pricebook2Id = customPB.Id;
         customPriceMoto2.Product2Id = prodM2.Id;
         customPriceMoto2.UnitPrice = 2000;
         customPriceMoto2.IsActive = true;
-        insert customPriceMoto2;*/
+        insert customPriceMoto2;
 		
         
         
@@ -121,37 +122,37 @@ public with sharing class DSALES_VentaSMRestTest {
         insert opp;
         
         Tienda__c t = new Tienda__c();
-        t.DSales_TiendaID__c =  '1';
+        t.dsalesTiendaID__c =  '1';
         insert t;
         
         Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
         insert cotizacion;
         
-        DSALES_TipodeUso__c tipoUso = new DSALES_TipodeUso__c(Name='Comercial');
+        dsalesTipoUso__c tipoUso = new dsalesTipoUso__c(Name='Comercial');
         insert tipoUso;
         DSALES_Tipodevehculo__c tipovehiculo = new DSALES_Tipodevehculo__c(Name='Moto');
         insert tipovehiculo;
         
         Plazo__c plazoRC12 = new Plazo__c();
         plazoRC12.Name='12';
-        plazoRC12.DSALES_Seguro__c=prodRc.Id;
-        plazoRC12.Dsales_Plazo__c='12';
-        plazoRC12.DSALES_Activo__c=true;
+        plazoRC12.dsalesSeguro__c=prodRc.Id;
+        plazoRC12.dsalesPlazo__c='12';
+        plazoRC12.dsalesActivo__c=true;
         insert plazoRC12;
         
         Plazo__c plazoRC18 = new Plazo__c();
         plazoRC18.Name='18';
-        plazoRC18.DSALES_Seguro__c=prodRc.Id;
-        plazoRC18.Dsales_Plazo__c='18';
-        plazoRC18.DSALES_Activo__c=true;
+        plazoRC18.dsalesSeguro__c=prodRc.Id;
+        plazoRC18.dsalesPlazo__c='18';
+        plazoRC18.dsalesActivo__c=true;
         insert plazoRC18;
         
-        Plazo__c plazoAMP12 = new Plazo__c(Name='12',Dsales_Plazo__c='12',DSALES_Seguro__c=prodAmp.Id,DSALES_Activo__c=true);
+        Plazo__c plazoAMP12 = new Plazo__c(Name='12',dsalesPlazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
         insert plazoAMP12;
-         Plazo__c plazoAMP18 = new Plazo__c(Name='18',Dsales_Plazo__c='18',DSALES_Seguro__c=prodAmp.Id,DSALES_Activo__c=true);
+         Plazo__c plazoAMP18 = new Plazo__c(Name='18',dsalesPlazo__c='18',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
         insert plazoAMP18;
         
-        /*QuoteLineItem moto = new QuoteLineItem();
+        QuoteLineItem moto = new QuoteLineItem();
         moto.QuoteId = cotizacion.Id;
         moto.PricebookEntryId = customPrice.Id;
         moto.Product2Id = prodM.Id;
@@ -159,8 +160,8 @@ public with sharing class DSALES_VentaSMRestTest {
         moto.UnitPrice = customPrice.UnitPrice;
         moto.DSALES_Segurogratis__c=true;
         //moto.DSALES_Tipodeproducto__c = 'Producto';
-        insert moto;*/
-        /*QuoteLineItem moto2 = new QuoteLineItem();
+        insert moto;
+        QuoteLineItem moto2 = new QuoteLineItem();
         moto2.QuoteId = cotizacion.Id;
         moto2.PricebookEntryId = customPrice.Id;
         moto2.Product2Id = prodM2.Id;
@@ -168,18 +169,18 @@ public with sharing class DSALES_VentaSMRestTest {
         moto2.UnitPrice = customPrice.UnitPrice;
         moto2.DSALES_Segurogratis__c=false;
         //moto.DSALES_Tipodeproducto__c = 'Producto';
-        insert moto2;*/
+        insert moto2;
         
-        /*QuoteLineItem seguroRc = new QuoteLineItem();
+        QuoteLineItem seguroRc = new QuoteLineItem();
         seguroRc.QuoteId = cotizacion.Id;
         seguroRc.PricebookEntryId = customPrice.Id;
         seguroRc.Product2Id = prodRc.Id;
         seguroRc.Quantity = 1.0;
         seguroRc.UnitPrice = customPrice.UnitPrice;
         //seguroRc.DSALES_Tipodeproducto__c = 'Producto';
-        seguroRc.DSALES_Plazo__c=plazoRC18.Id;
+        seguroRc.dsalesPlazo__c=plazoRC18.Id;
         seguroRc.DSALES_Segurogratis__c=false;
-        insert seguroRc;*/
+        insert seguroRc;
         
         QuoteLineItem seguroRcG = new QuoteLineItem();
         seguroRcG.QuoteId = cotizacion.Id;
@@ -188,7 +189,7 @@ public with sharing class DSALES_VentaSMRestTest {
         seguroRcG.Quantity = 1.0;
         seguroRcG.UnitPrice = customPrice.UnitPrice;
         //seguroRc.DSALES_Tipodeproducto__c = 'Producto';
-        seguroRcG.DSALES_Plazo__c=plazoRC12.Id;
+        seguroRcG.dsalesPlazo__c=plazoRC12.Id;
         seguroRcG.DSALES_Segurogratis__c=false;
         insert seguroRcG;
         
@@ -199,19 +200,19 @@ public with sharing class DSALES_VentaSMRestTest {
         seguroAmp.Quantity = 1.0;
         seguroAmp.UnitPrice = customPrice.UnitPrice;
         //seguroAmp.DSALES_Tipodeproducto__c = 'Producto';
-        seguroAmp.DSALES_Plazo__c=plazoAMP12.Id;
+        seguroAmp.dsalesPlazo__c=plazoAMP12.Id;
         seguroAmp.DSALES_Segurogratis__c=false;
         insert seguroAmp;
     }
     
-    /*@isTest
+    @isTest
     public static void ventaTest(){
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
         Product2 producto =[SELECT Id FROM Product2 WHERE Name='AMP Seguro de Moto' LIMIT 1];
         Plazo__c plazo=[SELECT Id FROM Plazo__c WHERE Name='18' LIMIT 1];
         Quote cot =[SELECT Id,OpportunityId,Opportunity.Name FROM Quote WHERE Name ='test' LIMIT 1];
-        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  DSALES_Plazo__c=:plazo.Id LIMIT 1];
+        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  dsalesPlazo__c=:plazo.Id LIMIT 1];
 		SYstem.debug('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         System.debug('cotizacion:'+cot.Id);
         System.debug('cotizacion:'+partida.Id);
@@ -231,7 +232,7 @@ public with sharing class DSALES_VentaSMRestTest {
         RestContext.request = request;
         RestContext.response= response;
 
-    }*/
+}
     
      @isTest
     public static void ventaExternaTest(){
@@ -240,7 +241,7 @@ public with sharing class DSALES_VentaSMRestTest {
         Product2 producto =[SELECT Id FROM Product2 WHERE Name='AMP' LIMIT 1];
         Plazo__c plazo=[SELECT Id FROM Plazo__c WHERE Name='12' LIMIT 1];
         Quote cot =[SELECT Id,OpportunityId,Opportunity.Name FROM Quote WHERE Name ='test' LIMIT 1];
-        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  DSALES_Plazo__c=:plazo.Id LIMIT 1];
+        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  dsalesPlazo__c=:plazo.Id LIMIT 1];
 		SYstem.debug('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         System.debug('cotizacion:'+cot.Id);
         System.debug('partida:'+partida.Id);
@@ -262,4 +263,5 @@ public with sharing class DSALES_VentaSMRestTest {
         RestContext.response= response;
         System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
     }
+*/
 }

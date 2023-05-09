@@ -78,7 +78,7 @@
     </groupingsDown>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>FK_$Tienda__c.DSALES_Nombre_GerentedeTiendadeZona__c</field>
+        <field>FK_$Tienda__c.dsalesNombreGerenteDeTiendaDeZona__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>GEX - Tiendas por mes</name>

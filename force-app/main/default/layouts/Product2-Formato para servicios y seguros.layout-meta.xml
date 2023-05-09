@@ -110,22 +110,22 @@
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
         <fields>DSales_Servicio_Seguro__c</fields>
-        <relatedList>DSales_Asignacion_de_Productos__c.DSales_Producto__c</relatedList>
+        <relatedList>DSales_Asignacion_de_Productos__c.dsalesProducto__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
         <fields>DSALES_Campania__c</fields>
-        <fields>DSALES_Activo__c</fields>
+        <fields>dsalesActivo__c</fields>
         <fields>CREATED_DATE</fields>
-        <relatedList>DSALES_AsociacionCampanias__c.DSALES_Producto__c</relatedList>
+        <relatedList>DSALES_AsociacionCampanias__c.dsalesProducto__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>DSALES_TipodeUso__c</fields>
-        <fields>DSALES_Activo__c</fields>
+        <fields>dsalesTipoUso__c</fields>
+        <fields>dsalesActivo__c</fields>
         <fields>CREATED_DATE</fields>
-        <relatedList>DSALES_AsociacionTiposUso__c.DSALES_Producto__c</relatedList>
+        <relatedList>DSALES_AsociacionTiposUso__c.dsalesProducto__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

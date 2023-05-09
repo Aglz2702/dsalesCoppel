@@ -144,7 +144,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_Cdigopostal__c</field>
+                <field>dsalesCodigoPostal__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -304,7 +304,7 @@
     </relatedContent>
     <relatedLists>
         <fields>QUOTE_LI.PRODUCT2</fields>
-        <fields>DSALES_Plazo__c</fields>
+        <fields>dsalesPlazo__c</fields>
         <fields>QUOTE_LI.QUANTITY</fields>
         <fields>QUOTE_LI.UNIT_PRICE</fields>
         <relatedList>RelatedQuoteLineItemList</relatedList>

@@ -51,7 +51,7 @@ global with sharing class DSALES_PaymentInfoWrapperGexRequest {
                     List<Tienda__c> idTienda = new List<Tienda__c>();
                     List<Opportunity> cliente = new List<Opportunity>();
                     if(Opportunity.SObjectType.getDescribe().isAccessible() && Tienda__c.SObjectType.getDescribe().isAccessible()){
-                        idTienda = [SELECT id FROM Tienda__c WHERE DSales_TiendaID__c =:payment.claveTienda LIMIT 1];
+                        idTienda = [SELECT id FROM Tienda__c WHERE dsalesTiendaID__c =:payment.claveTienda LIMIT 1];
                         cliente = [SELECT id,AccountId,Account.Name,Account.BillingStreet,Account.BillingCity,Account.BillingState,Account.BillingCountry,Account.BillingPostalCode,Account.AccountNumber,Account.PersonMobilePhone FROM Opportunity WHERE Id=:payment.opportunityId LIMIT 1];
                     }
                     system.debug('pagoss 222:  '+payment.PartidasDePago);

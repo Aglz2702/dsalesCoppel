@@ -9,7 +9,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_Seguro__c</field>
+                <field>dsalesSeguro__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -17,17 +17,17 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Activo__c</field>
+                <field>dsalesActivo__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Dsales_Plazo__c</field>
+                <field>dsalesPlazo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Descripcin__c</field>
+                <field>dsalesDescripcion__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

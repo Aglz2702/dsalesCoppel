@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <aggregates>
-        <calculatedFormula>(B0#OpportunityLineItem.DSALES_Servicio__c:SUM)/B0#OpportunityLineItem.DSALES_Producto__c:SUM</calculatedFormula>
+        <calculatedFormula>(B0#OpportunityLineItem.DSALES_Servicio__c:SUM)/B0#OpportunityLineItem.dsalesProducto__c:SUM</calculatedFormula>
         <datatype>percent</datatype>
         <developerName>FORMULA1</developerName>
         <isActive>true</isActive>
@@ -16,7 +16,7 @@
         </blockInfo>
         <columns>
             <aggregateTypes>Sum</aggregateTypes>
-            <field>OpportunityLineItem.DSALES_Producto__c</field>
+            <field>OpportunityLineItem.dsalesProducto__c</field>
         </columns>
         <columns>
             <aggregateTypes>Sum</aggregateTypes>
@@ -54,7 +54,7 @@
         <reportType>ProductOpportunity@Opportunity.DSALES_InformaciondePago__c</reportType>
         <showGrandTotal>true</showGrandTotal>
         <showSubTotals>true</showSubTotals>
-        <sortColumn>OpportunityLineItem.DSALES_Producto__c</sortColumn>
+        <sortColumn>OpportunityLineItem.dsalesProducto__c</sortColumn>
         <sortOrder>Asc</sortOrder>
         <timeFrameFilter>
             <dateColumn>CREATED_DATE</dateColumn>
@@ -126,7 +126,7 @@
         <chartSummaries>
             <aggregate>Sum</aggregate>
             <axisBinding>y2</axisBinding>
-            <column>B0#OpportunityLineItem.DSALES_Producto__c</column>
+            <column>B0#OpportunityLineItem.dsalesProducto__c</column>
         </chartSummaries>
         <chartType>VerticalColumnLine</chartType>
         <enableHoverLabels>false</enableHoverLabels>

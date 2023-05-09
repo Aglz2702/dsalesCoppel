@@ -25,7 +25,7 @@ public without sharing class DSALES_ControladorCertificadoPDF {
         if (Schema.sObjectType.DSALES_Certificado__c.isQueryable()) {
             certificado = DataBase.query(String.escapeSingleQuotes(query));
         }  
-        tienda=[SELECT name FROM Tienda__c WHERE DSales_TiendaID__c=:certificado.DSALES_Tienda__c  WITH SECURITY_ENFORCED LIMIT 1];
+        tienda=[SELECT name FROM Tienda__c WHERE dsalesTiendaID__c=:certificado.DSALES_Tienda__c  WITH SECURITY_ENFORCED LIMIT 1];
         html=html.replace('DSALES_Tienda__c', tienda.Name);
         html = html.replace('certificado.', '');
         /*for(String item: mapCampos.keySet()){

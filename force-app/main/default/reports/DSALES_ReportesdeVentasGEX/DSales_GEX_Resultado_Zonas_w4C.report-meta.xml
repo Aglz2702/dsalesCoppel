@@ -24,7 +24,7 @@
         <groupingColumn>Quote.DSALES_Regioon__c</groupingColumn>
         <legendPosition>Right</legendPosition>
         <location>CHART_BOTTOM</location>
-        <secondaryGroupingColumn>FK_$Tienda__c.DSALES_Nombre_GerentedeTiendadeZona__c</secondaryGroupingColumn>
+        <secondaryGroupingColumn>FK_$Tienda__c.dsalesNombreGerenteDeTiendaDeZona__c</secondaryGroupingColumn>
         <showAxisLabels>false</showAxisLabels>
         <showPercentage>false</showPercentage>
         <showTotal>false</showTotal>
@@ -73,7 +73,7 @@
     </groupingsDown>
     <groupingsDown>
         <dateGranularity>Day</dateGranularity>
-        <field>FK_$Tienda__c.DSALES_Nombre_GerentedeTiendadeZona__c</field>
+        <field>FK_$Tienda__c.dsalesNombreGerenteDeTiendaDeZona__c</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>GEX Resultado - Zonas</name>

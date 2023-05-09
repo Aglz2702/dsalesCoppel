@@ -204,7 +204,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             
             certificadoRecord.DSALES_Ticket__c=certificado.idFactura;
             certificadoRecord.DSALES_Tienda__c=certificado.claveTienda;
-            certificadoRecord.DSALES_TiendaId__c=certificado.idTienda;
+            certificadoRecord.dsalesTiendaID__c=certificado.idTienda;
             certificadoRecord.DSALES_Caja_GEX__c=certificado.numeroCajaCoppel;
             certificadoRecord.DSALES_Numero_de_Vendedor__c=certificado.idVendedor;
             certificadoRecord.DSALES_Nombre_Vendedor__c=certificado.nombreVendedor;	

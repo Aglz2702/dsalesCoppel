@@ -26,8 +26,8 @@ public class DSALES_ClasificacionServicio_Test {
           
         DSales_Matriz_GEX__c mat = new DSales_Matriz_GEX__c();
         mat.Name= 'test1';
-        mat.DSALES_Activo__c= true;
-        mat.DSALES_Region__c ='Hermosillo';
+        mat.dsalesActivo__c= true;
+        mat.dsalesRegion__c ='Hermosillo';
         mat.DSALES_Tiempogex__c = '2 años';
         insert mat;
         
@@ -81,15 +81,15 @@ public class DSALES_ClasificacionServicio_Test {
         DSales_Asignacion_de_Productos__c asignacionprod = new DSales_Asignacion_de_Productos__c();
         asignacionprod.Name='Test';
         asignacionprod.DSales_Servicio_Seguro__c= producto.Id;
-        asignacionprod.DSales_Producto__c=objetoserv.Id;
-        asignacionprod.DSALES_Activo__c=true;
+        asignacionprod.dsalesProducto__c=objetoserv.Id;
+        asignacionprod.dsalesActivo__c=true;
         insert asignacionprod;
         
         Campaign camp = new Campaign();
         camp.Name = 'TestCampaing';
         insert camp;
         
-        DSALES_TipodeUso__c tp = new DSALES_TipodeUso__c();
+        dsalesTipoUso__c tp = new dsalesTipoUso__c();
         tp.Name = 'TestTipoUso';
         insert tp;
         
@@ -103,7 +103,7 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_Clase__c idclass=  [select id from DSALES_Clase__c limit 1];
         DSales_Matriz_GEX__c idmat= [select id from DSales_Matriz_GEX__c limit 1];
         Campaign idcamp = [Select id from Campaign limit 1];
-        DSALES_TipodeUso__c idtp = [Select id from DSALES_TipodeUso__c limit 1];
+        dsalesTipoUso__c idtp = [Select id from dsalesTipoUso__c limit 1];
         DSALES_ClasificacionServicio.DSALES_ClasificacionServicioWrapper controller = DSALES_ClasificacionServicio.getPickListCategoria();
         controller.listCategorias[0].seleccionado = true;
         

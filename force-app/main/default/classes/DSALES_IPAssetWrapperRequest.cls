@@ -56,9 +56,9 @@ global with sharing class DSALES_IPAssetWrapperRequest {
         InsurancePolicyAsset ipAssetRecord  = new InsurancePolicyAsset();
         try{
             
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c,DSALES_IDUniversal__c,DSALES_Nombre_del_Vendedor__c,DSALES_Motoentregada__c, DSALES_Motoexterna__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE Id=:idPago WITH SECURITY_ENFORCED LIMIT 1];
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c,DSALES_IDUniversal__c,DSALES_Nombre_del_Vendedor__c,DSALES_Motoentregada__c, DSALES_Motoexterna__c,dsalesSeguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE Id=:idPago WITH SECURITY_ENFORCED LIMIT 1];
             System.debug('pago:'+pago);
-            if(pago.DSALES_Seguro__c ==true) {
+            if(pago.dsalesSeguro__c ==true) {
                 ipAssetRecord.DSALES_InformacionPago__c=pago.Id;
                 iPAssetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
                 ipAssetRecord.DSALES_Tienda__c=policyAsset.idTienda;

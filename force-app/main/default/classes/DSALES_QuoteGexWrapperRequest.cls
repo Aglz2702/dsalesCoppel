@@ -1,6 +1,6 @@
 @RestResource(urlMapping='/insertQuoteGex/*')
 global with sharing class DSALES_QuoteGexWrapperRequest {
-    
+    /*
     @HttpPost
     global static DSALES_QuoteGexWrapper.respuestaNPV createQuote(){
         Boolean success = true;
@@ -21,13 +21,13 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         mapProducts.put(p.skuDeTangible, p);
                     }
                     List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
-                    productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSALES_SKU__c in: mapProducts.keySet() WITH SECURITY_ENFORCED];
+                    productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, dsalesProducto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE dsalesActivo__c=true AND  DSALES_SKU__c in: mapProducts.keySet() WITH SECURITY_ENFORCED];
                     List<Id> dsalesProductoSetId = new List<Id>();
                     for(DSales_Asignacion_de_Productos__c da : productAsig){
-                        dsalesProductoSetId.add(da.DSales_Producto__c);
+                        dsalesProductoSetId.add(da.dsalesProducto__c);
                     }
                     Account universalAccount = [Select Id from Account WHERE DSALES_ClienteCoppel__c = :DSALES_Utility.NUMERO_CLIENTE_GENERICO WITH SECURITY_ENFORCED LIMIT 1];
-                    Tienda__c tienda = [Select Id from Tienda__c WHERE DSales_TiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
+                    Tienda__c tienda = [Select Id from Tienda__c WHERE dsalesTiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
                     
                     Id clienteId=null; 
                     Map<String, String> mapNomyId=new Map<String, String>();
@@ -37,9 +37,15 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         mapNomyId.put('firstName',clienteContado[0].FirstName);
                         mapNomyId.put('lastName',clienteContado[0].LastName);
                         mapNomyId.put('clienteId',clienteId);
-                        oppor = crearOportunidad(data, /*clienteId, clienteContado[0].FirstName, clienteContado[0].LastName,*/mapNomyId ,tienda);
+                */
+                /*
+                        oppor = crearOportunidad(data, /*clienteId, clienteContado[0].FirstName, clienteContado[0].LastName,*/
+                        
+                        /*mapNomyId ,tienda);
+                       /*
                         mapNomyId.put('oportunidadId',oppor.Id);
-                        cotiza = crearCotizacion(data, /*oppor.Id, clienteContado[0].FirstName, clienteContado[0].LastName,*/ mapNomyId ,tienda);
+                        cotiza = crearCotizacion(data, /*oppor.Id, clienteContado[0].FirstName, clienteContado[0].LastName,/* mapNomyId ,tienda);
+                        /*
                         listaPartida = crearPartidas(data, cotiza.Id);
                     }else{
                         if(data.numeroCliente != DSALES_Utility.NUMERO_CLIENTE_GENERICO){
@@ -47,44 +53,25 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             switch on result.size() {
                                 when 1 {
                                     clienteId = result[0].Id;
-<<<<<<< HEAD
-<<<<<<< HEAD
                                     mapNomyId.put('firstName',result[0].FirstName);
                                     mapNomyId.put('lastName',result[0].LastName);
                                     mapNomyId.put('clienteId',clienteId);
-                                    oppor = crearOportunidad(data, /*clienteId, result[0].FirstName, result[0].LastName*/ mapNomyId,tienda);
+                                    oppor = crearOportunidad(data, /*clienteId, result[0].FirstName, result[0].LastName*//* mapNomyId,tienda);
+                                    /*
                                     mapNomyId.put('oportunidadId',oppor.Id);
-                                    cotiza = crearCotizacion(data, /*oppor.Id, result[0].FirstName, result[0].LastName*/ mapNomyId, tienda);
-=======
-                                    oppor = crearOportunidad(data, clienteId, result[0].FirstName, result[0].LastName,tienda);
-                                    cotiza = crearCotizacion(data, oppor.Id, result[0].FirstName, result[0].LastName, tienda);
->>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
-=======
-                                    oppor = crearOportunidad(data, clienteId, result[0].FirstName, result[0].LastName,tienda);
-                                    cotiza = crearCotizacion(data, oppor.Id, result[0].FirstName, result[0].LastName, tienda);
->>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
-                        		    listaPartida = crearPartidas(data, cotiza.Id);
+                                    cotiza = crearCotizacion(data, /*oppor.Id, result[0].FirstName, result[0].LastName*/ /*mapNomyId, tienda);
+                        		    /*listaPartida = crearPartidas(data, cotiza.Id);
                                 }
                                 when 0 {
                                     cliente = crearCliente(data);
                                     clienteId = cliente.Id;
-<<<<<<< HEAD
-<<<<<<< HEAD
                                     mapNomyId.put('firstName',cliente.FirstName);
                                     mapNomyId.put('lastName',cliente.LastName);
                                     mapNomyId.put('clienteId',clienteId);
-                                    oppor = crearOportunidad(data, /*clienteId, cliente.FirstName,cliente.LastName*/mapNomyId, tienda);
-                                    mapNomyId.put('oportunidadId',oppor.Id);
-                                    cotiza = crearCotizacion(data, /*oppor.Id, cliente.FirstName, cliente.LastName*/mapNomyId, tienda);
-=======
-                                    oppor = crearOportunidad(data, clienteId, cliente.FirstName,cliente.LastName,tienda);
-                                    cotiza = crearCotizacion(data, oppor.Id, cliente.FirstName, cliente.LastName, tienda);
->>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
-=======
-                                    oppor = crearOportunidad(data, clienteId, cliente.FirstName,cliente.LastName,tienda);
-                                    cotiza = crearCotizacion(data, oppor.Id, cliente.FirstName, cliente.LastName, tienda);
->>>>>>> a22dd1cc7a9f4cff01ec17543ec3aa41628a6b20
-                                    listaPartida = crearPartidas(data, cotiza.Id);
+                                    oppor = crearOportunidad(data, /*clienteId, cliente.FirstName,cliente.LastName*//*mapNomyId, tienda);
+                                   /* mapNomyId.put('oportunidadId',oppor.Id);
+                                    cotiza = crearCotizacion(data, /*oppor.Id, cliente.FirstName, cliente.LastName*//*mapNomyId, tienda);
+                                    /*listaPartida = crearPartidas(data, cotiza.Id);
                                 }
                             }
                         }else{
@@ -92,10 +79,10 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             mapNomyId.put('firstName',data.nombre);
                             mapNomyId.put('lastName',data.apellidoPaterno);
                             mapNomyId.put('clienteId',clienteId);
-                            oppor = crearOportunidad(data,/* clienteId, data.nombre,data.apellidoPaterno*/mapNomyId,tienda);
-                            mapNomyId.put('oportunidadId',oppor.Id);
-                            cotiza = crearCotizacion(data, /* oppor.Id, data.nombre, data.apellidoPaterno*/mapNomyId, tienda);
-                        	listaPartida = crearPartidas(data, cotiza.Id);
+                            oppor = crearOportunidad(data,/* clienteId, data.nombre,data.apellidoPaterno*//*mapNomyId,tienda);
+                           /* mapNomyId.put('oportunidadId',oppor.Id);
+                            cotiza = crearCotizacion(data, /* oppor.Id, data.nombre, data.apellidoPaterno*//*mapNomyId, tienda);
+                        	/*listaPartida = crearPartidas(data, cotiza.Id);
                         }
                     }    
                 }catch(JSONException e){
@@ -146,7 +133,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 List<String> listIntangible = new List<String>();
                 for(DSales_Asignacion_de_Productos__c asigProduc: productAsig){
                     if(asigProduc.DSales_Servicio_Seguro__c == resTangible.Product2Id){
-                        listIntangible.add(asigProduc.DSales_Producto__c);
+                        listIntangible.add(asigProduc.dsalesProducto__c);
                     }
                 }
                 for(QuoteLineItem resIntangible : consultaRespuestaGEX){
@@ -188,8 +175,8 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return cliente;
     }
     
-    public static Opportunity crearOportunidad (DSALES_QuoteGexWrapper.QuoteGexRequest data,/*Id clienteId, String firstName, String lastName*/ Map<String, String> mapNomyId, Tienda__c tienda){
-        Opportunity oppor = new Opportunity();
+    public static Opportunity crearOportunidad (DSALES_QuoteGexWrapper.QuoteGexRequest data,/*Id clienteId, String firstName, String lastName*//* Map<String, String> mapNomyId, Tienda__c tienda){
+       /* Opportunity oppor = new Opportunity();
         String clienteId=(String)mapNomyId.get('clienteId');
         String firstName=(String)mapNomyId.get('firstName');
         String lastName=(String)mapNomyId.get('lastName');
@@ -213,8 +200,8 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return oppor;
     }
     
-    public static Quote crearCotizacion (DSALES_QuoteGexWrapper.QuoteGexRequest data,/*Id oportunidadId, String firstName, String lastName*/ Map<String, String> mapNomyId, Tienda__c tienda){
-        Quote cotiza = new Quote();
+    public static Quote crearCotizacion (DSALES_QuoteGexWrapper.QuoteGexRequest data,/*Id oportunidadId, String firstName, String lastName*/ /*Map<String, String> mapNomyId, Tienda__c tienda){
+        /*Quote cotiza = new Quote();
         String oportunidadId=(String)mapNomyId.get('oportunidadId');
         String firstName=(String)mapNomyId.get('firstName');
         String lastName=(String)mapNomyId.get('lastName');
@@ -253,12 +240,12 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         }
         
         List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
-        productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSALES_SKU__c in: mapProducts.keySet() WITH SECURITY_ENFORCED];
+        productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, dsalesProducto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE dsalesActivo__c=true AND  DSALES_SKU__c in: mapProducts.keySet() WITH SECURITY_ENFORCED];
         List<Id> dsalesProductoSetId = new List<Id>();
         for(DSales_Asignacion_de_Productos__c da : productAsig){
-            dsalesProductoSetId.add(da.DSales_Producto__c);
+            dsalesProductoSetId.add(da.dsalesProducto__c);
         }
-        List<DSales_Matriz_GEX__c> mat = [SELECT id, Name, DSALES_Activo__c, DSALES_Region__c, DSALES_Tipo__c FROM DSales_Matriz_GEX__c WHERE DSALES_Servicio__c =: dsalesProductoSetId and DSALES_Activo__c =true and DSALES_Tipo__c=:originalMat and DSALES_Region__c INCLUDES (:regions) WITH SECURITY_ENFORCED];
+        List<DSales_Matriz_GEX__c> mat = [SELECT id, Name, dsalesActivo__c, dsalesRegion__c, DSALES_Tipo__c FROM DSales_Matriz_GEX__c WHERE DSALES_Servicio__c =: dsalesProductoSetId and dsalesActivo__c =true and DSALES_Tipo__c=:originalMat and dsalesRegion__c INCLUDES (:regions) WITH SECURITY_ENFORCED];
         List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = [SELECT id, Name,SALES_Precio_GEX__c,DSales_Matriz_GEX__c,DSALES_Rango_interior_GEX__c,DSALES_Rango_Superior_GEX__c,DSALES_Tiempo_de_Garantia_Extendida_GEX__c FROM DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c =: mat WITH SECURITY_ENFORCED ORDER BY SALES_Precio_GEX__c DESC];
         List<Pricebook2> precioLista = [SELECT id,Name FROM Pricebook2 WHERE Name= 'Standard Price Book' and IsActive=true WITH SECURITY_ENFORCED LIMIT 1];
         List<PricebookEntry> precioEn = [SELECT Id,UnitPrice,Name,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: produc and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
@@ -288,7 +275,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             String intangibleId;
             for(DSales_Asignacion_de_Productos__c asigProduc: productAsig){
                 if(asigProduc.DSales_Servicio_Seguro__c == item.Product2Id){
-                    intangibleId = asigProduc.DSales_Producto__c;
+                    intangibleId = asigProduc.dsalesProducto__c;
                 }
             }
             for(PricebookEntry item2 : precioEnGEX){
@@ -482,7 +469,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return [SELECT Id, Name, DSALES_Rango_interior_GEX__c, DSALES_Rango_Superior_GEX__c, DSALES_Tiempo_de_Garantia_Extendida_GEX__c, SALES_Precio_GEX__c, DSales_Matriz_GEX__c 
                 FROM DSALES_Matriz_de_Cotizacion__c 
                 WHERE SALES_Precio_GEX__c = :resIntangible 
-                    AND DSales_Matriz_GEX__r.DSALES_Activo__c = true 
+                    AND DSales_Matriz_GEX__r.dsalesActivo__c = true 
                     AND DSALES_Rango_Superior_GEX__c >= :resTangible 
                 WITH SECURITY_ENFORCED 
                 LIMIT 1];
@@ -492,5 +479,5 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         List<DASALES_Porcentajedecobro__c> porcent = [SELECT Id, Name, DSALES_Anios__c, DSALES_Porcentaje__c FROM DASALES_Porcentajedecobro__c WHERE DSALES_Product__c=:intangibleId WITH SECURITY_ENFORCED];
         return porcent;
     }
-    
-}
+    */
+    }

@@ -202,7 +202,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DSALES_Region__c</picklist>
+        <picklist>dsalesRegion__c</picklist>
         <values>
             <fullName>AZCAPOTZALCO</fullName>
             <default>false</default>

@@ -3,7 +3,7 @@ public class DSALES_ControladorCertificadoPDFTest {
     public DSALES_Certificado__c certi = new DSALES_Certificado__c();
     @testSetup
     static void testSetup(){
-        Tienda__c tie= new Tienda__c(Name='Danny',DSales_TiendaID__c='21');
+        Tienda__c tie= new Tienda__c(Name='Danny',dsalesTiendaID__c='21');
         insert tie;
         Account ac= new Account(Name='DannyTest');  
         insert ac;

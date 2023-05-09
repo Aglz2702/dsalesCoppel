@@ -19,7 +19,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Region__c</field>
+                <field>dsalesRegion__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -27,7 +27,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Activo__c</field>
+                <field>dsalesActivo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
