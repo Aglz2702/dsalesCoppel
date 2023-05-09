@@ -3,7 +3,7 @@
     <fullName>DSALES_Misasociacionesdecampanas</fullName>
     <columns>NAME</columns>
     <columns>DSALES_Campania__c</columns>
-    <columns>DSALES_Producto__c</columns>
+    <columns>dsalesProducto__c</columns>
     <filterScope>Mine</filterScope>
     <label>Mis asociaciones de campañas</label>
 </ListView>

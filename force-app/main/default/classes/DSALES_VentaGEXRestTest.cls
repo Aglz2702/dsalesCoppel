@@ -6,7 +6,7 @@ public with sharing class DSALES_VentaGEXRestTest {
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         String recordTypeQuoteId = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Garantía Extendida').getRecordTypeId();
         Tienda__c t = new Tienda__c();
-        t.DSales_TiendaID__c =  'CPPL-UGARTE';
+        t.dsalesTiendaID__c =  'CPPL-UGARTE';
         insert t;
 
         Account acc = new Account();

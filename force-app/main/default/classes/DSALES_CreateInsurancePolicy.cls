@@ -53,10 +53,10 @@ public without sharing class DSALES_CreateInsurancePolicy {
     public static void relacionarPolizaAPago(InsurancePolicy poliza){
         try{
             InsurancePolicy polizaActual =[SELECT Id,SourceOpportunityId FROM InsurancePolicy WHERE Id=:poliza.Id WITH SECURITY_ENFORCED];
-            List<DSALES_InformacionDePago__c>  pagos =[SELECT Id,DSALES_Oportunidad__c,DSALES_Poliza__c,DSALES_Seguro__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:polizaActual.SourceOpportunityId WITH SECURITY_ENFORCED ];
+            List<DSALES_InformacionDePago__c>  pagos =[SELECT Id,DSALES_Oportunidad__c,DSALES_Poliza__c,dsalesSeguro__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:polizaActual.SourceOpportunityId WITH SECURITY_ENFORCED ];
             List<DSALES_InformacionDePago__c> listaParaActualizar = new List<DSALES_InformacionDePago__c>();
             for(DSALES_InformacionDePago__c pago:pagos){
-                if(pago.DSALES_Poliza__c==null && pago.DSALES_Seguro__c==true){
+                if(pago.DSALES_Poliza__c==null && pago.dsalesSeguro__c==true){
                     pago.DSALES_Poliza__c=poliza.Id;
                     listaParaActualizar.add(pago);
                 }

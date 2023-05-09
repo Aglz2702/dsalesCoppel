@@ -3,7 +3,7 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>OBJECT_ID</columns>
-    <columns>DSALES_Activo__c</columns>
+    <columns>dsalesActivo__c</columns>
     <columns>DSALES_Tipo__c</columns>
     <columns>DSALES_Tiempogex__c</columns>
     <columns>CREATED_DATE</columns>

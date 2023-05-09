@@ -210,7 +210,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DSALES_Tipodeuso__c</picklist>
+        <picklist>dsalesTipoUso__c</picklist>
         <values>
             <fullName>Comercial</fullName>
             <default>false</default>

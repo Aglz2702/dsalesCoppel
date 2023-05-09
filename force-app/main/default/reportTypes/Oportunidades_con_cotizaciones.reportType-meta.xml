@@ -850,7 +850,7 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_Region__c</field>
+            <field>dsalesRegion__c</field>
             <table>Opportunity.Quotes</table>
         </columns>
         <columns>

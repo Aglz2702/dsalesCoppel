@@ -102,7 +102,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
     
     public static String crearCancelacion(DSALES_CancelacionProductosWrapper.Request datos){
         DSALES_InformacionDePago__c pago = [SELECT Id FROM 	DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c =:datos.idUniversal WITH SECURITY_ENFORCED];
-        Tienda__c tienda =[SELECT Id FROM Tienda__c WHERE DSales_TiendaID__c=:datos.idTienda WITH SECURITY_ENFORCED];
+        Tienda__c tienda =[SELECT Id FROM Tienda__c WHERE dsalesTiendaID__c=:datos.idTienda WITH SECURITY_ENFORCED];
         DSALES_Cancelacion__c cancelacion = new DSALES_Cancelacion__c(
             DSALES_Canal__c= datos.canal,
             DSALES_FechaCancelacion__c =datos.fechaCancelacion,

@@ -45,7 +45,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_TiendaId__c</field>
+                <field>dsalesTiendaID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

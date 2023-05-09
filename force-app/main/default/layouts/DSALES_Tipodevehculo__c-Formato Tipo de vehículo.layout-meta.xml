@@ -9,7 +9,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DSALES_Numerodevehculo__c</field>
+                <field>dsalesNumerodeVehiculo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -17,13 +17,13 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Descripcin__c</field>
+                <field>dsalesDescripcion__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Activo__c</field>
+                <field>dsalesActivo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

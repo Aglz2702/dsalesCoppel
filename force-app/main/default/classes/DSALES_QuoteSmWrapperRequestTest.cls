@@ -104,7 +104,7 @@ public class DSALES_QuoteSmWrapperRequestTest {
         insert opp;
         
         Tienda__c t = new Tienda__c();
-        t.DSales_TiendaID__c =  'CPPL-UGARTE';
+        t.dsalesTiendaID__c =  'CPPL-UGARTE';
         insert t;
         
         Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
@@ -119,19 +119,19 @@ public class DSALES_QuoteSmWrapperRequestTest {
         presupuesto.DSALES_ListaArticulo__c = 'Producto';
         insert presupuesto;
         
-        DSALES_TipodeUso__c tipoUso = new DSALES_TipodeUso__c(Name='Comercial');
+        dsalesTipoUso__c tipoUso = new dsalesTipoUso__c(Name='Comercial');
         insert tipoUso;
         DSALES_Tipodevehculo__c tipovehiculo = new DSALES_Tipodevehculo__c(Name='Moto');
         insert tipovehiculo;
         
         Plazo__c plazo1 = new Plazo__c();
         plazo1.Name='12';
-        plazo1.DSALES_Seguro__c=prodRc.Id;
-        plazo1.Dsales_Plazo__c='12';
-        plazo1.DSALES_Activo__c=true;
+        plazo1.dsalesSeguro__c=prodRc.Id;
+        plazo1.dsalesPlazo__c='12';
+        plazo1.dsalesActivo__c=true;
         insert plazo1;
         
-        Plazo__c plazo2 = new Plazo__c(Name='12',Dsales_Plazo__c='12',DSALES_Seguro__c=prodAmp.Id,DSALES_Activo__c=true);
+        Plazo__c plazo2 = new Plazo__c(Name='12',dsalesPlazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
         insert plazo2;
         
         Campaign camapna = new Campaign();
@@ -146,8 +146,8 @@ public class DSALES_QuoteSmWrapperRequestTest {
         camapnaAmp.IsActive = true;
         insert camapnaAmp;
         
-        DSALES_AsociacionCampanias__c asociacionRc = new DSALES_AsociacionCampanias__c(DSALES_Producto__c=prodRc.Id,DSALES_Campania__c=camapna.Id, DSALES_Activo__c=true);
-        DSALES_AsociacionCampanias__c asociacionAmp = new DSALES_AsociacionCampanias__c(DSALES_Producto__c=prodAmp.Id,DSALES_Campania__c=camapnaAmp.Id, DSALES_Activo__c=true);
+        DSALES_AsociacionCampanias__c asociacionRc = new DSALES_AsociacionCampanias__c(dsalesProducto__c=prodRc.Id,DSALES_Campania__c=camapna.Id, dsalesActivo__c=true);
+        DSALES_AsociacionCampanias__c asociacionAmp = new DSALES_AsociacionCampanias__c(dsalesProducto__c=prodAmp.Id,DSALES_Campania__c=camapnaAmp.Id, dsalesActivo__c=true);
         insert asociacionRc;
         insert asociacionAmp;
     }

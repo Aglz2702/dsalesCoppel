@@ -177,9 +177,9 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>DSALES_Producto__c</fields>
+        <fields>dsalesProducto__c</fields>
         <fields>CREATED_DATE</fields>
-        <fields>DSALES_Activo__c</fields>
+        <fields>dsalesActivo__c</fields>
         <relatedList>DSALES_AsociacionCampanias__c.DSALES_Campania__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

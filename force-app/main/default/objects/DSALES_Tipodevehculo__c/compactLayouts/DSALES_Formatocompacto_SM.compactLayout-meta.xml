@@ -2,7 +2,7 @@
 <CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DSALES_Formatocompacto_SM</fullName>
     <fields>Name</fields>
-    <fields>DSALES_Numerodevehculo__c</fields>
-    <fields>DSALES_Activo__c</fields>
+    <fields>dsalesNumerodeVehiculo__c</fields>
+    <fields>dsalesActivo__c</fields>
     <label>Formato compacto SM</label>
 </CompactLayout>

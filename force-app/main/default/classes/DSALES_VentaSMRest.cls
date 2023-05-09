@@ -32,7 +32,7 @@ global without sharing class DSALES_VentaSMRest {
                         venta.pagos.idOportunidad=oppor.Id;
                         List<String> partidasSeleccionadas= venta.idPartidaPresupuesto;
                         DSALES_PaymentInfoWrapper.PaymentResponse resp= DSALES_PaymentInfoWrapperRequest.insertarPago(venta.pagos);
-                        pago=[SELECT Id,DSALES_Factura__c,DSALES_Oportunidad__c,DSALES_Plazodecomprademoto__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName,DSALES_Seguro__c,DSALES_SKU__c  
+                        pago=[SELECT Id,DSALES_Factura__c,DSALES_Oportunidad__c,DSALES_Plazodecomprademoto__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName,dsalesSeguro__c,DSALES_SKU__c  
                                                 FROM DSALES_InformacionDePago__c 
                                                 WHERE Id=:resp.pagoId WITH SECURITY_ENFORCED];
                         idPago=pago.Id;
@@ -114,7 +114,7 @@ global without sharing class DSALES_VentaSMRest {
         }
     }
     private static void crearPrePoliza(DSALES_InformacionDePago__c pago, Insurancepolicy poliza){
-        if(pago.DSALES_Seguro__c==true && pago.DSALES_Poliza__c==null){
+        if(pago.dsalesSeguro__c==true && pago.DSALES_Poliza__c==null){
             poliza=DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
             pago.DSALES_Poliza__c=poliza.Id;       
         }

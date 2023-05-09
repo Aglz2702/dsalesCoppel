@@ -191,8 +191,8 @@ global with sharing class DSALES_VentaGEXRest {
             }
             system.debug('Aquí sí llegó: SKU: '+listStores);
         }
-        for(Tienda__c store: [select id,DSales_TiendaID__c from Tienda__c where DSales_TiendaID__c in :listStores WITH SECURITY_ENFORCED]){
-            mapStores.put(store.DSales_TiendaID__c, store.Id);
+        for(Tienda__c store: [select id,dsalesTiendaID__c from Tienda__c where dsalesTiendaID__c in :listStores WITH SECURITY_ENFORCED]){
+            mapStores.put(store.dsalesTiendaID__c, store.Id);
         }
         system.debug('Seguimos bien con sku '+listSKUCertifieds);
         for(Product2 t: [Select StockKeepingUnit from Product2 where StockKeepingUnit in :listSKUCertifieds and DSales_Tipo_de_Producto__c='Servicio' WITH SECURITY_ENFORCED]){

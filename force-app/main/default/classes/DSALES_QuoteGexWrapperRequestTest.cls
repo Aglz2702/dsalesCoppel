@@ -65,14 +65,14 @@ public class DSALES_QuoteGexWrapperRequestTest{
         DSales_Asignacion_de_Productos__c asig = new DSales_Asignacion_de_Productos__c();
         asig.Name = 'test';
         asig.DSales_Servicio_Seguro__c =prod.Id;
-        asig.DSales_Producto__c = prodGEX.Id;
-        asig.DSALES_Activo__c = true;
+        asig.dsalesProducto__c = prodGEX.Id;
+        asig.dsalesActivo__c = true;
         insert asig;
         
         DSales_Matriz_GEX__c mat = new DSales_Matriz_GEX__c();
         mat.Name= 'test';
-        mat.DSALES_Activo__c= true;
-        mat.DSALES_Region__c ='Hermosillo';
+        mat.dsalesActivo__c= true;
+        mat.dsalesRegion__c ='Hermosillo';
         mat.DSALES_Tiempogex__c = '1 año';
         insert mat;
         
@@ -144,7 +144,7 @@ public class DSALES_QuoteGexWrapperRequestTest{
         insert opp;
         
         Tienda__c t = new Tienda__c();
-        t.DSales_TiendaID__c =  '21';
+        t.dsalesTiendaID__c =  '21';
         insert t;
         
         Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);

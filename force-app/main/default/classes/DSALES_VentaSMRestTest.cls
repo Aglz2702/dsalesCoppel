@@ -122,34 +122,34 @@ public with sharing class DSALES_VentaSMRestTest {
         insert opp;
         
         Tienda__c t = new Tienda__c();
-        t.DSales_TiendaID__c =  '1';
+        t.dsalesTiendaID__c =  '1';
         insert t;
         
         Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
         insert cotizacion;
         
-        DSALES_TipodeUso__c tipoUso = new DSALES_TipodeUso__c(Name='Comercial');
+        dsalesTipoUso__c tipoUso = new dsalesTipoUso__c(Name='Comercial');
         insert tipoUso;
         DSALES_Tipodevehculo__c tipovehiculo = new DSALES_Tipodevehculo__c(Name='Moto');
         insert tipovehiculo;
         
         Plazo__c plazoRC12 = new Plazo__c();
         plazoRC12.Name='12';
-        plazoRC12.DSALES_Seguro__c=prodRc.Id;
-        plazoRC12.Dsales_Plazo__c='12';
-        plazoRC12.DSALES_Activo__c=true;
+        plazoRC12.dsalesSeguro__c=prodRc.Id;
+        plazoRC12.dsalesPlazo__c='12';
+        plazoRC12.dsalesActivo__c=true;
         insert plazoRC12;
         
         Plazo__c plazoRC18 = new Plazo__c();
         plazoRC18.Name='18';
-        plazoRC18.DSALES_Seguro__c=prodRc.Id;
-        plazoRC18.Dsales_Plazo__c='18';
-        plazoRC18.DSALES_Activo__c=true;
+        plazoRC18.dsalesSeguro__c=prodRc.Id;
+        plazoRC18.dsalesPlazo__c='18';
+        plazoRC18.dsalesActivo__c=true;
         insert plazoRC18;
         
-        Plazo__c plazoAMP12 = new Plazo__c(Name='12',Dsales_Plazo__c='12',DSALES_Seguro__c=prodAmp.Id,DSALES_Activo__c=true);
+        Plazo__c plazoAMP12 = new Plazo__c(Name='12',dsalesPlazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
         insert plazoAMP12;
-         Plazo__c plazoAMP18 = new Plazo__c(Name='18',Dsales_Plazo__c='18',DSALES_Seguro__c=prodAmp.Id,DSALES_Activo__c=true);
+         Plazo__c plazoAMP18 = new Plazo__c(Name='18',dsalesPlazo__c='18',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
         insert plazoAMP18;
         
         QuoteLineItem moto = new QuoteLineItem();
@@ -178,7 +178,7 @@ public with sharing class DSALES_VentaSMRestTest {
         seguroRc.Quantity = 1.0;
         seguroRc.UnitPrice = customPrice.UnitPrice;
         //seguroRc.DSALES_Tipodeproducto__c = 'Producto';
-        seguroRc.DSALES_Plazo__c=plazoRC18.Id;
+        seguroRc.dsalesPlazo__c=plazoRC18.Id;
         seguroRc.DSALES_Segurogratis__c=false;
         insert seguroRc;
         
@@ -189,7 +189,7 @@ public with sharing class DSALES_VentaSMRestTest {
         seguroRcG.Quantity = 1.0;
         seguroRcG.UnitPrice = customPrice.UnitPrice;
         //seguroRc.DSALES_Tipodeproducto__c = 'Producto';
-        seguroRcG.DSALES_Plazo__c=plazoRC12.Id;
+        seguroRcG.dsalesPlazo__c=plazoRC12.Id;
         seguroRcG.DSALES_Segurogratis__c=false;
         insert seguroRcG;
         
@@ -200,7 +200,7 @@ public with sharing class DSALES_VentaSMRestTest {
         seguroAmp.Quantity = 1.0;
         seguroAmp.UnitPrice = customPrice.UnitPrice;
         //seguroAmp.DSALES_Tipodeproducto__c = 'Producto';
-        seguroAmp.DSALES_Plazo__c=plazoAMP12.Id;
+        seguroAmp.dsalesPlazo__c=plazoAMP12.Id;
         seguroAmp.DSALES_Segurogratis__c=false;
         insert seguroAmp;
     }
@@ -212,7 +212,7 @@ public with sharing class DSALES_VentaSMRestTest {
         Product2 producto =[SELECT Id FROM Product2 WHERE Name='AMP Seguro de Moto' LIMIT 1];
         Plazo__c plazo=[SELECT Id FROM Plazo__c WHERE Name='18' LIMIT 1];
         Quote cot =[SELECT Id,OpportunityId,Opportunity.Name FROM Quote WHERE Name ='test' LIMIT 1];
-        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  DSALES_Plazo__c=:plazo.Id LIMIT 1];
+        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  dsalesPlazo__c=:plazo.Id LIMIT 1];
 		SYstem.debug('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         System.debug('cotizacion:'+cot.Id);
         System.debug('cotizacion:'+partida.Id);
@@ -241,7 +241,7 @@ public with sharing class DSALES_VentaSMRestTest {
         Product2 producto =[SELECT Id FROM Product2 WHERE Name='AMP' LIMIT 1];
         Plazo__c plazo=[SELECT Id FROM Plazo__c WHERE Name='12' LIMIT 1];
         Quote cot =[SELECT Id,OpportunityId,Opportunity.Name FROM Quote WHERE Name ='test' LIMIT 1];
-        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  DSALES_Plazo__c=:plazo.Id LIMIT 1];
+        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  dsalesPlazo__c=:plazo.Id LIMIT 1];
 		SYstem.debug('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         System.debug('cotizacion:'+cot.Id);
         System.debug('partida:'+partida.Id);

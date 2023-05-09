@@ -109,7 +109,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Seguro__c</field>
+                <field>dsalesSeguro__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

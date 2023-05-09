@@ -5,7 +5,7 @@
     <fields>QuoteId</fields>
     <fields>Product2Id</fields>
     <fields>DSALES_Tipodeproducto__c</fields>
-    <fields>DSALES_Plazo__c</fields>
+    <fields>dsalesPlazo__c</fields>
     <fields>DSALES_TrackingID__c</fields>
     <fields>UnitPrice</fields>
     <label>Formato compacto SM</label>
