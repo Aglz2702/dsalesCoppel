@@ -85,7 +85,7 @@ public without sharing class DSALES_GexCotizacionesHelper {
         pdf.getParameters().put('quoteID',quoteId);
         if (Schema.sObjectType.Quote.isQueryable()&&Schema.sObjectType.Quote.isDeletable()) {
             List<Quote> dupQuote = [SELECT Id, Name,OpportunityId, DSALES_EmailNew__c, Pricebook2Id, RecordTypeId, Status, DSALES_Enviarcotizacion__c, dsalesTienda, dsalesVendedor,
-                               DSALES_Fechadecreacionpresupuesto__c, ExpirationDate, DSALES_esClon__c FROM Quote where DSALES_esClon__c= true]; 
+            dsalesFechaDeCreacionPresupuesto, ExpirationDate, DSALES_esClon__c FROM Quote where DSALES_esClon__c= true]; 
             delete dupQuote;
         }
          

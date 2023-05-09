@@ -65,7 +65,7 @@ public without sharing class DSALES_ControladorCotizacionGex {
    
     
     public void replaceHtml(String templateName, Id recordId){ 
-        Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,dsalesTienda,dsalesVendedor,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED];
+        Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,dsalesTienda,dsalesVendedor,DSALES_Plazoacotizar__c,dsalesFechaDeCreacionPresupuesto,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED];
         List<DSALES_InformacionDePago__c> pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:cotizacion.OpportunityId WITH SECURITY_ENFORCED LIMIT 1];
         email=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Direccion_de_la_tienda__c FROM Quote WHERE ID=:recordId].DSALES_EmailNew__c;
        // cliente=[SELECT Name FROM Account WHERE Id=:cliente].Name;
@@ -365,7 +365,7 @@ public without sharing class DSALES_ControladorCotizacionGex {
         //rempSucSG+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:30%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha creaci&oacute;n:</strong></td>';
         //rempSucSG+='<td colspan="1" rowspan="1" height="35px"style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .2rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;width:30%;text-align:center; font-size:12px">'+fechaFormato +'</td>';
         rempSucSG+='</tr>';
-        String fechaFormato=cotizacion.DSALES_Fechadecreacionpresupuesto__c.format();
+        String fechaFormato=cotizacion.dsalesFechaDeCreacionPresupuesto.format();
         System.debug('fechaFormato1:'+fechaFormato);
         String rempFecha='<tr>';
         rempFecha+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:30%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha creaci&oacute;n:</strong></td>';
@@ -721,7 +721,7 @@ public without sharing class DSALES_ControladorCotizacionGex {
 
     public  void replaceSecondPlantilla(String templateName, Id recordId){ 
         try{
-            Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,dsalesTienda,dsalesVendedor,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED];
+            Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,dsalesTienda,dsalesVendedor,DSALES_Plazoacotizar__c,dsalesFechaDeCreacionPresupuesto,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED];
             DSALES_InformacionDePago__c pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:cotizacion.OpportunityId WITH SECURITY_ENFORCED LIMIT 1];
             email=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Direccion_de_la_tienda__c FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED].DSALES_EmailNew__c;
             // cliente=[SELECT Name FROM Account WHERE Id=:cliente].Name;
@@ -1011,7 +1011,7 @@ public without sharing class DSALES_ControladorCotizacionGex {
             //rempSucSG+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:30%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha creaci&oacute;n:</strong></td>';
             //rempSucSG+='<td colspan="1" rowspan="1" height="35px"style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .2rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;width:30%;text-align:center; font-size:12px">'+fechaFormato +'</td>';
             rempSucSG+='</tr>';
-            String fechaFormato=cotizacion.DSALES_Fechadecreacionpresupuesto__c.format();
+            String fechaFormato=cotizacion.dsalesFechaDeCreacionPresupuesto.format();
             System.debug('fechaFormato1:'+fechaFormato);
             String rempFecha='<tr>';
             rempFecha+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:30%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha creaci&oacute;n:</strong></td>';

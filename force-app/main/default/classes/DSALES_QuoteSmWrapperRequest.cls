@@ -62,7 +62,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                     datosEnviar.idAsociado='0';//fijo
                     date aux = date.today();
                     aux = date.newInstance(aux.year(), aux.month(), aux.day());
-                    datosEnviar.fechaCotizacion = aux.format(); //cotiza.DSALES_Fechadecreacionpresupuesto__c.format();//fecha creacion-sales
+                    datosEnviar.fechaCotizacion = aux.format(); //cotiza.dsalesFechaDeCreacionPresupuesto.format();//fecha creacion-sales
                     datosEnviar.fechaInicio = data.fechaInicio.format(); //Nuevo revisar
                     datosEnviar.listaPlazos = plazosActivos(data.plazoCotizar);
                     if(!listaNegra){
@@ -271,7 +271,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.ExpirationDate = date.today()+30;
         cotiza.RecordTypeId = recordTypeId;
         date aux = date.today();
-        cotiza.DSALES_Fechadecreacionpresupuesto__c = date.newInstance(aux.year(), aux.month(), aux.day());
+        cotiza.dsalesFechaDeCreacionPresupuesto = date.newInstance(aux.year(), aux.month(), aux.day());
         cotiza.dsalesListaNegra = listaNegra;
         cotiza.dsalesMotivoDeListaNegra= 'Sin Definir';
         cotiza.Phone = data.telefonoCelular;
