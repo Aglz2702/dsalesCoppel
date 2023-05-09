@@ -272,8 +272,8 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.RecordTypeId = recordTypeId;
         date aux = date.today();
         cotiza.DSALES_Fechadecreacionpresupuesto__c = date.newInstance(aux.year(), aux.month(), aux.day());
-        cotiza.Lista_negra__c = listaNegra;
-        cotiza.Motivo_de_lista_negra__c= 'Sin Definir';
+        cotiza.dsalesListaNegra = listaNegra;
+        cotiza.dsalesMotivoDeListaNegra= 'Sin Definir';
         cotiza.Phone = data.telefonoCelular;
         cotiza.dsalesFechaDeNacimiento = data.fechaNacimiento;
         cotiza.dsalesCodigoPostal__c = data.codigoPostal;

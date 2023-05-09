@@ -101,7 +101,7 @@ public with sharing class DSALES_QuotePagoSM {
     public static String crearCotizacion(String idCotizacion,String idPago){
         try{
             Quote beforeCot = [SELECT Id,OpportunityId,Name,dsalesFechaDeNacimiento,Email,DSALES_Cobertura__c,DSALES_Opcindepago__c,dsalesGenero,Phone,dsalesCodigoPostal__c,DSALES_Fechadecomienzodepliza__c,
-                            Lista_negra__c,Motivo_de_lista_negra__c,DSALES_TrakingID__c,DSALES_NombreCliente__c,DSALES_Enviarcotizacion__c,GrandTotal,Tax,DSales_Vendedor__c,ExpirationDate,DSALES_IDdelvehculo__c,
+                            dsalesListaNegra,dsalesMotivoDeListaNegra,DSALES_TrakingID__c,DSALES_NombreCliente__c,DSALES_Enviarcotizacion__c,GrandTotal,Tax,DSales_Vendedor__c,ExpirationDate,DSALES_IDdelvehculo__c,
                             DSales_Tienda__c,DSALES_Plazoacotizar__c,DSALES_PlazoacotizarRC__c,dsalesTipoUso__c,DSALES_RFC__c,DSALES_TipoUso__c,DSALES_Tipodeveihculo__c
                             FROM Quote WHERE Id=:idCotizacion WITH SECURITY_ENFORCED];
             DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
@@ -117,8 +117,8 @@ public with sharing class DSALES_QuotePagoSM {
             cotizacion.Phone=beforeCot.Phone;
             cotizacion.dsalesCodigoPostal__c=beforeCot.dsalesCodigoPostal__c;
             cotizacion.DSALES_Fechadecomienzodepliza__c=beforeCot.DSALES_Fechadecomienzodepliza__c;
-            cotizacion.Lista_negra__c=beforeCot.Lista_negra__c;
-            cotizacion.Motivo_de_lista_negra__c=beforeCot.Motivo_de_lista_negra__c;
+            cotizacion.dsalesListaNegra=beforeCot.dsalesListaNegra;
+            cotizacion.dsalesMotivoDeListaNegra=beforeCot.dsalesMotivoDeListaNegra;
             cotizacion.DSALES_TrakingID__c=beforeCot.DSALES_TrakingID__c;
             if(pago.DSALES_Nombre_del_Vendedor__c!=null){
                 cotizacion.DSales_Vendedor__c=pago.DSALES_Nombre_del_Vendedor__c;
