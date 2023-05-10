@@ -1,12 +1,12 @@
 @isTest
 public with sharing class DSALES_VentaGEXRestTest {
-    /*
+    
     @testSetup
     static void crearRegistro(){
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         String recordTypeQuoteId = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Garantía Extendida').getRecordTypeId();
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  'CPPL-UGARTE';
+        t.dsales_TiendaID__c =  'CPPL-UGARTE';
         insert t;
 
         Account acc = new Account();
@@ -115,5 +115,5 @@ public with sharing class DSALES_VentaGEXRestTest {
         System.assertEquals(200, res2.statusCode,'El status code no debería ser 200');
 
     }
-    */
+    
 }

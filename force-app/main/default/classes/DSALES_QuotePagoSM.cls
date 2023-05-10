@@ -136,6 +136,7 @@ public with sharing class DSALES_QuotePagoSM {
             cotizacion.DSALES_Plazoacotizar__c=pago.DSALES_Plazodecomprademoto__c;
             cotizacion.DSALES_PlazoacotizarRC__c=beforeCot.DSALES_PlazoacotizarRC__c;
             cotizacion.DSALES_TipoUso__c=beforeCot.DSALES_TipoUso__c;
+            cotizacion.DSALES_TipoUso__c=beforeCot.DSALES_TipoUso__c;
             cotizacion.DSALES_RFC__c=beforeCot.DSALES_RFC__c;
             cotizacion.DSALES_TipoUso__c=beforeCot.DSALES_TipoUso__c;
             cotizacion.dsalesTipoDeVehiculo__c=beforeCot.dsalesTipoDeVehiculo__c;
@@ -189,7 +190,7 @@ public with sharing class DSALES_QuotePagoSM {
             }
             List<Product2> productos = [SELECT Id, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE Id IN:listIdProd  WITH SECURITY_ENFORCED] ;
             List<PricebookEntry> precios = [SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Product2Id IN:listIdProd WITH SECURITY_ENFORCED]; 
-            List<Plazo__c> plazos =[SELECT Id, Dsales_Plazo__c,dsalesSeguro__c FROM Plazo__c WHERE  dsalesSeguro__c=:listIdProd WITH SECURITY_ENFORCED];
+            List<Plazo__c> plazos =[SELECT Id, DSALES_Plazo__c,dsalesSeguro__c FROM Plazo__c WHERE  dsalesSeguro__c=:listIdProd WITH SECURITY_ENFORCED];
             //moto + 2 seguros
             WrapperListaPartidas listaPrueba = new WrapperListaPartidas();
             listaPrueba.partidas=partidas;
@@ -205,7 +206,7 @@ public with sharing class DSALES_QuotePagoSM {
             List<QuoteLineItem> partidasNuevas =[SELECT Id, UnitPrice,DSALES_Tipodeproducto__c,ListPrice,DSALES_Pagomensual__c,TotalPrice,DSALES_Impuestos__c,DSALES_Recargos__c,dsalesDerechosDePoliza__c,DSALES_Primaneta__c,dsalesGastosDeOperacionDelRecibo__c,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_NombreProducto__c FROM QuoteLineItem WHERE Id IN:listPartidas WITH SECURITY_ENFORCED];
             for(QuoteLineItem ql:partidasNuevas){
                 for(QuoteLineItem q:partidas){
-                    if(ql.DSALES_NombreProducto__c == q.DSALES_NombreProducto__c){
+                    /*if(ql.DSALES_NombreProducto__c == q.DSALES_NombreProducto__c){
                         if( ql.DSALES_Plazo__c == q.DSALES_Plazo__c){
                             if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
                                 ql.UnitPrice=0;
@@ -315,6 +316,7 @@ public with sharing class DSALES_QuotePagoSM {
             
             //trae la moto
             QuoteLineItem producto =[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Segurogratis__c,DSALES_Comision__c,DSALES_NombreProducto__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+            QuoteLineItem producto =[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Segurogratis__c,DSALES_Comision__c,DSALES_NombreProducto__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
                                     dsalesGastosDeOperacionDelRecibo__c,DSALES_Recargos__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                                     FROM QuoteLineItem  WHERE QuoteId=:idCot  AND DSALES_SKU__c=:skuMoto WITH SECURITY_ENFORCED LIMIT 1]; 
             System.debug('moto:'+producto);
@@ -328,7 +330,9 @@ public with sharing class DSALES_QuotePagoSM {
                         seguroGratis=partida; //SOLO ID DE RC    
                     }
                     seguro=[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Recargos__c,DSALES_SKU__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+                    seguro=[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Recargos__c,DSALES_SKU__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
                                 dsalesGastosDeOperacionDelRecibo__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
+                                FROM QuoteLineItem WHERE QuoteId=:idCot AND DSALES_Segurogratis__c!=true AND DSALES_Plazo__r.DSALES_Plazo__c =:String.valueOf(plazo) AND Id!=:seguroGratis.Id WITH SECURITY_ENFORCED LIMIT 1
                                 FROM QuoteLineItem WHERE QuoteId=:idCot AND DSALES_Segurogratis__c!=true AND DSALES_Plazo__r.DSALES_Plazo__c =:String.valueOf(plazo) AND Id!=:seguroGratis.Id WITH SECURITY_ENFORCED LIMIT 1
                                 ];
                     System.debug('seguro amp:'+seguro);
@@ -385,6 +389,8 @@ public with sharing class DSALES_QuotePagoSM {
                         for(Plazo__c p:plazos){
                             if(ql.DSALES_Plazo__c!=null && p.Id== ql.DSALES_Plazo__c){
                                 partida.DSALES_Plazo__c=ql.DSALES_Plazo__c;
+                            if(ql.DSALES_Plazo__c!=null && p.Id== ql.DSALES_Plazo__c){
+                                partida.DSALES_Plazo__c=ql.DSALES_Plazo__c;
                             }
                         }
                         listaMotoSeguroToInsert.add(partida);
@@ -426,6 +432,8 @@ public with sharing class DSALES_QuotePagoSM {
                                 part.DSALES_Descripcion__c=q.DSALES_Descripcion__c;
                                 part.DSALES_Pagomensual__c=q.DSALES_Pagomensual__c;
                                 for(Plazo__c p:plazos){
+                                    if(q.DSALES_Plazo__c!=null && p.Id==q.DSALES_Plazo__c){
+                                        part.DSALES_Plazo__c=q.DSALES_Plazo__c;
                                     if(q.DSALES_Plazo__c!=null && p.Id==q.DSALES_Plazo__c){
                                         part.DSALES_Plazo__c=q.DSALES_Plazo__c;
                                     }
@@ -494,11 +502,14 @@ public with sharing class DSALES_QuotePagoSM {
                     listSeguros=[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
                                 dsalesGastosDeOperacionDelRecibo__c,DSALES_Pagomensual__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                                 FROM QuoteLineItem WHERE  QuoteId=:idCot AND DSALES_Tipodeproducto__c='Seguro' AND DSALES_Plazo__r.DSALES_Plazo__c =:String.valueOf(plazo) WITH SECURITY_ENFORCED];
+                                FROM QuoteLineItem WHERE  QuoteId=:idCot AND DSALES_Tipodeproducto__c='Seguro' AND DSALES_Plazo__r.DSALES_Plazo__c =:String.valueOf(plazo) WITH SECURITY_ENFORCED];
                     System.debug('Seguro con plazo correcto:'+listSeguros);
                     System.debug('Seguro size:'+listSeguros.size());
                     if(listSeguros!=null && listSeguros.size()==1){
                         seguro=[SELECT Id,QuoteId,DSALES_Plazo__r.DSALES_Plazo__c,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
+                        seguro=[SELECT Id,QuoteId,DSALES_Plazo__r.DSALES_Plazo__c,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
                                 dsalesGastosDeOperacionDelRecibo__c,DSALES_Pagomensual__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
+                                FROM QuoteLineItem WHERE  QuoteId=:idCot AND DSALES_Tipodeproducto__c='Seguro' AND DSALES_NombreProducto__c=:RC_GRATIS WITH SECURITY_ENFORCED ORDER BY DSALES_Plazo__r.DSALES_Plazo__c DESC LIMIT 1]; 
                                 FROM QuoteLineItem WHERE  QuoteId=:idCot AND DSALES_Tipodeproducto__c='Seguro' AND DSALES_NombreProducto__c=:RC_GRATIS WITH SECURITY_ENFORCED ORDER BY DSALES_Plazo__r.DSALES_Plazo__c DESC LIMIT 1]; 
                         listSeguros.add(seguro);
                         System.debug('Seguros:'+listSeguros);
@@ -514,6 +525,7 @@ public with sharing class DSALES_QuotePagoSM {
                     List<Product2> productos = [SELECT Id, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE Id IN:listIdProd WITH SECURITY_ENFORCED ] ;
                     System.debug('productos: '+productos);
                     List<PricebookEntry> precios = [SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Product2Id IN:listIdProd WITH SECURITY_ENFORCED]; 
+                    List<Plazo__c> plazos =[SELECT Id, DSALES_Plazo__c,dsalesSeguro__c FROM Plazo__c WHERE  dsalesSeguro__c=:listIdProd WITH SECURITY_ENFORCED];
                     List<Plazo__c> plazos =[SELECT Id, DSALES_Plazo__c,dsalesSeguro__c FROM Plazo__c WHERE  dsalesSeguro__c=:listIdProd WITH SECURITY_ENFORCED];
                     System.debug('precios:'+precios);
                     System.debug('xxxx:'+plazos);
@@ -542,6 +554,8 @@ public with sharing class DSALES_QuotePagoSM {
                     partida.DSALES_Recargos__c=producto.DSALES_Recargos__c;
                     partida.DSALES_Pagomensual__c=producto.DSALES_Pagomensual__c;
                     partida.DSALES_Descripcion__c=producto.DSALES_Descripcion__c;
+                    if( producto.DSALES_Plazo__c!=null && producto.Id==producto.DSALES_Plazo__c){
+                        partida.DSALES_Plazo__c=producto.DSALES_Plazo__c;
                     if( producto.DSALES_Plazo__c!=null && producto.Id==producto.DSALES_Plazo__c){
                         partida.DSALES_Plazo__c=producto.DSALES_Plazo__c;
                     }
@@ -579,6 +593,8 @@ public with sharing class DSALES_QuotePagoSM {
                                     part.DSALES_Descripcion__c=q.DSALES_Descripcion__c;
                                     if(q.DSALES_Plazo__c!=null && p.Id== q.DSALES_Plazo__c){
                                         part.DSALES_Plazo__c=q.DSALES_Plazo__c;
+                                    if(q.DSALES_Plazo__c!=null && p.Id== q.DSALES_Plazo__c){
+                                        part.DSALES_Plazo__c=q.DSALES_Plazo__c;
                                     }
                                 }
                             }   
@@ -593,9 +609,11 @@ public with sharing class DSALES_QuotePagoSM {
                     update cotizacionEnviar;
                     List<QuoteLineItem> idNuevos = new List<QuoteLineItem>();
                     List<QuoteLineItem> partidasNuevas =[SELECT Id, UnitPrice,DSALES_Plazo__c,DSALES_NombreProducto__c FROM QuoteLineItem WHERE Id IN:listPartInsert WITH SECURITY_ENFORCED];
+                    List<QuoteLineItem> partidasNuevas =[SELECT Id, UnitPrice,DSALES_Plazo__c,DSALES_NombreProducto__c FROM QuoteLineItem WHERE Id IN:listPartInsert WITH SECURITY_ENFORCED];
                     for(QuoteLineItem ql:partidasNuevas){
                         for(QuoteLineItem q:listPartidas){
                             if(ql.DSALES_NombreProducto__c == q.DSALES_NombreProducto__c){
+                                if( ql.DSALES_Plazo__c == q.DSALES_Plazo__c){
                                 if( ql.DSALES_Plazo__c == q.DSALES_Plazo__c){
                                     ql.UnitPrice=q.UnitPrice;
                                 }

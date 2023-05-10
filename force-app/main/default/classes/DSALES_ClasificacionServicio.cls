@@ -825,8 +825,8 @@ public without sharing class DSALES_ClasificacionServicio {
     @AuraEnabled
     public static List<Servicio> getTipoUso(){
         List<Servicio>listTipoUso = new List<Servicio>();
-        if (Schema.sObjectType.dsalesTipoUso__c.isQueryable()) {
-            for(dsalesTipoUso__c item: [Select Id, Name from dsalesTipoUso__c where dsalesActivo__c = true])
+        if (Schema.sObjectType.DSALES_TipoUso__c.isQueryable()) {
+            for(DSALES_TipoUso__c item: [Select Id, Name from DSALES_TipoUso__c where dsalesActivo__c = true])
             {
                 Servicio b = new Servicio();
                 b.label= item.Name;
@@ -887,12 +887,12 @@ public without sharing class DSALES_ClasificacionServicio {
         List<Servicio> listTipoUsoSelectedidvalue= new List<Servicio>();
         List<DSALES_AsociacionTiposUso__c> listTipoUsoSeleccion= new List<DSALES_AsociacionTiposUso__c>();
         if (Schema.sObjectType.DSALES_AsociacionTiposUso__c.isQueryable()) {
-            for(DSALES_AsociacionTiposUso__c item: [Select id, dsalesTipoUso__c from DSALES_AsociacionTiposUso__c where dsalesProducto__c= :idProducto])
+            for(DSALES_AsociacionTiposUso__c item: [Select id, DSALES_TipoUso__c from DSALES_AsociacionTiposUso__c where dsalesProducto__c= :idProducto])
             {
-                listTipoUsoSelected.add(item.dsalesTipoUso__c);
+                listTipoUsoSelected.add(item.DSALES_TipoUso__c);
                 Servicio b= new Servicio();
                 b.id=item.id;
-                b.value=item.dsalesTipoUso__c;
+                b.value=item.DSALES_TipoUso__c;
                 listTipoUsoSelectedidvalue.add(b);
             }  
         }
@@ -904,16 +904,16 @@ public without sharing class DSALES_ClasificacionServicio {
         }   
         for(Integer i=0; newList.size()>i; i++)
         {
-            listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(dsalesTipoUso__c = newList[i], dsalesProducto__c=idProducto, dsalesActivo__c=true));
+            listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(DSALES_TipoUso__c = newList[i], dsalesProducto__c=idProducto, dsalesActivo__c=true));
         }
        for(Servicio item: listTipoUsoSelectedidvalue){
             if(objetoTipoUso.contains(item.value))
             {
-                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, dsalesTipoUso__c = item.value, dsalesProducto__c=idProducto, dsalesActivo__c=true));
+                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, DSALES_TipoUso__c = item.value, dsalesProducto__c=idProducto, dsalesActivo__c=true));
             }
             else
             {
-                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, dsalesTipoUso__c = item.value, dsalesProducto__c=idProducto, dsalesActivo__c=false));
+                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, DSALES_TipoUso__c = item.value, dsalesProducto__c=idProducto, dsalesActivo__c=false));
             }
         }
         if(Schema.sObjectType.DSALES_AsociacionTiposUso__c.isCreateable() && Schema.sObjectType.DSALES_AsociacionTiposUso__c.isUpdateable()){
@@ -926,9 +926,9 @@ public without sharing class DSALES_ClasificacionServicio {
 
         List<String> listTipoUsoUsed = new List<String>();
         if (Schema.sObjectType.DSALES_AsociacionTiposUso__c.isQueryable()) {
-            for(DSALES_AsociacionTiposUso__c item: [Select dsalesTipoUso__c from DSALES_AsociacionTiposUso__c where dsalesProducto__c=:idProducto and dsalesActivo__c=true])
+            for(DSALES_AsociacionTiposUso__c item: [Select DSALES_TipoUso__c from DSALES_AsociacionTiposUso__c where dsalesProducto__c=:idProducto and dsalesActivo__c=true])
             {
-                listTipoUsoUsed.add(item.dsalesTipoUso__c);
+                listTipoUsoUsed.add(item.DSALES_TipoUso__c);
             }  
         }
         return listTipoUsoUsed;

@@ -304,7 +304,7 @@
     </relatedContent>
     <relatedLists>
         <fields>QUOTE_LI.PRODUCT2</fields>
-        <fields>dsalesPlazo__c</fields>
+        <fields>DSALES_Plazo__c</fields>
         <fields>QUOTE_LI.QUANTITY</fields>
         <fields>QUOTE_LI.UNIT_PRICE</fields>
         <relatedList>RelatedQuoteLineItemList</relatedList>

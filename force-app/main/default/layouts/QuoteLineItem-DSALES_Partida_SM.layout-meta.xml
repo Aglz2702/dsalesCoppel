@@ -51,7 +51,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>dsalesPlazo__c</field>
+                <field>DSALES_Plazo__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

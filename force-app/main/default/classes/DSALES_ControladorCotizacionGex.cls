@@ -117,11 +117,11 @@ public without sharing class DSALES_ControladorCotizacionGex {
         System.debug('*********Partidas**********'+cotiLine);
         List<String> idsPartidas = new List<String>();
         for(QuoteLineItem ql:cotiLine){
-            idsPartidas.add(ql.dsalesPlazo__c);
+            idsPartidas.add(ql.DSALES_Plazo__c);
 
         }
         System.debug('ids partidas: '+ idsPartidas.size());
-        List<Plazo__c> plazo=[SELECT Id,dsalesPlazo__c,DSALES_Seguro__r.Name FROM Plazo__c WHERE Id IN: idsPartidas WITH SECURITY_ENFORCED];
+        List<Plazo__c> plazo=[SELECT Id,DSALES_Plazo__c,DSALES_Seguro__r.Name FROM Plazo__c WHERE Id IN: idsPartidas WITH SECURITY_ENFORCED];
        // System.debug('plazos: '+plazo);
         //System.debug('plazos: '+plazo[0].DSALES_Seguro__r.Name);
         html = html.replace('Quote.', '');
@@ -540,9 +540,9 @@ public without sharing class DSALES_ControladorCotizacionGex {
                                 String plazoSeg='';
                                 System.debug('Nombre de seguro:'+quote.DSALES_NombreProducto__c);
                                 for(Plazo__c pl:plazo){
-                                    if(quote.dsalesPlazo__c==pl.Id){
+                                    if(quote.DSALES_Plazo__c==pl.Id){
                                         System.debug('es igual:'+pl.DSALES_Seguro__r.Name);
-                                        plazoSeg=pl.dsalesPlazo__c;
+                                        plazoSeg=pl.DSALES_Plazo__c;
                                     }
                                 }
                                 System.debug('plazo amp'+plazoSeg);
@@ -565,9 +565,9 @@ public without sharing class DSALES_ControladorCotizacionGex {
                                 String plazoSeg='';
                                 System.debug('Nombre de seguro:'+quote.DSALES_NombreProducto__c);
                                 for(Plazo__c pl:plazo){
-                                    if(quote.dsalesPlazo__c==pl.Id){
+                                    if(quote.DSALES_Plazo__c==pl.Id){
                                         System.debug('es igual:'+pl.DSALES_Seguro__r.Name);
-                                        plazoSeg=pl.dsalesPlazo__c;
+                                        plazoSeg=pl.DSALES_Plazo__c;
                                     }
                                 }
                                 System.debug('plazo a mostrar rc:'+plazoSeg);
@@ -765,11 +765,11 @@ public without sharing class DSALES_ControladorCotizacionGex {
             System.debug('*********Partidas**********'+cotiLine);
             List<String> idsPartidas = new List<String>();
             for(QuoteLineItem ql:cotiLine){
-                idsPartidas.add(ql.dsalesPlazo__c);
+                idsPartidas.add(ql.DSALES_Plazo__c);
 
             }
             System.debug('ids partidas: '+ idsPartidas.size());
-            List<Plazo__c> plazo=[SELECT Id,dsalesPlazo__c,DSALES_Seguro__r.Name FROM Plazo__c WHERE Id IN: idsPartidas WITH SECURITY_ENFORCED];
+            List<Plazo__c> plazo=[SELECT Id,DSALES_Plazo__c,DSALES_Seguro__r.Name FROM Plazo__c WHERE Id IN: idsPartidas WITH SECURITY_ENFORCED];
            
             html = html.replace('Quote.', '');
             for(String item: mapCampos.keySet()){
@@ -1162,9 +1162,9 @@ public without sharing class DSALES_ControladorCotizacionGex {
                                 System.debug('Nombre de seguro:'+quote.DSALES_NombreProducto__c);
                                 for(Plazo__c pl:plazo){
                                     System.debug('nombre plazo:'+pl.DSALES_Seguro__r.Name);
-                                    if(quote.dsalesPlazo__c==pl.Id){
+                                    if(quote.DSALES_Plazo__c==pl.Id){
                                         System.debug('es igual:'+pl.DSALES_Seguro__r.Name);
-                                        plazoSeg=pl.dsalesPlazo__c;
+                                        plazoSeg=pl.DSALES_Plazo__c;
                                     }
                                 }
                                 System.debug('plazo a mostrar2:'+plazoSeg);

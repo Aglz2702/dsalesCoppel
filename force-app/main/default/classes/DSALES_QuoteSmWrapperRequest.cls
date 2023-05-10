@@ -171,20 +171,20 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         List<Plazo__c> lista;
         try{
             Product2 seguro = [SELECT Id, Name, StockKeepingUnit, dsalesSeguro__c, DSales_Articulo__c FROM Product2 WHERE Name=:rc WITH SECURITY_ENFORCED LIMIT 1];
-            lista = [SELECT Name, dsalesPlazo__c, dsalesSeguro__c FROM Plazo__c WHERE dsalesPlazo__c<=:plazoMaximo AND dsalesActivo__c = true AND dsalesSeguro__c =:seguro.Id WITH SECURITY_ENFORCED];        
+            lista = [SELECT Name, DSALES_Plazo__c, dsalesSeguro__c FROM Plazo__c WHERE DSALES_Plazo__c<=:plazoMaximo AND dsalesActivo__c = true AND dsalesSeguro__c =:seguro.Id WITH SECURITY_ENFORCED];        
             for(Plazo__c item:lista){
                 DSALES_QuoteSmWrapper.Plazo aux = new DSALES_QuoteSmWrapper.Plazo();
                 aux.paquete = seguro.Name;
-                //aux.plazo = item.dsalesPlazo__c;
+                //aux.plazo = item.DSALES_Plazo__c;
                 aux.opcionPago = 'A';
                 plazosSeguros.add(aux);            
             }
             seguro = [SELECT Id, Name, StockKeepingUnit, dsalesSeguro__c, DSales_Articulo__c FROM Product2 WHERE Name=:amp WITH SECURITY_ENFORCED LIMIT 1];
-            lista = [SELECT dsalesPlazo__c, dsalesSeguro__c FROM Plazo__c WHERE dsalesPlazo__c<=:plazoMaximo AND dsalesActivo__c = true AND dsalesSeguro__c =:seguro.Id WITH SECURITY_ENFORCED];
+            lista = [SELECT DSALES_Plazo__c, dsalesSeguro__c FROM Plazo__c WHERE DSALES_Plazo__c<=:plazoMaximo AND dsalesActivo__c = true AND dsalesSeguro__c =:seguro.Id WITH SECURITY_ENFORCED];
             for(Plazo__c item:lista){
   			   	DSALES_QuoteSmWrapper.Plazo aux = new DSALES_QuoteSmWrapper.Plazo();
                	aux.paquete = seguro.Name;
-               	aux.opcionPago = item.dsalesPlazo__c+'M';
+               	aux.opcionPago = item.DSALES_Plazo__c+'M';
                	plazosSeguros.add(aux);              
             }
         }
@@ -262,7 +262,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         else{
             cotiza.Name+= ' '+lastName;
         }
-        dsalesTipoUso__c tipoUso = [Select Id from dsalesTipoUso__c WHERE Name =:data.tipoUso WITH SECURITY_ENFORCED LIMIT 1];
+        DSALES_TipoUso__c tipoUso = [Select Id from DSALES_TipoUso__c WHERE Name =:data.tipoUso WITH SECURITY_ENFORCED LIMIT 1];
         DSALES_Tipodevehculo__c tipoVehiculo = [Select Id from DSALES_Tipodevehculo__c WHERE Name =: data.tipoVehiculo WITH SECURITY_ENFORCED LIMIT 1];
         cotiza.OpportunityId = oportunidadId;
         //cotiza.DSALES_FormadePago__c = data.method_payment;
@@ -315,7 +315,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             partida.dsalesGastosDeOperacionDelRecibo__c = decimal.valueOf(data.data.primaSeguro.recargo);
             partida.DSALES_Impuestos__c = decimal.valueOf(data.data.primaSeguro.impuestos);
             partida.DSALES_TrackingID__c = data.trackingId;
-        	partida.dsalesPlazo__c = plazo.Id;
+        	partida.DSALES_Plazo__c = plazo.Id;
         	partida.DSALES_Comision__c = decimal.valueOf(data.data.primaSeguro.comision);
             partida.DSALES_Recargos__c = decimal.valueOf(data.data.recibos[0].recargo);
         	partida.DSALES_Descripcion__c='Esta cobertura ampara la responsabilidad civil por el tránsito de vehículos en territorio nacional, en que incurra el Asegurado o cualquier persona que con consentimiento del Asegurado use o posea el vehículo descrito en la Póliza con el límite de responsabilidad establecido en la misma, siempre que a consecuencia de dicho uso o posesión, cause a Terceros daños materiales en sus bienes, lesiones corporales, incapacidades temporales y/o permanentes o la muerte, distintos de los ocupantes de dicho vehículo, que considera la Responsabilidad Civil a que se refiere el artículo 63 Bis de la Ley de Caminos, Puentes y Autotransporte Federal.';

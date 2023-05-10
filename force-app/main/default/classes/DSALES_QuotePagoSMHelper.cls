@@ -71,6 +71,7 @@ public with sharing class DSALES_QuotePagoSMHelper {
         QuoteLineItem newpartida=new QuoteLineItem();
         if(ql.DSALES_NombreProducto__c == q.DSALES_NombreProducto__c){
             if( ql.DSALES_Plazo__c == q.DSALES_Plazo__c){
+            if( ql.DSALES_Plazo__c == q.DSALES_Plazo__c){
                 if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
                     ql.UnitPrice=0;
                     ql.dsalesGastosDeOperacionDelRecibo__c=0;
