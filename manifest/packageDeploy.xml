@@ -393,7 +393,7 @@
 	<members>DSALES_InformacionDePago__c.DSALES_Precio__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_ProductoAdquirido__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_SKU__c</members>
-	<members>DSALES_InformacionDePago__c.dsalesSeguro__c</members>
+	<members>DSALES_InformacionDePago__c.dsales_Seguro__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_TipoFolio__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Saldodineroelec__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_TelefonoCliente__c</members>
