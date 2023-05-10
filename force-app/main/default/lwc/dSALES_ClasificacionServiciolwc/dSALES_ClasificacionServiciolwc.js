@@ -1666,7 +1666,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         else{
             this.listaClaseFamilia.push(this.data.valueClassService);
             this.listaClaseFamilia.push(this.data.valueFamilyService);
-            getserviciosku({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, valueClases: this.listaClaseFamilia})
+            getserviciosku({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, valueClasesFamilias: this.listaClaseFamilia})
             .then(result => {
                 this.data.servicioSku= result;
             }).catch(error => {

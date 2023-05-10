@@ -1,6 +1,6 @@
 @isTest
 public class DSALES_ClasificacionServicio_Test {
-    
+   
     @testSetup
     static void testSetup(){
         String recordTypeId = Schema.SObjectType.DSALES_Categoria__c.getRecordTypeInfosByDeveloperName().get('dsalesServicios').getRecordTypeId();
@@ -26,8 +26,8 @@ public class DSALES_ClasificacionServicio_Test {
           
         DSales_Matriz_GEX__c mat = new DSales_Matriz_GEX__c();
         mat.Name= 'test1';
-        mat.dsalesActivo__c= true;
-        mat.dsalesRegion__c ='Hermosillo';
+        mat.DSALES_Activo__c= true;
+        mat.DSALES_Region__c ='Hermosillo';
         mat.DSALES_Tiempogex__c = '2 años';
         insert mat;
         
@@ -81,15 +81,15 @@ public class DSALES_ClasificacionServicio_Test {
         DSales_Asignacion_de_Productos__c asignacionprod = new DSales_Asignacion_de_Productos__c();
         asignacionprod.Name='Test';
         asignacionprod.DSales_Servicio_Seguro__c= producto.Id;
-        asignacionprod.dsalesProducto__c=objetoserv.Id;
-        asignacionprod.dsalesActivo__c=true;
+        asignacionprod.DSales_Producto__c=objetoserv.Id;
+        asignacionprod.DSALES_Activo__c=true;
         insert asignacionprod;
         
         Campaign camp = new Campaign();
         camp.Name = 'TestCampaing';
         insert camp;
         
-        dsalesTipoUso__c tp = new dsalesTipoUso__c();
+        DSALES_TipodeUso__c tp = new DSALES_TipodeUso__c();
         tp.Name = 'TestTipoUso';
         insert tp;
         
@@ -103,7 +103,7 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_Clase__c idclass=  [select id from DSALES_Clase__c limit 1];
         DSales_Matriz_GEX__c idmat= [select id from DSales_Matriz_GEX__c limit 1];
         Campaign idcamp = [Select id from Campaign limit 1];
-        dsalesTipoUso__c idtp = [Select id from dsalesTipoUso__c limit 1];
+        DSALES_TipodeUso__c idtp = [Select id from DSALES_TipodeUso__c limit 1];
         DSALES_ClasificacionServicio.DSALES_ClasificacionServicioWrapper controller = DSALES_ClasificacionServicio.getPickListCategoria();
         controller.listCategorias[0].seleccionado = true;
         
@@ -187,9 +187,9 @@ public class DSALES_ClasificacionServicio_Test {
     static  void testGetCallout5() {
         Test.startTest(); 
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif5());
-        DSALES_ClasificacionServicio.getserviciosku('2','4','178','2');
+        DSALES_ClasificacionServicio.getserviciosku('2','4','{178,2}');
         Test.stopTest();
-        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosku('2','4','178','2').size()), 'la llamada no debe devolver un código 1000'); 
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosku('2','4',(178, 2)).size()), 'la llamada no debe devolver un código 1000'); 
     } 
     
     @isTest 

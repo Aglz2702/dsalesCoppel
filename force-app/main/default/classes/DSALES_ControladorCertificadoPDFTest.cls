@@ -3,7 +3,7 @@ public class DSALES_ControladorCertificadoPDFTest {
     public DSALES_Certificado__c certi = new DSALES_Certificado__c();
     @testSetup
     static void testSetup(){
-        Tienda__c tie= new Tienda__c(Name='Danny',dsalesTiendaID__c='21');
+        Tienda__c tie= new Tienda__c(Name='Danny',DSales_TiendaID__c='21');
         insert tie;
         Account ac= new Account(Name='DannyTest');  
         insert ac;
@@ -14,6 +14,7 @@ public class DSALES_ControladorCertificadoPDFTest {
         DSALES_Generador__C genera= new DSALES_Generador__c(Name='Certificado PDF',DSALES_Plantilla__c='Name,DSALES_Duracion_de_GEX__c');
         insert genera;
     }
+    
     @isTest 
     static void dsalesControladorCertificadoPDF()
     {

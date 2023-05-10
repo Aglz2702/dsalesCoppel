@@ -29,7 +29,7 @@ public with sharing class DSALES_CertificadoWrapperTest {
         Contact con = new Contact(lastname= 'Test', AccountId= ac.Id, Email= 'johndoeus@salesforce.com');
         insert con;
       
-        Tienda__c tienda = new Tienda__c(dsalesTiendaID__c='1234');
+        Tienda__c tienda = new Tienda__c(DSales_TiendaID__c='1234');
         insert tienda;
         Opportunity opp = new Opportunity(Name='Danny',StageName='Closed',CloseDate=Date.today(),Pricebook2Id=customPB.Id);
         insert opp;
@@ -58,7 +58,7 @@ public with sharing class DSALES_CertificadoWrapperTest {
     @isTest static void crearRegistroTest()
     {
         
-        Tienda__c tienda = [SELECT Id FROM Tienda__c WHERE dsalesTiendaID__c='1234'];
+        Tienda__c tienda = [SELECT Id FROM Tienda__c WHERE DSales_TiendaID__c='1234'];
         Account acc=[SELECT CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];
         contact c= [SELECT Id, FirstName, LastName, AccountId from Contact];
         Asset ast =[select Id, Name, AccountId from Asset];

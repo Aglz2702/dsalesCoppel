@@ -1,5 +1,5 @@
 public without sharing class DSALES_ClonarMatriz {
-    /*
+    
 private static final String OBJETO_PADRE = 'DSales_Matriz_GEX__c';
 private static final String OBJETO_HIJO = 'DSALES_Matriz_de_Cotizacion__c';
     private static final String TEXT_CLON = ' - Clon';
@@ -34,7 +34,7 @@ public static String clonarMatriz(String recordId){
     matrizClone.DSALES_EsClone__c = true;
     matrizClone.DSALES_CloneMatriz__c = recordId;
     matrizClone.Name += TEXT_CLON;
-    matrizClone.dsalesActivo__c = false;
+    matrizClone.DSALES_Activo__c = false;
     if(Schema.sObjectType.DSales_Matriz_GEX__c.isCreateable()){
         insert matrizClone;           
         }
@@ -67,7 +67,7 @@ public static String actualizarMatrizOriginal(Id recordId){
     matrizClone.DSALES_EsClone__c = false;
     matrizClone.DSALES_CloneMatriz__c = recordId;
     matrizClone.Name = matrizClone.Name.replace(TEXT_CLON, '');
-    matrizClone.dsalesActivo__c = true;
+    matrizClone.DSALES_Activo__c = true;
     update matrizClone;
     clonarMatrizItem(matrizClone.Id,recordId);
     return matrizClone.Id;
@@ -123,5 +123,5 @@ public static void compararEliminados(Id original, Id clone){
             System.debug('Permisos insuficientes para borrar');
             }
 }
-*/
+
 }
