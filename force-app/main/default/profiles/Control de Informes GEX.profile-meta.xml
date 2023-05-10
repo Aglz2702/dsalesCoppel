@@ -2117,7 +2117,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>DSALES_InformacionDePago__c.dsalesSeguro__c</field>
+        <field>DSALES_InformacionDePago__c.dsales_Seguro__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
