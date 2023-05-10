@@ -83,7 +83,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                             seguro.urlPdfPoliza = poliza.DSALES_PDF_poliza__c;
                             System.debug('SEGURO:' + seguro);
                             System.debug('POLIZA DESPUES DE EMITIR:' + poliza);
-                            idActivo = poliza.DSALES_Activodeplizadeseguro__c;
+                            idActivo = poliza.dsalesActivoPolizaSeguro__c;
                         }
                     }
                 }
@@ -149,11 +149,11 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             idActivo=activo.Id;
             InsurancePolicy polizaActivo=new InsurancePolicy();
                 polizaActivo = [SELECT Id FROM InsurancePolicy WHERE Id=:pago.DSALES_Poliza__c];
-                polizaActivo.DSALES_Activodeplizadeseguro__c=activo.Id;
+                polizaActivo.dsalesActivoPolizaSeguro__c=activo.Id;
                 polizaActivo.DSALES_Clavevehicular__c=activo.DSALES_Clavevehicular__c;
                 polizaActivo.DSALES_Modelo__c=activo.DSALES_Modelo__c;
                 polizaActivo.DSALES_Numeroserie__c=activo.DSALES_Numeroserie__c;
-                polizaActivo.DSALES_Nmerodemotor__c=activo.DSALES_Numeromotor__c;
+                polizaActivo.dsalesNumeroDeMotor__c=activo.DSALES_Numeromotor__c;
                 polizaActivo.DSALES_Descripcion__c=activo.DSALES_Descripcion__c;
                 polizaActivo.DSALES_Servicio__c=activo.DSALES_Servicio__c;
                 polizaActivo.DSALES_Placas__c=activo.DSALES_Placas__c;
@@ -180,13 +180,13 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c,DSALES_Nombre_del_Vendedor__c,DSALES_Motoentregada__c, DSALES_Motoexterna__c,dsalesSeguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal LIMIT 1];
             if(pago.dsalesSeguro__c ==true ) {
                 ipAssetRecord.DSALES_InformacionPago__c=pago.Id;
-                ipAssetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
-                ipAssetRecord.DSales_Tienda__c=policyAsset.idTienda;
+                ipAssetRecord.dsalesCliente__c=pago.DSALES_Cliente__c;
+                ipAssetRecord.DSALES_Tienda__c=policyAsset.idTienda;
                 ipAssetRecord.DSALES_Colaborador__c=pago.DSALES_Nombre_del_Vendedor__c;
                 ipAssetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
                 ipAssetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
                 ipAssetRecord.InsurancePolicyId=pago.DSALES_Poliza__c;
-                ipAssetRecord.Estatus__c='Activo';
+                ipAssetRecord.dsalesEstatus__c='Activo';
                 ipAssetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
                 ipAssetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
                 ipAssetRecord.DSALES_Modelo__c=policyAsset.modelo;
@@ -205,13 +205,13 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 InsurancePolicy poliza = [SELECT Id, Name  FROM InsurancePolicy where  Name=:DSALES_Utility.SEGURO_PREDETERMINADO];
                 System.debug('poliza domi'+poliza);
                 ipAssetRecord.DSALES_InformacionPago__c=pago.Id;
-                ipAssetRecord.DSALES_Account__c=pago.DSALES_Cliente__c;
-                ipAssetRecord.DSales_Tienda__c=policyAsset.idTienda;
+                ipAssetRecord.dsalesCliente__c=pago.DSALES_Cliente__c;
+                ipAssetRecord.DSALES_Tienda__c=policyAsset.idTienda;
                 ipAssetRecord.DSALES_Colaborador__c=pago.DSALES_Nombre_del_Vendedor__c;
                 ipAssetRecord.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
                 ipAssetRecord.DSALES_Valorfactura__c=policyAsset.valorFactura;
                 ipAssetRecord.InsurancePolicyId= poliza.Id;
-                ipAssetRecord.Estatus__c='Activo';
+                ipAssetRecord.dsalesEstatus__c='Activo';
                 ipAssetRecord.DSALES_Clavevehicular__c=policyAsset.claveVehicular;
                 ipAssetRecord.DSALES_Descripcion__c=policyAsset.descripcion;
                 ipAssetRecord.DSALES_Modelo__c=policyAsset.modelo;

@@ -28,7 +28,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DSALES_Fechadecreacin__c</field>
+                <field>dsalesFechaDeCreacion__c__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

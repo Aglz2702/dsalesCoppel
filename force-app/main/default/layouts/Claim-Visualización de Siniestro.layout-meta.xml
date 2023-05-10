@@ -23,7 +23,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Correo_electr_nico__c</field>
+                <field>dsalesCorreoElectronico__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -66,7 +66,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_SolucionaDevoluci_n__c</field>
+                <field>dsalesSolucionaDevolucion__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

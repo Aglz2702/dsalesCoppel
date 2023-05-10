@@ -39,8 +39,8 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                     }            
                     DSALES_QuoteSmWrapper.QuotePostProvedor datosEnviar = new DSALES_QuoteSmWrapper.QuotePostProvedor();
                     if(data.sku!=''){
-                        Product2 temporal = [SELECT Id,DSALES_vehculo__c, Name, StockKeepingUnit, dsalesSeguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:data.sku WITH SECURITY_ENFORCED LIMIT 1];
-                        data.idVehiculo=temporal.DSALES_vehculo__c;  
+                        Product2 temporal = [SELECT Id,dsalesVehiculo__c, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:data.sku WITH SECURITY_ENFORCED LIMIT 1];
+                        data.idVehiculo=temporal.dsalesVehiculo__c;  
                     }
                     datosEnviar.negocio = Label.DSALES_business;
                     datosEnviar.aseguradora = Label.DSALES_NombreAseguradora; //sales-fijo
@@ -154,10 +154,10 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             Product2 productoMoto = [SELECT Id, Name, StockKeepingUnit, dsalesSeguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku WITH SECURITY_ENFORCED LIMIT 1];
             List<DSALES_AsociacionCampanias__c> lista = [SELECT Name, DSALES_Campania__c, dsalesProducto__c FROM DSALES_AsociacionCampanias__c WHERE dsalesProducto__c =:productoMoto.Id WITH SECURITY_ENFORCED];
             for(DSALES_AsociacionCampanias__c item:lista){
-                Campaign aux = [SELECT Name, DSALES_Tipodecapana__c, Description FROM Campaign WHERE Id =: item.DSALES_Campania__c WITH SECURITY_ENFORCED];
+                Campaign aux = [SELECT Name, dsalesTipoCampana__c, Description FROM Campaign WHERE Id =: item.DSALES_Campania__c WITH SECURITY_ENFORCED];
                 DSALES_QuoteSmWrapper.Campanias aux2 = new DSALES_QuoteSmWrapper.Campanias();
                 aux2.nombre = aux.Name;
-                aux2.tipoCampana = aux.DSALES_Tipodecapana__c;
+                aux2.tipoCampana = aux.dsalesTipoCampana__c;
                 aux2.descripcion = aux.Description;
                 listaCampanias.add(aux2);
             }
@@ -337,10 +337,10 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             Product2 producto = [SELECT Id, Name, StockKeepingUnit, dsalesSeguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku WITH SECURITY_ENFORCED LIMIT 1];
             List <DSALES_AsociacionCampanias__c> listaCampanas = [SELECT Name, DSALES_Campania__c, dsalesProducto__c FROM DSALES_AsociacionCampanias__c WHERE dsalesProducto__c =:producto.Id WITH SECURITY_ENFORCED];
             for(DSALES_AsociacionCampanias__c asoCampana:listaCampanas){         
-                //Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Name=:VALOR];             
-                Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Id=:asoCampana.DSALES_Campania__c WITH SECURITY_ENFORCED];             
+                //Campaign aux = [SELECT Id, Name, IsActive, dsalesTipoCampana__c FROM Campaign WHERE Name=:VALOR];             
+                Campaign aux = [SELECT Id, Name, IsActive, dsalesTipoCampana__c FROM Campaign WHERE Id=:asoCampana.DSALES_Campania__c WITH SECURITY_ENFORCED];             
                 if(aux!=null){
-                    if(aux.IsActive==true && aux.DSALES_Tipodecapana__c==tipo){
+                    if(aux.IsActive==true && aux.dsalesTipoCampana__c==tipo){
                         condicion = true;           
                     }
                 }  
@@ -356,9 +356,9 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             if(seguro == rc){               
             	List <DSALES_AsociacionCampanias__c> listaCampanas = [SELECT Name, DSALES_Campania__c, dsalesProducto__c,dsalesActivo__c FROM DSALES_AsociacionCampanias__c WHERE dsalesProducto__c =:producto.Id AND dsalesActivo__c=true WITH SECURITY_ENFORCED];
                 for(DSALES_AsociacionCampanias__c asoCampana:listaCampanas){                   
-                	Campaign aux = [SELECT Id, Name, IsActive, DSALES_Tipodecapana__c FROM Campaign WHERE Id=:asoCampana.DSALES_Campania__c WITH SECURITY_ENFORCED];             
+                	Campaign aux = [SELECT Id, Name, IsActive, dsalesTipoCampana__c FROM Campaign WHERE Id=:asoCampana.DSALES_Campania__c WITH SECURITY_ENFORCED];             
                     if(aux!=null){
-                        if(aux.Name == VALOR && aux.Id== asoCampana.DSALES_Campania__c && aux.IsActive==true && aux.DSALES_Tipodecapana__c==tipo){
+                        if(aux.Name == VALOR && aux.Id== asoCampana.DSALES_Campania__c && aux.IsActive==true && aux.dsalesTipoCampana__c==tipo){
                             condicion = true;           
                         }
                     }    

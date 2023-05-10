@@ -13,11 +13,11 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         DSALES_Clase__c clase = new DSALES_Clase__c();
         clase.Name = 'test';
         insert clase;
-        Product2 prodRc = new Product2(Name ='RC',DSALES_vehculo__c='sadkncdcs' ,StockKeepingUnit='0000',DSALES_Familia__c=familia.Id,DSALES_Categoria__c=categoria.Id,DSALES_Clase__c=clase.Id,DSales_Tipo_de_Producto__c='Seguro',IsActive=true);
+        Product2 prodRc = new Product2(Name ='RC',dsalesVehiculo__c='sadkncdcs' ,StockKeepingUnit='0000',DSALES_Familia__c=familia.Id,DSALES_Categoria__c=categoria.Id,DSALES_Clase__c=clase.Id,DSales_Tipo_de_Producto__c='Seguro',IsActive=true);
 		insert prodRc;
-        Product2 prodAmp = new Product2(Name ='AMP',DSALES_vehculo__c='23d23d23', StockKeepingUnit='123444',DSALES_Familia__c=familia.Id,DSALES_Categoria__c=categoria.Id,DSALES_Clase__c=clase.Id,DSales_Tipo_de_Producto__c='Seguro',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40,IsActive=true);
+        Product2 prodAmp = new Product2(Name ='AMP',dsalesVehiculo__c='23d23d23', StockKeepingUnit='123444',DSALES_Familia__c=familia.Id,DSALES_Categoria__c=categoria.Id,DSALES_Clase__c=clase.Id,DSales_Tipo_de_Producto__c='Seguro',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40,IsActive=true);
 		insert prodAmp;
-        Product2 prodMoto = new Product2(Name ='Moto',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='12121212',DSales_Tipo_de_Producto__c='Producto',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40,IsActive=true);
+        Product2 prodMoto = new Product2(Name ='Moto',dsalesVehiculo__c='lasicndsldicsid',StockKeepingUnit='12121212',DSales_Tipo_de_Producto__c='Producto',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40,IsActive=true);
 		insert prodMoto;
         Id pricebookId = Test.getStandardPricebookId();
         PricebookEntry standardPrice = new PricebookEntry();
@@ -111,7 +111,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
     public static void prepolizaTest(){
         DSALES_InformaciondePago__c pago = [SELECT Id,DSALES_Oportunidad__c FROM DSALES_InformaciondePago__c LIMIT 1];
         DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
-        InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,DSALES_Estatusdepliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
+        InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
 		DSALES_CreateInsurancePolicy.relacionarPolizaAPago(poliza);
         InsurancePolicyAsset activo = new InsurancePolicyAsset(
             		InsurancePolicyId=poliza.Id,
@@ -138,7 +138,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         DSALES_InformaciondePago__c pago = [SELECT Id,DSALES_Oportunidad__c FROM DSALES_InformaciondePago__c LIMIT 1];
         Test.startTest();
         DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
-        InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,DSALES_Estatusdepliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
+        InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
 		poliza.ExpirationDate=DateTime.now();
         update poliza;
         DSALES_CreateInsurancePolicy.cambiarEstatusPoliza(poliza.Id);

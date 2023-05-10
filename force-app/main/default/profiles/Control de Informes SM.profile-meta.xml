@@ -1344,7 +1344,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Campaign.DSALES_Tipodecapana__c</field>
+        <field>Campaign.dsalesTipoCampana__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1804,7 +1804,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_Fechadecreacin__c</field>
+        <field>DSALES_Endoso__c.dsalesFechaDeCreacion__c__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2314,7 +2314,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InsurancePolicyAsset.DSALES_Account__c</field>
+        <field>InsurancePolicyAsset.dsalesCliente__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2399,7 +2399,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InsurancePolicyAsset.Estatus__c</field>
+        <field>InsurancePolicyAsset.dsalesEstatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2884,7 +2884,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Product2.DSALES_vehculo__c</field>
+        <field>Product2.dsalesVehiculo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1104,7 +1104,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_Nmerodemotor__c</field>
+            <field>dsalesNumeroDeMotor__c</field>
             <table>Account.InsurancePolicy</table>
         </columns>
         <columns>
@@ -1367,7 +1367,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Correo_electr_nico__c</field>
+            <field>dsalesCorreoElectronico__c</field>
             <table>Account.InsurancePolicy.Siniestros__r</table>
         </columns>
         <columns>

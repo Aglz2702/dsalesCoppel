@@ -96,7 +96,7 @@ global without sharing class DSALES_VentaSMRest {
         if(String.isNotEmpty(datosActivo.numeroSerie)){
             activo= DSALES_IPAssetWrapperRequest.insertIPAsset(datosActivo,pago.Id);
             idActivo=activo.Id;
-            poliza.DSALES_Activodeplizadeseguro__c=activo.Id;
+            poliza.dsalesActivoPolizaSeguro__c=activo.Id;
             poliza=DSALES_CreateInsurancePolicy.agregarDatosDeActivo(activo,poliza.Id);
             if(pago.DSALES_Poliza__c!=null && pago.DSALES_Poliza__r.PolicyName!= DSALES_Utility.SEGURO_PREDETERMINADO){
                 condicionesParaEmitir(activo,datosActivo.emitirPoliza);

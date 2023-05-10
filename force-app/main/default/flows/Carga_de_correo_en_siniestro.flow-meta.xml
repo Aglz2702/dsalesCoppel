@@ -58,7 +58,7 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Correo_electr_nico__c</field>
+            <field>dsalesCorreoElectronico__c</field>
             <value>
                 <elementReference>Obtener_email_de_cliente.PersonEmail</elementReference>
             </value>
@@ -73,7 +73,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Correo_electr_nico__c</field>
+            <field>dsalesCorreoElectronico__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>true</booleanValue>

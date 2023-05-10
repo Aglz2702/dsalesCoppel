@@ -21,7 +21,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Fecha_de_emisi_n__c</field>
+                <field>dsalesFechaDeEmision__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -43,7 +43,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DSALES_Estatusdepliza__c</field>
+                <field>dsalesEstatusPoliza__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -138,7 +138,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Activodeplizadeseguro__c</field>
+                <field>dsalesActivoPolizaSeguro__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -154,7 +154,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Nmerodemotor__c</field>
+                <field>dsalesNumeroDeMotor__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

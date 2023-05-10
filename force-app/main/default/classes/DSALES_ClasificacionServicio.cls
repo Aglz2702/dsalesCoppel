@@ -41,7 +41,7 @@ public without sharing class DSALES_ClasificacionServicio {
         tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Producto Tangible').getRecordTypeId();
         String producto= 'Producto';
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
-        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, dsalesSeguro__c, DSALES_TipoServicio__c, DSALES_vehculo__c, DSALES_Noaplica__c, DSALES_NoaplicaServ__c, DSALES_NoaplicaSeg__c, RecordTypeId ';
+        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, DSALES_TipoServicio__c, dsalesVehiculo__c, DSALES_Noaplica__c, DSALES_NoaplicaServ__c, DSALES_NoaplicaSeg__c, RecordTypeId ';
         query += 'from Product2 Where RecordTypeId = :tipoRegistroId ';
        
         switch on opcion {
@@ -80,7 +80,7 @@ public without sharing class DSALES_ClasificacionServicio {
         system.debug(sku);
         //String tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSales_Tipo_de_Producto__c').getRecordTypeId();
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
-        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, dsalesSeguro__c, RecordTypeId, DSALES_vehculo__c, DSALES_TipoServicio__c, DSALES_Noaplica__c, DSALES_NoaplicaServ__c, DSALES_NoaplicaSeg__c ';
+        query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, RecordTypeId, dsalesVehiculo__c, DSALES_TipoServicio__c, DSALES_Noaplica__c, DSALES_NoaplicaServ__c, DSALES_NoaplicaSeg__c ';
         query += 'from Product2 Where StockKeepingUnit LIKE \''+ sku + '%\' OR Name LIKE \'' + sku + '%\'';
         query += ' order by DSales_Servicio__c asc';
         System.debug('Query: '+query);
@@ -250,7 +250,7 @@ public without sharing class DSALES_ClasificacionServicio {
             servicio.tipoServicio = item.DSALES_TipoServicio__c;
             servicio.tipoUso = false;
             servicio.campanas = false;
-            servicio.idvehiculo = item.DSALES_vehculo__c;
+            servicio.idvehiculo = item.dsalesVehiculo__c;
             listServicios.add(servicio); 
         }
         return listServicios;
@@ -308,8 +308,8 @@ public without sharing class DSALES_ClasificacionServicio {
             for(integer i=0; i<listCompleted.size(); i++)
             {
                 if(listCompleted[i]==integer.valueof(item.sku)){
-                    listProductos.add(new Product2(Id = item.id, DSALES_Servicio__c = item.servicio, dsalesSeguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, 
-                    DSALES_NoaplicaSeg__c= item.noAplicaSeguro, DSALES_NoaplicaServ__c=item.noAplicaServicio, DSALES_IsClasified__c=true, DSALES_vehculo__c = item.idvehiculo)); 
+                    listProductos.add(new Product2(Id = item.id, DSALES_Servicio__c = item.servicio, DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, 
+                    DSALES_NoaplicaSeg__c= item.noAplicaSeguro, DSALES_NoaplicaServ__c=item.noAplicaServicio, DSALES_IsClasified__c=true, dsalesVehiculo__c = item.idvehiculo)); 
                 } 
             }
         }
