@@ -1,6 +1,5 @@
 @isTest
 global with sharing class DSALES_ValidarClienteHelperTest {
-    /*
     @testSetup
     static void SetUp()
     { 
@@ -137,7 +136,4 @@ insert certificadoInsert;
         System.assertEquals('Cerrada ganada', p.StageName);
         System.assertEquals(qts.Id, p.SyncedQuoteId);
     }
-    
-   
-    */
 }

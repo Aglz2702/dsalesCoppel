@@ -1,9 +1,9 @@
 @RestResource(urlMapping='/siniestroUpsert/*')
 global with sharing class DSALES_Siniestro {
-    /*
+
     @HttpPost
     global static DSALES_SiniestroWrapper.siniestroPostResponse siniestroUpsert(){
-        /* String message = '';
+ String message = '';
         Integer errorCode;
         Boolean succes = false;
         String idSiniestro;
@@ -70,8 +70,8 @@ global with sharing class DSALES_Siniestro {
                            FROM Claim WHERE DSALES_SiniestroUid__c =:data.uid WITH SECURITY_ENFORCED LIMIT 1];
         if(data.estatus =='En requerimiento de información'){
             siniestro.DSALES_Estatus__c = data.estatus;
-            siniestro.DSALES_MotivodeDevolucion__c = data.motivoDevolucion;
-            siniestro.DSALES_SolucionaDevoluci_n__c = data.solucionDevolucion;
+            siniestro.DSALES_MotivodeDevolucion__c = data.comentarioDeEstatus;
+            siniestro.dsalesSolucionaDevolucion__c = data.solucion;
         }
         if(data.estatus =='Pendiente de información'){
             siniestro.DSALES_Estatus__c = data.estatus;
@@ -108,5 +108,4 @@ global with sharing class DSALES_Siniestro {
         
         return siniestro.Id;
     }
-    */
 }
