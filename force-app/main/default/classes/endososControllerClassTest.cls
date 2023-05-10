@@ -1,5 +1,5 @@
 @isTest
-public class EndososControllerClassTest {
+public class endososControllerClassTest {
     
     @isTest static void configSetupTest () { 
         
