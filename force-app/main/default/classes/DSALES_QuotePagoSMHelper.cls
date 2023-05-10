@@ -70,7 +70,7 @@ public with sharing class DSALES_QuotePagoSMHelper {
     public static QuoteLineItem llenarPartida(QuoteLineItem ql, QuoteLineItem q){
         QuoteLineItem newpartida=new QuoteLineItem();
         if(ql.DSALES_NombreProducto__c == q.DSALES_NombreProducto__c){
-            if( ql.dsalesPlazo__c == q.dsalesPlazo__c){
+            if( ql.DSALES_Plazo__c == q.DSALES_Plazo__c){
                 if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
                     ql.UnitPrice=0;
                     ql.dsalesGastosDeOperacionDelRecibo__c=0;
@@ -116,8 +116,8 @@ public with sharing class DSALES_QuotePagoSMHelper {
                 part.DSALES_Descripcion__c=q.DSALES_Descripcion__c;
                 part.DSALES_Pagomensual__c=q.DSALES_Pagomensual__c;
                 for(Plazo__c p:plazos){
-                    if(q.dsalesPlazo__c!=null && p.Id==q.dsalesPlazo__c){
-                        part.dsalesPlazo__c=q.dsalesPlazo__c;
+                    if(q.DSALES_Plazo__c!=null && p.Id==q.DSALES_Plazo__c){
+                        part.DSALES_Plazo__c=q.DSALES_Plazo__c;
                     }
                 }
             }

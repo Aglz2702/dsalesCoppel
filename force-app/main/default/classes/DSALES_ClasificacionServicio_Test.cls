@@ -89,7 +89,7 @@ public class DSALES_ClasificacionServicio_Test {
         camp.Name = 'TestCampaing';
         insert camp;
         
-        dsalesTipoUso__c tp = new dsalesTipoUso__c();
+        DSALES_TipoUso__c tp = new DSALES_TipoUso__c();
         tp.Name = 'TestTipoUso';
         insert tp;
         
@@ -103,7 +103,7 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_Clase__c idclass=  [select id from DSALES_Clase__c limit 1];
         DSales_Matriz_GEX__c idmat= [select id from DSales_Matriz_GEX__c limit 1];
         Campaign idcamp = [Select id from Campaign limit 1];
-        dsalesTipoUso__c idtp = [Select id from dsalesTipoUso__c limit 1];
+        DSALES_TipoUso__c idtp = [Select id from DSALES_TipoUso__c limit 1];
         DSALES_ClasificacionServicio.DSALES_ClasificacionServicioWrapper controller = DSALES_ClasificacionServicio.getPickListCategoria();
         controller.listCategorias[0].seleccionado = true;
         

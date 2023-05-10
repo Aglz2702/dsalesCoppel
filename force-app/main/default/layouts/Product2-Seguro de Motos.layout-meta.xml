@@ -80,7 +80,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>dsalesPlazo__c</fields>
+        <fields>DSALES_Plazo__c</fields>
         <fields>dsalesActivo__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Plazo__c.dsalesSeguro__c</relatedList>

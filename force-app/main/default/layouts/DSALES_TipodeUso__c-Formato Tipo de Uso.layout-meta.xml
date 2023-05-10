@@ -88,7 +88,7 @@
         <fields>dsalesProducto__c</fields>
         <fields>CREATED_DATE</fields>
         <fields>dsalesActivo__c</fields>
-        <relatedList>DSALES_AsociacionTiposUso__c.dsalesTipoUso__c</relatedList>
+        <relatedList>DSALES_AsociacionTiposUso__c.DSALES_TipoUso__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

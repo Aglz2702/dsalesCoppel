@@ -159,7 +159,7 @@
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>dsalesTipoUso__c</pageOrSobjectType>
+        <pageOrSobjectType>DSALES_TipoUso__c</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -168,7 +168,7 @@
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
-        <pageOrSobjectType>dsalesTipoUso__c</pageOrSobjectType>
+        <pageOrSobjectType>DSALES_TipoUso__c</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
@@ -1243,7 +1243,7 @@
     <tabs>DSALES_InformacionDePago__c</tabs>
     <tabs>DSALES_Endoso__c</tabs>
     <tabs>standard-Claim</tabs>
-    <tabs>dsalesTipoUso__c</tabs>
+    <tabs>DSALES_TipoUso__c</tabs>
     <tabs>DSALES_Tipodevehculo__c</tabs>
     <tabs>standard-Campaign</tabs>
     <tabs>standard-Product2</tabs>
