@@ -1,6 +1,5 @@
 @RestResource(urlMapping='/insertPaymentInformationSM/*')
 global with sharing class DSALES_PaymentInfoWrapperRequest {
-    /*
     @HttpPost
     global static DSALES_PaymentInfoWrapper.PaymentResponse crearPago(){
         DSALES_PaymentInfoWrapper.PaymentResponse responsePago = new DSALES_PaymentInfoWrapper.PaymentResponse();      
@@ -42,7 +41,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
         try{
             String recordTypePago = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
             Opportunity oportunidad =[SELECT Id,AccountId FROM Opportunity WHERE Id=:pago.idOportunidad WITH SECURITY_ENFORCED];
-            Tienda__c tienda =[SELECT Id,dsalesTiendaID__c FROM Tienda__c WHERE dsalesTiendaID__c=:pago.claveTienda WITH SECURITY_ENFORCED];
+            Tienda__c tienda =[SELECT Id,dsales_TiendaID__c FROM Tienda__c WHERE dsales_TiendaID__c=:pago.claveTienda WITH SECURITY_ENFORCED];
             Account cliente=[SELECT Id,	FinServ__BillingAddress__pc FROM Account WHERE Id=:oportunidad.AccountId WITH SECURITY_ENFORCED];
             nuevoPago.DSALES_Cliente__c=cliente.Id;
             nuevoPago.DSALES_Oportunidad__c=pago.idOportunidad;
@@ -52,7 +51,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             nuevoPago.DSALES_Montototal__c=pago.totalFactura;
             nuevoPago.DSALES_Nombre_del_Vendedor__c=pago.nombreVendedor;
             nuevoPago.DSALES_Caja__c=pago.numeroCaja;
-            nuevoPago.dsalesSeguro__c=pago.seguro;
+            nuevoPago.dsales_Seguro__c=pago.seguro;
             nuevoPago.DSALES_Plazodecomprademoto__c=pago.plazos;
             if(pago.fechaEntrega!=null){
               nuevoPago.DSALES_Fechadeentregaestimada__c=pago.fechaEntrega;   
@@ -101,5 +100,4 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
         
         return responsePago;
     }
-    */
 }

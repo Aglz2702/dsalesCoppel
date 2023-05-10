@@ -177,8 +177,8 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
 
         InsurancePolicyAsset ipAssetRecord  = new InsurancePolicyAsset();
         try {
-            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c,DSALES_Nombre_del_Vendedor__c,DSALES_Motoentregada__c, DSALES_Motoexterna__c,dsalesSeguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal LIMIT 1];
-            if(pago.dsalesSeguro__c ==true ) {
+            DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c,DSALES_Nombre_del_Vendedor__c,DSALES_Motoentregada__c, DSALES_Motoexterna__c,dsales_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal LIMIT 1];
+            if(pago.dsales_Seguro__c ==true ) {
                 ipAssetRecord.DSALES_InformacionPago__c=pago.Id;
                 ipAssetRecord.dsalesCliente__c=pago.DSALES_Cliente__c;
                 ipAssetRecord.DSALES_Tienda__c=policyAsset.idTienda;
@@ -201,7 +201,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 success = true; 
               
             }
-            if(pago.dsalesSeguro__c ==false ) {
+            if(pago.dsales_Seguro__c ==false ) {
                 InsurancePolicy poliza = [SELECT Id, Name  FROM InsurancePolicy where  Name=:DSALES_Utility.SEGURO_PREDETERMINADO];
                 System.debug('poliza domi'+poliza);
                 ipAssetRecord.DSALES_InformacionPago__c=pago.Id;
