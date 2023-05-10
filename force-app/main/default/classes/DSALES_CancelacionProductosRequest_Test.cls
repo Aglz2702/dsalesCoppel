@@ -96,13 +96,13 @@ public class DSALES_CancelacionProductosRequest_Test {
         insert oppGex;
         
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  '1';
+        t.DSales_TiendaID__c =  '1';
         insert t;
         DSALES_InformacionDePago__c pago = new DSALES_InformacionDePago__c(
                                       	DSALES_IDUniversal1__c='0000000000000000000001',
               							DSALES_Cliente__c=acc.Id,
               							DSALES_Oportunidad__c=opp.Id,
-              							dsalesSeguro__c=true,
+              							DSALES_Seguro__c=true,
               							RecordTypeId=recordTypeIdPagoM
                                       
                                       
@@ -119,7 +119,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         insert cotizacion;
         Quote cotGex = new Quote(OpportunityId=oppGex.Id,Name='GEX',DSales_Tienda__c=t.Id);
         insert cotGex;
-		Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
+		    Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
         insert plazoAMP12;
         
         QuoteLineItem moto = new QuoteLineItem();
@@ -189,7 +189,7 @@ public class DSALES_CancelacionProductosRequest_Test {
     public static void cancelacionMotoySeguro(){
         RestRequest request=new RestRequest();
        	RestResponse response = new RestResponse();
-        DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE dsalesSeguro__c=true];
+        DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_Seguro__c=true];
        	Product2 prod=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE Name='Moto Vento'];
         List<OpportunityLineItem> productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem  WHERE Product2.Name=:'Moto Vento'];
        	OpportunityLineItem prodSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Product2.Name='AMP'];
@@ -213,7 +213,7 @@ public class DSALES_CancelacionProductosRequest_Test {
     public static void devolucionMotoySeguro(){
         RestRequest request=new RestRequest();
        	RestResponse response = new RestResponse();
-        DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE dsalesSeguro__c=true];
+        DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_Seguro__c=true];
         List<Product2> productos=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2];
         List<OpportunityLineItem> productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Opportunity.Name='Venta moto'];
         String bodyJson='{"canal":".EXE","fechaCancelacion":"2023-03-22","folioCancelacion":"12876","idUniversal":"'+pago.DSALES_IDUniversal1__c+'","idTienda":"1","numeroCliente":"","nombreVendedor":"Luis Perez Sanchez","numeroVendedor":"1234","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","ListaProductos":[{"idPartidaOportunidad":"'+productosSincro[0].Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":""},{"idPartidaOportunidad":"'+productosSincro[1].Id+'","estatus":"Devuelto","motivoCancelacion":"A petición del cliente","idCertificado":""}],"ListaReembolso":[{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"MOTO","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005},{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"AMP","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005}]}';

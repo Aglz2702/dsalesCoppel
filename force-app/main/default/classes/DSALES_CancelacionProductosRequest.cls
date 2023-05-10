@@ -92,7 +92,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
         String recordTypeIdMoto = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
         String recordTypeIdGex = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_Pagos_en_NPV').getRecordTypeId();
         if(pago.RecordTypeId==recordTypeIdGex){
-            DSALES_CertificadoWrapperRequest.putCertificado(datos.idUniversal,listaProductos,datos.estatus,datos.motivoCancelacion);
+           // DSALES_CertificadoWrapperRequest.putCertificado(datos.idUniversal,listaProductos,datos.estatus,datos.motivoCancelacion);
         }else if(pago!=null && pago.RecordTypeId==recordTypeIdMoto){
             actualizarOportunidades(listaProductos);
         }
@@ -102,7 +102,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
     
     public static String crearCancelacion(DSALES_CancelacionProductosWrapper.Request datos){
         DSALES_InformacionDePago__c pago = [SELECT Id FROM 	DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c =:datos.idUniversal WITH SECURITY_ENFORCED];
-        Tienda__c tienda =[SELECT Id FROM Tienda__c WHERE dsalesTiendaID__c=:datos.idTienda WITH SECURITY_ENFORCED];
+        Tienda__c tienda =[SELECT Id FROM Tienda__c WHERE DSales_TiendaID__c=:datos.idTienda WITH SECURITY_ENFORCED];
         DSALES_Cancelacion__c cancelacion = new DSALES_Cancelacion__c(
             DSALES_Canal__c= datos.canal,
             DSALES_FechaCancelacion__c =datos.fechaCancelacion,
@@ -132,7 +132,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
             for(DSALES_ReembolsoWrapper.ReembolsoRequest rmb:datos.listaReembolso){
                 rmb.numeroCancelacion=cancelacion.Id;
             }
-            DSALES_ReembolsoWrapperRequest.insertReembolso(datos.listaReembolso);
+            //DSALES_ReembolsoWrapperRequest.insertReembolso(datos.listaReembolso);
         }
         return cancelacion.Id;
     }
