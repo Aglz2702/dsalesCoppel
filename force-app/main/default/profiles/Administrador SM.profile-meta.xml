@@ -3419,7 +3419,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Opportunity.DSALES_Tiend__c</field>
+        <field>Opportunity.dsalesTienda__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3934,7 +3934,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.DSALES_Cdigodepromocin__c</field>
+        <field>Quote.dsalesCodigoDePromocion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3994,7 +3994,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.DSALES_Fechadecomienzodepliza__c</field>
+        <field>Quote.dsalesFechaDeComienzoDePoliza__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4014,7 +4014,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.DSALES_Gnero__c</field>
+        <field>Quote.dsalesGenero__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4024,12 +4024,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.DSALES_IDdelvehculo__c</field>
+        <field>Quote.dsalesIdDeVehiculo__c/field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.DSALES_Mtododecontacto__c</field>
+        <field>Quote.dsalesMetodoDeContacto__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4054,7 +4054,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.DSALES_Opcindepago__c</field>
+        <field>Quote.dsalesOpcionDePago__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4089,7 +4089,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.DSALES_Tipodeserviciodelvehculo__c</field>
+        <field>Quote.dsalesTipoDeServicioDelVehiculo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4104,7 +4104,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.DSALES_Tipodeveihculo__c</field>
+        <field>Quote.dsalesTipoDeVehiculo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4219,12 +4219,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Quote.Lista_negra__c</field>
+        <field>Quote.dsalesListaNegra__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.Motivo_de_lista_negra__c</field>
+        <field>Quote.dsalesMotivoDeListaNegra__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4299,7 +4299,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>QuoteLineItem.DSALES_Derechosdepliza__c</field>
+        <field>QuoteLineItem.dsalesDerechosDePoliza__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4324,7 +4324,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>QuoteLineItem.DSALES_Gastosdeoperacindelrecibo__c</field>
+        <field>QuoteLineItem.dsalesGastosDeOperacionDelRecibo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

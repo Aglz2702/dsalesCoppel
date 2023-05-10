@@ -243,7 +243,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         oppor.CloseDate = date.today()+30;
         oppor.StageName = 'Nuevo';
         oppor.RecordTypeId = recordTypeId;
-        oppor.DSALES_Tiend__c = tienda.Id;
+        oppor.dsalesTienda__c = tienda.Id;
         oppor.Pricebook2Id = precioLista.Id;
         if(Schema.sObjectType.Opportunity.isCreateable())
         {
@@ -272,20 +272,20 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.RecordTypeId = recordTypeId;
         date aux = date.today();
         cotiza.DSALES_Fechadecreacionpresupuesto__c = date.newInstance(aux.year(), aux.month(), aux.day());
-        cotiza.Lista_negra__c = listaNegra;
-        cotiza.Motivo_de_lista_negra__c= 'Sin Definir';
+        cotiza.dsalesListaNegra__c = listaNegra;
+        cotiza.dsalesMotivoDeListaNegra__c= 'Sin Definir';
         cotiza.Phone = data.telefonoCelular;
         cotiza.DSALES_Fechadenacimiento__c = data.fechaNacimiento;
         cotiza.dsalesCodigoPostal__c = data.codigoPostal;
-        cotiza.DSALES_IDdelvehculo__c = data.idVehiculo;
-        cotiza.DSALES_Opcindepago__c = data.opcionPago;
+        cotiza.dsalesIdDeVehiculo__c = data.idVehiculo;
+        cotiza.dsalesOpcionDePago__c = data.opcionPago;
         cotiza.DSALES_Cobertura__c = '';
         cotiza.DSales_Vendedor__c = data.nombreVendedor;
-        cotiza.DSALES_Gnero__c = data.generoContacto;
-        cotiza.DSALES_Fechadecomienzodepliza__c = data.fechaInicio;
+        cotiza.dsalesGenero__c = data.generoContacto;
+        cotiza.dsalesFechaDeComienzoDePoliza__c = data.fechaInicio;
         cotiza.Email = data.correoElectronico;
         cotiza.DSALES_TipoUso__c = tipoUso.Id;
-        cotiza.DSALES_Tipodeveihculo__c = tipoVehiculo.Id;
+        cotiza.dsalesTipoDeVehiculo__c = tipoVehiculo.Id;
         cotiza.DSALES_RFC__c = data.rfc;
         cotiza.DSALES_Plazoacotizar__c= decimal.valueOf(data.plazoCotizar);
         
@@ -311,8 +311,8 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             partida.DSALES_Fechadetermino__c = Date.valueOF(data.data.recibos[0].fechaTermino);
             partida.DSALES_Primaneta__c = decimal.valueOf(data.data.primaSeguro.primaNeta);
             partida.UnitPrice = decimal.valueOf(data.data.recibos[0].primaTotal);
-            partida.DSALES_Derechosdepliza__c = decimal.valueOf(data.data.primaSeguro.derecho);
-            partida.DSALES_Gastosdeoperacindelrecibo__c = decimal.valueOf(data.data.primaSeguro.recargo);
+            partida.dsalesDerechosDePoliza__c = decimal.valueOf(data.data.primaSeguro.derecho);
+            partida.dsalesGastosDeOperacionDelRecibo__c = decimal.valueOf(data.data.primaSeguro.recargo);
             partida.DSALES_Impuestos__c = decimal.valueOf(data.data.primaSeguro.impuestos);
             partida.DSALES_TrackingID__c = data.trackingId;
         	partida.dsalesPlazo__c = plazo.Id;
