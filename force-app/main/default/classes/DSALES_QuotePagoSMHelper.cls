@@ -73,9 +73,9 @@ public with sharing class DSALES_QuotePagoSMHelper {
             if( ql.dsalesPlazo__c == q.dsalesPlazo__c){
                 if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
                     ql.UnitPrice=0;
-                    ql.DSALES_Gastosdeoperacindelrecibo__c=0;
+                    ql.dsalesGastosDeOperacionDelRecibo__c=0;
                     ql.DSALES_Primaneta__c=0;
-                    ql.DSALES_Derechosdepliza__c=0;
+                    ql.dsalesDerechosDePoliza__c=0;
                     ql.DSALES_Comision__c=0;
                     ql.DSALES_Recargos__c=0;
                     ql.DSALES_Impuestos__c=0;
@@ -107,8 +107,8 @@ public with sharing class DSALES_QuotePagoSMHelper {
                 part.DSALES_Fechadeinicio__c = q.DSALES_Fechadeinicio__c;
                 part.DSALES_Fechadetermino__c = q.DSALES_Fechadetermino__c;
                 part.DSALES_Primaneta__c = q.DSALES_Primaneta__c;
-                part.DSALES_Derechosdepliza__c = q.DSALES_Derechosdepliza__c;
-                part.DSALES_Gastosdeoperacindelrecibo__c = q.DSALES_Gastosdeoperacindelrecibo__c;
+                part.dsalesDerechosDePoliza__c = q.dsalesDerechosDePoliza__c;
+                part.dsalesGastosDeOperacionDelRecibo__c = q.dsalesGastosDeOperacionDelRecibo__c;
                 part.DSALES_Impuestos__c = q.DSALES_Impuestos__c;
                 part.DSALES_TrackingID__c=q.DSALES_TrackingID__c;
                 part.DSALES_Comision__c=q.DSALES_Comision__c;
@@ -129,9 +129,9 @@ public with sharing class DSALES_QuotePagoSMHelper {
     public static QuoteLineItem quoteIf(QuoteLineItem ql, QuoteLineItem q){
         if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
             ql.UnitPrice=0;
-            ql.DSALES_Gastosdeoperacindelrecibo__c=0;
+            ql.dsalesGastosDeOperacionDelRecibo__c=0;
             ql.DSALES_Primaneta__c=0;
-            ql.DSALES_Derechosdepliza__c=0;
+            ql.dsalesDerechosDePoliza__c=0;
             ql.DSALES_Comision__c=0;
             ql.DSALES_Recargos__c=0;
             ql.DSALES_Impuestos__c=0;

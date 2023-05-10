@@ -78,7 +78,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DSALES_Gastosdeoperacindelrecibo__c</field>
+                <field>dsalesGastosDeOperacionDelRecibo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -86,7 +86,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DSALES_Derechosdepliza__c</field>
+                <field>dsalesDerechosDePoliza__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
