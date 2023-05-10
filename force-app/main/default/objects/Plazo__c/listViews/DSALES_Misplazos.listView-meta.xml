@@ -3,7 +3,7 @@
     <fullName>DSALES_Misplazos</fullName>
     <columns>NAME</columns>
     <columns>dsalesSeguro__c</columns>
-    <columns>dsalesPlazo__c</columns>
+    <columns>DSALES_Plazo__c</columns>
     <columns>dsalesActivo__c</columns>
     <columns>CREATED_DATE</columns>
     <columns>dsalesDescripcion__c</columns>

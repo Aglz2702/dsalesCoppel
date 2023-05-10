@@ -119,7 +119,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         insert cotizacion;
         Quote cotGex = new Quote(OpportunityId=oppGex.Id,Name='GEX',DSales_Tienda__c=t.Id);
         insert cotGex;
-		Plazo__c plazoAMP12 = new Plazo__c(Name='12',dsalesPlazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
+		Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
         insert plazoAMP12;
         
         QuoteLineItem moto = new QuoteLineItem();
@@ -136,7 +136,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         seguroAmp.Product2Id = prodAmp.Id;
         seguroAmp.Quantity = 1.0;
         seguroAmp.UnitPrice = customPrice.UnitPrice;
-        seguroAmp.dsalesPlazo__c=plazoAMP12.Id;
+        seguroAmp.DSALES_Plazo__c=plazoAMP12.Id;
         seguroAmp.DSALES_Segurogratis__c=false;
         insert seguroAmp;
         opp.SyncedQuoteId  = cotizacion.Id;     

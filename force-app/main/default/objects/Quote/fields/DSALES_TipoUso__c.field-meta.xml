@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Tipo de Uso</label>
-    <referenceTo>dsalesTipoUso__c</referenceTo>
+    <referenceTo>DSALES_TipoUso__c</referenceTo>
     <relationshipLabel>Cotizaciones</relationshipLabel>
     <relationshipName>Cotizaciones</relationshipName>
     <required>false</required>

@@ -3,7 +3,7 @@
     <fullName>DSALES_FormatoompactoSM</fullName>
     <fields>Name</fields>
     <fields>dsalesSeguro__c</fields>
-    <fields>dsalesPlazo__c</fields>
+    <fields>DSALES_Plazo__c</fields>
     <fields>dsalesActivo__c</fields>
     <label>Formato compacto SM</label>
 </CompactLayout>

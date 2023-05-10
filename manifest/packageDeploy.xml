@@ -274,7 +274,7 @@
 	<members>DSALES_AsociacionCampanias__c.DSALES_Campania__c</members> 
 	<members>DSALES_AsociacionCampanias__c.dsalesProducto__c</members>
 	<members>DSALES_AsociacionTiposUso__c.dsalesProducto__c</members>
-	<members>DSALES_AsociacionTiposUso__c.dsalesTipoUso__c</members>
+	<members>DSALES_AsociacionTiposUso__c.DSALES_TipoUso__c</members>
 	<members>DSALES_Categoria__c.DSALES_TipoProducto__c</members>
 	<members>DSALES_Categoria__c.DSALES_TipoSeguro__c</members>
 	<members>DSALES_Categoria__c.DSALES_TipoServicio__c</members>
@@ -546,7 +546,7 @@
 	<members>OrderItem.DSales_Vigencia__c</members>
 	<members>Plazo__c.dsalesDescripcion__c</members>
 	<members>Plazo__c.dsalesSeguro__c</members>
-	<members>Plazo__c.dsalesPlazo__c</members>
+	<members>Plazo__c.DSALES_Plazo__c</members>
 	<members>Product2.DSALES_VigenciaMeses__c</members>
 	<members>Product2.DSALES_Vinculado__c</members>
 	<members>Product2.DSales_Marca__c</members>
@@ -647,7 +647,7 @@
 	<members>QuoteLineItem.DSALES_NombreProducto__c</members>
 	<members>QuoteLineItem.DSALES_NombreProductoServicio__c</members>
 	<members>QuoteLineItem.DSALES_Primaneta__c</members>
-	<members>QuoteLineItem.dsalesPlazo__c</members>
+	<members>QuoteLineItem.DSALES_Plazo__c</members>
 	<members>QuoteLineItem.DSALES_SKU__c</members>
 	<members>QuoteLineItem.DSales_SKU_Producto__c</members>
 	<members>QuoteLineItem.DSALES_Tipodeproducto__c</members>
@@ -791,7 +791,7 @@
 	<members>DSALES_SubCategoria__c</members>
 	<members>DSales_Matriz_GEX__c</members>
 	<members>DSALES_RutaIntegracion__mdt</members>
-	<members>dsalesTipoUso__c</members>
+	<members>DSALES_TipoUso__c</members>
 	<members>DSALES_Tipodevehculo__c</members>
 	<members>DASALES_Porcentajedecobro__c</members>
 	<members>DSALES_Partidadepago__c</members>

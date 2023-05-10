@@ -122,7 +122,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>dsalesTipoUso__c</fields>
+        <fields>DSALES_TipoUso__c</fields>
         <fields>dsalesActivo__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>DSALES_AsociacionTiposUso__c.dsalesProducto__c</relatedList>

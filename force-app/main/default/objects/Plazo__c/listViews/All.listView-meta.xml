@@ -5,7 +5,7 @@
     <columns>dsalesSeguro__c</columns>
     <columns>dsalesActivo__c</columns>
     <columns>dsalesDescripcion__c</columns>
-    <columns>dsalesPlazo__c</columns>
+    <columns>DSALES_Plazo__c</columns>
     <columns>UPDATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>

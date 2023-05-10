@@ -1679,7 +1679,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DSALES_AsociacionTiposUso__c.dsalesTipoUso__c</field>
+        <field>DSALES_AsociacionTiposUso__c.DSALES_TipoUso__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2484,17 +2484,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>dsalesTipoUso__c.dsalesActivo__c</field>
+        <field>DSALES_TipoUso__c.dsalesActivo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>dsalesTipoUso__c.dsalesDescripcion__c</field>
+        <field>DSALES_TipoUso__c.dsalesDescripcion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>dsalesTipoUso__c.dsalesNumeroTipoUso__c</field>
+        <field>DSALES_TipoUso__c.dsalesNumeroTipoUso__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3679,7 +3679,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Plazo__c.dsalesPlazo__c</field>
+        <field>Plazo__c.DSALES_Plazo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4094,7 +4094,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.dsalesTipoUso__c</field>
+        <field>Quote.DSALES_TipoUso__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4364,7 +4364,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>QuoteLineItem.dsalesPlazo__c</field>
+        <field>QuoteLineItem.DSALES_Plazo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4738,7 +4738,7 @@
         <recordType>DSALES_SubCategoria__c.DSales_Producto_Tangible</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>dsalesTipoUso__c-Formato Tipo de Uso</layout>
+        <layout>DSALES_TipoUso__c-Formato Tipo de Uso</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DSALES_Tipodevehculo__c-Formato Tipo de vehículo</layout>
@@ -4943,7 +4943,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>dsalesTipoUso__c</object>
+        <object>DSALES_TipoUso__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -5302,7 +5302,7 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>dsalesTipoUso__c</tab>
+        <tab>DSALES_TipoUso__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
