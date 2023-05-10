@@ -12,7 +12,7 @@
 @isTest
 //global class DSALES_ReembolsoWrapperTest {
 public class DSALES_ReembolsoWrapperTest {
-/*
+
     @testSetup
     //global static void setUp() {
     public static void setUp() {
@@ -83,5 +83,4 @@ public class DSALES_ReembolsoWrapperTest {
         RestContext.request = request;
         RestContext.response= response;
     }  
-    */
 }

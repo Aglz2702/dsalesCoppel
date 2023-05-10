@@ -9,10 +9,7 @@
  * 1.0   04-18-2023                       Initial Version
 **/
 
-<<<<<<< HEAD
-=======
 @SuppressWarnings('PMD.AvoidGlobalModifier')
->>>>>>> 5ea51fd5305818ea0bab4c05059bc5468870ea08
 global class DSALES_PaymentInfoWrapperGEX {
     global class PaymentGEXRequest{
         global Date fechaVenta {get;set;}
