@@ -1,6 +1,5 @@
 @isTest
 public with sharing class DSALES_QuotePagoSmTest {
-   /*
     @testSetup
     static void SetUp(){
         String tipoProducto = 'Producto';
@@ -345,5 +344,4 @@ public with sharing class DSALES_QuotePagoSmTest {
         DSALES_QuotePagoSM.cotizacionesNuevas(pago3.Id, null,moto.DSALES_SKU__c);
         Test.stopTest();
     }  
-    */
 }

@@ -1,6 +1,6 @@
 @RestResource(urlMapping='/insertQuoteSM/*')//
 global with sharing class DSALES_QuoteSmWrapperRequest {
-    /*public static final String NOMBRE_SERVICIO = 'DSALES_QuoteSM';
+    public static final String NOMBRE_SERVICIO = 'DSALES_QuoteSM';
     public static final String VALOR = 'RC'; //nombre campaña
     public static final String TIPO = 'Seguro gratis'; //tipo de campaña
     public static final String RC = 'RC';
@@ -417,5 +417,4 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         }
         return listaSeguros;     
     }
-    */
 }

@@ -1,6 +1,6 @@
 public without sharing class DSALES_ClasificacionServicio {
     
-    /*private static final String NOMBRE_OBJETO_CS = 'DSales_ClasificacionDeServicio__c';
+    private static final String NOMBRE_OBJETO_CS = 'DSales_ClasificacionDeServicio__c';
     private static final String NOMBRE_SERVICIO_CAT= 'DSALES_accesoCategorias';
     private static final String NOMBRE_SERVICIO_COD= 'DSALES_AccesoCodigos';
     @AuraEnabled
@@ -1178,5 +1178,4 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public integer anio4;
         @AuraEnabled public integer anio5;
         @AuraEnabled public integer anio6;      
-    }*/
 }

@@ -1,6 +1,6 @@
 @isTest
 public class DSALES_QuoteSmWrapperRequestTest {
-   /*
+   
     @testSetup
     static void SetUp(){
         String tipoProducto = 'Producto';
@@ -218,6 +218,5 @@ public class DSALES_QuoteSmWrapperRequestTest {
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
 		Test.stopTest();
     }
-    */
 
 }
