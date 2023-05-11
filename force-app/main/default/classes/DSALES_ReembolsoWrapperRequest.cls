@@ -11,8 +11,6 @@
 
 @RestResource(urlMapping='/insertReembolso/*')
 global without sharing class DSALES_ReembolsoWrapperRequest {
-    /*
-    
     @HttpPost
     global static  DSALES_ReembolsoWrapper.ReembolsoResponse createReembolso() {
         List< String> listaIdsReembolso = new  List<String>();
@@ -82,5 +80,4 @@ global without sharing class DSALES_ReembolsoWrapperRequest {
         } 
         return responsePayload;
     } 
-    */
 }

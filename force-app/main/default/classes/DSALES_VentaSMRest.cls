@@ -1,7 +1,7 @@
 @RestResource(urlMapping='/ventaSM/*')
 global without sharing class DSALES_VentaSMRest {
     public static final String NOMBRE_SERVICIO = 'DSALES_createPoliza';
-    /*
+    
     @HttpPost
     global static DSALES_VentaSM.VentaSMResponse crearVenta() {
         String idCliente='';
@@ -32,7 +32,7 @@ global without sharing class DSALES_VentaSMRest {
                         venta.pagos.idOportunidad=oppor.Id;
                         List<String> partidasSeleccionadas= venta.idPartidaPresupuesto;
                         DSALES_PaymentInfoWrapper.PaymentResponse resp= DSALES_PaymentInfoWrapperRequest.insertarPago(venta.pagos);
-                        pago=[SELECT Id,DSALES_Factura__c,DSALES_Oportunidad__c,DSALES_Plazodecomprademoto__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName,dsalesSeguro__c,DSALES_SKU__c  
+                        pago=[SELECT Id,DSALES_Factura__c,DSALES_Oportunidad__c,DSALES_Plazodecomprademoto__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName,dsales_Seguro__c,DSALES_SKU__c  
                                                 FROM DSALES_InformacionDePago__c 
                                                 WHERE Id=:resp.pagoId WITH SECURITY_ENFORCED];
                         idPago=pago.Id;
@@ -66,7 +66,7 @@ global without sharing class DSALES_VentaSMRest {
     @future(callout=true)
     public static void emitirPoliza(String idActivo){
         InsurancePolicyAsset activo =[SELECT Id,InsurancePolicyId,DSALES_Clavevehicular__c,DSALES_Modelo__c,DSALES_Numeroserie__c,DSALES_Numeromotor__c,DSALES_Descripcion__c,DSALES_Servicio__c,DSALES_Placas__c,DSALES_Marca__c,DSALES_Uso__c FROM InsurancePolicyAsset WHERE Id=:idActivo WITH SECURITY_ENFORCED];
-        DSALES_NuevaPoliza.invokeService(activo);
+        //DSALES_NuevaPoliza.invokeService(activo);
     }
 
     private static DSALES_VentaSM.IdsARetornar procesoVenta(DSALES_InformacionDePago__c pago,List<String> partidasSeleccionadas,DSALES_IPAssetWrapper.IPAssetRequest datosActivo){
@@ -94,10 +94,10 @@ global without sharing class DSALES_VentaSMRest {
         String idActivo ='';
         InsurancePolicyAsset activo = new InsurancePolicyAsset();
         if(String.isNotEmpty(datosActivo.numeroSerie)){
-            activo= DSALES_IPAssetWrapperRequest.insertIPAsset(datosActivo,pago.Id);
+            //activo= DSALES_IPAssetWrapperRequest.insertIPAsset(datosActivo,pago.Id);
             idActivo=activo.Id;
             poliza.dsalesActivoPolizaSeguro__c=activo.Id;
-            poliza=DSALES_CreateInsurancePolicy.agregarDatosDeActivo(activo,poliza.Id);
+            //poliza=DSALES_CreateInsurancePolicy.agregarDatosDeActivo(activo,poliza.Id);
             if(pago.DSALES_Poliza__c!=null && pago.DSALES_Poliza__r.PolicyName!= DSALES_Utility.SEGURO_PREDETERMINADO){
                 condicionesParaEmitir(activo,datosActivo.emitirPoliza);
             }
@@ -114,8 +114,8 @@ global without sharing class DSALES_VentaSMRest {
         }
     }
     private static void crearPrePoliza(DSALES_InformacionDePago__c pago, Insurancepolicy poliza){
-        if(pago.dsalesSeguro__c==true && pago.DSALES_Poliza__c==null){
-            poliza=DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
+        if(pago.dsales_Seguro__c==true && pago.DSALES_Poliza__c==null){
+            //poliza=DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
             pago.DSALES_Poliza__c=poliza.Id;       
         }
         if(DSALES_InformacionDePago__c.SObjectType.getDescribe().isUpdateable()) {
@@ -169,5 +169,5 @@ global without sharing class DSALES_VentaSMRest {
         public String nombreProducto { get; set; }
         public String sku {get;set;}
     }
-*/
+
 }

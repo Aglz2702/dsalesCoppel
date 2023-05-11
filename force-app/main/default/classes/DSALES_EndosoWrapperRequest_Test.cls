@@ -111,8 +111,8 @@ public class DSALES_EndosoWrapperRequest_Test {
         DSALES_EndorsementWrapper.EndorsementRequest requestReq = new DSALES_EndorsementWrapper.EndorsementRequest();
         requestReq.uid = 'testUid';
         requestReq.estatus = 'Requerimiento de Información';
-        requestReq.motivoDevolucion = 'Test Motivo Devolucion';
-        requestReq.solucionDevolucion = 'Test Solucion Devolucion';
+        requestReq.estatusComentario = 'Test Motivo Devolucion';
+        requestReq.solucion = 'Test Solucion Devolucion';
         DSALES_EndorsementWrapper.EndorsementResponse responseRes = DSALES_EndosoWrapperRequestHelper.updateEndoso(requestReq);
         System.assertEquals(true, responseRes.success, 'El registro se ha creado correctamente');      
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MotivoDevolucion__c, DSALES_SolucionDevolucion__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
@@ -124,7 +124,7 @@ public class DSALES_EndosoWrapperRequest_Test {
         DSALES_EndorsementWrapper.EndorsementRequest requestRech = new DSALES_EndorsementWrapper.EndorsementRequest();
         requestRech.uid = 'testUid';
         requestRech.estatus = 'Rechazado';
-        requestRech.motivoRechazo = 'Test Motivo Rechazo';
+        requestRech.estatusComentario = 'Test Motivo Rechazo';
         DSALES_EndorsementWrapper.EndorsementResponse responseRech = DSALES_EndosoWrapperRequestHelper.updateEndoso(requestRech);
         System.assertEquals(true, responseRech.success, 'El registro se ha creado correctamente');
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MotivoRechazo__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
@@ -135,7 +135,7 @@ public class DSALES_EndosoWrapperRequest_Test {
         DSALES_EndorsementWrapper.EndorsementRequest requestAuto = new DSALES_EndorsementWrapper.EndorsementRequest();
         requestAuto.uid = 'testUid';
         requestAuto.estatus = 'Autorizado';
-        requestAuto.montoDevolver = 4.55;
+        requestAuto.montoDevolucion = 4.55;
         DSALES_EndosoWrapperRequestHelper.updateEndoso(requestAuto);
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MontoaDevolver__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
         System.assertEquals('Autorizado', endoso.DSALES_Estatus__c, 'El estado de endoso es Autorizado');

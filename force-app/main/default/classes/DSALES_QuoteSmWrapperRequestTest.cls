@@ -1,6 +1,6 @@
 @isTest
 public class DSALES_QuoteSmWrapperRequestTest {
-   /*
+   
     @testSetup
     static void SetUp(){
         String tipoProducto = 'Producto';
@@ -119,7 +119,7 @@ public class DSALES_QuoteSmWrapperRequestTest {
         presupuesto.DSALES_ListaArticulo__c = 'Producto';
         insert presupuesto;
         
-        dsalesTipoUso__c tipoUso = new dsalesTipoUso__c(Name='Comercial');
+        DSALES_TipoUso__c tipoUso = new DSALES_TipoUso__c(Name='Comercial');
         insert tipoUso;
         DSALES_Tipodevehculo__c tipovehiculo = new DSALES_Tipodevehculo__c(Name='Moto');
         insert tipovehiculo;
@@ -127,11 +127,11 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Plazo__c plazo1 = new Plazo__c();
         plazo1.Name='12';
         plazo1.dsalesSeguro__c=prodRc.Id;
-        plazo1.dsalesPlazo__c='12';
+        plazo1.DSALES_Plazo__c='12';
         plazo1.dsalesActivo__c=true;
         insert plazo1;
         
-        Plazo__c plazo2 = new Plazo__c(Name='12',dsalesPlazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
+        Plazo__c plazo2 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
         insert plazo2;
         
         Campaign camapna = new Campaign();
@@ -218,6 +218,5 @@ public class DSALES_QuoteSmWrapperRequestTest {
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
 		Test.stopTest();
     }
-    */
 
 }
