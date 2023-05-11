@@ -89,7 +89,7 @@ public class DSALES_ClasificacionServicio_Test {
         camp.Name = 'TestCampaing';
         insert camp;
         
-        dsalesTipoUso__c tp = new dsalesTipoUso__c();
+        DSALES_TipodeUso__c tp = new DSALES_TipodeUso__c();
         tp.Name = 'TestTipoUso';
         insert tp;
         
@@ -103,7 +103,7 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_Clase__c idclass=  [select id from DSALES_Clase__c limit 1];
         DSales_Matriz_GEX__c idmat= [select id from DSales_Matriz_GEX__c limit 1];
         Campaign idcamp = [Select id from Campaign limit 1];
-        dsalesTipoUso__c idtp = [Select id from dsalesTipoUso__c limit 1];
+        DSALES_TipodeUso__c idtp = [Select id from DSALES_TipodeUso__c limit 1];
         DSALES_ClasificacionServicio.DSALES_ClasificacionServicioWrapper controller = DSALES_ClasificacionServicio.getPickListCategoria();
         controller.listCategorias[0].seleccionado = true;
         
@@ -187,9 +187,12 @@ public class DSALES_ClasificacionServicio_Test {
     static  void testGetCallout5() {
         Test.startTest(); 
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif5());
-        DSALES_ClasificacionServicio.getserviciosku('2','4','{178,2}');
+        List<String> listPrueba= new List<String>();
+        listPrueba.add('178');
+        listPrueba.add('2');
+        DSALES_ClasificacionServicio.getserviciosku('2','4', listPrueba);
         Test.stopTest();
-        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosku('2','4',(178, 2)).size()), 'la llamada no debe devolver un código 1000'); 
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosku('2','4',listPrueba).size()), 'la llamada no debe devolver un código 1000'); 
     } 
     
     @isTest 
