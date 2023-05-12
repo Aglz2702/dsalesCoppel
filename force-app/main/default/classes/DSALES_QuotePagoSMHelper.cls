@@ -10,7 +10,7 @@
 **/
 public with sharing class DSALES_QuotePagoSMHelper {
 
-  /*  private static final  String RC_GRATIS='RC';
+  private static final  String RC_GRATIS='RC';
 
     public static void crearCotizacionesNuevas(String idPago, List<String> partidasSeleccionadas, String skuMoto){
         if(skuMoto!=null){
@@ -23,7 +23,7 @@ public with sharing class DSALES_QuotePagoSMHelper {
 
     public static void crearCotNueva2(String idPago, List<String> partidasSeleccionadas, String skuMoto){
         List<String> listIdCotiza = new List<String>();
-        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,dsalesSeguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
+        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Seguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
                                         FROM DSALES_InformacionDePago__c 
                                         WHERE Id=:idPago WITH SECURITY_ENFORCED];
         Quote beforeCot = [SELECT Id,OpportunityId,AccountId FROM Quote WHERE OpportunityId =:pago.DSALES_Oportunidad__c WITH SECURITY_ENFORCED];
@@ -53,7 +53,7 @@ public with sharing class DSALES_QuotePagoSMHelper {
     }
 
     public static void creacionDePartida(String idPago, List<String> partidasSeleccionadas, String skuMoto){
-        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,dsalesSeguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
+        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Plazodecomprademoto__c,DSALES_Seguro__c,DSALES_Oportunidad__c,DSALES_Nombre_del_Vendedor__c,DSales_Tienda__c,DSALES_SKU__c  
                                         FROM DSALES_InformacionDePago__c 
                                         WHERE Id=:idPago WITH SECURITY_ENFORCED];
         Quote beforeCot = [SELECT Id,OpportunityId,AccountId FROM Quote WHERE OpportunityId =:pago.DSALES_Oportunidad__c WITH SECURITY_ENFORCED];
@@ -64,7 +64,7 @@ public with sharing class DSALES_QuotePagoSMHelper {
         DSALES_QuotePagoSM.crearPartidas(ambasCotizaciones, partidasSeleccionadas, skuMoto);
         if(idCotizacion!=null || idCotizacion!=''){
             DSALES_QuotePagoSM.sincronizarOportunidad(idCotizacion);
-        } 
+        }
     }
 
     public static QuoteLineItem llenarPartida(QuoteLineItem ql, QuoteLineItem q){
@@ -90,9 +90,9 @@ public with sharing class DSALES_QuotePagoSMHelper {
         return newpartida;
     }
 
-    public static QuoteLineItem productoIf(List<PricebookEntry> precios, QuoteLineItem q, /*List<String> listCotNew, List<Plazo__c> plazos*//* Map<String, List<Object>> mapData){
+    public static QuoteLineItem productoIf(List<PricebookEntry> precios, QuoteLineItem q, /*List<String> listCotNew, List<Plazo__c> plazos*/Map<String, List<Object>> mapData){
         
-        /*List<String> listCotNew=(List<String>)mapData.get('listCotNew');
+        List<String> listCotNew=(List<String>)mapData.get('listCotNew');
         List<Plazo__c> plazos=(List<Plazo__c>)mapData.get('plazos');
         QuoteLineItem part = new QuoteLineItem();
         for(PricebookEntry pr:precios){
@@ -117,7 +117,7 @@ public with sharing class DSALES_QuotePagoSMHelper {
                 part.DSALES_Pagomensual__c=q.DSALES_Pagomensual__c;
                 for(Plazo__c p:plazos){
                     if(q.DSALES_Plazo__c!=null && p.Id==q.DSALES_Plazo__c){
-                        part.DSALES_Plazo__c=q.DSALES_Plazo__c;
+                        part.DSALES_Plazo__c=q.Dsales_Plazo__c;
                     }
                 }
             }
@@ -141,5 +141,4 @@ public with sharing class DSALES_QuotePagoSMHelper {
         }  
         return ql;
     }
-    */
 }
