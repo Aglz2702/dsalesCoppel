@@ -48,10 +48,10 @@ public without sharing class DSALES_ClasificacionServicio {
             when 'AllRecords' {
                 switch on perfilUsuario {
                     when 'Administrador del sistema' {
-                        query += 'and DSales_Servicio__c != true and dsalesSeguro__c!= true ';
+                        query += 'and DSales_Servicio__c != true and DSALES_Seguro__c!= true ';
                     }
                     when 'Seguro de Motos' {
-                        query += ' And DSALES_NoaplicaSeg__c = false and dsalesSeguro__c= false ';
+                        query += ' And DSALES_NoaplicaSeg__c = false and DSALES_Seguro__c= false ';
                     }
                     when 'Garantía Extendida' {
                         query += ' And DSALES_NoaplicaServ__c = false and DSales_Servicio__c = false ';
@@ -98,13 +98,13 @@ public without sharing class DSALES_ClasificacionServicio {
         }
         String idproducto= producto[0].Id;
         if (Schema.sObjectType.DSales_Asignacion_de_Productos__c.isQueryable()) {
-            for(DSales_Asignacion_de_Productos__c item: [Select Id, dsalesProducto__c, DSales_NombreProducto__c, DSALES_Departamento__c, DSALES_Subcategoria__c, DSALES_Clase__c,
-            DSALES_Familia__c, DSALES_SKU__c, CreatedDate, CreatedBy.Name, dsalesActivo__c, DSales_Servicio_Seguro__c from DSales_Asignacion_de_Productos__c Where dsalesProducto__c =:idproducto and dsalesActivo__c=:true order by DSales_NombreProducto__c asc])
+            for(DSales_Asignacion_de_Productos__c item: [Select Id, DSales_Producto__c, DSales_NombreProducto__c, DSALES_Departamento__c, DSALES_Subcategoria__c, DSALES_Clase__c,
+            DSALES_Familia__c, DSALES_SKU__c, CreatedDate, CreatedBy.Name, DSALES_Activo__c, DSales_Servicio_Seguro__c from DSales_Asignacion_de_Productos__c Where DSales_Producto__c =:idproducto and DSALES_Activo__c=:true order by DSales_NombreProducto__c asc])
             {
                 AsignarProductos asignarProductos = new AsignarProductos(); 
                 asignarProductos.id = item.Id;
                 asignarProductos.nombre = item.DSales_NombreProducto__c;
-                asignarProductos.servicio = item.dsalesProducto__c;
+                asignarProductos.servicio = item.DSales_Producto__c;
                 asignarProductos.productoid = item.DSales_Servicio_Seguro__c;
                 asignarProductos.sku = item.DSALES_SKU__c;
                 asignarProductos.departamento = item.DSALES_Departamento__c;
@@ -113,7 +113,7 @@ public without sharing class DSALES_ClasificacionServicio {
                 asignarProductos.clase = item.DSales_Clase__c;
                 asignarProductos.creadoPor = item.CreatedBy.Name;
                 asignarProductos.createdDate = item.CreatedDate.format();
-                asignarProductos.estado = item.dsalesActivo__c;
+                asignarProductos.estado = item.DSALES_Activo__c;
                 asignarProductos.seleccionadoSku= false;
                 listasignacion.add(asignarProductos); 
             }
@@ -142,7 +142,7 @@ public without sharing class DSALES_ClasificacionServicio {
         String checkProfile = checkProfileType('Administrador SM');
         Boolean boolserv = false;
         Boolean boolseg = false;
-        producto= [Select DSales_Servicio_Seguro__c from DSales_Asignacion_de_Productos__c Where dsalesActivo__c=true];
+        producto= [Select DSales_Servicio_Seguro__c from DSales_Asignacion_de_Productos__c Where DSALES_Activo__c=true];
         
         for(integer i=0; i<producto.size(); i++)
         {
@@ -163,8 +163,8 @@ public without sharing class DSALES_ClasificacionServicio {
             boolseg = false;
         }
         if (Schema.sObjectType.Product2.isQueryable()) {
-            for(Product2 item: [Select Id, (Select Id from Asignaciones_de_Productos1__r Where dsalesProducto__c = :servicio and dsalesActivo__c=false), Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name,
-                DSALES_Familia__r.Name from Product2 Where DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and DSALES_Servicio__c = :boolserv and dsalesSeguro__c= :boolseg WITH SECURITY_ENFORCED order by Name asc])
+            for(Product2 item: [Select Id, (Select Id from Asignaciones_de_Productos1__r Where DSales_Producto__c = :servicio and DSALES_Activo__c=false), Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name,
+                DSALES_Familia__r.Name from Product2 Where DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and DSALES_Servicio__c = :boolserv and DSALES_Seguro__c= :boolseg WITH SECURITY_ENFORCED order by Name asc])
                 {
                     AsignarProductos asignarProductos = new AsignarProductos(); 
                     if(item.Asignaciones_de_Productos1__r.size()>0){
@@ -172,7 +172,7 @@ public without sharing class DSALES_ClasificacionServicio {
                     }
                     asignarProductos.productoid = item.Id;
                     asignarProductos.nombre = item.Name;
-                    //asignarProductos.servicio = item.dsalesProducto__c;
+                    //asignarProductos.servicio = item.DSales_Producto__c;
                     asignarProductos.sku = item.StockKeepingUnit;
                     asignarProductos.departamento = item.DSALES_Categoria__r.Name;
                     asignarProductos.subcategoria = item.DSALES_SubCategoria__r.Name;
@@ -197,7 +197,7 @@ public without sharing class DSALES_ClasificacionServicio {
            
             if(item.seleccionadoSku)
             {
-            listUpsertVinculacion.add(new DSales_Asignacion_de_Productos__c(id=item.id,dsalesActivo__c=!item.seleccionadoSku));
+            listUpsertVinculacion.add(new DSales_Asignacion_de_Productos__c(id=item.id,DSALES_Activo__c=!item.seleccionadoSku));
             }
             
             
@@ -220,7 +220,7 @@ public without sharing class DSALES_ClasificacionServicio {
            
             if(item.seleccionadoSku)
             {
-                listInsertVinculacion.add(new DSales_Asignacion_de_Productos__c(Id=Item.id, DSALES_Servicio_Seguro__c=item.productoid, dsalesActivo__c=true, dsalesProducto__c= idservicio));
+                listInsertVinculacion.add(new DSales_Asignacion_de_Productos__c(Id=Item.id, DSALES_Servicio_Seguro__c=item.productoid, DSALES_Activo__c=true, DSales_Producto__c= idservicio));
             }
             
             
@@ -243,7 +243,7 @@ public without sharing class DSALES_ClasificacionServicio {
             servicio.familia = item.DSALES_Familia__r.Name;
             servicio.clase = item.DSales_Clase__r.Name;
             servicio.servicio = item.DSALES_Servicio__c;
-            servicio.seguro = item.dsalesSeguro__c;
+            servicio.seguro = item.DSALES_Seguro__c;
             servicio.noAplica = item.DSALES_NoAplica__c;
             servicio.noAplicaServicio = item.DSALES_NoaplicaServ__c;
             servicio.noAplicaSeguro = item.DSALES_NoaplicaSeg__c;
@@ -523,8 +523,7 @@ public without sharing class DSALES_ClasificacionServicio {
         List<String> categoriasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        Blob credential= Blob.valueOf(DSALES_obtenerToken.getToken());
-        String authorizationHeader = 'Bearer ' + '{!$Credential.Tokensss.AccessToken}';
+        String authorizationHeader = 'Bearer ' + DSALES_obtenerToken.getToken();
 
         request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT));
         request.setHeader('Authorization', authorizationHeader);
@@ -671,6 +670,7 @@ public without sharing class DSALES_ClasificacionServicio {
 
     @AuraEnabled
     public static List<AsignarProductos> getserviciosku(String valueCategoria, String valueSubcategoria, List<String> valueClasesFamilias){   
+        system.debug('hi'+valueClasesFamilias);
         List<String> skus = new List<String>();
         List<String> skusNombres = new List<String>();
         List<String> tiposervicio= new  List<String>();
@@ -825,8 +825,8 @@ public without sharing class DSALES_ClasificacionServicio {
     @AuraEnabled
     public static List<Servicio> getTipoUso(){
         List<Servicio>listTipoUso = new List<Servicio>();
-        if (Schema.sObjectType.DSALES_TipoUso__c.isQueryable()) {
-            for(DSALES_TipoUso__c item: [Select Id, Name from DSALES_TipoUso__c where dsalesActivo__c = true])
+        if (Schema.sObjectType.dsalesTipoUso__c.isQueryable()) {
+            for(dsalesTipoUso__c item: [Select Id, Name from dsalesTipoUso__c where dsalesActivo__c = true])
             {
                 Servicio b = new Servicio();
                 b.label= item.Name;
@@ -845,7 +845,7 @@ public without sharing class DSALES_ClasificacionServicio {
         List<Servicio> listCampanasSelectedidvalue= new List<Servicio>();
         List<DSALES_AsociacionCampanias__c> listCampanasSeleccion= new List<DSALES_AsociacionCampanias__c>();
         if (Schema.sObjectType.DSALES_AsociacionCampanias__c.isQueryable()) {
-            for(DSALES_AsociacionCampanias__c item: [Select id, DSALES_Campania__c  from DSALES_AsociacionCampanias__c where dsalesProducto__c= :idProducto ])
+            for(DSALES_AsociacionCampanias__c item: [Select id, DSALES_Campania__c  from DSALES_AsociacionCampanias__c where DSales_Producto__c= :idProducto ])
             {
                 listCampanasSelected.add(item.DSALES_Campania__c);
                 Servicio b= new Servicio();
@@ -862,16 +862,16 @@ public without sharing class DSALES_ClasificacionServicio {
         }   
         for(Integer i=0; newList.size()>i; i++)
         {
-            listCampanasSeleccion.add(new DSALES_AsociacionCampanias__c(DSALES_Campania__c = newList[i], dsalesProducto__c=idProducto, dsalesActivo__c=true));
+            listCampanasSeleccion.add(new DSALES_AsociacionCampanias__c(DSALES_Campania__c = newList[i], DSales_Producto__c=idProducto, DSALES_Activo__c=true));
         }
        for(Servicio item: listCampanasSelectedidvalue){
             if(objetoCampaings.contains(item.value))
             {
-                listCampanasSeleccion.add(new DSALES_AsociacionCampanias__c(id=item.id, DSALES_Campania__c = item.value, dsalesProducto__c=idProducto, dsalesActivo__c=true));
+                listCampanasSeleccion.add(new DSALES_AsociacionCampanias__c(id=item.id, DSALES_Campania__c = item.value, DSales_Producto__c=idProducto, DSALES_Activo__c=true));
             }
             else
             {
-                listCampanasSeleccion.add(new DSALES_AsociacionCampanias__c(id=item.id, DSALES_Campania__c = item.value, dsalesProducto__c=idProducto, dsalesActivo__c=false));
+                listCampanasSeleccion.add(new DSALES_AsociacionCampanias__c(id=item.id, DSALES_Campania__c = item.value, DSales_Producto__c=idProducto, DSALES_Activo__c=false));
             }
         }
         if(Schema.sObjectType.DSALES_AsociacionCampanias__c.isCreateable() && Schema.sObjectType.DSALES_AsociacionCampanias__c.isUpdateable()){
@@ -887,12 +887,12 @@ public without sharing class DSALES_ClasificacionServicio {
         List<Servicio> listTipoUsoSelectedidvalue= new List<Servicio>();
         List<DSALES_AsociacionTiposUso__c> listTipoUsoSeleccion= new List<DSALES_AsociacionTiposUso__c>();
         if (Schema.sObjectType.DSALES_AsociacionTiposUso__c.isQueryable()) {
-            for(DSALES_AsociacionTiposUso__c item: [Select id, DSALES_TipoUso__c from DSALES_AsociacionTiposUso__c where dsalesProducto__c= :idProducto])
+            for(DSALES_AsociacionTiposUso__c item: [Select id, dsalesTipoUso__c from DSALES_AsociacionTiposUso__c where dsalesProducto__c= :idProducto])
             {
-                listTipoUsoSelected.add(item.DSALES_TipoUso__c);
+                listTipoUsoSelected.add(item.dsalesTipoUso__c);
                 Servicio b= new Servicio();
                 b.id=item.id;
-                b.value=item.DSALES_TipoUso__c;
+                b.value=item.dsalesTipoUso__c;
                 listTipoUsoSelectedidvalue.add(b);
             }  
         }
@@ -904,16 +904,16 @@ public without sharing class DSALES_ClasificacionServicio {
         }   
         for(Integer i=0; newList.size()>i; i++)
         {
-            listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(DSALES_TipoUso__c = newList[i], dsalesProducto__c=idProducto, dsalesActivo__c=true));
+            listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(dsalesTipoUso__c = newList[i], dsalesProducto__c=idProducto, dsalesActivo__c=true));
         }
        for(Servicio item: listTipoUsoSelectedidvalue){
             if(objetoTipoUso.contains(item.value))
             {
-                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, DSALES_TipoUso__c = item.value, dsalesProducto__c=idProducto, dsalesActivo__c=true));
+                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, dsalesTipoUso__c = item.value, dsalesProducto__c=idProducto, dsalesActivo__c=true));
             }
             else
             {
-                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, DSALES_TipoUso__c = item.value, dsalesProducto__c=idProducto, dsalesActivo__c=false));
+                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, dsalesTipoUso__c = item.value, dsalesProducto__c=idProducto, dsalesActivo__c=false));
             }
         }
         if(Schema.sObjectType.DSALES_AsociacionTiposUso__c.isCreateable() && Schema.sObjectType.DSALES_AsociacionTiposUso__c.isUpdateable()){
@@ -926,9 +926,9 @@ public without sharing class DSALES_ClasificacionServicio {
 
         List<String> listTipoUsoUsed = new List<String>();
         if (Schema.sObjectType.DSALES_AsociacionTiposUso__c.isQueryable()) {
-            for(DSALES_AsociacionTiposUso__c item: [Select DSALES_TipoUso__c from DSALES_AsociacionTiposUso__c where dsalesProducto__c=:idProducto and dsalesActivo__c=true])
+            for(DSALES_AsociacionTiposUso__c item: [Select dsalesTipoUso__c from DSALES_AsociacionTiposUso__c where dsalesProducto__c=:idProducto and dsalesActivo__c=true])
             {
-                listTipoUsoUsed.add(item.DSALES_TipoUso__c);
+                listTipoUsoUsed.add(item.dsalesTipoUso__c);
             }  
         }
         return listTipoUsoUsed;
@@ -939,7 +939,7 @@ public without sharing class DSALES_ClasificacionServicio {
 
         List<String> listCampanasUsed = new List<String>();
         if (Schema.sObjectType.DSALES_AsociacionCampanias__c.isQueryable()) {
-            for(DSALES_AsociacionCampanias__c item: [Select DSALES_Campania__c from DSALES_AsociacionCampanias__c where dsalesProducto__c=:idProducto and dsalesActivo__c=true])
+            for(DSALES_AsociacionCampanias__c item: [Select DSALES_Campania__c from DSALES_AsociacionCampanias__c where DSales_Producto__c=:idProducto and DSALES_Activo__c=true])
             {
                 listCampanasUsed.add(item.DSALES_Campania__c);
             }  
@@ -1178,4 +1178,5 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public integer anio4;
         @AuraEnabled public integer anio5;
         @AuraEnabled public integer anio6;      
+    }*/
 }
