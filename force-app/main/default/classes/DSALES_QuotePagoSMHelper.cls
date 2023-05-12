@@ -64,7 +64,7 @@ public with sharing class DSALES_QuotePagoSMHelper {
         //DSALES_QuotePagoSM.crearPartidas(ambasCotizaciones, partidasSeleccionadas, skuMoto);
         /*if(idCotizacion!=null || idCotizacion!=''){
             DSALES_QuotePagoSM.sincronizarOportunidad(idCotizacion);
-        } */
+        }
     }
 
     public static QuoteLineItem llenarPartida(QuoteLineItem ql, QuoteLineItem q){
