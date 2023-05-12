@@ -13,13 +13,13 @@ global with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         insert pol;
         String recordTypeIdPago=Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
 		Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  '1';
+        t.dsales_TiendaID__c =  '1';
         insert t;
-        DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=ip.id,DSALES_Clave_Tienda__c='1',dsalesSeguro__c=true,DSALES_IDUniversal1__c='2023031400015666666');
+        DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=ip.id,DSALES_Clave_Tienda__c='1',dsales_Seguro__c=true,DSALES_IDUniversal1__c='2023031400015666666');
         insert pago; 
-        DSALES_InformaciondePago__c pago2 = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=pol.id,DSALES_Clave_Tienda__c='1',dsalesSeguro__c=true,DSALES_IDUniversal1__c='2023031400015666600');
+        DSALES_InformaciondePago__c pago2 = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=pol.id,DSALES_Clave_Tienda__c='1',dsales_Seguro__c=true,DSALES_IDUniversal1__c='2023031400015666600');
         insert pago2; 
-        DSALES_InformaciondePago__c pago3 = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=pol.id,DSALES_Clave_Tienda__c='1',dsalesSeguro__c=false,DSALES_IDUniversal1__c='2023031400015666634');
+        DSALES_InformaciondePago__c pago3 = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=pol.id,DSALES_Clave_Tienda__c='1',dsales_Seguro__c=false,DSALES_IDUniversal1__c='2023031400015666634');
         insert pago3;
         InsurancePolicy poliza = new InsurancePolicy(
 				SourceOpportunityId=op.Id,

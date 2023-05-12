@@ -10,11 +10,11 @@ global with sharing class DSALES_IPAssetWrapperTest {
          InsurancePolicy ip = new InsurancePolicy(Name='Danny',NameInsuredId=ac.id,DSALES_CorreoElectronico__c='kvothe.sanmiguel@gmail.com');
         insert ip;
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  'CPPL-UGARTE';
+        t.dsales_TiendaID__c =  'CPPL-UGARTE';
         insert t;
         /*Asset producto= new Asset(Name='Danny',AccountId=ac.id);
         insert producto;*/
-        DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=ip.id,dsalesSeguro__c=true);
+        DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=op.id,DSALES_Cliente__c=ac.Id,DSALES_Poliza__c=ip.id,dsales_Seguro__c=true);
         insert pago;
     }
     @isTest 
