@@ -1,5 +1,6 @@
 @RestResource(urlMapping='/insertQuoteGex/*')
 global with sharing class DSALES_QuoteGexWrapperRequest {
+    
     @HttpPost
     global static DSALES_QuoteGexWrapper.respuestaNPV createQuote(){
         Boolean success = true;
@@ -20,13 +21,13 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         mapProducts.put(p.skuDeTangible, p);
                     }
                     List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
-                    productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, dsalesProducto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE dsalesActivo__c=true AND  DSALES_SKU__c in: mapProducts.keySet() WITH SECURITY_ENFORCED];
+                    productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSALES_SKU__c in: mapProducts.keySet() WITH SECURITY_ENFORCED];
                     List<Id> dsalesProductoSetId = new List<Id>();
                     for(DSales_Asignacion_de_Productos__c da : productAsig){
-                        dsalesProductoSetId.add(da.dsalesProducto__c);
+                        dsalesProductoSetId.add(da.DSales_Producto__c);
                     }
                     Account universalAccount = [Select Id from Account WHERE DSALES_ClienteCoppel__c = :DSALES_Utility.NUMERO_CLIENTE_GENERICO WITH SECURITY_ENFORCED LIMIT 1];
-                    Tienda__c tienda = [Select Id from Tienda__c WHERE dsalesTiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
+                    Tienda__c tienda = [Select Id from Tienda__c WHERE DSales_TiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
                     
                     Id clienteId=null; 
                     Map<String, String> mapNomyId=new Map<String, String>();
@@ -38,7 +39,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         mapNomyId.put('clienteId',clienteId);
                         oppor = crearOportunidad(data, /*clienteId, clienteContado[0].FirstName, clienteContado[0].LastName,*/mapNomyId ,tienda);
                         mapNomyId.put('oportunidadId',oppor.Id);
-                        cotiza = crearCotizacion(data, /*oppor.Id, clienteContado[0].FirstName, clienteContado[0].LastName,*/ mapNomyId ,tienda);
+                        cotiza = crearCotizacion(data, /*oppor.Id, clienteContado[0].FirstName, clienteContado[0].LastName,*/mapNomyId ,tienda);
                         listaPartida = crearPartidas(data, cotiza.Id);
                     }else{
                         if(data.numeroCliente != DSALES_Utility.NUMERO_CLIENTE_GENERICO){
@@ -61,7 +62,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                     mapNomyId.put('lastName',cliente.LastName);
                                     mapNomyId.put('clienteId',clienteId);
                                     oppor = crearOportunidad(data, /*clienteId, cliente.FirstName,cliente.LastName*/mapNomyId, tienda);
-                                   mapNomyId.put('oportunidadId',oppor.Id);
+                                   	mapNomyId.put('oportunidadId',oppor.Id);
                                     cotiza = crearCotizacion(data, /*oppor.Id, cliente.FirstName, cliente.LastName*/mapNomyId, tienda);
                                     listaPartida = crearPartidas(data, cotiza.Id);
                                 }
@@ -72,7 +73,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             mapNomyId.put('lastName',data.apellidoPaterno);
                             mapNomyId.put('clienteId',clienteId);
                             oppor = crearOportunidad(data,/* clienteId, data.nombre,data.apellidoPaterno*/mapNomyId,tienda);
-                           mapNomyId.put('oportunidadId',oppor.Id);
+                           	mapNomyId.put('oportunidadId',oppor.Id);
                             cotiza = crearCotizacion(data, /* oppor.Id, data.nombre, data.apellidoPaterno*/mapNomyId, tienda);
                         	listaPartida = crearPartidas(data, cotiza.Id);
                         }
@@ -125,7 +126,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 List<String> listIntangible = new List<String>();
                 for(DSales_Asignacion_de_Productos__c asigProduc: productAsig){
                     if(asigProduc.DSales_Servicio_Seguro__c == resTangible.Product2Id){
-                        listIntangible.add(asigProduc.dsalesProducto__c);
+                        listIntangible.add(asigProduc.DSales_Producto__c);
                     }
                 }
                 for(QuoteLineItem resIntangible : consultaRespuestaGEX){
@@ -184,7 +185,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         oppor.CloseDate = date.today()+30;
         oppor.StageName = 'Nuevo';
         oppor.RecordTypeId = recordTypeId;
-        oppor.dsalesTienda__c = tienda.Id;
+        oppor.DSALES_Tienda__c = tienda.Id;
         oppor.Pricebook2Id = precioLista.Id;
         if (Schema.sObjectType.Opportunity.isCreateable()) {
             insert oppor;
@@ -232,12 +233,12 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         }
         
         List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
-        productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, dsalesProducto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE dsalesActivo__c=true AND  DSALES_SKU__c in: mapProducts.keySet() WITH SECURITY_ENFORCED];
+        productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSALES_SKU__c in: mapProducts.keySet() WITH SECURITY_ENFORCED];
         List<Id> dsalesProductoSetId = new List<Id>();
         for(DSales_Asignacion_de_Productos__c da : productAsig){
-            dsalesProductoSetId.add(da.dsalesProducto__c);
+            dsalesProductoSetId.add(da.DSales_Producto__c);
         }
-        List<DSales_Matriz_GEX__c> mat = [SELECT id, Name, dsalesActivo__c, dsalesRegion__c, DSALES_Tipo__c FROM DSales_Matriz_GEX__c WHERE DSALES_Servicio__c =: dsalesProductoSetId and dsalesActivo__c =true and DSALES_Tipo__c=:originalMat and dsalesRegion__c INCLUDES (:regions) WITH SECURITY_ENFORCED];
+        List<DSales_Matriz_GEX__c> mat = [SELECT id, Name, DSALES_Activo__c, DSales_Region_GEX__c, DSALES_Tipo__c FROM DSales_Matriz_GEX__c WHERE DSALES_Servicio__c =: dsalesProductoSetId and DSALES_Activo__c =true and DSALES_Tipo__c=:originalMat and DSALES_Region__c INCLUDES (:regions) WITH SECURITY_ENFORCED];
         List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = [SELECT id, Name,SALES_Precio_GEX__c,DSales_Matriz_GEX__c,DSALES_Rango_interior_GEX__c,DSALES_Rango_Superior_GEX__c,DSALES_Tiempo_de_Garantia_Extendida_GEX__c FROM DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c =: mat WITH SECURITY_ENFORCED ORDER BY SALES_Precio_GEX__c DESC];
         List<Pricebook2> precioLista = [SELECT id,Name FROM Pricebook2 WHERE Name= 'Standard Price Book' and IsActive=true WITH SECURITY_ENFORCED LIMIT 1];
         List<PricebookEntry> precioEn = [SELECT Id,UnitPrice,Name,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: produc and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
@@ -267,7 +268,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             String intangibleId;
             for(DSales_Asignacion_de_Productos__c asigProduc: productAsig){
                 if(asigProduc.DSales_Servicio_Seguro__c == item.Product2Id){
-                    intangibleId = asigProduc.dsalesProducto__c;
+                    intangibleId = asigProduc.DSales_Producto__c;
                 }
             }
             for(PricebookEntry item2 : precioEnGEX){
@@ -461,7 +462,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return [SELECT Id, Name, DSALES_Rango_interior_GEX__c, DSALES_Rango_Superior_GEX__c, DSALES_Tiempo_de_Garantia_Extendida_GEX__c, SALES_Precio_GEX__c, DSales_Matriz_GEX__c 
                 FROM DSALES_Matriz_de_Cotizacion__c 
                 WHERE SALES_Precio_GEX__c = :resIntangible 
-                    AND DSales_Matriz_GEX__r.dsalesActivo__c = true 
+                    AND DSales_Matriz_GEX__r.DSALES_Activo__c = true 
                     AND DSALES_Rango_Superior_GEX__c >= :resTangible 
                 WITH SECURITY_ENFORCED 
                 LIMIT 1];
@@ -471,4 +472,5 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         List<DASALES_Porcentajedecobro__c> porcent = [SELECT Id, Name, DSALES_Anios__c, DSALES_Porcentaje__c FROM DASALES_Porcentajedecobro__c WHERE DSALES_Product__c=:intangibleId WITH SECURITY_ENFORCED];
         return porcent;
     }
+    
     }
