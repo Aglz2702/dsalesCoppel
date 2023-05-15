@@ -11,6 +11,7 @@
 
 public with sharing class DSALES_QuotePagoSM { 
 
+
     private static final  String RC_GRATIS='RC';
 
     /////////////****------ 1 -----------****///////////////
@@ -190,13 +191,13 @@ public with sharing class DSALES_QuotePagoSM {
             }
             List<Product2> productos = [SELECT Id, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE Id IN:listIdProd  WITH SECURITY_ENFORCED] ;
             List<PricebookEntry> precios = [SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Product2Id IN:listIdProd WITH SECURITY_ENFORCED]; 
-            List<Plazo__c> plazos =[SELECT Id, DSALES_Plazo__c,dsalesSeguro__c FROM Plazo__c WHERE  dsalesSeguro__c=:listIdProd WITH SECURITY_ENFORCED];
+            List<Plazo__c> plazos =[SELECT Id, Dsales_Plazo__c,dsalesSeguro__c FROM Plazo__c WHERE  dsalesSeguro__c=:listIdProd WITH SECURITY_ENFORCED];
             //moto + 2 seguros
             WrapperListaPartidas listaPrueba = new WrapperListaPartidas();
             listaPrueba.partidas=partidas;
             listaPrueba.plazos=plazos;
             listaPrueba.precios=precios;
-            //listPartidas=mapeoPartidas(listaPrueba,idCotizacion);
+            listPartidas=mapeoPartidas(listaPrueba,idCotizacion);
             if(Schema.sObjectType.QuoteLineItem.isCreateable()) {
                 insert listPartidas;
             }else{
@@ -223,7 +224,7 @@ public with sharing class DSALES_QuotePagoSM {
                             }
                             idNuevos.add(ql);
                         }
-                    } 
+                    } */ /*
                     idNuevos.add(DSALES_QuotePagoSMHelper.llenarPartida(ql,q));
                 }
             }
@@ -237,7 +238,6 @@ public with sharing class DSALES_QuotePagoSM {
             System.debug(e.getLineNumber());
             System.debug(e.getMessage());
         }
-
     } 
  
      
@@ -295,9 +295,9 @@ public with sharing class DSALES_QuotePagoSM {
     }
 
     /////////////****------ 5 -----------****///////////////
-   
-    public static String crear2CotPartidas(/*String idCot, String skuMoto, Integer plazo,*/Map<String, Object> stringData, List<String> listCotNew, List<String> partidasSeleccionadas){
-      try{
+   /*
+    public static String crear2CotPartidas(/*String idCot, String skuMoto, Integer plazo,*//*Map<String, Object> stringData, List<String> listCotNew, List<String> partidasSeleccionadas){
+      /*  try{
             System.debug('lista de new cotiza: '+ listCotNew.size());
             String idCot=(String)stringData.get('beCot');
             String skuMoto=(String)stringData.get('skuMoto');
@@ -313,7 +313,6 @@ public with sharing class DSALES_QuotePagoSM {
             QuoteLineItem seguro = new QuoteLineItem();
             QuoteLineItem seguroGratis = new QuoteLineItem();
             String idCotSincronizar='';
-            
             //trae la moto
             QuoteLineItem producto =[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Segurogratis__c,DSALES_Comision__c,DSALES_NombreProducto__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
             QuoteLineItem producto =[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Segurogratis__c,DSALES_Comision__c,DSALES_NombreProducto__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
@@ -411,8 +410,8 @@ public with sharing class DSALES_QuotePagoSM {
                     Map<String, List<Object>> mapData =new Map<String, List<Object>>(); 
                     for(QuoteLineItem q:listMotoRc){
                         QuoteLineItem part = new QuoteLineItem();
-                        for(PricebookEntry pr:precios){
-                              if(pr.Name==q.DSALES_NombreProducto__c){
+                        //for(PricebookEntry pr:precios){
+                              /*if(pr.Name==q.DSALES_NombreProducto__c){
                                 part.QuoteId = listCotNew[1]; 
                                 part.PricebookEntryId = pr.Id;
                                 part.UnitPrice=pr.UnitPrice;
@@ -441,11 +440,11 @@ public with sharing class DSALES_QuotePagoSM {
                             }
                             //part=part;   
                         //}
-                        listPartInsert.add(part);
-                       mapData.put('listCotNew',listCotNew);
+                        //listPartInsert.add(part);
+                       /* mapData.put('listCotNew',listCotNew);
                         mapData.put('plazos',plazos);
-                        listPartInsert.add(DSALES_QuotePagoSMHelper.productoIf(precios, q, /*listCotNew, plazos*/mapData)); 
-                   }
+                        listPartInsert.add(DSALES_QuotePagoSMHelper.productoIf(precios, q, /*listCotNew, plazos*/ /*mapData)); 
+                   /* }
                     System.debug('listPartInsert:'+listPartInsert.size());
                     System.debug('listPartInsert:'+listPartInsert);
                     try{
@@ -469,9 +468,9 @@ public with sharing class DSALES_QuotePagoSM {
                             FROM QuoteLineItem WHERE Id IN:listPartInsert WITH SECURITY_ENFORCED];
                     System.debug('nuevas:'+partidasNuevas.size());
                     for(QuoteLineItem ql:partidasNuevas){
-                        for(QuoteLineItem t:listMotoRc){
-                            if( ql.DSALES_Plazo__c == t.DSALES_Plazo__c){
-                                if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
+                        for(QuoteLineItem q:listMotoRc){
+                            if( ql.DSALES_Plazo__c == q.DSALES_Plazo__c){
+                                /*if(ql.DSALES_Segurogratis__c==true && ql.DSALES_Tipodeproducto__c=='Seguro'){
                                     ql.UnitPrice=0;
                                     ql.dsalesGastosDeOperacionDelRecibo__c=0;
                                     ql.DSALES_Primaneta__c=0;
@@ -482,8 +481,8 @@ public with sharing class DSALES_QuotePagoSM {
                                     ql.DSALES_Pagomensual__c=0;
                                 }else{
                                     ql.UnitPrice=q.UnitPrice;
-                                } 
-                               ql=DSALES_QuotePagoSMHelper.quoteIf(ql, t);
+                                }*/ 
+                               /* ql=DSALES_QuotePagoSMHelper.quoteIf(ql, q);
                             }
                         }
                         idNuevos.add(ql);
@@ -498,7 +497,8 @@ public with sharing class DSALES_QuotePagoSM {
                     
                     System.debug('idCotizacion actu:'+listPartInsert[0].QuoteId);
                     idCotSincronizar= listPartInsert[0].QuoteId;
-                    }}else{ // no aplica seguro gratis
+                }
+                else{ // no aplica seguro gratis
                     listSeguros=[SELECT Id,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
                                 dsalesGastosDeOperacionDelRecibo__c,DSALES_Pagomensual__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                                 FROM QuoteLineItem WHERE  QuoteId=:idCot AND DSALES_Tipodeproducto__c='Seguro' AND DSALES_Plazo__r.DSALES_Plazo__c =:String.valueOf(plazo) WITH SECURITY_ENFORCED];
@@ -626,7 +626,7 @@ public with sharing class DSALES_QuotePagoSM {
                 }
             }
             return idCotSincronizar;
-        }catch(Exception e ){
+        }catch(Exception e){
             System.debug('Error al crear dos partidas de presupuesto');
             System.debug(e.getLineNumber());
             System.debug(e.getMessage());
