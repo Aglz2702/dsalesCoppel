@@ -3,13 +3,13 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>DSales_Servicio_Seguro__c</columns>
-    <columns>dsalesProducto__c</columns>
+    <columns>DSALES_Producto__c</columns>
     <columns>DSALES_SKU__c</columns>
     <columns>CREATED_DATE</columns>
-    <columns>dsalesActivo__c</columns>
+    <columns>DSALES_Activo__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>dsalesActivo__c</field>
+        <field>DSALES_Activo__c</field>
         <operation>equals</operation>
         <value>1</value>
     </filters>

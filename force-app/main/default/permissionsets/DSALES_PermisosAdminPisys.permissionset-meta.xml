@@ -858,7 +858,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DSales_Matriz_GEX__c.dsalesActivo__c</field>
+        <field>DSales_Matriz_GEX__c.DSALES_Activo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -873,7 +873,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DSales_Matriz_GEX__c.dsalesRegion__c</field>
+        <field>DSales_Matriz_GEX__c.DSALES_Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

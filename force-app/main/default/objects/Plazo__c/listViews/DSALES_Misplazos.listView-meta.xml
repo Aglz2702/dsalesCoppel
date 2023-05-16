@@ -4,7 +4,7 @@
     <columns>NAME</columns>
     <columns>dsalesSeguro__c</columns>
     <columns>DSALES_Plazo__c</columns>
-    <columns>dsalesActivo__c</columns>
+    <columns>DSALES_Activo__c</columns>
     <columns>CREATED_DATE</columns>
     <columns>dsalesDescripcion__c</columns>
     <filterScope>Mine</filterScope>

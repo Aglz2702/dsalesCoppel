@@ -1687,7 +1687,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>dsalesRegion__c</field>
+            <field>DSALES_Region__c</field>
             <table>Account.Opportunities.Quotes</table>
         </columns>
         <columns>

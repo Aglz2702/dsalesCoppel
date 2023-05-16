@@ -16,7 +16,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>dsalesNumeroTipoUso__c</field>
+                <field>DSALES_Numerodetipodeuso__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -29,7 +29,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>dsalesActivo__c</field>
+                <field>DSALES_Activo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -85,9 +85,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>dsalesProducto__c</fields>
+        <fields>DSALES_Producto__c</fields>
         <fields>CREATED_DATE</fields>
-        <fields>dsalesActivo__c</fields>
+        <fields>DSALES_Activo__c</fields>
         <relatedList>DSALES_AsociacionTiposUso__c.DSALES_TipoUso__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

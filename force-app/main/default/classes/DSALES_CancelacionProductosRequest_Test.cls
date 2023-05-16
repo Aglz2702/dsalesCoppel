@@ -119,7 +119,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         insert cotizacion;
         Quote cotGex = new Quote(OpportunityId=oppGex.Id,Name='GEX',DSales_Tienda__c=t.Id);
         insert cotGex;
-		    Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
+		    Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,DSALES_Activo__c=true);
         insert plazoAMP12;
         
         QuoteLineItem moto = new QuoteLineItem();

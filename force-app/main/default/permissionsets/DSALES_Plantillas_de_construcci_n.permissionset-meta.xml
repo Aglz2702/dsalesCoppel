@@ -42,7 +42,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Asset.dsalesRegion__c</field>
+        <field>Asset.DSALES_Region__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -532,7 +532,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>DSales_Matriz_GEX__c.dsalesActivo__c</field>
+        <field>DSales_Matriz_GEX__c.DSALES_Activo__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -547,7 +547,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>DSales_Matriz_GEX__c.dsalesRegion__c</field>
+        <field>DSales_Matriz_GEX__c.DSALES_Region__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -762,7 +762,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>OpportunityLineItem.dsalesProducto__c</field>
+        <field>OpportunityLineItem.DSALES_Producto__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -922,7 +922,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Quote.dsalesRegion__c</field>
+        <field>Quote.DSALES_Region__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

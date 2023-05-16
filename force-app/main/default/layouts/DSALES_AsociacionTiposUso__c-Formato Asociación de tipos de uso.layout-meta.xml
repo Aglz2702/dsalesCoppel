@@ -13,7 +13,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>dsalesProducto__c</field>
+                <field>DSALES_Producto__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -23,7 +23,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>dsalesActivo__c</field>
+                <field>DSALES_Activo__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

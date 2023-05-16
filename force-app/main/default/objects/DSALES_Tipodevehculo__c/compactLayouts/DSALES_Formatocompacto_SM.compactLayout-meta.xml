@@ -3,6 +3,6 @@
     <fullName>DSALES_Formatocompacto_SM</fullName>
     <fields>Name</fields>
     <fields>dsalesNumerodeVehiculo__c</fields>
-    <fields>dsalesActivo__c</fields>
+    <fields>DSALES_Activo__c</fields>
     <label>Formato compacto SM</label>
 </CompactLayout>

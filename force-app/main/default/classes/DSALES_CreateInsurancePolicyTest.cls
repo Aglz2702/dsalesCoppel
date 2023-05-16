@@ -68,7 +68,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         Opportunity oportunidad = new Opportunity(Name='Testoportunidadortunity', AccountId=acc.Id, CloseDate=Date.Today(), StageName='Nuevo', Pricebook2Id=customPB.Id,RecordTypeId=recordTypeId);
         insert oportunidad;
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  'T-0001';
+        t.DSales_TiendaID__c =  'T-0001';
         insert t;
         DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=oportunidad.id,DSALES_Cliente__c=acc.Id,dsalesSeguro__c=true);
         insert pago;
@@ -82,9 +82,9 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         plazoRC12.Name='12';
         plazoRC12.dsalesSeguro__c=prodRc.Id;
         plazoRC12.DSALES_Plazo__c='12';
-        plazoRC12.dsalesActivo__c=true;
+        plazoRC12.DSALES_Activo__c=true;
         insert plazoRC12;
-        Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
+        Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,DSALES_Activo__c=true);
         insert plazoAMP12;
         QuoteLineItem moto = new QuoteLineItem();
         moto.QuoteId = cotizacion.Id;

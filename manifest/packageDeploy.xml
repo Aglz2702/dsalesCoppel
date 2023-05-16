@@ -262,18 +262,18 @@
 	<members>Claim.N_mero_de_Siniestro__c</members>
 	<members>ClaimPaymentSummary.DSALES_Tipopago__c</members>
 	<members>Contact.DSALES_Metodocontacto__c</members>
-	<members>DSales_Asignacion_de_Productos__c.dsalesActivo__c</members>
+	<members>DSales_Asignacion_de_Productos__c.DSALES_Activo__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Clase__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Departamento__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Familia__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_SKU__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Subcategoria__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSales_NombreProducto__c</members>
-	<members>DSales_Asignacion_de_Productos__c.dsalesProducto__c</members>
+	<members>DSales_Asignacion_de_Productos__c.DSALES_Producto__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSales_Servicio_Seguro__c</members>
 	<members>DSALES_AsociacionCampanias__c.DSALES_Campania__c</members> 
-	<members>DSALES_AsociacionCampanias__c.dsalesProducto__c</members>
-	<members>DSALES_AsociacionTiposUso__c.dsalesProducto__c</members>
+	<members>DSALES_AsociacionCampanias__c.DSALES_Producto__c</members>
+	<members>DSALES_AsociacionTiposUso__c.DSALES_Producto__c</members>
 	<members>DSALES_AsociacionTiposUso__c.DSALES_TipoUso__c</members>
 	<members>DSALES_Categoria__c.DSALES_TipoProducto__c</members>
 	<members>DSALES_Categoria__c.DSALES_TipoSeguro__c</members>
@@ -313,7 +313,7 @@
 	<members>DSALES_Certificado__c.DSALES_ProductoAdquirido__c</members>
 	<members>DSALES_Certificado__c.DSALES_SKU__c</members>
 	<members>DSALES_Certificado__c.DSALES_Ticket__c</members>
-	<members>DSALES_Certificado__c.dsalesTiendaID__c</members>
+	<members>DSALES_Certificado__c.DSales_TiendaID__c</members>
 	<members>DSALES_Certificado__c.DSALES_Tienda__c</members>
 	<members>DSALES_Certificado__c.DSALES_Vigenciacumplida__c</members>
 	<members>DSALES_Certificado__c.DSALES_enviado__c</members>
@@ -411,14 +411,14 @@
 	<members>DSALES_Matriz_de_Cotizacion__c.SALES_Precio_GEX__c</members>
 	<members>DSALES_RutaIntegracion__mdt.DSALES_Endpoint__c</members>
 	<members>DSALES_SubCategoria__c.DSALES_Categoria__c</members>
-	<members>DSales_Matriz_GEX__c.dsalesActivo__c</members>
+	<members>DSales_Matriz_GEX__c.DSALES_Activo__c</members>
 	<members>DSales_Matriz_GEX__c.DSALES_CloneMatriz__c</members>
 	<members>DSales_Matriz_GEX__c.DSALES_EsClone__c</members>
-	<members>DSales_Matriz_GEX__c.dsalesRegion__c</members>
+	<members>DSales_Matriz_GEX__c.DSALES_Region__c</members>
 	<members>DSales_Matriz_GEX__c.DSALES_Tiempogex__c</members>
 	<members>DSales_Matriz_GEX__c.DSALES_Tipo__c</members>
 	<members>DSales_Matriz_GEX__c.DSales_Region_GEX__c</members>
-	<members>DSALES_AsociacionCampanias__c.dsalesActivo__c</members>
+	<members>DSALES_AsociacionCampanias__c.DSALES_Activo__c</members>
 	<members>DSALES_Partidadepago__c.DSALES_Cambio__c</members>
 	<members>DSALES_Partidadepago__c.DSALES_CreditoIVA__c</members>
 	<members>DSALES_Partidadepago__c.DSALES_Ganodineroelec__c</members>
@@ -529,7 +529,7 @@
 	<members>OpportunityLineItem.DSALES_PrecioServ__c</members>
 	<members>Opportunity.Folio_de_oportunidad__c</members>
 	<members>Opportunity.Posici_n__c</members>
-	<members>OpportunityLineItem.dsalesProducto__c</members>
+	<members>OpportunityLineItem.DSALES_Producto__c</members>
 	<members>OpportunityLineItem.DSALES_Servicio__c</members>
 	<members>Opportunity.DSales_Compra__c</members>
 	<members>OpportunityLineItem.DSALES_TipoServ__c</members>
@@ -607,7 +607,7 @@
 	<members>Quote.dsalesMetodoDeContacto__c</members>
 	<members>Quote.dsalesOpcionDePago__c</members>
 	<members>Quote.DSALES_Plazoacotizar__c</members>
-	<members>Quote.dsalesRegion__c</members>
+	<members>Quote.DSALES_Region__c</members>
 	<members>Quote.DSALES_Suburbcode__c</members>
 	<members>Quote.DSales_Direccion_de_la_tienda__c</members>
 	<members>Quote.DSales_Division__c</members>
@@ -671,9 +671,9 @@
 	<members>DSALES_Reembolso__c.DSALES_FechaReembolso__c</members>
 	<members>DSALES_Reembolso__c.DSALES_NumeroCancelacion__c</members>
 	<members>DSALES_Reembolso__c.NombredelProducto__c</members>
-	<members>Tienda__c.dsalesRegion__c</members>
+	<members>Tienda__c.DSALES_Region__c</members>
 	<members>Tienda__c.dsalesAnoDeUltimaRemodelacion__c</members>
-	<members>Tienda__c.dsalesBanco__c</members>
+	<members>Tienda__c.DSALES_Banco__c</members>
 	<members>Tienda__c.dsalesEmailGerenteDeTiendaDeZona__c</members>
 	<members>Tienda__c.DSALES_Formato__c</members>
 	<members>Tienda__c.dsalesModuloAfore__c
@@ -681,9 +681,9 @@
 	<members>Tienda__c.dsalesNombreGerenteDeTiendaDeZona__c</members>
 	<members>Tienda__c.dsalesNumeroCelular__c</members>
 	<members>Tienda__c.dsalesTelefonoTiendaBase__c</members>
-	<members>Tienda__c.dsalesTiendaBase__c</members>
-	<members>Tienda__c.dsalesTipoTiendaInmuebleRenta__c</members>
-	<members>Tienda__c.dsalesOptica__c</members>
+	<members>Tienda__c.DSALES_Tienda_Base__c</members>
+	<members>Tienda__c.Tipo_de_Tienda_Inmueble_Renta__c</members>
+	<members>Tienda__c.DSALES_Optica__c</members>
 	<members>DSALES_Certificado__c.DSales_Garantia_Coppel__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_IDUniversal__c</members>
 	<members>OpportunityLineItem.DSALES_Duracion__c</members>
