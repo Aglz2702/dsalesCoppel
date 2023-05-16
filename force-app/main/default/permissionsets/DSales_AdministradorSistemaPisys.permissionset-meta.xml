@@ -521,7 +521,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Asset.dsalesRegion__c</field>
+        <field>Asset.DSALES_Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1251,7 +1251,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DSales_Asignacion_de_Productos__c.dsalesActivo__c</field>
+        <field>DSales_Asignacion_de_Productos__c.DSALES_Activo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1286,7 +1286,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DSales_Asignacion_de_Productos__c.dsalesProducto__c</field>
+        <field>DSales_Asignacion_de_Productos__c.DSALES_Producto__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1296,7 +1296,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DSales_Matriz_GEX__c.dsalesActivo__c</field>
+        <field>DSales_Matriz_GEX__c.DSALES_Activo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1311,7 +1311,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DSales_Matriz_GEX__c.dsalesRegion__c</field>
+        <field>DSales_Matriz_GEX__c.DSALES_Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1426,7 +1426,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Opportunity.dsalesRegion__c</field>
+        <field>Opportunity.DSALES_Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1561,7 +1561,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>OpportunityLineItem.dsalesProducto__c</field>
+        <field>OpportunityLineItem.DSALES_Producto__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2261,7 +2261,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesBanco__c</field>
+        <field>Tienda__c.DSALES_Banco__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2271,7 +2271,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesCiudad__c</field>
+        <field>Tienda__c.DSALES_Ciudad__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2281,12 +2281,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesEstado__c</field>
+        <field>Tienda__c.DSALES_Estado__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesFechaApertura__c</field>
+        <field>Tienda__c.DSALES_Fechadeapertura__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2317,7 +2317,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesOptica__c</field>
+        <field>Tienda__c.DSALES_Optica__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2327,7 +2327,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesRegion__c</field>
+        <field>Tienda__c.DSALES_Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2342,12 +2342,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesTiendaBase__c</field>
+        <field>Tienda__c.DSALES_Tienda_Base__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesTiendaID__c</field>
+        <field>Tienda__c.DSales_TiendaID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2357,7 +2357,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesTipoTiendaInmuebleRenta__c</field>
+        <field>Tienda__c.Tipo_de_Tienda_Inmueble_Renta__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

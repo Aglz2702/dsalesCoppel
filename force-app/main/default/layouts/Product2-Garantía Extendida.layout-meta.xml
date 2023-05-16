@@ -96,7 +96,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>DSales_Servicio_Seguro__c</fields>
-        <relatedList>DSales_Asignacion_de_Productos__c.dsalesProducto__c</relatedList>
+        <relatedList>DSales_Asignacion_de_Productos__c.DSALES_Producto__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

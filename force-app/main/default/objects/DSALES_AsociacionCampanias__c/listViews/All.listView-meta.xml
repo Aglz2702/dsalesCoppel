@@ -3,7 +3,7 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>DSALES_Campania__c</columns>
-    <columns>dsalesProducto__c</columns>
+    <columns>DSALES_Producto__c</columns>
     <columns>UPDATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>

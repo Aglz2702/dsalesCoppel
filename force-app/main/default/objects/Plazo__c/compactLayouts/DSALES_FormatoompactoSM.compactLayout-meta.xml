@@ -4,6 +4,6 @@
     <fields>Name</fields>
     <fields>dsalesSeguro__c</fields>
     <fields>DSALES_Plazo__c</fields>
-    <fields>dsalesActivo__c</fields>
+    <fields>DSALES_Activo__c</fields>
     <label>Formato compacto SM</label>
 </CompactLayout>
