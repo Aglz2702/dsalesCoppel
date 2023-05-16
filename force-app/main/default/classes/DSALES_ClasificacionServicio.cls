@@ -258,24 +258,57 @@ public without sharing class DSALES_ClasificacionServicio {
     
     @AuraEnabled
     public static List<String> upsertRecord(String allData){
+        system.debug(allData);
         List<Servicio> objeto= (List<Servicio>) JSON.deserialize(allData, List<Servicio>.class);
         List<Product2> listProductos= new List<Product2>();
         Map<String, Integer> listProductosServicio= new Map<String, Integer>();
         List<String> tipoServicio= new List<String>();
         List<Object> listaJson = new List<Object>();
-        listProductosServicio.putAll(upsertRecordAux(objeto, listProductosServicio));
-        listaJson.addAll(upsertRecordAux4(listaJson, listProductosServicio));
+        for(Servicio item: objeto){
+               if(item.seguro==false && item.servicio==true && item.noAplicaServicio == false && item.noAplicaSeguro== true){
+                listProductosServicio.put(item.sku, 2);
+               }
+               else if(item.seguro==false && item.servicio==true && item.noAplicaServicio == false && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 2);
+               }
+               else if(item.seguro==true && item.servicio==true && item.noAplicaServicio == false && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 3);
+               }
+               else if(item.seguro==true && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 1);
+
+               }
+               else if(item.seguro==true && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 1);
+               }
+               else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 0);
+               }
+               else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== true){
+                listProductosServicio.put(item.sku, 0);
+               }
+               else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== true){
+                    listProductosServicio.put(item.sku, 0);
+               }
+               else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
+                listProductosServicio.put(item.sku, 0);
+           }        
+        }
+        for(String sku : listProductosServicio.keySet()) {
+            Integer codigoServicio = Integer.valueOf(listProductosServicio.get(sku));
+            listaJson.add(new Map<String, Object>{'codigo' => integer.valueof(sku), 'codigoServicio' => integer.valueof(codigoServicio)});
+        }
         String cuerpoJson = JSON.serialize(listaJson);
+        system.debug(cuerpoJson);
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('callout:DSALES_AutorizacionToken/'+DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_COD));
-        request.setBody(cuerpoJson);
-        request.setHeader('Content-Type', 'application/json');
+        request.setEndpoint('https://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/codigos');
+        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setBody(cuerpoJson); 
+        request.setHeader('Content-Type', 'application/json'); 
         request.setHeader('X-HTTP-Method-Override','PATCH');
         request.setMethod('PATCH');
-        //request.setHeader('Authorization', 'Bearer {!$Credential.Tokensss.AccessToken}');
-        //request.setHeader('Authorization', 'Bearer ' + Credential.getName('DSALES_AutorizacionToken').AccessToken);
-        HttpResponse response = https.send(request);        
+        HttpResponse response = https.send(request);
         Map<String, Object> responseMap = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
         List<Object> dataList = (List<Object>) responseMap.get('data');
         Map<Integer, Integer> codeStatusMap = new Map<Integer, Integer>();
@@ -291,75 +324,16 @@ public without sharing class DSALES_ClasificacionServicio {
             {
                 listCompleted.add(code);
             }
-            else if(statusCode==404)
+            if(statusCode==404)
             {
                 listError404.add(code);
             }
-            else if(statusCode==500)
+            if(statusCode==500)
             {
                 listError500.add(code);
             }
             codeStatusMap.put(code, statusCode);
         }
-        status=upsertRecordAux3(listError404,listError500);
-        system.debug(listCompleted);
-        System.debug('Mapa de código y estado: ' + codeStatusMap);
-        for(Servicio item: objeto){
-            for(integer i=0; i<listCompleted.size(); i++)
-            {
-                if(listCompleted[i]==integer.valueof(item.sku)){
-                    listProductos.add(new Product2(Id = item.id, DSALES_Servicio__c = item.servicio, DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, 
-                    DSALES_NoaplicaSeg__c= item.noAplicaSeguro, DSALES_NoaplicaServ__c=item.noAplicaServicio, DSALES_IsClasified__c=true, dsalesVehiculo__c = item.idvehiculo)); 
-                } 
-            }
-        }
-        if(Schema.sObjectType.Product2.isCreateable() && Schema.sObjectType.Product2.isUpdateable()){
-            upsert listProductos; 
-        } 
-        status.add(String.valueof(response.getStatusCode())) ;       
-        return status;
-    }
-    public static Map<String, Integer> upsertRecordAux(List<Servicio> objeto, Map<String, Integer> listProductosServicio){
-        for(Servicio item: objeto){
-            if(item.seguro==false && item.servicio==true && item.noAplicaServicio == false && item.noAplicaSeguro== true){
-             listProductosServicio.put(item.sku, 2);
-            }
-            else if(item.seguro==false && item.servicio==true && item.noAplicaServicio == false && item.noAplicaSeguro== false){
-             listProductosServicio.put(item.sku, 2);
-            }
-            else if(item.seguro==true && item.servicio==true && item.noAplicaServicio == false && item.noAplicaSeguro== false){
-             listProductosServicio.put(item.sku, 3);
-            }
-            else if(item.seguro==true && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== false){
-             listProductosServicio.put(item.sku, 1);
-
-            }
-            else if(item.seguro==true && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
-             listProductosServicio.put(item.sku, 1);
-            }
-            listProductosServicio.putAll(upsertRecordAux2(item,listProductosServicio));      
-     }
-     return listProductosServicio; 
-    }
-
-    public static Map<String, Integer> upsertRecordAux2(Servicio item, Map<String, Integer> listProductosServicio){
-            if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== false){
-            listProductosServicio.put(item.sku, 0);
-           }
-           else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== true){
-            listProductosServicio.put(item.sku, 0);
-           }
-           else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == true && item.noAplicaSeguro== true){
-                listProductosServicio.put(item.sku, 0);
-           }
-           else if(item.seguro==false && item.servicio==false && item.noAplicaServicio == false && item.noAplicaSeguro== false){
-            listProductosServicio.put(item.sku, 0);
-           }
-           return listProductosServicio;
-    }
-
-    public static List<String> upsertRecordAux3(List<Integer> listError404, List<Integer> listError500){
-        List<String> status= new List<String> ();
         if(listError404.size()>0){
             if(listError500.size()>0){
                 status.add('Error 404 "No se encontró el recurso solicitado" en: '+listError404+ ', Error 500 en: ' +listError500);
@@ -375,17 +349,26 @@ public without sharing class DSALES_ClasificacionServicio {
         else{
             status.add('sin errores');
         }
+        system.debug(listCompleted);
+        System.debug('Mapa de código y estado: ' + codeStatusMap);
+        for(Servicio item: objeto){
+            for(integer i=0; i<listCompleted.size(); i++)
+            {
+                if(listCompleted[i]==integer.valueof(item.sku)){
+                    listProductos.add(new Product2(Id = item.id, DSALES_Servicio__c = item.servicio, DSALES_Seguro__c = item.seguro, DSALES_NoAplica__c = item.noAplica, 
+                    DSALES_NoaplicaSeg__c= item.noAplicaSeguro, DSALES_NoaplicaServ__c=item.noAplicaServicio, DSALES_IsClasified__c=true, dsalesVehiculo__c = item.idvehiculo)); 
+                } 
+            }
+        }
+        if(Schema.sObjectType.Product2.isCreateable() && Schema.sObjectType.Product2.isUpdateable()){
+            upsert listProductos;  
+        } 
+         
+
+        status.add(String.valueof(response.getStatusCode())) ;       
         return status;
     }
-
-    public static List<Object> upsertRecordAux4(List<Object> listaJson , Map<String, Integer> listProductosServicio){
-        for(String sku : listProductosServicio.keySet()) {
-            Integer codigoServicio = Integer.valueOf(listProductosServicio.get(sku));
-            listaJson.add(new Map<String, Object>{'codigo' => integer.valueof(sku), 'codigoServicio' => integer.valueof(codigoServicio)});
-        }
-        return listaJson;
-    }
-
+    
     public static List<String> itemSeleccionados(List<PicklistOption> listPickList){
         List<String> listItems = new List <String>();
         for(PicklistOption item: listPickList){
@@ -887,7 +870,7 @@ public without sharing class DSALES_ClasificacionServicio {
         List<Servicio> listTipoUsoSelectedidvalue= new List<Servicio>();
         List<DSALES_AsociacionTiposUso__c> listTipoUsoSeleccion= new List<DSALES_AsociacionTiposUso__c>();
         if (Schema.sObjectType.DSALES_AsociacionTiposUso__c.isQueryable()) {
-            for(DSALES_AsociacionTiposUso__c item: [Select id, DSALES_TipodeUso__c from DSALES_AsociacionTiposUso__c where DSALES_Producto__c= :idProducto])
+            for(DSALES_AsociacionTiposUso__c item: [Select id, DSALES_TipodeUso__c from DSALES_AsociacionTiposUso__c where DSales_Producto__c= :idProducto])
             {
                 listTipoUsoSelected.add(item.DSALES_TipodeUso__c);
                 Servicio b= new Servicio();
@@ -904,16 +887,16 @@ public without sharing class DSALES_ClasificacionServicio {
         }   
         for(Integer i=0; newList.size()>i; i++)
         {
-            listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(DSALES_TipodeUso__c = newList[i], DSALES_Producto__c=idProducto, DSALES_Activo__c=true));
+            listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(DSALES_TipodeUso__c = newList[i], DSales_Producto__c=idProducto, DSALES_Activo__c=true));
         }
        for(Servicio item: listTipoUsoSelectedidvalue){
             if(objetoTipoUso.contains(item.value))
             {
-                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, DSALES_TipodeUso__c = item.value, DSALES_Producto__c=idProducto, DSALES_Activo__c=true));
+                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, DSALES_TipodeUso__c = item.value, DSales_Producto__c=idProducto, DSALES_Activo__c=true));
             }
             else
             {
-                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, DSALES_TipodeUso__c = item.value, DSALES_Producto__c=idProducto, DSALES_Activo__c=false));
+                listTipoUsoSeleccion.add(new DSALES_AsociacionTiposUso__c(id=item.id, DSALES_TipodeUso__c = item.value, DSales_Producto__c=idProducto, DSALES_Activo__c=false));
             }
         }
         if(Schema.sObjectType.DSALES_AsociacionTiposUso__c.isCreateable() && Schema.sObjectType.DSALES_AsociacionTiposUso__c.isUpdateable()){
@@ -926,7 +909,7 @@ public without sharing class DSALES_ClasificacionServicio {
 
         List<String> listTipoUsoUsed = new List<String>();
         if (Schema.sObjectType.DSALES_AsociacionTiposUso__c.isQueryable()) {
-            for(DSALES_AsociacionTiposUso__c item: [Select DSALES_TipodeUso__c from DSALES_AsociacionTiposUso__c where DSALES_Producto__c=:idProducto and DSALES_Activo__c=true])
+            for(DSALES_AsociacionTiposUso__c item: [Select DSALES_TipodeUso__c from DSALES_AsociacionTiposUso__c where DSales_Producto__c=:idProducto and DSALES_Activo__c=true])
             {
                 listTipoUsoUsed.add(item.DSALES_TipodeUso__c);
             }  
@@ -1178,5 +1161,5 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled public integer anio4;
         @AuraEnabled public integer anio5;
         @AuraEnabled public integer anio6;      
-    }*/
+    }
 }
