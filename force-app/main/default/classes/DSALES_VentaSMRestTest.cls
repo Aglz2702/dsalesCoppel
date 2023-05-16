@@ -122,7 +122,7 @@ public with sharing class DSALES_VentaSMRestTest {
         insert opp;
         
         Tienda__c t = new Tienda__c();
-        t.dsalesTiendaID__c =  '1';
+        t.DSales_TiendaID__c =  '1';
         insert t;
         
         Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
@@ -137,19 +137,19 @@ public with sharing class DSALES_VentaSMRestTest {
         plazoRC12.Name='12';
         plazoRC12.dsalesSeguro__c=prodRc.Id;
         plazoRC12.DSALES_Plazo__c='12';
-        plazoRC12.dsalesActivo__c=true;
+        plazoRC12.DSALES_Activo__c=true;
         insert plazoRC12;
         
         Plazo__c plazoRC18 = new Plazo__c();
         plazoRC18.Name='18';
         plazoRC18.dsalesSeguro__c=prodRc.Id;
         plazoRC18.DSALES_Plazo__c='18';
-        plazoRC18.dsalesActivo__c=true;
+        plazoRC18.DSALES_Activo__c=true;
         insert plazoRC18;
         
-        Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
+        Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,DSALES_Activo__c=true);
         insert plazoAMP12;
-         Plazo__c plazoAMP18 = new Plazo__c(Name='18',DSALES_Plazo__c='18',dsalesSeguro__c=prodAmp.Id,dsalesActivo__c=true);
+         Plazo__c plazoAMP18 = new Plazo__c(Name='18',DSALES_Plazo__c='18',dsalesSeguro__c=prodAmp.Id,DSALES_Activo__c=true);
         insert plazoAMP18;
         
         QuoteLineItem moto = new QuoteLineItem();

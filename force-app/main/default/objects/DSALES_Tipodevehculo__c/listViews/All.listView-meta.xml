@@ -2,13 +2,13 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>NAME</columns>
-    <columns>dsalesActivo__c</columns>
+    <columns>DSALES_Activo__c</columns>
     <columns>dsalesDescripcion__c</columns>
     <columns>UPDATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>dsalesActivo__c</field>
+        <field>DSALES_Activo__c</field>
         <operation>equals</operation>
         <value>1</value>
     </filters>

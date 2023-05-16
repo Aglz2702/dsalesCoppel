@@ -71,14 +71,14 @@ public without sharing class DSALES_ControladorCotizacionGex {
        // cliente=[SELECT Name FROM Account WHERE Id=:cliente].Name;
         List<Tienda__c> tienda = new List<Tienda__c>();
            //tienda=[SELECT dsalesDireccion__c FROM Tienda__c WHERE Id=:String.ValueOf(cotizacion.DSales_Tienda__c) Limit 1].dsalesDireccion__c;
-           tienda=[SELECT dsalesDireccion__c,dsalesCodigoPostal__c,dsalesCiudad__c,dsalesEstado__c FROM Tienda__c WHERE Id=:cotizacion.DSales_Tienda__c WITH SECURITY_ENFORCED Limit 1];
+           tienda=[SELECT dsalesDireccion__c,dsalesCodigoPostal__c,DSALES_Ciudad__c,DSALES_Estado__c FROM Tienda__c WHERE Id=:cotizacion.DSales_Tienda__c WITH SECURITY_ENFORCED Limit 1];
         String direccion='';
         for(Tienda__c t: tienda)
         {
             
             if(tienda!=null){ //datos de la direción de la tienda SG
                 direccion='\n'+t.dsalesDireccion__c+','+'\n';
-                direccion +='\n CP '+t.dsalesCodigoPostal__c+','+t.dsalesCiudad__c+','+t.dsalesEstado__c;
+                direccion +='\n CP '+t.dsalesCodigoPostal__c+','+t.DSALES_Ciudad__c+','+t.DSALES_Estado__c;
                 html=html.replace('Tienda__c', direccion);
             }else
             {
@@ -727,14 +727,14 @@ public without sharing class DSALES_ControladorCotizacionGex {
             // cliente=[SELECT Name FROM Account WHERE Id=:cliente].Name;
             List<Tienda__c> tienda = new List<Tienda__c>();
                 //tienda=[SELECT dsalesDireccion__c FROM Tienda__c WHERE Id=:String.ValueOf(cotizacion.DSales_Tienda__c) Limit 1].dsalesDireccion__c;
-                tienda=[SELECT dsalesDireccion__c,dsalesCodigoPostal__c,dsalesCiudad__c,dsalesEstado__c FROM Tienda__c WHERE Id=:cotizacion.DSales_Tienda__c WITH SECURITY_ENFORCED Limit 1];
+                tienda=[SELECT dsalesDireccion__c,dsalesCodigoPostal__c,DSALES_Ciudad__c,DSALES_Estado__c FROM Tienda__c WHERE Id=:cotizacion.DSales_Tienda__c WITH SECURITY_ENFORCED Limit 1];
             String direccion='';
             for(Tienda__c t: tienda)
             {
                 
                 if(tienda!=null){ //datos de la direción de la tienda SG
                     direccion='\n'+t.dsalesDireccion__c+','+'\n';
-                    direccion +='\n CP '+t.dsalesCodigoPostal__c+','+t.dsalesCiudad__c+','+t.dsalesEstado__c;
+                    direccion +='\n CP '+t.dsalesCodigoPostal__c+','+t.DSALES_Ciudad__c+','+t.DSALES_Estado__c;
                     //html=html.replace('Tienda__c', direccion);
                 }else
                 {

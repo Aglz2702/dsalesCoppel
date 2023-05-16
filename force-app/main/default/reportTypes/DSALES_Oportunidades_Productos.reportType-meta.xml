@@ -458,7 +458,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>dsalesProducto__c</field>
+            <field>DSALES_Producto__c</field>
             <table>Opportunity.OpportunityLineItems</table>
         </columns>
         <columns>
