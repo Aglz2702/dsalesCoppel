@@ -1804,7 +1804,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>DSALES_Endoso__c.dsalesFechaDeCreacion__c__c</field>
+        <field>DSALES_Endoso__c.dsalesFechaDeCreacion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
