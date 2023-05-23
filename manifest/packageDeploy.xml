@@ -852,6 +852,9 @@
 	<members>DSales_Asignacion_de_Productos__c</members>
 	<members>DASALES_Porcentajedecobro__c</members>
 	<members>DSALES_Partidadepago__c</members>
+	<members>dsalesAsignacionDeTienda__c</members>
+	<members>dsalesCiudad__c</members>
+	<members>dsalesRegion__c</members>
 	<name>CustomTab</name>
 </types>
 <types>
