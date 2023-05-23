@@ -194,6 +194,8 @@
 	<members>DSALES_InformacionDePago__c.DSales_Informacion_GEX</members>
 	<members>Product2.DSALES_FormatoCompactoSMIntang</members>
 	<members>Product2.DSALES_FormatocompactoSM</members>
+	<members>dsalesCiudad__c.Ciudad_Compact_Layout</members>
+	<members>dsalesRegion__c.Region_Compact_Layout</members>
 	<name>CompactLayout</name>
 </types>
 <types>
@@ -693,6 +695,7 @@
 	<members>InsurancePolicy.dsalesEstatusPoliza__c</members>
 	<members>InsurancePolicy.dsalesFechaDeEmision__c</members>
 	<members>InsurancePolicy.dsalesNumeroDeMotor__c</members>
+	<members>Tienda__c.dsalesCiudad__c</members>
 	<name>CustomField</name>
 </types>
 <types>
@@ -814,6 +817,9 @@
 	<members>Tienda__c</members>
 	<members>DSALES_Reembolso__c</members>
 	<members>DSALES_Cancelacion__c</members>
+	<members>dsalesAsignacionDeTienda__c</members>
+	<members>dsalesCiudad__c</members>
+	<members>dsalesRegion__c</members>
 	<name>CustomObject</name>
 </types>
 <types>
@@ -933,6 +939,9 @@
 	<members>Producto_P_gina_de_registro</members>
 	<members>Partida_presupuesto_Pagina_registro</members>
 	<members>Campaign_Record_PageSM</members>
+	<members>Asignaci_n_de_Tienda_Record_Page</members>
+	<members>Ciudad_Record_Page</members>
+	<members>Region_Record_Page</members>
 	<name>FlexiPage</name>
 </types>
 <types>
@@ -1049,6 +1058,7 @@
 	<members>DSALES_Certificado__c-DSALES_Certificado_GEX</members>
 	<members>ClaimPaymentSummary-Formato de Resumen de pago de reclamación</members>
 	<members>OpportunityLineItem-dsalesformatopaginagex</members>
+	<members>dsalesAsignacionDeTienda__c-Formato Asignación de Tienda</members>
 	<name>Layout</name>
 </types>
 <types>
