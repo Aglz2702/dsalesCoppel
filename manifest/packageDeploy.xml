@@ -730,6 +730,9 @@
 	<members>DSALES_RutaIntegracion.DSALES_ListaNegra</members>
 	<members>DSALES_RutaIntegracion.DSALES_SendPdfToNVP</members>
 	<members>DSALES_RutaIntegracion.DSALES_QuoteSM</members>
+	<members>dsalesDatosContratante.dsalesNombre</members>
+	<members>dsalesEquivalencias.C</members>
+	<members>dsalesEquivalencias.M</members>
 	<members>Tipo_de_endoso.AcreditacionMP</members>
 	<members>Tipo_de_endoso.CURP</members>
 	<members>Tipo_de_endoso.C_card_Trajeta_De_Circulatci_n</members>
@@ -820,6 +823,8 @@
 	<members>dsalesAsignacionDeTienda__c</members>
 	<members>dsalesCiudad__c</members>
 	<members>dsalesRegion__c</members>
+	<members>dsalesDatosContratante__mdt</members>
+	<members>dsalesEquivalencias__mdt</members>
 	<name>CustomObject</name>
 </types>
 <types>
