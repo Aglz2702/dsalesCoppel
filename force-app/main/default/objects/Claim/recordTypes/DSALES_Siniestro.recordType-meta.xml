@@ -69,6 +69,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DSALES_Motivo_rechazo__c</picklist>
+        <values>
+            <fullName>Cobertura no contratada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Es una exclusión del producto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moto distinta al uso registrado en la póliza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Póliza cancelada</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DSALES_Tipo_pago__c</picklist>
         <values>
             <fullName>Pago a Cliente</fullName>

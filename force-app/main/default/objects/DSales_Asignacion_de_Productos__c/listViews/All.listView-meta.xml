@@ -3,7 +3,7 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>DSales_Servicio_Seguro__c</columns>
-    <columns>DSALES_Producto__c</columns>
+    <columns>DSales_Producto__c</columns>
     <columns>DSALES_SKU__c</columns>
     <columns>CREATED_DATE</columns>
     <columns>DSALES_Activo__c</columns>

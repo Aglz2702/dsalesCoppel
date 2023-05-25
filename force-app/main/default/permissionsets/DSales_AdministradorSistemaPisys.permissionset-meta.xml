@@ -986,6 +986,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DSALES_InformacionDePago__c.DSALES_FolioTransaccion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DSALES_InformacionDePago__c.DSALES_FormaDePago__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1101,7 +1106,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DSALES_InformacionDePago__c.dsales_Seguro__c</field>
+        <field>DSALES_InformacionDePago__c.DSALES_Seguro__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1117,6 +1122,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DSALES_InformacionDePago__c.DSALES_TipoCompra__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DSALES_InformacionDePago__c.DSALES_TipoFolio__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1286,7 +1296,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DSales_Asignacion_de_Productos__c.DSALES_Producto__c</field>
+        <field>DSales_Asignacion_de_Productos__c.DSales_Producto__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1327,11 +1337,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DSales_Matriz_GEX__c.DSales_Region_GEX__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Opportunity.A_o_anterior__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1431,7 +1436,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Opportunity.dsalesTienda__c</field>
+        <field>Opportunity.DSALES_Tiend__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1561,22 +1566,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>OpportunityLineItem.DSALES_Producto__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>OpportunityLineItem.DSALES_Servicio__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>OpportunityLineItem.DSALES_TipoServ__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>OpportunityLineItem.DSALES_Vendido__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1671,7 +1666,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Product2.dsalesSeguro__c</field>
+        <field>Product2.DSALES_Seguro__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1846,16 +1841,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.dsalesCodigoDePromocion__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Quote.dsalesCodigoPostal__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Quote.DSALES_Cobertura__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1906,11 +1891,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.dsalesFechaDeComienzoDePoliza__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Quote.DSALES_Fechadecreacionpresupuesto__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1926,22 +1906,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.dsalesGenero__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Quote.DSALES_IDdelasociado__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Quote.dsalesIdDeVehiculo__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Quote.dsalesMetodoDeContacto__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1961,17 +1926,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.dsalesOpcionDePago__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Quote.DSALES_Suburbcode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Quote.dsalesTipoDeServicioDelVehiculo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2056,16 +2011,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Quote.dsalesListaNegra__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Quote.dsalesMotivoDeListaNegra__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Quote.NOMigrar__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2131,7 +2076,52 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>QuoteLineItem.dsalesDerechosDePoliza__c</field>
+        <field>Quote.dsalesCodigoDePromocion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote.dsalesCodigoPostal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote.dsalesFechaDeComienzoDePoliza__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote.dsalesGenero__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote.dsalesIdDeVehiculo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote.dsalesListaNegra__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote.dsalesMetodoDeContacto__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote.dsalesMotivoDeListaNegra__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote.dsalesOpcionDePago__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quote.dsalesTipoDeServicioDelVehiculo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2147,11 +2137,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>QuoteLineItem.DSALES_Fechadetermino__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>QuoteLineItem.dsalesGastosDeOperacionDelRecibo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2256,7 +2241,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesAnoDeUltimaRemodelacion__c</field>
+        <field>QuoteLineItem.dsalesDerechosDePoliza__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>QuoteLineItem.dsalesGastosDeOperacionDelRecibo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2266,17 +2256,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesCodigoPostal__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Tienda__c.DSALES_Ciudad__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Tienda__c.dsalesDireccion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2296,27 +2276,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesEmailGerenteDeTiendaDeZona__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Tienda__c.dsalesModuloAfore__c
-</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Tienda__c.dsalesNumeroCelular__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Tienda__c.dsalesNombreGerenteDeTiendaDeZona__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Tienda__c.DSALES_Optica__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2332,16 +2291,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.dsalesTelefonoTiendaBase__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Tienda__c.dsalesTelefono__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Tienda__c.DSALES_Tienda_Base__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2352,12 +2301,57 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Tienda__c.Tipo_de_Tienda_Inmueble_Renta__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tienda__c.dsalesAnoDeUltimaRemodelacion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tienda__c.dsalesCodigoPostal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tienda__c.dsalesDireccion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Tienda__c.dsalesDivision__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.Tipo_de_Tienda_Inmueble_Renta__c</field>
+        <field>Tienda__c.dsalesEmailGerenteDeTiendaDeZona__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tienda__c.dsalesModuloAfore__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tienda__c.dsalesNombreGerenteDeTiendaDeZona__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tienda__c.dsalesNumeroCelular__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tienda__c.dsalesTelefonoTiendaBase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tienda__c.dsalesTelefono__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
@@ -2548,15 +2542,11 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>DSALES_Categoria__c.DSALES_GEX</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <recordType>DSALES_Categoria__c.DSALES_SM</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>DSALES_Clase__c.DSALES_GEX</recordType>
+        <recordType>DSALES_Categoria__c.dsalesServicios</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -2564,11 +2554,15 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>DSALES_Familia__c.DSALES_GEX</recordType>
+        <recordType>DSALES_Clase__c.dsalesServicios</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>DSALES_Familia__c.DSALES_SM</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>DSALES_Familia__c.dsalesServicios</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -2588,7 +2582,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>DSALES_SubCategoria__c.DSales_GEX</recordType>
+        <recordType>DSALES_SubCategoria__c.dsalesServicios</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

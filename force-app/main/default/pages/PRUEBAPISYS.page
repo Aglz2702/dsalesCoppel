@@ -1,0 +1,18 @@
+<apex:page standardController="DSALES_Categoria__c" recordSetVar="garantias" 
+    title="Garantías Extendidas">
+    
+    <apex:form >
+        <apex:pageBlock title="Garantías Extendidas">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Guardar cambios" action="{!save}" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!garantias}" var="garantia">
+                <apex:column headerValue="Nombre" value="{!garantia.Name}"/>
+                <apex:column headerValue="Tipo de Producto">
+                    <apex:inputField value="{!garantia.DSALES_TipoProducto__c}" />
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>

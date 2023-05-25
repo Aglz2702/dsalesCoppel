@@ -6,5 +6,10 @@
     <columns>CREATED_DATE</columns>
     <columns>DSALES_Poliza__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>DSALES_InformacionDePago__c.DSALES_PagosdeVentaenNPVSM_c</value>
+    </filters>
     <label>Mi Información de Pago</label>
 </ListView>

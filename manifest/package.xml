@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-	<types>
-		<members>dsalesDatosContratante.dsalesNombre</members>
-		<members>dsalesEquivalencias.C</members>
-		<members>dsalesEquivalencias.M</members>
-		<name>CustomMetadata</name>
-	</types>
-	<types>
-		<members>dsalesDatosContratante__mdt</members>
-		<members>dsalesEquivalencias__mdt</members>
-		<name>CustomObject</name>
-	</types>
 	<version>55.0</version>
 </Package>
