@@ -60,21 +60,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>dsalesTipoCampana__c</picklist>
-        <values>
-            <fullName>Informativo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Seguro gratis</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Seguro obligatorio</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Status</picklist>
         <values>
             <fullName>Anulado</fullName>
@@ -129,6 +114,21 @@
         </values>
         <values>
             <fullName>Website Direct</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>dsalesTipoCampana__c</picklist>
+        <values>
+            <fullName>Informativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seguro gratis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seguro obligatorio</fullName>
             <default>false</default>
         </values>
     </picklistValues>

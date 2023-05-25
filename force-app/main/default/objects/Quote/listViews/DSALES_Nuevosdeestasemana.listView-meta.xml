@@ -7,6 +7,11 @@
     <columns>ACCOUNT.NAME</columns>
     <columns>QUOTE.TOTALPRICE</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>QUOTE.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Quote.DSALES_VentaGEX</value>
+    </filters>
     <label>Nuevas de esta semana</label>
     <sharedTo>
         <role>DSALES_Admin_GEX</role>

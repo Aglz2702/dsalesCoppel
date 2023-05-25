@@ -146,16 +146,8 @@
     <picklistValues>
         <picklist>DSales_Tipo_de_Producto__c</picklist>
         <values>
-            <fullName>Producto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Seguro</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Servicio</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

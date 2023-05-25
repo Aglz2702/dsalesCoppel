@@ -1159,11 +1159,11 @@
 	<members>Product2.DSales_Seguro_de_Motos</members>
 	<members>Product2.DSales_Garantia_Extendida</members>
 	<members>Asset.DSALES_Garantia_Extendida</members>
-	<members>DSALES_Categoria__c.DSALES_GEX</members>
+	<members>DSALES_Categoria__c.DSales_ProductoTangible</members>
 	<members>DSALES_Categoria__c.DSALES_SM</members>
-	<members>DSALES_Clase__c.DSALES_GEX</members>
+	<members>DSALES_Clase__c.DSales_ProductoTangible</members>
 	<members>DSALES_Clase__c.DSALES_SM</members>
-	<members>DSALES_Familia__c.DSALES_GEX</members>
+	<members>DSALES_Familia__c.DSales_ProductoTangible</members>
 	<members>DSALES_Familia__c.DSALES_SM</members>
 	<members>Claim.DSALES_Nuevo_Siniestro</members>
 	<members>DSALES_Partidadepago__c.DSALES_SegurodeMotos</members>
