@@ -12,7 +12,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>dsalesFechaDeCreacion__c__c</field>
+                <field>dsalesFechaDeCreacion__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

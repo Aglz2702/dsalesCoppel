@@ -20,7 +20,7 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_AccountWrapperRequest</apexClass>
+        <apexClass>DSALES_ActualizarSiniestroTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -28,15 +28,23 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_AssetWrapper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_AssetWrapperRequest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_AssetWrapperTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_CancelacionController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_CancelacionProductosRequest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_CancelacionProductosRequest_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_CancelacionProductosWrapper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

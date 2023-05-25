@@ -2156,6 +2156,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>DSALES_Endoso__c.DSALES_MontoaDevolver__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>DSALES_Endoso__c.DSALES_MotivoDevolucion__c</field>
         <readable>true</readable>
