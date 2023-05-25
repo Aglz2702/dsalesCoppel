@@ -196,6 +196,7 @@
 	<members>Product2.DSALES_FormatocompactoSM</members>
 	<members>dsalesCiudad__c.Ciudad_Compact_Layout</members>
 	<members>dsalesRegion__c.Region_Compact_Layout</members>
+	<members>InsurancePolicyParticipant.dsalesFormatoCompactoSm</members>
 	<name>CompactLayout</name>
 </types>
 <types>
@@ -1057,8 +1058,8 @@
 	<members>DSALES_Endoso__c-Formato Endoso</members>
 	<members>DSALES_InformacionDePago__c-DSALESInformaciondepagosSM</members>
 	<members>DSALES_Categoria__c-DSALES_GEX</members>
-		<members>DSALES_Clase__c-DSALES_GEX</members>
-		<members>DSALES_Familia__c-DSALES_GEX</members>
+	<members>DSALES_Clase__c-DSALES_GEX</members>
+	<members>DSALES_Familia__c-DSALES_GEX</members>
 	<members>DSALES_SubCategoria__c-DSales_GEX</members>
 	<members>DASALES_Porcentajedecobro__c-Porcentaje de cobro Layout</members>
 	<members>DSales_Asignacion_de_Productos__c-Formato Asignación de Productos</members>
@@ -1067,6 +1068,7 @@
 	<members>ClaimPaymentSummary-Formato de Resumen de pago de reclamación</members>
 	<members>OpportunityLineItem-dsalesformatopaginagex</members>
 	<members>dsalesAsignacionDeTienda__c-Formato Asignación de Tienda</members>
+	<members>InsurancePolicyParticipant-Formato de pagina SM</members>
 	<name>Layout</name>
 </types>
 <types>
