@@ -1069,6 +1069,8 @@
 	<members>OpportunityLineItem-dsalesformatopaginagex</members>
 	<members>dsalesAsignacionDeTienda__c-Formato Asignación de Tienda</members>
 	<members>InsurancePolicyParticipant-Formato de pagina SM</members>
+	<members>dsalesDatosContratante__mdt-Formato Nombre del contratante</members>
+	<members>dsalesEquivalencias__mdt-Formato Equivalencia</members>
 	<name>Layout</name>
 </types>
 <types>
