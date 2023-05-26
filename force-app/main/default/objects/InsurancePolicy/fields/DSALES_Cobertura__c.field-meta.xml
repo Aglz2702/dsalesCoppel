@@ -3,23 +3,9 @@
     <fullName>DSALES_Cobertura__c</fullName>
     <externalId>false</externalId>
     <label>Cobertura</label>
+    <length>20</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
-    <type>Picklist</type>
-    <valueSet>
-        <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>PLUS</fullName>
-                <default>false</default>
-                <label>PLUS</label>
-            </value>
-            <value>
-                <fullName>RC</fullName>
-                <default>false</default>
-                <label>RC</label>
-            </value>
-        </valueSetDefinition>
-    </valueSet>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

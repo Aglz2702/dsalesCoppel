@@ -1,35 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>DSALES_Familia__c.DSALES_Clase__c</members>
-		<members>DSALES_Familia__c.DSALES_Tipodeproducto__c</members>
-		<name>CustomField</name>
+		<members>dsalesDatosContratante.dsalesNombre</members>
+		<name>CustomMetadata</name>
 	</types>
 	<types>
-		<members>Familia_P_gina_de_registro</members>
-		<name>FlexiPage</name>
+		<members>dsalesDatosContratante__mdt</members>
+		<name>CustomObject</name>
 	</types>
 	<types>
-		<members>DSALES_Familia__c-DSALES_GEX</members>
-		<members>DSALES_Familia__c-DSALES_SM</members>
-		<members>DSALES_Familia__c-Formato Familia</members>
+		<members>dsalesDatosContratante__mdt-Formato Nombre del contratante</members>
 		<name>Layout</name>
-	</types>
-	<types>
-		<members>Administrador_de_sistema_Fun_SM</members>
-		<name>PermissionSet</name>
-	</types>
-	<types>
-		<members>Admin</members>
-		<members>Administrador SM</members>
-		<members>Atención de servicio SM</members>
-		<name>Profile</name>
-	</types>
-	<types>
-		<members>DSALES_Familia__c.DSALES_GEX</members>
-		<members>DSALES_Familia__c.DSALES_SM</members>
-		<members>DSALES_Familia__c.DSales_ProductoTangible</members>
-		<name>RecordType</name>
 	</types>
 	<version>55.0</version>
 </Package>

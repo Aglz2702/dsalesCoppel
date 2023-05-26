@@ -12,7 +12,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
                 String body = System.RestContext.request.requestBody.toString();
                 if(String.isNotBlank(body)){
                     DSALES_PaymentInfoWrapper.PaymentRequest pago = (DSALES_PaymentInfoWrapper.PaymentRequest)JSON.deserialize(body, DSALES_PaymentInfoWrapper.PaymentRequest.class);            
-                    responsePago = insertarPago(pago);
+                    responsePago = insertarPago(pago,'');
                     exito=true;
                 }
             }catch(Exception.JSONException jsonException){
@@ -32,7 +32,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
         
         return responsePago;
     }
-    public static DSALES_PaymentInfoWrapper.PaymentResponse insertarPago(DSALES_PaymentInfoWrapper.PaymentRequest pago){
+    public static DSALES_PaymentInfoWrapper.PaymentResponse insertarPago(DSALES_PaymentInfoWrapper.PaymentRequest pago,String contratante){
         Boolean exito = false;
         String mensajeError = '';
         Integer codigoError;
@@ -61,6 +61,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             nuevoPago.DSALES_IDUniversal1__c=pago.idUniversal;
             nuevoPago.DSALES_FolioTransaccion__c=pago.folioTransaccion;
             nuevoPago.DSALES_TipoFolio__c=pago.tipoFolio;
+            nuevoPago.dsalesContratante__c=contratante;
             if(cliente.FinServ__BillingAddress__pc!=null){
                 String direcion =cliente.FinServ__BillingAddress__pc.replace('<br>', ',');
                 nuevoPago.DSALES_DireccionCliente__c=direcion;
@@ -68,7 +69,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             if(Schema.sObjectType.DSALES_InformacionDePago__c.isCreateable()) {
                 insert nuevoPago;
             }else{
-                System.debug('Permisos insuficientes para insertar'); 
+                System.debug('Permisos insuficientes para insertar');
             }
             if(pago.ListaDePagos!=null){
                 for(DSALES_PaymentInfoWrapper.listaDePago part : pago.listaDePagos){

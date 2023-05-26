@@ -3,6 +3,8 @@
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
+    <excludeButtons>Delete</excludeButtons>
+    <excludeButtons>Edit</excludeButtons>
     <excludeButtons>PrintableView</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -22,6 +24,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DSales_Tienda__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>dsalesContratante__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
