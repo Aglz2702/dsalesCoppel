@@ -100,7 +100,7 @@ global class DSALES_QuoteSmWrapper {
     }  
     global class Data{
         global List<CoveragesArray> listaCoberturas {get;set;}
-        global String idCotizacion {get;set;}
+        global String quote_id {get;set;}
         global List<Receipt> recibos {get;set;}
         global InsurancePremium primaSeguro {get;set;}
         global String idPoliza {get;set;}
@@ -128,7 +128,5 @@ global class DSALES_QuoteSmWrapper {
         global String recargo {get;set;}
         global String impuestos {get;set;}
         global String comision {get;set;}
-        global String pagoTotalEfectivo {get;set;}
-        global String pagoMensual {get;set;}
     }
 }
