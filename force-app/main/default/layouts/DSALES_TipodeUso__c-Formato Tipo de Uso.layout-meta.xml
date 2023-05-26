@@ -33,7 +33,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Descripcin__c</field>
+                <field>dsalesDescripcion__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -88,7 +88,7 @@
         <fields>DSALES_Producto__c</fields>
         <fields>CREATED_DATE</fields>
         <fields>DSALES_Activo__c</fields>
-        <relatedList>DSALES_AsociacionTiposUso__c.DSALES_TipodeUso__c</relatedList>
+        <relatedList>DSALES_AsociacionTiposUso__c.DSALES_TipoUso__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

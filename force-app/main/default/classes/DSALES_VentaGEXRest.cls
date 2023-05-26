@@ -1,4 +1,3 @@
-
 @RestResource(urlMapping='/ventaGex/*')
 global with sharing class DSALES_VentaGEXRest {
     
@@ -46,9 +45,9 @@ global with sharing class DSALES_VentaGEXRest {
                     }
                     
                     
-                    paymentIds=insertPaymentInfo(venta.pago, cliente.idCuenta, mapAssets, venta.quoteId);
-                    //DSALES_ValidarClienteHelper.deleteUnpurchasedItem(venta.listaDeProductos,venta.listaDeCertificados, venta.quoteId);
-                    //DSALES_ValidarClienteHelper.actualizarCotizacion(venta.quoteId,ventaGEX,mapAssets,mapCertifieds);
+                    paymentIds=insertPaymentInfo(venta.pago,  mapAssets, venta.quoteId);
+                    DSALES_ValidarClienteHelper.deleteUnpurchasedItem(venta.listaDeProductos,venta.listaDeCertificados, venta.quoteId);
+                    DSALES_ValidarClienteHelper.actualizarCotizacion(venta.quoteId,ventaGEX,mapAssets,mapCertifieds);
                     
 
                     success=true;
@@ -192,8 +191,8 @@ global with sharing class DSALES_VentaGEXRest {
             }
             system.debug('Aquí sí llegó: SKU: '+listStores);
         }
-        for(Tienda__c store: [select id,DSales_TiendaID__c from Tienda__c where DSales_TiendaID__c in :listStores WITH SECURITY_ENFORCED]){
-            mapStores.put(store.DSales_TiendaID__c, store.Id);
+        for(Tienda__c store: [select id,dsales_TiendaID__c from Tienda__c where dsales_TiendaID__c in :listStores WITH SECURITY_ENFORCED]){
+            mapStores.put(store.dsales_TiendaID__c, store.Id);
         }
         system.debug('Seguimos bien con sku '+listSKUCertifieds);
         for(Product2 t: [Select StockKeepingUnit from Product2 where StockKeepingUnit in :listSKUCertifieds and DSales_Tipo_de_Producto__c='Servicio' WITH SECURITY_ENFORCED]){
@@ -217,7 +216,7 @@ global with sharing class DSALES_VentaGEXRest {
         return mapCertifieds;
     }
     
-    public static List<String> insertPaymentInfo(DSALES_PaymentInfoWrapperGEX.PaymentGEXRequest paymentInformation, String accountId, Map<String, String> assetsId, String quoteId){
+    public static List<String> insertPaymentInfo(DSALES_PaymentInfoWrapperGEX.PaymentGEXRequest paymentInformation,Map<String, String> assetsId, String quoteId){
         Map<String, String> mapStores = new Map<String, String>();
         String stores = '';
         List<String> ids= new List<String>();
@@ -299,4 +298,5 @@ global with sharing class DSALES_VentaGEXRest {
         venta.pago.idVendedor=venta.idVendedor;
         venta.pago.nombreVendedor=venta.nombreVendedor;              
     }
+
 }

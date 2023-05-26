@@ -1,5 +1,6 @@
 @isTest
 public class DSALES_QuoteSmWrapperTest {
+    
     @isTest 
     static void createQuoteCredito(){
         DSALES_QuoteSmWrapper.QuoteSmRequest requestnpv = new DSALES_QuoteSmWrapper.QuoteSmRequest();
@@ -50,7 +51,7 @@ public class DSALES_QuoteSmWrapperTest {
         requesAInter.plazo = '12';
         
         DSALES_QuoteSmWrapper.respuestaDelProveedor response = new DSALES_QuoteSmWrapper.respuestaDelProveedor();
-        response.code = 12;
+        //response.code = 12;
         response.plazos = new List<DSALES_QuoteSmWrapper.ArmadoMuleSoft>();
         response.success = true;
         
@@ -66,49 +67,19 @@ public class DSALES_QuoteSmWrapperTest {
         responseNpv.listaproducto = new DSALES_QuoteSmWrapper.RespuestaPlazos();
         responseNpv.campanias = new List<DSALES_QuoteSmWrapper.Campanias>();
         
-        DSALES_QuoteSmWrapper.Data dat = new DSALES_QuoteSmWrapper.Data();
-        dat.coveragesArray = new List<DSALES_QuoteSmWrapper.CoveragesArray>();
-        DSALES_QuoteSmWrapper.CoveragesArray cover = new DSALES_QuoteSmWrapper.CoveragesArray();
-        cover.code='2';
-        cover.deductive=123;
-        cover.name='2';
-        cover.sumAssured='2';
-        dat.coveragesArray.add(cover);
-        
-        dat.quoteId = 'nsq';
-        dat.receipts = new List<DSALES_QuoteSmWrapper.Receipt>();
-        dat.insurancePremium = new DSALES_QuoteSmWrapper.InsurancePremium();
-        dat.insurancePremium.commission = 12;
-        dat.insurancePremium.surcharge = 12.43;
-        dat.insurancePremium.tax = 12.43;
-        dat.insurancePremium.right = 12.43;
-        
+        DSALES_QuoteSmWrapper.Data dat = new DSALES_QuoteSmWrapper.Data();       
         DSALES_QuoteSmWrapper.Receipt recep = new DSALES_QuoteSmWrapper.Receipt();
-        recep.numbere=1;
-        recep.commission='12';
-        recep.endDate='10-12';
-        recep.netPremium='12';
-        recep.recharge='12';
-        recep.recharge='12';
-        recep.right='12';
-        recep.startDate='12-12';
-        recep.tax='12';
-        recep.totalPremium='12';
+        recep.numero=1;
+        recep.comision='12';
+        recep.fechaTermino='10-12';
+        //recep.netPremium='12';
+        recep.recargo='12';
+        recep.derechosPoliza='12';
+        recep.fechaInicio='12-12';
+        recep.impuestos='12';
+        //recep.totalPremium='12';
         recep.pagoTotalEfectivo = 'dato prueba';
         recep.pagoMensual = 'dato prueba';
-        
-        DSALES_QuoteSmWrapper.ReceiptEspa recEspanol = new DSALES_QuoteSmWrapper.ReceiptEspa();
-        recEspanol.numero = 1;
-        recEspanol.fechaInicio = 'dato prueba';
-        recEspanol.fechaTermino = 'dato prueba';
-        recEspanol.primaNeta = 'dato prueba';
-        recEspanol.precioVenta = 'dato prueba';
-        recEspanol.derechosPoliza = 'dato prueba';
-        recEspanol.recargos = 'dato prueba';
-        recEspanol.impuestos = 'dato prueba';
-        recEspanol.comision = 'dato prueba';
-        recEspanol.pagoTotalEfectivo = 'dato prueba';
-        recEspanol.pagoMensual = 'dato prueba';
        	
         DSALES_QuoteSmWrapper.RespuestaPlazos plazos = new DSALES_QuoteSmWrapper.RespuestaPlazos();
         plazos.trackingId = 'dato prueba';
@@ -120,6 +91,5 @@ public class DSALES_QuoteSmWrapperTest {
         RestResponse res3 = new RestResponse();
         System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
-    
 
 }

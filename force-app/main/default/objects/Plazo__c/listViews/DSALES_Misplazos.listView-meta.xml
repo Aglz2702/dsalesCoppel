@@ -2,11 +2,11 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DSALES_Misplazos</fullName>
     <columns>NAME</columns>
-    <columns>DSALES_Seguro__c</columns>
+    <columns>dsalesSeguro__c</columns>
     <columns>Dsales_Plazo__c</columns>
     <columns>DSALES_Activo__c</columns>
     <columns>CREATED_DATE</columns>
-    <columns>DSALES_Descripcin__c</columns>
+    <columns>dsalesDescripcion__c</columns>
     <filterScope>Mine</filterScope>
     <label>Mis plazos</label>
 </ListView>

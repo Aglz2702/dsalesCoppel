@@ -16,5 +16,10 @@
         <operation>equals</operation>
         <value>DSALES_InformacionDePago__c.DSALES_PagosdeVentaenNPVSM_c</value>
     </filters>
+    <filters>
+        <field>DSALES_Seguro__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
     <label>Nuevos de esta semana</label>
 </ListView>

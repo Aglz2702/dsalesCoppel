@@ -1,9 +1,9 @@
 @isTest
 public class DSALES_ClasificacionServicio_Test {
-    
+   
     @testSetup
     static void testSetup(){
-        String recordTypeId = Schema.SObjectType.DSALES_Categoria__c.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
+        String recordTypeId = Schema.SObjectType.DSALES_Categoria__c.getRecordTypeInfosByDeveloperName().get('dsalesServicios').getRecordTypeId();
         DSALES_Categoria__c categoria = new DSALES_Categoria__c();
         categoria.Name = 'Test';
         categoria.RecordTypeId=recordTypeId;
@@ -96,7 +96,7 @@ public class DSALES_ClasificacionServicio_Test {
     }
 
     @isTest
-    static void ClasificacionServicio(){
+    static void clasificacionServicio(){
         Product2 idprueba= [Select id from Product2 limit 1];
         DSALES_Categoria__c idcat = [select id from DSALES_Categoria__c limit 1];
         DSALES_SubCategoria__c idsubc= [select id from DSALES_SubCategoria__c limit 1];
@@ -106,7 +106,6 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_TipodeUso__c idtp = [Select id from DSALES_TipodeUso__c limit 1];
         DSALES_ClasificacionServicio.DSALES_ClasificacionServicioWrapper controller = DSALES_ClasificacionServicio.getPickListCategoria();
         controller.listCategorias[0].seleccionado = true;
-        
         
         controller = DSALES_ClasificacionServicio.getPicklistOptionsDependent(JSON.serialize(controller));
         controller.listSubCategorias[0].seleccionado = true;
@@ -132,10 +131,8 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_ClasificacionServicio.getClases(idsubc.id);
         DSALES_ClasificacionServicio.getFamilias(idclass.id);
         DSALES_ClasificacionServicio.getMatriz();
-        //DSALES_ClasificacionServicio.upsertRecord('[{"categoria":"LÍNEA BLANCA","clase":"COOLER","familia":"VENTANA","id":"'+idprueba.id+'","noAplica":true,"nombre":"Extractor de Aire 6p Volteck color Blanco","seguro":false,"servicio":false,"sku":"48671001","subCategoria":"COOLER","tipoServicio":"0"}]');
         DSALES_ClasificacionServicio.RecordTypeId('Garantía Extendida');
         DSALES_ClasificacionServicio.updateMatriz( '["'+idmat.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU12346VG'));
-        //DSALES_ClasificacionServicio.insertListaPrecios(DSALES_ClasificacionServicio.getidservicio('SKU12346VG'),'1','[]');
         DSALES_ClasificacionServicio.insertPocentajeCobro(DSALES_ClasificacionServicio.getidservicio('SKU12346VG'),'{"anio1":"6","anio2":"5","anio3":"9","anio4":3,"anio5":2,"anio6":1}');
         DSALES_ClasificacionServicio.getPickListValuesIntoList1();
         DSALES_ClasificacionServicio.getPickListValuesIntoList2();
@@ -145,11 +142,7 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_ClasificacionServicio.getTipoUso();
         DSALES_ClasificacionServicio.updateCampaigns('["'+idcamp.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
         DSALES_ClasificacionServicio.updateTipoUso('["'+idtp.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
-       // DSALES_ClasificacionServicio.createProductIntan('{valueSelectedtipoProducto: 'Servicio', DSales_Tipo_de_Producto__c: 'Servicio', tipoSeguroServicio: Array(1), ValueClasesSelected: 'a3275000000D7zAAAS', ValuefamiliasSelected: ''}', 'sku8080');
-        System.assertEquals(controller.listServicios.size(), 1);
-        
-        //Modificacion OVG a partir de aqui
-        
+        System.assertEquals(controller.listServicios.size(), 1, 'completado');
     }
 
     @isTest 
@@ -158,6 +151,8 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif());
         DSALES_ClasificacionServicio.getserviciocategorias('test');
         Test.stopTest();
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciocategorias('test').size()), 'la llamada no debe devolver un código 200');
+        
         //System.assertNotEquals(null,result);  
     }   
 
@@ -167,7 +162,7 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif2());
         DSALES_ClasificacionServicio.getserviciosubcategorias('2');
         Test.stopTest();
-        //System.assertNotEquals(null,result);  
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosubcategorias('2').size()), 'la llamada no debe devolver un código 1000');
     }   
 
     @isTest 
@@ -176,7 +171,8 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif3());
         DSALES_ClasificacionServicio.getservicioclase('2','4');
         Test.stopTest();
-        //System.assertNotEquals(null,result);  
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getservicioclase('2','4').size()), 'la llamada no debe devolver un código 1000');
+        
     }  
     @isTest 
     static  void testGetCallout4() {
@@ -184,15 +180,19 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif4());
         DSALES_ClasificacionServicio.getserviciofamilia('2','4','178');
         Test.stopTest();
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciofamilia('2','4','178').size()), 'la llamada no debe devolver un código 1000');
         //System.assertNotEquals(null,result);  
     } 
     @isTest 
     static  void testGetCallout5() {
         Test.startTest(); 
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif5());
-        DSALES_ClasificacionServicio.getserviciosku('2','4','178','2');
+        List<String> listPrueba= new List<String>();
+        listPrueba.add('178');
+        listPrueba.add('2');
+        DSALES_ClasificacionServicio.getserviciosku('2','4', listPrueba);
         Test.stopTest();
-        //System.assertNotEquals(null,result);  
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosku('2','4',listPrueba).size()), 'la llamada no debe devolver un código 1000'); 
     } 
     
     @isTest 
@@ -202,7 +202,7 @@ public class DSALES_ClasificacionServicio_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif6());
         DSALES_ClasificacionServicio.upsertRecord('[{"campanas":false,"id":"'+idproducto+'", "noAplica":false,"noAplicaSeguro":false,"noAplicaServicio":false,"nombre":"NotiPrueba","seguro":false,"servicio":true,"sku":"2122","tipoServicio":"2","tipoUso":false}]');
         Test.stopTest();
-        //System.assertNotEquals(null,result);  
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.upsertRecord('[{"campanas":false,"id":"'+idproducto+'", "noAplica":false,"noAplicaSeguro":false,"noAplicaServicio":false,"nombre":"NotiPrueba","seguro":false,"servicio":true,"sku":"2122","tipoServicio":"2","tipoUso":false}]').size()), 'la llamada no debe devolver un código 1000'); 
     } 
 
 private class DSALES_MockHttpClasif implements HttpCalloutMock {

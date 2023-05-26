@@ -92,8 +92,8 @@ global class DSALES_SiniestroWrapper {
         global String estado { get; set;}
         global String estatus { get; set;}
 
-        global String solucionDevolucion { get; set;}
-        global String motivoDevolucion { get; set;}
+        global String solucion { get; set;}
+        global String comentarioDeEstatus { get; set;}
         global String saldoinsoluto {get;set;}
         global String motivoRechazo {get;set;}
         global String salesforceid { get; set;}       
@@ -102,8 +102,8 @@ global class DSALES_SiniestroWrapper {
         //Informacion de Resumen de pago de poliza
         global String claimpaymentName{get;set;}
         global Double paymentAmount{get;set;}
-        global String paymentType{get;set;}
-        global Date paymentDate{get;set;}
+        global String tipoDePago{get;set;}
+        global Date fechaDePago{get;set;}
     }
 
 }

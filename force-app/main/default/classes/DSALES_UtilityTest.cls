@@ -1,6 +1,5 @@
 @isTest
 public class DSALES_UtilityTest {
-    
     @isTest
     static void getEndpoint(){
         for(DSALES_RutaIntegracion__mdt item: [Select Developername from DSALES_RutaIntegracion__mdt limit 1]){
@@ -23,5 +22,4 @@ public class DSALES_UtilityTest {
             System.assertNotEquals(ex, null,'');
         }
     }
-
 }

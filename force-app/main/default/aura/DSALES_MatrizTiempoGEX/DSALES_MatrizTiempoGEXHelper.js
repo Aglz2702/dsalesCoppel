@@ -30,9 +30,9 @@
     },
     asignarMatriz : function(component){
         var object = component.get("v.data");
-        for(let i=0; i<object.listMatriz.length; i++){
-            for(let j=0; j<object.listMatriz[i].listMatriz.length; j++){
-                object.listMatriz[i].listMatriz[j].seleccionado = false;
+        for(const element of object.listMatriz){
+            for(let j=0; j<element.listMatriz.length; j++){
+                element.listMatriz[j].seleccionado = false;
             }
         }
         var objectShow = {};

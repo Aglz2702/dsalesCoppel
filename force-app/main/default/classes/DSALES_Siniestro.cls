@@ -1,8 +1,9 @@
 @RestResource(urlMapping='/siniestroUpsert/*')
-global class DSALES_Siniestro {
+global with sharing class DSALES_Siniestro {
+
     @HttpPost
     global static DSALES_SiniestroWrapper.siniestroPostResponse siniestroUpsert(){
-        String message = '';
+ String message = '';
         Integer errorCode;
         Boolean succes = false;
         String idSiniestro;
@@ -12,8 +13,7 @@ global class DSALES_Siniestro {
             if(String.isNotBlank(body)){
                 try{
                     data = (DSALES_SiniestroWrapper.SiniestroGet)JSON.deserialize(body, DSALES_SiniestroWrapper.SiniestroGet.class);
-                    //Claim siniestro  = [SELECT Id, Name,ClaimType,ClaimReason,PolicyNumberId,DSALES_Estatus__c FROM Claim WHERE DSALES_SiniestroUid__c =:data.uid];
-                    Integer existe = [SELECT COUNT() FROM Claim WHERE DSALES_SiniestroUid__c =:data.uid];
+                    Integer existe = [SELECT COUNT() FROM Claim WHERE DSALES_SiniestroUid__c =:data.uid WITH SECURITY_ENFORCED];
                     if(existe > 0 && data.uid!=''){
                         idSiniestro = actualizaSiniestro(data);
                         message = 'Siniestro Actualizado';
@@ -40,12 +40,12 @@ global class DSALES_Siniestro {
         DSALES_SiniestroWrapper.siniestroPostResponse response = new DSALES_SiniestroWrapper.siniestroPostResponse();
         response.success = succes;
         response.mensaje = message;
-        response.codigo_error = errorCode;
-        response.id_siniestro = idSiniestro;
+        response.codigoError = errorCode;
+        response.idSiniestro = idSiniestro;
         return response;
     }
     public static String createSiniestro(DSALES_SiniestroWrapper.SiniestroGet data){
-        InsurancePolicy poliza = [SELECT Id, Name FROM InsurancePolicy WHERE Name =:data.poliza.numeroPoliza LIMIT 1];
+        InsurancePolicy poliza = [SELECT Id, Name FROM InsurancePolicy WHERE Name =:data.poliza.numeroPoliza WITH SECURITY_ENFORCED LIMIT 1];
         Claim siniestro = new Claim();
         siniestro.Name = data.reporte;
         siniestro.ClaimType = data.tipoSiniestro;
@@ -55,21 +55,27 @@ global class DSALES_Siniestro {
         siniestro.DSALES_SiniestroUid__c = data.uid;
         siniestro.DSALES_Ano__c=data.vehiculo.anio;
         siniestro.DSALES_Serie__c=data.vehiculo.serie;
-        insert siniestro;
+
+        if(Schema.sObjectType.Claim.isCreateable()) {
+            insert siniestro;
+        }else{
+            System.debug('Permisos insuficientes para insertar');
+        }
+        
         return siniestro.Id;
     }
     public static String actualizaSiniestro(DSALES_SiniestroWrapper.SiniestroGet data){
         List<ClaimPaymentSummary> listaPagos = new List<ClaimPaymentSummary>();
-        Claim siniestro = [SELECT Id,ClaimType,PolicyNumberId,DSALES_Estatus__c,DSALES_SolucionaDevoluci_n__c,DSALES_MotivodeDevolucion__c 
-                           FROM Claim WHERE DSALES_SiniestroUid__c =:data.uid LIMIT 1];
+        Claim siniestro = [SELECT Id,ClaimType,PolicyNumberId,DSALES_Estatus__c,dsalesSolucionaDevolucion__c,DSALES_MotivodeDevolucion__c 
+                           FROM Claim WHERE DSALES_SiniestroUid__c =:data.uid WITH SECURITY_ENFORCED LIMIT 1];
         if(data.estatus =='En requerimiento de información'){
             siniestro.DSALES_Estatus__c = data.estatus;
-            siniestro.DSALES_MotivodeDevolucion__c = data.motivoDevolucion;
-            siniestro.DSALES_SolucionaDevoluci_n__c = data.solucionDevolucion;
+            siniestro.DSALES_MotivodeDevolucion__c = data.comentarioDeEstatus;
+            siniestro.dsalesSolucionaDevolucion__c = data.solucion;
         }
         if(data.estatus =='Pendiente de información'){
             siniestro.DSALES_Estatus__c = data.estatus;
-            siniestro.DSALES_SolucionDevolver__c = data.solucionDevolucion;
+            siniestro.DSALES_SolucionDevolver__c = data.solucion;
         }
         if(data.estatus =='Rechazado'){
             siniestro.DSALES_Estatus__c = data.estatus;
@@ -81,25 +87,25 @@ global class DSALES_Siniestro {
         }
         if(data.estatus =='Pagado'){ 
             for (DSALES_SiniestroWrapper.listaSiniestros aux : data.listSiniestro) {
-                ClaimPaymentSummary SiniestroRPRecord = new ClaimPaymentSummary();
+                ClaimPaymentSummary siniestroRPRecord = new ClaimPaymentSummary();
                 SiniestroRPRecord.ClaimId=siniestro.Id;
-                SiniestroRPRecord.PaymentAmount= aux.payment_amount;
-                SiniestroRPRecord.Name = aux.claimpayment_name;
-                SiniestroRPRecord.DSALES_Tipopago__c= aux.payment_type;
-                SiniestroRPRecord.PaymentDate= aux.payment_date;
-                listaPagos.add(SiniestroRPRecord);
+                SiniestroRPRecord.PaymentAmount= aux.paymentAmount;
+                SiniestroRPRecord.Name = aux.claimpaymentName;
+                SiniestroRPRecord.DSALES_Tipopago__c= aux.tipoDePago;
+                SiniestroRPRecord.PaymentDate= aux.fechaDePago;
+                listaPagos.add(siniestroRPRecord);
             }
-            if(listaPagos!=null){
-                insert listaPagos;
+            if(listaPagos!=null && Schema.sObjectType.ClaimPaymentSummary.isCreateable()){
+                insert listaPagos;  
             }
         }
-        /*if((data.tipoSiniestro=='Robo Total' || data.tipoSiniestro=='Perdida Total') && data.estatus =='Autorizado'){
-InsurancePolicy cancelarPoliza = [SELECT DSALES_Estatusdepliza__c, Substatus FROM InsurancePolicy WHERE Name =:data.poliza.numeroPoliza LIMIT 1];
-//cancelarPoliza.DSALES_Estatusdepliza__c = 'Cancelada';
-cancelarPoliza.Substatus = 'Siniestrada';
-update cancelarPoliza;
-}*/
-        update siniestro;
+        
+        if(Claim.SObjectType.getDescribe().isUpdateable()) {
+            update siniestro;   
+        }else{
+            System.debug('Permisos insuficientes para actualizar');   
+        } 
+        
         return siniestro.Id;
     }
 }

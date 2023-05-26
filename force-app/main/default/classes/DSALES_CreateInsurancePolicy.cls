@@ -25,11 +25,26 @@ public without sharing class DSALES_CreateInsurancePolicy {
             poliza.SourceOpportunityId=oportunidad.Id;
             poliza.SourceQuoteId=cotizacion.Id;
             poliza.dsalesFechaDeEmision__c=Date.today();
+<<<<<<< HEAD
             poliza.dsalesQuoteId__c=partidas.dsalesQuoteId__c;
             poliza.dsalesBeneficiarioPreferente__c =String.valueOf(banderas.beneficiarioPreferente);
             //poliza.DSALES_Opcionpago__c=partidas.dsalesOpcionPago__c;
             if(oliList!= null){
                poliza.DSALES_Cobertura__c= oliList.Product2.Name;
+=======
+            if(partidas.size()==1){
+                if(partidas[0].DSALES_NombreProducto__c==SEGURO_AMP){
+                    poliza.DSALES_Cobertura__c='PLUS';
+                }
+                else if(partidas[0].DSALES_NombreProducto__c==SEGURO_RC){
+                    poliza.DSALES_Cobertura__c='RC';
+                }
+                
+            }
+            else if( partidas.size()==2){
+                poliza.DSALES_Cobertura__c='PLUS';
+                
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
             }
             if(Schema.sObjectType.InsurancePolicy.isCreateable()) {
                 insert poliza;
@@ -48,10 +63,10 @@ public without sharing class DSALES_CreateInsurancePolicy {
     public static void relacionarPolizaAPago(InsurancePolicy poliza){
         try{
             InsurancePolicy polizaActual =[SELECT Id,SourceOpportunityId FROM InsurancePolicy WHERE Id=:poliza.Id WITH SECURITY_ENFORCED];
-            List<DSALES_InformacionDePago__c>  pagos =[SELECT Id,DSALES_Oportunidad__c,DSALES_Poliza__c,DSALES_Seguro__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:polizaActual.SourceOpportunityId WITH SECURITY_ENFORCED ];
+            List<DSALES_InformacionDePago__c>  pagos =[SELECT Id,DSALES_Oportunidad__c,DSALES_Poliza__c,dsalesSeguro__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:polizaActual.SourceOpportunityId WITH SECURITY_ENFORCED ];
             List<DSALES_InformacionDePago__c> listaParaActualizar = new List<DSALES_InformacionDePago__c>();
             for(DSALES_InformacionDePago__c pago:pagos){
-                if(pago.DSALES_Poliza__c==null && pago.DSALES_Seguro__c==true){
+                if(pago.DSALES_Poliza__c==null && pago.dsalesSeguro__c==true){
                     pago.DSALES_Poliza__c=poliza.Id;
                     listaParaActualizar.add(pago);
                 }
@@ -70,9 +85,15 @@ public without sharing class DSALES_CreateInsurancePolicy {
     public static InsurancePolicy agregarDatosDeActivo(InsurancePolicyAsset activo,String idPoliza){
         InsurancePolicy poliza = new InsurancePolicy();
         if(activo!=null){
+<<<<<<< HEAD
             poliza= [SELECT Id,dsalesActivoPolizaSeguro__c,DSALES_Clavevehicular__c,DSALES_Modelo__c,DSALES_Numeroserie__c,	dsalesNumeroDeMotor__c,DSALES_Descripcion__c,
                      DSALES_Servicio__c,DSALES_Placas__c,DSALES_Marca__c,DSALES_Uso__c,DSALES_ClaveAMIS__c
                      FROM InsurancePolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED];
+=======
+        poliza= [SELECT Id,dsalesActivoPolizaSeguro__c,DSALES_Clavevehicular__c,DSALES_Modelo__c,DSALES_Numeroserie__c,dsalesNumeroDeMotor__c,DSALES_Descripcion__c,
+                                DSALES_Servicio__c,DSALES_Placas__c,DSALES_Marca__c,DSALES_Uso__c,DSALES_ClaveAMIS__c
+                                FROM InsurancePolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED];
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
             
             poliza.dsalesActivoPolizaSeguro__c=activo.Id;
             poliza.DSALES_Clavevehicular__c=activo.DSALES_Clavevehicular__c;

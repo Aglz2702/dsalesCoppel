@@ -3,7 +3,7 @@
     <fullName>DSALES_Formatocompactodetienda</fullName>
     <fields>Name</fields>
     <fields>DSales_TiendaID__c</fields>
-    <fields>Dsales_Divisin__c</fields>
+    <fields>dsalesDivision__c</fields>
     <fields>DSALES_Region__c</fields>
     <label>Formato compacto de tienda</label>
 </CompactLayout>

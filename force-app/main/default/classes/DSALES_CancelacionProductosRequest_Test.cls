@@ -19,10 +19,10 @@ public class DSALES_CancelacionProductosRequest_Test {
         insert acc;
         Contact con = new Contact(lastname= 'Test', AccountId= acc.Id, Email= 'johndoeus@salesforce.com');
         insert con;
-        Product2 prodAmp = new Product2(Name ='AMP',DSALES_vehculo__c='23d23d23', StockKeepingUnit='123444',DSales_Tipo_de_Producto__c='Seguro',IsActive=true,RecordTypeId=recordTypeProdSeg);
+        Product2 prodAmp = new Product2(Name ='AMP',dsalesVehiculo__c='23d23d23', StockKeepingUnit='123444',DSales_Tipo_de_Producto__c='Seguro',IsActive=true,RecordTypeId=recordTypeProdSeg);
 		insert prodAmp;
         
-        Product2 prodM = new Product2(Name ='Moto Vento',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='121213',DSales_Tipo_de_Producto__c='Producto',IsActive=true );
+        Product2 prodM = new Product2(Name ='Moto Vento',dsalesVehiculo__c='lasicndsldicsid',StockKeepingUnit='121213',DSales_Tipo_de_Producto__c='Producto',IsActive=true );
 		insert prodM;
         
         Product2 pr= new Product2(Name='Lavadora',StockKeepingUnit='123451',DSales_Tipo_de_Producto__c='Producto',RecordTypeId=recordTypeIdProd,IsActive=true);
@@ -119,7 +119,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         insert cotizacion;
         Quote cotGex = new Quote(OpportunityId=oppGex.Id,Name='GEX',DSales_Tienda__c=t.Id);
         insert cotGex;
-		Plazo__c plazoAMP12 = new Plazo__c(Name='12',Dsales_Plazo__c='12',DSALES_Seguro__c=prodAmp.Id,DSALES_Activo__c=true);
+		    Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,DSALES_Activo__c=true);
         insert plazoAMP12;
         
         QuoteLineItem moto = new QuoteLineItem();
@@ -160,7 +160,7 @@ public class DSALES_CancelacionProductosRequest_Test {
        	update oppGex;
       	InsurancePolicy poliza = new InsurancePolicy(
 				SourceOpportunityId=opp.Id,
-            	DSALES_Estatusdepliza__c='Vigente',
+            	dsalesEstatusPoliza__c='Vigente',
         		NameInsuredId=acc.Id,
                 DSALES_Tipodepersona__c='Física',
             	DSALES_CorreoElectronico__c='saymartinez@deloittemx.com',
@@ -175,12 +175,12 @@ public class DSALES_CancelacionProductosRequest_Test {
                             	InsurancePolicyId=poliza.Id,
             					AssetName='MOTO VENTO',
             					DSALES_InformacionPago__c=pago.Id,
-            					DSALES_Account__c=acc.Id,
-            					Estatus__c='Activo',
+            					dsalesCliente__c=acc.Id,
+            					dsalesEstatus__c='Activo',
             					DSALES_Motoexterna__c=true
         );
         insert activo;
-        poliza.DSALES_Activodeplizadeseguro__c=activo.Id;
+        poliza.dsalesActivoPolizaSeguro__c=activo.Id;
         update poliza;
         
     }
@@ -295,8 +295,8 @@ public class DSALES_CancelacionProductosRequest_Test {
     @isTest
     public static void polizaCancelada(){
 		DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:'11111111111111111110'];
-        InsurancePolicy poliza=[SELECT Id,DSALES_Estatusdepliza__c,SourceOpportunityId,DSALES_Activodeplizadeseguro__c FROM InsurancePolicy WHERE Name='1234567890'];   
-        poliza.DSALES_Estatusdepliza__c='Cancelada';
+        InsurancePolicy poliza=[SELECT Id,dsalesEstatusPoliza__c,SourceOpportunityId,dsalesActivoPolizaSeguro__c FROM InsurancePolicy WHERE Name='1234567890'];   
+        poliza.dsalesEstatusPoliza__c='Cancelada';
         update poliza;
         DSALES_CancelacionProductosRequest.cancelarPartidaDeSeguro(poliza);
         System.assertNotEquals(null, poliza, 'El registro no debe estar en null');

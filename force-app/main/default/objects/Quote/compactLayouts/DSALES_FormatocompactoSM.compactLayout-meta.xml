@@ -4,10 +4,10 @@
     <fields>QuoteNumber</fields>
     <fields>DSales_Vendedor__c</fields>
     <fields>DSales_Tienda__c</fields>
-    <fields>DSALES_Tipodeveihculo__c</fields>
+    <fields>dsalesTipoDeVehiculo__c</fields>
     <fields>DSALES_TipoUso__c</fields>
-    <fields>Lista_negra__c</fields>
-    <fields>DSALES_IDdelvehculo__c</fields>
+    <fields>dsalesListaNegra__c</fields>
+    <fields>dsalesIdDeVehiculo__c</fields>
     <fields>DSALES_Fechadecreacionpresupuesto__c</fields>
     <label>Formato compacto SM</label>
 </CompactLayout>

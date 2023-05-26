@@ -13,7 +13,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_Telfono__c</field>
+                <field>dsalesTelefono__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -29,15 +29,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Nombre_GerentedeTiendadeZona__c</field>
+                <field>dsalesNombreGerenteDeTiendaDeZona__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_N_mero_Celular__c</field>
+                <field>dsalesNumeroCelular__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Gerente_de_Tienda_de_Zona__c</field>
+                <field>dsalesEmailGerenteDeTiendaDeZona__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -45,7 +45,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_A_o_de_ltima_remodelaci_n__c</field>
+                <field>dsalesAnoDeUltimaRemodelacion__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -61,7 +61,8 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_M_dulo_AFORE__c</field>
+                <field>dsalesModuloAfore__c
+</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -69,7 +70,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Tel_fono_TiendaBase__c</field>
+                <field>dsalesTelefonoTiendaBase__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -83,7 +84,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Dsales_Divisin__c</field>
+                <field>dsalesDivision__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -105,13 +106,13 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_Direccin__c</field>
+                <field>dsalesDireccion__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_Cdigopostal__c</field>
+                <field>dsalesCodigoPostal__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

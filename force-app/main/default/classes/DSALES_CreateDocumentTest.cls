@@ -30,11 +30,13 @@ public class DSALES_CreateDocumentTest {
     
     @isTest static void testCrearDocumento() {
         Claim siniestro = [SELECT Id, DSALES_SiniestroUid__c FROM Claim WHERE DSALES_SiniestroUid__c = 'iszxxzxaxa'];
-		ContentVersion dc = DSALES_CreateDocument.CreaDocument('sdsfsfsf', 'Prueba.pdf');
+		ContentVersion dc = DSALES_CreateDocument.creaDocument('sdsfsfsf', 'Prueba.pdf');
         insert dc;
         
-        DSALES_CreateDocument.Crealink(dc, siniestro.Id);
-		      
+        DSALES_CreateDocument.crealink(dc, siniestro.Id);
+		System.assertEquals(1, [SELECT COUNT() FROM ContentVersion WHERE Id = :dc.Id], 'El objeto ContentVersion no se ha insertado correctamente.');
+
+      
     }
 
 }

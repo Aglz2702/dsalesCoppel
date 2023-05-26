@@ -54,9 +54,9 @@ global with sharing class DSALES_CancelacionProductosRequest {
                 String estatus = mapaProductos.get(oli.Id);
                 oli.DSALES_Estatus__c = estatus;
                 if(activo!=null && idPaOp!=''){
-                    activo.Estatus__c=estatus;
+                    activo.dsalesEstatus__c=estatus;
                     if(oli.Id==idPaOp){
-                        activo.Estatus__c=estatus;
+                        activo.dsalesEstatus__c=estatus;
                     }  
                 }
             }
@@ -92,7 +92,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
         String recordTypeIdMoto = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
         String recordTypeIdGex = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_Pagos_en_NPV').getRecordTypeId();
         if(pago.RecordTypeId==recordTypeIdGex){
-            DSALES_CertificadoWrapperRequest.putCertificado(datos.idUniversal,listaProductos,datos.estatus,datos.motivoCancelacion);
+           // DSALES_CertificadoWrapperRequest.putCertificado(datos.idUniversal,listaProductos,datos.estatus,datos.motivoCancelacion);
         }else if(pago!=null && pago.RecordTypeId==recordTypeIdMoto){
             actualizarOportunidades(listaProductos);
         }
@@ -132,14 +132,14 @@ global with sharing class DSALES_CancelacionProductosRequest {
             for(DSALES_ReembolsoWrapper.ReembolsoRequest rmb:datos.listaReembolso){
                 rmb.numeroCancelacion=cancelacion.Id;
             }
-            DSALES_ReembolsoWrapperRequest.insertReembolso(datos.listaReembolso);
+            //DSALES_ReembolsoWrapperRequest.insertReembolso(datos.listaReembolso);
         }
         return cancelacion.Id;
     }
     
     public static void cancelarPartidaDeSeguro(InsurancePolicy poliza){
         InsurancePolicyAsset activo = new InsurancePolicyAsset();
-        if(poliza.DSALES_Estatusdepliza__c ==ESTATUS_POLIZA ){
+        if(poliza.dsalesEstatusPoliza__c ==ESTATUS_POLIZA ){
             List<OpportunityLineItem> partidasActualizadas = new List<OpportunityLineItem>();
             Set<Id> oliIds = new Set<Id>(); 
             

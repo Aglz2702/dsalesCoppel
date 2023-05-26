@@ -33,7 +33,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Tipodecapana__c</field>
+                <field>dsalesTipoCampana__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

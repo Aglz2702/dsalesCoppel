@@ -15,7 +15,7 @@ public class DSALES_EndosoWrapperRequest_Test {
         poliza.DSALES_NombredelAsegurado__c = 'John Doe';
         poliza.DSALES_Placas__c = 'ABC123';
         poliza.DSALES_Numeroserie__c = '1234567890';
-        poliza.DSALES_Nmerodemotor__c = '0987654321';
+        poliza.dsalesNumeroDeMotor__c = '0987654321';
         insert poliza;
         
         DSALES_Endoso__c endoso = new DSALES_Endoso__c();
@@ -98,7 +98,7 @@ public class DSALES_EndosoWrapperRequest_Test {
                                    DSALES_MotivoRechazo__c,DSALES_MotivoDevolucion__c, DSALES_SolucionDevolucion__c FROM DSALES_Endoso__c WHERE DSALES_Estatus__c = 'Nuevo' LIMIT 1];
         
         InsurancePolicy poliza = [SELECT Id, DSALES_TelefonoContacto__c, DSALES_CorreoElectronico__c,DSALES_NombredelAsegurado__c, DSALES_Placas__c, DSALES_Numeroserie__c,
-                                  DSALES_Nmerodemotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=: endoso.DSALES_Poliza__c];
+                                  dsalesNumeroDeMotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=: endoso.DSALES_Poliza__c];
         
         // Test update with 'En tramite' status
         DSALES_EndorsementWrapper.EndorsementRequest request = new DSALES_EndorsementWrapper.EndorsementRequest();
@@ -111,8 +111,8 @@ public class DSALES_EndosoWrapperRequest_Test {
         DSALES_EndorsementWrapper.EndorsementRequest requestReq = new DSALES_EndorsementWrapper.EndorsementRequest();
         requestReq.uid = 'testUid';
         requestReq.estatus = 'Requerimiento de Información';
-        requestReq.motivoDevolucion = 'Test Motivo Devolucion';
-        requestReq.solucionDevolucion = 'Test Solucion Devolucion';
+        requestReq.estatusComentario = 'Test Motivo Devolucion';
+        requestReq.solucion = 'Test Solucion Devolucion';
         DSALES_EndorsementWrapper.EndorsementResponse responseRes = DSALES_EndosoWrapperRequestHelper.updateEndoso(requestReq);
         System.assertEquals(true, responseRes.success, 'El registro se ha creado correctamente');      
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MotivoDevolucion__c, DSALES_SolucionDevolucion__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
@@ -124,7 +124,7 @@ public class DSALES_EndosoWrapperRequest_Test {
         DSALES_EndorsementWrapper.EndorsementRequest requestRech = new DSALES_EndorsementWrapper.EndorsementRequest();
         requestRech.uid = 'testUid';
         requestRech.estatus = 'Rechazado';
-        requestRech.motivoRechazo = 'Test Motivo Rechazo';
+        requestRech.estatusComentario = 'Test Motivo Rechazo';
         DSALES_EndorsementWrapper.EndorsementResponse responseRech = DSALES_EndosoWrapperRequestHelper.updateEndoso(requestRech);
         System.assertEquals(true, responseRech.success, 'El registro se ha creado correctamente');
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MotivoRechazo__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
@@ -135,7 +135,7 @@ public class DSALES_EndosoWrapperRequest_Test {
         DSALES_EndorsementWrapper.EndorsementRequest requestAuto = new DSALES_EndorsementWrapper.EndorsementRequest();
         requestAuto.uid = 'testUid';
         requestAuto.estatus = 'Autorizado';
-        requestAuto.montoDevolver = 4.55;
+        requestAuto.montoDevolucion = 4.55;
         DSALES_EndosoWrapperRequestHelper.updateEndoso(requestAuto);
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MontoaDevolver__c FROM DSALES_Endoso__c WHERE Id =: endoso.Id];
         System.assertEquals('Autorizado', endoso.DSALES_Estatus__c, 'El estado de endoso es Autorizado');
@@ -184,8 +184,8 @@ public class DSALES_EndosoWrapperRequest_Test {
         endosos.tipoEndoso = 'Cambio de número de motor';
         endosos.datos.valor = 'TVS100';
         DSALES_EndosoWrapperRequestHelper.updatePolicy(endosos);
-        poliza = [SELECT DSALES_Nmerodemotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id =: poliza.Id LIMIT 1];
-        System.assertEquals('TVS100', poliza.DSALES_Nmerodemotor__c, 'Póliza de seguro Nmerodemotor es TVS100');
+        poliza = [SELECT dsalesNumeroDeMotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id =: poliza.Id LIMIT 1];
+        System.assertEquals('TVS100', poliza.dsalesNumeroDeMotor__c, 'Póliza de seguro Nmerodemotor es TVS100');
         System.assertEquals('Endosada', poliza.ChangeSubtype, 'ChangeSubtype de póliza de seguro es Endosada');
         
         

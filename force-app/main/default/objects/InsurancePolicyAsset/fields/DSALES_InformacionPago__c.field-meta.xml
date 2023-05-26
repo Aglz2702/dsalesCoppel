@@ -9,7 +9,7 @@
         <filterItems>
             <field>DSALES_InformacionDePago__c.DSALES_Cliente__c</field>
             <operation>equals</operation>
-            <valueField>$Source.DSALES_Account__c</valueField>
+            <valueField>$Source.dsalesCliente__c</valueField>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>

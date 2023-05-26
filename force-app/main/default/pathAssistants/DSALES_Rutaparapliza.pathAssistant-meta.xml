@@ -2,7 +2,7 @@
 <PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
     <active>true</active>
     <entityName>InsurancePolicy</entityName>
-    <fieldName>DSALES_Estatusdepliza__c</fieldName>
+    <fieldName>dsalesEstatusPoliza__c</fieldName>
     <masterLabel>Ruta para póliza</masterLabel>
     <recordTypeName>__MASTER__</recordTypeName>
 </PathAssistant>

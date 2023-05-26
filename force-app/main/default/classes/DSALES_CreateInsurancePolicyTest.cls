@@ -70,21 +70,28 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         Tienda__c t = new Tienda__c();
         t.DSales_TiendaID__c =  '1';
         insert t;
-        DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=oportunidad.id,DSALES_Cliente__c=acc.Id,DSALES_Seguro__c=true);
+        DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=oportunidad.id,DSALES_Cliente__c=acc.Id,dsalesSeguro__c=true);
         insert pago;
         Quote cotizacion = new Quote(opportunityId=oportunidad.Id,Name='test',DSales_Tienda__c=t.Id);
         insert cotizacion;
-        DSALES_TipodeUso__c tipoUso = new DSALES_TipodeUso__c(Name='Comercial');
+        DSALES_TipoUso__c tipoUso = new DSALES_TipoUso__c(Name='Comercial');
         insert tipoUso;
         DSALES_Tipodevehculo__c tipovehiculo = new DSALES_Tipodevehculo__c(Name='Moto');
         insert tipovehiculo;
         Plazo__c plazoRC12 = new Plazo__c();
         plazoRC12.Name='12';
         plazoRC12.dsalesSeguro__c=prodRc.Id;
+<<<<<<< HEAD
         plazoRC12.Dsales_Plazo__c='12';
         plazoRC12.DSALES_Activo__c=true;
         insert plazoRC12;
         Plazo__c plazoAMP12 = new Plazo__c(Name='12',Dsales_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,DSALES_Activo__c=true);
+=======
+        plazoRC12.DSALES_Plazo__c='12';
+        plazoRC12.DSALES_Activo__c=true;
+        insert plazoRC12;
+        Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,DSALES_Activo__c=true);
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
         insert plazoAMP12;
         QuoteLineItem moto = new QuoteLineItem();
         moto.QuoteId = cotizacion.Id;
@@ -130,6 +137,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
     @isTest
     public static void prepolizaTest(){
         DSALES_InformaciondePago__c pago = [SELECT Id,DSALES_Oportunidad__c FROM DSALES_InformaciondePago__c LIMIT 1];
+<<<<<<< HEAD
         DSALES_VentaSM.DatosParticipante part = new DSALES_VentaSM.DatosParticipante();
         part.figura='Conductor';
         part.nombre='Sayra';
@@ -156,6 +164,9 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         banderas.enviaContratante=false;
         banderas.beneficiarioPreferente=true;
         DSALES_CreateInsurancePolicy.crearPoliza(listaPart,banderas);
+=======
+        DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
         InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
 		DSALES_CreateInsurancePolicy.relacionarPolizaAPago(poliza);
         InsurancePolicyAsset activo = new InsurancePolicyAsset(
@@ -182,6 +193,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
     public static void estatusTest(){
         DSALES_InformaciondePago__c pago = [SELECT Id,DSALES_Oportunidad__c FROM DSALES_InformaciondePago__c LIMIT 1];
         Test.startTest();
+<<<<<<< HEAD
        DSALES_VentaSM.DatosParticipante part = new DSALES_VentaSM.DatosParticipante();
         part.figura='Conductor';
         part.nombre='Sayra';
@@ -208,6 +220,9 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         banderas.enviaContratante=false;
         banderas.beneficiarioPreferente=true;
         DSALES_CreateInsurancePolicy.crearPoliza(listaPart,banderas);
+=======
+        DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
         InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
 		poliza.ExpirationDate=DateTime.now();
         update poliza;

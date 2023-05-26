@@ -1,6 +1,5 @@
 @isTest 
 public class DSALES_QuoteGexWrapperRequestTest{
-    
    @testSetup
     static void setUp(){
         String tipoProducto = 'Servicio';

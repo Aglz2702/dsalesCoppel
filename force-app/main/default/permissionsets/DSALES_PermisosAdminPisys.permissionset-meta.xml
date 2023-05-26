@@ -13,19 +13,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_AccountWrapperRequesCredit_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_AccountWrapperReques_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_AccountWrapperRequest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_AccountWrapperRequestCredit</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -220,10 +212,7 @@
         <apexClass>DSALES_InformacionPagoHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_InsurancePolicyAssets</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
+    
     <classAccesses>
         <apexClass>DSALES_InsurancePolicyAssetsHandler</apexClass>
         <enabled>true</enabled>

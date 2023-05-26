@@ -13,7 +13,7 @@ public class DSALES_siniestroTest {
         InsurancePolicy poli = new InsurancePolicy();
         poli.NameInsuredId=acc.Id;
         poli.DSALES_CorreoElectronico__c='asa@as.co';
-        poli.DSALES_Estatusdepliza__c = 'Vigente';
+        poli.dsalesEstatusPoliza__c = 'Vigente';
         poli.Name = '2345';
         insert poli;
         
@@ -55,6 +55,6 @@ public class DSALES_siniestroTest {
         req2.requestBody = Blob.valueof(body);
         DSALES_SiniestroWrapper.siniestroPostResponse response3 = DSALES_Siniestro.siniestroUpsert();
         Test.stopTest();
+        System.assertNotEquals('Test', body, 'La llamada no debe ser igual');
     }
-
 }

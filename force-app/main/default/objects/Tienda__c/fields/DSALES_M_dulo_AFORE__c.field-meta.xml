@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSALES_M_dulo_AFORE__c</fullName>
+    <fullName>dsalesModuloAfore__c
+</fullName>
     <defaultValue>false</defaultValue>
     <description>Indica las tiendas que cuentan con este servicio</description>
     <externalId>false</externalId>

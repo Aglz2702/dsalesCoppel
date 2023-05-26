@@ -46,34 +46,40 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         {
             if(!String.isEmpty(idUniversal))
             {
-                if(pago.size()>0)
-                {
-                Integer contador =0;
-                List<OpportunityLineItem> productoOpor= [SELECT DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c  WITH SECURITY_ENFORCED]; 
-                List<DSALES_Certificado__c> certificados= [SELECT DSALES_Estatus__c FROM DSALES_Certificado__c WHERE
-                                                          DSALES_InformacionDePago__c=:pago[0].Id WITH SECURITY_ENFORCED];
-                List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
-            	
-                for(OpportunityLineItem oportunidad:productoOpor)
-                {
-                    oportunidad.DSALES_Estatus__c=estatusGlobal;
-                    listaOportunidades.add(oportunidad);
-                    if(certificados.size()>contador)
+                switch on pago.size() {
+                    when 0  {
+                       System.debug('El size es 0');
+                    }
+                    when else {
+                        Integer contador =0;
+                        List<OpportunityLineItem> productoOpor= [SELECT DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c  WITH SECURITY_ENFORCED]; 
+                        List<DSALES_Certificado__c> certificados= [SELECT DSALES_Estatus__c FROM DSALES_Certificado__c WHERE
+                                                                  DSALES_InformacionDePago__c=:pago[0].Id WITH SECURITY_ENFORCED];
+                        List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
+                        
+                        for(OpportunityLineItem oportunidad:productoOpor)
                         {
-                            certificados[contador].DSALES_Estatus__c =estatusGlobal;
-                            certificados[contador].DSales_Motivo__c=motivoGlobal;
-                            listaCertificadosModificar.add(certificados[contador]);
+                            oportunidad.DSALES_Estatus__c=estatusGlobal;
+                            listaOportunidades.add(oportunidad);
+                            if(certificados.size()>contador)
+                                {
+                                    certificados[contador].DSALES_Estatus__c =estatusGlobal;
+                                    certificados[contador].DSales_Motivo__c=motivoGlobal;
+                                    listaCertificadosModificar.add(certificados[contador]);
+                                }
+                           
+                             if(productos.size()>contador)
+                                {
+                                    productos[contador].Status =estatusGlobal;
+                                     productos[contador].DSALES_Motivo__c=motivoGlobal;
+                                    listaAssetsModificar.add(productos[contador]);
+                                }
+                            contador++;
                         }
-                   
-                     if(productos.size()>contador)
-                        {
-                            productos[contador].Status =estatusGlobal;
-                             productos[contador].DSALES_Motivo__c=motivoGlobal;
-                            listaAssetsModificar.add(productos[contador]);
-                        }
-                    contador++;
+                        
+                    }
                 }
-            }
+              
                 }
         }
         else
@@ -198,7 +204,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             
             certificadoRecord.DSALES_Ticket__c=certificado.idFactura;
             certificadoRecord.DSALES_Tienda__c=certificado.claveTienda;
-            certificadoRecord.DSALES_TiendaId__c=certificado.idTienda;
+            certificadoRecord.dsales_TiendaID__c=certificado.idTienda;
             certificadoRecord.DSALES_Caja_GEX__c=certificado.numeroCajaCoppel;
             certificadoRecord.DSALES_Numero_de_Vendedor__c=certificado.idVendedor;
             certificadoRecord.DSALES_Nombre_Vendedor__c=certificado.nombreVendedor;	

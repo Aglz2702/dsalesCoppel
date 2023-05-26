@@ -55,8 +55,11 @@
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <layoutColumns/>
+<<<<<<< HEAD
         <layoutColumns/>
         <layoutColumns/>
+=======
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
         <style>CustomLinks</style>
     </layoutSections>
     <showEmailCheckbox>false</showEmailCheckbox>

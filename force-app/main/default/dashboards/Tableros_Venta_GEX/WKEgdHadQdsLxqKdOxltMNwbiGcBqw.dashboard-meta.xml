@@ -165,7 +165,7 @@
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
                 <groupingColumn>Quote.DSALES_Regioon__c</groupingColumn>
-                <groupingColumn>FK_$Tienda__c.DSALES_Nombre_GerentedeTiendadeZona__c</groupingColumn>
+                <groupingColumn>FK_$Tienda__c.dsalesNombreGerenteDeTiendaDeZona__c</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>

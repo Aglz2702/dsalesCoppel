@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DSales_DivisionG__c</fullName>
     <externalId>false</externalId>
-    <formula>TEXT( DSales_Tienda__r.Dsales_Divisin__c )</formula>
+    <formula>TEXT( DSales_Tienda__r.dsalesDivision__c )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>División</label>
     <required>false</required>

@@ -19,7 +19,7 @@ public without sharing class DSALES_EndosoWrapperRequestHelper{
 **********************************************************************************************************************************************************************/    
 
 public static DSALES_EndorsementWrapper.EndorsementResponse upsertEndoso(DSALES_EndorsementWrapper.EndorsementRequest endosos){
-    if(endosos.estatus=='Nuevo'){
+    if(endosos.estatus=='Recibido'){
         DSALES_EndorsementWrapper.EndorsementResponse responsePayload = DSALES_EndosoWrapperRequestHelper.insertEndoso(endosos);
         return responsePayload;
     }
@@ -42,6 +42,7 @@ public static DSALES_EndorsementWrapper.EndorsementResponse insertEndoso(DSALES_
     Boolean success = false;
     String message = '';
     String code = '';
+    String mensaje = '';
     DSALES_Endoso__c endosoRecord = new DSALES_Endoso__c();
     InsurancePolicy poliza = new InsurancePolicy();
     try{
@@ -52,11 +53,12 @@ public static DSALES_EndorsementWrapper.EndorsementResponse insertEndoso(DSALES_
         endosoRecord.DSALES_Tipodedocumento__c = endosos.tipoDocumento;
         endosoRecord.DSALES_Tipodedato__c = endosos.datos.tipoDato;
         endosoRecord.DSALES_Valor__c = endosos.datos.valor;
-        endosoRecord.DSALES_Estatus__c = endosos.estatus;
-        endosoRecord.DSALES_MotivoDevolucion__c = endosos.motivoDevolucion;
-        endosoRecord.DSALES_SolucionDevolucion__c = endosos.solucionDevolucion;
-        endosoRecord.DSALES_MotivoRechazo__c = endosos.motivoRechazo;
-        endosoRecord.DSALES_MontoaDevolver__c = endosos.montoDevolver;
+        endosoRecord.DSALES_Estatus__c = 'Nuevo';
+        endosoRecord.dsalesFechaCreacion__c = endosos.fechaEndoso;
+        endosoRecord.DSALES_MotivoDevolucion__c = endosos.estatusComentario;
+        endosoRecord.DSALES_SolucionDevolucion__c = endosos.solucion;
+        endosoRecord.DSALES_MotivoRechazo__c = endosos.estatusComentario;
+        endosoRecord.DSALES_MontoaDevolver__c = endosos.montoDevolucion;
         if(Schema.sObjectType.DSALES_Endoso__c.isCreateable()){
             insert endosoRecord;           
             }
@@ -66,6 +68,7 @@ public static DSALES_EndorsementWrapper.EndorsementResponse insertEndoso(DSALES_
         success = true;
         message = '';
         code = '';
+        mensaje = 'Endoso creado correctamente';
         
     }catch(Exception e){
         success = false;
@@ -74,6 +77,7 @@ public static DSALES_EndorsementWrapper.EndorsementResponse insertEndoso(DSALES_
     }
     
     DSALES_EndorsementWrapper.EndorsementResponse responsePayload = new DSALES_EndorsementWrapper.EndorsementResponse();
+    responsePayload.mensaje = mensaje;
     responsePayload.success = success;
     responsePayload.mensajeError = message;
     responsePayload.codigoError = code;
@@ -95,13 +99,14 @@ public static DSALES_EndorsementWrapper.EndorsementResponse updateEndoso(DSALES_
     Boolean success = false;
     String message = '';
     String code = '';
+    String mensaje = '';
     DSALES_Endoso__c endosoRecord = new DSALES_Endoso__c();
     InsurancePolicy poliza = new InsurancePolicy();        
     try{
         endosoRecord = [SELECT Id, DSALES_Poliza__c, DSALES_Poliza__r.Name, DSALES_uid__c FROM DSALES_Endoso__c WHERE DSALES_uid__c=: endosos.uid WITH SECURITY_ENFORCED LIMIT 1];
         switch on endosos.estatus{
-            when 'En tramite'{
-                endosoRecord.DSALES_Estatus__c = endosos.estatus;
+            when 'En proceso'{
+                endosoRecord.DSALES_Estatus__c = 'En tramite';
                 if (DSALES_Endoso__c.SObjectType.getDescribe().isUpdateable()) {
                     upsert endosoRecord;
                     } 
@@ -109,20 +114,20 @@ public static DSALES_EndorsementWrapper.EndorsementResponse updateEndoso(DSALES_
                     System.debug('Permisos insuficientes para actualizar');
                     }
             }
-            when 'Requerimiento de Información'{
-                endosoRecord.DSALES_Estatus__c = endosos.estatus;
-                endosoRecord.DSALES_MotivoDevolucion__c = endosos.motivoDevolucion;
-                endosoRecord.DSALES_SolucionDevolucion__c = endosos.solucionDevolucion;
+            when 'Pendiente de información'{
+                endosoRecord.DSALES_Estatus__c = 'Requerimiento de Información';
+                endosoRecord.DSALES_MotivoDevolucion__c = endosos.estatusComentario;
+                endosoRecord.DSALES_SolucionDevolucion__c = endosos.solucion;
                 upsert endosoRecord;
             }
-            when 'Rechazado'{
-                endosoRecord.DSALES_Estatus__c = endosos.estatus;
-                endosoRecord.DSALES_MotivoRechazo__c = endosos.motivoRechazo;
+            when 'Rechazo'{
+                endosoRecord.DSALES_Estatus__c = 'Rechazado';
+                endosoRecord.DSALES_MotivoRechazo__c = endosos.estatusComentario;
                 upsert endosoRecord;
             }
-            when 'Autorizado'{
-                endosoRecord.DSALES_Estatus__c = endosos.estatus;
-                endosoRecord.DSALES_MontoaDevolver__c = endosos.montoDevolver;
+            when 'Finalizado'{
+                endosoRecord.DSALES_Estatus__c = 'Autorizado';
+                endosoRecord.DSALES_MontoaDevolver__c = endosos.montoDevolucion;
                 upsert endosoRecord;
                 updatePolicy(endosos);                    
                 
@@ -131,6 +136,7 @@ public static DSALES_EndorsementWrapper.EndorsementResponse updateEndoso(DSALES_
         success = true;
         message = '';
         code = '';
+        mensaje = 'Endoso actualizado correctamente';
     }catch(Exception e){
         success = false;
         message = DSALES_Utility.INTERNAL_ERROR_MSJ+' '+ e.getLineNumber()+' '+e.getCause()+' '+e.getMessage();
@@ -138,6 +144,7 @@ public static DSALES_EndorsementWrapper.EndorsementResponse updateEndoso(DSALES_
     }
     
     DSALES_EndorsementWrapper.EndorsementResponse responsePayload = new DSALES_EndorsementWrapper.EndorsementResponse();
+    responsePayload.mensaje = mensaje;
     responsePayload.success = success;
     responsePayload.mensajeError = message;
     responsePayload.codigoError = code;
@@ -160,7 +167,7 @@ public static void updatePolicy(DSALES_EndorsementWrapper.EndorsementRequest end
     try{
         DSALES_Endoso__c endosoRecord = [SELECT Id, DSALES_Poliza__c, DSALES_Poliza__r.Name, DSALES_uid__c FROM DSALES_Endoso__c WHERE DSALES_uid__c=: endosos.uid WITH SECURITY_ENFORCED LIMIT 1];
         InsurancePolicy poliza = [SELECT Id, DSALES_TelefonoContacto__c, DSALES_CorreoElectronico__c,DSALES_NombredelAsegurado__c, DSALES_Placas__c, DSALES_Numeroserie__c,
-                                    DSALES_Nmerodemotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=: endosoRecord.DSALES_Poliza__c WITH SECURITY_ENFORCED LIMIT 1];
+                                    dsalesNumeroDeMotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=: endosoRecord.DSALES_Poliza__c WITH SECURITY_ENFORCED LIMIT 1];
         switch on endosos.tipoEndoso{
             when 'Actualización de correo electrónico'{
                 poliza.DSALES_CorreoElectronico__c = endosos.datos.valor;
@@ -194,7 +201,7 @@ public static void updatePolicy(DSALES_EndorsementWrapper.EndorsementRequest end
                 update poliza; 
             }
             when 'Cambio de número de motor'{
-                poliza.DSALES_Nmerodemotor__c = endosos.datos.valor;
+                poliza.dsalesNumeroDeMotor__c = endosos.datos.valor;
                 poliza.ChangeSubtype = 'Endosada';
                 update poliza; 
             }

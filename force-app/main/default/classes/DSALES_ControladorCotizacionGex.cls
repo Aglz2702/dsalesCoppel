@@ -1,4 +1,4 @@
-public class DSALES_ControladorCotizacionGex {
+public without sharing class DSALES_ControladorCotizacionGex {
     public  String html{get;set;}
     public  String html2{get;set;}
     public  String email{get;set;}
@@ -7,18 +7,18 @@ public class DSALES_ControladorCotizacionGex {
     private static final String NOMBRE_OBJETO = 'Quote';
     private static final String NOMBRE_OBJETO2 = 'QuoteLineItem'; 
     private static final String NOMBRE_PLANTILLA = 'Cotizacion Gex';
-    private static final String NOMBRE_Seguro= 'Cotizacion SG';
-    private static final String NOMBRE_Seguro2= 'DSALES_EnvioCotizacionSm' ;
+    private static final String NOMBRE_SEGURO= 'Cotizacion SG';
+    private static final String NOMBRE_SEGURO2= 'DSALES_EnvioCotizacionSm' ;
     private static final String NOMBRE_DATE = 'DATE';
     private static final String NOMBRE_DOUBLE = 'DOUBLE';
-    private static final String myfilename = 'Cotizacion';
+    private static final String MYFILENAME = 'Cotizacion';
     private static final String SEGURO_AMP='AMP';
     private static final String SEGURO_RC='RC';
     public DSALES_ControladorCotizacionGex(){
         //Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=hey');
         String recordId = ApexPages.currentPage().getParameters().get('quoteId');
-        Quote recordCoti=[SELECT Id, RecordTypeId FROM Quote Where Id=:recordId];
-        RECORDTYPE motos= [SELECT Id, Name FROM RECORDTYPE WHERE Id=:recordCoti.RecordTypeId ];
+        Quote recordCoti=[SELECT Id, RecordTypeId FROM Quote Where Id=:recordId WITH SECURITY_ENFORCED];
+        RECORDTYPE motos= [SELECT Id, Name FROM RECORDTYPE WHERE Id=:recordCoti.RecordTypeId WITH SECURITY_ENFORCED];
         System.debug('recordType: '+motos);
         //html = [Select Id, HtmlValue, Subject from EmailTemplate Where DeveloperName = :NOMBRE_PLANTILLA].HtmlValue;
         If(motos.name=='Venta de Garantía Extendida')
@@ -28,20 +28,20 @@ public class DSALES_ControladorCotizacionGex {
         }
         else if(motos.name=='Venta de Seguro de Motos')
         {
-            List<QuoteLineItem> partidas =[SELECT Id FROM QuoteLineItem WHERE QuoteId=:recordCoti.Id];
+            List<QuoteLineItem> partidas =[SELECT Id FROM QuoteLineItem WHERE QuoteId=:recordCoti.Id WITH SECURITY_ENFORCED];
             if(partidas!=null && partidas.size()==2){
-                html = [select Id, DSALES_Plantilla__c  from DSALES_Generador__c Where Name = :NOMBRE_Seguro2 LIMIT 1].DSALES_Plantilla__c;
+                html = [select Id, DSALES_Plantilla__c  from DSALES_Generador__c Where Name = :NOMBRE_SEGURO2 LIMIT 1].DSALES_Plantilla__c;
                 System.debug('+++++plantilla+++++++++: '+html);
-                replaceSecondPlantilla(NOMBRE_Seguro2, recordId);
+                replaceSecondPlantilla(NOMBRE_SEGURO2, recordId);
             }
             else if(partidas!=null && partidas.size()==3){
-                html = [select Id, DSALES_Plantilla__c  from DSALES_Generador__c Where Name = :NOMBRE_Seguro LIMIT 1].DSALES_Plantilla__c;
+                html = [select Id, DSALES_Plantilla__c  from DSALES_Generador__c Where Name = :NOMBRE_SEGURO LIMIT 1].DSALES_Plantilla__c;
                 System.debug('+++++plantilla+++++++++: '+html);
-                replaceHtml(NOMBRE_Seguro,recordId);
+                replaceHtml(NOMBRE_SEGURO,recordId);
             }
            
           // System.debug('html:'+html);
-            //replaceHtml(NOMBRE_Seguro,recordId);
+            //replaceHtml(NOMBRE_SEGURO,recordId);
            // 
            // System.debug('html2:'+html2);
             //
@@ -52,33 +52,33 @@ public class DSALES_ControladorCotizacionGex {
     }
     
     
-    private static Map<String, String> getField(String ObjName){
+    private static Map<String, String> getField(String objName){
         Map<String, String> mapCampos = new Map<String, String>();
-        Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get(ObjName).getDescribe().fields.getMap();
-        for(Schema.SObjectField Sfield : fieldMap.Values()){
-            schema.describefieldresult Field = sfield.getDescribe();
-            mapCampos.put(Field.getName(), String.valueOf(Field.getType())); 
+        Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap();
+        for(Schema.SObjectField sfield : fieldMap.Values()){
+            schema.DescribeFieldResult field = sfield.getDescribe();
+            mapCampos.put(field.getName(), String.valueOf(field.getType())); 
         }
         return mapCampos;
     }
     
    
     
-    public void replaceHtml(String templateName,Id recordId){ 
-        Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Tienda__c,DSales_Vendedor__c,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId];
-        List<DSALES_InformacionDePago__c> pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:cotizacion.OpportunityId LIMIT 1];
+    public void replaceHtml(String templateName, Id recordId){ 
+        Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Tienda__c,DSales_Vendedor__c,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED];
+        List<DSALES_InformacionDePago__c> pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:cotizacion.OpportunityId WITH SECURITY_ENFORCED LIMIT 1];
         email=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Direccion_de_la_tienda__c FROM Quote WHERE ID=:recordId].DSALES_EmailNew__c;
        // cliente=[SELECT Name FROM Account WHERE Id=:cliente].Name;
         List<Tienda__c> tienda = new List<Tienda__c>();
-           //tienda=[SELECT DSALES_Direccin__c FROM Tienda__c WHERE Id=:String.ValueOf(cotizacion.DSales_Tienda__c) Limit 1].DSALES_Direccin__c;
-           tienda=[SELECT DSALES_Direccin__c,DSALES_Cdigopostal__c,DSALES_Ciudad__c,DSALES_Estado__c FROM Tienda__c WHERE Id=:cotizacion.DSales_Tienda__c Limit 1];
+           //tienda=[SELECT dsalesDireccion__c FROM Tienda__c WHERE Id=:String.ValueOf(cotizacion.DSales_Tienda__c) Limit 1].dsalesDireccion__c;
+           tienda=[SELECT dsalesDireccion__c,dsalesCodigoPostal__c,DSALES_Ciudad__c,DSALES_Estado__c FROM Tienda__c WHERE Id=:cotizacion.DSales_Tienda__c WITH SECURITY_ENFORCED Limit 1];
         String direccion='';
         for(Tienda__c t: tienda)
         {
             
             if(tienda!=null){ //datos de la direción de la tienda SG
-                direccion='\n'+t.DSALES_Direccin__c+','+'\n';
-                direccion +='\n CP '+t.DSALES_Cdigopostal__c+','+t.DSALES_Ciudad__c+','+t.DSALES_Estado__c;
+                direccion='\n'+t.dsalesDireccion__c+','+'\n';
+                direccion +='\n CP '+t.dsalesCodigoPostal__c+','+t.DSALES_Ciudad__c+','+t.DSALES_Estado__c;
                 html=html.replace('Tienda__c', direccion);
             }else
             {
@@ -108,12 +108,12 @@ public class DSALES_ControladorCotizacionGex {
         query = query.substring(0, query.length() -1);
         query += ' From Quote Where Id = :recordId';
         query2 = query2.substring(0, query2.length() -1);
-        query2 += ' From QuoteLineItem Where QuoteId = :recordId';
+        query2 += ' From Quote Where Id = :recordId';
         
-        Quote coti = DataBase.query(query);
+        Quote coti = DataBase.query(String.escapeSingleQuotes(query));
         html = html.replace('coti.', '');
         Integer contadora=0;
-        List<QuoteLineItem> cotiLine = DataBase.query(query2);
+        List<QuoteLineItem> cotiLine = DataBase.query(String.escapeSingleQuotes(query2));
         System.debug('*********Partidas**********'+cotiLine);
         List<String> idsPartidas = new List<String>();
         for(QuoteLineItem ql:cotiLine){
@@ -121,7 +121,7 @@ public class DSALES_ControladorCotizacionGex {
 
         }
         System.debug('ids partidas: '+ idsPartidas.size());
-        List<Plazo__c> plazo=[SELECT Id,Dsales_Plazo__c,DSALES_Seguro__r.Name FROM Plazo__c WHERE Id IN: idsPartidas ];
+        List<Plazo__c> plazo=[SELECT Id,DSALES_Plazo__c,DSALES_Seguro__r.Name FROM Plazo__c WHERE Id IN: idsPartidas WITH SECURITY_ENFORCED];
        // System.debug('plazos: '+plazo);
         //System.debug('plazos: '+plazo[0].DSALES_Seguro__r.Name);
         html = html.replace('Quote.', '');
@@ -416,11 +416,11 @@ public class DSALES_ControladorCotizacionGex {
         String tabRemp='<table border="0" cellpadding="0" cellspacing="0" style="height:auto; width:80%:float:left">';
         String tab2='<table border="0" cellpadding="0" cellspacing="0" style="height:auto;">';
         String tab2Remp='<table border="0" cellpadding="0" cellspacing="0" style="height:auto;float:right">';
-        if(templateName==NOMBRE_Seguro){
+        if(templateName==NOMBRE_SEGURO){
             try{
                 String rempFechaSG='<tr>';
                 rempFechaSG+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209 );border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha de entrega estimada</strong></td>';
-                if(pago.size()>0)  
+                if(pago.size()>0) { 
                     rempFechaSG+='<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;width:20%;"><strong>'+pago[0].DSALES_Fechadeentregaestimada__c.format()+'</strong></td>';
 
                 rempFechaSG+='</tr>';
@@ -440,10 +440,10 @@ public class DSALES_ControladorCotizacionGex {
                 html=html.replace(tablaImagen,rempImagen1);
                 html=html.replace(tablaImagen2,rempImagen2);
                 html=html.replace(espacio, rempEspacio);
+                
                 if(cotiLine!=null && cotiLine.size()==3){
-                    for(QuoteLineItem quote: cotiLine){
-                        System.debug('partidas:'+quote);
-                        Product2 producto = [SELECT DSales_Tipo_de_Producto__c FROM Product2 WHERE ID=:quote.Product2Id ];
+                    for(QuoteLineItem quote: [Select Id,Product2.Id, DSALES_SKU__c,Product2.DSales_Tipo_de_Producto__c from QuoteLineItem WHERE QuoteId=: cotizacion.Id WITH SECURITY_ENFORCED]){
+                        //Product2 producto = [SELECT DSales_Tipo_de_Producto__c FROM Product2 WHERE ID=:quote.Product2Id WITH SECURITY_ENFORCED];
                         String rempServ='<tr>';
                         rempServ+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:15%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Servicio</strong></td>';
                         rempServ+='<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;width:20%;text-align:left;font-size:12px;padding-left:15px;"><strong>'+quote.DSALES_NombreProducto__c+'</strong></td>';
@@ -479,10 +479,10 @@ public class DSALES_ControladorCotizacionGex {
                         rempProduc4+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(242, 242, 242 );border-bottom: .2rem solid white;width:50%; border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Total</strong></td>';
                         rempProduc4+='<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;text-align:left; font-size:12px;padding-left:15px;"><strong>'+'$'+quote.TotalPrice+'</strong></td>';
                         rempProduc4+='</tr>';
-                        /*String rempFechaSG='<tr>';
+                        ///*String rempFechaSG='<tr>';
                         rempFechaSG+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:70%;border:solid; border-color:white; font-size:12px;padding-left:15px;"><strong>Fecha de entrega estimada</td>';
                         rempFechaSG+='<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;">'+fechaFormato+'</td>';
-                        rempFechaSG+='</tr>';*/
+                        rempFechaSG+='</tr>';///*
                         String rempSku='<tr>';
                         rempSku+='<td colspan="1" rowspan="1" style="text-align:left; width:50%; color:rgb(189,189,189);font-size:12px;padding-left:15px;">SKU:'+quote.DSALES_SKU__c+'</td><br>';
                         rempSku+='</tr>';
@@ -519,7 +519,7 @@ public class DSALES_ControladorCotizacionGex {
                         html=html.replace(tablaImagen4,rempImagen2);
                         ///presupues
                         html=html.replace(tablaPresupuestoSG,rempPres);
-                        if(producto.DSales_Tipo_de_Producto__c=='Producto'){
+                        if(quote.Product2.DSales_Tipo_de_Producto__c=='Producto'){
                             System.debug('producto:'+quote);
                             
                             html=html.replace(tablaConceptoSG,rempConcepto2);
@@ -532,15 +532,17 @@ public class DSALES_ControladorCotizacionGex {
                             //html=html.replace(leyendaSG3,rempleyendaSG3);
                         }
                         
-                        if(producto.DSales_Tipo_de_Producto__c=='Seguro'){
-                            if(quote.DSALES_NombreProducto__c==SEGURO_AMP){
+                        if(quote.Product2.DSales_Tipo_de_Producto__c=='Seguro'){
+                           //if(quote.DSALES_NombreProducto__c==SEGURO_AMP){
+                            switch on quote.DSALES_NombreProducto__c{
+                                when SEGURO_AMP{
                                 System.debug('amp:'+quote);
                                 String plazoSeg='';
                                 System.debug('Nombre de seguro:'+quote.DSALES_NombreProducto__c);
                                 for(Plazo__c pl:plazo){
                                     if(quote.DSALES_Plazo__c==pl.Id){
                                         System.debug('es igual:'+pl.DSALES_Seguro__r.Name);
-                                        plazoSeg=pl.Dsales_Plazo__c;
+                                        plazoSeg=pl.DSALES_Plazo__c;
                                     }
                                 }
                                 System.debug('plazo amp'+plazoSeg);
@@ -556,15 +558,16 @@ public class DSALES_ControladorCotizacionGex {
                                 html=html.replace(tablaServicioSG3,rempServ3);
                                 html=html.replace(tablaServicioSG4,rempServ4);
                                 
-                                
-                            }
-                            if(quote.DSALES_NombreProducto__c==SEGURO_RC){
+                            }  
+                            
+                           // if(quote.DSALES_NombreProducto__c==SEGURO_RC){
+                            when SEGURO_RC{
                                 String plazoSeg='';
                                 System.debug('Nombre de seguro:'+quote.DSALES_NombreProducto__c);
                                 for(Plazo__c pl:plazo){
                                     if(quote.DSALES_Plazo__c==pl.Id){
                                         System.debug('es igual:'+pl.DSALES_Seguro__r.Name);
-                                        plazoSeg=pl.Dsales_Plazo__c;
+                                        plazoSeg=pl.DSALES_Plazo__c;
                                     }
                                 }
                                 System.debug('plazo a mostrar rc:'+plazoSeg);
@@ -584,22 +587,26 @@ public class DSALES_ControladorCotizacionGex {
                         }
                     }
                 }
+            }
+        }       
             }catch(Exception e){
                 System.debug(e.getLineNumber() + e.getMessage());
             }
         }
-        for(QuoteLineItem quote: cotiLine){
-            Product2 producto = [SELECT DSales_Tipo_de_Producto__c FROM Product2 WHERE ID=:quote.Product2Id ];
+        for(QuoteLineItem quote: [Select Id,Product2.Id, Product2.DSales_Tipo_de_Producto__c from QuoteLineItem WHERE QuoteId=: cotizacion.Id WITH SECURITY_ENFORCED]){
+            //Product2 producto = [SELECT DSales_Tipo_de_Producto__c FROM Product2 WHERE ID=:quote.Product2Id WITH SECURITY_ENFORCED];
             String sku='';
             String skuArray='';
-            if(String.isBlank(quote.DSALES_SKU__c))
+            if(String.isBlank(quote.DSALES_SKU__c)){
                 sku='';
-            else
+            }
+            else{
                 sku=quote.DSALES_SKU__c;
+            }
             String formattedDate='';
             
             
-            if(producto.DSales_Tipo_de_Producto__c=='Producto')
+            if(quote.Product2.DSales_Tipo_de_Producto__c=='Producto')
              {
             skuArray+=sku;
             
@@ -618,7 +625,7 @@ public class DSALES_ControladorCotizacionGex {
                       tabla+='<td colspan="1" rowspan="1 "style="font-size:15px;font-family: Arial, Helvetica, sans-serif;text-align:center;">'+'________'+'</td>';
                 tabla+='<td colspan="1" rowspan="1" style="font-size:15px;font-family: Arial, Helvetica, sans-serif;text-align:center;">'+ '<br/>' +'$ '+quote.totalPrice+  '<br/>'+'</td>';
                  }
-            if(String.valueOf(quote.DSALES_Fechadecompra__c)==null)
+            if(String.valueOf(quote.DSALES_Fechadecompra__c)==null){
                 total+=quote.TotalPrice;
             tabla+='</tr>';
             tabla+='<tr>';
@@ -628,11 +635,11 @@ public class DSALES_ControladorCotizacionGex {
             tabla+='<td style="border-bottom:1px solid #00a9e0;"height="10"></td>';
             tabla+='<td style="border-bottom:1px solid #00a9e0;"height="10"></td>';
             tabla+='</tr>';
-            
+            }
              }   
             
             
-            if(producto.DSales_Tipo_de_Producto__c=='Servicio'){
+            if(quote.Product2.DSales_Tipo_de_Producto__c=='Servicio'){
             
             
             tabla2+='<tr>';
@@ -698,9 +705,11 @@ public class DSALES_ControladorCotizacionGex {
             html=html.replace('total24',String.valueOf(total24+total));
              //html=html.replace(sku, sku2);
             }
-      if(templateName==NOMBRE_Seguro){
+      
+     // if(templateName==NOMBRE_SEGURO){
           //remplazar los valores de la platilla con lo que se pone en codigo
-      }
+      //}
+      
         html=html.replace('null', '________');
         //system.debug('Discount: '+discount);
        // system.debug('Price: '+tdPrice);
@@ -712,20 +721,20 @@ public class DSALES_ControladorCotizacionGex {
 
     public  void replaceSecondPlantilla(String templateName, Id recordId){ 
         try{
-            Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Tienda__c,DSales_Vendedor__c,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId];
-            DSALES_InformacionDePago__c pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:cotizacion.OpportunityId LIMIT 1];
-            email=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Direccion_de_la_tienda__c FROM Quote WHERE ID=:recordId].DSALES_EmailNew__c;
+            Quote cotizacion=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Tienda__c,DSales_Vendedor__c,DSALES_Plazoacotizar__c,DSALES_Fechadecreacionpresupuesto__c,ExpirationDate,QuoteNumber,DSALES_fechadecreacion__c,Email,   OpportunityId FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED];
+            DSALES_InformacionDePago__c pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:cotizacion.OpportunityId WITH SECURITY_ENFORCED LIMIT 1];
+            email=[SELECT  DSALES_EmailNew__c,Name,Id,DSales_Direccion_de_la_tienda__c FROM Quote WHERE ID=:recordId WITH SECURITY_ENFORCED].DSALES_EmailNew__c;
             // cliente=[SELECT Name FROM Account WHERE Id=:cliente].Name;
             List<Tienda__c> tienda = new List<Tienda__c>();
-                //tienda=[SELECT DSALES_Direccin__c FROM Tienda__c WHERE Id=:String.ValueOf(cotizacion.DSales_Tienda__c) Limit 1].DSALES_Direccin__c;
-                tienda=[SELECT DSALES_Direccin__c,DSALES_Cdigopostal__c,DSALES_Ciudad__c,DSALES_Estado__c FROM Tienda__c WHERE Id=:cotizacion.DSales_Tienda__c Limit 1];
+                //tienda=[SELECT dsalesDireccion__c FROM Tienda__c WHERE Id=:String.ValueOf(cotizacion.DSales_Tienda__c) Limit 1].dsalesDireccion__c;
+                tienda=[SELECT dsalesDireccion__c,dsalesCodigoPostal__c,DSALES_Ciudad__c,DSALES_Estado__c FROM Tienda__c WHERE Id=:cotizacion.DSales_Tienda__c WITH SECURITY_ENFORCED Limit 1];
             String direccion='';
             for(Tienda__c t: tienda)
             {
                 
                 if(tienda!=null){ //datos de la direción de la tienda SG
-                    direccion='\n'+t.DSALES_Direccin__c+','+'\n';
-                    direccion +='\n CP '+t.DSALES_Cdigopostal__c+','+t.DSALES_Ciudad__c+','+t.DSALES_Estado__c;
+                    direccion='\n'+t.dsalesDireccion__c+','+'\n';
+                    direccion +='\n CP '+t.dsalesCodigoPostal__c+','+t.DSALES_Ciudad__c+','+t.DSALES_Estado__c;
                     //html=html.replace('Tienda__c', direccion);
                 }else
                 {
@@ -749,10 +758,10 @@ public class DSALES_ControladorCotizacionGex {
             query2 = query2.substring(0, query2.length() -1);
             query2 += ' From QuoteLineItem Where QuoteId = :recordId';
             
-            Quote coti = DataBase.query(query);
+            Quote coti = DataBase.query( String.escapeSingleQuotes(query));
             html = html.replace('coti.', '');
             Integer contadora=0;
-            List<QuoteLineItem> cotiLine = DataBase.query(query2);
+            List<QuoteLineItem> cotiLine = DataBase.query( String.escapeSingleQuotes(query2));
             System.debug('*********Partidas**********'+cotiLine);
             List<String> idsPartidas = new List<String>();
             for(QuoteLineItem ql:cotiLine){
@@ -760,7 +769,7 @@ public class DSALES_ControladorCotizacionGex {
 
             }
             System.debug('ids partidas: '+ idsPartidas.size());
-            List<Plazo__c> plazo=[SELECT Id,Dsales_Plazo__c,DSALES_Seguro__r.Name FROM Plazo__c WHERE Id IN: idsPartidas ];
+            List<Plazo__c> plazo=[SELECT Id,DSALES_Plazo__c,DSALES_Seguro__r.Name FROM Plazo__c WHERE Id IN: idsPartidas WITH SECURITY_ENFORCED];
            
             html = html.replace('Quote.', '');
             for(String item: mapCampos.keySet()){
@@ -1053,7 +1062,7 @@ public class DSALES_ControladorCotizacionGex {
             String tab2='<table border="0" cellpadding="0" cellspacing="0" style="height:auto;">';
             String tab2Remp='<table border="0" cellpadding="0" cellspacing="0" style="height:auto;float:right">';
             
-            if(templateName==NOMBRE_Seguro2){
+            if(templateName==NOMBRE_SEGURO2){
                 String rempFechaSG='<tr>';
                 rempFechaSG+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209 );border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha de entrega estimada</strong></td>';
                 rempFechaSG+='<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;width:20%;"><strong>'+pago.DSALES_Fechadeentregaestimada__c.format()+'</strong></td>';
@@ -1075,9 +1084,9 @@ public class DSALES_ControladorCotizacionGex {
                 html=html.replace(tablaImagen2,rempImagen2);
                 html=html.replace(espacio, rempEspacio);
                 if(cotiLine!=null && cotiLine.size()==2){
-                    for(QuoteLineItem quote: cotiLine){
+                    for(QuoteLineItem quote: [Select Id,Product2.Id, DSALES_SKU__c,Product2.DSales_Tipo_de_Producto__c from QuoteLineItem WHERE QuoteId=: cotizacion.Id WITH SECURITY_ENFORCED]){
                         System.debug('partidas:'+quote);
-                        Product2 producto = [SELECT DSales_Tipo_de_Producto__c FROM Product2 WHERE ID=:quote.Product2Id ];
+                        //Product2 producto = [SELECT DSales_Tipo_de_Producto__c FROM Product2 WHERE ID=:quote.Product2Id WITH SECURITY_ENFORCED];
                         String rempServ='<tr>';
                         rempServ+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:15%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Servicio</strong></td>';
                         rempServ+='<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;width:20%;text-align:left;font-size:12px;padding-left:15px;">'+quote.DSALES_NombreProducto__c+'</td>';
@@ -1133,7 +1142,7 @@ public class DSALES_ControladorCotizacionGex {
                         //html=html.replace(tablaP2,rempTablaP2);
                         ///presupues
                         html=html.replace(tablaPresupuestoSG,rempPres);
-                        if(producto.DSales_Tipo_de_Producto__c=='Producto'){
+                        if(quote.Product2.DSales_Tipo_de_Producto__c=='Producto'){
                             System.debug('producto:'+quote);
                             
                             html=html.replace(tablaConceptoSG,rempConcepto2);
@@ -1146,7 +1155,7 @@ public class DSALES_ControladorCotizacionGex {
                             //html=html.replace(leyendaSG3,rempleyendaSG3);
                         }
                         
-                        if(producto.DSales_Tipo_de_Producto__c=='Seguro'){
+                        if(quote.Product2.DSales_Tipo_de_Producto__c=='Seguro'){
                             if(quote.DSALES_NombreProducto__c==SEGURO_AMP){
                                 System.debug('amp:'+quote);
                                 String plazoSeg='';
@@ -1155,7 +1164,7 @@ public class DSALES_ControladorCotizacionGex {
                                     System.debug('nombre plazo:'+pl.DSALES_Seguro__r.Name);
                                     if(quote.DSALES_Plazo__c==pl.Id){
                                         System.debug('es igual:'+pl.DSALES_Seguro__r.Name);
-                                        plazoSeg=pl.Dsales_Plazo__c;
+                                        plazoSeg=pl.DSALES_Plazo__c;
                                     }
                                 }
                                 System.debug('plazo a mostrar2:'+plazoSeg);
@@ -1190,5 +1199,6 @@ public class DSALES_ControladorCotizacionGex {
         }catch(Exception e){
             System.debug('********2plant*******'+e.getLineNumber() + e.getMessage());
         }
-    }   
+    
+    }
 }

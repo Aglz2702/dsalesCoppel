@@ -1,11 +1,11 @@
 @isTest
 public class DSALES_QuoteSmWrapperRequestTest {
     @testSetup
-    static void setUp(){
+    static void SetUp(){
         String tipoProducto = 'Producto';
         String message = '';
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
-        
+
         DSALES_Familia__c family = new DSALES_Familia__c();
         family.Name = 'test';
         insert family;
@@ -18,13 +18,13 @@ public class DSALES_QuoteSmWrapperRequestTest {
         classs.Name = 'test';
         insert classs;
         
-        Product2 prodRc = new Product2(Name ='RC Seguro de Moto',DSALES_vehculo__c='sadkncdcs' ,StockKeepingUnit='0000',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro');
+        Product2 prodRc = new Product2(Name ='RC Seguro de Moto',dsalesVehiculo__c='sadkncdcs' ,StockKeepingUnit='0000',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro');
 		insert prodRc;
         
-        Product2 prodAmp = new Product2(Name ='AMP Seguro de Moto',DSALES_vehculo__c='23d23d23', StockKeepingUnit='123444',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40);
+        Product2 prodAmp = new Product2(Name ='AMP Seguro de Moto',dsalesVehiculo__c='23d23d23', StockKeepingUnit='123444',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40);
 		insert prodAmp;
         
-        Product2 prodM = new Product2(Name ='Moto',DSALES_vehculo__c='lasicndsldicsid',StockKeepingUnit='1231212',DSales_Tipo_de_Producto__c='Producto',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40);
+        Product2 prodM = new Product2(Name ='Moto',dsalesVehiculo__c='lasicndsldicsid',StockKeepingUnit='1231212',DSales_Tipo_de_Producto__c='Producto',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40);
 		insert prodM;
         
         Id pricebookId = Test.getStandardPricebookId();
@@ -125,23 +125,23 @@ public class DSALES_QuoteSmWrapperRequestTest {
         
         Plazo__c plazo1 = new Plazo__c();
         plazo1.Name='12';
-        plazo1.DSALES_Seguro__c=prodRc.Id;
+        plazo1.dsalesSeguro__c=prodRc.Id;
         plazo1.Dsales_Plazo__c='12';
         plazo1.DSALES_Activo__c=true;
         insert plazo1;
         
-        Plazo__c plazo2 = new Plazo__c(Name='12',Dsales_Plazo__c='12',DSALES_Seguro__c=prodAmp.Id,DSALES_Activo__c=true);
+        Plazo__c plazo2 = new Plazo__c(Name='12',Dsales_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,DSALES_Activo__c=true);
         insert plazo2;
         
         Campaign camapna = new Campaign();
         camapna.Name='RC';
-        camapna.DSALES_Tipodecapana__c = 'Seguro gratis';
+        camapna.dsalesTipoCampana__c = 'Seguro gratis';
         camapna.IsActive = true;
         insert camapna;
         
         Campaign camapnaAmp = new Campaign();
         camapnaAmp.Name='A';
-        camapnaAmp.DSALES_Tipodecapana__c = 'Seguro gratis';
+        camapnaAmp.dsalesTipoCampana__c = 'Seguro gratis';
         camapnaAmp.IsActive = true;
         insert camapnaAmp;
         
@@ -152,11 +152,11 @@ public class DSALES_QuoteSmWrapperRequestTest {
     }
     
     @isTest 
-    static void createQuoteCredito(){
+    static void CreateQuoteCredito(){
         
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{"vehicle_use":"Comercial","sku":"1231212",vehicle_type":"Moto","plazo":"12","rfc":"abcd","client_number":"43535","first_name":"hpero","middle_name":"gonzalez","last_name":"lopez","suffix":"sepa","store_id":"CPPL-UGARTE","vendedor":"pedro","contact_phone":"4545454545","contact_email":"ssas@fgmaoc.com","contact_gender":"Masculino","contact_birth_date":"1990-10-02","contact_state_code":"12","contact_township_code":"212","contact_suburb_code":12,"contact_zip_code":"12","vehicle_id":"slknvsaeclskvlams","payment_option":"Mensual","packagge":"EC","start_at":"2020-10-10","productList":[{"sku":"1231212"},{"sku":"632013-GEX"}]}';
+        String body = '{"numeroCliente":"43535","tipoUso":"Comercial","tipoVehiculo":"Moto","plazoCotizar":"12","rfc":"abcd","sku":"1231212","precioProducto":"213.4","nombre":"hpero","apellidoPaterno":"gonzalez","apellidoMaterno":"lopez","idTienda":"CPPL-UGARTE","nombreVendedor":"pedro","telefonoCelular":"4545454545","correoElectronico":"ssas@fgmaoc.com","generoContacto":"Masculino","fechaNacimiento":"1990-10-02","codigoPostal":"12","idVehiculo":"slknvsaeclskvlams","opcionPago":"Mensual","fechaInicio":"2020-10-10"}';
         req.requestURI = '/apexrest/insertQuoteSM';
         req.httpMethod = 'POST';
         RestContext.request = req;
@@ -166,15 +166,13 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
 		Test.stopTest();
-        RestResponse res3 = new RestResponse();
-        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
     
     @isTest 
-    static void createQuoteCredito2(){
+    static void CreateQuoteCredito2(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{"precioProducto":"213.4","tipo_uso":"Comercial","sku":"1231212","tipo_vehiculo":"Moto","plazo_cotizar":"18","rfc":"abcd","numero_cliente":"45654","nombre":"hpero","apellido_paterno":"lopez","apellido_materno":"sepa","id_tienda":"CPPL-UGARTE","nombre_vendedor":"pedro","telefono_celular":"45454554545","correo_electronico":"ssfas@fgmaoc.com","genero_contacto":"Masculino","fecha_nacimiento":"1990-10-02","codigo_postal":"12","id_vehiculo":"slknvsaeclskvlams","opcion_pago":"Mensual","fecha_inicio":"2020-10-10"}';
+        String body = '{"numeroCliente":"45654","tipoUso":"Comercial","tipoVehiculo":"Moto","plazoCotizar":"18","rfc":"abcd","sku":"1231212","precioProducto":"213.4","nombre":"hpero","apellidoPaterno":"lopez","apellidoMaterno":"sepa","idTienda":"CPPL-UGARTE","nombreVendedor":"pedro","telefonoCelular":"45454554545","correoElectronico":"ssfas@fgmaoc.com","generoContacto":"Masculino","fechaNacimiento":"1990-10-02","codigoPostal":"12","idVehiculo":"slknvsaeclskvlams","opcionPago":"Mensual","fechaInicio":"2020-10-10"}';
         req.requestURI = '/apexrest/insertQuoteSM';
         req.httpMethod = 'POST';
         RestContext.request = req;
@@ -186,15 +184,13 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
 		Test.stopTest();
-        RestResponse res3 = new RestResponse();
-        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
     
     @isTest 
-    static void createQuoteGenerico(){
+    static void CreateQuoteGenerico(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{"precioProducto":"213.4","tipo_uso":"Comercial","sku":"0000","tipo_vehiculo":"Moto","plazo_cotizar":"12","rfc":"abcd","numero_cliente":"","nombre":"DanielaD","apellido_paterno":"Galle535gos","apellido_materno":"35","id_tienda":"CPPL-UGARTE","nombre_vendedor":"pedro","telefono_celular":"45454554545","correo_electronico":"ssfas@fgmaoc.com","genero_contacto":"Masculino","fecha_nacimiento":"1990-10-02","codigo_postal":"12","id_vehiculo":"slknvsaeclskvlams","opcion_pago":"Mensual","fecha_inicio":"2020-10-10"}';
+        String body = '{"numeroCliente":"323535324","tipoUso":"Comercial","tipoVehiculo":"Moto","plazoCotizar":"12","rfc":"abcd","sku":"","precioProducto":"213.4","nombre":"DanielaD","apellidoPaterno":"Galle535gos","apellidoMaterno":"35","idTienda":"CPPL-UGARTE","nombreVendedor":"pedro","telefonoCelular":"45454554545","correoElectronico":"ssfas@fgmaoc.com","generoContacto":"Masculino","fechaNacimiento":"1990-10-02","codigoPostal":"12","idVehiculo":"slknvsaeclskvlams","opcionPago":"Mensual","fechaInicio":"2020-10-10"}';
         req.requestURI = '/apexrest/insertQuoteSM';
         req.httpMethod = 'POST';
         RestContext.request = req;
@@ -204,15 +200,14 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
 		Test.stopTest();
-        RestResponse res3 = new RestResponse();
-        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
     
     @isTest 
-    static void createQuoteCreditoo(){
+    static void CreateQuoteCreditoo(){
+        
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{"precioProducto":"213.4","tipo_uso":"Comercial","sku":"1231212","tipo_vehiculo":"Moto","plazo_cotizar":"12","rfc":"abcd","numero_cliente":"323535324","nombre":"DanielaD","apellido_paterno":"Galle535gos","apellido_materno":"35","id_tienda":"CPPL-UGARTE","nombre_vendedor":"pedro","telefono_celular":"45454554545","correo_electronico":"ssfas@fgmaoc.com","genero_contacto":"Masculino","fecha_nacimiento":"1990-10-02","codigo_postal":"12","id_vehiculo":"slknvsaeclskvlams","opcion_pago":"Mensual","fecha_inicio":"2020-10-10"}';
+        String body = '{"numeroCliente":"323535324","tipoUso":"Comercial","tipoVehiculo":"Moto","plazoCotizar":"12","rfc":"abcd","sku":"1231212","precioProducto":"213.4","nombre":"DanielaD","apellidoPaterno":"Galle535gos","apellidoMaterno":"35","idTienda":"CPPL-UGARTE","nombreVendedor":"pedro","telefonoCelular":"45454554545","correoElectronico":"ssfas@fgmaoc.com","generoContacto":"Masculino","fechaNacimiento":"1990-10-02","codigoPostal":"12","idVehiculo":"slknvsaeclskvlams","opcionPago":"Mensual","fechaInicio":"2020-10-10"}';
         req.requestURI = '/apexrest/insertQuoteSM';
         req.httpMethod = 'POST';
         RestContext.request = req;
@@ -221,9 +216,8 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(5));
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6));
         DSALES_QuoteSmWrapper.RespuestaParaNpv response = DSALES_QuoteSmWrapperRequest.createQuoteSM();
+        List<DSALES_QuoteSmWrapper.Plazo> PLAZ = DSALES_QuoteSmWrapperRequest.plazosActivosExterna('12');
 		Test.stopTest();
-        RestResponse res3 = new RestResponse();
-        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
 
 }

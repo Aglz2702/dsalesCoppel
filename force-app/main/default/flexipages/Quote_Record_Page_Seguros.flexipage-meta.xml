@@ -11,9 +11,28 @@
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Quote.DSALES_VerCotizacion</value>
+<<<<<<< HEAD
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Quote.Ver_Cotization1</value>
+=======
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Administrador GEX</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Administrador del sistema</rightValue>
+                                </criteria>
+                            </visibilityRule>
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Quote.Ver_Cotizaci_n_PDF</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
