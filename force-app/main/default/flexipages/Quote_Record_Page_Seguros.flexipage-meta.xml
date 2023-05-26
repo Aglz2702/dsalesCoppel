@@ -7,20 +7,26 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>Edit</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>SyncQuote</value>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Quote.DSALES_VerCotizacion</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.DSALES_Enviarcotizacion__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Administrador GEX</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Administrador del sistema</rightValue>
                                 </criteria>
                             </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Quote.Ver_Cotizaci_n_PDF</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
