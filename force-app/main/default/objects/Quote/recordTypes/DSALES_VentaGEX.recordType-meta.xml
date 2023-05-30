@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DSALES_VentaGEX</fullName>
     <active>true</active>
+    <compactLayoutAssignment>DSales_Formato_GEX</compactLayoutAssignment>
     <description>Tipo de registro para cotización del producto GEX.</description>
     <label>Venta de Garantía Extendida</label>
     <picklistValues>
@@ -154,28 +155,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>dsalesGenero__c</picklist>
-        <values>
-            <fullName>Femenino</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Masculino</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>dsalesMetodoDeContacto__c</picklist>
-        <values>
-            <fullName>Email</fullName>
-            <default>true</default>
-        </values>
-        <values>
-            <fullName>Teléfono</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>DSALES_Negocio__c</picklist>
         <values>
             <fullName>Coppel</fullName>
@@ -183,26 +162,63 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>dsalesOpcionDePago__c</picklist>
+        <picklist>DSALES_Tipodeuso__c</picklist>
         <values>
-            <fullName>Anual</fullName>
+            <fullName>Comercial</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Mensual</fullName>
+            <fullName>Particular</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Semestral</fullName>
+            <fullName>Reparto de comida</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Trimestral</fullName>
+            <fullName>Todo terreno</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DSALES_Region__c</picklist>
+        <picklist>DSALES_Tipodevehculo__c</picklist>
+        <values>
+            <fullName>Moto</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Usodelvehculo__c</picklist>
+        <values>
+            <fullName>Normal</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSales_Division__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NOMigrar__c</picklist>
         <values>
             <fullName>AZCAPOTZALCO</fullName>
             <default>false</default>
@@ -305,50 +321,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>dsalesTipoDeServicioDelVehiculo__c</picklist>
-        <values>
-            <fullName>Particular</fullName>
-            <default>true</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DSALES_Tipodevehculo__c</picklist>
-        <values>
-            <fullName>Moto</fullName>
-            <default>true</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DSALES_Usodelvehculo__c</picklist>
-        <values>
-            <fullName>Normal</fullName>
-            <default>true</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DSales_Division__c</picklist>
-        <values>
-            <fullName>1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Status</picklist>
         <values>
             <fullName>Enviada</fullName>
@@ -361,6 +333,54 @@
         <values>
             <fullName>Vencida</fullName>
             <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>dsalesGenero__c</picklist>
+        <values>
+            <fullName>Femenino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Masculino</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>dsalesMetodoDeContacto__c</picklist>
+        <values>
+            <fullName>Email</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Teléfono</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>dsalesOpcionDePago__c</picklist>
+        <values>
+            <fullName>Anual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mensual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semestral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trimestral</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>dsalesTipoDeServicioDelVehiculo__c</picklist>
+        <values>
+            <fullName>Particular</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
 </RecordType>

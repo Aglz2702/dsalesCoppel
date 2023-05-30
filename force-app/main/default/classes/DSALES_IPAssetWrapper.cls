@@ -3,10 +3,8 @@ global class DSALES_IPAssetWrapper {
     global class IPAssetRequest{
         global Boolean emitirPoliza {get;set;}
         global String idUniversal {get;set;}
-        global String tipoFolio { get; set; }
-        global String folioTransaccion { get; set; }
         global String uso { get; set; }
-        global String idTienda { get; set; }
+        global String claveTienda { get; set; }
         global String servicio { get; set; }
         global String numeroSerie { get; set; }
         global String numeroMotor { get; set; }
@@ -21,12 +19,11 @@ global class DSALES_IPAssetWrapper {
         //global String id_pago { get; set; }
     }
     global class IPAssetResponse{
-        global List<ListaPartidasOportunidad> listaPartidasOportunidad {get; set;}
-        global Seguro seguro { get; set; }
-        global String idActivo {get;set;}
-        global Boolean success {get;set;}
+        global List<DSALES_VentaSMRest.WrapperDatosProductos> listaPartidasOportunidad {get; set;}
+        global Boolean exito {get;set;}
         global String mensajeError {get;set;}
         global Integer codigoError {get;set;}
+        global DSALES_VentaSM.DatosParaEmitir datosParaEmitir {get;set;}
        
     }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesQuoteId__c</fullName>
+    <description>Campo que almacena el ID de la cotización del seguro ganador y compartirlo en la emisión de póliza.</description>
+    <externalId>false</externalId>
+    <label>Quote id</label>
+    <length>30</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

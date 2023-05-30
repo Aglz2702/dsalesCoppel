@@ -5,7 +5,8 @@ public class DSALES_Utility {
     public static final Integer BAD_REQUEST_CODE = 400;
     public static final Integer INTERNAL_ERROR_CODE = 500;
     public static final String SEGURO_PREDETERMINADO = 'PÓLIZA UNIVERSAL';
-    
+    public static final String FIGURA_CONDUCTOR ='Conductor';
+    public static final String FIGURA_CONTRATANTE='Contratante';
     public static String getEndpoint(String nombreURL){
         try{
             DSALES_RutaIntegracion__mdt ruta = DSALES_RutaIntegracion__mdt.getInstance(nombreURL); 
@@ -14,4 +15,16 @@ public class DSALES_Utility {
             return null;
         }
     }
+<<<<<<< HEAD
+    public static String getNombreContratante(String nombre){
+         try{
+            dsalesDatosContratante__mdt contratante = dsalesDatosContratante__mdt.getInstance(nombre);
+            return contratante.dsalesNombre__c;
+         }catch(Exception ex){
+            return null;
+        }    
+    }
+
+=======
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
 }

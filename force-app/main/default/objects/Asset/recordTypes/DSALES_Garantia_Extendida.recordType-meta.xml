@@ -217,6 +217,14 @@
             <fullName>Adquirido</fullName>
             <default>true</default>
         </values>
+        <values>
+            <fullName>Cancelado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Devuelto</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>StatusReason</picklist>

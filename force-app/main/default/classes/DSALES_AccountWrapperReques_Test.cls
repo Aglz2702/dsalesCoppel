@@ -22,7 +22,7 @@ public class DSALES_AccountWrapperReques_Test{
     static void createRecordTest(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{"numeroDeCliente":"87654","nombre":"Test","apellidoPaterno":"Test","apellidoMaterno":"Prueba","telefono":"89017829","correoElectronico":"dsanmiguel@deloittemx.com","genero":"M","fechaNacimiento":"1992-08-02","codigoPostal":"06030"}';
+        String body = '{"numeroDeCliente":"87654","nombre":"Test","apellidoPaterno":"Test","apellidoMaterno":"Prueba","telefono":"89017829","correoElectronico":"dsanmiguel@deloittemx.com","genero":"M","fechaNacimiento":"1992-08-02","codigoPostal":"06030","nombreEstado":"12","numeroInterior":"12","numeroExterior":"12","colonia":"12"}';
         req.requestURI = '/apexrest/insertAccount';
         req.httpMethod = 'POST';
         RestContext.request = req;
@@ -34,8 +34,7 @@ public class DSALES_AccountWrapperReques_Test{
         Test.stopTest();
         RestContext.request = req;
         RestContext.response= res;
-        System.assertNotEquals(200, res.statusCode, 'La llamada no debe devolver un código 200');
-        
+        System.assertNotEquals(200, res.statusCode, 'The API call should not return a 200 status code');
     }
      @isTest 
     static void createRecordTest2(){
@@ -53,7 +52,7 @@ public class DSALES_AccountWrapperReques_Test{
         Test.stopTest();
         RestContext.request = req2;
         RestContext.response= res2;
-        System.assertNotEquals(200, res2.statusCode, 'La llamada no debe devolver un código 200');
+        System.assertNotEquals(200, res2.statusCode, 'The API call should not return a 200 status code');
     }
      @isTest 
     static void createRecordTest3(){
@@ -71,6 +70,6 @@ public class DSALES_AccountWrapperReques_Test{
         Test.stopTest();
         RestContext.request = req3;
         RestContext.response= res3;
-        System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
+        System.assertNotEquals(200, res3.statusCode, 'The API call should not return a 200 status code');
     }
 }

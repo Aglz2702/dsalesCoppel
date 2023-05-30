@@ -1,3 +1,7 @@
 {
-  "defaultusername": "Dev2"
+<<<<<<< HEAD
+  "defaultusername": "pysisIntegrator"
+=======
+  "defaultusername": "vscodeOrg"
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
 }

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+<<<<<<< HEAD
+    <customButtons>Ver_Cotization1</customButtons>
+=======
+    <customButtons>Ver_Cotizaci_n_PDF</customButtons>
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
-    <excludeButtons>CreateOrder</excludeButtons>
     <excludeButtons>CreatePdf</excludeButtons>
+    <excludeButtons>Delete</excludeButtons>
+    <excludeButtons>Edit</excludeButtons>
     <excludeButtons>EmailQuote</excludeButtons>
     <excludeButtons>PrintableView</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -22,7 +28,7 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>dsalesGenero__c</field>
             </layoutItems>
             <layoutItems>
@@ -77,11 +83,11 @@
                 <field>DSALES_Fechadecreacionpresupuesto__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>dsalesFechaDeComienzoDePoliza__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>dsalesOpcionDePago__c</field>
             </layoutItems>
         </layoutColumns>
@@ -127,7 +133,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>dsalesTipoDeVehiculo__c</field>
+                <field>DSALES_Tipodevehculo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -143,7 +149,7 @@
         <label>Address Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>dsalesCodigoPostal__c</field>
             </layoutItems>
         </layoutColumns>
@@ -229,16 +235,24 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Ver_Cotization1</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>FeedItem.ContentPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>DSALES_VerCotizacion</actionName>
+<<<<<<< HEAD
+=======
+            <actionName>Ver_Cotizaci_n_PDF</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
             <actionName>FeedItem.PollPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
@@ -305,7 +319,7 @@
     <relatedLists>
         <fields>QUOTE_LI.PRODUCT2</fields>
         <fields>DSALES_Plazo__c</fields>
-        <fields>QUOTE_LI.QUANTITY</fields>
+        <fields>dsalesOpcionPago__c</fields>
         <fields>QUOTE_LI.UNIT_PRICE</fields>
         <relatedList>RelatedQuoteLineItemList</relatedList>
     </relatedLists>

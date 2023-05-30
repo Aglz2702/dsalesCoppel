@@ -68,7 +68,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         Opportunity oportunidad = new Opportunity(Name='Testoportunidadortunity', AccountId=acc.Id, CloseDate=Date.Today(), StageName='Nuevo', Pricebook2Id=customPB.Id,RecordTypeId=recordTypeId);
         insert oportunidad;
         Tienda__c t = new Tienda__c();
-        t.DSales_TiendaID__c =  'T-0001';
+        t.DSales_TiendaID__c =  '1';
         insert t;
         DSALES_InformaciondePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=oportunidad.id,DSALES_Cliente__c=acc.Id,dsalesSeguro__c=true);
         insert pago;
@@ -81,10 +81,17 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         Plazo__c plazoRC12 = new Plazo__c();
         plazoRC12.Name='12';
         plazoRC12.dsalesSeguro__c=prodRc.Id;
+<<<<<<< HEAD
+        plazoRC12.Dsales_Plazo__c='12';
+        plazoRC12.DSALES_Activo__c=true;
+        insert plazoRC12;
+        Plazo__c plazoAMP12 = new Plazo__c(Name='12',Dsales_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,DSALES_Activo__c=true);
+=======
         plazoRC12.DSALES_Plazo__c='12';
         plazoRC12.DSALES_Activo__c=true;
         insert plazoRC12;
         Plazo__c plazoAMP12 = new Plazo__c(Name='12',DSALES_Plazo__c='12',dsalesSeguro__c=prodAmp.Id,DSALES_Activo__c=true);
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
         insert plazoAMP12;
         QuoteLineItem moto = new QuoteLineItem();
         moto.QuoteId = cotizacion.Id;
@@ -105,12 +112,61 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         insert seguroAmp;
         oportunidad.SyncedQuoteId=cotizacion.Id;
         update oportunidad;
+        
+        DSALES_VentaSM.DatosParticipante part = new DSALES_VentaSM.DatosParticipante();
+        part.figura='Conductor';
+        part.nombre='Sayra';
+        part.apellidoPaterno='Martinez';
+        part.apellidoMaterno='Quiroz';
+        part.relacionConParticipante='';
+        part.porcentaje='0';
+        part.telefono='4325808753';
+        part.correoElectronico='saymartinez@deloittemx.com';
+        part.genero='Femenino';
+        part.fechaNacimiento=Date.today();
+        part.rfc='123678';
+        part.codigoPostal=22945;
+        part.codigoEstado='12';
+        part.codigoCiudad='12';
+        part.codigoColonia='12';
+        part.calle='calle';
+        part.numeroExterior='12';
+        part.numeroInterior='12';
     }
 
     @isTest
     public static void prepolizaTest(){
         DSALES_InformaciondePago__c pago = [SELECT Id,DSALES_Oportunidad__c FROM DSALES_InformaciondePago__c LIMIT 1];
+<<<<<<< HEAD
+        DSALES_VentaSM.DatosParticipante part = new DSALES_VentaSM.DatosParticipante();
+        part.figura='Conductor';
+        part.nombre='Sayra';
+        part.apellidoPaterno='Martinez';
+        part.apellidoMaterno='Quiroz';
+        part.relacionConParticipante='';
+        part.porcentaje='0';
+        part.telefono='4325808753';
+        part.correoElectronico='saymartinez@deloittemx.com';
+        part.genero='Femenino';
+        part.fechaNacimiento=Date.today();
+        part.rfc='123678';
+        part.codigoPostal=1224324;
+        part.codigoEstado='12';
+        part.codigoCiudad='12';
+        part.codigoColonia='12';
+        part.calle='calle';
+        part.numeroExterior='12';
+        part.numeroInterior='12';
+        List<DSALES_VentaSM.DatosParticipante> listaPart= new List<DSALES_VentaSM.DatosParticipante>();
+        listaPart.add(part);
+        DSALES_VentaSMRest.DatosPrepoliza banderas = new DSALES_VentaSMRest.DatosPrepoliza();
+        banderas.idPago=pago.Id;
+        banderas.enviaContratante=false;
+        banderas.beneficiarioPreferente=true;
+        DSALES_CreateInsurancePolicy.crearPoliza(listaPart,banderas);
+=======
         DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
         InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
 		DSALES_CreateInsurancePolicy.relacionarPolizaAPago(poliza);
         InsurancePolicyAsset activo = new InsurancePolicyAsset(
@@ -137,7 +193,36 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
     public static void estatusTest(){
         DSALES_InformaciondePago__c pago = [SELECT Id,DSALES_Oportunidad__c FROM DSALES_InformaciondePago__c LIMIT 1];
         Test.startTest();
+<<<<<<< HEAD
+       DSALES_VentaSM.DatosParticipante part = new DSALES_VentaSM.DatosParticipante();
+        part.figura='Conductor';
+        part.nombre='Sayra';
+        part.apellidoPaterno='Martinez';
+        part.apellidoMaterno='Quiroz';
+        part.relacionConParticipante='';
+        part.porcentaje='0';
+        part.telefono='4325808753';
+        part.correoElectronico='saymartinez@deloittemx.com';
+        part.genero='Femenino';
+        part.fechaNacimiento=Date.today();
+        part.rfc='123678';
+        part.codigoPostal=1224324;
+        part.codigoEstado='12';
+        part.codigoCiudad='12';
+        part.codigoColonia='12';
+        part.calle='calle';
+        part.numeroExterior='12';
+        part.numeroInterior='12';
+        List<DSALES_VentaSM.DatosParticipante> listaPart= new List<DSALES_VentaSM.DatosParticipante>();
+        listaPart.add(part);
+        DSALES_VentaSMRest.DatosPrepoliza banderas = new DSALES_VentaSMRest.DatosPrepoliza();
+        banderas.idPago=pago.Id;
+        banderas.enviaContratante=false;
+        banderas.beneficiarioPreferente=true;
+        DSALES_CreateInsurancePolicy.crearPoliza(listaPart,banderas);
+=======
         DSALES_CreateInsurancePolicy.crearPoliza(pago.Id);
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
         InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
 		poliza.ExpirationDate=DateTime.now();
         update poliza;

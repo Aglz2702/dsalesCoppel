@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>TOKEN</fullName>
-        <language>es_MX</language>
+        <fullName>npvEquivalente</fullName>
+        <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>TOKEN</shortDescription>
-        <value>DSALES_TOKEN</value>
+        <shortDescription>npvEquivalente</shortDescription>
+        <value>RCEXC</value>
     </labels>
     <labels>
-        <fullName>client_id</fullName>
-        <language>es_MX</language>
+        <fullName>npvSeguro</fullName>
+        <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>client_id</shortDescription>
-        <value>salesforce</value>
-    </labels>
-    <labels>
-        <fullName>client_secret</fullName>
-        <language>es_MX</language>
-        <protected>false</protected>
-        <shortDescription>client_secret</shortDescription>
-        <value>salesforce123</value>
+        <shortDescription>npvSeguro</shortDescription>
+        <value>PLUS</value>
     </labels>
 </CustomLabels>

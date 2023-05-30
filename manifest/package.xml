@@ -1,4 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+<<<<<<< HEAD
+		<members>dsalesDatosContratante.dsalesNombre</members>
+		<name>CustomMetadata</name>
+	</types>
+	<types>
+		<members>dsalesDatosContratante__mdt</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>dsalesDatosContratante__mdt-Formato Nombre del contratante</members>
+		<name>Layout</name>
+	</types>
+=======
+		<members>DSALES_GexCotizacionesHelper</members>
+		<members>DSALES_QuotePagoSM</members>
+		<members>DSALES_QuotePagoSmTest</members>
+		<members>DSALES_QuotePdfController</members>
+		<members>DSALES_QuotePdfController_Test</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>DSALES_CotizationSm</members>
+		<name>ApexPage</name>
+	</types>
+	<types>
+		<members>Quote_Record_Page_Seguros</members>
+		<members>Quote_Record_Page_Servicios</members>
+		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>Quote-Venta SM</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>Quote.Ver_Cotizaci_n_PDF</members>
+		<name>WebLink</name>
+	</types>
+>>>>>>> 247fa3a93c31dddeba7f12b43021ae15fb091033
 	<version>55.0</version>
 </Package>

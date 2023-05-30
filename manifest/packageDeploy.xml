@@ -194,6 +194,9 @@
 	<members>DSALES_InformacionDePago__c.DSales_Informacion_GEX</members>
 	<members>Product2.DSALES_FormatoCompactoSMIntang</members>
 	<members>Product2.DSALES_FormatocompactoSM</members>
+	<members>dsalesCiudad__c.Ciudad_Compact_Layout</members>
+	<members>dsalesRegion__c.Region_Compact_Layout</members>
+	<members>InsurancePolicyParticipant.dsalesFormatoCompactoSm</members>
 	<name>CompactLayout</name>
 </types>
 <types>
@@ -687,6 +690,13 @@
 	<members>DSALES_Certificado__c.DSales_Garantia_Coppel__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_IDUniversal__c</members>
 	<members>OpportunityLineItem.DSALES_Duracion__c</members>
+	<members>Campaign.dsalesTipoCampana__c</members>
+	<members>DSALES_TipodeUso__c.dsalesDescripcion__c</members>
+	<members>InsurancePolicy.dsalesActivoPolizaSeguro__c</members>
+	<members>InsurancePolicy.dsalesEstatusPoliza__c</members>
+	<members>InsurancePolicy.dsalesFechaDeEmision__c</members>
+	<members>InsurancePolicy.dsalesNumeroDeMotor__c</members>
+	<members>Tienda__c.dsalesCiudad__c</members>
 	<name>CustomField</name>
 </types>
 <types>
@@ -721,6 +731,9 @@
 	<members>DSALES_RutaIntegracion.DSALES_ListaNegra</members>
 	<members>DSALES_RutaIntegracion.DSALES_SendPdfToNVP</members>
 	<members>DSALES_RutaIntegracion.DSALES_QuoteSM</members>
+	<members>dsalesDatosContratante.dsalesNombre</members>
+	<members>dsalesEquivalencias.C</members>
+	<members>dsalesEquivalencias.M</members>
 	<members>Tipo_de_endoso.AcreditacionMP</members>
 	<members>Tipo_de_endoso.CURP</members>
 	<members>Tipo_de_endoso.C_card_Trajeta_De_Circulatci_n</members>
@@ -808,6 +821,11 @@
 	<members>Tienda__c</members>
 	<members>DSALES_Reembolso__c</members>
 	<members>DSALES_Cancelacion__c</members>
+	<members>dsalesAsignacionDeTienda__c</members>
+	<members>dsalesCiudad__c</members>
+	<members>dsalesRegion__c</members>
+	<members>dsalesDatosContratante__mdt</members>
+	<members>dsalesEquivalencias__mdt</members>
 	<name>CustomObject</name>
 </types>
 <types>
@@ -840,6 +858,9 @@
 	<members>DSales_Asignacion_de_Productos__c</members>
 	<members>DASALES_Porcentajedecobro__c</members>
 	<members>DSALES_Partidadepago__c</members>
+	<members>dsalesAsignacionDeTienda__c</members>
+	<members>dsalesCiudad__c</members>
+	<members>dsalesRegion__c</members>
 	<name>CustomTab</name>
 </types>
 <types>
@@ -927,6 +948,9 @@
 	<members>Producto_P_gina_de_registro</members>
 	<members>Partida_presupuesto_Pagina_registro</members>
 	<members>Campaign_Record_PageSM</members>
+	<members>Asignaci_n_de_Tienda_Record_Page</members>
+	<members>Ciudad_Record_Page</members>
+	<members>Region_Record_Page</members>
 	<name>FlexiPage</name>
 </types>
 <types>
@@ -1034,8 +1058,8 @@
 	<members>DSALES_Endoso__c-Formato Endoso</members>
 	<members>DSALES_InformacionDePago__c-DSALESInformaciondepagosSM</members>
 	<members>DSALES_Categoria__c-DSALES_GEX</members>
-		<members>DSALES_Clase__c-DSALES_GEX</members>
-		<members>DSALES_Familia__c-DSALES_GEX</members>
+	<members>DSALES_Clase__c-DSALES_GEX</members>
+	<members>DSALES_Familia__c-DSALES_GEX</members>
 	<members>DSALES_SubCategoria__c-DSales_GEX</members>
 	<members>DASALES_Porcentajedecobro__c-Porcentaje de cobro Layout</members>
 	<members>DSales_Asignacion_de_Productos__c-Formato Asignación de Productos</members>
@@ -1043,6 +1067,10 @@
 	<members>DSALES_Certificado__c-DSALES_Certificado_GEX</members>
 	<members>ClaimPaymentSummary-Formato de Resumen de pago de reclamación</members>
 	<members>OpportunityLineItem-dsalesformatopaginagex</members>
+	<members>dsalesAsignacionDeTienda__c-Formato Asignación de Tienda</members>
+	<members>InsurancePolicyParticipant-Formato de pagina SM</members>
+	<members>dsalesDatosContratante__mdt-Formato Nombre del contratante</members>
+	<members>dsalesEquivalencias__mdt-Formato Equivalencia</members>
 	<name>Layout</name>
 </types>
 <types>
@@ -1159,11 +1187,11 @@
 	<members>Product2.DSales_Seguro_de_Motos</members>
 	<members>Product2.DSales_Garantia_Extendida</members>
 	<members>Asset.DSALES_Garantia_Extendida</members>
-	<members>DSALES_Categoria__c.DSALES_GEX</members>
+	<members>DSALES_Categoria__c.DSales_ProductoTangible</members>
 	<members>DSALES_Categoria__c.DSALES_SM</members>
-	<members>DSALES_Clase__c.DSALES_GEX</members>
+	<members>DSALES_Clase__c.DSales_ProductoTangible</members>
 	<members>DSALES_Clase__c.DSALES_SM</members>
-	<members>DSALES_Familia__c.DSALES_GEX</members>
+	<members>DSALES_Familia__c.DSales_ProductoTangible</members>
 	<members>DSALES_Familia__c.DSALES_SM</members>
 	<members>Claim.DSALES_Nuevo_Siniestro</members>
 	<members>DSALES_Partidadepago__c.DSALES_SegurodeMotos</members>
@@ -1229,9 +1257,6 @@
 		<members>DSALES_ReportesdeVentasGEX/Ranking_Tiendas_CuC</members>
 		<members>DSALES_ReportesdeVentasGEX/Resultado_Divisin_Primer_Trimestre_2_4Zj</members>
 		<members>DSALES_ReportesdeVentasGEX/Resultado_Divisin_Regin_iVL</members>
-
-
-
 	<name>Report</name>
 </types>
 <types>
