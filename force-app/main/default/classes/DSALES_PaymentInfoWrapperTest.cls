@@ -30,7 +30,7 @@ public class DSALES_PaymentInfoWrapperTest {
         Tienda__c tienda =[SELECT Id FROM Tienda__c LIMIT 1];
         RestRequest request = new RestRequest();
         RestResponse respuesta = new RestResponse();
-        String body='{"id_universal":"20230314000101014564","tipo_folio":"01","folio_transaccion":"012345","total_factura":20000,"Seguro":true,"nombre_vendedor":"Nelson Varela","numero_caja":"1","clave_tienda":"1","sku":"","id_oportunidad":"'+oportunidad.Id+'","fecha_de_entrega":"2023-01-20","fecha_venta":"2023-01-19","plazos":18,"ListaDePagos":[{"metodo_pago":"Efectivo","pago":10000},{"metodo_pago":"Efectivo","pago":10000}]}';
+        String body='{"idUniversal":"111111111111","idOportunidad":"'+oportunidad.Id+'","tipoFolio":"01","folioTransaccion":"014564","totalFactura":20000,"Seguro":true,"nombreVendedor":"Nelson Varela","numeroCaja":"1","claveTienda":"1","sku":"984376","fechaEntrega":"2023-05-19","fechaVenta":"2023-05-17","plazos":18,"ListaDePagos":[{"metodoPago":"Efectivo","pago":1000}]}';
         request.requestURI = '/insertPaymentInformationSM/*';
         request.httpMethod = 'POST';
         RestContext.request = request;
@@ -51,7 +51,7 @@ public class DSALES_PaymentInfoWrapperTest {
         Tienda__c tienda =[SELECT Id FROM Tienda__c LIMIT 1];
         RestRequest request = new RestRequest();
         RestResponse respuesta = new RestResponse();
-        String body='{"id_universal":"xxxxx","tipo_folio":"01","folio_transaccion":"01","total_factura":20000,"Seguro":true,"nombre_vendedor":"Nelson Varela","numero_caja":"1","clave_tienda":"1","sku":"","id_oportunidad":"'+oportunidad.Id+'","fecha_de_entrega":"2023-01-20","fecha_venta":"2023-01-19","plazos":18,"ListaDePagos":[{"metodo_pago":"Efectivo","pago":10000}]}';
+        String body='{"idUniversal":"111111111111","idOportunidad":"00000000000000000","tipoFolio":"01","folioTransaccion":"014564","totalFactura":20000,"Seguro":true,"nombreVendedor":"Nelson Varela","numeroCaja":"1","claveTienda":"1","sku":"984376","fechaEntrega":"2023-05-19","fechaVenta":"2023-05-17","plazos":18,"ListaDePagos":[{"metodoPago":"Efectivo","pago":1000}]}';
         request.requestURI = '/insertPaymentInformationSM/*';
         request.httpMethod = 'POST';
         RestContext.request = request;

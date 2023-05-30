@@ -35,8 +35,9 @@ global with sharing class DSALES_AccountWrapperRequest {
         String message = '';
         String code = '';
         Account accountRecord = new Account();
+        System.debug('datos de cliente antes de buscar:'+cliente);
         try{
-            if(cliente.numeroCliente == null || cliente.numeroCliente ==''){
+            if(cliente.numeroCliente == null || String.isEmpty(cliente.numeroCliente)){
                 for(Account item : [Select id from Account Where FirstName=:cliente.nombre and LastName=:cliente.apellidoPaterno and PersonEmail= :cliente.correoElectronico WITH SECURITY_ENFORCED]){
                     accountRecord.Id = item.Id;
                 }
@@ -51,15 +52,33 @@ global with sharing class DSALES_AccountWrapperRequest {
             accountRecord.Suffix = cliente.apellidoMaterno;
             accountRecord.PersonMobilePhone = cliente.telefono;
             accountRecord.PersonEmail = cliente.correoElectronico;
-            accountRecord.CP_Gender__pc = cliente.genero;
+            System.debug('Genero antes de asignar:'+cliente.genero);
+            if(cliente.genero=='Femenino'){
+                accountRecord.CP_Gender__pc = 'F';
+            }
+            else if(cliente.genero=='Masculino'){
+                accountRecord.CP_Gender__pc = 'M';
+            }
+            System.debug('Genero despues de asignar:'+accountRecord.CP_Gender__pc);
+            //accountRecord.CP_Gender__pc = cliente.genero;
             accountRecord.PersonBirthdate = cliente.fechaNacimiento;
             accountRecord.BillingStreet = cliente.domicilio;
             accountRecord.BillingCity =  cliente.nombreCiudad;
             accountRecord.BillingState = cliente.nombreEstado;
             accountRecord.BillingPostalCode = cliente.codigoPostal;
+            if(!String.isEmpty(cliente.numeroInterior))
+            {
+                accountRecord.dsalesNumeroInterior__c=Decimal.valueOf(cliente.numeroInterior);
+            }
             
+            accountRecord.dsalesNumeroExterior__c=Decimal.valueOf(cliente.numeroExterior);
+            accountRecord.CP_BillingStateCode__c=cliente.nombreEstado; //clave de estado en SM
+            //accountRecord.dsalesCodigoColonia__c=Decimal.valueOf(cliente.colonia); //clave colonia SM
+           
+            System.debug('Datos del cliente: '+accountRecord.Id + ' ' + accountRecord.FirstName + ' ' + accountRecord.LastName);
             if(Schema.sObjectType.Account.isCreateable() && Schema.sObjectType.Account.isUpdateable()){
                 upsert accountRecord;
+                System.debug('cuenta actualizada'+accountRecord);
             } else {
                 System.debug('Permisos insuficientes para actualizar');
             }
@@ -70,7 +89,7 @@ global with sharing class DSALES_AccountWrapperRequest {
             
         }catch(Exception e){
             success = false;
-            message = DSALES_Utility.INTERNAL_ERROR_MSJ;
+            message = DSALES_Utility.INTERNAL_ERROR_MSJ + e.getMessage() + e.getLineNumber();
             code = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
         }
         
