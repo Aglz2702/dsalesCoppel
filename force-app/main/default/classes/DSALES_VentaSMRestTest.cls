@@ -6,6 +6,7 @@ public with sharing class DSALES_VentaSMRestTest {
         String message = '';
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Seguro_de_Moto').getRecordTypeId();
         String recordTypeAccountId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
+        String  quoteRecordType = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Seguro de Motos').getRecordTypeId();
         DSALES_Familia__c family = new DSALES_Familia__c();
         family.Name = 'test';
         insert family;
@@ -101,7 +102,7 @@ public with sharing class DSALES_VentaSMRestTest {
         t.DSales_TiendaID__c =  '1';
         insert t;
         
-        Quote cotizacion = new Quote(OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
+        Quote cotizacion = new Quote(RecordTypeId=quoteRecordType,OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
         insert cotizacion;
         
         DSALES_TipodeUso__c tipoUso = new DSALES_TipodeUso__c(Name='Comercial');
