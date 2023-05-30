@@ -4,7 +4,9 @@ public with sharing class DSALES_IPAssetWrapperRequestActivoTest {
     static void setUp(){
         Product2 prodAmp = new Product2(Name ='AMP',	dsalesVehiculo__c='23d23d23', StockKeepingUnit='123444',DSales_Tipo_de_Producto__c='Seguro',IsActive=true);
 		insert prodAmp;
-         Id pricebookId = Test.getStandardPricebookId();
+        Product2 prodM = new Product2(Name ='MOTO',	dsalesVehiculo__c='21d23d23', StockKeepingUnit='123644',DSales_Tipo_de_Producto__c='Producto',IsActive=true);
+		insert prodM;
+        Id pricebookId = Test.getStandardPricebookId();
         PricebookEntry standardPriceGEX = new PricebookEntry();
         standardPriceGEX.Pricebook2Id = pricebookId;
         standardPriceGEX.Product2Id = prodAmp.Id;
@@ -50,6 +52,13 @@ public with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         seguroAmp.DSALES_Plazo__c=plazoAMP12.Id;
         seguroAmp.DSALES_Segurogratis__c=false;
         insert seguroAmp;
+        QuoteLineItem moto = new QuoteLineItem();
+        moto.QuoteId = cotizacion.Id;
+        moto.PricebookEntryId = customPrice.Id;
+        moto.Product2Id = prodM.Id;
+        moto.Quantity = 1.0;
+        moto.UnitPrice = customPrice.UnitPrice;
+        insert moto;
         InsurancePolicy pol = new InsurancePolicy(
            Name='Sayra test',
            NameInsuredId=ac.id,

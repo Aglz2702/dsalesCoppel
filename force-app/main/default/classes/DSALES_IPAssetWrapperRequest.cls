@@ -24,7 +24,6 @@ global with sharing class DSALES_IPAssetWrapperRequest {
                     policyAssetRes.codigoError=DSALES_Utility.BAD_REQUEST_CODE;
                     
                 }catch(Exception e){
-                    System.debug('ERROR SERIVICO ACTIVO EXTERNO');
                     System.debug('error: '+e.getLineNumber()+':'+e.getMessage());
                     policyAssetRes.exito = false;
                     policyAssetRes.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
@@ -34,7 +33,6 @@ global with sharing class DSALES_IPAssetWrapperRequest {
                 }
             }
         }
-        //policyAssetRes=prueba.seguro.poliza;
         return policyAssetRes;
        
     }	 
@@ -46,9 +44,7 @@ global with sharing class DSALES_IPAssetWrapperRequest {
         try{
             
             DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Poliza__c,DSALES_IDUniversal__c,DSALES_Nombre_del_Vendedor__c,DSALES_Motoentregada__c, DSALES_Motoexterna__c,DSALES_Seguro__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal WITH SECURITY_ENFORCED LIMIT 1];
-            System.debug('pago:'+pago);
             pago.DSALES_Motoexterna__c=policyAsset.bajoDemanda; 
-            System.debug('pago.DSALES_Seguro__c;'+pago.DSALES_Seguro__c);
             if(pago.DSALES_Seguro__c ==true) {
                 ipAssetRecord.DSALES_InformacionPago__c=pago.Id;
                 iPAssetRecord.dsalesCliente__c=pago.DSALES_Cliente__c;
@@ -81,12 +77,10 @@ global with sharing class DSALES_IPAssetWrapperRequest {
                 insert ipAssetRecord;
             }else{
                 System.debug('Permisos insuficientes para insertar');
-            }               
-            System.debug('Registro ha insertado');
+            }
         }catch(Exception e){
             System.debug('ERROR EN ACTIVO SERVICE:'+e.getLineNumber()+':'+e.getMessage());
         }
-        //System.debug('activo creado en venta x: '+ipAssetRecord);
         return ipAssetRecord;
     }
     public class WrapperReturn{

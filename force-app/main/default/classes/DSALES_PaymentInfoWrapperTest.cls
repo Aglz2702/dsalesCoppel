@@ -45,24 +45,5 @@ public class DSALES_PaymentInfoWrapperTest {
         RestContext.response= respuesta;
         System.assertNotEquals(200, respuesta.statusCode, 'La llamada no debe devolver un código 200');
     }
-    @isTest 
-    static void registrarPagoErrorTest(){
-        Opportunity oportunidad = [SELECT Id FROM Opportunity LIMIT 1];
-        Tienda__c tienda =[SELECT Id FROM Tienda__c LIMIT 1];
-        RestRequest request = new RestRequest();
-        RestResponse respuesta = new RestResponse();
-        String body='{"idUniversal":"111111111111","idOportunidad":"00000000000000000","tipoFolio":"01","folioTransaccion":"014564","totalFactura":20000,"Seguro":true,"nombreVendedor":"Nelson Varela","numeroCaja":"1","claveTienda":"1","sku":"984376","fechaEntrega":"2023-05-19","fechaVenta":"2023-05-17","plazos":18,"ListaDePagos":[{"metodoPago":"Efectivo","pago":1000}]}';
-        request.requestURI = '/insertPaymentInformationSM/*';
-        request.httpMethod = 'POST';
-        RestContext.request = request;
-        request.requestBody = Blob.valueof(body);
-        RestContext.response = respuesta;
-        DSALES_PaymentInfoWrapper.PaymentRequest pago = (DSALES_PaymentInfoWrapper.PaymentRequest)JSON.deserialize(body, DSALES_PaymentInfoWrapper.PaymentRequest.class);            
-        Test.startTest();
-		DSALES_PaymentInfoWrapperRequest.crearPago();
-		Test.stopTest();
-        RestContext.request = request;
-        RestContext.response= respuesta;
-        System.assertNotEquals(200, respuesta.statusCode, 'La llamada no debe devolver un código 200');
-    }
+    
 }

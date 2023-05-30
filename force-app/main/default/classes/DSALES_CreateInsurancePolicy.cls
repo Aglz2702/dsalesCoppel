@@ -1,4 +1,4 @@
-public without sharing class DSALES_CreateInsurancePolicy {
+public without sharing class DSALES_CreateInsurancePolicy{
 
     public static InsurancePolicy crearPoliza(List<DSALES_VentaSM.DatosParticipante> participantes, DSALES_VentaSMRest.DatosPrepoliza banderas) {
         DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Oportunidad__c,DSALES_Motoexterna__c,DSALES_Poliza__c FROM DSALES_InformacionDePago__c WHERE Id=:banderas.idPago WITH SECURITY_ENFORCED];

@@ -2,8 +2,10 @@
 public with sharing class DSALES_CreateInsurancePolicyTest {
     @testSetup
     static void creacionRegistros(){
-        String tipoProducto = 'Producto';
+        String tipoProducto = 'Producto'; 
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Seguro_de_Moto').getRecordTypeId();
+       String recordTypeAccountId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
+
         DSALES_Familia__c familia = new DSALES_Familia__c();
         familia.Name = 'test';
         insert familia;
@@ -61,9 +63,12 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         customPriceMoto.IsActive = true;
         insert customPriceMoto;
         Account acc = new Account();
-        acc.Name='Sayra Martinez Quiroz';
-        acc.CP_WalletCustomerNumber__c=45654;
-        acc.DSALES_Clientecoppel__c='90001';
+        acc.RecordTypeId=recordTypeAccountId;
+        acc.FirstName='Sayra';
+        acc.LastName='Martinez';
+        acc.Suffix='Quiroz';
+        //acc.CP_WalletCustomerNumber__c=45654;
+        acc.PersonEmail='saymartinez@deloittemx.com';
         insert acc;
         Opportunity oportunidad = new Opportunity(Name='Testoportunidadortunity', AccountId=acc.Id, CloseDate=Date.Today(), StageName='Nuevo', Pricebook2Id=customPB.Id,RecordTypeId=recordTypeId);
         insert oportunidad;
@@ -130,6 +135,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
     @isTest
     public static void prepolizaTest(){
         DSALES_InformaciondePago__c pago = [SELECT Id,DSALES_Oportunidad__c FROM DSALES_InformaciondePago__c LIMIT 1];
+        List<DSALES_VentaSM.DatosParticipante> listaPart= new List<DSALES_VentaSM.DatosParticipante>();
         DSALES_VentaSM.DatosParticipante part = new DSALES_VentaSM.DatosParticipante();
         part.figura='Conductor';
         part.nombre='Sayra';
@@ -149,11 +155,30 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         part.calle='calle';
         part.numeroExterior='12';
         part.numeroInterior='12';
-        List<DSALES_VentaSM.DatosParticipante> listaPart= new List<DSALES_VentaSM.DatosParticipante>();
+        DSALES_VentaSM.DatosParticipante part2 = new DSALES_VentaSM.DatosParticipante();
+        part2.figura='Beneficiario';
+        part2.nombre='Martha';
+        part2.apellidoPaterno='Moralez';
+        part2.apellidoMaterno='Sanchez';
+        part2.relacionConParticipante='';
+        part2.porcentaje='0';
+        part2.telefono='4325808753';
+        part2.correoElectronico='saymartinez@deloittemx.com';
+        part2.genero='Femenino';
+        part2.fechaNacimiento=Date.today();
+        part2.rfc='123678';
+        part2.codigoPostal=1224324;
+        part2.codigoEstado='12';
+        part2.codigoCiudad='12';
+        part2.codigoColonia='12';
+        part2.calle='calle';
+        part2.numeroExterior='12';
+        part2.numeroInterior='12';
         listaPart.add(part);
+        listaPart.add(part2);
         DSALES_VentaSMRest.DatosPrepoliza banderas = new DSALES_VentaSMRest.DatosPrepoliza();
         banderas.idPago=pago.Id;
-        banderas.enviaContratante=false;
+        banderas.enviaContratante=null;
         banderas.beneficiarioPreferente=true;
         DSALES_CreateInsurancePolicy.crearPoliza(listaPart,banderas);
         InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
@@ -173,46 +198,12 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         insert activo;
         Test.startTest();
         DSALES_CreateInsurancePolicy.agregarDatosDeActivo(activo, poliza.Id);
-        Test.stopTest();
-        System.assertNotEquals(null, activo,'la variable no debe ser null');
-
-    }
-    
-    @isTest
-    public static void estatusTest(){
-        DSALES_InformaciondePago__c pago = [SELECT Id,DSALES_Oportunidad__c FROM DSALES_InformaciondePago__c LIMIT 1];
-        Test.startTest();
-       DSALES_VentaSM.DatosParticipante part = new DSALES_VentaSM.DatosParticipante();
-        part.figura='Conductor';
-        part.nombre='Sayra';
-        part.apellidoPaterno='Martinez';
-        part.apellidoMaterno='Quiroz';
-        part.relacionConParticipante='';
-        part.porcentaje='0';
-        part.telefono='4325808753';
-        part.correoElectronico='saymartinez@deloittemx.com';
-        part.genero='Femenino';
-        part.fechaNacimiento=Date.today();
-        part.rfc='123678';
-        part.codigoPostal=1224324;
-        part.codigoEstado='12';
-        part.codigoCiudad='12';
-        part.codigoColonia='12';
-        part.calle='calle';
-        part.numeroExterior='12';
-        part.numeroInterior='12';
-        List<DSALES_VentaSM.DatosParticipante> listaPart= new List<DSALES_VentaSM.DatosParticipante>();
-        listaPart.add(part);
-        DSALES_VentaSMRest.DatosPrepoliza banderas = new DSALES_VentaSMRest.DatosPrepoliza();
-        banderas.idPago=pago.Id;
-        banderas.enviaContratante=false;
-        banderas.beneficiarioPreferente=true;
-        DSALES_CreateInsurancePolicy.crearPoliza(listaPart,banderas);
-        InsurancePolicy poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
+        poliza = [SELECT Id,SourceopportunityId,ExpirationDate,DSALES_VigenciacumplidaSM__c,dsalesEstatusPoliza__c FROM InsurancePolicy WHERE SourceopportunityId=:pago.DSALES_Oportunidad__c];
 		poliza.ExpirationDate=DateTime.now();
         update poliza;
         DSALES_CreateInsurancePolicy.cambiarEstatusPoliza(poliza.Id);
         Test.stopTest();
-        System.assertNotEquals(null, poliza, 'La variable no debe ser null');
+        System.assertNotEquals(null, activo,'la variable no debe ser null');
+
     }
 }

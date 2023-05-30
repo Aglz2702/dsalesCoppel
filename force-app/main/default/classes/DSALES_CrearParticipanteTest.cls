@@ -1,5 +1,5 @@
 @isTest
-public class DSALES_CrearParticipanteTest {
+public class DSALES_CrearParticipanteTest{
     @testSetup
     public static void crearRegistros(){
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Seguro_de_Moto').getRecordTypeId();

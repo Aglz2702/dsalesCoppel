@@ -14,10 +14,8 @@ global with sharing class DSALES_NuevaPoliza {
                 try{
                     DSALES_PolizaWrapper.Request poliza = (DSALES_PolizaWrapper.Request)JSON.deserialize(body, DSALES_PolizaWrapper.Request.class);
                     InsurancePolicy polizaA = [SELECT Id,SourceQuoteId,dsalesQuoteId__c,SourceOpportunityId FROM InsurancePolicy WHERE dsalesQuoteId__c=:poliza.quote_id WITH SECURITY_ENFORCED LIMIT 1];
-                    System.debug('poliza request:'+poliza);
                     listaIds=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(polizaA.SourceOpportunityId);
                     service(poliza,polizaA.Id);    
-                    System.debug('póliza'+polizaA);
                     exito=true;
                 }catch(Exception.JSONException e){
                     exito = false;
