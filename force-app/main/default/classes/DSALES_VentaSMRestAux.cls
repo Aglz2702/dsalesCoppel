@@ -1,7 +1,6 @@
 public with sharing class DSALES_VentaSMRestAux {
     public static  List<DSALES_VentaSM.ListaPartidasOportunidad> obtenerPartidas(String idOportunidad){
         List<DSALES_VentaSMRest.WrapperDatosProductos> productosSincronisados= DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(idOportunidad);
-        System.debug('PARTIDAS ANTES DE RESPONSE:'+productosSincronisados);
         List<DSALES_VentaSM.ListaPartidasOportunidad> listaPartidas= new List<DSALES_VentaSM.ListaPartidasOportunidad>();
         for(DSALES_VentaSMRest.WrapperDatosProductos listSin:productosSincronisados){
             DSALES_VentaSM.ListaPartidasOportunidad partida = new DSALES_VentaSM.ListaPartidasOportunidad();
@@ -10,7 +9,6 @@ public with sharing class DSALES_VentaSMRestAux {
             partida.sku=listSin.sku; 
             listaPartidas.add(partida);
         }
-        System.debug('PARTIDAS PARA EL RESPONSE:'+listaPartidas);
         return listaPartidas;
     }
     public static void cotizacionesNuevas(DSALES_InformacionDePago__c pago,List<String> partidasSeleccionadas){

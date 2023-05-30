@@ -22,7 +22,7 @@ public class DSALES_AccountWrapperReques_Test{
     static void createRecordTest(){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{"numeroDeCliente":"87654","nombre":"Test","apellidoPaterno":"Test","apellidoMaterno":"Prueba","telefono":"89017829","correoElectronico":"dsanmiguel@deloittemx.com","genero":"M","fechaNacimiento":"1992-08-02","codigoPostal":"06030","nombreEstado":"12","numeroInterior":"12","numeroExterior":"12","colonia":"12"}';
+        String body = '{"numeroDeCliente":"87654","nombre":"Test","apellidoPaterno":"Test","apellidoMaterno":"Prueba","telefono":"89017829","correoElectronico":"dsanmiguel@deloittemx.com","genero":"Masculino","fechaNacimiento":"1992-08-02","codigoPostal":"06030","nombreEstado":"12","numeroInterior":"12","numeroExterior":"12","colonia":"12"}';
         req.requestURI = '/apexrest/insertAccount';
         req.httpMethod = 'POST';
         RestContext.request = req;
@@ -40,7 +40,7 @@ public class DSALES_AccountWrapperReques_Test{
     static void createRecordTest2(){
         RestRequest req2 = new RestRequest();
         RestResponse res2 = new RestResponse();
-        String body2 = '{"numeroDeCliente":"","nombre":"Test","apellidoPaterno":"Test","apellidoMaterno":"Prueba","telefono":"89017829","correoElectronico":"dsanmiguel@deloittemx.com","genero":"M","fechaNacimiento":"1992-08-02","codigoPostal":"06030"}';
+        String body2 = '{"numeroDeCliente":"","nombre":"Test","apellidoPaterno":"Test","apellidoMaterno":"Prueba","telefono":"89017829","correoElectronico":"dsanmiguel@deloittemx.com","genero":"Masculino","fechaNacimiento":"1992-08-02","codigoPostal":"06030"}';
         req2.requestURI = '/apexrest/insertAccount';
         req2.httpMethod = 'POST';
         RestContext.request = req2;
@@ -58,7 +58,7 @@ public class DSALES_AccountWrapperReques_Test{
     static void createRecordTest3(){
         RestRequest req3 = new RestRequest();
         RestResponse res3 = new RestResponse();
-        String body3 = '{"numeroDeCliente":"","nombre":"Emmanuel","apellidoPaterno":"Gonzalez","apellidoMaterno":"Lopez","telefono":"89017829","correoElectronico":"egl@deloittemx.com","genero":"M","fechaNacimiento":"1992-08-02","codigoPostal":"06030"}';
+        String body3 = '{"numeroDeCliente":"","nombre":"Emmanuel","apellidoPaterno":"Gonzalez","apellidoMaterno":"Lopez","telefono":"89017829","correoElectronico":"egl@deloittemx.com","genero":"Masculino","fechaNacimiento":"1992-08-02","codigoPostal":"06030"}';
         req3.requestURI = '/apexrest/insertAccount';
         req3.httpMethod = 'POST';
         RestContext.request = req3;

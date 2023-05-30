@@ -147,7 +147,6 @@ global without sharing class DSALES_VentaSMRest {
                 participante.fechaNacimiento = item.fechaNacimiento;
                 participante.calle = item.calle;
                 participante.codigoCiudad =  item.codigoCiudad;
-                //cliente.BillingState = participante.nombreEstado; //preguntar a lalo si este campo es correcto
                 participante.codigoPostal = item.codigoPostal;
                 participante.numeroInterior=item.numeroInterior;
                 participante.numeroExterior=item.numeroExterior;
@@ -164,18 +163,15 @@ global without sharing class DSALES_VentaSMRest {
         cliente.fechaNacimiento=participante.fechaNacimiento;
         cliente.domicilio=participante.calle;
         cliente.nombreCiudad=participante.codigoCiudad;
-        //cliente.nombreEstado;
         cliente.codigoPostal=String.valueOf(participante.codigoPostal);
         cliente.numeroInterior=participante.numeroInterior;
         cliente.numeroExterior =participante.numeroExterior;
         cliente.nombreEstado=participante.codigoEstado; //clave de estado en SM
         cliente.colonia=participante.codigoColonia; //clave colonia SM
         DSALES_AccountWrapper.AccountResponse response= DSALES_AccountWrapperRequest.upsertAccount(cliente);
-        //System.debug('Datos del cliente: '+cliente.Id + ' ' + cliente.FirstName + ' ' + cliente.LastName);
         return response.idCuenta;
     }
     public static DSALES_VentaSM.DatosParaEmitir datosParaEmitir(DSALES_VentaSM.VentaSMRequest venta,String idPoliza){
-        System.debug('DATOS PARA GENERAR EL RESPONSE:'+venta);
         DSALES_VentaSM.DatosParaEmitir response = new DSALES_VentaSM.DatosParaEmitir();
         DSALES_VentaSM.DatosSeguro datosSeguro= new DSALES_VentaSM.DatosSeguro();
         DSALES_VentaSM.DatosVehiculo vehiculo = new DSALES_VentaSM.DatosVehiculo();
@@ -269,7 +265,6 @@ global without sharing class DSALES_VentaSMRest {
             Account item =[SELECT Id,CP_WalletCustomerNumber__c,dsalesRfc__c,FirstName,LastName,Suffix,PersonMobilePhone,PersonEmail,CP_Gender__pc,PersonBirthdate,BillingStreet,BillingCity,BillingState,BillingPostalCode,dsalesNumeroInterior__c,
             dsalesNumeroExterior__c,CP_BillingStateCode__c,dsalesCodigoColonia__c,dsalesSegundoCorreo__c,dsalesNacionalidadSociedad__c,dsalesFechaConstitucion__c,dsalesGiroComercial__c,dsalesTipoPersona__c,dsalesNombreApoderadoLegal__c,dsalesActividad__c 
             FROM Account WHERE FirstName=:NOMBRE_CONTRATANTE WITH SECURITY_ENFORCED LIMIT 1];
-            System.debug('contratante:'+item);
             contratante.rfc=item.dsalesRfc__c;
             //contratante.nombre = item.FirstName;
             //contratante.apellidoPaterno = item.LastName;

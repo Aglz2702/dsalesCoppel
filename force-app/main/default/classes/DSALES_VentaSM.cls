@@ -12,7 +12,6 @@ global class DSALES_VentaSM {
 	}
 
 	global class DatosParticipante {
-		//global Boolean contratante {get;set;}
 		global String figura { get; set; }
 		global String numeroCliente { get; set; }
 		global String nombre { get; set; }
@@ -63,13 +62,8 @@ global class DSALES_VentaSM {
 		global String contratante {get;set;}
 		global DatosContratante datosContratante {get;set;}
 		global DatosConductor datosConductor {get;set;}
-		//global List<DatosParticipante> participante { get; set; } 
-		
 	}
 	global class DatosContratante {
-		//global String nombre { get; set; }
-		//global String apellidoPaterno { get; set; }
-		//global String apellidoMaterno { get; set; }
 		global String telefono { get; set; }
 		global String correoElectronico { get; set; }
 		global String segundoCorreoContratante {get;set;}

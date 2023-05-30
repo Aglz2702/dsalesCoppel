@@ -173,8 +173,6 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             }  
         }
         
-        //listaParticipantes.add(contratante);
-        //System.debug('lista Participantes:'+listaParticipantes);
         seguro.aseguradora=poliza.DSALES_Aseguradora__c;
         seguro.codigoPromocion=cotizacion.dsalesCodigoDePromocion__c;
         seguro.fechaEmision=poliza.dsalesFechaDeEmision__c;

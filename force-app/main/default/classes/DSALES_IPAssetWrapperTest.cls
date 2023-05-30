@@ -27,10 +27,8 @@ public with sharing class DSALES_IPAssetWrapperTest {
         request.requestBody=Blob.valueOf(body);
         RestContext.response=response;
         DSALES_IPAssetWrapper.IPAssetRequest policyAsset =  (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize (body,DSALES_IPAssetWrapper.IPAssetRequest.class);
-        //policyAsset.payment_info=pago.id;
         Test.startTest();
         DSALES_IPAssetWrapperRequest.createIPAsset();
-        //Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
         Test.stopTest();
         RestContext.request = request;
         RestContext.response= response;

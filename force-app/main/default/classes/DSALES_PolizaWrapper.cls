@@ -5,7 +5,6 @@ global class DSALES_PolizaWrapper {
         global String quote {get;set;}
         global String idEmision { get; set; }
         global String trackingId { get; set; }
-        //global String nombrePoliza { get; set; }
         global String numeroPoliza { get; set; }
         global String urlPdf { get; set; }
         global Date fechaVigencia { get; set; }
