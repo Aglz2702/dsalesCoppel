@@ -63,8 +63,8 @@ public class DSALES_QuoteGexWrapperRequestTest{
         
         DSales_Asignacion_de_Productos__c asig = new DSales_Asignacion_de_Productos__c();
         asig.Name = 'test';
-        asig.DSales_Servicio_Seguro__c =prod.Id;
-        asig.DSales_Producto__c = prodGEX.Id;
+        asig.DSales_Servicio_Seguro__c =prodGEX.Id;
+        asig.DSales_Producto__c = prod.Id;
         asig.DSALES_Activo__c = true;
         insert asig;
         
