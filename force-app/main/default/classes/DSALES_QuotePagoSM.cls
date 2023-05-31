@@ -334,9 +334,9 @@ public with sharing class DSALES_QuotePagoSM {
                     }
                     
                     Quote cotizacion =updateCot(listCotNew);
-                }catch(Exception e){
-                    System.debug('Error al insertar:\n'+e.getMessage());
-                }
+                }catch(Exception e ){
+            System.debug('Error al crear dos partidas de presupuesto--------->'+e.getLineNumber() + e.getMessage());
+        }
                 
                 List<QuoteLineItem> idNuevos = new List<QuoteLineItem>();
                 idNuevos= createCotItm(listMotoRc, listPartInsert);
@@ -425,14 +425,21 @@ public with sharing class DSALES_QuotePagoSM {
     
     /**************************************************************** */
     public static Quote updateEnviarCot(List<QuoteLineItem>listaMotoSeguroToInsert){
+        try{
         Quote cotizacionEnviar=[SELECT Id,DSALES_Enviarcotizacion__c FROM Quote WHERE Id=:listaMotoSeguroToInsert[0].QuoteId WITH SECURITY_ENFORCED LIMIT 1];
+        
         cotizacionEnviar.DSALES_Enviarcotizacion__c=true;
         if(Quote.SObjectType.getDescribe().isUpdateable()) {
             update cotizacionEnviar;   
         }else{
             System.debug('Permisos insuficientes para actualizar');   
-        } 
+        }
+        
         return cotizacionEnviar;
+        }catch(Exception e ){
+            System.debug('Error al crear dos partidas de presupuesto--------->'+e.getLineNumber() + e.getMessage());
+            return null;
+        }
     }
     
     
@@ -503,14 +510,17 @@ public with sharing class DSALES_QuotePagoSM {
         
         for(QuoteLineItem q:listMotoRc){
             QuoteLineItem part = new QuoteLineItem();
-            part.QuoteId = listCotNew[0]; 
+            part.QuoteId = listCotNew[0];
+            part.PricebookEntryId = q.PricebookEntryId;
+            part.UnitPrice=q.UnitPrice;
+            part.Quantity = 1;
+            part.Product2Id = q.Product2Id;
             if (pricesMap.containsKey(q.DSALES_NombreProducto__c) && plazosMap.containsKey(q.DSALES_Plazo__c)) {
-                PricebookEntry pr = pricesMap.get(q.DSALES_NombreProducto__c);
-                
-                part.PricebookEntryId = pr.Id;
-                part.UnitPrice=pr.UnitPrice;
+                //PricebookEntry pr = pricesMap.get(q.DSALES_NombreProducto__c);
+                //part.PricebookEntryId = pr.Id;
+                //part.UnitPrice=pr.UnitPrice;
                 part.DSALES_Segurogratis__c=q?.DSALES_Segurogratis__c;
-                part.Quantity = 1;
+                //part.Quantity = 1;
                 part.DSALES_Fechadeinicio__c = q.DSALES_Fechadeinicio__c;
                 part.DSALES_Fechadetermino__c = q.DSALES_Fechadetermino__c;
                 part.DSALES_Primaneta__c = q.DSALES_Primaneta__c;
