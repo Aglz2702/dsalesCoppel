@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>DSALES_AccountWrapperReques_Test</members>
-		<members>DSALES_AccountWrapperRequest</members>
-		<members>DSALES_CrearParticipanteTest</members>
-		<members>DSALES_CrearParticipantesPoliza</members>
-		<members>DSALES_CreateInsurancePolicy</members>
-		<members>DSALES_CreateInsurancePolicyTest</members>
-		<members>DSALES_IPAssetWrapper</members>
-		<members>DSALES_IPAssetWrapperRequest</members>
-		<members>DSALES_IPAssetWrapperRequestActivo</members>
-		<members>DSALES_IPAssetWrapperRequestActivoTest</members>
-		<members>DSALES_IPAssetWrapperTest</members>
-		<members>DSALES_NuevaPoliza</members>
-		<members>DSALES_PaymentInfoWrapper</members>
-		<members>DSALES_PaymentInfoWrapperRequest</members>
-		<members>DSALES_PaymentInfoWrapperTest</members>
-		<members>DSALES_PolizaWrapper</members>
-		<members>DSALES_PolizaWrapperTest</members>
-		<members>DSALES_Utility</members>
-		<members>DSALES_UtilityTest</members>
-		<members>DSALES_VentaSM</members>
-		<members>DSALES_VentaSMRest</members>
-		<members>DSALES_VentaSMRestAux</members>
-		<members>DSALES_VentaSMRestAuxTest</members>
-		<members>DSALES_VentaSMRestTest</members>
-		<name>ApexClass</name>
+		<members>InsurancePolicyParticipant.dsalesFormatoCompactoSm</members>
+		<members>QuoteLineItem.DSALES_FormatocompactoSM</members>
+		<name>CompactLayout</name>
+	</types>
+	<types>
+		<members>DSALES_CancelacionPaginaRegistroSM</members>
+		<members>DSALES_PlazoPginaderegistro</members>
+		<members>DSALES_PysisAccountRecordPage</members>
+		<members>Informaci_n_de_Venta_de_Pago</members>
+		<members>ParticipantePolizaPaginaRegistro</members>
+		<members>Partida_presupuesto_Pagina_registro</members>
+		<members>Poliza_pagina_registroSM</members>
+		<members>Producto_Pagina_registro</members>
+		<members>Quote_Record_Page_Seguros</members>
+		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>DSALES_Cancelacion__c-Formato de Cancelación SM</members>
+		<members>DSALES_InformacionDePago__c-DSALESInformaciondepagosSM</members>
+		<members>InsurancePolicy-Formato de póliza de seguro</members>
+		<members>InsurancePolicyParticipant-Formato de pagina SM</members>
+		<members>Opportunity-DSALES_OpportunitySM</members>
+		<members>PersonAccount-DSALES_Clientes</members>
+		<members>Plazo__c-Formato Plazo</members>
+		<members>Product2-Formato para servicios y seguros</members>
+		<members>Product2-Seguro de Motos</members>
+		<members>Quote-Venta SM</members>
+		<name>Layout</name>
 	</types>
 	<version>55.0</version>
 </Package>
