@@ -40,13 +40,7 @@ public class DSALES_PolizaWrapperTest {
         customPriceAMP.IsActive = true;
         insert customPriceAMP;
         
-        /*PricebookEntry customPriceMoto = new PricebookEntry();
-        customPriceMoto.Pricebook2Id = customPB.Id;
-        customPriceMoto.Product2Id = prodM.Id;
-        customPriceMoto.UnitPrice = 2000;
-        customPriceMoto.IsActive = true;
-        insert customPriceMoto;*/
-       Account acc = new Account();
+       	Account acc = new Account();
         acc.Name='Sayra Martinez Quiroz';
         acc.CP_WalletCustomerNumber__c=45654;
         acc.DSALES_ClienteCoppel__c='90001';

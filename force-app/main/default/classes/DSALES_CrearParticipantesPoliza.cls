@@ -35,7 +35,6 @@ public with sharing class DSALES_CrearParticipantesPoliza {
         Set<String> datosCliente = new Set<String>();
         Set<String> datosClienteApellido = new Set<String>();
         Set<String> correosConAsignacion = new Set<String>();
-        //String figura ='';
         DatosConductor conductor = new DatosConductor();
         Decimal valueNumero;
         List<DSALES_VentaSM.DatosParticipante> listaOtrosParticipantes = new List<DSALES_VentaSM.DatosParticipante>();
@@ -53,20 +52,14 @@ public with sharing class DSALES_CrearParticipantesPoliza {
                 }
             }
             else{
-                System.debug('figura en participante:'+item);
                 if(enviaContratante=true && item.figura==DSALES_Utility.FIGURA_CONTRATANTE ){
-                    System.debug('condicion1:');
                     listaOtrosParticipantes.add(item);
-                    System.debug('figura en 1:'+item);
                 }
                 else if(item.figura!=DSALES_Utility.FIGURA_CONTRATANTE){
-                    System.debug('condicion2:');
-                    System.debug('figura en 2:'+item);
-                    listaOtrosParticipantes.add(item);   
+                         listaOtrosParticipantes.add(item);   
                 }
             } 
         }
-        System.debug('lista de participantes a agregar: '+listaOtrosParticipantes);
         if(enviaContratante==false){
             crearContratante(idPoliza);
         }

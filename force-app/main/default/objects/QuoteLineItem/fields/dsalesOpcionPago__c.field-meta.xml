@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSALES_Cobertura__c</fullName>
+    <fullName>dsalesOpcionPago__c</fullName>
+    <description>Campo para identificar si la partida es de contado o crédito.</description>
     <externalId>false</externalId>
-    <label>Cobertura</label>
+    <label>Opción de pago</label>
     <length>20</length>
     <required>false</required>
     <trackHistory>false</trackHistory>

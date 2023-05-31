@@ -16,7 +16,6 @@ global class DSALES_IPAssetWrapper {
         global String descripcion { get; set; }
         global String marca { get; set; }
         global String nombreActivo { get; set; }
-        //global String id_pago { get; set; }
     }
     global class IPAssetResponse{
         global List<DSALES_VentaSMRest.WrapperDatosProductos> listaPartidasOportunidad {get; set;}

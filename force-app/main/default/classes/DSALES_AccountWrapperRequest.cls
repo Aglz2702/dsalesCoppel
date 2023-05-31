@@ -53,12 +53,7 @@ global with sharing class DSALES_AccountWrapperRequest {
             accountRecord.PersonMobilePhone = cliente.telefono;
             accountRecord.PersonEmail = cliente.correoElectronico;
             System.debug('Genero antes de asignar:'+cliente.genero);
-            if(cliente.genero=='Femenino'){
-                accountRecord.CP_Gender__pc = 'F';
-            }
-            else if(cliente.genero=='Masculino'){
-                accountRecord.CP_Gender__pc = 'M';
-            }
+            accountRecord.CP_Gender__pc=asignarGenero(cliente.genero);
             System.debug('Genero despues de asignar:'+accountRecord.CP_Gender__pc);
             //accountRecord.CP_Gender__pc = cliente.genero;
             accountRecord.PersonBirthdate = cliente.fechaNacimiento;
@@ -101,5 +96,19 @@ global with sharing class DSALES_AccountWrapperRequest {
         responsePayload.idCuenta = accountRecord.id;
         
         return responsePayload;
+    }
+
+    public static String asignarGenero(String genero){
+        String generoAsignado='';
+        if(genero=='Femenino'){
+            generoAsignado= 'F';
+        }
+        else if(genero=='Masculino'){
+            generoAsignado= 'M';
+        }
+        if(genero=='M' || genero=='F'){
+            generoAsignado =genero;
+        }
+        return generoAsignado;
     }
 }
