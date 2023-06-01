@@ -252,8 +252,8 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         for(DSales_Asignacion_de_Productos__c da : productAsig){
             dsalesProductoSetId.add(da.DSales_Servicio_Seguro__c);
         }
-        List<DSales_Matriz_GEX__c> mat = [SELECT id, Name, DSALES_Activo__c, DSales_Region_GEX__c, DSALES_Tipo__c FROM DSales_Matriz_GEX__c WHERE DSALES_Servicio__c =: dsalesProductoSetId and DSALES_Activo__c =true and DSALES_Tipo__c=:originalMat and DSALES_Region__c INCLUDES (:regions) WITH SECURITY_ENFORCED];
-        List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = [SELECT id, Name,SALES_Precio_GEX__c,DSales_Matriz_GEX__c,DSALES_Rango_interior_GEX__c,DSALES_Rango_Superior_GEX__c,DSALES_Tiempo_de_Garantia_Extendida_GEX__c FROM DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c =: mat WITH SECURITY_ENFORCED ORDER BY SALES_Precio_GEX__c DESC];
+        //List<DSales_Matriz_GEX__c> mat = [SELECT id, Name, DSALES_Activo__c, DSales_Region_GEX__c, DSALES_Tipo__c,DSALES_Servicio__c FROM DSales_Matriz_GEX__c WHERE DSALES_Servicio__c =: dsalesProductoSetId and DSALES_Activo__c =true and DSALES_Tipo__c=:originalMat and DSALES_Region__c INCLUDES (:regions) WITH SECURITY_ENFORCED];
+        //List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = [SELECT id, Name,SALES_Precio_GEX__c,DSales_Matriz_GEX__c,DSALES_Rango_interior_GEX__c,DSALES_Rango_Superior_GEX__c,DSALES_Tiempo_de_Garantia_Extendida_GEX__c FROM DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c =: mat WITH SECURITY_ENFORCED ORDER BY SALES_Precio_GEX__c DESC];
         List<Pricebook2> precioLista = [SELECT id,Name FROM Pricebook2 WHERE Name= 'Standard Price Book' and IsActive=true WITH SECURITY_ENFORCED LIMIT 1];
         List<PricebookEntry> precioEn = [SELECT Id,UnitPrice,Name,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: produc and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
         List<PricebookEntry> precioEnGEX = [SELECT Id,Name,UnitPrice,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_Tipo_de_Producto__c,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: dsalesProductoSetId and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
@@ -323,6 +323,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             }
                         }
                     }else{
+                        List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = obtenerMatricesPrecio(intangibleId, regions, originalMat);
                         for(DSALES_Matriz_de_Cotizacion__c mPrice : matPrice1Year){
                             switch on mPrice.DSALES_Tiempo_de_Garantia_Extendida_GEX__c{
                                 when '1 año'{
@@ -487,4 +488,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return porcent;
     }
     
+    public static List<DSALES_Matriz_de_Cotizacion__c> obtenerMatricesPrecio(Id intangibleId, String regions, String originalMat) {
+        List<DSales_Matriz_GEX__c> mat = [SELECT id, Name, DSALES_Activo__c, DSales_Region_GEX__c, DSALES_Tipo__c, DSALES_Servicio__c FROM DSales_Matriz_GEX__c WHERE DSALES_Servicio__c = :intangibleId AND DSALES_Activo__c = true AND DSALES_Tipo__c = :originalMat AND DSALES_Region__c INCLUDES (:regions) WITH SECURITY_ENFORCED];
+        List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = [SELECT id, Name, SALES_Precio_GEX__c, DSales_Matriz_GEX__c, DSALES_Rango_interior_GEX__c, DSALES_Rango_Superior_GEX__c, DSALES_Tiempo_de_Garantia_Extendida_GEX__c FROM DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c = :mat WITH SECURITY_ENFORCED ORDER BY SALES_Precio_GEX__c DESC];
+        return matPrice1Year;
+    }    
     }
