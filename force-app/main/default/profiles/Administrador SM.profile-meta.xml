@@ -176,7 +176,7 @@
         <apexClass>DSALES_EndosoWrapperRequest_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-   
+    
     <classAccesses>
         <apexClass>DSALES_GetPolicyPDF</apexClass>
         <enabled>false</enabled>
@@ -217,8 +217,11 @@
         <apexClass>DSALES_InformacionPagoHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-   
-   
+    
+    <classAccesses>
+        <apexClass>DSALES_InsurancePolicyAssetsHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>DSALES_InsurancePolicyHandler</apexClass>
         <enabled>false</enabled>
@@ -294,6 +297,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_PolizaWrapperTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_Product2Handler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DSALES_Product2Handler_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -426,7 +437,7 @@
         <apexClass>DSALES_TiposDeUsoTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-   
+    
     
     <classAccesses>
         <apexClass>DSALES_UpdateClienteTest</apexClass>
@@ -497,11 +508,16 @@
         <apexClass>DSALES_siniestroTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>DSales_Product2Helper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
     
     <classAccesses>
         <apexClass>Product2_Handler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
+    
     
     <classAccesses>
         <apexClass>endososControllerClass</apexClass>
@@ -2434,6 +2450,7 @@
         <field>DSALES_Certificado__c.NOMIGRAR__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    
     <fieldPermissions>
         <editable>true</editable>
         <field>DSALES_Clase__c.DSALES_Departamento__c</field>
@@ -5114,6 +5131,7 @@
         <field>Quote.dsalesValorFactura__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    
     <fieldPermissions>
         <editable>false</editable>
         <field>QuoteLineItem.DSALES_Comision__c</field>
@@ -5495,6 +5513,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>dsalesCiudad__c.dsalesNumero__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>dsalesCiudad__c.dsalesRegion__c</field>
         <readable>true</readable>
@@ -5529,6 +5552,11 @@
         <field>dsalesRegion__c.dsalesNombre__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>dsalesRegion__c.dsalesNumero__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Asset-Pisys Asset Layout</layout>
     </layoutAssignments>
@@ -5540,11 +5568,11 @@
         <recordType>Campaign.DSALES_TipoderegistrocampaNasSM</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Claim-Ingreso de Siniestro</layout>
-        <recordType>Claim.DSALES_Nuevo_Siniestro</recordType>
+        <layout>Claim-Visualización de Siniestro</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Claim-Visualización de Siniestro</layout>
+        <recordType>Claim.DSALES_Nuevo_Siniestro</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Claim-Visualización de Siniestro</layout>
