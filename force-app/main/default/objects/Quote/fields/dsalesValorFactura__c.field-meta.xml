@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesValorFactura__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Campo para indicar si estamos recibiendo el valor de la factura</description>
+    <externalId>false</externalId>
+    <label>Valor de la factura</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>
