@@ -26,15 +26,11 @@
                 <behavior>Edit</behavior>
                 <field>dsalesCorreoElectronico__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DSALES_Monto__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
+                <field>dsalesFechaAltaSiniestro__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -69,35 +65,19 @@
                 <behavior>Edit</behavior>
                 <field>dsalesSolucionaDevolucion__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CreatedDate</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DSALES_SaldoInsoluto__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DSALES_SolucionDevolver__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_Motivo_rechazo__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DSALES_Indemnizacionaprobada__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Motivo_rechazo__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DSALES_Reporte__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>FinalizedDate</field>
+                <field>DSALES_SaldoInsoluto__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -118,11 +98,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Descripcion__c</field>
+                <field>DSALES_Marca__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_Marca__c</field>
+                <field>DSALES_Descripcion__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

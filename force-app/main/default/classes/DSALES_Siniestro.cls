@@ -55,6 +55,13 @@ global with sharing class DSALES_Siniestro {
         siniestro.DSALES_SiniestroUid__c = data.uid;
         siniestro.DSALES_Ano__c=data.vehiculo.anio;
         siniestro.DSALES_Serie__c=data.vehiculo.serie;
+        siniestro.dsalesFechaAltaSiniestro__c=Datetime.valueOf(data.fechaSiniestro);
+        siniestro.DSALES_Causa__c=data.causa;
+        siniestro.IncidentSiteCity = data.municipio;
+        siniestro.IncidentSiteState=data.estado;
+        siniestro.IncidentSiteStreet=data.ubicacion;
+        siniestro.DSALES_Descripcion__c=data.vehiculo.descripcion;
+        siniestro.DSALES_Nombre_conductor__c = data.nombreConductor;
 
         if(Schema.sObjectType.Claim.isCreateable()) {
             insert siniestro;
@@ -66,34 +73,45 @@ global with sharing class DSALES_Siniestro {
     }
     public static String actualizaSiniestro(DSALES_SiniestroWrapper.SiniestroGet data){
         List<ClaimPaymentSummary> listaPagos = new List<ClaimPaymentSummary>();
+        ClaimPaymentSummary SiniestroRPRecord = new ClaimPaymentSummary();
         Claim siniestro = [SELECT Id,ClaimType,PolicyNumberId,DSALES_Estatus__c,dsalesSolucionaDevolucion__c,DSALES_MotivodeDevolucion__c 
                            FROM Claim WHERE DSALES_SiniestroUid__c =:data.uid WITH SECURITY_ENFORCED LIMIT 1];
-        if(data.estatus =='En requerimiento de información'){
-            siniestro.DSALES_Estatus__c = data.estatus;
+        if(data.estatus =='En revisión'){
+            siniestro.DSALES_Estatus__c = 'En trámite';
+        }
+        if(data.estatus =='Documentado'){
+            siniestro.DSALES_Estatus__c = 'Autorizado';
+        }
+        if(data.estatus == 'Pendiente de información'){
+            siniestro.DSALES_Estatus__c = 'En requerimiento de información';
             siniestro.DSALES_MotivodeDevolucion__c = data.comentarioDeEstatus;
             siniestro.dsalesSolucionaDevolucion__c = data.solucion;
         }
-        if(data.estatus =='Pendiente de información'){
-            siniestro.DSALES_Estatus__c = data.estatus;
-            siniestro.DSALES_SolucionDevolver__c = data.solucion;
-        }
         if(data.estatus =='Rechazado'){
             siniestro.DSALES_Estatus__c = data.estatus;
-            siniestro.DSALES_Motivo_rechazo__c = data.motivoRechazo;
+            siniestro.DSALES_Motivo_rechazo__c = data.motivodeRechazo;
         }
-        if(data.estatus =='En solicitud de saldo insoluto'){
-            siniestro.DSALES_Estatus__c = data.estatus;
+        if(data.estatus == 'Solicitud de saldo'){
+            siniestro.DSALES_Estatus__c = 'En solicitud de saldo insoluto';
             siniestro.DSALES_SaldoInsoluto__c = Double.ValueOf(data.saldoinsoluto);
         }
-        if(data.estatus =='Pagado'){ 
-            for (DSALES_SiniestroWrapper.listaSiniestros aux : data.listSiniestro) {
-                ClaimPaymentSummary siniestroRPRecord = new ClaimPaymentSummary();
+        if(data.estatus =='Pagado'){
+            if(decimal.valueOf(data.saldo)!=0.0){
                 SiniestroRPRecord.ClaimId=siniestro.Id;
-                SiniestroRPRecord.PaymentAmount= aux.paymentAmount;
-                SiniestroRPRecord.Name = aux.claimpaymentName;
-                SiniestroRPRecord.DSALES_Tipopago__c= aux.tipoDePago;
-                SiniestroRPRecord.PaymentDate= aux.fechaDePago;
-                listaPagos.add(siniestroRPRecord);
+                SiniestroRPRecord.PaymentAmount= decimal.valueOf(data.saldoInsoluto);
+                SiniestroRPRecord.Name = 'Pago de siniestro';
+                SiniestroRPRecord.DSALES_Tipopago__c= 'Pago a cuenta Coppel';
+                SiniestroRPRecord.PaymentDate= data.fechaDePago;
+                listaPagos.add(SiniestroRPRecord);
+            }
+            if(decimal.valueOf(data.remanente)!=0.0){
+                SiniestroRPRecord = new ClaimPaymentSummary();
+                SiniestroRPRecord.ClaimId=siniestro.Id;
+                SiniestroRPRecord.PaymentAmount= decimal.valueOf(data.remanente);
+                SiniestroRPRecord.Name = 'Pago de siniestro';
+                SiniestroRPRecord.DSALES_Tipopago__c= 'Pago a Cliente';
+                SiniestroRPRecord.PaymentDate= data.fechaDePago;
+                listaPagos.add(SiniestroRPRecord);
             }
             if(listaPagos!=null && Schema.sObjectType.ClaimPaymentSummary.isCreateable()){
                 insert listaPagos;  

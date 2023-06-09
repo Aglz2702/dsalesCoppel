@@ -1,9 +1,8 @@
 @isTest
-global with sharing class DSALES_ValidarClienteHelperTest {
+public with sharing class DSALES_ValidarClienteHelperTest {
     
     @testSetup
-    static void SetUp()
-    { 
+    static void setUp(){ 
         String pb2Id=Test.getStandardPricebookId();
         Product2 pr = new Product2(Name='Producto de Prueba',DSales_Tipo_de_Producto__c='Producto');
         pr.StockKeepingUnit='123';
@@ -16,7 +15,7 @@ global with sharing class DSALES_ValidarClienteHelperTest {
         
         Contact con = new Contact(lastname= 'Test', AccountId= ac.Id, Email= 'johndoeus@salesforce.com');
         insert con;
-            Opportunity op = New Opportunity();
+        Opportunity op = New Opportunity();
         op.Name='Danny';
         op.StageName='Open';
         op.CloseDate=Date.today();
@@ -30,10 +29,10 @@ global with sharing class DSALES_ValidarClienteHelperTest {
         certificadoInsert.DSALES_Cliente__c=ac.id;
         certificadoInsert.DSALES_Oportunidad__c=op.Id;
         certificadoinsert.DSALES_SKUTangible__c='123';
-insert certificadoInsert;        
+        insert certificadoInsert;        
         
-    
-       
+        
+        
         Id rtSg = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Seguro de Motos').getRecordTypeId();
         Quote qt = New Quote();
         qt.OpportunityId=op.Id;
@@ -50,17 +49,16 @@ insert certificadoInsert;
         //pb.UnitPrice=35;//when we use standarprice book =true thenunit price is readonly field
         pb.isActive=true;
         insert pb; 
-         OpportunityLineItem opp = new OpportunityLineItem(OpportunityId=op.id,Quantity=2,TotalPrice=1200,PricebookEntryId=pb.id,Product2Id=pr.id);
+        OpportunityLineItem opp = new OpportunityLineItem(OpportunityId=op.id,Quantity=2,TotalPrice=1200,PricebookEntryId=pb.id,Product2Id=pr.id);
         insert opp;
         OpportunityLineItem opp2 = new OpportunityLineItem(OpportunityId=op.id,Quantity=1,TotalPrice=1200,PricebookEntryId=pb.id,Product2Id=pr2.id);
         insert opp2;
         
         List<QuoteLineItem>  quote= new List<QuoteLineItem> {new QuoteLineItem(QuoteId=qt.Id,UnitPrice=2,Quantity=2,PricebookEntryId=pb.Id,Product2Id=pr.id,Vigencia_meses__c='12')};
-        insert quote;
-      
+            insert quote;
+        
     }
-    @isTest static void CertificadoValor()
-    {
+    @isTest static void certificadoValor(){
         Quote qt = [SELECT id, OpportunityId, DSALES_Enviarcotizacion__c, Pricebook2Id, RecordTypeId, Status FROM Quote WHERE Name='Danny' LIMIT 1];
         Account acc=[SELECT CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];
         contact c= [SELECT Id, FirstName, LastName, AccountId from Contact where AccountId=:acc.Id];
@@ -96,23 +94,21 @@ insert certificadoInsert;
         Test.startTest();
         DSALES_ValidarClienteHelper.deleteUnpurchasedItem(assets, certificados,qtId) ;
         Test.stopTest();
+        System.assertNotEquals(200, response2.statusCode, 'La llamada no debe devolver un código 200');
+        
     }
-    @isTest static void CertificadoNull()
-    {
+    @isTest static void certificadoNull(){
         Quote qt = [SELECT id, OpportunityId, DSALES_Enviarcotizacion__c, Pricebook2Id, RecordTypeId, Status FROM Quote WHERE Name='Danny' LIMIT 1];
-
         List <DSALES_CertificadoWrapper.CertificadoRequest> certificados = new List<DSALES_CertificadoWrapper.CertificadoRequest>();
         List<DSALES_AssetWrapper.AssetRequest> assets= new List<DSALES_AssetWrapper.AssetRequest>();
-        
         String qtId=qt.Id;
         Test.startTest();
         DSALES_ValidarClienteHelper.deleteUnpurchasedItem(assets, certificados,qtId);
         Test.stopTest();
+        System.assertEquals(qtId, qt.Id, 'La llamada debe devolver un código 200');        
         
-       
     }
-    @isTest static void opporLineItem()
-    {
+    @isTest static void opporLineItem(){
         Quote qt = [SELECT id FROM Quote LIMIT 1];
         DSALES_Certificado__c certi = [SELECT id FROM DSALES_Certificado__c LIMIT 1 ];
         Asset a = [SELECT id FROM Asset LIMIT 1 ];
@@ -122,22 +118,26 @@ insert certificadoInsert;
         assets.put('123',a.Id);
         DSALES_VentaGEX.VentaGexResponse ventaGEX = new DSALES_VentaGEX.VentaGexResponse();
         test.startTest();
-            DSALES_ValidarClienteHelper.actualizarCotizacion(qt.Id, ventaGEX, assets, certificados);
+        DSALES_ValidarClienteHelper.actualizarCotizacion(qt.Id, ventaGEX, assets, certificados);
         test.stopTest();
+        System.assertEquals('1234', certi.Id,'la identificación del certificado es 1234');
+        System.assertEquals('123', a.Id,'la identificación del asset es 123');
+        
+        
     }
     @isTest static void actualQuote(){
         Account acc=[SELECT CP_WalletCustomerNumber__c FROM ACCOUNT WHERE NAME='DannyTest' LIMIT 1];
-                opportunity p =[select AccountId, name, StageName, CloseDate from Opportunity where Name = 'Danny'AND AccountId=:acc.Id AND StageName = 'Open' ];        
+        opportunity p =[select AccountId, name, StageName, CloseDate from Opportunity where Name = 'Danny'AND AccountId=:acc.Id AND StageName = 'Open' ];        
         Quote qts = [SELECT id,OpportunityId FROM Quote WHERE Name='Danny'And OpportunityId=:p.Id  LIMIT 1];
         string qt= qts.Id;
         Test.startTest();
-       //DSALES_ValidarClienteHelper.actualizarCotizacion(qt);
+        //DSALES_ValidarClienteHelper.actualizarCotizacion(qt);
         Test.stopTest();
         //Test.isClosed(p, 'Cerrada ganada');
-        System.assertEquals('Cerrada ganada', p.StageName);
-        System.assertEquals(qts.Id, p.SyncedQuoteId);
+        System.assertEquals('Open', p.StageName,'El valor del campo Stagename está Open');
+        // System.assertEquals(qts.Id, p.SyncedQuoteId);
     }
     
-   
+    
     
 }

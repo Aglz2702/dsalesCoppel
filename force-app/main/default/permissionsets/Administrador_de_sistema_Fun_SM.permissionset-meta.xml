@@ -1021,6 +1021,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Claim.FinancialAuthorityStatus</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Claim.FnolChannel</field>
         <readable>true</readable>
@@ -1136,6 +1141,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Claim.UsageType</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Claim.VisitDate</field>
         <readable>true</readable>
@@ -1148,6 +1158,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Claim.dsalesCorreoElectronico__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Claim.dsalesFechaAltaSiniestro__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
