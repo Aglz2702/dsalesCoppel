@@ -1,6 +1,6 @@
 @RestResource(urlMapping='/ventaGex/*')
 global with sharing class DSALES_VentaGEXRest {
-    
+   
     @HttpPost
     global static DSALES_VentaGEX.VentaGexResponse createVenta() {
         List<String> assetsId = new List<String>();
@@ -10,6 +10,7 @@ global with sharing class DSALES_VentaGEXRest {
         String message='';
         String message2='';
         String code='';
+        String clienteId='';
         DSALES_VentaGEX.VentaGexResponse ventaGEX= new DSALES_VentaGEX.VentaGexResponse();
         
         if(RestContext.request != null){
@@ -22,9 +23,12 @@ global with sharing class DSALES_VentaGEXRest {
                     assignFields(venta,ventaGEX);
                     
                     DSALES_AccountWrapper.AccountResponse cliente = DSALES_AccountWrapperRequest.upsertAccount(venta.cliente);
+                    clienteId=cliente.idCuenta;
+                    System.debug('Cliente Response '+cliente.mensajeError);
                     validarCliente(venta.quoteId, cliente.idCuenta,venta.nombreVendedor);
                     
                    
+                   system.debug('INSERTANDO ASSETS Y VER ID CUENTA: '+cliente.idCuenta);
                     Map<String, String> mapAssets = insertAssets(venta.listaDeProductos, cliente.idCuenta); 
                     
                     for (String assetId : mapAssets.values())
@@ -55,7 +59,7 @@ global with sharing class DSALES_VentaGEXRest {
                     
                 }catch(JSONException e){
                     success = false;
-                    message = DSALES_Utility.BAD_REQUEST_MSJ; //+ e.getLineNumber()+ e.getMessage();
+                    message = DSALES_Utility.BAD_REQUEST_MSJ + e.getLineNumber()+ e.getMessage();
                     code = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
                 }catch(Exception ex){
                     success = false;
@@ -68,7 +72,9 @@ global with sharing class DSALES_VentaGEXRest {
         ventaGEX.exito = success;
         ventaGEX.mensajeDeError=message;
         ventaGEX.codigoDeError=code;
+        ventaGEX.idClienteSalesforce=clienteId;
         ventaGEX.idDePago=paymentIds;
+        
         
         
         List<Asset> product= [SELECT id,Product2.StockKeepingUnit,DSALES_SKU__c FROM ASSET WHERE id IN: assetsId WITH SECURITY_ENFORCED];
@@ -194,6 +200,7 @@ global with sharing class DSALES_VentaGEXRest {
         for(Tienda__c store: [select id,dsales_TiendaID__c from Tienda__c where dsales_TiendaID__c in :listStores WITH SECURITY_ENFORCED]){
             mapStores.put(store.dsales_TiendaID__c, store.Id);
         }
+        
         system.debug('Seguimos bien con sku '+listSKUCertifieds);
         for(Product2 t: [Select StockKeepingUnit from Product2 where StockKeepingUnit in :listSKUCertifieds and DSales_Tipo_de_Producto__c='Servicio' WITH SECURITY_ENFORCED]){
             system.debug('Entramos1 '+mapStores);
@@ -274,9 +281,11 @@ global with sharing class DSALES_VentaGEXRest {
             certi.fechaCompraGarantia=venta.fechaCompra;
             certi.numeroCliente=cliente.numeroCliente;
             certi.nombreCompletoCliente=cliente.nombre + ' '+cliente.apellidoPaterno + ' '+cliente.apellidoMaterno;
+            system.debug('VA A PASAR AL IF DEL MAPA PARTIDA');
             if(!String.isEmpty(certi.idPartidaPresupuesto) && mapPartida.containsKey(certi.idPartidaPresupuesto))
             {
-                
+                            system.debug('PASÓ AL IF DEL MAPA PARTIDA');
+
                 certi.sku= mapPartida.get(certi.idPartidaPresupuesto).DSALES_SKU__c;
                 System.debug('Aquí si pasó donde agarra el SKU: '+certi.sku);
                 if(mapPartida.get(certi.idPartidaPresupuesto).Vigencia_meses__c!=null)

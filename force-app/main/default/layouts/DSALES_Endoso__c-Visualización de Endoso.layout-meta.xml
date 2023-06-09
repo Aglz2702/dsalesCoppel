@@ -19,12 +19,12 @@
                 <field>DSALES_Cliente__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>dsalesFechaDeCreacion__c</field>
+                <behavior>Edit</behavior>
+                <field>DSALES_CorreoElectronico__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSALES_CorreoElectronico__c</field>
+                <field>dsalesFechaCreacion__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

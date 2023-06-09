@@ -75,20 +75,11 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
-        <fields>QUOTE.NAME</fields>
-        <fields>OPPORTUNITY.NAME</fields>
-        <fields>QUOTE.ISSYNCING</fields>
-        <fields>QUOTE.EXPIRATIONDATE</fields>
-        <fields>QUOTE.SUBTOTAL</fields>
-        <fields>QUOTE.TOTALPRICE</fields>
-        <relatedList>Quote.DSALES_TipoUso__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>DSALES_Producto__c</fields>
         <fields>CREATED_DATE</fields>
         <fields>DSALES_Activo__c</fields>
-        <relatedList>DSALES_AsociacionTiposUso__c.DSALES_TipoUso__c</relatedList>
+        <relatedList>DSALES_AsociacionTiposUso__c.DSALES_TipodeUso__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
