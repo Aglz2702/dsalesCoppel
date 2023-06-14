@@ -22,7 +22,7 @@ public with sharing class DSALES_QuotePdfController {
                 quote = quotes[0];
                 quoteLineItems = [SELECT Id,QuoteId,Product2.Name,DSALES_NombreProducto__c,Dsales_Plazo__c, Dsales_Plazo__r.Dsales_Plazo__c,PricebookEntryId,Product2Id,DSALES_SKU__c,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                                   FROM QuoteLineItem WHERE QuoteId = :quoteId WITH SECURITY_ENFORCED  LIMIT 10];
-                tienda = [SELECT dsalesDireccion__c, dsalesCodigoPostal__c, DSALES_Ciudad__c, DSALES_Estado__c FROM Tienda__c WHERE Id = :quote.DSales_Tienda__c WITH SECURITY_ENFORCED LIMIT 1];
+                tienda = [SELECT Id, Name, dsalesDireccion__c, dsalesCodigoPostal__c, DSALES_Ciudad__c, DSALES_Estado__c FROM Tienda__c WHERE Id = :quote.DSales_Tienda__c WITH SECURITY_ENFORCED LIMIT 1];
                 pago =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:quote.OpportunityId WITH SECURITY_ENFORCED LIMIT 1];
                 
             }
