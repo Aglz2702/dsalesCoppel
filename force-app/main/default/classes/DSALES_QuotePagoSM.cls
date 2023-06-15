@@ -27,10 +27,10 @@ public with sharing class DSALES_QuotePagoSM {
                     QuoteLineItem producto =[SELECT Id,DSALES_NombreProducto__c, DSALES_Segurogratis__c FROM QuoteLineItem  WHERE DSALES_SKU__c=:skuMoto  AND quoteId=:beforeCot.Id WITH SECURITY_ENFORCED LIMIT 1];
                     if(producto.DSALES_Segurogratis__c==true && partidasSeleccionadas!=null && partidasSeleccionadas.size()==1){
                         System.debug('DOS COTIZACIONES// SEGURO GRATIS //Nombre:------> '+producto.DSALES_NombreProducto__c);
-                        for(Integer i=0;i<2;i++){
+                        //for(Integer i=0;i<2;i++){
                             idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
                             listIdCotiza.add(idCotizacion);
-                        } 
+                        //} 
                         String idCotSin=crear2CotPartidas(beforeCot.Id,listIdCotiza,Integer.valueOf(pago.DSALES_Plazodecomprademoto__c), partidasSeleccionadas,skuMoto);
                         createCot( idCotSin );
                     }

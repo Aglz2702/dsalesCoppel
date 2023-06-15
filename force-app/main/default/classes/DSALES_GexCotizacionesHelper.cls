@@ -6,12 +6,12 @@ private static final String DIRECCION_CORREO = 'atencion@coppel.com';
 
 @Future(callout=true)
 public static void envioCotizacionGex(String jsonString, String quoteOld){
-    try{
+        try{
         System.debug('>>> response ' + jsonString);
         List<Quote> sObjectList = (List<Quote>) JSON.deserialize(jsonString, List<Quote>.class);
         Map<Id,Quote> mapQuote= (Map<Id,Quote>) JSON.deserialize(quoteOld, Map<Id,Quote>.class);
         Map<String, Account> mapAccount = new Map<String, Account>();
-        Set<Id> recordId = new Set<Id>();
+        List<String> recordId = new List<String>();
         for(Quote item: sObjectList){
             mapAccount.put(item.AccountId, new Account());
             recordId.add(item.RecordTypeId);
@@ -20,7 +20,7 @@ public static void envioCotizacionGex(String jsonString, String quoteOld){
         for(Account item: [Select Id,Name,PersonContactId, PersonEmail from Account where Id in : mapAccount.keySet() WITH SECURITY_ENFORCED LIMIT 1]){
             mapAccount.put(item.Id, item);
         }
-        RECORDTYPE motos= [SELECT Id, Name FROM RECORDTYPE WHERE Id=:recordId WITH SECURITY_ENFORCED];
+        RECORDTYPE motos= [SELECT Id, Name FROM RECORDTYPE WHERE Id=:recordId[0] WITH SECURITY_ENFORCED LIMIT 1];
         EmailTemplate templete = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :TEMPLETE_NAME WITH SECURITY_ENFORCED];
         system.debug('Template name------->' +templete.DeveloperName);
         EmailTemplate templeteGEX = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :GEX_TEMPLETE WITH SECURITY_ENFORCED];     
