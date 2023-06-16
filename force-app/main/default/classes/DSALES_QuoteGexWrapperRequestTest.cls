@@ -20,10 +20,10 @@ public class DSALES_QuoteGexWrapperRequestTest{
         classs.Name = 'test';
         insert classs;
         
-        Product2 prod = new Product2(Name ='test', StockKeepingUnit='0000',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Producto');
+        Product2 prod = new Product2(Name ='test', StockKeepingUnit='0000',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Producto',Description='test001');
 		insert prod;
         
-        Product2 prodGEX = new Product2(Name ='testGEX', StockKeepingUnit='123444',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Servicio',DSales_Aplicaporcentajecobro__c=true);
+        Product2 prodGEX = new Product2(Name ='testGEX', StockKeepingUnit='123444',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Servicio',DSales_Aplicaporcentajecobro__c=true,Description='test00222');
 		insert prodGEX;
         
         Id pricebookId = Test.getStandardPricebookId();
@@ -71,23 +71,27 @@ public class DSALES_QuoteGexWrapperRequestTest{
         DSales_Matriz_GEX__c mat = new DSales_Matriz_GEX__c();
         mat.Name= 'test';
         mat.DSALES_Activo__c= true;
-        mat.DSALES_Region__c ='Hermosillo';
-        mat.DSALES_Tiempogex__c = '1 año';
+        mat.DSALES_Region__c ='Todas las regiones';
+        mat.DSALES_Tiempogex__c = '2 años';
         insert mat;
         
         DSALES_Matriz_de_Cotizacion__c matItem = new DSALES_Matriz_de_Cotizacion__c();
         matItem.DSales_Matriz_GEX__c = mat.Id;
-        matItem.SALES_Precio_GEX__c = 3500;
-        matItem.DSALES_Rango_interior_GEX__c=7000;
+        matItem.SALES_Precio_GEX__c = 4650;
+        matItem.DSALES_Rango_interior_GEX__c=1;
         matItem.DSALES_Rango_Superior_GEX__c = 8500;
         matItem.DSALES_Tiempo_de_Garantia_Extendida_GEX__c = '1 año';
-        
-        matItem.DSales_Matriz_GEX__c = mat.Id;
-        matItem.SALES_Precio_GEX__c = 4500;
-        matItem.DSALES_Rango_interior_GEX__c=7000;
-        matItem.DSALES_Rango_Superior_GEX__c = 8500;
-        matItem.DSALES_Tiempo_de_Garantia_Extendida_GEX__c = '2 años';
+        matItem.Name = 'test';
         insert matItem;
+        
+        DSALES_Matriz_de_Cotizacion__c matItem2 = new DSALES_Matriz_de_Cotizacion__c();
+        matItem2.DSales_Matriz_GEX__c = mat.Id;
+        matItem2.SALES_Precio_GEX__c = 4650;
+        matItem2.DSALES_Rango_interior_GEX__c=1;
+        matItem2.DSALES_Rango_Superior_GEX__c = 8500;
+        matItem2.DSALES_Tiempo_de_Garantia_Extendida_GEX__c = '2 años';
+        matItem2.Name = 'test2';
+        insert matItem2;
         
         DASALES_Porcentajedecobro__c percent = new DASALES_Porcentajedecobro__c();
         percent.DSALES_Anios__c = 1;

@@ -6,9 +6,12 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         Boolean success = true;
         String message = '';
         String code = '';
+        String regions = 'Todas las regiones';
+        String originalMat = 'Matriz Original';
         Account cliente = new Account();
         Opportunity oppor = new Opportunity();
         Quote cotiza = new Quote();
+        Map<String, DSALES_QuoteGexWrapper.Product> mapProducts = new  Map<String, DSALES_QuoteGexWrapper.Product>();
         List<QuoteLineItem> listaPartida = new List<QuoteLineItem>();
         List<DSales_Asignacion_de_Productos__c> productAsig = new List<DSales_Asignacion_de_Productos__c>();  
         if(RestContext.request != null){
@@ -16,7 +19,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             if(String.isNotBlank(body)){
                 try{
                     DSALES_QuoteGexWrapper.QuoteGexRequest data = (DSALES_QuoteGexWrapper.QuoteGexRequest)JSON.deserialize(body, DSALES_QuoteGexWrapper.QuoteGexRequest.class); 
-                     Map<String, DSALES_QuoteGexWrapper.Product> mapProducts = new  Map<String, DSALES_QuoteGexWrapper.Product>();
+                     //Map<String, DSALES_QuoteGexWrapper.Product> mapProducts = new  Map<String, DSALES_QuoteGexWrapper.Product>();
                     for(DSALES_QuoteGexWrapper.Product p : data.productos){
                         mapProducts.put(p.skuDeTangible, p);
                     }
@@ -126,33 +129,35 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             respuestaNpvList.respuesta.add(responsePayloadError);
             return respuestaNpvList;
         }else{
-            
-            for(QuoteLineItem resTangible : consultaRespuesta){
-                List<String> listIntangible = new List<String>();
-                for(DSales_Asignacion_de_Productos__c asigProduc: productAsig){
-                    if(asigProduc.DSales_Producto__c == resTangible.Product2Id){
-                        listIntangible.add(asigProduc.DSales_Servicio_Seguro__c);
+            for (QuoteLineItem quoteLineItem : listaPartida) {
+                Product2 tipoProducto = [SELECT id,DSales_Tipo_de_Producto__c, StockKeepingUnit,DSales_Aplicaporcentajecobro__c FROM Product2 WHERE id=:quoteLineItem.Product2Id];
+                if (tipoProducto.DSales_Tipo_de_Producto__c == 'Servicio') {
+                    DSALES_QuoteGexWrapper.QuoteGexResponse responsePayload = new DSALES_QuoteGexWrapper.QuoteGexResponse();
+                    DSales_Matriz_GEX__c idMat = obtenerIdMatriz(tipoProducto.Id,regions, originalMat);
+                    Id idMatriz = idMat.Id;
+                    String nombreIntangible = quoteLineItem.DSALES_NombreProductoServicio__c;
+                    String[] partesCadena = nombreIntangible.split(' ');
+                    String numeroExtraido = partesCadena[3];
+                    Decimal precioTangible = 0.0;
+                    if (mapProducts.containsKey(numeroExtraido)) {
+                        DSALES_QuoteGexWrapper.Product product = mapProducts.get(numeroExtraido);
+                        precioTangible = product.precioTangible;
                     }
-                }
-                for(QuoteLineItem resIntangible : consultaRespuestaGEX){
-                    if(listIntangible.contains(resIntangible.Product2Id)){
-                       	DSALES_QuoteGexWrapper.QuoteGexResponse responsePayload = new DSALES_QuoteGexWrapper.QuoteGexResponse();
-                        responsePayload.costoTotal = resIntangible.UnitPrice + resTangible.UnitPrice;
-                        responsePayload.precio = resIntangible.UnitPrice;
-                        responsePayload.nombreIntangible = 'Garantia Extendida '+resIntangible.Vigencia_meses__c+'M'+' '+resTangible.DSALES_SKU__c+' '+resTangible.Product2.Name;
-                        responsePayload.skuDeTangible = resTangible.DSALES_SKU__c;
-                        if(resIntangible.Product2.DSales_Aplicaporcentajecobro__c==true){
+                    responsePayload.costoTotal = precioTangible + quoteLineItem.UnitPrice;
+                    responsePayload.precio = quoteLineItem.UnitPrice;
+                    responsePayload.nombreIntangible = nombreIntangible;
+                    responsePayload.skuDeTangible = numeroExtraido;
+                    if(tipoProducto.DSales_Aplicaporcentajecobro__c==true){
                              responsePayload.skuDePrecio = null;
                         }else{
-                            DSALES_Matriz_de_Cotizacion__c skuPrecio = obtenerSkuPrecio(resIntangible.UnitPrice, resTangible.UnitPrice);
+                            DSALES_Matriz_de_Cotizacion__c skuPrecio = obtenerSkuPrecio(quoteLineItem.UnitPrice, precioTangible, idMatriz);
                             responsePayload.skuDePrecio = skuPrecio.Name;
 
                         }
-                        responsePayload.skuDeServicio = resIntangible.DSALES_SKU__c;
-                        responsePayload.mesesCobertura = resIntangible.Vigencia_meses__c;
-                        responsePayload.idPartidaDePresupuesto = resIntangible.Id;
-                        respuestaNpvList.respuesta.add(responsePayload);
-                    }
+                    responsePayload.skuDeServicio = tipoProducto.StockKeepingUnit;
+                    responsePayload.mesesCobertura = quoteLineItem.Vigencia_meses__c;
+                    responsePayload.idPartidaDePresupuesto = quoteLineItem.Id;
+                    respuestaNpvList.respuesta.add(responsePayload);
                 }
             }
         }
@@ -255,7 +260,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         List<Pricebook2> precioLista = [SELECT id,Name FROM Pricebook2 WHERE Name= 'Standard Price Book' and IsActive=true WITH SECURITY_ENFORCED LIMIT 1];
         List<PricebookEntry> precioEn = [SELECT Id,UnitPrice,Name,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: produc and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
         List<PricebookEntry> precioEnGEX = [SELECT Id,Name,UnitPrice,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_Tipo_de_Producto__c,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: dsalesProductoSetId and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
-        
         for(PricebookEntry item : precioEn){
             QuoteLineItem partidapre = new QuoteLineItem();
             
@@ -471,13 +475,13 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         }
         return response;
     }
-    public static DSALES_Matriz_de_Cotizacion__c obtenerSkuPrecio(Decimal resIntangible, Decimal resTangible) {
+    public static DSALES_Matriz_de_Cotizacion__c obtenerSkuPrecio(Decimal resIntangible, Decimal resTangible, Id idMat) {
         return [SELECT Id, Name, DSALES_Rango_interior_GEX__c, DSALES_Rango_Superior_GEX__c, DSALES_Tiempo_de_Garantia_Extendida_GEX__c, SALES_Precio_GEX__c, DSales_Matriz_GEX__c 
                 FROM DSALES_Matriz_de_Cotizacion__c 
                 WHERE SALES_Precio_GEX__c = :resIntangible 
                     AND DSales_Matriz_GEX__r.DSALES_Activo__c = true 
-                    AND DSALES_Rango_Superior_GEX__c >= :resTangible 
-                WITH SECURITY_ENFORCED 
+                    AND DSALES_Rango_Superior_GEX__c >= :resTangible AND DSales_Matriz_GEX__c=:idMat
+                WITH SECURITY_ENFORCED
                 LIMIT 1];
     }
 
@@ -490,5 +494,14 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         List<DSales_Matriz_GEX__c> mat = [SELECT id, Name, DSALES_Activo__c, DSales_Region_GEX__c, DSALES_Tipo__c, DSALES_Servicio__c FROM DSales_Matriz_GEX__c WHERE DSALES_Servicio__c = :intangibleId AND DSALES_Activo__c = true AND DSALES_Tipo__c = :originalMat AND DSALES_Region__c INCLUDES (:regions) WITH SECURITY_ENFORCED];
         List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = [SELECT id, Name, SALES_Precio_GEX__c, DSales_Matriz_GEX__c, DSALES_Rango_interior_GEX__c, DSALES_Rango_Superior_GEX__c, DSALES_Tiempo_de_Garantia_Extendida_GEX__c FROM DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c = :mat WITH SECURITY_ENFORCED ORDER BY SALES_Precio_GEX__c DESC];
         return matPrice1Year;
-    }    
+    }
+    
+    public static DSales_Matriz_GEX__c obtenerIdMatriz(Id intangibleId, String regions, String originalMat) {
+        return [SELECT id 
+                FROM DSales_Matriz_GEX__c 
+                WHERE DSALES_Servicio__c = :intangibleId 
+                AND DSALES_Activo__c = true AND DSALES_Tipo__c = :originalMat 
+                AND DSALES_Region__c INCLUDES (:regions) 
+                WITH SECURITY_ENFORCED LIMIT 1];
+    }
     }
