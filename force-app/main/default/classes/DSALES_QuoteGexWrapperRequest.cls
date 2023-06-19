@@ -130,7 +130,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             return respuestaNpvList;
         }else{
             for (QuoteLineItem quoteLineItem : listaPartida) {
-                Product2 tipoProducto = [SELECT id,DSales_Tipo_de_Producto__c, StockKeepingUnit,DSales_Aplicaporcentajecobro__c FROM Product2 WHERE id=:quoteLineItem.Product2Id];
+                Product2 tipoProducto = [SELECT id,DSales_Tipo_de_Producto__c, StockKeepingUnit,DSales_Aplicaporcentajecobro__c FROM Product2 WHERE id=:quoteLineItem.Product2Id WITH SECURITY_ENFORCED];
                 if (tipoProducto.DSales_Tipo_de_Producto__c == 'Servicio') {
                     DSALES_QuoteGexWrapper.QuoteGexResponse responsePayload = new DSALES_QuoteGexWrapper.QuoteGexResponse();
                     DSales_Matriz_GEX__c idMat = obtenerIdMatriz(tipoProducto.Id,regions, originalMat);
@@ -442,13 +442,16 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
     }
     
     public static DSALES_QuoteGexWrapper.Nodos respuestaDescripcion(String nombre, String cotizaId,String tipoServicio){
-        List<Quotelineitem> lstSkus = [SELECT id,Product2.StockKeepingUnit,Product2.Description FROM Quotelineitem WHERE Quoteid=:cotizaId AND Product2.DSales_Tipo_de_Producto__c='Servicio' AND Product2.Description=:nombre WITH SECURITY_ENFORCED];
+        List<Quotelineitem> lstSkus = [SELECT id,Product2.StockKeepingUnit,Product2.Description,Product2.dsalesSubtipo__c FROM Quotelineitem WHERE Quoteid=:cotizaId AND Product2.DSales_Tipo_de_Producto__c='Servicio' AND Product2.Description=:nombre WITH SECURITY_ENFORCED];
         DSALES_QuoteGexWrapper.Nodos nodoAux = new DSALES_QuoteGexWrapper.Nodos();
         nodoAux.Description = nombre;
         nodoAux.tipoDeServicio = tipoServicio;
         nodoAux.sku = new List<String>();
         
         for(Quotelineitem valores :lstSkus){
+            String subTipoAux = valores.Product2.dsalesSubtipo__c;
+            nodoAux.subTipo = subTipoAux;
+            
             String skuAux = valores.Product2.StockKeepingUnit;
             nodoAux.sku.add(skuAux);
         }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>DSALES_VerCotizacion</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>CreateOrder</excludeButtons>
@@ -28,6 +29,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Status</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>dsalesVencida__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -222,11 +227,12 @@
     <relatedLists>
         <excludeButtons>AddQuoteLine</excludeButtons>
         <excludeButtons>EditAllQuoteLine</excludeButtons>
+        <excludeButtons>MultiAdd</excludeButtons>
+        <excludeButtons>MultiEdit</excludeButtons>
         <excludeButtons>Sort</excludeButtons>
         <excludeButtons>SortQuoteLines</excludeButtons>
         <fields>QUOTE_LI.PRODUCT2</fields>
         <fields>DSALES_NombreProductoServicio__c</fields>
-        <fields>QUOTE_LI.QUANTITY</fields>
         <fields>QUOTE_LI.UNIT_PRICE</fields>
         <relatedList>RelatedQuoteLineItemList</relatedList>
     </relatedLists>
