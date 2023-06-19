@@ -45,7 +45,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DSales_TiendaID__c</field>
+                <field>DSALES_TiendaId__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -225,11 +225,7 @@
     <quickActionList/>
     <relatedLists>
         <fields>ASSET.NAME</fields>
-        <fields>ASSET.SERIAL_NUMBER</fields>
-        <fields>ASSET.INSTALL_DATE</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.NAME</fields>
-        <fields>PRODUCT2.NAME</fields>
+        <fields>PRODUCT2.STOCK_KEEPING_UNIT</fields>
         <relatedList>Asset.DSALES_Certificado__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
