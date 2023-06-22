@@ -88,7 +88,7 @@ global with sharing class DSALES_PaymentInfoWrapperRequest {
             }
             exito=true;
         }catch(Exception e){
-            System.debug(e.getLineNumber()+ e.getMessage());
+            System.debug('insertarPago '+e.getLineNumber()+ e.getMessage());
             exito = false;
             mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
             codigoError = DSALES_Utility.INTERNAL_ERROR_CODE;

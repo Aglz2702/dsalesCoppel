@@ -15,11 +15,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Name</field>
+                <field>dsalesNumero__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesNombre__c</field>
+                <behavior>Required</behavior>
+                <field>Name</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -83,6 +83,9 @@
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
+        <fields>DSales_TiendaID__c</fields>
+        <fields>Activa__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Tienda__c.dsalesCiudad__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

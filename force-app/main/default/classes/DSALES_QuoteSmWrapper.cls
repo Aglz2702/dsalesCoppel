@@ -16,12 +16,13 @@ global class DSALES_QuoteSmWrapper {
         global String telefonoCelular {get; set;}
         global String correoElectronico {get;set;}
         global String generoContacto {get; set;}
-        global Date fechaNacimiento {get; set;}
+        global String fechaNacimiento {get; set;}
         global String codigoPostal {get; set;}
         global String idVehiculo {get; set;}
         global String opcionPago {get; set;}
-        global date fechaInicio {get; set;}
-        global String precioProducto {get; set;}
+        global String fechaInicio {get; set;}
+        global Double precioProducto {get; set;}
+        global Boolean valorFactura {get; set;}
     }
     global class QuotePostProvedor{
         //Inter Cotizacion
@@ -29,8 +30,8 @@ global class DSALES_QuoteSmWrapper {
         global String aseguradora {get; set;} //sales-fijo
         global String nombreCompleto {get; set;}//combinacion
         global String metodoContacto {get; set;}//sales-fijo
+        global String correoContacto {get; set;}//sales-fijo
         global String telefonoContacto {get; set;}
-        global String correoContacto {get;set;}
         global String generoContacto {get; set;}
         global String fechaNacimientoContacto {get; set;}
         global String cpContacto{get; set;}
@@ -46,6 +47,8 @@ global class DSALES_QuoteSmWrapper {
         global String fechaCotizacion {get; set;}//fecha creacion-sales
         global String fechaInicio {get; set;}      
         global String plazo {get; set;}
+        global Boolean valorFactura {get; set;}
+        global Double precioProducto {get; set;}
         global List<Plazo> listaPlazos {get; set;}
     }
     global class Plazo {
@@ -62,8 +65,8 @@ global class DSALES_QuoteSmWrapper {
 	}    
     global class ArmadoMuleSoft{
         global String trackingId {get;set;}
-        global String nombre {get;set;}
-        global String plazo {get;set;}
+        global String paquete {get;set;}
+        global String opcionPago {get;set;}
         global Data data {get;set;}
 	}
     global class Campanias{
@@ -99,20 +102,20 @@ global class DSALES_QuoteSmWrapper {
         global String sumaAsegurada {get;set;}
     }  
     global class Data{
-        global List<CoveragesArray> listaCoberturas {get;set;}
-        global String idCotizacion {get;set;}
+        global List<CoveragesArray> coberturas {get;set;}
+        global String quoteId {get;set;}
         global List<Receipt> recibos {get;set;}
         global InsurancePremium primaSeguro {get;set;}
         global String idPoliza {get;set;}
         global String logotipoEmpresa {get;set;}
-        global List<PaymentOptionsJson> paymentOptionsJson {get;set;}
+        global List<PaymentOptionsJson> opcionesPago {get;set;}
     }   
     global class InsurancePremium{
         global Double primaNeta {get;set;}
         global Integer comision {get;set;}
         global Double recargo {get;set;}
         global Double impuestos {get;set;}
-        global Double derecho {get;set;}
+        global Double derechos {get;set;}
     }   
     global class PaymentOptionsJson{
         global String value {get;set;}
@@ -121,14 +124,12 @@ global class DSALES_QuoteSmWrapper {
     global class Receipt{
         global Integer numero {get;set;}
         global String fechaInicio {get;set;}
-        global String fechaTermino {get;set;}
+        global String fechaFin {get;set;}
         global String primaNeta {get;set;}
         global String primaTotal {get;set;}//precioVenta
-        global String derechosPoliza {get;set;}
+        global String derechos {get;set;}
         global String recargo {get;set;}
         global String impuestos {get;set;}
         global String comision {get;set;}
-        global String pagoTotalEfectivo {get;set;}
-        global String pagoMensual {get;set;}
     }
 }

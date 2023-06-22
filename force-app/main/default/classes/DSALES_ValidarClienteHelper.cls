@@ -109,9 +109,9 @@ public without sharing class  DSALES_ValidarClienteHelper {
     public static void actualizarCotizacion(String quoteId,DSALES_VentaGEX.VentaGexResponse ventaGEX,Map<String,String> mapAssets,Map<String,String>mapCertifieds){
     
         Quote cotizacion = [SELECT Id,AccountId,Name,OpportunityId,Opportunity.AccountId FROM Quote WHERE Id= :quoteId WITH SECURITY_ENFORCED];
-        List<QuoteLineItem> partida = [SELECT DSALES_NombreProductoServicio__c,DSALES_SKU__c FROM QuoteLineItem WHERE QuoteId=:quoteId];
+        List<QuoteLineItem> partida = [SELECT DSALES_NombreProductoServicio__c,DSALES_SKU__c FROM QuoteLineItem WHERE QuoteId=:quoteId WITH SECURITY_ENFORCED];
         //Map<String,DSALES_Certificado__c> listaCertificados =[SELECT Id,Name FROM DSALES_Certificado__c WHERE DSALES_SKU__c IN:mapCertifieds.keySet() ];
-        Map<String,DSALES_Certificado__c> mapaNombreCertificado = new Map<String,DSALES_Certificado__c>([SELECT Id,Name,DSALES_SKUTangible__c,DSALES_SKU__c FROM DSALES_Certificado__c WHERE Id IN:mapCertifieds.values()]);
+        Map<String,DSALES_Certificado__c> mapaNombreCertificado = new Map<String,DSALES_Certificado__c>([SELECT Id,Name,DSALES_SKUTangible__c,DSALES_SKU__c FROM DSALES_Certificado__c WHERE Id IN:mapCertifieds.values() WITH SECURITY_ENFORCED]);
        Map<String,DSALES_VentaGEX.ServicioCorrespondiente> oportunidadLineMap= new Map<String,DSALES_VentaGEX.ServicioCorrespondiente>();
         List<OpportunityLineItem> listActualizarOp = new List<OpportunityLineItem>();
        
@@ -140,9 +140,10 @@ public without sharing class  DSALES_ValidarClienteHelper {
                            servicioGex.idPartidaDeOportunidad=op.Id;
                            OportunidadLineMap.put(op.Product2.StockKeepingUnit,servicioGex);
                          opportunityLine.idPartidaDeOportunidad=op.Id;
+                           system.debug('REVISAR NOMBRE DE PRODUCTO ' +op.Product2.Name);
                          opportunityLine.nombreProducto=op.Product2.Name;
                        	opportunityLine.sku=op.Product2.StockKeepingUnit;
-                       	opportunityLine.tipoProducto='Producto';
+                       	opportunityLine.tipoProducto='Producto'; 
                         opportunityLine.idProductoAdquirido=mapAssets.get(op.Product2.StockKeepingUnit); 
                          
                            for(String b :mapaNombreCertificado.keySet())
@@ -171,8 +172,10 @@ public without sharing class  DSALES_ValidarClienteHelper {
                                 }
                                     for(QuoteLineItem p:partida)
                         {
+                            system.debug('DEBUGGUEANDO VALIDAR CLIENTE; NO PASÓ IF ');
                             if(p.DSALES_SKU__c==servicioCo.sku)
                             {
+                                system.debug('DEBUGGUEANDO VALIDAR CLIENTE; SI PASÓ IF ' +p.DSALES_NombreProductoServicio__c);
                                 servicioCo.nombreProducto=p.DSALES_NombreProductoServicio__c;
                                 
                                 
@@ -224,14 +227,16 @@ public without sharing class  DSALES_ValidarClienteHelper {
             }
             try{
                 
-
-                if(Schema.sObjectType.opportunityLineItem.isUpdateable()) {
-                    Update oppor;
-                    Update listActualizarOp;
-                    }else{
-                    
-                    System.debug('Permisos insuficientes para actualizar');
-                    }
+                if(Opportunity.SObjectType.getDescribe().isUpdateable()) {
+                    update oppor;   
+                }else{
+                    System.debug('Permisos insuficientes para actualizar');   
+                } 
+                if(opportunityLineItem.SObjectType.getDescribe().isUpdateable()) {
+                    Update listActualizarOp;  
+                }else{
+                    System.debug('Permisos insuficientes para actualizar');   
+                } 
                 
                 
             }catch(DmlException e){

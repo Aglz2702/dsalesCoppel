@@ -42,11 +42,6 @@
                 <label>En solicitud de saldo insoluto</label>
             </value>
             <value>
-                <fullName>Pendiente de información</fullName>
-                <default>false</default>
-                <label>Pendiente de información</label>
-            </value>
-            <value>
                 <fullName>Pagado</fullName>
                 <default>false</default>
                 <label>Pagado</label>
@@ -56,6 +51,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Completado</label>
+            </value>
+            <value>
+                <fullName>Pendiente de información</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Pendiente de información</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -223,7 +223,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 //datosContratante.codigoColonia=part.codigoColonia;
                 //datosContratante.numeroInterior=part.numeroInterior;
                 //datosContratante.numeroExterior=part.dsalesNumeroExterior__c;
-                datosContratante.contratante=part.dsalesNombre__c +' '+ part.dsalesPrimerApellido__c + ' '+ part.dsalesSegundoApellido__c;
+                datosContratante.contratante=part.dsalesNombre__c +''+ part.dsalesPrimerApellido__c + ''+ part.dsalesSegundoApellido__c;
             }
             
         }
@@ -248,7 +248,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             datosContratante.giroComercial=contratante.dsalesGiroComercial__c;
             datosContratante.tipoPersona=contratante.dsalesTipoPersona__c;
             datosContratante.nombreApoderadoLegal=contratante.dsalesNombreApoderadoLegal__c;
-            datosContratante.contratante=contratante.FirstName +' '+ contratante.LastName + ' '+ contratante.Suffix;
+            datosContratante.contratante=contratante.FirstName +''+ contratante.LastName + ''+ contratante.Suffix;
             datosContratante.actividad=contratante.dsalesActividad__c; 
         }
         return datosContratante;

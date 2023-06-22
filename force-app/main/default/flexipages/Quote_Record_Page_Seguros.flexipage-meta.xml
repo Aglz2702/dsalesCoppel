@@ -8,6 +8,13 @@
                     <valueList>
                         <valueListItems>
                             <value>SyncQuote</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Administrador del sistema</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Quote.DSALES_VerCotizacion</value>
