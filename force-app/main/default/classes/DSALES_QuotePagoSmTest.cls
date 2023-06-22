@@ -375,7 +375,7 @@ public with sharing class DSALES_QuotePagoSmTest {
     @isTest
     static void testCreateQlItms() {
         Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test1'  LIMIT 1];
-        List<QuoteLineItem> listMotoRc =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c FROM QuoteLineItem WHERE quoteId=:cotizacion.Id WITH SECURITY_ENFORCED LIMIT 1];
+        List<QuoteLineItem> listMotoRc =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c,PricebookEntryId, UnitPrice,Quantity FROM QuoteLineItem WHERE quoteId=:cotizacion.Id WITH SECURITY_ENFORCED LIMIT 1];
         List<QuoteLineItem> listPartidas =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c FROM QuoteLineItem WHERE DSALES_Segurogratis__c!=true AND QuoteId=:cotizacion.Id AND DSALES_Plazo__r.Dsales_Plazo__c='18' WITH SECURITY_ENFORCED LIMIT 1];
         List<Plazo__c> plazos =[SELECT Id,Dsales_Plazo__c FROM Plazo__c  WHERE Dsales_Plazo__c='18' WITH SECURITY_ENFORCED LIMIT 1];
         List<PricebookEntry> pricebookEntries=[SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Name='PLUS' WITH SECURITY_ENFORCED LIMIT 1]; 
