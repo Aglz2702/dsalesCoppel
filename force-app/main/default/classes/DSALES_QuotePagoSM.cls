@@ -25,22 +25,22 @@ public with sharing class DSALES_QuotePagoSM {
             else{
                 if(skuMoto!=null){
                     QuoteLineItem producto =[SELECT Id,DSALES_NombreProducto__c, DSALES_Segurogratis__c FROM QuoteLineItem  WHERE DSALES_SKU__c=:skuMoto  AND quoteId=:beforeCot.Id WITH SECURITY_ENFORCED LIMIT 1];
-                    if(producto.DSALES_Segurogratis__c==true && partidasSeleccionadas!=null && partidasSeleccionadas.size()==1){
-                        System.debug('DOS COTIZACIONES// SEGURO GRATIS //Nombre:------> '+producto.DSALES_NombreProducto__c);
-                        //for(Integer i=0;i<2;i++){
+                    if(partidasSeleccionadas==null){
+                        System.debug('DOS COTIZACIONES //Nombre:------> '+producto.DSALES_NombreProducto__c);
+                        for(Integer i=0;i<2;i++){
                             idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
                             listIdCotiza.add(idCotizacion);
-                        //} 
+                        } 
                         String idCotSin=crear2CotPartidas(beforeCot.Id,listIdCotiza,Integer.valueOf(pago.DSALES_Plazodecomprademoto__c), partidasSeleccionadas,skuMoto);
                         createCot( idCotSin );
                     }
-                    else if(producto.DSALES_Segurogratis__c==true && partidasSeleccionadas!=null && partidasSeleccionadas.size()==2){
+                    /*else if(producto.DSALES_Segurogratis__c==true && partidasSeleccionadas!=null && partidasSeleccionadas.size()==2){
                         idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
                         System.debug('se UNA cotizaciones creadas--------> '+ idCotizacion);
                         crearPartidas(beforeCot.Id,idCotizacion,partidasSeleccionadas,skuMoto);
                         createQuote(idCotizacion );
-                    }
-                    else if(producto.DSALES_Segurogratis__c==false){
+                    }*/
+                    else{
                         idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
                         System.debug('se UNA cotizaciones creadas-------> '+ idCotizacion);
                         crearPartidas(beforeCot.Id,idCotizacion,partidasSeleccionadas,skuMoto);
@@ -303,7 +303,7 @@ public with sharing class DSALES_QuotePagoSM {
         String idCotSincronizar='';
         try{
             QuoteLineItem producto =lstQlItm(idCot, skuMoto);
-            if(producto!=null && producto.DSALES_Segurogratis__c==true){
+           /* if(producto!=null && producto.DSALES_Segurogratis__c==true){
                 seguroGratis= lstQlItms(partidasSeleccionadas);
                 seguro=[SELECT Id,dsalesOpcionPago__c,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Recargos__c,DSALES_SKU__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
                         dsalesGastosDeOperacionDelRecibo__c,DSALES_Impuestos__c,dsalesQuoteId__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE 
@@ -343,8 +343,8 @@ public with sharing class DSALES_QuotePagoSM {
                 update idNuevos;
                 System.debug('idCotizacion actu:'+listPartInsert[0].QuoteId);
                 idCotSincronizar= listPartInsert[0].QuoteId;
-            }
-            else if(producto!= null){ 
+            }  else*/ 
+            if(producto!= null){ 
                 listSeguros=[SELECT Id,dsalesOpcionPago__c,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,Dsales_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
                              dsalesGastosDeOperacionDelRecibo__c,dsalesQuoteId__c,DSALES_Pagomensual__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
                              FROM QuoteLineItem WHERE  QuoteId=:idCot AND DSALES_Tipodeproducto__c='Seguro' AND DSALES_NombreProducto__c!=:rcGratis AND DSALES_Plazo__r.Dsales_Plazo__c =:String.valueOf(plazo) WITH SECURITY_ENFORCED ORDER BY DSALES_Plazo__r.Dsales_Plazo__c ASC LIMIT 10];
@@ -493,6 +493,7 @@ public with sharing class DSALES_QuotePagoSM {
                 
             }
         }
+        System.debug('escenario?'+listaMotoSeguroToInsert );
         return listaMotoSeguroToInsert;
         
     }
@@ -540,6 +541,7 @@ public with sharing class DSALES_QuotePagoSM {
             listPartInsert.add(part); 
         }
         System.debug('listPartInsert:'+listPartInsert.size());
+        System.debug('escenario??'+listPartInsert);
         return listPartInsert;
     }
     /*************************  3   ********************************************************/

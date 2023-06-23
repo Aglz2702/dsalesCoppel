@@ -43,6 +43,7 @@ global class DSALES_VentaSM {
 		global String mensajeError {get;set;}
 		global Integer codigoError {get;set;}
 		global String idUniversal{get;set;}
+		global String idClienteSalesforce {get;set;}
 		global List<ListaPartidasOportunidad> listaPartidasOportunidad { get; set; }
 		global DatosParaEmitir datosParaEmitir { get; set; } 
 		

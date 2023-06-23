@@ -37,6 +37,7 @@ global without sharing class DSALES_VentaSMRest {
                     venta.pagos.idOportunidad=oppor.Id;
                     List<String> partidasSeleccionadas= venta.idPartidaPresupuesto;
                     DSALES_PaymentInfoWrapper.PaymentResponse resp= DSALES_PaymentInfoWrapperRequest.insertarPago(venta.pagos,venta.contratante);
+                    System.debug('pago creado: '+resp.pagoId);
                     pago=[SELECT Id,DSALES_Factura__c,DSALES_IDUniversal1__c,DSALES_Oportunidad__c,DSALES_Plazodecomprademoto__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName,DSALES_Seguro__c,DSALES_SKU__c  
                                             FROM DSALES_InformacionDePago__c 
                                             WHERE Id=:resp.pagoId WITH SECURITY_ENFORCED];
@@ -60,14 +61,14 @@ global without sharing class DSALES_VentaSMRest {
                     
                 }catch(Exception.JSONException e){
                     exito = false;
-                    mensajeError= DSALES_Utility.BAD_REQUEST_MSJ;
+                    mensajeError= DSALES_Utility.BAD_REQUEST_MSJ+' '+e.getLineNumber()+ ': '+e.getMessage()+' '+e.getCause();
                     codigoError=DSALES_Utility.BAD_REQUEST_CODE;
                     
                 }
                 catch(Exception e){
                     System.debug('**ERROR VENTA**'+e.getLineNumber()+ ': '+e.getMessage());
                     exito = false;
-                    mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ+' '+e.getLineNumber()+ ': '+e.getMessage();
                     codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;
                 }
             }
@@ -85,6 +86,7 @@ global without sharing class DSALES_VentaSMRest {
         ventaSM.codigoError=codigoError;
         ventaSM.mensajeError=mensajeError;
         ventaSM.idUniversal =idUniversal;
+        ventaSM.idClienteSalesforce=idCliente;
         ventaSM.listaPartidasOportunidad=listaPartidas;
         
         
@@ -154,6 +156,7 @@ global without sharing class DSALES_VentaSMRest {
                 participante.codigoColonia=item.codigoColonia; //clave colonia SM
             }
         } 
+        cliente.numeroCliente=participante.numeroCliente;
         cliente.nombre = participante.nombre;
         cliente.apellidoPaterno=participante.apellidoPaterno;
         cliente.apellidoMaterno=participante.apellidoMaterno;
