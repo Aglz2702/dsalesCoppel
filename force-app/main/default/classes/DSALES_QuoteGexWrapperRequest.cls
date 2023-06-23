@@ -1,8 +1,9 @@
 @RestResource(urlMapping='/insertQuoteGex/*')
 global with sharing class DSALES_QuoteGexWrapperRequest {
-    
+
     @HttpPost
     global static DSALES_QuoteGexWrapper.respuestaNPV createQuote(){
+        
         Boolean success = true;
         String message = '';
         String code = '';
@@ -126,6 +127,8 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             respuestaNpvList.success = false;
             respuestaNpvList.codigoError = code;
             respuestaNpvList.mensajeError = message;
+            //respuestaNpvList.codigoError = String.valueOf(DSALES_Utility.NOASIGNAMENT_REQUEST_CODE);
+            //respuestaNpvList.mensajeError = DSALES_Utility.NOASIGNAMENT_ERROR_MSJ;
             respuestaNpvList.respuesta.add(responsePayloadError);
             return respuestaNpvList;
         }else{
@@ -137,7 +140,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     Id idMatriz = idMat.Id;
                     String nombreIntangible = quoteLineItem.DSALES_NombreProductoServicio__c;
                     String[] partesCadena = nombreIntangible.split(' ');
-                    String numeroExtraido = partesCadena[3];
+                    String numeroExtraido = partesCadena[4];
                     Decimal precioTangible = 0.0;
                     if (mapProducts.containsKey(numeroExtraido)) {
                         DSALES_QuoteGexWrapper.Product product = mapProducts.get(numeroExtraido);
@@ -369,7 +372,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         partidapreGEX.UnitPrice = price1;
                         partidapreGEX.Vigencia_meses__c = '12';
                         partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'Garantia Extendida 12M'+' '+item.product2.StockKeepingUnit+' '+p.articulo;
+                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 12M SKU'+' '+item.product2.StockKeepingUnit;
                         listaPartida.add(partidapreGEX);
                     }
                     if(price2!=0.0){
@@ -381,7 +384,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         partidapreGEX.UnitPrice = price2;
                         partidapreGEX.Vigencia_meses__c = '24';
                         partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'Garantia Extendida 24M'+' '+item.product2.StockKeepingUnit+' '+p.articulo;
+                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 24M SKU'+' '+item.product2.StockKeepingUnit;
                         listaPartida.add(partidapreGEX);
                     }
                     if(price3!=0.0){
@@ -393,7 +396,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         partidapreGEX.UnitPrice = price3;
                         partidapreGEX.Vigencia_meses__c = '36';
                         partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'Garantia Extendida 36M'+' '+item.product2.StockKeepingUnit+' '+p.articulo;
+                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 36M SKU'+' '+item.product2.StockKeepingUnit;
                         listaPartida.add(partidapreGEX);
                     }
                     if(price4!=0.0){
@@ -405,7 +408,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         partidapreGEX.UnitPrice = price4;
                         partidapreGEX.Vigencia_meses__c = '48';
                         partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'Garantia Extendida 48M'+' '+item.product2.StockKeepingUnit+' '+p.articulo;
+                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 48M SKU'+' '+item.product2.StockKeepingUnit;
                         listaPartida.add(partidapreGEX);
                     }
                     if(price5!=0.0){
@@ -417,7 +420,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         partidapreGEX.UnitPrice = price6;
                         partidapreGEX.Vigencia_meses__c = '60';
                         partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'Garantia Extendida 60M'+' '+item.product2.StockKeepingUnit+' '+p.articulo;
+                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 60M SKU'+' '+item.product2.StockKeepingUnit;
                         listaPartida.add(partidapreGEX);
                     }
                     if(price6!=0.0){
@@ -429,7 +432,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         partidapreGEX.UnitPrice = price6;
                         partidapreGEX.Vigencia_meses__c = '72';
                         partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'Garantia Extendida 72M'+' '+item.product2.StockKeepingUnit+' '+p.articulo;
+                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 72M SKU'+' '+item.product2.StockKeepingUnit;
                         listaPartida.add(partidapreGEX);
                     }
                 }
