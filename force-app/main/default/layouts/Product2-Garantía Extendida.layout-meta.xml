@@ -28,7 +28,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>dsalesSubtipo__c</field>
+                <field>DSALES_ServEspecifico__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
