@@ -45,6 +45,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>DSALES_RegionalizacionSegurosCampanas</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>DSALES_CancelacionController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
