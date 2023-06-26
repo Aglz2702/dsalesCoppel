@@ -35,7 +35,7 @@ global class DSALES_VentaGEX {
     
     global class VentaGexResponse{
         global Boolean exito {get;set;}
-        global String mensajeDeError {get;set;}
+        global String mensaje {get;set;}
         global String codigoDeError {get;set;}
         global String idClienteSalesforce {get;set;}
         global List<String> idDePago {get;set;}

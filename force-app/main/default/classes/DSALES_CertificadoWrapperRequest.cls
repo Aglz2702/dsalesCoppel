@@ -1,5 +1,6 @@
 @RestResource(urlMapping='/insertCertificado/*')
 global with sharing class DSALES_CertificadoWrapperRequest {
+
     @HttpPost
     global static DSALES_CertificadoWrapper.CertificadoResponse createCertificado(){
         
@@ -22,7 +23,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                 }
                 catch(Exception e){
                     responsePayload.exito = false;
-                    responsePayload.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    responsePayload.mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ + e.getMessage() + e.getLineNumber();
                     responsePayload.codigoError=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
                     
                     
@@ -190,10 +191,14 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         String message = '';
         String code='';
         try{
-            if(certificado.numeroCliente!=null)
+            if(certificado.numeroCliente!='' || !String.isEmpty(certificado.numeroCliente))
             {
-                Account cliente =[SELECT Id FROM ACCOUNT WHERE CP_WalletCustomerNumber__c=:Double.valueOf(certificado.numeroCliente) WITH SECURITY_ENFORCED LIMIT 1 ]; 
-                certificadoRecord.DSALES_Cliente__c=cliente.Id;
+                List<Account> cliente =[SELECT Id FROM ACCOUNT WHERE CP_WalletCustomerNumber__c=:Double.valueOf(certificado.numeroCliente) WITH SECURITY_ENFORCED LIMIT 1 ]; 
+                if (cliente.size()>0)
+                    {
+                        certificadoRecord.DSALES_Cliente__c=cliente[0].Id;
+                    }
+                
             }
             else
             {
@@ -241,7 +246,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             
         } catch(Exception e){
             success = false;
-            message = DSALES_Utility.INTERNAL_ERROR_MSJ;
+            message = DSALES_Utility.INTERNAL_ERROR_MSJ+ e.getMessage() + e.getLineNumber();
             code=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
             
             

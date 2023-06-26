@@ -69,9 +69,13 @@ global with sharing class DSALES_VentaGEXRest {
                 }
             }
         }
-        
+        ventaGex.mensaje='';
         ventaGEX.exito = success;
-        ventaGEX.mensajeDeError=message;
+        if(ventaGex.exito)
+        {
+        	ventaGEX.mensaje='Venta Generada con Éxito';    
+        }
+        
         ventaGEX.codigoDeError=code;
         ventaGEX.idClienteSalesforce=clienteId;
         ventaGEX.idDePago=paymentIds;

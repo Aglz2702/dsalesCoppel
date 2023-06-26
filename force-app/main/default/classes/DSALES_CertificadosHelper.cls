@@ -1,5 +1,5 @@
 public with sharing class DSALES_CertificadosHelper {
-    
+  
     
     private static final String TEMPLETE_NAME = 'DSALES_CertificadoGEX';  
     private static final String DIRECCION_CORREO = 'atencion@coppel.com';  
@@ -24,7 +24,17 @@ public with sharing class DSALES_CertificadosHelper {
                 item.DSALES_enviado__c = true;
                 
                 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                mail.setToAddresses(new string[] {item.DSALES_E_mail__c});
+               if(!String.isEmpty(item.DSALES_E_mail__c) || item.DSALES_E_mail__c!=null)
+               {
+                    mail.setToAddresses(new string[] {item.DSALES_E_mail__c});
+                    system.debug('item.Dsales_E_mail__c'+item.DSALES_E_mail__c);
+               }
+                else
+                {
+                     mail.setToAddresses(new string[] {item.DSALES_Email__c});
+                     system.debug('item.DsalesEmail'+item.DSALES_Email__c);
+                }
+               
                 mail.setTemplateId(templete.Id);
                 mail.setTargetObjectId(cuenta.PersonContactId);
                 mail.setOrgWideEmailAddressId(owa.Id);
@@ -42,9 +52,10 @@ public with sharing class DSALES_CertificadosHelper {
             Messaging.sendEmail(listaMensaje, false);
             if(Schema.sObjectType.DSALES_Certificado__c.isUpdateable()) {
                 update sObjectList;
+                 System.debug('Correo enviado' + sObjectList);
                 }
            
-            System.debug('Correo enviado');
+           
         }catch(Exception ex){
             System.debug('Error: '+ex.getMessage() + ', Línea: '+ex.getLineNumber());
         }
