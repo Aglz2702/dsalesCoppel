@@ -867,6 +867,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Campaign.dsalesPlazosAplicables__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Campaign.dsalesTipoCampana__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3158,6 +3163,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.StockKeepingUnit</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Product2.dsalesOpcionPago__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

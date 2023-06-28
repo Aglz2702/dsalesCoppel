@@ -3,6 +3,7 @@ global class DSALES_IPAssetWrapper {
     global class IPAssetRequest{
         global Boolean emitirPoliza {get;set;}
         global String idUniversal {get;set;}
+        global String correoElectronico {get;set;}
         global String uso { get; set; }
         global String claveTienda { get; set; }
         global String servicio { get; set; }
