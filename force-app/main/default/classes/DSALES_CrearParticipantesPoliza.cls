@@ -31,6 +31,7 @@ public with sharing class DSALES_CrearParticipantesPoliza {
     }
     public static void crearParticipantes(List<DSALES_VentaSM.DatosParticipante> participantes, String idPoliza,Boolean enviaContratante){
         List<InsurancePolicyParticipant> listaParticipantes = new List<InsurancePolicyParticipant>();
+        Insurancepolicy poliza =[SELECT Id,NameInsuredId FROM Insurancepolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED LIMIT 1];
         Set<Decimal> listaNumCliente =new  Set<Decimal>();
         Set<String> datosCliente = new Set<String>();
         Set<String> datosClienteApellido = new Set<String>();
@@ -40,7 +41,8 @@ public with sharing class DSALES_CrearParticipantesPoliza {
         List<DSALES_VentaSM.DatosParticipante> listaOtrosParticipantes = new List<DSALES_VentaSM.DatosParticipante>();
         for(DSALES_VentaSM.DatosParticipante item: participantes){
             if(item.figura==DSALES_Utility.FIGURA_CONDUCTOR){
-                if(!String.isEmpty(item.numeroCliente)){
+                crearConductor(poliza.NameInsuredId,idPoliza);
+               /* if(!String.isEmpty(item.numeroCliente)){
                     valueNumero=Decimal.valueOf(item.numeroCliente);
                 }
                 else{
@@ -49,7 +51,7 @@ public with sharing class DSALES_CrearParticipantesPoliza {
                     conductor.apellidoPaterno=item.apellidoPaterno;
                     conductor.apellidoMaterno=item.apellidoMaterno;
                     conductor.correo=item.correoElectronico;  
-                }
+                }*/
             }
             else{
                 if(enviaContratante=true && item.figura==DSALES_Utility.FIGURA_CONTRATANTE ){
@@ -63,8 +65,8 @@ public with sharing class DSALES_CrearParticipantesPoliza {
         if(enviaContratante==false){
             crearContratante(idPoliza);
         }
-        String idClienteConductor= busquedaCuentaConductor(conductor, valueNumero);
-        crearConductor(idClienteConductor,idPoliza);
+        //String idClienteConductor= busquedaCuentaConductor(conductor, valueNumero);
+       // crearConductor(idClienteConductor,idPoliza);
         crearOtrosParticipantes(listaOtrosParticipantes,idPoliza);
         
         

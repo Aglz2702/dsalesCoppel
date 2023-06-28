@@ -88,7 +88,8 @@ public with sharing class DSALES_IPAssetWrapperRequestActivoTest {
         DSALES_InformaciondePago__c pago = [SELECT id,DSALES_Poliza__c,DSALES_IDUniversal1__c, DSALES_Motoentregada__c FROM  DSALES_InformaciondePago__c  WHERE  DSALES_IDUniversal1__c='2023031400015666634'];
         InsurancePolicy poliza = [SELECT Id,SourceQuoteId FROM InsurancePolicy WHERE Id=:pago.DSALES_Poliza__c];
         System.debug('poliza rn test activo:'+poliza);
-        String body='{"emitirPoliza":true,"idUniversal":"'+pago.DSALES_IDUniversal1__c+'","uso":"Personal","claveTienda":"1","servicio":"Particular","numeroSerie":"12345678","numeroMotor":"8","modelo":"2022","placas":"AS-4567","claveVehicular":"098765432","valorFactura":8000,"bajoDemanda":false,"descripcion":"moto Vitalia azul","marca":"VITALIA","nombreActivo":"MOTO VITALIA"}';
+        String body='{"emitirPoliza":true,"idUniversal":"'+pago.DSALES_IDUniversal1__c+'","correoElectronico":"saymartinez@deloittemx.com","uso":"Personal","claveTienda":"1","servicio":"Particular","numeroSerie":"12345678","numeroMotor":"8","modelo":"2022","placas":"AS-4567","claveVehicular":"098765432","valorFactura":8000,"bajoDemanda":false,"descripcion":"moto Vitalia azul","marca":"VITALIA","nombreActivo":"MOTO VITALIA"}';
+        //String body='{"emitirPoliza":true,"idUniversal":"'+pago.DSALES_IDUniversal1__c+'","uso":"Personal","claveTienda":"1","servicio":"Particular","numeroSerie":"12345678","numeroMotor":"8","modelo":"2022","placas":"AS-4567","claveVehicular":"098765432","valorFactura":8000,"bajoDemanda":false,"descripcion":"moto Vitalia azul","marca":"VITALIA","nombreActivo":"MOTO VITALIA"}';
         request.requestURI='/apexrest/insertIPAssetDelivered'; 
         request.httpMethod='POST';
         RestContext.request=request;

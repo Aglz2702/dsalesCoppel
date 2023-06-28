@@ -1,5 +1,6 @@
 @isTest
 public class DSALES_QuoteSmWrapperTest {
+    
     @isTest 
     static void createQuoteCredito(){
         DSALES_QuoteSmWrapper.QuoteSmRequest requestnpv = new DSALES_QuoteSmWrapper.QuoteSmRequest();
@@ -90,4 +91,5 @@ public class DSALES_QuoteSmWrapperTest {
         RestResponse res3 = new RestResponse();
         System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
+
 }
