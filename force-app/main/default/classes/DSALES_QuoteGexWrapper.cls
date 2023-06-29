@@ -9,6 +9,7 @@ global class DSALES_QuoteGexWrapper {
         global String correoElectronico {get;set;}
         global String idFactura {get;set;}
         //global String	id_oportunidad	{get;set;}
+        global String iduVenta {get;set;}
         global List<Product> productos {get;set;}
  }
 	global class Product {
@@ -18,6 +19,8 @@ global class DSALES_QuoteGexWrapper {
         global String modelo {get; set;}
         global String marca {get; set;}
         global Double precioTangible {get; set;}
+        //global Integer idSecuencia {get; set;}
+        //global List<Integer> idSecuencia{get;set;}
     }
     global class QuoteGexResponse{
         global String	skuDeTangible	{get;set;}
@@ -27,13 +30,15 @@ global class DSALES_QuoteGexWrapper {
         global double	precio	{get;set;}
         global double	costoTotal	{get;set;}
         global String 	mesesCobertura {get;set;}
-        global String	idPartidaDePresupuesto	{get;set;} 
+        global String	idPartidaDePresupuesto	{get;set;}
+        global Integer	idSecuencia	{get;set;} 
     }
 
     global class RespuestaNPV{        
         global Boolean 	success {get;set;}
         global String	idCotizacion	{get;set;}
         global String	idOportunidad	{get;set;}
+        global String	iduVenta	{get;set;}
         global String 	codigoError {get;set;}
         global String 	mensajeError {get;set;}
         global List<QuoteGexResponse> respuesta {get;set;}
