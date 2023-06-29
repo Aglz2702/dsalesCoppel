@@ -8,7 +8,7 @@ global class DSALES_QuoteGexWrapper {
         global String apellidoMaterno {get;set;}
         global String correoElectronico {get;set;}
         global String idFactura {get;set;}
-        //global String	id_oportunidad	{get;set;}
+        global String idOportunidad	{get;set;}
         global String iduVenta {get;set;}
         global List<Product> productos {get;set;}
  }
@@ -40,7 +40,7 @@ global class DSALES_QuoteGexWrapper {
         global String	idOportunidad	{get;set;}
         global String	iduVenta	{get;set;}
         global String 	codigoError {get;set;}
-        global String 	mensajeError {get;set;}
+        global String 	mensaje {get;set;}
         global List<QuoteGexResponse> respuesta {get;set;}
         global List<Nodos> descripciones {get;set;}
     }

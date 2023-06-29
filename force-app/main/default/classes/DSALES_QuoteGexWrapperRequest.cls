@@ -20,27 +20,30 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             if(String.isNotBlank(body)){
                 try{
                     DSALES_QuoteGexWrapper.QuoteGexRequest data = (DSALES_QuoteGexWrapper.QuoteGexRequest)JSON.deserialize(body, DSALES_QuoteGexWrapper.QuoteGexRequest.class); 
-                     //Map<String, DSALES_QuoteGexWrapper.Product> mapProducts = new  Map<String, DSALES_QuoteGexWrapper.Product>();
                     for(DSALES_QuoteGexWrapper.Product p : data.productos){
                         mapProducts.put(p.skuDeTangible, p);
-                        system.debug('mapProductsUpdate:__ '+mapProducts);
                     }
-                    system.debug('mapProducts FINAL:__ '+mapProducts);
                     List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
-                    system.debug('produc:__ '+produc);
                     productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSales_Producto__r.StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
-                    system.debug('productAsig:__ '+productAsig);
                     List<Id> dsalesProductoSetId = new List<Id>();
                     for(DSales_Asignacion_de_Productos__c da : productAsig){
                         dsalesProductoSetId.add(da.DSales_Servicio_Seguro__c);
                     }
-                    system.debug('dsalesProductoSetId:__ '+dsalesProductoSetId);
                     Account universalAccount = [Select Id,DSALES_ClienteCoppel__c from Account WHERE DSALES_ClienteCoppel__c = :DSALES_Utility.NUMERO_CLIENTE_GENERICO WITH SECURITY_ENFORCED LIMIT 1];
                     Tienda__c tienda = [Select Id from Tienda__c WHERE DSales_TiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
                     
                     Id clienteId=null;
                     String numeroDeContado=null;
                     Map<String, String> mapNomyId=new Map<String, String>();
+                    if(data.idOportunidad!=null){
+                        system.debug('Entro a ligar cotizacion_____');
+                        Opportunity accountClient = [SELECT id, AccountId,Account.FirstName, Account.LastName FROM Opportunity WHERE id=:data.idOportunidad WITH SECURITY_ENFORCED LIMIT 1];
+                        mapNomyId.put('oportunidadId',data.idOportunidad);
+                        mapNomyId.put('firstName',accountClient.Account.FirstName);
+                        mapNomyId.put('lastName',accountClient.Account.LastName);
+                        cotiza = crearCotizacion(data, mapNomyId ,tienda);
+                        listaPartida = crearPartidas(data, cotiza.Id);
+                    }else{
                     if(data.numeroCliente == '' || data.numeroCliente == null ){
                         List<Account> clienteContado = [SELECT Id,FirstName,LastName FROM Account WHERE FirstName=: data.nombre and LastName=: data.apellidoPaterno and PersonEmail= :data.correoElectronico WITH SECURITY_ENFORCED];
                         clienteId = clienteContado[0].Id;
@@ -90,7 +93,8 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             cotiza = crearCotizacion(data,mapNomyId, tienda);
                         	listaPartida = crearPartidas(data, cotiza.Id);
                         }
-                    }    
+                    }
+                    }
                 }catch(JSONException e){
                     success = false;
                     code = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
@@ -104,11 +108,11 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         }
         DSALES_QuoteGexWrapper.RespuestaNPV respuestaNpvList = new DSALES_QuoteGexWrapper.RespuestaNPV();
         respuestaNpvList.idCotizacion = cotiza.Id;
-        respuestaNpvList.idOportunidad = oppor.Id;
+        respuestaNpvList.idOportunidad = cotiza.OpportunityId;
         respuestaNpvList.iduVenta = oppor.dsalesIduVenta__c;
         respuestaNpvList.success = success;
         respuestaNpvList.codigoError = code;
-        respuestaNpvList.mensajeError = message;
+        respuestaNpvList.mensaje = message;
         respuestaNpvList.respuesta =  new List<DSALES_QuoteGexWrapper.QuoteGexResponse>();
         respuestaNpvList.descripciones =  responseDescription('Servicio',cotiza.Id);
         
@@ -132,9 +136,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             responsePayloadError.skuDeServicio = null;
             respuestaNpvList.success = false;
             respuestaNpvList.codigoError = code;
-            respuestaNpvList.mensajeError = message;
-            //respuestaNpvList.codigoError = String.valueOf(DSALES_Utility.NOASIGNAMENT_REQUEST_CODE);
-            //respuestaNpvList.mensajeError = DSALES_Utility.NOASIGNAMENT_ERROR_MSJ;
+            respuestaNpvList.mensaje = message;
             respuestaNpvList.respuesta.add(responsePayloadError);
             return respuestaNpvList;
         }else{
