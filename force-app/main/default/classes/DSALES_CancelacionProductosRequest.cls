@@ -14,15 +14,25 @@ global with sharing class DSALES_CancelacionProductosRequest {
 
     private static DSALES_CancelacionProductosWrapper.Response cancelar(String body){
         DSALES_CancelacionProductosWrapper.Response response = new DSALES_CancelacionProductosWrapper.Response();
+        String idCancelacion='';
         if(String.isNotBlank(body)){
             try{
                 DSALES_CancelacionProductosWrapper.Request datos = (DSALES_CancelacionProductosWrapper.Request)JSON.deserialize(body,DSALES_CancelacionProductosWrapper.Request.class);
                 List<DSALES_CancelacionProductosWrapper.listaProducto> listaProductos = datos.ListaProductos;
                 DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId FROM DSALES_InformacionDePago__c WHERE 	DSALES_IDUniversal1__c=:datos.idUniversal WITH SECURITY_ENFORCED LIMIT 1];
-                String idCancelacion=escenariosCancelacion(pago, datos, listaProductos);
-                response.mensaje='Cancelacion Exitosa!';
-                response.idCancelacion=idCancelacion;
-                response.exito=true;
+                idCancelacion=escenariosCancelacion(pago, datos, listaProductos);
+                System.debug('id cancelacion:'+idCancelacion);
+                if(idCancelacion!=''){
+                    response.mensaje='Cancelacion Exitosa!';
+                    response.idCancelacion=idCancelacion;
+                    response.exito=true;
+                }
+                else{
+                    response.mensaje='No se pudo realizar la cancelación verifique los datos!';
+                    response.exito=false;
+                    response.codigoError=401;
+                }
+                
             }catch(Exception.JSONException e){
                 System.debug('ERROR JSON'+e.getLineNumber()+e.getMessage());
                 response.exito = false;
@@ -83,22 +93,33 @@ global with sharing class DSALES_CancelacionProductosRequest {
     private static String escenariosCancelacion(DSALES_InformacionDePago__c pago,DSALES_CancelacionProductosWrapper.Request datos,List<DSALES_CancelacionProductosWrapper.listaProducto> listaProductos){
         String idCancelacion='';
         if(pago!=null ){
-            idCancelacion =crearCancelacion(datos);
+           idCancelacion= cancelacionGex(pago, datos, listaProductos);
+           /* idCancelacion =crearCancelacion(datos);
             if(String.isNotEmpty(idCancelacion)){
                 cancelacionGex(pago, datos, listaProductos);
             }
-            System.debug('idCancelación: '+idCancelacion);
+            System.debug('idCancelación: '+idCancelacion);*/
         }
         return idCancelacion;
     }
-    private static void cancelacionGex(DSALES_InformacionDePago__c pago,DSALES_CancelacionProductosWrapper.Request datos,List<DSALES_CancelacionProductosWrapper.listaProducto> listaProductos){
+    private static String cancelacionGex(DSALES_InformacionDePago__c pago,DSALES_CancelacionProductosWrapper.Request datos,List<DSALES_CancelacionProductosWrapper.listaProducto> listaProductos){
         String recordTypeIdMoto = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
         String recordTypeIdGex = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_Pagos_en_NPV').getRecordTypeId();
+        String idCancelacion='';
         if(pago.RecordTypeId==recordTypeIdGex){
             DSALES_CertificadoWrapperRequest.putCertificado(datos.idUniversal,listaProductos,datos.estatus,datos.motivoCancelacion);
+            idCancelacion =crearCancelacion(datos);
         }else if(pago!=null && pago.RecordTypeId==recordTypeIdMoto){
-            actualizarOportunidades(listaProductos);
+            if(listaProductos.size()>0){
+                actualizarOportunidades(listaProductos);
+                idCancelacion =crearCancelacion(datos);
+            }
+            else{
+                System.debug('Lista de productos vacia');
+            }
+           
         }
+        return idCancelacion;
     }
 
    

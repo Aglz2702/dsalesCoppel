@@ -257,7 +257,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             datosContratante.codigoPostal =Integer.valueOf(contratante.BillingPostalCode);
             datosContratante.numeroInterior= String.valueOf(contratante.dsalesNumeroInterior__c);
             datosContratante.numeroExterior =String.valueOf(contratante.dsalesNumeroExterior__c);
-            datosContratante.codigoEstado =String.valueOf(contratante.dsalesCodigoEstado__c); 
+            datosContratante.codigoEstado =contratante.BillingState;
             datosContratante.codigoColonia=String.valueOf(contratante.dsalesCodigoColonia__c);
             datosContratante.segundoCorreoContratante=contratante.dsalesSegundoCorreo__c;
             datosContratante.nacionalidadSociedad=contratante.dsalesNacionalidadSociedad__c;

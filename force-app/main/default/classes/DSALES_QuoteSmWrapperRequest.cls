@@ -472,6 +472,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.dsalesFechaDeComienzoDePoliza__c = Date.valueOf(data.fechaInicio);
         cotiza.Email = data.correoElectronico;
         cotiza.DSALES_TipoUso__c = tipoUso.Id;
+        //cotiza.dsalesTipoDeVehiculo__c=data.tipoVehiculo;
         cotiza.dsalesTipoDeVehiculo__c = tipoVehiculo.Id;
         cotiza.DSALES_RFC__c = data.rfc;
         cotiza.DSALES_Plazoacotizar__c= decimal.valueOf(data.plazoCotizar);  
@@ -488,15 +489,18 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             PricebookEntry precio = [SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Product2Id =:producto.Id LIMIT 1];
         	Plazo__c plazo = [SELECT Id, Name, DSALES_Activo__c, dsalesSeguro__r.Name FROM Plazo__c WHERE dsalesSeguro__r.Name =:seguro AND Name=:data.opcionPago AND DSALES_Activo__c = true WITH SECURITY_ENFORCED];     	
         	QuoteLineItem partida = new QuoteLineItem();
+            System.debug('buscar  data say:'+data);
+            System.debug('buscar  data plazos say:'+data.data.primaSeguro.primaTotal);
             partida.QuoteId = cotiza.Id;
             partida.PricebookEntryId = precio.Id;
             partida.Product2Id = precio.Product2Id;
             partida.Quantity = 1;
-            partida.UnitPrice = precio.UnitPrice;
+            partida.UnitPrice=decimal.valueOf(data.data.primaSeguro.primaTotal);
+            //partida.UnitPrice = precio.UnitPrice;
             partida.DSALES_Fechadeinicio__c = Date.valueOf(data.data.recibos[0].fechaInicio);
             partida.DSALES_Fechadetermino__c = Date.valueOF(data.data.recibos[0].fechaFin);
             partida.DSALES_Primaneta__c = decimal.valueOf(data.data.primaSeguro.primaNeta);
-            partida.UnitPrice = decimal.valueOf(data.data.primaSeguro.primaNeta);
+           // partida.UnitPrice = decimal.valueOf(data.data.primaSeguro.primaNeta);
             partida.dsalesDerechosDePoliza__c = decimal.valueOf(data.data.primaSeguro.derechos);
             partida.dsalesGastosDeOperacionDelRecibo__c = decimal.valueOf(data.data.primaSeguro.recargo);
             partida.DSALES_Impuestos__c = decimal.valueOf(data.data.primaSeguro.impuestos);
@@ -513,6 +517,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                 partida.dsalesPagoInicial__c=decimal.valueOf(data.data.recibos[0].primaTotal);
                 partida.DSALES_Pagomensual__c=decimal.valueOf(data.data.recibos[1].primaTotal);
             }
+            System.debug('partida creada say:'+partida);
             return partida;
     }
     public static String coberturas(List<DSALES_QuoteSmWrapper.CoveragesArray> coberturas){
@@ -585,10 +590,11 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
     }
     public static List<DSALES_QuoteSmWrapper.RespuestaPlazos> creaPlazos(Quote cotiza, List<DSALES_QuoteSmWrapper.ArmadoMuleSoft> plazos, String sku,Boolean listaNegra,String idTienda){
         List<QuoteLineItem> listaPartidas = new List<QuoteLineItem>();
-        System.debug('plazos: '+plazos);
+        System.debug('plazos say: '+plazos);
         List<DSALES_QuoteSmWrapper.RespuestaPlazos> listaSeguros = new List<DSALES_QuoteSmWrapper.RespuestaPlazos>();
         for(Integer i=0; i<plazos.size(); i++){
             listaPartidas.add(creaPartida(plazos[i].paquete, cotiza, plazos[i],sku));
+            System.debug('lista partidas say:'+listaPartidas);
             DSALES_QuoteSmWrapper.RespuestaPlazos aux = new DSALES_QuoteSmWrapper.RespuestaPlazos();
             aux.trackingId = plazos[i].trackingId;
             aux.paquete = plazos[i].paquete;
