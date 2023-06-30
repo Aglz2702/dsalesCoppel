@@ -25,12 +25,14 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             if(String.isNotBlank(body)){
                 try{
                     DSALES_IPAssetWrapper.IPAssetRequest policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
+                        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Oportunidad__c,DSALES_Cliente__c,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Poliza__r.Name FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal WITH SECURITY_ENFORCED];
+                       
                         insertarActivo(policyAsset);
-                        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Oportunidad__c,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Poliza__r.Name FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal WITH SECURITY_ENFORCED];
                         productosSincronisados=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(pago.DSALES_Oportunidad__c);
                         Boolean emitir=condicionesParaEmitir(pago.DSALES_Poliza__c,productosSincronisados);
                         System.debug('Emitir?: '+emitir );
                         if(emitir==true && pago.DSALES_Poliza__r.Name!=DSALES_Utility.SEGURO_PREDETERMINADO){
+                            actualizarCorreo(pago.DSALES_Cliente__c, pago.DSALES_Poliza__c, policyAsset.correoElectronico);
                             datos=responseEmitir(pago.DSALES_Poliza__c);
                             System.debug('datos principal: '+datos);
                         }
@@ -63,7 +65,22 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
        
     }	 
     
-    
+    private static void actualizarCorreo(String idCliente, String idPoliza, String correo){
+        Account cliente =[SELECT Id, PersonEmail FROM Account WHERE Id=:idCliente WITH SECURITY_ENFORCED LIMIT 1];
+        cliente.PersonEmail=correo;
+        Insurancepolicy poliza =[SELECT Id,DSALES_CorreoElectronico__c FROM Insurancepolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED LIMIT 1];
+        poliza.DSALES_CorreoElectronico__c=correo;
+        if(Account.SObjectType.getDescribe().isUpdateable()) {
+            update cliente; 
+        }else{
+            System.debug('Permisos insuficientes para actualizar');   
+        } 
+        if(Insurancepolicy.SObjectType.getDescribe().isUpdateable()) {
+            update poliza; 
+        }else{
+            System.debug('Permisos insuficientes para actualizar');   
+        }  
+    }
     global static void insertarActivo(DSALES_IPAssetWrapper.IPAssetRequest policyAsset){
         System.debug('Metodo insertarActivo');
         InsurancePolicyAsset activo  = new InsurancePolicyAsset();
@@ -223,7 +240,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 //datosContratante.codigoColonia=part.codigoColonia;
                 //datosContratante.numeroInterior=part.numeroInterior;
                 //datosContratante.numeroExterior=part.dsalesNumeroExterior__c;
-                datosContratante.contratante=part.dsalesNombre__c +''+ part.dsalesPrimerApellido__c + ''+ part.dsalesSegundoApellido__c;
+                datosContratante.contratante=part.dsalesNombre__c +' '+ part.dsalesPrimerApellido__c + ' '+ part.dsalesSegundoApellido__c;
             }
             
         }
@@ -240,7 +257,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             datosContratante.codigoPostal =Integer.valueOf(contratante.BillingPostalCode);
             datosContratante.numeroInterior= String.valueOf(contratante.dsalesNumeroInterior__c);
             datosContratante.numeroExterior =String.valueOf(contratante.dsalesNumeroExterior__c);
-            datosContratante.codigoEstado =String.valueOf(contratante.dsalesCodigoEstado__c); 
+            datosContratante.codigoEstado =contratante.BillingState;
             datosContratante.codigoColonia=String.valueOf(contratante.dsalesCodigoColonia__c);
             datosContratante.segundoCorreoContratante=contratante.dsalesSegundoCorreo__c;
             datosContratante.nacionalidadSociedad=contratante.dsalesNacionalidadSociedad__c;
@@ -248,7 +265,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             datosContratante.giroComercial=contratante.dsalesGiroComercial__c;
             datosContratante.tipoPersona=contratante.dsalesTipoPersona__c;
             datosContratante.nombreApoderadoLegal=contratante.dsalesNombreApoderadoLegal__c;
-            datosContratante.contratante=contratante.FirstName +''+ contratante.LastName + ''+ contratante.Suffix;
+            datosContratante.contratante=contratante.FirstName +' '+ contratante.LastName + ' '+ contratante.Suffix;
             datosContratante.actividad=contratante.dsalesActividad__c; 
         }
         return datosContratante;

@@ -23,9 +23,10 @@ global with sharing class DSALES_CancelacionProductosWrapper {
     }
 
     global class Response{
-        global Boolean success{get;set;}
+        global Boolean exito{get;set;}
+        global String idCancelacion{get;set;}
         global Integer codigoError{set;get;}
-        global String mensajeError{set;get;}
+        global String mensaje{set;get;}
     }
 
 }

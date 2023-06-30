@@ -27,6 +27,7 @@ public with sharing class DSALES_VentaSMRestAux {
             datosActivo.idUniversal=pago.DSALES_IDUniversal1__c;
             activo= DSALES_IPAssetWrapperRequest.insertIPAsset(datosActivo);
             idActivo=activo.Id;
+            System.debug('id de activo: '+idActivo);
             DSALES_CreateInsurancePolicy.agregarDatosDeActivo(activo,polizaId);            
         }
         return idActivo;

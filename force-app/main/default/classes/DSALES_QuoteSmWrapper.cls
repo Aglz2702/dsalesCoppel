@@ -23,6 +23,7 @@ global class DSALES_QuoteSmWrapper {
         global String fechaInicio {get; set;}
         global Double precioProducto {get; set;}
         global Boolean valorFactura {get; set;}
+        global String iduVenta {get;set;}
     }
     global class QuotePostProvedor{
         //Inter Cotizacion
@@ -70,9 +71,13 @@ global class DSALES_QuoteSmWrapper {
         global Data data {get;set;}
 	}
     global class Campanias{
-        global String nombre {get;set;}
+        global String nombreCampana {get;set;}
         global String tipoCampana {get;set;}
         global String descripcion {get;set;}
+        global String productoDeCampana {get;set;}
+        global String sku {get;set;}
+        global String nombreProducto {get;set;}
+        global List<String> plazosAplicables {get;set;}
 	}
     global class RespuestaPlazos{
         global String trackingId {get;set;}
@@ -94,6 +99,7 @@ global class DSALES_QuoteSmWrapper {
         global RespuestaPlazos listaproducto {get;set;}
         global List<Campanias> campanias{get;set;}
         global String idOportunidad{get;set;}
+        global String iduVenta {get;set;}
     }
     global class CoveragesArray{
         global String codigo {get;set;}
@@ -116,6 +122,7 @@ global class DSALES_QuoteSmWrapper {
         global Double recargo {get;set;}
         global Double impuestos {get;set;}
         global Double derechos {get;set;}
+        global Double primaTotal {get;set;}
     }   
     global class PaymentOptionsJson{
         global String value {get;set;}
