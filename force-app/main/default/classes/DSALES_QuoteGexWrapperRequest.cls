@@ -20,22 +20,33 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             if(String.isNotBlank(body)){
                 try{
                     DSALES_QuoteGexWrapper.QuoteGexRequest data = (DSALES_QuoteGexWrapper.QuoteGexRequest)JSON.deserialize(body, DSALES_QuoteGexWrapper.QuoteGexRequest.class); 
-                     //Map<String, DSALES_QuoteGexWrapper.Product> mapProducts = new  Map<String, DSALES_QuoteGexWrapper.Product>();
-                    for(DSALES_QuoteGexWrapper.Product p : data.productos){
-                        mapProducts.put(p.skuDeTangible, p);
-                    }
-                    List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
-                    productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSales_Producto__r.StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
-                    List<Id> dsalesProductoSetId = new List<Id>();
-                    for(DSales_Asignacion_de_Productos__c da : productAsig){
-                        dsalesProductoSetId.add(da.DSales_Servicio_Seguro__c);
-                    }
                     Account universalAccount = [Select Id,DSALES_ClienteCoppel__c from Account WHERE DSALES_ClienteCoppel__c = :DSALES_Utility.NUMERO_CLIENTE_GENERICO WITH SECURITY_ENFORCED LIMIT 1];
                     Tienda__c tienda = [Select Id from Tienda__c WHERE DSales_TiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
                     
                     Id clienteId=null;
                     String numeroDeContado=null;
                     Map<String, String> mapNomyId=new Map<String, String>();
+                    if(data.idOportunidad!=null){
+                        system.debug('Entro a ligar cotizacion_____');
+                        Opportunity accountClient = [SELECT id, AccountId,Account.FirstName, Account.LastName FROM Opportunity WHERE id=:data.idOportunidad WITH SECURITY_ENFORCED LIMIT 1];
+                        mapNomyId.put('oportunidadId',data.idOportunidad);
+                        mapNomyId.put('firstName',accountClient.Account.FirstName);
+                        mapNomyId.put('lastName',accountClient.Account.LastName);
+                        cotiza = crearCotizacion(data, mapNomyId ,tienda);
+                        listaPartida = crearPartidas(data, cotiza.Id);
+                    }else{
+                        if(data.idUniversal!=null){
+                            DSALES_InformacionDePago__c newOpportunity =[Select id,DSALES_Oportunidad__c,DSALES_Oportunidad__r.Name, DSALES_Cliente__c from DSALES_InformacionDePago__c where DSALES_IDUniversal1__c= :data.idUniversal WITH SECURITY_ENFORCED LIMIT 1];
+                            Opportunity accountClient = [SELECT id, AccountId,Account.FirstName, Account.LastName FROM Opportunity WHERE id=:newOpportunity.DSALES_Oportunidad__c WITH SECURITY_ENFORCED LIMIT 1];
+                            mapNomyId.put('idUniversal',data.idUniversal);
+                            mapNomyId.put('oppPadre',newOpportunity.DSALES_Oportunidad__c);
+                            mapNomyId.put('firstName',accountClient.Account.FirstName);
+                            mapNomyId.put('lastName',accountClient.Account.LastName);
+                            oppor = crearOportunidad(data, mapNomyId ,tienda);
+                            mapNomyId.put('oportunidadId',oppor.Id);
+                            cotiza = crearCotizacion(data, mapNomyId ,tienda);
+                            listaPartida = crearPartidasSinTangible(data, cotiza.Id);
+                        }else{
                     if(data.numeroCliente == '' || data.numeroCliente == null ){
                         List<Account> clienteContado = [SELECT Id,FirstName,LastName FROM Account WHERE FirstName=: data.nombre and LastName=: data.apellidoPaterno and PersonEmail= :data.correoElectronico WITH SECURITY_ENFORCED];
                         clienteId = clienteContado[0].Id;
@@ -81,11 +92,13 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             mapNomyId.put('correo',data.correoElectronico);
                             mapNomyId.put('numeroContado',numeroDeContado);
                             oppor = crearOportunidad(data, mapNomyId,tienda);
-                           	mapNomyId.put('oportunidadId',oppor.Id);
+                            mapNomyId.put('oportunidadId',oppor.Id);
                             cotiza = crearCotizacion(data,mapNomyId, tienda);
-                        	listaPartida = crearPartidas(data, cotiza.Id);
+                            listaPartida = crearPartidas(data, cotiza.Id);
                         }
-                    }    
+                    }
+                        }
+                    }
                 }catch(JSONException e){
                     success = false;
                     code = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
@@ -99,10 +112,11 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         }
         DSALES_QuoteGexWrapper.RespuestaNPV respuestaNpvList = new DSALES_QuoteGexWrapper.RespuestaNPV();
         respuestaNpvList.idCotizacion = cotiza.Id;
-        respuestaNpvList.idOportunidad = oppor.Id;
+        respuestaNpvList.idOportunidad = cotiza.OpportunityId;
+        respuestaNpvList.iduVenta = oppor.dsalesIduVenta__c;
         respuestaNpvList.success = success;
         respuestaNpvList.codigoError = code;
-        respuestaNpvList.mensajeError = message;
+        respuestaNpvList.mensaje = message;
         respuestaNpvList.respuesta =  new List<DSALES_QuoteGexWrapper.QuoteGexResponse>();
         respuestaNpvList.descripciones =  responseDescription('Servicio',cotiza.Id);
         
@@ -116,7 +130,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 consultaRespuestaGEX.add(item);
             }
         }
-        if(consultaRespuesta.isEmpty()){
+        if(consultaRespuesta.isEmpty() && consultaRespuestaGEX.isEmpty()){
             DSALES_QuoteGexWrapper.QuoteGexResponse responsePayloadError = new DSALES_QuoteGexWrapper.QuoteGexResponse();
             responsePayloadError.nombreIntangible = null;
             responsePayloadError.precio = null;
@@ -126,9 +140,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             responsePayloadError.skuDeServicio = null;
             respuestaNpvList.success = false;
             respuestaNpvList.codigoError = code;
-            respuestaNpvList.mensajeError = message;
-            //respuestaNpvList.codigoError = String.valueOf(DSALES_Utility.NOASIGNAMENT_REQUEST_CODE);
-            //respuestaNpvList.mensajeError = DSALES_Utility.NOASIGNAMENT_ERROR_MSJ;
+            respuestaNpvList.mensaje = message;
             respuestaNpvList.respuesta.add(responsePayloadError);
             return respuestaNpvList;
         }else{
@@ -159,6 +171,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         }
                     responsePayload.skuDeServicio = tipoProducto.StockKeepingUnit;
                     responsePayload.mesesCobertura = quoteLineItem.Vigencia_meses__c;
+                    responsePayload.idSecuencia = Integer.valueOf(quoteLineItem.dsalesIdSecuencia__c);
                     responsePayload.idPartidaDePresupuesto = quoteLineItem.Id;
                     respuestaNpvList.respuesta.add(responsePayload);
                 }
@@ -186,7 +199,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         String clienteId=(String)mapNomyId.get('clienteId');
         String firstName=(String)mapNomyId.get('firstName');
         String lastName=(String)mapNomyId.get('lastName');
-        String numComparacion=(String)mapNomyId.get('numeroContado');  
+        String numComparacion=(String)mapNomyId.get('numeroContado');
+        String idUniversal=(String)mapNomyId.get('idUniversal');
+        String oppPadre=(String)mapNomyId.get('oppPadre');
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         Pricebook2 precioLista = [SELECT id,Name FROM Pricebook2 WHERE Name= 'Standard Price Book' and IsActive=true WITH SECURITY_ENFORCED LIMIT 1];
         oppor.AccountId = clienteId;
@@ -199,11 +214,17 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         if(numComparacion==DSALES_Utility.NUMERO_CLIENTE_GENERICO){
             oppor.DSALES_Nombredelsolicitante__c = firstName+' '+lastName;
         }
+        if(idUniversal!=null){
+            oppor.DSALES_OppPrin__c = oppPadre;
+        }
         oppor.CloseDate = date.today()+30;
         oppor.StageName = 'Nuevo';
         oppor.RecordTypeId = recordTypeId;
         oppor.DSALES_Tienda__c = tienda.Id;
         oppor.Pricebook2Id = precioLista.Id;
+        oppor.dsalesIduVenta__c=data.iduVenta;
+        
+        
         if (Schema.sObjectType.Opportunity.isCreateable()) {
             insert oppor;
         }
@@ -253,7 +274,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         for(DSALES_QuoteGexWrapper.Product p : data.productos){
             mapProducts.put(p.skuDeTangible, p);
         }
-        
         List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
         productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSales_Producto__r.StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
         List<Id> dsalesProductoSetId = new List<Id>();
@@ -264,23 +284,26 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         List<PricebookEntry> precioEn = [SELECT Id,UnitPrice,Name,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: produc and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
         List<PricebookEntry> precioEnGEX = [SELECT Id,Name,UnitPrice,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_Tipo_de_Producto__c,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: dsalesProductoSetId and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
         for(PricebookEntry item : precioEn){
-            QuoteLineItem partidapre = new QuoteLineItem();
+            //QuoteLineItem partidapre = new QuoteLineItem();
             
             DSALES_QuoteGexWrapper.Product p =  mapProducts.get(item.Product2.StockKeepingUnit);
-            Product2 producto = new Product2();
-            for(Product2 pro: produc){
-                if(pro.StockKeepingUnit == item.Product2.StockKeepingUnit){
-                    producto = pro;
+            for (Integer i = 0; i < p.cantidadProductosTangibles; i++) {
+                QuoteLineItem partidapre = new QuoteLineItem();
+                Product2 producto = new Product2();
+                for(Product2 pro: produc){
+                    if(pro.StockKeepingUnit == item.Product2.StockKeepingUnit){
+                        producto = pro;
+                    }
                 }
-            }
             partidapre.QuoteId = cotizaId;
             partidapre.PricebookEntryId = item.Id;
             partidapre.Product2Id = item.Product2Id;
-            partidapre.Quantity = p.cantidadProductosTangibles;
+            partidapre.Quantity = 1;
             partidapre.UnitPrice = p.precioTangible;
             partidapre.DSales_Articulo__c = p.articulo;
             partidapre.DSales_Marca__c = p.marca;
             partidapre.DSales_Modelo__c = p.modelo;
+            partidapre.dsalesIdSecuencia__c = i;
             partidapre.DSALES_NombreProductoServicio__c  = p.articulo;
             listaPartida.add(partidapre);
             
@@ -292,7 +315,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             }
             for(PricebookEntry item2 : precioEnGEX){
                 if(item2.Product2Id == intangibleId){
-                    
+                    //for (Integer idSecuencia : p.idSecuencia) {
+                    //for (Integer i = 0; i < p.cantidadProductosTangibles; i++) {
+                        
                     QuoteLineItem partidapreGEX = new QuoteLineItem();
                     Double price1=0;
                     Double price2=0;
@@ -364,80 +389,196 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             }
                         }
                     }
-                    if(price1!=0.0){
-                        partidapreGEX.QuoteId = cotizaId;
-                        partidapreGEX.PricebookEntryId = item2.Id;
-                        partidapreGEX.Product2Id = item2.Product2Id;
-                        partidapreGEX.Quantity = 1;
-                        partidapreGEX.UnitPrice = price1;
-                        partidapreGEX.Vigencia_meses__c = '12';
-                        partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 12M SKU'+' '+item.product2.StockKeepingUnit;
-                        listaPartida.add(partidapreGEX);
+                    if (price1 != 0.0) {
+                        QuoteLineItem partidapreGEX1 = new QuoteLineItem();
+                        partidapreGEX1.QuoteId = cotizaId;
+                        partidapreGEX1.PricebookEntryId = item2.Id;
+                        partidapreGEX1.Product2Id = item2.Product2Id;
+                        partidapreGEX1.Quantity = 1;
+                        partidapreGEX1.UnitPrice = price1;
+                        partidapreGEX1.Vigencia_meses__c = '12';
+                        partidapreGEX1.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
+                        partidapreGEX1.DSALES_NombreProductoServicio__c = 'GARANTÍA EXTENDIDA 12M SKU' + ' ' + item.product2.StockKeepingUnit;
+                        partidapreGEX1.dsalesIdSecuencia__c = i;
+                        listaPartida.add(partidapreGEX1);
                     }
-                    if(price2!=0.0){
-                        partidapreGEX = new QuoteLineItem();
-                        partidapreGEX.QuoteId = cotizaId;
-                        partidapreGEX.PricebookEntryId = item2.Id;
-                        partidapreGEX.Product2Id = item2.Product2Id;
-                        partidapreGEX.Quantity = 1;
-                        partidapreGEX.UnitPrice = price2;
-                        partidapreGEX.Vigencia_meses__c = '24';
-                        partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 24M SKU'+' '+item.product2.StockKeepingUnit;
-                        listaPartida.add(partidapreGEX);
+                    
+                    if (price2 != 0.0) {
+                        QuoteLineItem partidapreGEX2 = new QuoteLineItem();
+                        partidapreGEX2.QuoteId = cotizaId;
+                        partidapreGEX2.PricebookEntryId = item2.Id;
+                        partidapreGEX2.Product2Id = item2.Product2Id;
+                        partidapreGEX2.Quantity = 1;
+                        partidapreGEX2.UnitPrice = price2;
+                        partidapreGEX2.Vigencia_meses__c = '24';
+                        partidapreGEX2.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
+                        partidapreGEX2.DSALES_NombreProductoServicio__c = 'GARANTÍA EXTENDIDA 24M SKU' + ' ' + item.product2.StockKeepingUnit;
+                        partidapreGEX2.dsalesIdSecuencia__c = i;
+                        listaPartida.add(partidapreGEX2);
                     }
-                    if(price3!=0.0){
-                        partidapreGEX = new QuoteLineItem();
-                        partidapreGEX.QuoteId = cotizaId;
-                        partidapreGEX.PricebookEntryId = item2.Id;
-                        partidapreGEX.Product2Id = item2.Product2Id;
-                        partidapreGEX.Quantity = 1;
-                        partidapreGEX.UnitPrice = price3;
-                        partidapreGEX.Vigencia_meses__c = '36';
-                        partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 36M SKU'+' '+item.product2.StockKeepingUnit;
-                        listaPartida.add(partidapreGEX);
-                    }
-                    if(price4!=0.0){
-                        partidapreGEX = new QuoteLineItem();
-                        partidapreGEX.QuoteId = cotizaId;
-                        partidapreGEX.PricebookEntryId = item2.Id;
-                        partidapreGEX.Product2Id = item2.Product2Id;
-                        partidapreGEX.Quantity = 1;
-                        partidapreGEX.UnitPrice = price4;
-                        partidapreGEX.Vigencia_meses__c = '48';
-                        partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 48M SKU'+' '+item.product2.StockKeepingUnit;
-                        listaPartida.add(partidapreGEX);
-                    }
-                    if(price5!=0.0){
-                        partidapreGEX = new QuoteLineItem();
-                        partidapreGEX.QuoteId = cotizaId;
-                        partidapreGEX.PricebookEntryId = item2.Id;
-                        partidapreGEX.Product2Id = item2.Product2Id;
-                        partidapreGEX.Quantity = 1;
-                        partidapreGEX.UnitPrice = price6;
-                        partidapreGEX.Vigencia_meses__c = '60';
-                        partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 60M SKU'+' '+item.product2.StockKeepingUnit;
-                        listaPartida.add(partidapreGEX);
-                    }
-                    if(price6!=0.0){
-                        partidapreGEX = new QuoteLineItem();
-                        partidapreGEX.QuoteId = cotizaId;
-                        partidapreGEX.PricebookEntryId = item2.Id;
-                        partidapreGEX.Product2Id = item2.Product2Id;
-                        partidapreGEX.Quantity = 1;
-                        partidapreGEX.UnitPrice = price6;
-                        partidapreGEX.Vigencia_meses__c = '72';
-                        partidapreGEX.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
-                        partidapreGEX.DSALES_NombreProductoServicio__c  = 'GARANTÍA EXTENDIDA 72M SKU'+' '+item.product2.StockKeepingUnit;
-                        listaPartida.add(partidapreGEX);
-                    }
+                    
                 }
+                }
+                //}
             }
         }
+        
+        if (Schema.sObjectType.QuoteLineItem.isCreateable()) {
+            insert listaPartida;
+        }
+        return listaPartida;
+    }
+    
+    public static List<QuoteLineItem> crearPartidasSinTangible(DSALES_QuoteGexWrapper.QuoteGexRequest data, Id cotizaId){
+        String regions = 'Todas las regiones';
+        String tipoProducto = 'Servicio';
+        String originalMat = 'Matriz Original';
+        List<QuoteLineItem> listaPartida = new List<QuoteLineItem>();
+        List<PricebookEntry> listaPartida2 = new List<PricebookEntry>();
+        PricebookEntry listaentradapre = new PricebookEntry();
+        Product2 productos = new Product2(); 
+        Pricebook2 listaPrecio = new Pricebook2();
+        List<DSales_Asignacion_de_Productos__c> productAsig = new List<DSales_Asignacion_de_Productos__c>();
+        
+        Map<String, DSALES_QuoteGexWrapper.Product> mapProducts = new  Map<String, DSALES_QuoteGexWrapper.Product>();
+        for(DSALES_QuoteGexWrapper.Product p : data.productos){
+            mapProducts.put(p.skuDeTangible, p);
+        }
+        List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
+        productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSales_Producto__r.StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
+        List<Id> dsalesProductoSetId = new List<Id>();
+        for(DSales_Asignacion_de_Productos__c da : productAsig){
+            dsalesProductoSetId.add(da.DSales_Servicio_Seguro__c);
+        }
+        List<Pricebook2> precioLista = [SELECT id,Name FROM Pricebook2 WHERE Name= 'Standard Price Book' and IsActive=true WITH SECURITY_ENFORCED LIMIT 1];
+        List<PricebookEntry> precioEn = [SELECT Id,UnitPrice,Name,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: produc and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
+        List<PricebookEntry> precioEnGEX = [SELECT Id,Name,UnitPrice,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_Tipo_de_Producto__c,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: dsalesProductoSetId and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
+        for(PricebookEntry item : precioEn){
+            DSALES_QuoteGexWrapper.Product p =  mapProducts.get(item.Product2.StockKeepingUnit);
+            for (Integer i = 0; i < p.cantidadProductosTangibles; i++) {
+                QuoteLineItem partidapre = new QuoteLineItem();
+                Product2 producto = new Product2();
+                for(Product2 pro: produc){
+                    if(pro.StockKeepingUnit == item.Product2.StockKeepingUnit){
+                        producto = pro;
+                    }
+                }
+            String intangibleId;
+            for(DSales_Asignacion_de_Productos__c asigProduc: productAsig){
+                if(asigProduc.DSales_Producto__c == item.Product2Id){
+                    intangibleId = asigProduc.DSales_Servicio_Seguro__c;
+                }
+            }
+            for(PricebookEntry item2 : precioEnGEX){
+                if(item2.Product2Id == intangibleId){
+                    //for (Integer idSecuencia : p.idSecuencia) {
+                    //for (Integer i = 0; i < p.cantidadProductosTangibles; i++) {
+                        
+                    QuoteLineItem partidapreGEX = new QuoteLineItem();
+                    Double price1=0;
+                    Double price2=0;
+                    Double price3=0;
+                    Double price4=0;
+                    Double price5=0;
+                    Double price6=0;
+                    
+                    if(item2.Product2.DSales_Aplicaporcentajecobro__c==true){
+                        List<DASALES_Porcentajedecobro__c> porcent = obtenerPorcentajeCobro(intangibleId);
+                        for(DASALES_Porcentajedecobro__c percent: porcent){
+                            Integer year = Integer.valueOf(percent.DSALES_Anios__c);
+                            Decimal price = (p.precioTangible * percent.DSALES_Porcentaje__c)/100;
+                            switch on year{
+                                when 1{
+                                price1 = price;
+                                }
+                                when 2{
+                                price2 = price;
+                                }
+                                when 3{
+                                price3 = price;
+                                }
+                                when 4{
+                                price4 = price;
+                                }
+                                when 5{
+                                price5 = price;
+                                }
+                                when 6{
+                                price6 = price;
+                                }
+                            }
+                        }
+                    }else{
+                        List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = obtenerMatricesPrecio(intangibleId, regions, originalMat);
+                        for(DSALES_Matriz_de_Cotizacion__c mPrice : matPrice1Year){
+                            switch on mPrice.DSALES_Tiempo_de_Garantia_Extendida_GEX__c{
+                                when '1 año'{
+                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
+                                        price1 = mPrice.SALES_Precio_GEX__c;
+                                    }
+                                }
+                                when '2 años'{
+                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
+                                        price2 = mPrice.SALES_Precio_GEX__c;
+                                    }
+                                }
+                                when '3 años'{
+                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
+                                        price3 = mPrice.SALES_Precio_GEX__c;
+                                    }
+                                }
+                                when '4 años'{
+                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
+                                        price4 = mPrice.SALES_Precio_GEX__c;
+                                    }
+                                }
+                                when '5 años'{
+                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
+                                        price5 = mPrice.SALES_Precio_GEX__c;
+                                    }
+                                }
+                                when '6 años'{
+                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
+                                        price6 = mPrice.SALES_Precio_GEX__c;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (price1 != 0.0) {
+                        QuoteLineItem partidapreGEX1 = new QuoteLineItem();
+                        partidapreGEX1.QuoteId = cotizaId;
+                        partidapreGEX1.PricebookEntryId = item2.Id;
+                        partidapreGEX1.Product2Id = item2.Product2Id;
+                        partidapreGEX1.Quantity = 1;
+                        partidapreGEX1.UnitPrice = price1;
+                        partidapreGEX1.Vigencia_meses__c = '12';
+                        partidapreGEX1.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
+                        partidapreGEX1.DSALES_NombreProductoServicio__c = 'GARANTÍA EXTENDIDA 12M SKU' + ' ' + item.product2.StockKeepingUnit;
+                        partidapreGEX1.dsalesIdSecuencia__c = i;
+                        listaPartida.add(partidapreGEX1);
+                    }
+                    
+                    if (price2 != 0.0) {
+                        QuoteLineItem partidapreGEX2 = new QuoteLineItem();
+                        partidapreGEX2.QuoteId = cotizaId;
+                        partidapreGEX2.PricebookEntryId = item2.Id;
+                        partidapreGEX2.Product2Id = item2.Product2Id;
+                        partidapreGEX2.Quantity = 1;
+                        partidapreGEX2.UnitPrice = price2;
+                        partidapreGEX2.Vigencia_meses__c = '24';
+                        partidapreGEX2.DSALES_ListaArticulo__c = item2.Product2.DSales_Tipo_de_Producto__c;
+                        partidapreGEX2.DSALES_NombreProductoServicio__c = 'GARANTÍA EXTENDIDA 24M SKU' + ' ' + item.product2.StockKeepingUnit;
+                        partidapreGEX2.dsalesIdSecuencia__c = i;
+                        listaPartida.add(partidapreGEX2);
+                    }
+                    
+                }
+                }
+                //}
+            }
+        }
+        
         if (Schema.sObjectType.QuoteLineItem.isCreateable()) {
             insert listaPartida;
         }
