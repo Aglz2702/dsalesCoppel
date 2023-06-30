@@ -2,6 +2,7 @@
 global with sharing class DSALES_QuoteSmWrapperRequest {
     public static final String NOMBRE_SERVICIO = 'DSALES_QuoteSM';
     public static final String VALOR = 'RC'; //nombre campaña
+    public static final String VALOR2 = 'RCEXC'; //nombre campaña
     public static final String TIPO = 'Seguro gratis'; //tipo de campaña
     public static final String RC = 'RC';
     public static final String AMP = 'AMP';
@@ -66,20 +67,20 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                     datosEnviar.codigoPromocion='0';//fijo
                     datosEnviar.idAsociado='0';//fijo 
                     datosEnviar.valorFactura=data.valorFactura;
-                    datosEnviar.opcionPago=data.opcionPago;
+                    datosEnviar.opcionPago=data.opcionPago;  //opcion de pago enviado a inter?
                     datosEnviar.precioProducto=data.precioProducto;
 
                     Date aux = Date.today();
                     Datetime auxDatetime = DateTime.newInstance(aux.year(), aux.month(), aux.day());
                     String formattedDate = auxDatetime.format('yyyy-MM-dd');
                     datosEnviar.fechaCotizacion = formattedDate;
-                    
+                    System.debug('opcion de pao que se recibe xxx:'+ data.opcionPago);
                     datosEnviar.fechaInicio = data.fechaInicio; //Nuevo revisar
                     if(idProducto==null){
-                        datosEnviar.listaPlazos = plazosActivosExterna(data.plazoCotizar,idTienda);
+                        datosEnviar.listaPlazos = plazosActivosExterna(data.plazoCotizar,idTienda, data.opcionPago); //moficar op pago
                     }
                     else{
-                        datosEnviar.listaPlazos = plazosActivos(data.plazoCotizar,data.opcionPago,idProducto,idTienda);
+                        datosEnviar.listaPlazos = plazosActivos(data.plazoCotizar,data.opcionPago,idProducto,idTienda); // modificar op pago
                     }
                     if(datosEnviar.listaPlazos.size()<1){
                         datosEnviar.listaPlazos=null;
@@ -145,14 +146,14 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                         message='No se contraron seguros ';
                         if(listaNegra){message='Esta en lista negra';}
                     }                
-                }catch(Exception.JSONException jsonException){
-                    message = DSALES_Utility.BAD_REQUEST_MSJ;
+                }catch(JSONException e){
+                    message = DSALES_Utility.BAD_REQUEST_MSJ+' '+e.getCause()+' '+e.getLineNumber()+' '+ e.getMessage();
                     errorCode = DSALES_Utility.BAD_REQUEST_CODE;
                     succes = false;      
                 }catch(Exception e){
                     //ver error en la linea message = e.getMessage()+'Linea: '+e.getLineNumber();
                     message = DSALES_Utility.INTERNAL_ERROR_MSJ;
-                    message = e.getMessage()+'Linea: '+e.getLineNumber();
+                    message = e.getMessage()+' Linea: '+e.getLineNumber()+' '+e.getCause();
                     errorCode = DSALES_Utility.INTERNAL_ERROR_CODE;
                     succes = false;
                 }
@@ -164,6 +165,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         response.success = succes;
         response.idCotizacion = cotiza.Id;
         response.idOportunidad = oppor.Id;
+        response.iduVenta = oppor.dsalesIduVenta__c;
         response.listaNegra = listaNegra;
         response.listaSeguros = plazos;
         if(data.sku!=null && data.sku!='' && plazos!= null){
@@ -176,12 +178,15 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         List<DSALES_QuoteSmWrapper.RespuestaPlazos> filtroSoloCoppel = new List<DSALES_QuoteSmWrapper.RespuestaPlazos>();
         String userCop ='coopel';
         String cambioSeguroA= Label.npvSeguro;
+        system.debug('cambioSeguroA:__'+cambioSeguroA);
         String cambioSeguroB= Label.npvEquivalente;
+        system.debug('cambioSeguroB:__'+cambioSeguroB);
         
         if(plazos!=null){
             Boolean segGra = campana(rc, sku,null);
+            Boolean rcTrue = RCEXCESO(rc, sku,null);
             for(DSALES_QuoteSmWrapper.RespuestaPlazos item:plazos){
-                if(segGra==true) {//&& item.paquete==cambioSeguroA)
+                if(segGra==true && rcTrue==true) {//&& item.paquete==cambioSeguroA)
                     if(item.paquete!=cambioSeguroA){
                         filtroSoloCoppel.add(item);
                     }
@@ -191,6 +196,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                         filtroSoloCoppel.add(item);
                     }
                 }
+                //filtroSoloCoppel.add(item);
             }
 
         }
@@ -212,12 +218,22 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             for(dsalesAsignacionDeTienda__c asignaciont : asigt) {
                 productoIdts.add(asignaciont.dsalesCampana__c);
             }
-            List<Campaign> aux = [SELECT Name, dsalesTipoCampana__c,dsalesProductoCampanas__c, Description FROM Campaign WHERE Id IN:listAsoCampnia AND Id IN:productoIdts WITH SECURITY_ENFORCED];
-            for(Campaign item:aux){         
+            List<Campaign> aux = [SELECT Name, dsalesTipoCampana__c,dsalesProductoCampanas__r.Name, Description,dsalesPlazosAplicables__c FROM Campaign WHERE Id IN:listAsoCampnia AND Id IN:productoIdts WITH SECURITY_ENFORCED];
+            for(Campaign item:aux){      
+                System.debug('item plazos campaña: '+item);   
                 DSALES_QuoteSmWrapper.Campanias aux2 = new DSALES_QuoteSmWrapper.Campanias();
-                aux2.nombre = item.Name;
+                aux2.nombreCampana = item.Name;
                 aux2.tipoCampana = item.dsalesTipoCampana__c;
                 aux2.descripcion = item.Description;
+                List<String> plazosAplicables = new List<String>();
+                plazosAplicables.addAll(item.dsalesPlazosAplicables__c.split(';'));
+                aux2.plazosAplicables=plazosAplicables;
+                //System.debug('plazos met xxx: '+item.dsalesPlazosAplicables__c);
+                System.debug('plazos met campaña: '+aux2.plazosAplicables);
+                //item.dsalesPlazosAplicables__c.split(';');
+                aux2.productoDeCampana = item.dsalesProductoCampanas__r.Name;
+                aux2.nombreProducto = productoMoto.Name;
+                aux2.sku = productoMoto.StockKeepingUnit;
                 listaCampanias.add(aux2);
             }
         }catch(Exception e){
@@ -225,7 +241,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         }    
         return listaCampanias;
     }
-    public static List<DSALES_QuoteSmWrapper.Plazo> plazosActivos(String plazoMaximo,String contado,String idProducto,String idTienda){
+    public static List<DSALES_QuoteSmWrapper.Plazo> plazosActivos(String plazoMaximo,String opPagoRecibido,String idProducto,String idTienda){
         List<DSALES_QuoteSmWrapper.Plazo> plazosSeguros = new List<DSALES_QuoteSmWrapper.Plazo>();
         List<Plazo__c> lista;
         try{
@@ -239,19 +255,50 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             for(dsalesAsignacionDeTienda__c asignaciont : asigt) {
                 productoIdts.add(asignaciont.Producto__c);
             }
-
             List<Product2> seguros = [SELECT Id, Name, (SELECT Name, Dsales_Plazo__c, dsalesSeguro__c FROM Plazos__r  WHERE Dsales_Plazo__c<=:plazoMaximo AND DSALES_Activo__c = true) FROM Product2 WHERE Id IN :productoIds AND IsActive = true AND Id IN :productoIdts WITH SECURITY_ENFORCED];
-            List<dsalesEquivalencias__mdt> opcionPago = [SELECT Id, DeveloperName FROM dsalesEquivalencias__mdt WITH SECURITY_ENFORCED limit 50];
+            //List<dsalesEquivalencias__mdt> opcionPago = [SELECT Id, DeveloperName FROM dsalesEquivalencias__mdt WITH SECURITY_ENFORCED limit 50];
             for(Product2 item:seguros){
                 List<Plazo__c> plazos = item.Plazos__r;
                 for(Plazo__c plazo :plazos) {
-                    for(dsalesEquivalencias__mdt opPago:opcionPago){
-                        DSALES_QuoteSmWrapper.Plazo aux = new DSALES_QuoteSmWrapper.Plazo();
-                        aux.paquete = item.Name;
-                        aux.opcionPago = plazo.Dsales_Plazo__c+opPago.DeveloperName;
-                        plazosSeguros.add(aux);
-                    }              
-                }   
+                    List<Product2> productos = [SELECT dsalesOpcionpago__c FROM Product2 WHERE Id=:item.Id];
+                    if(opPagoRecibido=='Mensual'){
+                        System.debug('ENTRA EN OPCION DE PAGO MENSUAL');
+                        List<String> opcionPago = new List<String>();
+                        for (Product2 producto : productos) {
+                            if (producto.dsalesOpcionpago__c != null) {
+                                opcionPago.addAll(producto.dsalesOpcionpago__c.split(';'));
+                            }
+                        }
+                        for(String opPago:opcionPago){
+                            DSALES_QuoteSmWrapper.Plazo aux = new DSALES_QuoteSmWrapper.Plazo();
+                            aux.paquete = item.Name;
+                            aux.opcionPago = plazo.Dsales_Plazo__c+opPago; 
+                            plazosSeguros.add(aux);
+                        }
+                    }else if (opPagoRecibido=='Contado'){
+                        System.debug('ENTRA EN OPCION DE PAGO CONTADO');
+                        DSALES_QuoteSmWrapper.Plazo auxx = new DSALES_QuoteSmWrapper.Plazo();
+                            auxx.paquete = item.Name;
+                            auxx.opcionPago = plazo.Dsales_Plazo__c+'C'; 
+                            plazosSeguros.add(auxx);
+                    }
+                    /*DSALES_QuoteSmWrapper.Plazo aux = new DSALES_QuoteSmWrapper.Plazo();
+                    aux.paquete = item.Name;
+                    aux.opcionPago = plazo.Dsales_Plazo__c+plazoRecivido; 
+                    plazosSeguros.add(aux);*/
+                    //7List<String> opcionPago = new List<String>();
+                    /*for (Product2 producto : productos) {
+                        if (producto.dsalesOpcionpago__c != null) {
+                            opcionPago.addAll(producto.dsalesOpcionpago__c.split(';'));
+                        }
+                    }*/
+                    /*//for(String opPago:opcionPago){
+                    DSALES_QuoteSmWrapper.Plazo aux = new DSALES_QuoteSmWrapper.Plazo();
+                    aux.paquete = item.Name;
+                    aux.opcionPago = plazo.Dsales_Plazo__c+opPago;  ///say modify 
+                    plazosSeguros.add(aux);
+                   // }*/
+                }
             }
         }
         catch(Exception e){
@@ -263,9 +310,10 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             aux.opcionPago = '12M';
             plazosSeguros.add(aux);
         }
+        System.debug('Plazos con opción de pago:'+plazosSeguros);
         return plazosSeguros;
     }
-    public static List<DSALES_QuoteSmWrapper.Plazo> plazosActivosExterna(String plazoMaximo,String idTienda){
+    public static List<DSALES_QuoteSmWrapper.Plazo> plazosActivosExterna(String plazoMaximo,String idTienda, String opPagoRecibido){
         List<DSALES_QuoteSmWrapper.Plazo> plazosSeguros = new List<DSALES_QuoteSmWrapper.Plazo>();
         List<Plazo__c> lista;
 
@@ -277,16 +325,34 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             }
             List<Product2> seguros = [SELECT Id, Name, (SELECT Name, Dsales_Plazo__c, dsalesSeguro__c FROM Plazos__r  WHERE Dsales_Plazo__c<=:plazoMaximo AND DSALES_Activo__c = true) FROM Product2 WHERE DSALES_Aplicaparamotoexterna__c=true AND IsActive=true AND Id IN :productoIdts WITH SECURITY_ENFORCED];
             System.debug('Entraaa aExterna: '+seguros);
-            List<dsalesEquivalencias__mdt> opcionPago = [SELECT Id, DeveloperName FROM dsalesEquivalencias__mdt WITH SECURITY_ENFORCED limit 50];
+            //List<dsalesEquivalencias__mdt> opcionPago = [SELECT Id, DeveloperName FROM dsalesEquivalencias__mdt WITH SECURITY_ENFORCED limit 50];
             for(Product2 item:seguros){
                 List<Plazo__c> plazos = item.Plazos__r;
                 for(Plazo__c plazo :plazos) {
-                    for(dsalesEquivalencias__mdt opPago:opcionPago){
+                    List<Product2> productos = [SELECT dsalesOpcionpago__c FROM Product2 WHERE Id=:item.Id];
+                    if(opPagoRecibido=='Mensual'){
+                        System.debug('ENTRA EN OPCION DE PAGO MENSUAL');
+                        List<String> opcionPago = new List<String>();
+                        for (Product2 producto : productos) {
+                            if (producto.dsalesOpcionpago__c != null) {
+                                opcionPago.addAll(producto.dsalesOpcionpago__c.split(';'));
+                            }
+                        }
+                        for(String opPago:opcionPago){
                         DSALES_QuoteSmWrapper.Plazo aux = new DSALES_QuoteSmWrapper.Plazo();
                         aux.paquete = item.Name;
-                        aux.opcionPago = plazo.Dsales_Plazo__c+opPago.DeveloperName;
+                        aux.opcionPago = plazo.Dsales_Plazo__c+opPago;
                         plazosSeguros.add(aux);
-                    }  
+                        }
+                    }
+                    else if(opPagoRecibido=='Contado'){
+                        System.debug('ENTRA EN OPCION DE PAGO CONTADO');
+                        DSALES_QuoteSmWrapper.Plazo auxx = new DSALES_QuoteSmWrapper.Plazo();
+                        auxx.paquete = item.Name;
+                        auxx.opcionPago = plazo.Dsales_Plazo__c+'C';
+                        plazosSeguros.add(auxx);
+                    }
+                    
                 }   
             }
         }
@@ -299,6 +365,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             aux.opcionPago = '12M';
             plazosSeguros.add(aux);
         }
+        System.debug('Plazos con opción de pago:'+plazosSeguros);
         return plazosSeguros;
     }
     
@@ -311,7 +378,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         request.setHeader('Authorization','Bearer '+token);
         String endpoint = DSALES_Utility.getEndpoint(NOMBRE_SERVICIO);
         request.setHeader('Content-Type','application/json');
-        request.setTimeout(60000);
+        request.setTimeout(120000);
         request.setEndpoint(endpoint);
         request.setMethod('POST');
         request.setBody(body);
@@ -363,6 +430,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         oppor.RecordTypeId = recordTypeId;
         oppor.DSALES_Tiend__c = tienda.Id;
         oppor.Pricebook2Id = precioLista.Id;
+        oppor.dsalesIduVenta__c=data.iduVenta;
         if(Schema.sObjectType.Opportunity.isCreateable())
         {
             insert oppor;        
@@ -499,7 +567,22 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             return motoVacia;
         }   
     }
-    
+    public  class nuevasPartidasPlazos{
+        String idPlazo;
+        String plazo;
+    }
+    public static List<nuevasPartidasPlazos> buscarPlazoAplicable(List<String> plazosAbuscar){
+        List<nuevasPartidasPlazos> partidasYPlazos = new List<nuevasPartidasPlazos>();
+        List<Plazo__c> plazos = [SELECT Id,Dsales_Plazo__c FROM Plazo__c WHERE Id IN:plazosAbuscar WITH SECURITY_ENFORCED];
+        for(Plazo__c q: plazos){
+            nuevasPartidasPlazos nuevo = new nuevasPartidasPlazos();
+            nuevo.idPlazo=q.Id;
+            nuevo.plazo=q.Dsales_Plazo__c;
+            partidasYPlazos.add(nuevo);
+        }
+        System.debug('partidasYPlazos:'+partidasYPlazos);
+        return partidasYPlazos;
+    }
     public static List<DSALES_QuoteSmWrapper.RespuestaPlazos> creaPlazos(Quote cotiza, List<DSALES_QuoteSmWrapper.ArmadoMuleSoft> plazos, String sku,Boolean listaNegra,String idTienda){
         List<QuoteLineItem> listaPartidas = new List<QuoteLineItem>();
         System.debug('plazos: '+plazos);
@@ -513,14 +596,43 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             aux.data = plazos[i].data;
             listaSeguros.add(aux);
         }
+        List<String> idPartidaPlazo= new List<String>();
+        for(QuoteLineItem pr : listaPartidas){
+            idPartidaPlazo.add(pr.DSALES_Plazo__c);
+        }
+        List<nuevasPartidasPlazos> partidasYPlazos=buscarPlazoAplicable(idPartidaPlazo);
         try{
             List<DSALES_QuoteSmWrapper.Campanias> campanas = buscaCampanias(sku,idTienda);
+            List<nuevasPartidasPlazos>idPlazosGratis = new List<nuevasPartidasPlazos>();
+            for(DSALES_QuoteSmWrapper.Campanias item2:campanas){
+                for(nuevasPartidasPlazos plr:partidasYPlazos){
+                    for(String cp:item2.plazosAplicables){
+                        if(cp==plr.plazo){
+                            nuevasPartidasPlazos npl= new nuevasPartidasPlazos();
+                            npl.idPlazo=plr.idPlazo;
+                            npl.plazo=plr.plazo;
+                            idPlazosGratis.add(npl);
+                        }
+                    }
+                    
+                }
+            }
+            System.debug('plazos gratis:'+idPlazosGratis);
             System.debug('campanas: '+campanas); 
+            //agregar método de busqueda de plazos
             for(Integer i=0; i<listaPartidas.size(); i++){
                 System.debug('Nombres: '+listaSeguros[i].paquete);           
                 for(DSALES_QuoteSmWrapper.Campanias item:campanas){
-                    if(item.nombre=='RC' && item.tipoCampana=='Seguro gratis' && listaSeguros[i].paquete=='RC'){
-                        listaPartidas[i].DSALES_Segurogratis__c=true;
+                   if(item.nombreCampana=='RC' && item.tipoCampana=='Seguro gratis' && listaSeguros[i].paquete=='RC'){
+                      for(nuevasPartidasPlazos pl : idPlazosGratis){
+
+                          if(listaPartidas[i].DSALES_Plazo__c==pl.idPlazo ){
+                                listaPartidas[i].DSALES_Segurogratis__c=true;
+                            }
+                        }
+                        //sacar los valores de la lista multiple
+                        // comparar con el plazo de las partidas
+                       
                     }
                 }   
             }          
@@ -534,5 +646,20 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
 
         }
         return listaSeguros;     
+    }
+    
+    public static Boolean RCEXCESO(String seguro,String sku,String id){
+        Boolean condicion = false;  
+        if(sku!=null && sku!=''){
+            Product2 producto = [SELECT Id, Name, StockKeepingUnit,DSales_Tipo_de_Producto__c, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku OR Id=:id WITH SECURITY_ENFORCED LIMIT 1];        
+             List<DSales_Asignacion_de_Productos__c> asig = [SELECT DSales_Servicio_Seguro__c, DSales_Servicio_Seguro__r.Name, DSales_Servicio_Seguro__r.isActive FROM DSales_Asignacion_de_Productos__c where DSales_Producto__c=:Producto.id AND DSALES_Activo__c=true WITH SECURITY_ENFORCED];
+            for(DSales_Asignacion_de_Productos__c asignacion:asig){
+                if(asignacion.DSales_Servicio_Seguro__r.Name == VALOR2 && asignacion.DSales_Servicio_Seguro__r.isActive){
+                    condicion = true; 
+                }
+            }
+                           
+            } 
+        return condicion;
     }
 }

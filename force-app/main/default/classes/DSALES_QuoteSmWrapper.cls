@@ -70,9 +70,13 @@ global class DSALES_QuoteSmWrapper {
         global Data data {get;set;}
 	}
     global class Campanias{
-        global String nombre {get;set;}
+        global String nombreCampana {get;set;}
         global String tipoCampana {get;set;}
         global String descripcion {get;set;}
+        global String productoDeCampana {get;set;}
+        global String sku {get;set;}
+        global String nombreProducto {get;set;}
+        global List<String> plazosAplicables {get;set;}
 	}
     global class RespuestaPlazos{
         global String trackingId {get;set;}
