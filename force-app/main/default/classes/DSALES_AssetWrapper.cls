@@ -1,7 +1,9 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global class DSALES_AssetWrapper {
+    
     global class AssetRequest{
         global String idPago{get;set;} 
+        global Decimal idSecuencia{get;set;}
         global String idProducto{get;set;}
         global String primerNombre {get; set;}
         global String apellido {get;set;}
@@ -37,4 +39,5 @@ global class DSALES_AssetWrapper {
         global String codigoError{get;set;}
         global String idAsset {get;set;}
     }
+
 }

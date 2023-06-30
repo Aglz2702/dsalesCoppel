@@ -29,7 +29,7 @@ global with sharing class DSALES_VentaGEXRest {
                     
                    
                    system.debug('INSERTANDO ASSETS Y VER ID CUENTA: '+cliente.idCuenta);
-                    Map<String, String> mapAssets = insertAssets(venta.listaDeProductos, cliente.idCuenta); 
+                    Map<String, String> mapAssets = insertAssets(venta, cliente.idCuenta); 
                     
                     for (String assetId : mapAssets.values())
                     {
@@ -82,11 +82,11 @@ global with sharing class DSALES_VentaGEXRest {
         
         
         
-        List<Asset> product= [SELECT id,Product2.StockKeepingUnit,DSALES_SKU__c FROM ASSET WHERE id IN: assetsId WITH SECURITY_ENFORCED];
+        List<Asset> product= [SELECT id,Product2.StockKeepingUnit,DSALES_SKU__c,dsalesIdSecuencia__c FROM ASSET WHERE id IN: assetsId WITH SECURITY_ENFORCED];
         system.debug('Lista de productos: '+product);
         List<DSALES_InformacionDePago__c> pago=[Select id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE id IN:paymentIds WITH SECURITY_ENFORCED];
         system.debug('Lista de pagos: '+pago);
-        List<DSALES_Certificado__c> certi=[Select id,DSALES_SKU__c,DSALES_SKUTangible__c,DSALES_Precio_del_Articulo__c FROM DSALES_Certificado__c WHERE id IN:certifiedIds WITH SECURITY_ENFORCED];
+        List<DSALES_Certificado__c> certi=[Select id,DSALES_SKU__c,DSALES_SKUTangible__c,DSALES_Precio_del_Articulo__c,dsalesIdSecuencia__c FROM DSALES_Certificado__c WHERE id IN:certifiedIds WITH SECURITY_ENFORCED];
         system.debug('Lista de cert: '+certi);
         
         try{
@@ -110,8 +110,11 @@ global with sharing class DSALES_VentaGEXRest {
                     //aqui
                     c.DSALES_InformacionDePago__c=pago[0].id;
                 }
-                system.debug('EL PRIMERO ES EL QUE HAY QUE CHECAR: '+c.DSALES_SKUTangible__c + 'Asset: '+a.DSALES_SKU__c);
-                if(c.DSALES_SKUTangible__c==a.DSALES_SKU__c)
+                system.debug('EL PRIMERO ES EL QUE HAY QUE CHECAR: Certi '+c.dsalesIdSecuencia__c + 'Asset: '+a.dsalesIdSecuencia__c);
+               system.debug('CERTI Sku: '+c.DSALES_SKUTangible__c);
+                system.debug('ASSET SKU: '+a.DSALES_SKU__c);
+                if(c.DSALES_SKUTangible__c+String.valueOf(c.dsalesIdSecuencia__c)==a.DSALES_SKU__c+String.valueOf(a.dsalesIdSecuencia__c))
+                    
                 {
                     c.DSALES_ProductoAdquirido__c=a.Id;
                     system.debug('DEBERÏA DE HABER PASADO 2 Veces: '+c.DSALES_ProductoAdquirido__c);
@@ -167,26 +170,56 @@ global with sharing class DSALES_VentaGEXRest {
         }  
     }
     
-    public static Map<String, String> insertAssets(List<DSALES_AssetWrapper.AssetRequest> listAssets, String accountId){
+    public static Map<String, String> insertAssets(DSALES_VentaGEX.VentaGexRequest venta, String accountId){
         Map<String, String> mapAssets = new Map<String, String>();
         List<String> listSKU = new List<String>();
         List<String> idsAssets = new List<String>();
         
-        for(DSALES_AssetWrapper.AssetRequest sku: listAssets){
+        for(DSALES_AssetWrapper.AssetRequest sku: venta.listaDeProductos){
             listSKU.add(sku.skuDeTangible);
         }
-        
+       
+         String nuevoSku='';
         
         for(Product2 t: [Select StockKeepingUnit,Id from Product2 where StockKeepingUnit in :listSKU and DSales_Tipo_de_Producto__c='Producto' WITH SECURITY_ENFORCED] ){
-            for(DSALES_AssetWrapper.AssetRequest producto: listAssets){
+            
+            for(DSALES_AssetWrapper.AssetRequest producto: venta.listaDeProductos){
+                
                 if(t.StockKeepingUnit == producto.skuDeTangible){
                     producto.idCuenta=accountId;
                     producto.idProducto=t.Id;
                     producto.estado='Adquirido';
                     
-                    DSALES_AssetWrapper.AssetResponse responsePayloadAsset = DSALES_AssetWrapperRequest.insertaAssets(producto);
+                    for(DSALES_CertificadoWrapper.CertificadoRequest garantia: venta.listaDeCertificados)
+                        {
+                             if(!String.isEmpty(garantia.idPartidaPresupuesto) && 
+                                garantia.skuDeTangible+string.valueOf(garantia.idSecuencia)== producto.skuDeTangible+string.valueOf(garantia.idSecuencia))
+                      
+                    {
+                        system.debug('SI PAsó EL IF ASSET');
+                        system.debug('venta.listaDeCertificados.size ' +venta.listaDeCertificados.size());
+                         nuevoSku=t.stockKeepingUnit+String.valueOf(garantia.idSecuencia);
+                        producto.idSecuencia=garantia.idSecuencia;
+                        system.debug('NUEVOSKU: '+nuevoSKu);
+                        break;
+                        
+                      
+                    }
+                            else
+                            {
+                                 system.debug('SI PAsó EL ELSE ASSET');
+                        
+                         nuevoSku=t.stockKeepingUnit;
+                       
+                        system.debug('NUEVOSKU ELSE: '+nuevoSKu);
+                            }
+                    
+                        }
+                   
+                   
+                     DSALES_AssetWrapper.AssetResponse responsePayloadAsset = DSALES_AssetWrapperRequest.insertaAssets(producto);
                     system.debug('Mensaje de ASSET: '+responsePayloadAsset.mensajeError);
-                    mapAssets.put(t.StockKeepingUnit, responsePayloadAsset.idAsset);
+                    mapAssets.put(nuevoSku, responsePayloadAsset.idAsset);
                     idsAssets.add(responsePayloadAsset.idAsset);
                     
                 }
@@ -205,7 +238,7 @@ global with sharing class DSALES_VentaGEXRest {
         for(DSALES_CertificadoWrapper.CertificadoRequest sku: certificado){
             if(!String.isEmpty(sku.idPartidaPresupuesto) )
             {system.debug('Entró al for: y el SKU es: '+sku.sku);
-             listSKUCertifieds.add(sku.sku+sku.skuDeTangible);
+             listSKUCertifieds.add(sku.sku+sku.skuDeTangible+String.valueOf(sku.idSecuencia));
              listProducts.add(sku.sku);
              listStores.add(sku.claveTienda);
             }
@@ -225,12 +258,16 @@ global with sharing class DSALES_VentaGEXRest {
                     system.debug('Entramos '+mapStores);
                     if(t.StockKeepingUnit+productoGex.skuDeTangible == productoGex.sku+productoGex.skuDeTangible){
                         productoGex.idCuenta =accountId;
-                        productoGex.idProductoAdquirido = mapAssets.get(productoGex.skuDeTangible);
+                        system.debug('Map assets: '+mapAssets);
+                        //productoGex.idProductoAdquirido = mapAssets.get(productoGex.skuDeTangible+'idSec'+String.valueOf(productoGex.idSecuencia));
+                        
                         productoGex.idTienda = mapStores.get(productoGex.claveTienda);
-                        system.debug('Asset al que va: '+productoGex.idProductoAdquirido);
+                        system.debug('Id Tienda: '+productoGex.idTienda);
+                      //  system.debug('Asset al que va: '+productoGex.idProductoAdquirido);
+                        system.debug('Producto Gex '+productoGEx);
                         DSALES_CertificadoWrapper.CertificadoResponse responsePayloadCertifieds = DSALES_CertificadoWrapperRequest.insertCertificado(productoGex);
                         System.debug('C E R T I: '+responsePayloadCertifieds.mensajeError);
-                        mapCertifieds.put(t.StockKeepingUnit+productoGex.skuDeTangible, responsePayloadCertifieds.idCertificado);
+                        mapCertifieds.put(t.StockKeepingUnit+productoGex.skuDeTangible+String.valueOf(productoGex.idSecuencia), responsePayloadCertifieds.idCertificado);
                     }
                 }
             }
@@ -280,7 +317,7 @@ global with sharing class DSALES_VentaGEXRest {
         }
         
         List<DSALES_CertificadoWrapper.CertificadoRequest> certificadoList= new List<DSALES_CertificadoWrapper.CertificadoRequest>();
-        Map<Id,QuoteLineItem>mapPartida= new map<Id,QuoteLineitem>([SELECT Vigencia_meses__c,DSALES_SKU__c,TotalPrice FROM QuoteLineItem WHERE quoteId=:venta.quoteId ]);
+        Map<Id,QuoteLineItem>mapPartida= new map<Id,QuoteLineitem>([SELECT Vigencia_meses__c,DSALES_SKU__c,TotalPrice,dsalesIdSecuencia__c FROM QuoteLineItem WHERE quoteId=:venta.quoteId ]);
         
         for(DSALES_CertificadoWrapper.CertificadoRequest certi: venta.listaDeCertificados)
         {
@@ -302,6 +339,7 @@ global with sharing class DSALES_VentaGEXRest {
                             system.debug('PASÓ AL IF DEL MAPA PARTIDA');
 
                 certi.sku= mapPartida.get(certi.idPartidaPresupuesto).DSALES_SKU__c;
+                certi.idSecuencia=mapPartida.get(certi.idPartidaPresupuesto).dsalesIdSecuencia__c;
                 System.debug('Aquí si pasó donde agarra el SKU: '+certi.sku);
                 if(mapPartida.get(certi.idPartidaPresupuesto).Vigencia_meses__c!=null)
                 {
