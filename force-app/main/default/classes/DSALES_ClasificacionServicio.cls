@@ -68,7 +68,7 @@ public without sharing class DSALES_ClasificacionServicio {
         query += '  and DSales_Tipo_de_Producto__c= :producto';
         query += ' order by DSales_Servicio__c asc';
         objeto.listServicios = consultarProductos(DataBase.query(String.escapeSingleQuotes(query)));
-        System.debug('Query: '+query);
+        System.debug('Query---> '+query);
         return objeto;
     }
     
@@ -84,7 +84,7 @@ public without sharing class DSALES_ClasificacionServicio {
         query += 'from Product2 Where StockKeepingUnit LIKE \''+ sku + '%\' OR Name LIKE \'' + sku + '%\'';
         query += ' order by DSales_Servicio__c asc';
         System.debug('Query: '+query);
-        return consultarProductos(DataBase.query(query));
+        return consultarProductos(DataBase.query(String.escapeSingleQuotes(query)));
     }
 
     @AuraEnabled
