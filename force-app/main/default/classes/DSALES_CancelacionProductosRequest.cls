@@ -106,6 +106,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
         String recordTypeIdMoto = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
         String recordTypeIdGex = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_Pagos_en_NPV').getRecordTypeId();
         String idCancelacion='';
+        List<DSALES_CancelacionProductosWrapper.listaProducto> listaCancelar = new List<DSALES_CancelacionProductosWrapper.listaProducto>();
         if(pago.RecordTypeId==recordTypeIdGex){
             DSALES_CertificadoWrapperRequest.putCertificado(datos.idUniversal,listaProductos,datos.estatus,datos.motivoCancelacion);
             idCancelacion =crearCancelacion(datos);
@@ -116,12 +117,36 @@ global with sharing class DSALES_CancelacionProductosRequest {
             }
             else{
                 System.debug('Lista de productos vacia');
+                listaCancelar=cancelacionCompleta(datos.idUniversal, datos.estatus,datos.motivoCancelacion);
+                if(listaCancelar.size()>0){
+                    actualizarOportunidades(listaCancelar);
+                    idCancelacion =crearCancelacion(datos);
+                }
+               
             }
            
         }
         return idCancelacion;
     }
-
+    private static  List<DSALES_CancelacionProductosWrapper.listaProducto> cancelacionCompleta(String idUniversal,String estatus, String motivo){
+        DSALES_InformacionDePago__c pago =[SELECT Id, DSALES_Oportunidad__c FROM DSALES_InformacionDePago__c WHERE 	DSALES_IDUniversal1__c=:idUniversal WITH SECURITY_ENFORCED LIMIT 1];
+        List<OpportunityLineItem> olis = [SELECT Id,Name, OpportunityId, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
+                                          FROM OpportunityLineItem
+                                          WHERE OpportunityId = :pago.DSALES_Oportunidad__c 
+                                          WITH SECURITY_ENFORCED]; 
+        List<DSALES_CancelacionProductosWrapper.listaProducto> productosSincro = new List<DSALES_CancelacionProductosWrapper.listaProducto>();
+        if(olis!=null && olis.size()>0){
+            for(OpportunityLineItem ol:olis){
+                DSALES_CancelacionProductosWrapper.listaProducto producto = new DSALES_CancelacionProductosWrapper.listaProducto();
+                producto.estatus=estatus;
+                producto.motivoCancelacion=motivo;
+                producto.idPartidaOportunidad=ol.Id;
+                productosSincro.add(producto);
+            }
+        }
+        System.debug('lista de productos sincronizados a cancelar: '+productosSincro);
+        return productosSincro;
+    }
    
     
     public static String crearCancelacion(DSALES_CancelacionProductosWrapper.Request datos){

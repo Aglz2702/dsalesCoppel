@@ -1,6 +1,5 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global class DSALES_AccountWrapper {
-	
     global class AccountRequest{
         global String numeroCliente {get;set;}
         global String nombre {get; set;}
@@ -17,7 +16,8 @@ global class DSALES_AccountWrapper {
         global String numeroExterior {get;set;}
         global String numeroInterior {get;set;}
         global String colonia {get;set;}
-        global String codigoPostal {get;set;}     
+        global String codigoPostal {get;set;}  
+        global String rfc {get;set;} 
     }
     global class AccountResponse{
         global Boolean success {get;set;}

@@ -34,6 +34,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                       }
                       nombreCompleto += ' ' +data.apellidoPaterno; 
                     String rfc = data.rfc;
+                    system.debug('RFC:'+rfc);
                     respuestaListaNegra = DSALES_ConsultaListaNegra.callWebService(rfc, nombreCompleto);
                     if(respuestaListaNegra.estatus !=true){
                         listaNegra = true;
@@ -476,7 +477,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         cotiza.dsalesTipoDeVehiculo__c = tipoVehiculo.Id;
         cotiza.DSALES_RFC__c = data.rfc;
         cotiza.DSALES_Plazoacotizar__c= decimal.valueOf(data.plazoCotizar);  
-        //cotiza.dsalesValorFactura__c=data.valorFactura;      
+        cotiza.dsalesValorFactura__c=data.valorFactura;      
         if(Schema.sObjectType.Quote.isCreateable())
         {
             insert cotiza;        
