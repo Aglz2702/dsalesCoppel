@@ -52,12 +52,13 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                        System.debug('El size es 0');
                     }
                     when else {
+                    system.debug('El size es diferente');
                         Integer contador =0;
                         List<OpportunityLineItem> productoOpor= [SELECT DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c  WITH SECURITY_ENFORCED]; 
                         List<DSALES_Certificado__c> certificados= [SELECT DSALES_Estatus__c FROM DSALES_Certificado__c WHERE
                                                                   DSALES_InformacionDePago__c=:pago[0].Id WITH SECURITY_ENFORCED];
                         List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
-                        
+                        system.debug('');
                         for(OpportunityLineItem oportunidad:productoOpor)
                         {
                             oportunidad.DSALES_Estatus__c=estatusGlobal;
@@ -185,7 +186,8 @@ global with sharing class DSALES_CertificadoWrapperRequest {
    }
    
     
-    global static DSALES_CertificadoWrapper.CertificadoResponse insertCertificado(DSALES_CertificadoWrapper.CertificadoRequest certificado){
+    public static DSALES_CertificadoWrapper.CertificadoResponse insertCertificado(DSALES_CertificadoWrapper.CertificadoRequest certificado){
+        
         DSALES_Certificado__c certificadoRecord = new DSALES_Certificado__c();
         Boolean success = false;
         String message = '';
@@ -204,28 +206,28 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             {
                 certificadoRecord.DSALES_Cliente__c=certificado.idCuenta;
             }
-            
+            system.debug('Id Producto Adquirido: '+certificado.idProductoAdquirido);
             certificadoRecord.DSALES_ProductoAdquirido__c=certificado.idProductoAdquirido;
-            
+            certificadoRecord.dsalesIdSecuencia__c=certificado.idSecuencia;
             certificadoRecord.DSALES_Ticket__c=certificado.idFactura;
             certificadoRecord.DSALES_Tienda__c=certificado.claveTienda;
             certificadoRecord.dsales_TiendaID__c=certificado.idTienda;
             certificadoRecord.DSALES_Caja_GEX__c=certificado.numeroCajaCoppel;
             certificadoRecord.DSALES_Numero_de_Vendedor__c=certificado.idVendedor;
-            certificadoRecord.DSALES_Nombre_Vendedor__c=certificado.nombreVendedor;	
+            certificadoRecord.DSALES_Nombre_Vendedor__c=certificado.nombreVendedor; 
             certificadoRecord.DSALES_Domicilio_del_Client_e__c=certificado.direccionCliente;
             certificadoRecord.DSALES_Email__c=certificado.emailCliente;
             certificadoRecord.DSALES_No_de_Telefono__c=certificado.telefonoCliente;
             certificadoRecord.DSALES_Numero_celular__c=certificado.celularCliente;
-            certificadoRecord.DSALES_SKU__c=certificado.sku;	
-            certificadoRecord.DSALES_Modelo__c=certificado.modeloTangible;	
-            certificadoRecord.DSALES_Marca__c=certificado.marcaTangible;	
-            certificadoRecord.DSALES_Numero_serie__c=certificado.numeroSerie;	
+            certificadoRecord.DSALES_SKU__c=certificado.sku;    
+            certificadoRecord.DSALES_Modelo__c=certificado.modeloTangible;  
+            certificadoRecord.DSALES_Marca__c=certificado.marcaTangible;    
+            certificadoRecord.DSALES_Numero_serie__c=certificado.numeroSerie;   
             certificadoRecord.DSALES_DescripcionDelArtculo__c=certificado.descripcionTangible;
             certificadoRecord.DSALES_Precio_del_Articulo__c=certificado.precioTangible;
             certificadoRecord.DSALES_Duracion_de_GEX__c=certificado.garantiaCoppelTangible;
             certificadoRecord.DSales_Garantia_Coppel__c=certificado.garantiaCoppelProducto;
-            certificadoRecord.DSALES_Fecha_de_compra_GEX__c=certificado.fechaCompraGarantia;	
+            certificadoRecord.DSALES_Fecha_de_compra_GEX__c=certificado.fechaCompraGarantia;    
             certificadoRecord.DSALES_Fecha_Inicio_de_Vigencia__c=certificado.fechaInicioGarantiaExtendida;
             certificadoRecord.DSALES_Costo_de_Garantia_Extendida__c=certificado.costoGarantia;
             certificadoRecord.DSALES_Fecha_Fin_Vigencia__c=certificado.fechaFinGarantiaExtendida;
@@ -238,7 +240,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             {
                 insert certificadoRecord;
             }
-         
+          system.debug('Exito');
             
             success = true;
             message = '';

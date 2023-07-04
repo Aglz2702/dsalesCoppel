@@ -15,18 +15,23 @@ public without sharing class DSALES_EndosoWrapperRequestHelper{
 @ Purpose : method to insert or update Endoso record in salesforce
 @ Date : 5/3/2023
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
-@ Change History :
+@ Change History :9/6/2023
 **********************************************************************************************************************************************************************/    
 
 public static DSALES_EndorsementWrapper.EndorsementResponse upsertEndoso(DSALES_EndorsementWrapper.EndorsementRequest endosos){
-    if(endosos.estatus=='Recibido'){
-        DSALES_EndorsementWrapper.EndorsementResponse responsePayload = DSALES_EndosoWrapperRequestHelper.insertEndoso(endosos);
-        return responsePayload;
-    }
-    else {
+    Integer uidExist = [SELECT COUNT() FROM DSALES_Endoso__c WHERE DSALES_uid__c =:endosos.uid WITH SECURITY_ENFORCED ];
+    if(uidExist>0 && endosos.uid!=''){
+        //DSALES_EndorsementWrapper.EndorsementResponse responsePayload = DSALES_EndosoWrapperRequestHelper.insertEndoso(endosos);
         DSALES_EndorsementWrapper.EndorsementResponse responsePayload = DSALES_EndosoWrapperRequestHelper.updateEndoso(endosos);
         return responsePayload;
     }
+    else{
+       
+        //DSALES_EndorsementWrapper.EndorsementResponse responsePayload = DSALES_EndosoWrapperRequestHelper.updateEndoso(endosos);
+         DSALES_EndorsementWrapper.EndorsementResponse responsePayload = DSALES_EndosoWrapperRequestHelper.insertEndoso(endosos);
+        return responsePayload;
+    }
+        
 }
 
 /*********************************************************************************************************************************************************************
@@ -68,7 +73,7 @@ public static DSALES_EndorsementWrapper.EndorsementResponse insertEndoso(DSALES_
         success = true;
         message = '';
         code = '';
-        mensaje = 'Endoso creado correctamente';
+        mensaje = 'Endoso creado';
         
     }catch(Exception e){
         success = false;
@@ -136,7 +141,7 @@ public static DSALES_EndorsementWrapper.EndorsementResponse updateEndoso(DSALES_
         success = true;
         message = '';
         code = '';
-        mensaje = 'Endoso actualizado correctamente';
+        mensaje = 'Endoso actualizado';
     }catch(Exception e){
         success = false;
         message = DSALES_Utility.INTERNAL_ERROR_MSJ+' '+ e.getLineNumber()+' '+e.getCause()+' '+e.getMessage();
@@ -207,7 +212,7 @@ public static void updatePolicy(DSALES_EndorsementWrapper.EndorsementRequest end
             }
         }
     }catch(DmlException e) {
-        System.debug('Ocurrió un error: ' + e);
+        System.debug('Ocurrió un error: ' + e.getLineNumber()+''+e.getMessage());
     }
 }
 }
