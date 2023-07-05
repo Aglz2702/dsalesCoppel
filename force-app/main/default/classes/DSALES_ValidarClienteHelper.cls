@@ -109,7 +109,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
     public static void actualizarCotizacion(String quoteId,DSALES_VentaGEX.VentaGexResponse ventaGEX,Map<String,String> mapAssets,Map<String,String>mapCertifieds){
     
         list<String> idSecuencias=New list<String>();
-        List<Asset> productos=[SELECT dsalesIdSecuencia__c FROM ASSET WHERE id IN:mapAssets.values()];
+        List<Asset> productos=[SELECT dsalesIdSecuencia__c FROM ASSET WHERE id IN:mapAssets.values() WITH SECURITY_ENFORCED LIMIT 10];
         for(Asset p:productos)
             {
                 if(p.dsalesIdSecuencia__c!=-2 || p.dsalesIdSecuencia__c!=null)
@@ -122,8 +122,8 @@ public without sharing class  DSALES_ValidarClienteHelper {
         List<QuoteLineItem> partida = [SELECT Product2.Name, DSALES_NombreProductoServicio__c,DSALES_SKU__c,dsalesIdSecuencia__c,DSALES_ListaArticulo__c FROM QuoteLineItem WHERE QuoteId=:quoteId WITH SECURITY_ENFORCED];
         //Map<String,DSALES_Certificado__c> listaCertificados =[SELECT Id,Name FROM DSALES_Certificado__c WHERE DSALES_SKU__c IN:mapCertifieds.keySet() ];
         Map<String,DSALES_Certificado__c> mapaNombreCertificado = new Map<String,DSALES_Certificado__c>([SELECT Id,Name,DSALES_SKUTangible__c,DSALES_SKU__c,dsalesIdSecuencia__c FROM DSALES_Certificado__c WHERE Id IN:mapCertifieds.values() WITH SECURITY_ENFORCED]);
-       Map<String,DSALES_VentaGEX.ServicioCorrespondiente> OportunidadLineMap= new Map<String,DSALES_VentaGEX.ServicioCorrespondiente>();
-         Map<String,String> OportunidadLineMap1= new Map<String,String>();
+       Map<String,DSALES_VentaGEX.ServicioCorrespondiente> oportunidadLineMap= new Map<String,DSALES_VentaGEX.ServicioCorrespondiente>();
+         Map<String,String> oportunidadLineMap1= new Map<String,String>();
         
         List<OpportunityLineItem> listActualizarOp = new List<OpportunityLineItem>();
         Set<OpportunityLineItem> setActualizarOp= new Set <OpportunityLineItem>();
@@ -160,7 +160,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
                     {
                         
                         system.debug('numeroOppor!!! '+numeroOppor);
-                        system.debug('mapAssets: '+mapAssets);
+                        //system.debug('mapAssets: '+mapAssets);
                        
                         if(idSecuencias.size()<=numeroOppor)
                         {
@@ -168,7 +168,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
                              system.debug('op[numeroOppor]: '+op.Product2.StockKeepingUnit+idSecuencias[numeroOppor]);
                         }
                         
-                       if( (idSecuencias[numeroOppor]!=null && mapAssets.containsKey(op.Product2.StockKeepingUnit+idSecuencias[numeroOppor]))  || mapAssets.containsKey(op.Product2.StockKeepingUnit) && idSecuencias[numeroOppor]==null )
+                       if( (idSecuencias[numeroOppor]!=null && mapAssets.containsKey(op.Product2.StockKeepingUnit+idSecuencias[numeroOppor]))  || mapAssets.containsKey(op.Product2.StockKeepingUnit))
                        {
                            if(mapAssets.containsKey(op.Product2.StockKeepingUnit))
                            {
@@ -376,12 +376,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
                 if(opportunityLineItem.SObjectType.getDescribe().isUpdateable()) {
                     
                     system.debug('listActualizarOp: '+listActualizarOp);
-                   
-                    
-                   
-                   
-                    
-                    Update listActualizarOp;  
+                    update listActualizarOp;  
                 }else{
                     System.debug('Permisos insuficientes para actualizar');   
                 } 

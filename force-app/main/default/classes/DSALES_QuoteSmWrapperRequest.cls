@@ -258,10 +258,15 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             }
             List<Product2> seguros = [SELECT Id, Name, (SELECT Name, Dsales_Plazo__c, dsalesSeguro__c FROM Plazos__r  WHERE Dsales_Plazo__c<=:plazoMaximo AND DSALES_Activo__c = true) FROM Product2 WHERE Id IN :productoIds AND IsActive = true AND Id IN :productoIdts WITH SECURITY_ENFORCED];
             //List<dsalesEquivalencias__mdt> opcionPago = [SELECT Id, DeveloperName FROM dsalesEquivalencias__mdt WITH SECURITY_ENFORCED limit 50];
+            Set<Id> productIds = new Set<Id>();
+            for(Product2 item:seguros){
+                productIds.add(item.Id);
+            }
+            List<Product2> productos = [SELECT dsalesOpcionpago__c FROM Product2 WHERE Id=:productIds WITH SECURITY_ENFORCED LIMIT 10];
             for(Product2 item:seguros){
                 List<Plazo__c> plazos = item.Plazos__r;
                 for(Plazo__c plazo :plazos) {
-                    List<Product2> productos = [SELECT dsalesOpcionpago__c FROM Product2 WHERE Id=:item.Id];
+                    //List<Product2> productos = [SELECT dsalesOpcionpago__c FROM Product2 WHERE Id=:item.Id];
                     if(opPagoRecibido=='Mensual'){
                         System.debug('ENTRA EN OPCION DE PAGO MENSUAL');
                         List<String> opcionPago = new List<String>();
@@ -327,10 +332,15 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             List<Product2> seguros = [SELECT Id, Name, (SELECT Name, Dsales_Plazo__c, dsalesSeguro__c FROM Plazos__r  WHERE Dsales_Plazo__c<=:plazoMaximo AND DSALES_Activo__c = true) FROM Product2 WHERE DSALES_Aplicaparamotoexterna__c=true AND IsActive=true AND Id IN :productoIdts WITH SECURITY_ENFORCED];
             System.debug('Entraaa aExterna: '+seguros);
             //List<dsalesEquivalencias__mdt> opcionPago = [SELECT Id, DeveloperName FROM dsalesEquivalencias__mdt WITH SECURITY_ENFORCED limit 50];
+            Set<Id> productIds = new Set<Id>();
+            for(Product2 item:seguros){
+                productIds.add(item.Id);
+            }
+            List<Product2> productos = [SELECT dsalesOpcionpago__c FROM Product2 WHERE Id=:productIds WITH SECURITY_ENFORCED LIMIT 10];
             for(Product2 item:seguros){
                 List<Plazo__c> plazos = item.Plazos__r;
                 for(Plazo__c plazo :plazos) {
-                    List<Product2> productos = [SELECT dsalesOpcionpago__c FROM Product2 WHERE Id=:item.Id];
+                    //List<Product2> productos = [SELECT dsalesOpcionpago__c FROM Product2 WHERE Id=:item.Id];
                     if(opPagoRecibido=='Mensual'){
                         System.debug('ENTRA EN OPCION DE PAGO MENSUAL');
                         List<String> opcionPago = new List<String>();
@@ -487,7 +497,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
     
     public static QuoteLineItem creaPartida(String seguro, Quote cotiza, DSALES_QuoteSmWrapper.ArmadoMuleSoft data, String sku){
             Product2 producto = [SELECT Id, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE Name=:seguro WITH SECURITY_ENFORCED LIMIT 1];
-            PricebookEntry precio = [SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Product2Id =:producto.Id LIMIT 1];
+            PricebookEntry precio = [SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Product2Id =:producto.Id WITH SECURITY_ENFORCED LIMIT 1];
         	Plazo__c plazo = [SELECT Id, Name, DSALES_Activo__c, dsalesSeguro__r.Name FROM Plazo__c WHERE dsalesSeguro__r.Name =:seguro AND Name=:data.opcionPago AND DSALES_Activo__c = true WITH SECURITY_ENFORCED];     	
         	QuoteLineItem partida = new QuoteLineItem();
             System.debug('buscar  data say:'+data);
@@ -529,17 +539,22 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         return body;
     }
     public static Boolean campana(String seguro,String sku,String id){
-        Boolean condicion = false;  
+        Boolean condicion = false;
+        List<String> auxLst = new List<String>(); 
         if(sku!=null && sku!=''){
             Product2 producto = [SELECT Id, Name, StockKeepingUnit,DSales_Tipo_de_Producto__c, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku OR Id=:id WITH SECURITY_ENFORCED LIMIT 1];        
             if(seguro == rc){               
             	List <DSALES_AsociacionCampanias__c> listaCampanas = [SELECT Name, DSALES_Campania__c, DSALES_Producto__c,DSALES_Activo__c FROM DSALES_AsociacionCampanias__c WHERE DSALES_Producto__c =:producto.Id AND DSALES_Activo__c=true WITH SECURITY_ENFORCED];
+                for(DSALES_AsociacionCampanias__c asoCampana:listaCampanas){
+                    auxLst.add(asoCampana.DSALES_Campania__c);
+                }
+                Campaign aux = [SELECT Id, Name, IsActive, dsalesTipoCampana__c FROM Campaign WHERE Id=:auxLst WITH SECURITY_ENFORCED];
                 for(DSALES_AsociacionCampanias__c asoCampana:listaCampanas){                   
-                	Campaign aux = [SELECT Id, Name, IsActive, dsalesTipoCampana__c FROM Campaign WHERE Id=:asoCampana.DSALES_Campania__c WITH SECURITY_ENFORCED];             
-                    if(aux!=null){
-                        if(aux.Name == VALOR && aux.Id== asoCampana.DSALES_Campania__c && aux.IsActive==true && aux.dsalesTipoCampana__c==tipo){
+                	//Campaign aux = [SELECT Id, Name, IsActive, dsalesTipoCampana__c FROM Campaign WHERE Id=:asoCampana.DSALES_Campania__c WITH SECURITY_ENFORCED];             
+                    if(aux!=null && aux.Name == VALOR && aux.Id== asoCampana.DSALES_Campania__c && aux.IsActive==true && aux.dsalesTipoCampana__c==tipo){
+                        //if(aux.Name == VALOR && aux.Id== asoCampana.DSALES_Campania__c && aux.IsActive==true && aux.dsalesTipoCampana__c==tipo){
                             condicion = true;           
-                        }
+                        //}
                     }  
         		}
             }
@@ -573,7 +588,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
             return motoVacia;
         }   
     }
-    public  class nuevasPartidasPlazos{
+    public  class NuevasPartidasPlazos{
         String idPlazo;
         String plazo;
     }
@@ -655,7 +670,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         return listaSeguros;     
     }
     
-    public static Boolean RCEXCESO(String seguro,String sku,String id){
+    public static Boolean rcExceso(String seguro,String sku,String id){
         Boolean condicion = false;  
         if(sku!=null && sku!=''){
             Product2 producto = [SELECT Id, Name, StockKeepingUnit,DSales_Tipo_de_Producto__c, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku OR Id=:id WITH SECURITY_ENFORCED LIMIT 1];        
