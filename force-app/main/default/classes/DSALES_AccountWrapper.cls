@@ -11,11 +11,13 @@ global class DSALES_AccountWrapper {
         global Date fechaNacimiento {get;set;}
         global String nombreCiudad {get;set;}
         global String nombreEstado {get;set;}
+        global String codigoEstado{get;set;} //sm
         global String domicilio {get;set;}
         global String calle {get;set;}
         global String numeroExterior {get;set;}
         global String numeroInterior {get;set;}
-        global String colonia {get;set;}
+        global String colonia {get;set;} //gex
+        global String codigoColonia{get;set;} //sm
         global String codigoPostal {get;set;}  
         global String rfc {get;set;} 
     }
