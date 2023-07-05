@@ -58,7 +58,7 @@ global with sharing class DSALES_AccountWrapperRequest {
             System.debug('Genero despues de asignar:'+accountRecord.CP_Gender__pc);
             //accountRecord.CP_Gender__pc = cliente.genero;
             accountRecord.PersonBirthdate = cliente.fechaNacimiento;
-            accountRecord.BillingStreet = cliente.domicilio;
+            accountRecord.BillingStreet = cliente.calle;
             accountRecord.BillingCity =  cliente.nombreCiudad;
             accountRecord.BillingState = cliente.nombreEstado;
             accountRecord.BillingPostalCode = cliente.codigoPostal;
@@ -68,8 +68,14 @@ global with sharing class DSALES_AccountWrapperRequest {
             }
             
             accountRecord.dsalesNumeroExterior__c=Decimal.valueOf(cliente.numeroExterior);
-            accountRecord.CP_BillingStateCode__c=cliente.nombreEstado; //clave de estado en SM
-            //accountRecord.dsalesCodigoColonia__c=Decimal.valueOf(cliente.colonia); //clave colonia SM
+            accountRecord.CP_BillingStateCode__c=cliente.codigoEstado; //clave de estado en SM
+            if(!String.isEmpty(cliente.codigoColonia)){
+                accountRecord.dsalesCodigoColonia__c=Decimal.valueOf(cliente.codigoColonia); //clave colonia SM
+            }
+            if(!String.isEmpty(cliente.colonia)){ // gex
+                accountRecord.BillingStreet=cliente.calle + ', ' + cliente.colonia;
+            }
+            
             System.debug('Datos del cliente: '+accountRecord);
             System.debug('Datos del cliente: '+accountRecord.Id + ' ' + accountRecord.FirstName + ' ' + accountRecord.LastName);
             if(Schema.sObjectType.Account.isCreateable() && Schema.sObjectType.Account.isUpdateable()){

@@ -21,7 +21,7 @@ global class DSALES_VentaSM {
 		global String porcentaje{get;set;}
 		global String telefono { get; set; }
 		global String correoElectronico { get; set; }
-		global String genero { get; set; }
+		global String genero {get;set;}
 		global Date fechaNacimiento { get; set; }
 		global String rfc { get; set; }
 		global Integer codigoPostal { get; set; }
