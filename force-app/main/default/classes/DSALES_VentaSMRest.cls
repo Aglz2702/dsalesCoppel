@@ -165,6 +165,7 @@ global without sharing class DSALES_VentaSMRest {
                 participante.numeroExterior=item.numeroExterior;
                 participante.codigoEstado=item.codigoEstado; //clave de estado en SM
                 participante.codigoColonia=item.codigoColonia; //clave colonia SM
+                participante.rfc=item.rfc;
             }
         } 
         cliente.numeroCliente=participante.numeroCliente;
@@ -182,10 +183,13 @@ global without sharing class DSALES_VentaSMRest {
         cliente.numeroExterior =participante.numeroExterior;
         cliente.nombreEstado=participante.codigoEstado; //clave de estado en SM
         cliente.colonia=participante.codigoColonia; //clave colonia SM
+        cliente.rfc=participante.rfc;
+        System.debug('participante cliente: '+cliente);
         DSALES_AccountWrapper.AccountResponse response= DSALES_AccountWrapperRequest.upsertAccount(cliente);
         return response.idCuenta;
     }
     public static DSALES_VentaSM.DatosParaEmitir datosParaEmitir(DSALES_VentaSM.VentaSMRequest venta,String idPoliza){
+        System.debug('datos del cliente:'+venta.datosParticipantes);  
         DSALES_VentaSM.DatosParaEmitir response = new DSALES_VentaSM.DatosParaEmitir();
         DSALES_VentaSM.DatosSeguro datosSeguro= new DSALES_VentaSM.DatosSeguro();
         DSALES_VentaSM.DatosVehiculo vehiculo = new DSALES_VentaSM.DatosVehiculo();
@@ -195,14 +199,19 @@ global without sharing class DSALES_VentaSMRest {
         DSALES_VentaSM.DatosConductor datosConductor = new DSALES_VentaSM.DatosConductor();
         DSALES_VentaSM.DatosContratante datosContratante = new DSALES_VentaSM.DatosContratante();
         if(venta.activo.emitirPoliza==true){
-            Insurancepolicy poliza =[SELECT Id,DSALES_Modelo__c,DSALES_Uso__c,PlanType,DSALES_Tipovehiculo__c,DSALES_Servicio__c,DSALES_Placas__c,DSALES_Numeroserie__c,SourceQuoteId,DSALES_Aseguradora__c,DSALES_Cobertura__c,dsalesFechaDeEmision__c,EffectiveDate,DSALES_Negocio__c,DSALES_Opcionpago__c FROM Insurancepolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED];
-            Quote cotizacion =[SELECT Id,dsalesIdDeVehiculo__c,	dsalesCodigoDePromocion__c,DSALES_IDdelasociado__c,DSALES_RFC__c,dsalesFechaDeComienzoDePoliza__c FROM Quote WHERE Id=:poliza.SourceQuoteId WITH SECURITY_ENFORCED];
+            Insurancepolicy poliza =[SELECT Id,DSALES_Modelo__c,dsalesEstatusPoliza__c,DSALES_Uso__c,PlanType,DSALES_Tipovehiculo__c,DSALES_Servicio__c,DSALES_Placas__c,DSALES_Numeroserie__c,SourceQuoteId,DSALES_Aseguradora__c,DSALES_Cobertura__c,dsalesFechaDeEmision__c,EffectiveDate,DSALES_Negocio__c,DSALES_Opcionpago__c,dsalesTipoServicio__c,dsalesTipoUso__c FROM Insurancepolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED];
+            Quote cotizacion =[SELECT Id,dsalesIdDeVehiculo__c,	dsalesCodigoDePromocion__c,DSALES_IDdelasociado__c,DSALES_RFC__c,dsalesFechaDeComienzoDePoliza__c,dsalesValorFactura__c FROM Quote WHERE Id=:poliza.SourceQuoteId WITH SECURITY_ENFORCED];
             QuoteLineItem seguro =[SELECT Id,dsalesQuoteId__c,	DSALES_TrackingID__c,dsalesOpcionPago__c FROM QuoteLineItem WHERE QuoteId=:cotizacion.Id AND DSALES_Tipodeproducto__c=:'Seguro' WITH SECURITY_ENFORCED LIMIT 1];
-            
+            poliza.dsalesEstatusPoliza__c='En tramite';
+            if(Insurancepolicy.SObjectType.getDescribe().isUpdateable()) {
+                update poliza;  
+            }else{
+                System.debug('Permisos insuficientes para actualizar');   
+            }
             for(DSALES_VentaSM.DatosParticipante p:venta.datosParticipantes){
-                if(!String.isEmpty(p.rfc)){
+               /* if(!String.isEmpty(p.rfc)){
                     p.rfc=cotizacion.DSALES_RFC__c;
-                }
+                }*/
                 if(p.figura==DSALES_Utility.FIGURA_CONDUCTOR){
                    datosConductor.nombre=p.nombre;
                     datosConductor.apellidoPaterno=p.apellidoPaterno;
@@ -253,14 +262,14 @@ global without sharing class DSALES_VentaSMRest {
             datosSeguro.planPago='';
             datosSeguro.tarjetaPago='';
             datosSeguro.sumaAsegurada=0;
-            datosSeguro.valorfactura='false';
+            datosSeguro.valorfactura=String.valueOf(cotizacion.dsalesValorFactura__c);
             vehiculo.idVehiculo=cotizacion.dsalesIdDeVehiculo__c;
             vehiculo.modelo=poliza.DSALES_Modelo__c;
             vehiculo.numeroSerie=poliza.DSALES_Numeroserie__c;
             vehiculo.placas=poliza.DSALES_Placas__c;
-            vehiculo.sevicio=poliza.DSALES_Servicio__c;
+            vehiculo.sevicio=poliza.dsalesTipoServicio__c;
             vehiculo.tipo=poliza.DSALES_Tipovehiculo__c;
-            vehiculo.uso=poliza.DSALES_Uso__c;
+            vehiculo.uso=poliza.dsalesTipoUso__c;
             response.datosSeguro=datosSeguro;
             response.datosConductor=datosConductor;
             response.datosContratante=datosContratante;
@@ -268,6 +277,8 @@ global without sharing class DSALES_VentaSMRest {
             response.beneficiarioPreferente=String.valueOf(venta.beneficiarioPreferente);
             response.contratante=venta.contratante;
         }
+       
+       
         System.debug('response: '+response);
         return response;
     }

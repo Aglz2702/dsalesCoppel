@@ -47,6 +47,7 @@ global with sharing class DSALES_AccountWrapperRequest {
                     accountRecord.CP_WalletCustomerNumber__c = Decimal.valueOf(cliente.numeroCliente);
                 }
             }
+            accountRecord.dsalesRfc__c=cliente.rfc;
             accountRecord.FirstName = cliente.nombre;
             accountRecord.LastName = cliente.apellidoPaterno;
             accountRecord.Suffix = cliente.apellidoMaterno;
@@ -69,7 +70,7 @@ global with sharing class DSALES_AccountWrapperRequest {
             accountRecord.dsalesNumeroExterior__c=Decimal.valueOf(cliente.numeroExterior);
             accountRecord.CP_BillingStateCode__c=cliente.nombreEstado; //clave de estado en SM
             //accountRecord.dsalesCodigoColonia__c=Decimal.valueOf(cliente.colonia); //clave colonia SM
-           
+            System.debug('Datos del cliente: '+accountRecord);
             System.debug('Datos del cliente: '+accountRecord.Id + ' ' + accountRecord.FirstName + ' ' + accountRecord.LastName);
             if(Schema.sObjectType.Account.isCreateable() && Schema.sObjectType.Account.isUpdateable()){
                 upsert accountRecord;
