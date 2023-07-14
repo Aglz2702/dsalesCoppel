@@ -8,7 +8,7 @@ public without sharing class DSALES_CreateInsurancePolicy{
         InsurancePolicy poliza = new InsurancePolicy();
         try{
             Account cliente =[SELECT Id,RecordTypeId, Name,FirstName,MiddleName,LastName,Suffix,PersonEmail,Fecha_de_Nacimiento__c,CP_Gender__pc FROM Account WHERE Id=:oportunidad.AccountId WITH SECURITY_ENFORCED];
-            Quote cotizacion=[SELECT Id,DSALES_RFC__c FROM Quote WHERE Id=:oportunidad.SyncedQuoteId WITH SECURITY_ENFORCED LIMIT 1 ]; 
+            Quote cotizacion=[SELECT Id,DSALES_RFC__c,dsalesTipoDeVehiculo__r.Name,DSALES_TipoUso__r.Name FROM Quote WHERE Id=:oportunidad.SyncedQuoteId WITH SECURITY_ENFORCED LIMIT 1 ]; 
             QuoteLineItem partidas =[SELECT Id,DSALES_Tipodeproducto__c,DSALES_NombreProducto__c,dsalesQuoteId__c,dsalesOpcionPago__c FROM QuoteLineItem WHERE QuoteId=:cotizacion.Id AND DSALES_Tipodeproducto__c='Seguro' WITH SECURITY_ENFORCED LIMIT 1 ];
             poliza.DSALES_RFC__c=cotizacion.DSALES_RFC__c;
             //poliza.PolicyName='0001';
@@ -80,10 +80,10 @@ public without sharing class DSALES_CreateInsurancePolicy{
             poliza.DSALES_Numeroserie__c=activo.DSALES_Numeroserie__c;
             poliza.dsalesNumeroDeMotor__c=activo.DSALES_Numeromotor__c;
             poliza.DSALES_Descripcion__c=activo.DSALES_Descripcion__c;
-            poliza.DSALES_Servicio__c=activo.DSALES_Servicio__c;
+            //poliza.DSALES_Servicio__c=activo.DSALES_Servicio__c;
             poliza.DSALES_Placas__c=activo.DSALES_Placas__c;
             poliza.DSALES_Marca__c=activo.DSALES_Marca__c;
-            poliza.DSALES_Uso__c=activo.DSALES_Uso__c;
+            //poliza.DSALES_Uso__c=activo.DSALES_Uso__c;
             if(InsurancePolicy.SObjectType.getDescribe().isUpdateable()) {
                 update poliza;
             }else{

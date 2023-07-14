@@ -94,18 +94,18 @@ public without sharing class DSALES_ClasificacionServicio {
         List<Product2> producto= new List<Product2>(); 
         List<Servicio> listServicios = new List<Servicio>();
         if (Schema.sObjectType.product2.isQueryable()) {
-            producto= [Select Name, Id from product2 Where Id = :servicio and DSales_Tipo_de_Producto__c= 'Servicio'];
+            producto= [Select Name, Id from product2 Where Id = :servicio and (DSales_Tipo_de_Producto__c= 'Servicio' or DSales_Tipo_de_Producto__c= 'Seguro')];
         }
         String idproducto= producto[0].Id;
         if (Schema.sObjectType.DSales_Asignacion_de_Productos__c.isQueryable()) {
             for(DSales_Asignacion_de_Productos__c item: [Select Id, DSales_Producto__c, DSales_NombreProducto__c, DSALES_Departamento__c, DSALES_Subcategoria__c, DSALES_Clase__c,
-            DSALES_Familia__c, DSALES_SKU__c, CreatedDate, CreatedBy.Name, DSALES_Activo__c, DSales_Servicio_Seguro__c from DSales_Asignacion_de_Productos__c Where DSales_Producto__c =:idproducto and DSALES_Activo__c=:true order by DSales_NombreProducto__c asc])
+            DSALES_Familia__c, DSALES_SKU__c, CreatedDate, CreatedBy.Name, DSALES_Activo__c, DSales_Servicio_Seguro__c from DSales_Asignacion_de_Productos__c Where DSales_Servicio_Seguro__c =:idproducto and DSALES_Activo__c=:true order by DSales_NombreProducto__c asc])
             {
                 AsignarProductos asignarProductos = new AsignarProductos(); 
                 asignarProductos.id = item.Id;
                 asignarProductos.nombre = item.DSales_NombreProducto__c;
-                asignarProductos.servicio = item.DSales_Producto__c;
-                asignarProductos.productoid = item.DSales_Servicio_Seguro__c;
+                asignarProductos.servicio = item.DSales_Servicio_Seguro__c;
+                asignarProductos.productoid = item.DSales_Producto__c;
                 asignarProductos.sku = item.DSALES_SKU__c;
                 asignarProductos.departamento = item.DSALES_Departamento__c;
                 asignarProductos.subcategoria = item.DSALES_Subcategoria__c;
@@ -118,7 +118,7 @@ public without sharing class DSALES_ClasificacionServicio {
                 listasignacion.add(asignarProductos); 
             }
         }
-          
+        System.debug('prueba: ' +listasignacion);
         return listasignacion;
     }
     
@@ -142,11 +142,11 @@ public without sharing class DSALES_ClasificacionServicio {
         String checkProfile = checkProfileType('Administrador SM');
         Boolean boolserv = false;
         Boolean boolseg = false;
-        producto= [Select DSales_Servicio_Seguro__c from DSales_Asignacion_de_Productos__c Where DSALES_Activo__c=true];
+        producto= [Select DSales_Producto__c from DSales_Asignacion_de_Productos__c Where DSALES_Activo__c=true and DSales_Servicio_Seguro__c= :servicio];
         
         for(integer i=0; i<producto.size(); i++)
         {
-            idproducto.add(producto[i].DSales_Servicio_Seguro__c);
+            idproducto.add(producto[i].DSales_Producto__c);
         }
         if(checkProfile== 'Administrador SM')
         {
@@ -163,12 +163,12 @@ public without sharing class DSALES_ClasificacionServicio {
             boolseg = false;
         }
         if (Schema.sObjectType.Product2.isQueryable()) {
-            for(Product2 item: [Select Id, (Select Id from Asignaciones_de_Productos1__r Where DSales_Producto__c = :servicio and DSALES_Activo__c=false), Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name,
+            for(Product2 item: [Select Id, (Select Id from Asignaciones_de_Productos__r Where DSales_Servicio_Seguro__c = :servicio and DSALES_Activo__c=false), Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name,
                 DSALES_Familia__r.Name from Product2 Where DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and DSALES_Servicio__c = :boolserv and DSALES_Seguro__c= :boolseg WITH SECURITY_ENFORCED order by Name asc])
                 {
                     AsignarProductos asignarProductos = new AsignarProductos(); 
-                    if(item.Asignaciones_de_Productos1__r.size()>0){
-                        asignarProductos.id= item.Asignaciones_de_Productos1__r[0].Id;
+                    if(item.Asignaciones_de_Productos__r.size()>0){
+                        asignarProductos.id= item.Asignaciones_de_Productos__r[0].Id;
                     }
                     asignarProductos.productoid = item.Id;
                     asignarProductos.nombre = item.Name;
@@ -182,6 +182,7 @@ public without sharing class DSALES_ClasificacionServicio {
                     listproductos.add(asignarProductos);   
                 }  
         }
+        system.debug('buscar: '+listproductos);
         return listproductos;
         
     }
@@ -220,12 +221,13 @@ public without sharing class DSALES_ClasificacionServicio {
            
             if(item.seleccionadoSku)
             {
-                listInsertVinculacion.add(new DSales_Asignacion_de_Productos__c(Id=Item.id, DSALES_Servicio_Seguro__c=item.productoid, DSALES_Activo__c=true, DSales_Producto__c= idservicio));
+                listInsertVinculacion.add(new DSales_Asignacion_de_Productos__c(Id=Item.id, DSales_Producto__c=item.productoid, DSALES_Activo__c=true, DSales_Servicio_Seguro__c= idservicio));
             }
             
             
         }
         if(Schema.sObjectType.DSales_Asignacion_de_Productos__c.isCreateable() && Schema.sObjectType.DSales_Asignacion_de_Productos__c.isUpdateable()){
+           system.debug(listInsertVinculacion);
             upsert listInsertVinculacion;
         }
     }
@@ -488,7 +490,8 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
-    public static List<PicklistOp> getcategories(string recordName){        
+    public static List<PicklistOp> getcategories(String recordName){
+        system.debug(recordName);      
         List<PicklistOp> listcategories = new List<PicklistOp>();
         for(DSALES_Categoria__c item: [Select Id, Name From DSALES_Categoria__c where RecordType.name=: recordName])
     {
@@ -653,7 +656,7 @@ public without sharing class DSALES_ClasificacionServicio {
 
     @AuraEnabled
     public static List<AsignarProductos> getserviciosku(String valueCategoria, String valueSubcategoria, List<String> valueClasesFamilias){   
-        system.debug('hi'+valueClasesFamilias);
+        system.debug('hi'+valueClasesFamilias[1]+ ' '+valueClasesFamilias[0]);
         List<String> skus = new List<String>();
         List<String> skusNombres = new List<String>();
         List<String> tiposervicio= new  List<String>();
@@ -661,9 +664,10 @@ public without sharing class DSALES_ClasificacionServicio {
         String nombreTipoServicio;
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClasesFamilias+'/familias/'+valueClasesFamilias+'/codigos');
+        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClasesFamilias[0]+'/familias/'+valueClasesFamilias[1]+'/codigos');
         request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
         request.setMethod('GET');
+        system.debug(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClasesFamilias[0]+'/familias/'+valueClasesFamilias[1]+'/codigos');
         HttpResponse response = https.send(request);
         if (response.getStatusCode() == 200) {
             Map<String, Object> respuesta = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
@@ -1014,10 +1018,26 @@ public without sharing class DSALES_ClasificacionServicio {
             }
             return pickListValuesList4;
         }
+
+        
+        @AuraEnabled
+        public static List<PicklistOp> getPickListValuesIntoList5(){
+            List<PicklistOp> pickListValuesList4= new List<PicklistOp>();
+            Schema.DescribeFieldResult fieldResult = Product2.dsalesOpcionPago__c.getDescribe();
+            List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+            for( Schema.PicklistEntry pickListVal : ple){
+                PicklistOp option = new PicklistOp();
+                option.label= pickListVal.getLabel();
+                option.value = pickListVal.getValue();
+                pickListValuesList4.add(option);
+            }
+            return pickListValuesList4;
+        }
                     
     @AuraEnabled
     public static Product2 createProductIntan(Product2 productIntan, String sku){
         try{
+            system.debug('aqui'+productIntan);
             insert productIntan;
             return productIntan;  
         }

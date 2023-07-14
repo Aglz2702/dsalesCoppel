@@ -3,7 +3,7 @@
     <fullName>DSales_Servicio_Seguro__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Producto</label>
+    <label>Servicio/Seguro</label>
     <referenceTo>Product2</referenceTo>
     <relationshipLabel>Asignaciones de Productos (Servicio/Seguro)</relationshipLabel>
     <relationshipName>Asignaciones_de_Productos1</relationshipName>

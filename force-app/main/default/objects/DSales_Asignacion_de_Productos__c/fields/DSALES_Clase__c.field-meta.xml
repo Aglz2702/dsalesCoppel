@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DSALES_Clase__c</fullName>
     <externalId>false</externalId>
-    <formula>DSales_Servicio_Seguro__r.DSALES_Clase__r.Name</formula>
+    <formula>DSales_Producto__r.DSALES_Clase__r.Name</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Clase</label>
     <required>false</required>

@@ -1,7 +1,7 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global class DSALES_PolizaWrapper {
     global class Request{
-        global String quote_id { get; set; }
+        global String quoteId { get; set; }
         global String quote {get;set;}
         global String idEmision { get; set; }
         global String trackingId { get; set; }

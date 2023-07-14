@@ -4,7 +4,7 @@ public with sharing class DSALES_VentaSMRestAux {
         List<DSALES_VentaSM.ListaPartidasOportunidad> listaPartidas= new List<DSALES_VentaSM.ListaPartidasOportunidad>();
         for(DSALES_VentaSMRest.WrapperDatosProductos listSin:productosSincronisados){
             DSALES_VentaSM.ListaPartidasOportunidad partida = new DSALES_VentaSM.ListaPartidasOportunidad();
-            partida.idPartidaOportunidad=listSin.oliId;
+            partida.idPartidaOportunidad=listSin.idPartidaDeOportunidad;
             partida.nombreProducto=listSin.nombreProducto;
             partida.sku=listSin.sku; 
             listaPartidas.add(partida);
@@ -27,6 +27,7 @@ public with sharing class DSALES_VentaSMRestAux {
             datosActivo.idUniversal=pago.DSALES_IDUniversal1__c;
             activo= DSALES_IPAssetWrapperRequest.insertIPAsset(datosActivo);
             idActivo=activo.Id;
+            System.debug('id de activo: '+idActivo);
             DSALES_CreateInsurancePolicy.agregarDatosDeActivo(activo,polizaId);            
         }
         return idActivo;
