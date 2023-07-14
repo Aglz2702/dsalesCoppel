@@ -34,7 +34,6 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
                       }
                       nombreCompleto += ' ' +data.apellidoPaterno; 
                     String rfc = data.rfc;
-                    system.debug('RFC:'+rfc);
                     /*respuestaListaNegra = DSALES_ConsultaListaNegra.callWebService(rfc, nombreCompleto);
                     if(respuestaListaNegra.estatus !=true){
                         listaNegra = true;
