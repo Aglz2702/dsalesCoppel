@@ -144,7 +144,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         Boolean seMandaEmitir=false;
         InsurancePolicyAsset activo =[SELECT Id,DSALES_emitir_poliza__c,InsurancePolicy.Name FROM InsurancePolicyAsset WHERE InsurancePolicyId=:idPoliza WITH SECURITY_ENFORCED LIMIT 1];
         for(DSALES_VentaSMRest.WrapperDatosProductos prod:listaIds){
-            idsPartidas.add(prod.oliId);
+            idsPartidas.add(prod.idPartidaDeOportunidad);
         }
         for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
                                 FROM OpportunityLineItem WHERE Id IN:idsPartidas AND Product2.DSales_Tipo_de_Producto__c=:'Seguro' WITH SECURITY_ENFORCED]){

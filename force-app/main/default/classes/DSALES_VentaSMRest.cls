@@ -135,7 +135,7 @@ global without sharing class DSALES_VentaSMRest {
         }
         for(OpportunityLineItem oli : oliLista) {
             WrapperDatosProductos productoWrapper = new WrapperDatosProductos();
-            productoWrapper.oliId = oli.Id;
+            productoWrapper.idPartidaDeOportunidad = oli.Id;
             productoWrapper.nombreProducto = mapaNombresProductos.get(oli.Product2Id);
             productoWrapper.sku=mapaSkuProductos.get(oli.Product2Id);
             listaWrapperProducto.add(productoWrapper);
@@ -323,7 +323,7 @@ global without sharing class DSALES_VentaSMRest {
         return contratante;
     }
     public class WrapperDatosProductos {
-        public Id oliId { get; set; }
+        public Id idPartidaDeOportunidad { get; set; }
         public String nombreProducto { get; set; }
         public String sku {get;set;}
     }

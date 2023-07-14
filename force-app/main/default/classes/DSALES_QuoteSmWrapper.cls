@@ -52,10 +52,14 @@ global class DSALES_QuoteSmWrapper {
         global Double precioProducto {get; set;}
         global List<Plazo> listaPlazos {get; set;}
     }
+    
     global class Plazo {
-		global String paquete {get;set;}
+        global String paquete {get;set;}
+        global List<opcionPago> opcionesPago {get;set;}
+    }
+    global class opcionPago {
         global String opcionPago {get;set;}
-	}  
+    }
 	global class Product {
 		global String sku {get;set;}
 	}   
