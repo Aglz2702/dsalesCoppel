@@ -1,9 +1,10 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
-global class DSALES_CertificadoWrapper {
+global with sharing class DSALES_CertificadoWrapper {
     
     
     global class CertificadoRequest{
-        global String idCuenta {get;set;} 
+        global String idCuenta {get;set;}
+        global Decimal idSecuencia {get;set;}
         global String idProductoAdquirido{get;set;}
         global String idPago {get;set;}
         global String idFactura {get;set;}//remaining

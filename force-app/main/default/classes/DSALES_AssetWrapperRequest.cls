@@ -1,5 +1,6 @@
 @RestResource(urlMapping='/insertAsset/*')
 global with sharing class DSALES_AssetWrapperRequest {
+    
     @HttpPost
     global static DSALES_AssetWrapper.AssetResponse crearAsset()
     {
@@ -82,6 +83,7 @@ global with sharing class DSALES_AssetWrapperRequest {
             assetRegistro.Status=product.estado;
             assetRegistro.DSALES_VigenciaMeses__c=product.meses;
             assetRegistro.DSALES_SKU__c=product.skuDeTangible;
+            assetRegistro.dsalesIdSecuencia__c=product.idSecuencia;
             //assetRegistro.DSALES_DuracionGEX__c=product.warranty_duration;
             assetRegistro.SerialNumber=product.numeroSerie;
             assetRegistro.PurchaseDate=product.fechaCompra;
@@ -104,7 +106,7 @@ global with sharing class DSALES_AssetWrapperRequest {
         }catch(Exception e){
             
             exito = false;
-            mensaje = DSALES_Utility.INTERNAL_ERROR_MSJ + e.GetMessage() + e.GetLineNumber();
+            mensaje =  e.GetMessage() + e.GetLineNumber();
             codigo=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
             
         }
@@ -119,5 +121,5 @@ global with sharing class DSALES_AssetWrapperRequest {
         return responsePayload;
         
     }
-    
+   
 }
