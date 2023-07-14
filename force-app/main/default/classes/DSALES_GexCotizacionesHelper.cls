@@ -20,7 +20,7 @@ public static void envioCotizacionGex(String jsonString, String quoteOld){
         for(Account item: [Select Id,Name,PersonContactId, PersonEmail from Account where Id in : mapAccount.keySet() WITH SECURITY_ENFORCED LIMIT 1]){
             mapAccount.put(item.Id, item);
         }
-        RECORDTYPE motos= [SELECT Id, Name FROM RECORDTYPE WHERE Id=:recordId[0] WITH SECURITY_ENFORCED LIMIT 1];
+        List<RECORDTYPE> motos= [SELECT Id, Name FROM RECORDTYPE WHERE Id=:recordId[0] WITH SECURITY_ENFORCED LIMIT 1];
         EmailTemplate templete = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :TEMPLETE_NAME WITH SECURITY_ENFORCED];
         system.debug('Template name------->' +templete.DeveloperName);
         EmailTemplate templeteGEX = [Select Id, HtmlValue, Subject, DeveloperName from EmailTemplate Where DeveloperName = :GEX_TEMPLETE WITH SECURITY_ENFORCED];     
@@ -39,7 +39,9 @@ public static void envioCotizacionGex(String jsonString, String quoteOld){
                 system.debug('Email: '+correo);
                 efa.setInline(False);
                 
-                if(motos.Name=='Venta de Seguro de Motos' &&(item.DSALES_Enviarcotizacion__c==true && mapQuote.get(item.Id).DSALES_Enviarcotizacion__c==false)){
+            if(motos.size()>0)
+            {
+            if(motos[0].Name=='Venta de Seguro de Motos' &&(item.DSALES_Enviarcotizacion__c==true && mapQuote.get(item.Id).DSALES_Enviarcotizacion__c==false)){
                     mail.setHtmlBody(templete.HtmlValue);
                     mail.setSubject(templete.Subject);
                     Blob body = generarSmPdf(item.Id);
@@ -50,7 +52,7 @@ public static void envioCotizacionGex(String jsonString, String quoteOld){
                     messageList.add(mail);
                     
                 }
-                else if(motos.Name=='Venta de Garantía Extendida' && (item.DSALES_Enviarcotizacion__c==true && mapQuote.get(item.Id).DSALES_Enviarcotizacion__c==false)){
+                else if(motos[0].Name=='Venta de Garantía Extendida' && (item.DSALES_Enviarcotizacion__c==true && mapQuote.get(item.Id).DSALES_Enviarcotizacion__c==false)){
                     mail.setHtmlBody(templeteGEX.HtmlValue);
                     mail.setSubject(templeteGEX.Subject);
                     Blob b = generarPFD(item.Id); 
@@ -61,7 +63,7 @@ public static void envioCotizacionGex(String jsonString, String quoteOld){
                     messageList.add(mail);
                     
                 }
-            // }
+             }
             
         }
         if(messageList.Size()!=0){

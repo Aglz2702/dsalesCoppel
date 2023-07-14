@@ -122,7 +122,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             
             List<OpportunityLineItem> sku =[SELECT Id,Product2.StockKeepingUnit,DSALES_FolioCertificado__c FROM OpportunityLineItem
                                            WHERE Id IN:idOportunidades WITH SECURITY_ENFORCED];
-           
+           system.debug('MARCA LA TOTALIZACIÓN');
            for(OpportunityLineItem s:sku)
            {
                if(mapaCancela.containsKey(s.Id))
@@ -250,6 +250,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             success = false;
             message = DSALES_Utility.INTERNAL_ERROR_MSJ+ e.getMessage() + e.getLineNumber();
             code=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+            system.debug(message);
             
             
         }
