@@ -1,4 +1,4 @@
-@RestResource(urlMapping='/obternerPoliza')
+@RestResource(urlMapping='/obtenerPoliza')
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global with sharing class DSALES_NuevaPoliza {
     @HttpPut 
@@ -8,15 +8,24 @@ global with sharing class DSALES_NuevaPoliza {
         Boolean exito=false ;
         Integer codigoError; 
         String mensajeError='';
+        String idPoliza='';
         if(RestContext.request != null){
             String body = System.RestContext.request.requestBody.toString();
             if(String.isNotBlank(body)){
                 try{
                     DSALES_PolizaWrapper.Request poliza = (DSALES_PolizaWrapper.Request)JSON.deserialize(body, DSALES_PolizaWrapper.Request.class);
-                    InsurancePolicy polizaA = [SELECT Id,SourceQuoteId,dsalesQuoteId__c,SourceOpportunityId FROM InsurancePolicy WHERE dsalesQuoteId__c=:poliza.quote_id WITH SECURITY_ENFORCED LIMIT 1];
-                    listaIds=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(polizaA.SourceOpportunityId);
-                    service(poliza,polizaA.Id);    
-                    exito=true;
+                    if(!String.isEmpty(poliza.quote)){
+                        InsurancePolicy polizaA = [SELECT Id,SourceQuoteId,dsalesQuoteId__c,SourceOpportunityId FROM InsurancePolicy WHERE dsalesQuoteId__c=:poliza.quote WITH SECURITY_ENFORCED LIMIT 1];
+                        listaIds=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(polizaA.SourceOpportunityId);
+                        
+                        idPoliza=service(poliza,polizaA.Id);    
+                        exito=true;
+                    }else {
+                        exito=false;
+                        mensajeError='Identificador "quote" no encontrado';
+                        codigoError=401;
+                    }
+                    
                 }catch(Exception.JSONException e){
                     exito = false;
                     mensajeError= DSALES_Utility.BAD_REQUEST_MSJ;
@@ -25,11 +34,12 @@ global with sharing class DSALES_NuevaPoliza {
                 catch(Exception e){
                     System.debug('**ERROR**'+e.getLineNumber()+ ': '+e.getMessage());
                     exito = false;
-                    mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ;
+                    mensajeError = DSALES_Utility.INTERNAL_ERROR_MSJ +': '+e.getLineNumber()+ ': '+e.getMessage();
                     codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;
                 }
             }
         }
+        System.debug('idPoliza: '+idPoliza);
         response.listaPartidasOportunidad=listaIds;
         response.exito=exito;
         response.codigoError=codigoError;
@@ -38,9 +48,10 @@ global with sharing class DSALES_NuevaPoliza {
     }
     
      
-    public static void service( DSALES_PolizaWrapper.Request polizaNueva, String idPoliza){
+    public static String service( DSALES_PolizaWrapper.Request polizaNueva, String idPoliza){
+        InsurancePolicy poliza =new InsurancePolicy();
         try{
-            InsurancePolicy poliza =new InsurancePolicy();
+           
             String datos='SELECT Id,DSALES_Numeroseguimiento__c,PolicyName,';
             String dats='dsalesEstatusPoliza__c,Name,EffectiveDate,ExpirationDate,DSALES_Prima_Neta__c,DSALES_Prima_total__c,DSALES_Gastos_expedicion__c,DSALES_IVA__c,SourceOpportunityId,TotalSumInsured,DSALES_IDemision__c,DSALES_Servicio__c,DSALES_Uso__c,';
             String dat='DSALES_Telefono__c,DSALES_Codigomunicipio__c,DSALES_Codigocolonia__c,DSALES_Fechanacimiento__c,DSALES_Numeroserie__c,NameInsuredId,DSALES_RFC__c,dsalesFechaDeEmision__c,CreatedDate,DSALES_Opcionpago__c,DSALES_Tipovehiculo__c,';
@@ -63,7 +74,7 @@ global with sharing class DSALES_NuevaPoliza {
             poliza.DSALES_IVA__c=polizaNueva.iva;
 
            // mapear campo de mensaje cuando no se haya generado una póliza.
-            poliza.dsalesQuote__c=polizaNueva.quote;
+            poliza.dsalesQuote__c=polizaNueva.quoteId;
             if(InsurancePolicy.SObjectType.getDescribe().isUpdateable()) {
                 update poliza;   
             }else{
@@ -72,7 +83,7 @@ global with sharing class DSALES_NuevaPoliza {
         }catch(Exception e){
             System.debug('error: '+e.getLineNumber()+e.getMessage());
         }
-        
+        return poliza.Id;
     }
     
     

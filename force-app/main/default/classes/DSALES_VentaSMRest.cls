@@ -26,38 +26,49 @@ global without sharing class DSALES_VentaSMRest {
             if(String.isNotBlank(body)){
                 try{
                     DSALES_VentaSM.VentaSMRequest venta = (DSALES_VentaSM.VentaSMRequest)JSON.deserialize(body, DSALES_VentaSM.VentaSMRequest.class);
-                    System.debug('venta request: '+venta);
-                    idCliente=crearCliente(venta.datosParticipantes);
-                    
-                    System.debug('cliente id venta:'+idCliente);
-                    sincronizarOportunidad(venta.idCotizacion, idCliente);
-                    idUniversal=venta.pagos.idUniversal;
-                    Quote cotizacion=[SELECT  Id,OpportunityId FROM Quote WHERE Id=:venta.idCotizacion WITH SECURITY_ENFORCED];
-                    Opportunity oppor=[SELECT Id,StageName,SyncedQuoteId FROM Opportunity WHERE Id=:cotizacion.OpportunityId WITH SECURITY_ENFORCED ];
-                    venta.pagos.idOportunidad=oppor.Id;
-                    List<String> partidasSeleccionadas= venta.idPartidaPresupuesto;
-                    DSALES_PaymentInfoWrapper.PaymentResponse resp= DSALES_PaymentInfoWrapperRequest.insertarPago(venta.pagos,venta.contratante);
-                    System.debug('pago creado: '+resp.pagoId);
-                    pago=[SELECT Id,DSALES_Factura__c,DSALES_IDUniversal1__c,DSALES_Oportunidad__c,DSALES_Plazodecomprademoto__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName,DSALES_Seguro__c,DSALES_SKU__c  
-                                            FROM DSALES_InformacionDePago__c 
-                                            WHERE Id=:resp.pagoId WITH SECURITY_ENFORCED];
-                    idPago=pago.Id;
-                    DSALES_VentaSMRestAux.cotizacionesNuevas(pago, partidasSeleccionadas);
-                    listaPartidas=DSALES_VentaSMRestAux.obtenerPartidas(pago.DSALES_Oportunidad__c);
-                    DatosPrepoliza datosPrepoliza= new DatosPrepoliza();
-                    datosPrepoliza.enviaContratante=venta.envioContratante;
-                    datosPrepoliza.beneficiarioPreferente=venta.beneficiarioPreferente;
-                    polizaId=DSALES_VentaSMRestAux.crearPrePoliza(pago,venta.datosParticipantes,datosPrepoliza);
-                    idActivo= DSALES_VentaSMRestAux.crearActivo(pago,venta.activo,polizaId);
-                    if(String.isNotEmpty(idActivo)){
-                        recived=datosParaEmitir(venta, polizaId);
-                        datosSeguro=recived.datosSeguro;
-                        vehiculo=recived.datosVehiculo;
-                        //datosSeguro=recived.datosSeguro;
-                        datosEmitir=recived;
+                    System.debug('venta request: '+body);
+                    String idUnico=venta.pagos.idUniversal;
+                    List<DSALES_InformacionDePago__c> verificaIdUniversal =[SELECT Id,DSALES_IDUniversal1__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c =: idUnico WITH SECURITY_ENFORCED LIMIT 1];
+                    System.debug('in universal recibido: '+ verificaIdUniversal);
+                    System.debug('in universal recibido: '+ idUnico);
+                    if(verificaIdUniversal!=null && verificaIdUniversal.size()>0){
+                        mensajeError='El id universal: '+idUnico+ ' ya existe' ;
+                        exito=false;
+                        codigoError=401;
                     }
-                    
-                    exito=true;
+                    else{
+                        idCliente=crearCliente(venta.datosParticipantes);
+                        
+                        System.debug('cliente id venta:'+idCliente);
+                        sincronizarOportunidad(venta.idCotizacion, idCliente);
+                        idUniversal=venta.pagos.idUniversal;
+                        Quote cotizacion=[SELECT  Id,OpportunityId FROM Quote WHERE Id=:venta.idCotizacion WITH SECURITY_ENFORCED];
+                        Opportunity oppor=[SELECT Id,StageName,SyncedQuoteId FROM Opportunity WHERE Id=:cotizacion.OpportunityId WITH SECURITY_ENFORCED ];
+                        venta.pagos.idOportunidad=oppor.Id;
+                        List<String> partidasSeleccionadas= venta.idPartidaPresupuesto;
+                        DSALES_PaymentInfoWrapper.PaymentResponse resp= DSALES_PaymentInfoWrapperRequest.insertarPago(venta.pagos,venta.contratante);
+                        System.debug('pago creado: '+resp.pagoId);
+                        pago=[SELECT Id,DSALES_Factura__c,DSALES_IDUniversal1__c,DSALES_Oportunidad__c,DSALES_Plazodecomprademoto__c,DSALES_Poliza__c,DSALES_Poliza__r.PolicyName,DSALES_Seguro__c,DSALES_SKU__c  
+                                                FROM DSALES_InformacionDePago__c 
+                                                WHERE Id=:resp.pagoId WITH SECURITY_ENFORCED];
+                        idPago=pago.Id;
+                        DSALES_VentaSMRestAux.cotizacionesNuevas(pago, partidasSeleccionadas);
+                        listaPartidas=DSALES_VentaSMRestAux.obtenerPartidas(pago.DSALES_Oportunidad__c);
+                        DatosPrepoliza datosPrepoliza= new DatosPrepoliza();
+                        datosPrepoliza.enviaContratante=venta.envioContratante;
+                        datosPrepoliza.beneficiarioPreferente=venta.beneficiarioPreferente;
+                        polizaId=DSALES_VentaSMRestAux.crearPrePoliza(pago,venta.datosParticipantes,datosPrepoliza);
+                        idActivo= DSALES_VentaSMRestAux.crearActivo(pago,venta.activo,polizaId);
+                        if(String.isNotEmpty(idActivo)){
+                            recived=datosParaEmitir(venta, polizaId);
+                            datosSeguro=recived.datosSeguro;
+                            vehiculo=recived.datosVehiculo;
+                            //datosSeguro=recived.datosSeguro;
+                            datosEmitir=recived;
+                        }
+                        
+                        exito=true;
+                    }
                     
                 }catch(Exception.JSONException e){
                     exito = false;
@@ -124,7 +135,7 @@ global without sharing class DSALES_VentaSMRest {
         }
         for(OpportunityLineItem oli : oliLista) {
             WrapperDatosProductos productoWrapper = new WrapperDatosProductos();
-            productoWrapper.oliId = oli.Id;
+            productoWrapper.idPartidaDeOportunidad = oli.Id;
             productoWrapper.nombreProducto = mapaNombresProductos.get(oli.Product2Id);
             productoWrapper.sku=mapaSkuProductos.get(oli.Product2Id);
             listaWrapperProducto.add(productoWrapper);
@@ -134,6 +145,7 @@ global without sharing class DSALES_VentaSMRest {
     }
 
     public static String crearCliente(List<DSALES_VentaSM.DatosParticipante> participantes){
+        system.debug('data de participantes______'+participantes);
         DSALES_VentaSM.DatosParticipante participante = new DSALES_VentaSM.DatosParticipante();
         DSALES_AccountWrapper.AccountRequest cliente= new DSALES_AccountWrapper.AccountRequest();
         for(DSALES_VentaSM.DatosParticipante item: participantes){
@@ -146,6 +158,8 @@ global without sharing class DSALES_VentaSMRest {
                 participante.telefono = item.telefono;
                 participante.correoElectronico = item.correoElectronico;
                 participante.genero = item.genero;
+                System.debug('Genero asignado:'+item.genero);
+                System.debug('Genero en data:'+participante.genero);
                 participante.fechaNacimiento = item.fechaNacimiento;
                 participante.calle = item.calle;
                 participante.codigoCiudad =  item.codigoCiudad;
@@ -153,7 +167,9 @@ global without sharing class DSALES_VentaSMRest {
                 participante.numeroInterior=item.numeroInterior;
                 participante.numeroExterior=item.numeroExterior;
                 participante.codigoEstado=item.codigoEstado; //clave de estado en SM
+                System.debug('codigo Estado:'+participante.codigoEstado);
                 participante.codigoColonia=item.codigoColonia; //clave colonia SM
+                participante.rfc=item.rfc;
             }
         } 
         cliente.numeroCliente=participante.numeroCliente;
@@ -163,18 +179,22 @@ global without sharing class DSALES_VentaSMRest {
         cliente.telefono=participante.telefono;
         cliente.correoElectronico =participante.correoElectronico;
         cliente.genero=participante.genero;
+        system.debug('genero ');
         cliente.fechaNacimiento=participante.fechaNacimiento;
-        cliente.domicilio=participante.calle;
+        cliente.calle=participante.calle;
         cliente.nombreCiudad=participante.codigoCiudad;
         cliente.codigoPostal=String.valueOf(participante.codigoPostal);
         cliente.numeroInterior=participante.numeroInterior;
         cliente.numeroExterior =participante.numeroExterior;
-        cliente.nombreEstado=participante.codigoEstado; //clave de estado en SM
-        cliente.colonia=participante.codigoColonia; //clave colonia SM
+        cliente.codigoEstado=participante.codigoEstado; //clave de estado en SM
+        cliente.codigoColonia=participante.codigoColonia; //clave colonia SM
+        cliente.rfc=participante.rfc;
+        System.debug('participante cliente: '+cliente);
         DSALES_AccountWrapper.AccountResponse response= DSALES_AccountWrapperRequest.upsertAccount(cliente);
         return response.idCuenta;
     }
     public static DSALES_VentaSM.DatosParaEmitir datosParaEmitir(DSALES_VentaSM.VentaSMRequest venta,String idPoliza){
+        System.debug('datos del cliente:'+venta.datosParticipantes);  
         DSALES_VentaSM.DatosParaEmitir response = new DSALES_VentaSM.DatosParaEmitir();
         DSALES_VentaSM.DatosSeguro datosSeguro= new DSALES_VentaSM.DatosSeguro();
         DSALES_VentaSM.DatosVehiculo vehiculo = new DSALES_VentaSM.DatosVehiculo();
@@ -184,14 +204,19 @@ global without sharing class DSALES_VentaSMRest {
         DSALES_VentaSM.DatosConductor datosConductor = new DSALES_VentaSM.DatosConductor();
         DSALES_VentaSM.DatosContratante datosContratante = new DSALES_VentaSM.DatosContratante();
         if(venta.activo.emitirPoliza==true){
-            Insurancepolicy poliza =[SELECT Id,DSALES_Modelo__c,DSALES_Uso__c,PlanType,DSALES_Tipovehiculo__c,DSALES_Servicio__c,DSALES_Placas__c,DSALES_Numeroserie__c,SourceQuoteId,DSALES_Aseguradora__c,DSALES_Cobertura__c,dsalesFechaDeEmision__c,EffectiveDate,DSALES_Negocio__c,DSALES_Opcionpago__c FROM Insurancepolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED];
-            Quote cotizacion =[SELECT Id,dsalesIdDeVehiculo__c,	dsalesCodigoDePromocion__c,DSALES_IDdelasociado__c,DSALES_RFC__c,dsalesFechaDeComienzoDePoliza__c FROM Quote WHERE Id=:poliza.SourceQuoteId WITH SECURITY_ENFORCED];
+            Insurancepolicy poliza =[SELECT Id,DSALES_Modelo__c,dsalesEstatusPoliza__c,DSALES_Uso__c,PlanType,DSALES_Tipovehiculo__c,DSALES_Servicio__c,DSALES_Placas__c,DSALES_Numeroserie__c,SourceQuoteId,DSALES_Aseguradora__c,DSALES_Cobertura__c,dsalesFechaDeEmision__c,EffectiveDate,DSALES_Negocio__c,DSALES_Opcionpago__c,dsalesTipoServicio__c,dsalesTipoUso__c FROM Insurancepolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED];
+            Quote cotizacion =[SELECT Id,dsalesIdDeVehiculo__c,	dsalesCodigoDePromocion__c,DSALES_IDdelasociado__c,DSALES_RFC__c,dsalesFechaDeComienzoDePoliza__c,dsalesValorFactura__c FROM Quote WHERE Id=:poliza.SourceQuoteId WITH SECURITY_ENFORCED];
             QuoteLineItem seguro =[SELECT Id,dsalesQuoteId__c,	DSALES_TrackingID__c,dsalesOpcionPago__c FROM QuoteLineItem WHERE QuoteId=:cotizacion.Id AND DSALES_Tipodeproducto__c=:'Seguro' WITH SECURITY_ENFORCED LIMIT 1];
-            
+            poliza.dsalesEstatusPoliza__c='En tramite';
+            if(Insurancepolicy.SObjectType.getDescribe().isUpdateable()) {
+                update poliza;  
+            }else{
+                System.debug('Permisos insuficientes para actualizar');   
+            }
             for(DSALES_VentaSM.DatosParticipante p:venta.datosParticipantes){
-                if(!String.isEmpty(p.rfc)){
+               /* if(!String.isEmpty(p.rfc)){
                     p.rfc=cotizacion.DSALES_RFC__c;
-                }
+                }*/
                 if(p.figura==DSALES_Utility.FIGURA_CONDUCTOR){
                    datosConductor.nombre=p.nombre;
                     datosConductor.apellidoPaterno=p.apellidoPaterno;
@@ -242,14 +267,14 @@ global without sharing class DSALES_VentaSMRest {
             datosSeguro.planPago='';
             datosSeguro.tarjetaPago='';
             datosSeguro.sumaAsegurada=0;
-            datosSeguro.valorfactura='false';
+            datosSeguro.valorfactura=String.valueOf(cotizacion.dsalesValorFactura__c);
             vehiculo.idVehiculo=cotizacion.dsalesIdDeVehiculo__c;
             vehiculo.modelo=poliza.DSALES_Modelo__c;
             vehiculo.numeroSerie=poliza.DSALES_Numeroserie__c;
             vehiculo.placas=poliza.DSALES_Placas__c;
-            vehiculo.sevicio=poliza.DSALES_Servicio__c;
+            vehiculo.sevicio=poliza.dsalesTipoServicio__c;
             vehiculo.tipo=poliza.DSALES_Tipovehiculo__c;
-            vehiculo.uso=poliza.DSALES_Uso__c;
+            vehiculo.uso=poliza.dsalesTipoUso__c;
             response.datosSeguro=datosSeguro;
             response.datosConductor=datosConductor;
             response.datosContratante=datosContratante;
@@ -257,6 +282,8 @@ global without sharing class DSALES_VentaSMRest {
             response.beneficiarioPreferente=String.valueOf(venta.beneficiarioPreferente);
             response.contratante=venta.contratante;
         }
+       
+       
         System.debug('response: '+response);
         return response;
     }
@@ -281,7 +308,7 @@ global without sharing class DSALES_VentaSMRest {
             contratante.codigoPostal = Integer.valueOf(item.BillingPostalCode);
             contratante.numeroInterior=String.valueOf(item.dsalesNumeroInterior__c);
             contratante.numeroExterior=String.valueOf(item.dsalesNumeroExterior__c);
-            contratante.codigoEstado=item.CP_BillingStateCode__c;
+            contratante.codigoEstado=item.BillingState;
             contratante.codigoColonia=String.valueOf(item.dsalesCodigoColonia__c); 
             contratante.segundoCorreoContratante=item.dsalesSegundoCorreo__c;
             contratante.nacionalidadSociedad=item.dsalesNacionalidadSociedad__c;
@@ -296,7 +323,7 @@ global without sharing class DSALES_VentaSMRest {
         return contratante;
     }
     public class WrapperDatosProductos {
-        public Id oliId { get; set; }
+        public Id idPartidaDeOportunidad { get; set; }
         public String nombreProducto { get; set; }
         public String sku {get;set;}
     }

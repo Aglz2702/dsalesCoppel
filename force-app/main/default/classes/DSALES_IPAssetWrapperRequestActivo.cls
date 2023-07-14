@@ -24,9 +24,13 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             String body = System.RestContext.request.requestBody.toString();
             if(String.isNotBlank(body)){
                 try{
-                    DSALES_IPAssetWrapper.IPAssetRequest policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
-                        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Oportunidad__c,DSALES_Cliente__c,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Poliza__r.Name FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal WITH SECURITY_ENFORCED];
-                       
+                    DSALES_IPAssetWrapper.IPAssetRequest policyAsset = new DSALES_IPAssetWrapper.IPAssetRequest();
+                    policyAsset.uso='';
+                    policyAsset.servicio='';
+                    System.debug('entrega  request: '+body);
+                    policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
+                    DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Oportunidad__c,DSALES_Cliente__c,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Poliza__r.Name FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal WITH SECURITY_ENFORCED];
+                    
                         insertarActivo(policyAsset);
                         productosSincronisados=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(pago.DSALES_Oportunidad__c);
                         Boolean emitir=condicionesParaEmitir(pago.DSALES_Poliza__c,productosSincronisados);
@@ -140,7 +144,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         Boolean seMandaEmitir=false;
         InsurancePolicyAsset activo =[SELECT Id,DSALES_emitir_poliza__c,InsurancePolicy.Name FROM InsurancePolicyAsset WHERE InsurancePolicyId=:idPoliza WITH SECURITY_ENFORCED LIMIT 1];
         for(DSALES_VentaSMRest.WrapperDatosProductos prod:listaIds){
-            idsPartidas.add(prod.oliId);
+            idsPartidas.add(prod.idPartidaDeOportunidad);
         }
         for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
                                 FROM OpportunityLineItem WHERE Id IN:idsPartidas AND Product2.DSales_Tipo_de_Producto__c=:'Seguro' WITH SECURITY_ENFORCED]){
@@ -164,9 +168,9 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         DSALES_VentaSM.DatosParaEmitir datos = new DSALES_VentaSM.DatosParaEmitir();
         DSALES_InformacionDePago__c pago= [SELECT Id,dsalesContratante__c FROM DSALES_InformacionDePago__c WHERE DSALES_Poliza__c=:polizaId  WITH SECURITY_ENFORCED LIMIT 1];
         Insurancepolicy poliza =[SELECT Id,DSALES_Modelo__c,dsalesQuoteId__c,DSALES_Uso__c,PlanType,DSALES_Tipovehiculo__c,DSALES_Servicio__c,DSALES_Placas__c,DSALES_Numeroserie__c,SourceQuoteId,
-                                DSALES_Aseguradora__c,DSALES_Cobertura__c,dsalesFechaDeEmision__c,EffectiveDate,DSALES_Negocio__c,DSALES_Opcionpago__c,dsalesBeneficiarioPreferente__c FROM Insurancepolicy WHERE Id=:polizaId WITH SECURITY_ENFORCED LIMIT 1];
+                                DSALES_Aseguradora__c,DSALES_Cobertura__c,dsalesEstatusPoliza__c,dsalesFechaDeEmision__c,EffectiveDate,DSALES_Negocio__c,DSALES_Opcionpago__c,dsalesBeneficiarioPreferente__c,dsalesTipoServicio__c,dsalesTipoUso__c FROM Insurancepolicy WHERE Id=:polizaId WITH SECURITY_ENFORCED LIMIT 1];
         System.debug('poliza en activo w:'+poliza);
-        Quote cotizacion =[SELECT Id,dsalesIdDeVehiculo__c,dsalesCodigoDePromocion__c,DSALES_IDdelasociado__c,DSALES_RFC__c,dsalesFechaDeComienzoDePoliza__c FROM Quote WHERE Id=:poliza.SourceQuoteId WITH SECURITY_ENFORCED LIMIT 1];
+        Quote cotizacion =[SELECT Id,dsalesIdDeVehiculo__c,dsalesCodigoDePromocion__c,DSALES_IDdelasociado__c,DSALES_RFC__c,dsalesFechaDeComienzoDePoliza__c,dsalesValorFactura__c FROM Quote WHERE Id=:poliza.SourceQuoteId WITH SECURITY_ENFORCED LIMIT 1];
          System.debug('cot en activo w:'+cotizacion);
         QuoteLineItem partida =[SELECT Id,dsalesQuoteId__c,Product2.Name,	DSALES_TrackingID__c,dsalesOpcionPago__c FROM QuoteLineItem WHERE QuoteId=:cotizacion.Id AND DSALES_Tipodeproducto__c=:'Seguro' WITH SECURITY_ENFORCED LIMIT 1];   
         QuoteLineItem moto =[SELECT Id,UnitPrice FROM QuoteLineItem WHERE QuoteId=:cotizacion.Id AND DSALES_Tipodeproducto__c=:'Producto' WITH SECURITY_ENFORCED LIMIT 1];   
@@ -175,6 +179,13 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         List<InsurancePolicyParticipant> participantesAgregados= [SELECT Id,PrimaryParticipantAccountId,RelatedParticipantAccountId,Role,dsalesNombre__c,dsalesPrimerApellido__c,dsalesSegundoApellido__c,dsalesNumeroTelefono__c,dsalesCorreoElectronico__c,dsalesGenero__c,
                                                                 dsalesFechaNacimiento__c,dsalesRfc__c,dsalesCodigoPostal__c,dsalesClaveEstado__c,dsalesCalle__c,dsalesNumeroExterior__c,InsurancePolicyId FROM InsurancePolicyParticipant 
                                                                 WHERE InsurancePolicyId=:polizaId WITH SECURITY_ENFORCED];
+        
+        poliza.dsalesEstatusPoliza__c='En tramite';
+        if(Insurancepolicy.SObjectType.getDescribe().isUpdateable()) {
+            update poliza;  
+        }else{
+            System.debug('Permisos insuficientes para actualizar');   
+        }
         if(participantesAgregados!=null){
             contratante=buscarContratante(participantesAgregados);
             conductor=buscarConductor(participantesAgregados);
@@ -182,11 +193,11 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         if(moto!=null){
             if(partida!=null && partida.Product2.Name!=Label.dsalesSeguro_RC){
                 seguro.sumaAsegurada=Integer.valueOf(moto.UnitPrice);
-                seguro.valorFactura='true';
+                seguro.valorFactura=String.valueOf(cotizacion.dsalesValorFactura__c);
             } 
             else{
                 seguro.sumaAsegurada=0;
-                seguro.valorFactura='true';
+                seguro.valorFactura=String.valueOf(cotizacion.dsalesValorFactura__c);
             }  
         }
         
@@ -206,9 +217,9 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         vehiculo.modelo=poliza.DSALES_Modelo__c;
         vehiculo.numeroSerie=poliza.DSALES_Numeroserie__c;
         vehiculo.placas=poliza.DSALES_Placas__c;
-        vehiculo.sevicio=poliza.DSALES_Servicio__c;
+        vehiculo.sevicio=poliza.dsalesTipoServicio__c;
         vehiculo.tipo = poliza.DSALES_Tipovehiculo__c;
-        vehiculo.uso=poliza.DSALES_Uso__c;
+        vehiculo.uso=poliza.dsalesTipoUso__c;
 
         datos.datosSeguro=seguro;
         datos.datosVehiculo=vehiculo;
@@ -257,7 +268,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
             datosContratante.codigoPostal =Integer.valueOf(contratante.BillingPostalCode);
             datosContratante.numeroInterior= String.valueOf(contratante.dsalesNumeroInterior__c);
             datosContratante.numeroExterior =String.valueOf(contratante.dsalesNumeroExterior__c);
-            datosContratante.codigoEstado =String.valueOf(contratante.dsalesCodigoEstado__c); 
+            datosContratante.codigoEstado =contratante.BillingState;
             datosContratante.codigoColonia=String.valueOf(contratante.dsalesCodigoColonia__c);
             datosContratante.segundoCorreoContratante=contratante.dsalesSegundoCorreo__c;
             datosContratante.nacionalidadSociedad=contratante.dsalesNacionalidadSociedad__c;

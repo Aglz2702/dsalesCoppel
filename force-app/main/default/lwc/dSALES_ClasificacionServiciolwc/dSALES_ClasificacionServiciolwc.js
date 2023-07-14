@@ -14,6 +14,7 @@ import getPickListTipoProducto from '@salesforce/apex/DSALES_ClasificacionServic
 import getPickListTipoServicio from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList2';
 import getPickListTipoSeguro from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList4';
 import getPickListMatriz from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList3';
+import getPickListPago from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList5';
 import getMatrices from '@salesforce/apex/DSALES_ClasificacionServicio.getMatriz';
 import getBuscarVinculacion from '@salesforce/apex/DSALES_ClasificacionServicio.getBuscarVinculacion';
 import createProductIntan from '@salesforce/apex/DSALES_ClasificacionServicio.createProductIntan';
@@ -36,6 +37,11 @@ import getserviciosubcategorias from '@salesforce/apex/DSALES_ClasificacionServi
 import getservicioclase from '@salesforce/apex/DSALES_ClasificacionServicio.getservicioclase';
 import getserviciofamilia from '@salesforce/apex/DSALES_ClasificacionServicio.getserviciofamilia';
 import getserviciosku from '@salesforce/apex/DSALES_ClasificacionServicio.getserviciosku';
+import getPicklistOptionsDependent from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.getPicklistOptionsDependent';
+import getPickListRegiones from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.getPickListRegiones';
+import vinculacionTiendaSeguro from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.vinculacionTiendaSeguro';
+import getPickListTiendasSeguro from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.getPickListTiendasSeguro';
+import SystemModstamp from '@salesforce/schema/Account.SystemModstamp';
 
 
 
@@ -47,6 +53,7 @@ const columns = [
 
 export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     @track data = {};
+    @track dataSeguros = {};
     @track pickList = {};
     @track asignacion = {};
     @track label = {};
@@ -58,6 +65,10 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     checkSkus = false;
     checkClase = false;
     checkFamilia = false;
+    checkRegion = false;
+    checkCiudad = false;
+    checkTienda = false;
+    listTiendasActivas=[];
     showSpinner = true;
     popServicios = false;
     show = false;
@@ -80,9 +91,12 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     openTableVincProduct = false;
     showConfirmarDesvincular = false
     showConfirmarVincular = false;
+    openFormAsignarTiendas=false;
     ValueCategoriaSelected = '';
     ValueSubCategoriaSelected = '';
     resultPerfil = false;
+    vincular=true;
+    desvincular=false;
     campanasSelected = [];
     tiposUsoSelected = [];
     listaClaseFamilia= [];
@@ -218,13 +232,11 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
 
     cargarPickList() {
-        this.showSpinner = true;
         SendCat({ allData: JSON.stringify(this.data) })
             .then(result => {
                 this.data = result;
-                this.showSpinner = false;
             }).catch(error => {
-                this.showSpinner = false;
+               console.log(error);
             });
     }
 
@@ -480,8 +492,11 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.pickList.StockKeepingUnit = '';
         this.pickList.valueSelectedtipoSeguroServicio = '';
         this.pickList.matrizSelected = '';
+        this.pickList.dsalesOpcionPago__c= '';
         this.pickList.DSales_Aplicaporcentajecobro__c = false;
         this.showPorcentajeCobro = false;
+        this.aplicaMotoEx=false;
+        this.pickList.DSALES_Aplicaparamotoexterna__c=false;
         this.checkSku = false;
         this.checkSkus = false;
         this.pickList.listMatrices = '';
@@ -732,22 +747,31 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     asignarCategoria(event) {
         this.showSpinner = true;
         this.pickList.valueSelectedtipoSeguroServicio = event.target.value;
+        console.log(this.pickList.DSALES_ServEspecifico__c+this.pickList.DSALES_SegEspecifico__c);
         recordTypeId({ tipoRegistro: this.pickList.valueSelectedtipoSeguroServicio })
             .then(result => {
                 this.pickList.RecordTypeId = result;
                 if (this.pickList.valueSelectedtipoSeguroServicio == 'Garantía Extendida') {
                     this.pickList.DSALES_ServEspecifico__c = event.target.value;
+                    this.pickList.recordTypeSeguroServicio= 'Servicios';
                 }
                 else if (this.pickList.valueSelectedtipoSeguroServicio == 'Seguro de Motos') {
                     this.pickList.DSALES_SegEspecifico__c = event.target.value;
+                    this.pickList.recordTypeSeguroServicio= 'Seguro de Motos';
+                    getPickListPago()
+                    .then(result7 => {
+                        this.pickList.listOpcionesPago = result7;
+                    });
                 }
+                getCategories({ recordName: this.pickList.recordTypeSeguroServicio })
+                .then(result2 => {
+                    this.pickList.listCategorias = result2;
+                    this.showSpinner = false;
+                });
             });
-
-        getCategories({ recordName: this.pickList.valueSelectedtipoSeguroServicio })
-            .then(result => {
-                this.pickList.listCategorias = result;
-                this.showSpinner = false;
-            });
+            console.log(this.pickList.recordTypeSeguroServicio);
+            console.log(this.pickList.DSALES_ServEspecifico__c+this.pickList.DSALES_SegEspecifico__c);
+       
     }
     asignarSubCategorias(event) {
         this.ValueCategoriaSelected = event.target.value;
@@ -875,6 +899,17 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
 
     }
 
+    motoExternaSelected(event){
+        const checkpc = event.target.checked;
+        this.pickList.aplicaMotoEx=checkpc;
+        this.pickList.DSALES_Aplicaparamotoexterna__c=checkpc;
+    }
+
+    opcionpagoselected(event){
+        this.pickList.dsalesOpcionPago__c= event.target.value;
+        console.log(JSON.parse(JSON.stringify(this.pickList.dsalesOpcionPago__c)));
+    }
+
     onChangePorcentajeCobro(event) {
         this.data.DSALES_Anios__c = 1;
         this.matrizPorcentaje.anio1 = event.target.value;
@@ -963,6 +998,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
 
 
     confirmarGuardar() {
+        console.log('hola');
+        console.log(this.pickList.valueSelectedtipoSeguroServicio);
         if (this.pickList.valueSelectedtipoProducto == 'Servicio') {
             this.camposVacios();
             this.data.confirmarGuardar = false;
@@ -1014,6 +1051,16 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
 
     guardarProductIntan() {
+        console.log('hola');
+        if(this.pickList.valueSelectedtipoProducto=='Servicio')
+        {
+            this.pickList.DSALES_ServEspecifico__c=this.pickList.valueSelectedtipoSeguroServicio;
+        }
+        else{
+            this.pickList.DSALES_SegEspecifico__c=this.pickList.valueSelectedtipoSeguroServicio;
+        }
+        console.log( this.pickList.dsalesOpcionPago__c);
+        console.log(this.pickList.DSALES_ServEspecifico__c);   
         createProductIntan({ productIntan: this.pickList, sku: this.pickList.StockKeepingUnit }
         ).then(result => {
             this.message = result.message;
@@ -1032,7 +1079,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                         this.data.idservicio = result2;
                         this.showSpinner = false;
                         if (this.showPorcentajeCobro === false) {
-                            updateMatriz({ allData: JSON.stringify(this.pickList.matrizSelected), typeServicio: result })
+                            updateMatriz({ allData: JSON.stringify(this.pickList.matrizSelected), typeServicio: result2 })
                                 .then(result3 => {
                                     console.log(result3);
                                 }).catch(error => {
@@ -1041,7 +1088,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                                 });
                         }
                         else {
-                            insertPocentajeCobro({ idservicio: result, jsonp: JSON.stringify(this.matrizPorcentaje) })
+                            insertPocentajeCobro({ idservicio: result2, jsonp: JSON.stringify(this.matrizPorcentaje) })
                                 .then(result4 => {
                                     console.log(result4);
                                 }).catch(error => {
@@ -1054,22 +1101,23 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                         this.showSpinner = false;
                     });
 
-                getidservicio({ sku: this.pickList.StockKeepingUnit })
-                    .then(result11 => {
-                        this.data.idservicio = result11;
-                        this.showSpinner = false;
-                        insertListaPrecios({ idproductoservicio: result, opcion: '1', json2: JSON.stringify(this.data.listServicios) })
-                            .then(result22 => {
-                                console.log(result22);
-                            }).catch(error => {
-                                console.log(error);
-                            });
-
+                
+            }
+            getidservicio({ sku: this.pickList.StockKeepingUnit })
+            .then(result11 => {
+                this.data.idservicio = result11;
+                this.showSpinner = false;
+                insertListaPrecios({ idproductoservicio: result11, opcion: '1', json2: JSON.stringify(this.data.listServicios) })
+                    .then(result22 => {
+                        console.log(result22);
                     }).catch(error => {
                         console.log(error);
-                        this.showSpinner = false;
                     });
-            }
+
+            }).catch(error => {
+                console.log(error);
+                this.showSpinner = false;
+            });
 
         })
             .catch(error => {
@@ -1083,7 +1131,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
 
     guardarAsignacion() {
-
+        console.log(JSON.parse(JSON.stringify(this.data.listaproductos)));
+        console.log('id: ' +this.data.idservicio )
         insertVinculacion({ dataJSON: JSON.stringify(this.data.listaproductos), idservicio: this.data.idservicio })
             .then(result => {
                 console.log(result);
@@ -1097,6 +1146,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.showConfirmarVincular = false;
         this.openTableVincProduct = false;
     }
+
     onClickBuscarIntanProduct() {
         this.limpiarCampos();
         this.showSpinner = true;
@@ -1488,7 +1538,10 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.openTableVincProduct = false;
         this.limpiarCampos();
     }
-
+    cancelar31(){
+        this.openFormAsignarTiendas=false;
+        this.limpiarcamposTiendaSeguro();
+    }
     openEmergenteDesvincular() {
         for (const element of this.data.listasignacion) {
             if (element.seleccionadoSku === true) {
@@ -1684,4 +1737,179 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         }
       }
 
+      openAsignarTiendas(){
+        this.openFormAsignarTiendas=true;
+        getPickListRegiones()
+        .then(result => {
+          console.log(this.recordId);
+            this.dataSeguros = result;
+            this.showSpinner = false;
+
+        })
+        .catch(error => {
+            this.showSpinner = false;
+            console.log(error);
+        });      
+        this.getListTiendas();        
+        this.checkRegion = false;
+        this.checkCiudad = false;
+        this.checkTienda = false;
+      }
+
+      selectAllRegion(event) {
+        const check = event.target.checked;
+        for (const element of this.dataSeguros.listRegiones) {
+            element.seleccionado = check;
+        }
+        this.checkRegion = check;
+        this.mostrarCiudades();
+      }
+    
+      selectAllCiudad(event) {
+        const check = event.target.checked;
+        for (const element of this.dataSeguros.listCiudades) {
+            element.seleccionado = check;
+        }
+        this.checkCiudad = check;
+        this.mostrarTienda();
+    }
+    
+    selectAllTienda(event) {
+      const check = event.target.checked;
+    
+      for (const element of this.dataSeguros.listTiendas) {
+          element.seleccionado = check;
+      }
+      this.checkTienda = check;
+      console.log(JSON.parse(JSON.stringify(this.dataSeguros.listTiendas)));
+    }
+    
+      mostrarCiudades() {
+        this.cargarPickList();
+      }
+    
+      mostrarTienda() {
+        this.cargarPickList();
+    }
+    
+      cargarPickList() {
+        this.showSpinner = true;
+        getPicklistOptionsDependent({ allData: JSON.stringify(this.dataSeguros) })
+            .then(result => {
+                this.dataSeguros = result;
+                this.showSpinner = false;
+            }).catch(error => {
+                this.showSpinner = false;
+            });
+      }
+    
+      onclickRegion(event) {
+        let x = false;
+        const valor = event.target.name;
+        const check = event.target.checked;
+        for (const element of this.dataSeguros.listRegiones) {
+            if (valor == element.valor) {
+                element.seleccionado = check;
+            }
+            if (element.seleccionado) {
+                x = true;
+            }
+        }
+        if (x === false) {
+            this.checkRegion = false;
+        }
+        this.mostrarCiudades();
+    }
+    
+    onclickCiudad(event) {
+      let x = false;
+      const valor = event.target.name;
+      const check = event.target.checked;
+      for (const element of this.dataSeguros.listCiudades) {
+          if (valor == element.valor) {
+              element.seleccionado = check;
+          }
+          if (element.seleccionado) {
+              x = true;
+          }
+      }
+      if (x === false) {
+          this.checkCiudad = false;
+      }
+      this.mostrarTienda();
+    }
+    
+    onclicklistTiendas(event) {
+      let x = false;
+      const valor = event.target.name;
+      const check = event.target.checked;
+      for (const element of this.dataSeguros.listTiendas) {
+          if (valor == element.valor) {
+              element.seleccionado = check;
+          }
+          if (element.seleccionado) {
+              x = true;
+          }
+      }
+      if (x === false) {
+          this.checkTienda = false;
+      }
+    }
+    
+    getListTiendas(){
+      getPickListTiendasSeguro({idSeguros:  this.buscarServicio})
+      .then(result => {
+          this.listTiendasActivas = result;
+          this.showSpinner = false;
+      })
+      .catch(error => {
+          this.showSpinner = false;
+          console.log(error);
+      });
+    }
+    
+    
+    guardarAsignacionVinculacion(){
+        console.log(this.buscarServicio);
+        vinculacionTiendaSeguro({ dataJsonTienda: JSON.stringify(this.dataSeguros.listTiendas), idSeguros: this.buscarServicio, vincular: this.vincular})
+                .then(result => {
+                    console.log(result);
+                    this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
+                    this.getListTiendas();
+                }).catch(error => {
+                    console.log(error);
+                    this.showSpinner = false;
+                    this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
+                });
+        }
+    
+     
+    opcionVincular(event){
+        this.vincular=event.target.checked;
+        if(this.vincular){
+            this.desvincular=false;
+        }
+        else{
+            this.desvincular=true;
+        }
+    }
+    
+    opcionDesvincular(event){
+      this.desvincular=event.target.checked;;
+      if(this.desvincular)
+      {
+        this.vincular=false;
+      }
+      else{
+        this.vincular=true;
+      }
+     
+    }
+    
+    limpiarcamposTiendaSeguro(){
+        this.dataSeguros.listTiendas=[];
+        this.dataSeguros.listCiudades=[];
+        this.dataSeguros.listRegiones=[];
+
+    }
 }
