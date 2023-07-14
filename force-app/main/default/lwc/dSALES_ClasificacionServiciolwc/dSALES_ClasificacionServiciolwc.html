@@ -110,6 +110,14 @@
                                         onchange={handleInputChangeDescription} class="slds-m-bottom_x-small"
                                         placeholder="Escribe aquí">
                                     </lightning-textarea>
+                                    <div if:false={data.showServicio}>
+                                        <lightning-input class="lgc-bg " type="checkbox" onchange={motoExternaSelected}
+                                            value={pickList.aplicaMotoEx} label="Aplica para moto externa"
+                                            name="input3" checked={checkpc}>
+                                        </lightning-input>
+                                    </div>
+                                   
+
                                     <template if:true={data.showServicio}>
                                         <lightning-input class="lgc-bg " type="checkbox" onchange={openPorcentajeCobro}
                                             value={pickList.aplicaCobro} label="Aplica porcentaje de cobro"
@@ -204,6 +212,15 @@
                                         options={pickList.listMatrices} onchange={onchangeValueMatriz}>
                                     </lightning-dual-listbox>
                                 </template>
+
+                                <template if:false={data.showServicio}>
+                                    <lightning-dual-listbox if:false={showPorcentajeCobro} name="Pago"
+                                        label="Opcion de pago:" source-label="Disponible"
+                                        selected-label="Seleccionado"
+                                        options={pickList.listOpcionesPago} onchange={opcionpagoselected}>
+                                    </lightning-dual-listbox>
+                                </template>
+
                             </div>
                         </div>
                     </div>
