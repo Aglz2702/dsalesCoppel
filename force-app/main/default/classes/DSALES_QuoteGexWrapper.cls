@@ -19,8 +19,6 @@ global class DSALES_QuoteGexWrapper {
         global String modelo {get; set;}
         global String marca {get; set;}
         global Double precioTangible {get; set;}
-        //global Integer idSecuencia {get; set;}
-        //global List<Integer> idSecuencia{get;set;}
     }
     global class QuoteGexResponse{
         global String	skuDeTangible	{get;set;}
@@ -35,7 +33,7 @@ global class DSALES_QuoteGexWrapper {
     }
 
     global class RespuestaNPV{        
-        global Boolean 	success {get;set;}
+        global Boolean 	exito {get;set;}
         global String	idCotizacion	{get;set;}
         global String	idOportunidad	{get;set;}
         global String	iduVenta	{get;set;}

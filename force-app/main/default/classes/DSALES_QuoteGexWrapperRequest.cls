@@ -20,7 +20,13 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             if(String.isNotBlank(body)){
                 try{
                     DSALES_QuoteGexWrapper.QuoteGexRequest data = (DSALES_QuoteGexWrapper.QuoteGexRequest)JSON.deserialize(body, DSALES_QuoteGexWrapper.QuoteGexRequest.class); 
+                    system.debug('Datos recibidos:___'+data);
+                    for(DSALES_QuoteGexWrapper.Product p : data.productos){
+                        mapProducts.put(p.skuDeTangible, p);
+                    }
+                    system.debug('Data.idTienda: '+data.idTienda);
                     Account universalAccount = [Select Id,DSALES_ClienteCoppel__c from Account WHERE DSALES_ClienteCoppel__c = :DSALES_Utility.NUMERO_CLIENTE_GENERICO WITH SECURITY_ENFORCED LIMIT 1];
+                   
                     Tienda__c tienda = [Select Id from Tienda__c WHERE DSales_TiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
                     
                     Id clienteId=null;
@@ -102,11 +108,11 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 }catch(JSONException e){
                     success = false;
                     code = String.valueOf(DSALES_Utility.BAD_REQUEST_CODE);
-                    message = DSALES_Utility.BAD_REQUEST_MSJ;
+                    message = DSALES_Utility.BAD_REQUEST_MSJ+ ' ' +e.getMessage() + ' '+e.getLineNumber() + ' '+ e.getCause();
                 }catch(Exception e){
                     success = false;
                     code = String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
-                    message = DSALES_Utility.INTERNAL_ERROR_MSJ + ' ' +e.getMessage() + ' '+e.getLineNumber() + ' '+ e.getCause();
+                    message = DSALES_Utility.INTERNAL_ERROR_MSJ + ' ' +e.getMessage() + ' Linea: '+e.getLineNumber() + ' '+ e.getCause();
                 }
             }
         }
@@ -114,7 +120,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         respuestaNpvList.idCotizacion = cotiza.Id;
         respuestaNpvList.idOportunidad = cotiza.OpportunityId;
         respuestaNpvList.iduVenta = oppor.dsalesIduVenta__c;
-        respuestaNpvList.success = success;
+        respuestaNpvList.exito = success;
         respuestaNpvList.codigoError = code;
         respuestaNpvList.mensaje = message;
         respuestaNpvList.respuesta =  new List<DSALES_QuoteGexWrapper.QuoteGexResponse>();
@@ -131,17 +137,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             }
         }
         if(consultaRespuesta.isEmpty() && consultaRespuestaGEX.isEmpty()){
-            DSALES_QuoteGexWrapper.QuoteGexResponse responsePayloadError = new DSALES_QuoteGexWrapper.QuoteGexResponse();
-            responsePayloadError.nombreIntangible = null;
-            responsePayloadError.precio = null;
-            responsePayloadError.costoTotal = null;
-            responsePayloadError.skuDeTangible = null;
-            responsePayloadError.skuDePrecio = null;
-            responsePayloadError.skuDeServicio = null;
-            respuestaNpvList.success = false;
+            respuestaNpvList.exito = false;
             respuestaNpvList.codigoError = code;
             respuestaNpvList.mensaje = message;
-            respuestaNpvList.respuesta.add(responsePayloadError);
             return respuestaNpvList;
         }else{
             for (QuoteLineItem quoteLineItem : listaPartida) {
@@ -284,8 +282,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         List<PricebookEntry> precioEn = [SELECT Id,UnitPrice,Name,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: produc and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
         List<PricebookEntry> precioEnGEX = [SELECT Id,Name,UnitPrice,Product2Id,Pricebook2Id,Product2.StockKeepingUnit,Product2.DSales_Tipo_de_Producto__c,Product2.DSales_PorcentajeCobro__c,Product2.DSales_Aplicaporcentajecobro__c FROM PricebookEntry WHERE Product2Id =: dsalesProductoSetId and Pricebook2Id=: precioLista WITH SECURITY_ENFORCED];
         for(PricebookEntry item : precioEn){
-            //QuoteLineItem partidapre = new QuoteLineItem();
-            
             DSALES_QuoteGexWrapper.Product p =  mapProducts.get(item.Product2.StockKeepingUnit);
             for (Integer i = 0; i < p.cantidadProductosTangibles; i++) {
                 QuoteLineItem partidapre = new QuoteLineItem();
@@ -315,16 +311,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             }
             for(PricebookEntry item2 : precioEnGEX){
                 if(item2.Product2Id == intangibleId){
-                    //for (Integer idSecuencia : p.idSecuencia) {
-                    //for (Integer i = 0; i < p.cantidadProductosTangibles; i++) {
-                        
                     QuoteLineItem partidapreGEX = new QuoteLineItem();
                     Double price1=0;
                     Double price2=0;
-                    Double price3=0;
-                    Double price4=0;
-                    Double price5=0;
-                    Double price6=0;
                     
                     if(item2.Product2.DSales_Aplicaporcentajecobro__c==true){
                         List<DASALES_Porcentajedecobro__c> porcent = obtenerPorcentajeCobro(intangibleId);
@@ -337,18 +326,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                 }
                                 when 2{
                                 price2 = price;
-                                }
-                                when 3{
-                                price3 = price;
-                                }
-                                when 4{
-                                price4 = price;
-                                }
-                                when 5{
-                                price5 = price;
-                                }
-                                when 6{
-                                price6 = price;
                                 }
                             }
                         }
@@ -364,26 +341,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                 when '2 años'{
                                     if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
                                         price2 = mPrice.SALES_Precio_GEX__c;
-                                    }
-                                }
-                                when '3 años'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price3 = mPrice.SALES_Precio_GEX__c;
-                                    }
-                                }
-                                when '4 años'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price4 = mPrice.SALES_Precio_GEX__c;
-                                    }
-                                }
-                                when '5 años'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price5 = mPrice.SALES_Precio_GEX__c;
-                                    }
-                                }
-                                when '6 años'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price6 = mPrice.SALES_Precio_GEX__c;
                                     }
                                 }
                             }
@@ -419,7 +376,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     
                 }
                 }
-                //}
             }
         }
         
@@ -470,17 +426,10 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 }
             }
             for(PricebookEntry item2 : precioEnGEX){
-                if(item2.Product2Id == intangibleId){
-                    //for (Integer idSecuencia : p.idSecuencia) {
-                    //for (Integer i = 0; i < p.cantidadProductosTangibles; i++) {
-                        
+                if(item2.Product2Id == intangibleId){ 
                     QuoteLineItem partidapreGEX = new QuoteLineItem();
                     Double price1=0;
                     Double price2=0;
-                    Double price3=0;
-                    Double price4=0;
-                    Double price5=0;
-                    Double price6=0;
                     
                     if(item2.Product2.DSales_Aplicaporcentajecobro__c==true){
                         List<DASALES_Porcentajedecobro__c> porcent = obtenerPorcentajeCobro(intangibleId);
@@ -493,18 +442,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                 }
                                 when 2{
                                 price2 = price;
-                                }
-                                when 3{
-                                price3 = price;
-                                }
-                                when 4{
-                                price4 = price;
-                                }
-                                when 5{
-                                price5 = price;
-                                }
-                                when 6{
-                                price6 = price;
                                 }
                             }
                         }
@@ -520,26 +457,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                 when '2 años'{
                                     if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
                                         price2 = mPrice.SALES_Precio_GEX__c;
-                                    }
-                                }
-                                when '3 años'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price3 = mPrice.SALES_Precio_GEX__c;
-                                    }
-                                }
-                                when '4 años'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price4 = mPrice.SALES_Precio_GEX__c;
-                                    }
-                                }
-                                when '5 años'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price5 = mPrice.SALES_Precio_GEX__c;
-                                    }
-                                }
-                                when '6 años'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price6 = mPrice.SALES_Precio_GEX__c;
                                     }
                                 }
                             }
@@ -575,7 +492,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     
                 }
                 }
-                //}
             }
         }
         
