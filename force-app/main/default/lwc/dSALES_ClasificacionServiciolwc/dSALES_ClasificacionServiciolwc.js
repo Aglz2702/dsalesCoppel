@@ -14,6 +14,7 @@ import getPickListTipoProducto from '@salesforce/apex/DSALES_ClasificacionServic
 import getPickListTipoServicio from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList2';
 import getPickListTipoSeguro from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList4';
 import getPickListMatriz from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList3';
+import getPickListPago from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList5';
 import getMatrices from '@salesforce/apex/DSALES_ClasificacionServicio.getMatriz';
 import getBuscarVinculacion from '@salesforce/apex/DSALES_ClasificacionServicio.getBuscarVinculacion';
 import createProductIntan from '@salesforce/apex/DSALES_ClasificacionServicio.createProductIntan';
@@ -491,8 +492,11 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.pickList.StockKeepingUnit = '';
         this.pickList.valueSelectedtipoSeguroServicio = '';
         this.pickList.matrizSelected = '';
+        this.pickList.dsalesOpcionPago__c= '';
         this.pickList.DSales_Aplicaporcentajecobro__c = false;
         this.showPorcentajeCobro = false;
+        this.aplicaMotoEx=false;
+        this.pickList.DSALES_Aplicaparamotoexterna__c=false;
         this.checkSku = false;
         this.checkSkus = false;
         this.pickList.listMatrices = '';
@@ -754,10 +758,14 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                 else if (this.pickList.valueSelectedtipoSeguroServicio == 'Seguro de Motos') {
                     this.pickList.DSALES_SegEspecifico__c = event.target.value;
                     this.pickList.recordTypeSeguroServicio= 'Seguro de Motos';
+                    getPickListPago()
+                    .then(result7 => {
+                        this.pickList.listOpcionesPago = result7;
+                    });
                 }
                 getCategories({ recordName: this.pickList.recordTypeSeguroServicio })
-                .then(result => {
-                    this.pickList.listCategorias = result;
+                .then(result2 => {
+                    this.pickList.listCategorias = result2;
                     this.showSpinner = false;
                 });
             });
@@ -889,6 +897,17 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         }
         this.pickList.aplicaCobro = checkpc;
 
+    }
+
+    motoExternaSelected(event){
+        const checkpc = event.target.checked;
+        this.pickList.aplicaMotoEx=checkpc;
+        this.pickList.DSALES_Aplicaparamotoexterna__c=checkpc;
+    }
+
+    opcionpagoselected(event){
+        this.pickList.dsalesOpcionPago__c= event.target.value;
+        console.log(JSON.parse(JSON.stringify(this.pickList.dsalesOpcionPago__c)));
     }
 
     onChangePorcentajeCobro(event) {
@@ -1040,6 +1059,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         else{
             this.pickList.DSALES_SegEspecifico__c=this.pickList.valueSelectedtipoSeguroServicio;
         }
+        console.log( this.pickList.dsalesOpcionPago__c);
         console.log(this.pickList.DSALES_ServEspecifico__c);   
         createProductIntan({ productIntan: this.pickList, sku: this.pickList.StockKeepingUnit }
         ).then(result => {
