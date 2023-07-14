@@ -21,7 +21,6 @@ global with sharing class DSALES_CancelacionProductosRequest {
                 List<DSALES_CancelacionProductosWrapper.listaProducto> listaProductos = datos.ListaProductos;
                 DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId FROM DSALES_InformacionDePago__c WHERE 	DSALES_IDUniversal1__c=:datos.idUniversal WITH SECURITY_ENFORCED LIMIT 1];
                 idCancelacion=escenariosCancelacion(pago, datos, listaProductos);
-                System.debug('id cancelacion:'+idCancelacion);
                 if(idCancelacion!=''){
                     response.mensaje='Cancelacion Exitosa!';
                     response.idCancelacion=idCancelacion;

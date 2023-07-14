@@ -184,7 +184,28 @@ public class DSALES_CancelacionProductosRequest_Test {
         update poliza;
         
     }
-   
+    @isTest static void cancelacionCompletaMotos(){
+	RestRequest request=new RestRequest();
+       	RestResponse response = new RestResponse();
+        DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Nombre_del_cliente__c FROM DSALES_InformacionDePago__c WHERE DSALES_Seguro__c=true];
+       	Product2 prod=[SELECT Id, Name, DSales_Tipo_de_Producto__c FROM Product2 WHERE Name='Moto Vento'];
+        List<OpportunityLineItem> productosSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem  WHERE Product2.Name=:'Moto Vento'];
+       	OpportunityLineItem prodSincro =[SELECT Id,Name,DSALES_Estatus__c FROM OpportunityLineItem WHERE Product2.Name='AMP'];
+        productosSincro.add(prodSincro);
+        String bodyJson='{"canal":".EXE","fechaCancelacion":"2023-03-22","folioCancelacion":"12876","idUniversal":"'+pago.DSALES_IDUniversal1__c+'","idTienda":"1","numeroCliente":"","nombreVendedor":"Luis Perez Sanchez","numeroVendedor":"1234","estatus":"Cancelado","motivoCancelacion":"A petición del cliente","ListaProductos":[],"ListaReembolso":[{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"MOTO","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005},{"comentarios":"El cliente decidió cancelar el producto","fechaReembolso":"2023-02-24","nombreProducto":"AMP","metodoPago":"Efectivo","numeroReferencia":"1123456621","cantidadReembolsada":15005}]}';
+        request.requestURI='/apexrest/cancelacionProductos/*'; 
+        request.httpMethod='POST'; 
+        RestContext.request=request;
+        request.requestBody=Blob.valueOf(bodyJson);
+        RestContext.response=response;
+        DSALES_CancelacionProductosWrapper.request requestCancelar =(DSALES_CancelacionProductosWrapper.request)JSON.deserialize (bodyJson,DSALES_CancelacionProductosWrapper.request.class);
+        RestContext.request = request;
+        RestContext.response= response;
+        Test.startTest();
+        DSALES_CancelacionProductosRequest.servicioCancelar();
+        Test.stopTest();
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');        
+    }
     @isTest
     public static void cancelacionMotoySeguro(){
         RestRequest request=new RestRequest();

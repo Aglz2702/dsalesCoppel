@@ -14,11 +14,19 @@ global with sharing class DSALES_NuevaPoliza {
             if(String.isNotBlank(body)){
                 try{
                     DSALES_PolizaWrapper.Request poliza = (DSALES_PolizaWrapper.Request)JSON.deserialize(body, DSALES_PolizaWrapper.Request.class);
-                    InsurancePolicy polizaA = [SELECT Id,SourceQuoteId,dsalesQuoteId__c,SourceOpportunityId FROM InsurancePolicy WHERE dsalesQuoteId__c=:poliza.quote WITH SECURITY_ENFORCED LIMIT 1];
-                    listaIds=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(polizaA.SourceOpportunityId);
+                    System.debug('quote:'+ poliza.quote);
+                    if(!String.isEmpty(poliza.quote)){
+                        InsurancePolicy polizaA = [SELECT Id,SourceQuoteId,dsalesQuoteId__c,SourceOpportunityId FROM InsurancePolicy WHERE dsalesQuoteId__c=:poliza.quote WITH SECURITY_ENFORCED LIMIT 1];
+                        listaIds=DSALES_VentaSMRest.obtenerProductosEnPartidasOportunidad(polizaA.SourceOpportunityId);
+                        
+                        idPoliza=service(poliza,polizaA.Id);    
+                        exito=true;
+                    }else {
+                        exito=false;
+                        mensajeError='Identificador "quote" no encontrado';
+                        codigoError=401;
+                    }
                     
-                    idPoliza=service(poliza,polizaA.Id);    
-                    exito=true;
                 }catch(Exception.JSONException e){
                     exito = false;
                     mensajeError= DSALES_Utility.BAD_REQUEST_MSJ;

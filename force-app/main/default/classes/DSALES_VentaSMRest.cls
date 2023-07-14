@@ -26,7 +26,7 @@ global without sharing class DSALES_VentaSMRest {
             if(String.isNotBlank(body)){
                 try{
                     DSALES_VentaSM.VentaSMRequest venta = (DSALES_VentaSM.VentaSMRequest)JSON.deserialize(body, DSALES_VentaSM.VentaSMRequest.class);
-                    System.debug('venta request: '+venta);
+                    System.debug('venta request: '+body);
                     String idUnico=venta.pagos.idUniversal;
                     List<DSALES_InformacionDePago__c> verificaIdUniversal =[SELECT Id,DSALES_IDUniversal1__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c =: idUnico WITH SECURITY_ENFORCED LIMIT 1];
                     System.debug('in universal recibido: '+ verificaIdUniversal);
@@ -135,7 +135,7 @@ global without sharing class DSALES_VentaSMRest {
         }
         for(OpportunityLineItem oli : oliLista) {
             WrapperDatosProductos productoWrapper = new WrapperDatosProductos();
-            productoWrapper.oliId = oli.Id;
+            productoWrapper.idPartidaDeOportunidad = oli.Id;
             productoWrapper.nombreProducto = mapaNombresProductos.get(oli.Product2Id);
             productoWrapper.sku=mapaSkuProductos.get(oli.Product2Id);
             listaWrapperProducto.add(productoWrapper);
@@ -145,6 +145,7 @@ global without sharing class DSALES_VentaSMRest {
     }
 
     public static String crearCliente(List<DSALES_VentaSM.DatosParticipante> participantes){
+        system.debug('data de participantes______'+participantes);
         DSALES_VentaSM.DatosParticipante participante = new DSALES_VentaSM.DatosParticipante();
         DSALES_AccountWrapper.AccountRequest cliente= new DSALES_AccountWrapper.AccountRequest();
         for(DSALES_VentaSM.DatosParticipante item: participantes){
@@ -157,6 +158,8 @@ global without sharing class DSALES_VentaSMRest {
                 participante.telefono = item.telefono;
                 participante.correoElectronico = item.correoElectronico;
                 participante.genero = item.genero;
+                System.debug('Genero asignado:'+item.genero);
+                System.debug('Genero en data:'+participante.genero);
                 participante.fechaNacimiento = item.fechaNacimiento;
                 participante.calle = item.calle;
                 participante.codigoCiudad =  item.codigoCiudad;
@@ -164,6 +167,7 @@ global without sharing class DSALES_VentaSMRest {
                 participante.numeroInterior=item.numeroInterior;
                 participante.numeroExterior=item.numeroExterior;
                 participante.codigoEstado=item.codigoEstado; //clave de estado en SM
+                System.debug('codigo Estado:'+participante.codigoEstado);
                 participante.codigoColonia=item.codigoColonia; //clave colonia SM
                 participante.rfc=item.rfc;
             }
@@ -175,14 +179,15 @@ global without sharing class DSALES_VentaSMRest {
         cliente.telefono=participante.telefono;
         cliente.correoElectronico =participante.correoElectronico;
         cliente.genero=participante.genero;
+        system.debug('genero ');
         cliente.fechaNacimiento=participante.fechaNacimiento;
-        cliente.domicilio=participante.calle;
+        cliente.calle=participante.calle;
         cliente.nombreCiudad=participante.codigoCiudad;
         cliente.codigoPostal=String.valueOf(participante.codigoPostal);
         cliente.numeroInterior=participante.numeroInterior;
         cliente.numeroExterior =participante.numeroExterior;
-        cliente.nombreEstado=participante.codigoEstado; //clave de estado en SM
-        cliente.colonia=participante.codigoColonia; //clave colonia SM
+        cliente.codigoEstado=participante.codigoEstado; //clave de estado en SM
+        cliente.codigoColonia=participante.codigoColonia; //clave colonia SM
         cliente.rfc=participante.rfc;
         System.debug('participante cliente: '+cliente);
         DSALES_AccountWrapper.AccountResponse response= DSALES_AccountWrapperRequest.upsertAccount(cliente);
@@ -318,7 +323,7 @@ global without sharing class DSALES_VentaSMRest {
         return contratante;
     }
     public class WrapperDatosProductos {
-        public Id oliId { get; set; }
+        public Id idPartidaDeOportunidad { get; set; }
         public String nombreProducto { get; set; }
         public String sku {get;set;}
     }

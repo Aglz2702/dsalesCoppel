@@ -27,6 +27,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                     DSALES_IPAssetWrapper.IPAssetRequest policyAsset = new DSALES_IPAssetWrapper.IPAssetRequest();
                     policyAsset.uso='';
                     policyAsset.servicio='';
+                    System.debug('entrega  request: '+body);
                     policyAsset = (DSALES_IPAssetWrapper.IPAssetRequest)JSON.deserialize(body, DSALES_IPAssetWrapper.IPAssetRequest.class);
                     DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Oportunidad__c,DSALES_Cliente__c,DSALES_IDUniversal1__c,DSALES_Poliza__c,DSALES_Poliza__r.Name FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:policyAsset.idUniversal WITH SECURITY_ENFORCED];
                     
@@ -143,7 +144,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         Boolean seMandaEmitir=false;
         InsurancePolicyAsset activo =[SELECT Id,DSALES_emitir_poliza__c,InsurancePolicy.Name FROM InsurancePolicyAsset WHERE InsurancePolicyId=:idPoliza WITH SECURITY_ENFORCED LIMIT 1];
         for(DSALES_VentaSMRest.WrapperDatosProductos prod:listaIds){
-            idsPartidas.add(prod.oliId);
+            idsPartidas.add(prod.idPartidaDeOportunidad);
         }
         for(OpportunityLineItem partidasSeguro: [SELECT Id,Name, Product2Id, Product2.DSales_Tipo_de_Producto__c, DSALES_Estatus__c
                                 FROM OpportunityLineItem WHERE Id IN:idsPartidas AND Product2.DSales_Tipo_de_Producto__c=:'Seguro' WITH SECURITY_ENFORCED]){
