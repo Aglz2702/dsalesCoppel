@@ -1,3 +1,4 @@
+
 @RestResource(urlMapping='/insertQuoteSM/*')//
 global with sharing class DSALES_QuoteSmWrapperRequest {
     public static final String NOMBRE_SERVICIO = 'DSALES_QuoteSM';
