@@ -12,6 +12,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         Account cliente = new Account();
         Opportunity oppor = new Opportunity();
         Quote cotiza = new Quote();
+        Tienda__c tienda =  new Tienda__c();
         Map<String, DSALES_QuoteGexWrapper.Product> mapProducts = new  Map<String, DSALES_QuoteGexWrapper.Product>();
         List<QuoteLineItem> listaPartida = new List<QuoteLineItem>();
         List<DSales_Asignacion_de_Productos__c> productAsig = new List<DSales_Asignacion_de_Productos__c>();  
@@ -24,10 +25,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     for(DSALES_QuoteGexWrapper.Product p : data.productos){
                         mapProducts.put(p.skuDeTangible, p);
                     }
-                    system.debug('Data.idTienda: '+data.idTienda);
                     Account universalAccount = [Select Id,DSALES_ClienteCoppel__c from Account WHERE DSALES_ClienteCoppel__c = :DSALES_Utility.NUMERO_CLIENTE_GENERICO WITH SECURITY_ENFORCED LIMIT 1];
                    
-                    Tienda__c tienda = [Select Id from Tienda__c WHERE DSales_TiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
+                    tienda = [Select Id from Tienda__c WHERE DSales_TiendaID__c =: data.idTienda WITH SECURITY_ENFORCED LIMIT 1];
                     
                     Id clienteId=null;
                     String numeroDeContado=null;
@@ -39,7 +39,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         mapNomyId.put('firstName',accountClient.Account.FirstName);
                         mapNomyId.put('lastName',accountClient.Account.LastName);
                         cotiza = crearCotizacion(data, mapNomyId ,tienda);
-                        listaPartida = crearPartidas(data, cotiza.Id);
+                        listaPartida = crearPartidas(data, cotiza.Id,tienda);
                     }else{
                         if(data.idUniversal!=null){
                             DSALES_InformacionDePago__c newOpportunity =[Select id,DSALES_Oportunidad__c,DSALES_Oportunidad__r.Name, DSALES_Cliente__c from DSALES_InformacionDePago__c where DSALES_IDUniversal1__c= :data.idUniversal WITH SECURITY_ENFORCED LIMIT 1];
@@ -51,7 +51,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             oppor = crearOportunidad(data, mapNomyId ,tienda);
                             mapNomyId.put('oportunidadId',oppor.Id);
                             cotiza = crearCotizacion(data, mapNomyId ,tienda);
-                            listaPartida = crearPartidasSinTangible(data, cotiza.Id);
+                            listaPartida = crearPartidasSinTangible(data, cotiza.Id,tienda);
                         }else{
                     if(data.numeroCliente == '' || data.numeroCliente == null ){
                         List<Account> clienteContado = [SELECT Id,FirstName,LastName FROM Account WHERE FirstName=: data.nombre and LastName=: data.apellidoPaterno and PersonEmail= :data.correoElectronico WITH SECURITY_ENFORCED];
@@ -62,7 +62,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                         oppor = crearOportunidad(data, mapNomyId ,tienda);
                         mapNomyId.put('oportunidadId',oppor.Id);
                         cotiza = crearCotizacion(data, mapNomyId ,tienda);
-                        listaPartida = crearPartidas(data, cotiza.Id);
+                        listaPartida = crearPartidas(data, cotiza.Id,tienda);
                     }else{
                         if(data.numeroCliente != DSALES_Utility.NUMERO_CLIENTE_GENERICO){
                             List<Account> result = [Select Id,FirstName,MiddleName,LastName from Account WHERE CP_WalletCustomerNumber__c =:Decimal.valueOf(data.numeroCliente) WITH SECURITY_ENFORCED];
@@ -75,7 +75,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                     oppor = crearOportunidad(data, mapNomyId,tienda);
                                     mapNomyId.put('oportunidadId',oppor.Id);
                                     cotiza = crearCotizacion(data, mapNomyId, tienda);
-                        		    listaPartida = crearPartidas(data, cotiza.Id);
+                        		    listaPartida = crearPartidas(data, cotiza.Id,tienda);
                                 }
                                 when 0 {
                                     cliente = crearCliente(data);
@@ -86,7 +86,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                     oppor = crearOportunidad(data, mapNomyId, tienda);
                                    	mapNomyId.put('oportunidadId',oppor.Id);
                                     cotiza = crearCotizacion(data, mapNomyId, tienda);
-                                    listaPartida = crearPartidas(data, cotiza.Id);
+                                    listaPartida = crearPartidas(data, cotiza.Id,tienda);
                                 }
                             }
                         }else{
@@ -100,7 +100,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             oppor = crearOportunidad(data, mapNomyId,tienda);
                             mapNomyId.put('oportunidadId',oppor.Id);
                             cotiza = crearCotizacion(data,mapNomyId, tienda);
-                            listaPartida = crearPartidas(data, cotiza.Id);
+                            listaPartida = crearPartidas(data, cotiza.Id,tienda);
                         }
                     }
                         }
@@ -146,8 +146,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 Product2 tipoProducto = [SELECT id,DSales_Tipo_de_Producto__c, StockKeepingUnit,DSales_Aplicaporcentajecobro__c FROM Product2 WHERE id=:quoteLineItem.Product2Id WITH SECURITY_ENFORCED];
                 if (tipoProducto.DSales_Tipo_de_Producto__c == 'Servicio') {
                     DSALES_QuoteGexWrapper.QuoteGexResponse responsePayload = new DSALES_QuoteGexWrapper.QuoteGexResponse();
-                    DSales_Matriz_GEX__c idMat = obtenerIdMatriz(tipoProducto.Id,regions, originalMat);
-                    Id idMatriz = idMat.Id;
+                    List<dsalesAsignacionDeTienda__c> asigTienda = [SELECT id,Name, dsalesTienda__r.Name, dsalesMatriz__r.Name, dsalesMatriz__r.DSALES_Servicio__r.Name, dsalesMatriz__r.DSALES_Servicio__c,dsalesActivo__c,dsalesMatriz__c FROM dsalesAsignacionDeTienda__c WHERE dsalesTienda__c=:tienda.Id AND dsalesActivo__c=true AND dsalesMatriz__c<>null AND dsalesMatriz__r.DSALES_Servicio__c=:tipoProducto.Id WITH SECURITY_ENFORCED LIMIT 1];
                     String nombreIntangible = quoteLineItem.DSALES_NombreProductoServicio__c;
                     String[] partesCadena = nombreIntangible.split(' ');
                     String numeroExtraido = partesCadena[4];
@@ -163,8 +162,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     if(tipoProducto.DSales_Aplicaporcentajecobro__c==true){
                              responsePayload.skuDePrecio = null;
                         }else{
-                            DSALES_Matriz_de_Cotizacion__c skuPrecio = obtenerSkuPrecio(quoteLineItem.UnitPrice, precioTangible, idMatriz);
+                            DSALES_Matriz_de_Cotizacion__c skuPrecio = obtenerSkuPrecio(quoteLineItem.UnitPrice, precioTangible, asigTienda[0].dsalesMatriz__c);
                             responsePayload.skuDePrecio = skuPrecio.Name;
+                            //responsePayload.skuDePrecio = '00';
 
                         }
                     responsePayload.skuDeServicio = tipoProducto.StockKeepingUnit;
@@ -257,7 +257,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return cotiza;
     }
     
-    public static List<QuoteLineItem> crearPartidas(DSALES_QuoteGexWrapper.QuoteGexRequest data, Id cotizaId){
+    public static List<QuoteLineItem> crearPartidas(DSALES_QuoteGexWrapper.QuoteGexRequest data, Id cotizaId,Tienda__c tienda){
         String regions = 'Todas las regiones';
         String tipoProducto = 'Servicio';
         String originalMat = 'Matriz Original';
@@ -274,6 +274,8 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         }
         List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
         productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSales_Producto__r.StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
+        system.debug('productAsig'+productAsig);
+        
         List<Id> dsalesProductoSetId = new List<Id>();
         for(DSales_Asignacion_de_Productos__c da : productAsig){
             dsalesProductoSetId.add(da.DSales_Servicio_Seguro__c);
@@ -309,6 +311,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     intangibleId = asigProduc.DSales_Servicio_Seguro__c;
                 }
             }
+                
             for(PricebookEntry item2 : precioEnGEX){
                 if(item2.Product2Id == intangibleId){
                     QuoteLineItem partidapreGEX = new QuoteLineItem();
@@ -330,17 +333,21 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             }
                         }
                     }else{
-                        List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = obtenerMatricesPrecio(intangibleId, regions, originalMat);
-                        for(DSALES_Matriz_de_Cotizacion__c mPrice : matPrice1Year){
-                            switch on mPrice.DSALES_Tiempo_de_Garantia_Extendida_GEX__c{
-                                when '1 año'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price1 = mPrice.SALES_Precio_GEX__c;
+                        
+                        List<dsalesAsignacionDeTienda__c> asigTienda = [SELECT id,Name, dsalesTienda__r.Name, dsalesMatriz__r.Name, dsalesMatriz__r.DSALES_Servicio__r.Name, dsalesMatriz__r.DSALES_Servicio__c,dsalesActivo__c,dsalesMatriz__c FROM dsalesAsignacionDeTienda__c WHERE dsalesTienda__c=:tienda.Id AND dsalesActivo__c=true AND dsalesMatriz__c<>null AND dsalesMatriz__r.DSALES_Servicio__c=:intangibleId WITH SECURITY_ENFORCED LIMIT 1];
+                        if(asigTienda.size()>0){    
+                        List<DSALES_Matriz_de_Cotizacion__c> matrizPrecio = obtenerMatricesPrecio(asigTienda[0].dsalesMatriz__c);
+                            for(DSALES_Matriz_de_Cotizacion__c mPrice : matrizPrecio){
+                                switch on mPrice.DSALES_Tiempo_de_Garantia_Extendida_GEX__c{
+                                    when '1 año'{
+                                        if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
+                                            price1 = mPrice.SALES_Precio_GEX__c;
+                                        }
                                     }
-                                }
-                                when '2 años'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price2 = mPrice.SALES_Precio_GEX__c;
+                                    when '2 años'{
+                                        if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
+                                            price2 = mPrice.SALES_Precio_GEX__c;
+                                        }
                                     }
                                 }
                             }
@@ -385,7 +392,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return listaPartida;
     }
     
-    public static List<QuoteLineItem> crearPartidasSinTangible(DSALES_QuoteGexWrapper.QuoteGexRequest data, Id cotizaId){
+    public static List<QuoteLineItem> crearPartidasSinTangible(DSALES_QuoteGexWrapper.QuoteGexRequest data, Id cotizaId,Tienda__c tienda){
         String regions = 'Todas las regiones';
         String tipoProducto = 'Servicio';
         String originalMat = 'Matriz Original';
@@ -446,21 +453,25 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             }
                         }
                     }else{
-                        List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = obtenerMatricesPrecio(intangibleId, regions, originalMat);
-                        for(DSALES_Matriz_de_Cotizacion__c mPrice : matPrice1Year){
-                            switch on mPrice.DSALES_Tiempo_de_Garantia_Extendida_GEX__c{
-                                when '1 año'{
+                        List<dsalesAsignacionDeTienda__c> asigTienda = [SELECT id,Name, dsalesTienda__r.Name, dsalesMatriz__r.Name, dsalesMatriz__r.DSALES_Servicio__r.Name, dsalesMatriz__r.DSALES_Servicio__c,dsalesActivo__c,dsalesMatriz__c FROM dsalesAsignacionDeTienda__c WHERE dsalesTienda__c=:tienda.Id AND dsalesActivo__c=true AND dsalesMatriz__c<>null AND dsalesMatriz__r.DSALES_Servicio__c=:intangibleId WITH SECURITY_ENFORCED LIMIT 1];
+                        if(asigTienda.size()>0){    
+                            List<DSALES_Matriz_de_Cotizacion__c> matrizPrecio = obtenerMatricesPrecio(asigTienda[0].dsalesMatriz__c);
+                            for(DSALES_Matriz_de_Cotizacion__c mPrice : matrizPrecio){
+                                switch on mPrice.DSALES_Tiempo_de_Garantia_Extendida_GEX__c{
+                                    when '1 año'{
                                     if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
                                         price1 = mPrice.SALES_Precio_GEX__c;
                                     }
-                                }
-                                when '2 años'{
-                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                        price2 = mPrice.SALES_Precio_GEX__c;
+                                    }
+                                    when '2 años'{
+                                        if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
+                                            price2 = mPrice.SALES_Precio_GEX__c;
+                                        }
                                     }
                                 }
                             }
                         }
+                        
                     }
                     if (price1 != 0.0) {
                         QuoteLineItem partidapreGEX1 = new QuoteLineItem();
@@ -553,18 +564,23 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         return porcent;
     }
     
-    public static List<DSALES_Matriz_de_Cotizacion__c> obtenerMatricesPrecio(Id intangibleId, String regions, String originalMat) {
-        List<DSales_Matriz_GEX__c> mat = [SELECT id, Name, DSALES_Activo__c, DSales_Region_GEX__c, DSALES_Tipo__c, DSALES_Servicio__c FROM DSales_Matriz_GEX__c WHERE DSALES_Servicio__c = :intangibleId AND DSALES_Activo__c = true AND DSALES_Tipo__c = :originalMat AND DSALES_Region__c INCLUDES (:regions) WITH SECURITY_ENFORCED];
-        List<DSALES_Matriz_de_Cotizacion__c> matPrice1Year = [SELECT id, Name, SALES_Precio_GEX__c, DSales_Matriz_GEX__c, DSALES_Rango_interior_GEX__c, DSALES_Rango_Superior_GEX__c, DSALES_Tiempo_de_Garantia_Extendida_GEX__c FROM DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c = :mat WITH SECURITY_ENFORCED ORDER BY SALES_Precio_GEX__c DESC];
-        return matPrice1Year;
+    public static List<DSALES_Matriz_de_Cotizacion__c> obtenerMatricesPrecio(Id matrizId) {
+        List<DSALES_Matriz_de_Cotizacion__c> matrizPrecio = [SELECT id, Name, SALES_Precio_GEX__c, DSales_Matriz_GEX__c, DSALES_Rango_interior_GEX__c, DSALES_Rango_Superior_GEX__c, DSALES_Tiempo_de_Garantia_Extendida_GEX__c FROM DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c = :matrizId WITH SECURITY_ENFORCED ORDER BY SALES_Precio_GEX__c DESC];
+        return matrizPrecio;
     }
     
-    public static DSales_Matriz_GEX__c obtenerIdMatriz(Id intangibleId, String regions, String originalMat) {
-        return [SELECT id 
-                FROM DSales_Matriz_GEX__c 
-                WHERE DSALES_Servicio__c = :intangibleId 
-                AND DSALES_Activo__c = true AND DSALES_Tipo__c = :originalMat 
-                AND DSALES_Region__c INCLUDES (:regions) 
-                WITH SECURITY_ENFORCED LIMIT 1];
-    }
-    }
+    /*public static dsalesAsignacionDeTienda__c obtenerIdMatrizPrecio(Id tiendaId, id IntangibleId) {
+        dsalesAsignacionDeTienda__c asignacion= [SELECT id,Name, dsalesTienda__r.Name, dsalesMatriz__r.Name, dsalesMatriz__r.DSALES_Servicio__r.Name, dsalesMatriz__r.DSALES_Servicio__c,dsalesActivo__c 
+                FROM dsalesAsignacionDeTienda__c 
+                WHERE dsalesTienda__c=:tiendaId 
+                AND dsalesMatriz__c<>null
+                AND dsalesMatriz__r.DSALES_Servicio__c=:IntangibleId 
+                WITH SECURITY_ENFORCED limit 1];
+        
+        if(asignacion!=null){
+            return asignacion;
+        }else{
+            return null;
+        }
+    }*/
+}
