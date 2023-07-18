@@ -160,7 +160,7 @@
     <name>Ventas por división por mes</name>
     <params>
         <name>lsk</name>
-        <value>45</value>
+        <value>1</value>
     </params>
     <reportType>QuoteProduct</reportType>
     <showDetails>true</showDetails>

@@ -109,13 +109,21 @@ public without sharing class  DSALES_ValidarClienteHelper {
     public static void actualizarCotizacion(String quoteId,DSALES_VentaGEX.VentaGexResponse ventaGEX,Map<String,String> mapAssets,Map<String,String>mapCertifieds){
     
         list<String> idSecuencias=New list<String>();
-        List<Asset> productos=[SELECT dsalesIdSecuencia__c FROM ASSET WHERE id IN:mapAssets.values() WITH SECURITY_ENFORCED LIMIT 10];
+        List<String> skuConcatenadosNuevos = new List<String>();
+        List<Asset> productos=[SELECT dsalesIdSecuencia__c, DSALES_SKU__c FROM ASSET WHERE id IN:mapAssets.values() WITH SECURITY_ENFORCED ];
+        List<DSALES_Certificado__c> certificados=[SELECT dsalesIdSecuencia__c,DSALES_SKU__c,DSALES_SKUTangible__c FROM DSALES_Certificado__c WHERE id IN:mapCertifieds.values() WITH SECURITY_ENFORCED];
         for(Asset p:productos)
             {
-                if(p.dsalesIdSecuencia__c!=-2 || p.dsalesIdSecuencia__c!=null)
-                {
-                    idSecuencias.add(String.valueOf(p.dsalesIdSecuencia__c));
-                }
+               for(DSALES_Certificado__c c:certificados)
+               {
+                   if(p.DSALES_SKU__c+p.dsalesIdSecuencia__c==c.DSALES_SKUTangible__c+c.dsalesIdSecuencia__c)
+                       {
+                           String agrega=p.DSALES_SKU__c+p.dsalesIdSecuencia__c;
+                           skuConcatenadosNuevos.add(agrega);
+                           idSecuencias.add(String.valueOf(p.dsalesIdSecuencia__c));
+                       }
+               }
+                
                 
             }
         Quote cotizacion = [SELECT Id,AccountId,Name,OpportunityId,Opportunity.AccountId FROM Quote WHERE Id= :quoteId WITH SECURITY_ENFORCED];
@@ -153,32 +161,67 @@ public without sharing class  DSALES_ValidarClienteHelper {
                
                 try{
                     system.debug('IdSecuencias : '+idSecuencias);
-                 Integer numeroOppor=0;
-                Integer numeroGex=0;
-                   
+                    
+               
+                
                 for(OpportunityLineItem op:opLine)
                     {
+                         Integer numeroOppor=0;
+              			
+              			 String skuNuevoActualizado='';
+                        	do{ 
+                               
+                                system.debug('NumeroOppor: '+numeroOppor);
+                                system.debug('idSecuencias: '+idSecuencias);
+                                system.debug('skuConcatenadosNuevos: '+skuConcatenadosNuevos);
+                                
+                               if(numeroOppor<idSecuencias.size())
+                               {
+                                  system.debug('CONCATENACIÓN: '+op.Product2.StockKeepingUnit+idSecuencias[numeroOppor]);
+                                   system.debug('VERSUS: '+skuConcatenadosNuevos[numeroOppor]);
+                                   if(op.Product2.StockKeepingUnit+idSecuencias[numeroOppor]==skuConcatenadosNuevos[numeroOppor])
+                                        {
+                                            skuNuevoActualizado=skuConcatenadosNuevos[numeroOppor];
+                                            skuConcatenadosNuevos.remove(numeroOppor);
+                                            idSecuencias.remove(numeroOppor);
+                                            system.debug('skuConcatenadosNuevos: '+skuConcatenadosNuevos);
+                                            numeroOppor=idSecuencias.size()+1;
+                                            system.debug('Entró skuNuevoActualizado: '+skuNuevoActualizado);
+                                            
+                                        }
+                                else
+                                {
+                                    numeroOppor++;
+                                }
+                               }
+                                else
+                                {
+                                    numeroOppor=idSecuencias.size()+1;
+                                }
+                            		
+                        	}
+                        while(numeroOppor<idSecuencias.size());
                         
-                        system.debug('numeroOppor!!! '+numeroOppor);
-                        //system.debug('mapAssets: '+mapAssets);
+                        Boolean checkGex=False;
+                      
+                        system.debug('mapAssets: '+mapAssets);
                        
-                        if(idSecuencias.size()<=numeroOppor)
-                        {
-                            numeroOppor--;
-                             system.debug('op[numeroOppor]: '+op.Product2.StockKeepingUnit+idSecuencias[numeroOppor]);
-                        }
-                        
-                       if( (idSecuencias[numeroOppor]!=null && mapAssets.containsKey(op.Product2.StockKeepingUnit+idSecuencias[numeroOppor]))  || mapAssets.containsKey(op.Product2.StockKeepingUnit))
+                       
+                        system.debug('PRIMER Id del OP: '+op.Id);
+
+                       
+                       if( ( mapAssets.containsKey(skuNuevoActualizado))  || mapAssets.containsKey(op.Product2.StockKeepingUnit))
                        {
+                          
                            if(mapAssets.containsKey(op.Product2.StockKeepingUnit))
                            {
                                 skuTemporal=op.Product2.StockKeepingUnit;
                            }
                            else
                            {
-                                skuTemporal=op.Product2.StockKeepingUnit+idSecuencias[numeroOppor];
+                                skuTemporal=skuNuevoActualizado;
                            }
-                          system.debug('NUMEROSSS: '+ numeroOppor);
+                         
                            system.debug('Cúantas veces pasó??? ');
                            DSALES_VentaGEX.ServicioCorrespondiente servicioGex= new DSALES_VentaGEX.ServicioCorrespondiente();
                             DSALES_VentaGEX.OpporLineItem opportunityLine = new DSALES_VentaGEX.OpporLineItem();
@@ -191,18 +234,29 @@ public without sharing class  DSALES_ValidarClienteHelper {
                        	opportunityLine.tipoProducto='Producto'; 
                         opportunityLine.idProductoAdquirido=mapAssets.get(skuTemporal); 
                        
-                           system.debug('secuencia '+idSecuencias[numeroOppor]);
+                          
+                            
                            for(String b :mapaNombreCertificado.keySet())
                         {
-                        	
-                            try{
-                              
-                            if(numeroGex<idSecuencias.size() && mapaNombreCertificado.get(b).DSALES_SKUTangible__c+idSecuencias[numeroOppor]==op.Product2.StockKeepingUnit+idSecuencias[numeroOppor] )
+                            system.debug('CHECK GEX: '+checkGex);
+                            system.debug('SKU Temporal parte 5: '+ skutemporal);
+                            if(checkGex)
                             {
-                                numeroOppor++;
+                                checkGex=false;
+                                break;
+                            }
+                            
+                            try{
+                                system.debug('IMPRIMETE opID '+op.id);
+							   system.debug('REVISAR Comparación: '+mapaNombreCertificado.get(b).DSALES_SKUTangible__c+mapaNombreCertificado.get(b).dsalesIdSecuencia__c);
+                                system.debug('VS: '+skuNuevoActualizado);
+                            if( mapaNombreCertificado.get(b).DSALES_SKUTangible__c+mapaNombreCertificado.get(b).dsalesIdSecuencia__c==skuNuevoActualizado
+                              )
+                            {
+                                
                                 List<DSALES_VentaGEX.ServicioCorrespondiente> servicioCoList = new List <DSALES_VentaGEX.ServicioCorrespondiente>();
                                 system.debug('Debugeando B : '+b);
-                                system.debug('numeroGex '+numeroGex);
+                                
                                   DSALES_VentaGex.ServicioCorrespondiente servicioCo = new  DSALES_VentaGex.ServicioCorrespondiente();
                                 system.debug('Cúantas veces pasó??? hijo ');
                                  
@@ -217,7 +271,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
                                 
                                 system.debug('SERVICIo CO: '+servicioCo.sku);
                                 
-                                skuTemporal=servicioCo.sku+mapaNombreCertificado.get(b).DSALES_SKUTangible__c+idSecuencias[numeroGex];
+                                skuTemporal=servicioCo.sku+mapaNombreCertificado.get(b).DSALES_SKUTangible__c+mapaNombreCertificado.get(b).dsalesIdSecuencia__c;
                                 system.debug('skuTemporalGex: '+skuTemporal);
                                 OportunidadLineMap.put(skuTemporal,servicioGex);
                                 system.debug('OportunidadLineMap Linea 191 ' +OportunidadLineMap);
@@ -227,7 +281,9 @@ public without sharing class  DSALES_ValidarClienteHelper {
                                 skuTemporal='';
                                 //OportunidadLineMap1.put(servicioCo.folioCertificado,servicioGex);
                                 servicioCo.tipoProducto='Servicio';
-                               numeroGex++;
+                              
+                                checkGex=True;
+                                
                                 
                                     for(QuoteLineItem p:partida)
                         {
@@ -247,7 +303,8 @@ public without sharing class  DSALES_ValidarClienteHelper {
                                 
                                          servicioCo.nombreProducto=p.DSALES_NombreProductoServicio__c;
                                           Integer n=partida.indexOf(p);
-                               		 partida.remove(n);
+                                			partida.remove(n);
+                               		 
                                                                      
                                 break;
                                
@@ -267,7 +324,9 @@ public without sharing class  DSALES_ValidarClienteHelper {
                                 
                                
                                 opportunityLine.entregaServicioCorrespondiente=servicioCoList;
-                               
+                               system.debug('MapaNombre borrado ANTES: '+mapaNombreCertificado);
+                                mapaNombreCertificado.Remove(b);
+                                system.debug('MapaNombre borrado: '+mapaNombreCertificado);
                                
                             }
                                 
@@ -335,6 +394,8 @@ public without sharing class  DSALES_ValidarClienteHelper {
                       {
                           system.debug('N' +n);
                      
+                          system.debug('CONCATENA LIST: '+concatenarSkus);
+                          system.debug('OP MAP Concatena: '+oportunidadLineMap);
  					  if(OportunidadLineMap.containsKey(concatenarSkus[n]))
                         {
                             system.debug('CONCETENA SKUS: '+concatenarSKus[n]);

@@ -6,6 +6,7 @@
     <columns>OPPORTUNITY.NAME</columns>
     <columns>ACCOUNT.NAME</columns>
     <columns>QUOTE.TOTALPRICE</columns>
+    <columns>DSALES_fechadecreacion__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>QUOTE.RECORDTYPE</field>

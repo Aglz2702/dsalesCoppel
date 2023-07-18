@@ -1,5 +1,6 @@
 @isTest
 public with sharing class DSALES_AssetWrapperTest {
+    
     @testSetup
     static void crearRegistros(){
         DSALES_Categoria__c categoria = new DSALES_Categoria__c(Name='LÍNEA BLANCA');

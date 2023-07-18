@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesInformacionPagoGEX</fullName>
+    <columns>NAME</columns>
+    <columns>DSALES_Factura__c</columns>
+    <columns>DSALES_IDUniversal__c</columns>
+    <columns>DSALES_Cliente__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>DSALES_InformacionDePago__c.DSALES_Pagos_en_NPV</value>
+    </filters>
+    <label>Información de Pago GEX</label>
+</ListView>

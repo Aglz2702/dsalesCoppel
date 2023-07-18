@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Código de estado</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>

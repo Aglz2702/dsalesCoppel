@@ -4,9 +4,32 @@
     <description>Muestra el motivo de rechazo del siniestro</description>
     <externalId>false</externalId>
     <label>Motivo de rechazo</label>
-    <length>150</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Cobertura no contratada</fullName>
+                <default>false</default>
+                <label>Cobertura no contratada</label>
+            </value>
+            <value>
+                <fullName>Es una exclusión del producto</fullName>
+                <default>false</default>
+                <label>Es una exclusión del producto</label>
+            </value>
+            <value>
+                <fullName>Moto distinta al uso registrado en la póliza</fullName>
+                <default>false</default>
+                <label>Moto distinta al uso registrado en la póliza</label>
+            </value>
+            <value>
+                <fullName>Póliza cancelada</fullName>
+                <default>false</default>
+                <label>Póliza cancelada</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

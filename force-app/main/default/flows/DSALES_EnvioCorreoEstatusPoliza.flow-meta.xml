@@ -77,7 +77,6 @@
         </rules>
     </decisions>
     <description>Envía correos al cliente dependiendo del estatus de la póliza</description>
-    <environments>Default</environments>
     <interviewLabel>Envió de correo de estatus de póliza {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Envió de correo de estatus de póliza</label>
     <processMetadataValues>

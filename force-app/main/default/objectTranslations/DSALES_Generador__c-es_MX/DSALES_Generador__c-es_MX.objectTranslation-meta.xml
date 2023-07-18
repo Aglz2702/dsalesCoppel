@@ -9,4 +9,11 @@
         <value>Generador de Plantillas</value>
     </caseValues>
     <gender>Masculine</gender>
+    <layouts>
+        <layout>Formato Generador Plantillas</layout>
+        <sections>
+            <label></label>
+            <section>Vínculos personalizados</section>
+        </sections>
+    </layouts>
 </CustomObjectTranslation>

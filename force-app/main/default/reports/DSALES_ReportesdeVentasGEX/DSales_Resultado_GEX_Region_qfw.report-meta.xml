@@ -255,7 +255,7 @@
     <name>Resultado GEX -Región</name>
     <params>
         <name>lsk</name>
-        <value>45</value>
+        <value>1</value>
     </params>
     <reportType>OpportunityProduct</reportType>
     <showDetails>false</showDetails>

@@ -3,9 +3,14 @@
     <fullName>All</fullName>
     <columns>QUOTE.NAME</columns>
     <columns>QUOTE.STATUS</columns>
+    <columns>DSALES_TipoUso__c</columns>
     <columns>OPPORTUNITY.NAME</columns>
     <columns>ACCOUNT.NAME</columns>
     <columns>QUOTE.TOTALPRICE</columns>
+    <columns>DSALES_fechadecreacion__c</columns>
+    <columns>DSales_Productos__c</columns>
+    <columns>CreatedBy</columns>
+    <columns>DSALES_Tipodeuso__c</columns>
     <filterScope>Everything</filterScope>
     <label>Todas las cotizaciones</label>
 </ListView>

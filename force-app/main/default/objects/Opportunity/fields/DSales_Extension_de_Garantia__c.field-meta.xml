@@ -21,6 +21,12 @@
                 <default>false</default>
                 <label>24 Meses</label>
             </value>
+            <value>
+                <fullName>48 Meses</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>48 Meses</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

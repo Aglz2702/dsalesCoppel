@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <label>Producto Adquirido</label>
     <lookupFilter>
-        <active>true</active>
+        <active>false</active>
         <filterItems>
             <field>Asset.DSALES_TipoProducto__c</field>
             <operation>equals</operation>
@@ -15,6 +15,7 @@
         <isOptional>false</isOptional>
     </lookupFilter>
     <referenceTo>Asset</referenceTo>
+    <relationshipLabel>Información de Pagos</relationshipLabel>
     <relationshipName>Informaci_n_de_Pagos</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>

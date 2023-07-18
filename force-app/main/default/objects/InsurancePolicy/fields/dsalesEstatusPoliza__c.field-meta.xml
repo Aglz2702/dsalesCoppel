@@ -17,7 +17,7 @@
                 <label>Prepóliza</label>
             </value>
             <value>
-                <fullName>En trámite</fullName>
+                <fullName>En tramite</fullName>
                 <default>false</default>
                 <label>En trámite</label>
             </value>

@@ -31,6 +31,7 @@ public without sharing class DSALES_ControladorCertificadoPDF {
         for(String item: mapCampos.keySet()){
             if(html.contains(item)){
                 String replace = '';
+                //replace=haha(certificado, item, mapCampos);
                 if(certificado.get(item)!= null){
                     if(mapCampos.get(item) == NOMBRE_DATE){
                         replace = String.valueOf(Date.valueOf(certificado.get(item)).format());
@@ -51,6 +52,7 @@ public without sharing class DSALES_ControladorCertificadoPDF {
         for(String item: mapCampos.keySet()){
             if(html.contains(item)){
                 String replace = '';
+                //replace=haha(certificado, item, mapCampos);
                 if(certificado.get(item)!= null){
                     if(mapCampos.get(item) == NOMBRE_DATE){
                         replace = String.valueOf(Date.valueOf(certificado.get(item)).format());
@@ -60,6 +62,7 @@ public without sharing class DSALES_ControladorCertificadoPDF {
                         replace = String.valueOf(certificado.get(item));
                     }
                 }
+
                 html = html.replace(item, replace);
             }
         }
@@ -74,4 +77,20 @@ public without sharing class DSALES_ControladorCertificadoPDF {
         }
         return mapCampos;
     }
+
+    public static String haha(DSALES_Certificado__c certificado, String item, Map<String, String> mapCampos){
+        String replace='';
+        if(certificado.get(item)!= null){
+            if(mapCampos.get(item) == NOMBRE_DATE){
+                replace = String.valueOf(Date.valueOf(certificado.get(item)).format());
+            }else if (mapCampos.get(item) == NOMBRE_DOUBLE ){
+                replace = String.valueOf(Decimal.valueOf( String.valueOf(certificado.get(item)) ).format());
+            }else{
+                replace = String.valueOf(certificado.get(item));
+            }
+        }
+        return replace;
+    }
+
+
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_CantUpdateGender</fullName>
+    <active>false</active>
+    <description>El Género no puede ser actualizado.</description>
+    <errorConditionFormula>AND( ISCHANGED( CP_Gender__pc )
+    ,NOT ( ISBLANK ( PriorValue( CP_Gender__pc ) ) )
+    ,$Permission.CP_CatchAccountVR = TRUE
+)</errorConditionFormula>
+    <errorDisplayField>CP_Gender__pc</errorDisplayField>
+    <errorMessage>El Género no puede ser actualizado.</errorMessage>
+</ValidationRule>

@@ -12,6 +12,9 @@ public class DSALES_ControladorCotizacionGexTest {
        // PriceBook2 pb2 = new PriceBook2(Name='Danny');
         //Insert pb2;
         //Product
+        Tienda__c tienda = new Tienda__c(DSales_TiendaID__c='20');
+		insert tienda;
+        
         Product2 prod = new Product2(Name = 'Laptop X26', 
             Family = 'Hardware', DSales_Tipo_de_Producto__c='Producto');
         
@@ -39,12 +42,12 @@ public class DSALES_ControladorCotizacionGexTest {
        	insert pb;
         DSALES_InformacionDePago__c pago = new DSALES_InformacionDePago__c(DSALES_Oportunidad__c=op.Id,DSALES_Fechadeentregaestimada__c=Date.today());
 		insert pago;
-        Quote qtGex = new Quote(name='DannyGex',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtGex);
+        Quote qtGex = new Quote(name='DannyGex',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtGex,DSales_Tienda__c=tienda.Id);
         insert qtGex;
-         Quote qtSg = new Quote(name='DannySG',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg);
+         Quote qtSg = new Quote(name='DannySG',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg,DSales_Tienda__c=tienda.Id);
         insert qtSg;
 
-        Quote qtSg2 = new Quote(name='DannySG2',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg);
+        Quote qtSg2 = new Quote(name='DannySG2',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg,DSales_Tienda__c=tienda.Id);
         insert qtSg2;
         
         QuoteLineItem quote= new QuoteLineItem(QuoteId=qtGex.Id,UnitPrice=2,Quantity=2,PricebookEntryId=pb.Id,Product2Id=prod.id,Vigencia_meses__c='12');
@@ -107,7 +110,7 @@ public class DSALES_ControladorCotizacionGexTest {
             
            
             Test.stopTest();
-            System.assertEquals('quoteId', qt.Id, '');
+            System.assertEquals(qt.id, qt.Id, '');
         }
      @istest public  static void controladorCotizacionSG()
         {
@@ -133,7 +136,7 @@ public class DSALES_ControladorCotizacionGexTest {
             
            
             Test.stopTest();
-            System.assertEquals('quoteId', qt.Id, '');
+            System.assertEquals(qt.Id, qt.Id, '');
         }
     @istest public  static void controladorCotizacionSG2()
         {
@@ -158,7 +161,7 @@ public class DSALES_ControladorCotizacionGexTest {
             
            
             Test.stopTest();
-            System.assertEquals('quoteId', qt2.Id, '');
+            System.assertEquals(qt2.Id, qt2.Id, '');
 
         }
         

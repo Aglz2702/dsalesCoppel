@@ -16,21 +16,21 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>dsalesNumero__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>dsalesNombre__c</field>
+                <field>dsalesActivo__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>dsalesIdCoppel__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesActivo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -80,7 +80,9 @@
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
-        <fields>dsalesNombre__c</fields>
+        <fields>dsalesNumero__c</fields>
+        <fields>dsalesActivo__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>dsalesCiudad__c.dsalesRegion__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

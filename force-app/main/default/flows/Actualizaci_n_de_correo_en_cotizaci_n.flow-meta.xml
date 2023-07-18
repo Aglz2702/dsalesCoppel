@@ -14,7 +14,6 @@
             </value>
         </assignmentItems>
     </assignments>
-    <environments>Default</environments>
     <interviewLabel>Actualización de correo en cotización {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Actualización de correo en cotización</label>
     <processMetadataValues>

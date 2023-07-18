@@ -103,7 +103,16 @@
     </actionOverrides>
     <compactLayoutAssignment>DSALES_PysisCompactLayout</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <externalSharingModel>Private</externalSharingModel>
+    <profileSearchLayouts>
+        <fields>ASSET.NAME</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>ASSET.SERIAL_NUMBER</fields>
+        <fields>PRODUCT2.NAME</fields>
+        <fields>ASSET.PRICE</fields>
+        <fields>DSALES_Oportunidad__c</fields>
+        <profileName>Administrador GEX</profileName>
+    </profileSearchLayouts>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts>
         <customTabListAdditionalFields>ASSET.NAME</customTabListAdditionalFields>
@@ -129,5 +138,5 @@
         <searchResultsAdditionalFields>ASSET.PRICE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>DSALES_Oportunidad__c</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>Private</sharingModel>
 </CustomObject>

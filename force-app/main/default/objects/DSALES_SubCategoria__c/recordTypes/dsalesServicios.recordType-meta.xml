@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesServicios</fullName>
+    <active>true</active>
+    <label>Servicios</label>
+    <picklistValues>
+        <picklist>DSALES_TipoProducto__c</picklist>
+        <values>
+            <fullName>Servicio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

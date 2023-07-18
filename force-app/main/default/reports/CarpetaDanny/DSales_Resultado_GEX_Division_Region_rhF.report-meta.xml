@@ -151,7 +151,7 @@
     <name>Resultado GEX - División/Región por Mes</name>
     <params>
         <name>lsk</name>
-        <value>45</value>
+        <value>1</value>
     </params>
     <reportType>Oportunidades_con_cotizaciones__c</reportType>
     <showDetails>false</showDetails>

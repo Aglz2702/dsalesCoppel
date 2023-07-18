@@ -99,7 +99,7 @@
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>Tipo de Uso Record Page</masterLabel>
-    <sobjectType>DSALES_TipoUso__c</sobjectType>
+    <sobjectType>DSALES_TipodeUso__c</sobjectType>
     <template>
         <name>flexipage:recordHomeTemplateDesktop</name>
     </template>

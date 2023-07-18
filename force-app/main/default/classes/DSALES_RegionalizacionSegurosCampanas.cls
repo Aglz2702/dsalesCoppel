@@ -38,6 +38,23 @@ public without sharing class DSALES_RegionalizacionSegurosCampanas {
     }
 
     @AuraEnabled
+    public static  List<PickListOption>  getPickListTiendasMatriz(string idMatriz){
+        List<PickListOption>  respuesta = new  List<PickListOption> ();
+        for(dsalesAsignacionDeTienda__c item: [Select Id, dsalesTienda__r.name, dsalesTienda__c,LastModifiedBy.Name, dsalesActivo__c, dsalesMatriz__c from dsalesAsignacionDeTienda__c Where dsalesMatriz__c =:idMatriz and dsalesActivo__c=true WITH SECURITY_ENFORCED order by Name asc]){
+            PicklistOption option = new PicklistOption();
+            option.etiqueta = item.dsalesTienda__r.name;
+            option.valor = item.LastModifiedBy.Name;
+            if(item.dsalesActivo__c)
+            {
+                option.depende = 'Activo';
+            }
+            option.mostrar = true;
+            respuesta.add(option);
+        }
+        return respuesta;
+    }
+
+    @AuraEnabled
     public static  List<PickListOption>  getPickListTiendasSeguro(string idSeguros){
         List<PickListOption>  respuesta = new  List<PickListOption> ();
         for(dsalesAsignacionDeTienda__c item: [Select Id, dsalesTienda__r.name, dsalesTienda__c,LastModifiedBy.Name, dsalesActivo__c, Producto__c from dsalesAsignacionDeTienda__c Where Producto__c =:idSeguros and dsalesActivo__c=true WITH SECURITY_ENFORCED order by Name asc]){
@@ -121,6 +138,23 @@ public without sharing class DSALES_RegionalizacionSegurosCampanas {
     }
 
     @AuraEnabled
+    public static String seleccionCampanaMatriz( string idSelected){
+        List<Campaign> idCampana= [select id from campaign where id= :idSelected WITH SECURITY_ENFORCED];
+        List <DSales_Matriz_GEX__c>  idMatriz= [select id from DSales_Matriz_GEX__c where id= :idSelected WITH SECURITY_ENFORCED ];
+       
+        if(!idCampana.isEmpty()){
+            return 'campana';
+        }
+        else if(!idMatriz.isEmpty()){
+            return 'matriz';
+        }
+        else{
+            return 'ninguna';
+        }
+    }
+
+
+    @AuraEnabled
     public static void vinculacionTiendaCampana(string dataJsonTienda,  string idCampana, Boolean vincular){
         system.debug('xx'+dataJsonTienda);
         List<PickListOption> listIdTiendas= (List<PickListOption>) JSON.deserialize(dataJsonTienda, List<PickListOption>.class);
@@ -155,6 +189,53 @@ public without sharing class DSALES_RegionalizacionSegurosCampanas {
                 dsalesTienda__c = item.valor,
                 dsalesActivo__c = isActive,
                 dsalesCampana__c = idCampana,
+                RecordTypeId= tipoRegistroId
+
+            ));
+        }
+    }
+        system.debug(listInsertVinculacion);
+        if(Schema.sObjectType.dsalesAsignacionDeTienda__c.isCreateable() && Schema.sObjectType.dsalesAsignacionDeTienda__c.isUpdateable()){
+            upsert listInsertVinculacion;
+        }
+    }
+
+
+    @AuraEnabled
+    public static void vinculacionTiendaMatriz(string dataJsonTienda,  string idMatriz, Boolean vincular){
+        system.debug('xx'+dataJsonTienda);
+        List<PickListOption> listIdTiendas= (List<PickListOption>) JSON.deserialize(dataJsonTienda, List<PickListOption>.class);
+        List<dsalesAsignacionDeTienda__c> listInsertVinculacion = new List<dsalesAsignacionDeTienda__c>(); 
+        List<dsalesAsignacionDeTienda__c> listSelected=[Select Id, Name, dsalesTienda__c, dsalesActivo__c, dsalesMatriz__c from dsalesAsignacionDeTienda__c Where dsalesMatriz__c =:idMatriz WITH SECURITY_ENFORCED order by Name asc ];   
+        List<dsalesAsignacionDeTienda__c> listInsertVinculacionCorrecta = new List<dsalesAsignacionDeTienda__c>(); 
+       system.debug(listSelected);
+       String tipoRegistroId = Schema.SObjectType.dsalesAsignacionDeTienda__c.getRecordTypeInfosByDeveloperName().get('dsalesAsignacindeMatriz').getRecordTypeId();
+       system.debug(tipoRegistroId);
+       for (PickListOption item : listIdTiendas) {
+        Boolean encontrado = false;
+        String idAsignacion = '';
+      
+        for (dsalesAsignacionDeTienda__c insertItem : listSelected) {
+            if (insertItem.dsalesTienda__c == item.valor) {
+                encontrado = true;
+                idAsignacion = insertItem.id;
+                break;
+            }
+        }
+        Boolean isActive = item.seleccionado;
+        if (encontrado && isActive) {
+            listInsertVinculacion.add(new dsalesAsignacionDeTienda__c(
+                id = idAsignacion,
+                dsalesTienda__c = item.valor,
+                dsalesActivo__c = vincular,
+                dsalesMatriz__c = idMatriz,
+                RecordTypeId= tipoRegistroId
+            ));
+        } else if(isActive){
+            listInsertVinculacion.add(new dsalesAsignacionDeTienda__c(
+                dsalesTienda__c = item.valor,
+                dsalesActivo__c = isActive,
+                dsalesMatriz__c = idMatriz,
                 RecordTypeId= tipoRegistroId
 
             ));

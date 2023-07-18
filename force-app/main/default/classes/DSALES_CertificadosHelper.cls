@@ -37,7 +37,9 @@ public with sharing class DSALES_CertificadosHelper {
                
                 mail.setTemplateId(templete.Id);
                 mail.setTargetObjectId(cuenta.PersonContactId);
+                system.debug('Cuenta: '+cuenta.PersonContactId);
                 mail.setOrgWideEmailAddressId(owa.Id);
+                
                 
                 Blob b = generarPFD(item.Id); 
                 

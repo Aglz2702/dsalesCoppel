@@ -4,5 +4,6 @@
     <externalId>false</externalId>
     <label>Fecha de compra</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Date</type>
 </CustomField>

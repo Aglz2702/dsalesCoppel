@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MX_CP_MKTP_Fecha_Hora_Aceptacion_TYC__c</fullName>
+    <description>Fecha y Hora en que aceptó el cliente los términos y condiciones del Seller</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Fecha y Hora en que aceptó el cliente los términos y condiciones del Seller</inlineHelpText>
+    <label>Fecha/Hora Aceptación TYC</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>DateTime</type>
+</CustomField>

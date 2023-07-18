@@ -16,4 +16,8 @@
             <section>Vínculos personalizados</section>
         </sections>
     </layouts>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>digitosSKU</name>
+    </validationRules>
 </CustomObjectTranslation>

@@ -13,10 +13,6 @@
         <layout>DSALES_Certificado_GEX</layout>
         <sections>
             <label></label>
-            <section>Campos</section>
-        </sections>
-        <sections>
-            <label></label>
             <section>Datos de la Sucursal</section>
         </sections>
         <sections>
@@ -25,11 +21,19 @@
         </sections>
         <sections>
             <label></label>
+            <section>Información Garantía Coppel</section>
+        </sections>
+        <sections>
+            <label></label>
             <section>Información Garantía Extendida</section>
         </sections>
         <sections>
             <label></label>
             <section>Información del Artículo</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Información del sistema</section>
         </sections>
         <sections>
             <label></label>
