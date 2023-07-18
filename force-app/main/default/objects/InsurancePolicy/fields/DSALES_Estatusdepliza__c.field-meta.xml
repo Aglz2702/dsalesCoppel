@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>dsalesEstatusPoliza__c</fullName>
+    <fullName>DSALES_Estatusdepliza__c</fullName>
     <description>Campo para revisar en que estatus se encuentra la póliza</description>
     <externalId>false</externalId>
     <label>Estatus de póliza</label>

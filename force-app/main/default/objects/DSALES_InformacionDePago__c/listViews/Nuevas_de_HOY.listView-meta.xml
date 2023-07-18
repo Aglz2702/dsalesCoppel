@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nuevas_de_HOY</fullName>
+    <columns>NAME</columns>
+    <columns>DSALES_IDUniversal1__c</columns>
+    <columns>DSALES_TipoFolio__c</columns>
+    <columns>DSALES_FolioTransaccion__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>DSALES_ProductoAdquirido__c</columns>
+    <columns>DSALES_Cliente__c</columns>
+    <columns>DSALES_Factura__c</columns>
+    <columns>DSALES_Certificado__c</columns>
+    <columns>DSALES_Nombre_del_Vendedor__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>equals</operation>
+        <value>TODAY</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>DSALES_InformacionDePago__c.DSALES_PagosdeVentaenNPVSM_c,DSALES_InformacionDePago__c.DSALES_Pagos_en_NPV</value>
+    </filters>
+    <label>Nuevas de HOY</label>
+</ListView>

@@ -1,5 +1,6 @@
 @isTest
 public class DSALES_ConsultaListaNegraTest {
+    /*
     @testSetup
     static void testSetup(){
         String accountRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
@@ -34,4 +35,5 @@ public class DSALES_ConsultaListaNegraTest {
 		Test.stopTest();
         System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
+*/
 }

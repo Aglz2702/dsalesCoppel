@@ -129,7 +129,6 @@
         </rules>
     </decisions>
     <description>Realiza el envió de un correos por cada etapa en que se encuentre el siniestro</description>
-    <environments>Default</environments>
     <interviewLabel>Envió de correo en las etapas de siniestro {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Envió de correo en las etapas de siniestro</label>
     <processMetadataValues>
@@ -159,7 +158,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Correo_electr_nico__c</field>
+            <field>dsalesCorreoElectronico__c</field>
             <operator>NotEqualTo</operator>
             <value>
                 <stringValue></stringValue>

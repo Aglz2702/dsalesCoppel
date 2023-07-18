@@ -97,6 +97,9 @@ declare module "@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesI
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList4" {
   export default function getPickListValuesIntoList4(): Promise<any>;
 }
+declare module "@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList5" {
+  export default function getPickListValuesIntoList5(): Promise<any>;
+}
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.createProductIntan" {
   export default function createProductIntan(param: {productIntan: any, sku: any}): Promise<any>;
 }

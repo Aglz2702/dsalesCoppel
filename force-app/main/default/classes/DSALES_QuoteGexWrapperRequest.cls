@@ -275,7 +275,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         List<Product2> produc = [SELECT Id,Name,StockKeepingUnit,DSALES_Categoria__c,DSALES_Clase__c,DSALES_Familia__c,DSales_Aplicaporcentajecobro__c,DSales_PorcentajeCobro__c FROM Product2 WHERE StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
         productAsig = [SELECT id, Name, DSales_Servicio_Seguro__c, DSales_Producto__c,DSALES_SKU__c FROM DSales_Asignacion_de_Productos__c WHERE DSALES_Activo__c=true AND  DSales_Producto__r.StockKeepingUnit in: mapProducts.keySet() WITH SECURITY_ENFORCED];
         system.debug('productAsig'+productAsig);
-        
         List<Id> dsalesProductoSetId = new List<Id>();
         for(DSales_Asignacion_de_Productos__c da : productAsig){
             dsalesProductoSetId.add(da.DSales_Servicio_Seguro__c);
@@ -310,8 +309,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 if(asigProduc.DSales_Producto__c == item.Product2Id){
                     intangibleId = asigProduc.DSales_Servicio_Seguro__c;
                 }
-            }
-                
+            }  
             for(PricebookEntry item2 : precioEnGEX){
                 if(item2.Product2Id == intangibleId){
                     QuoteLineItem partidapreGEX = new QuoteLineItem();
@@ -333,7 +331,6 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             }
                         }
                     }else{
-                        
                         List<dsalesAsignacionDeTienda__c> asigTienda = [SELECT id,Name, dsalesTienda__r.Name, dsalesMatriz__r.Name, dsalesMatriz__r.DSALES_Servicio__r.Name, dsalesMatriz__r.DSALES_Servicio__c,dsalesActivo__c,dsalesMatriz__c FROM dsalesAsignacionDeTienda__c WHERE dsalesTienda__c=:tienda.Id AND dsalesActivo__c=true AND dsalesMatriz__c<>null AND dsalesMatriz__r.DSALES_Servicio__c=:intangibleId WITH SECURITY_ENFORCED LIMIT 1];
                         if(asigTienda.size()>0){    
                         List<DSALES_Matriz_de_Cotizacion__c> matrizPrecio = obtenerMatricesPrecio(asigTienda[0].dsalesMatriz__c);
@@ -432,6 +429,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     intangibleId = asigProduc.DSales_Servicio_Seguro__c;
                 }
             }
+            dsalesAsignacionDeTienda__c asignacionMatriz = obtenerIdMatrizPrecio(tienda.Id,intangibleId);
             for(PricebookEntry item2 : precioEnGEX){
                 if(item2.Product2Id == intangibleId){ 
                     QuoteLineItem partidapreGEX = new QuoteLineItem();
@@ -470,8 +468,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                     }
                                 }
                             }
-                        }
-                        
+                        } 
                     }
                     if (price1 != 0.0) {
                         QuoteLineItem partidapreGEX1 = new QuoteLineItem();
@@ -583,4 +580,5 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
             return null;
         }
     }*/
+    }
 }

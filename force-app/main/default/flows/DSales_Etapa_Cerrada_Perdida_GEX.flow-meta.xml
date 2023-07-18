@@ -51,7 +51,6 @@
             <label>Cerrada Perdida</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <interviewLabel>Etapa Cerrada Perdida GEX {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Etapa Cerrada Perdida GEX</label>
     <processMetadataValues>
@@ -96,5 +95,5 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
 </Flow>

@@ -57,7 +57,7 @@
                 <indicatorHighColor>#00716B</indicatorHighColor>
                 <indicatorLowColor>#C23934</indicatorLowColor>
                 <indicatorMiddleColor>#FFB75D</indicatorMiddleColor>
-                <report>SegurosdeMotos/Clientes_con_cotizaciones_jaC</report>
+                <report>CoppelPISyS/SegurosdeMotos/Clientes_con_cotizaciones_jaC</report>
                 <showPercentage>true</showPercentage>
                 <showRange>true</showRange>
                 <showTotal>true</showTotal>
@@ -94,7 +94,7 @@
                 </groupingSortProperties>
                 <header>Cotizaciones</header>
                 <legendPosition>Right</legendPosition>
-                <report>SegurosdeMotos/Clientes_con_cotizaciones_jaC</report>
+                <report>CoppelPISyS/SegurosdeMotos/Clientes_con_cotizaciones_jaC</report>
                 <showPercentage>true</showPercentage>
                 <showTotal>true</showTotal>
                 <showValues>true</showValues>
@@ -223,7 +223,7 @@
                 </groupingSortProperties>
                 <header>Oportunidades pasada la fecha de cierre</header>
                 <legendPosition>Right</legendPosition>
-                <report>SegurosdeMotos/FinServ__Client_Opportunities_Past_Close_Date</report>
+                <report>FinServ__Advisor_Reports/FinServ__Client_Opportunities_Past_Close_Date</report>
                 <showPercentage>true</showPercentage>
                 <showValues>true</showValues>
                 <sortBy>RowLabelAscending</sortBy>

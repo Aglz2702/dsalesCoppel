@@ -5,11 +5,11 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>dashboardName</name>
-                    <value>WKEgdHadQdsLxqKdOxltMNwbiGcBqw</value>
+                    <value>WKEgdHadQdsLxqKdOxltMNwbiGcBqw2</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>height</name>
-                    <value>350</value>
+                    <value>450</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideOnError</name>
@@ -23,7 +23,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>dashboardName</name>
-                    <value>qlMoAFAafYUpLidIIquKMuGnVMWNiU1</value>
+                    <value>qlMoAFAafYUpLidIIquKMuGnVMWNiU11</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideOnError</name>
@@ -38,23 +38,11 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentName>home:eventContainer</componentName>
-                <identifier>home_eventContainer</identifier>
-            </componentInstance>
-        </itemInstances>
         <mode>Replace</mode>
         <name>bottomLeft</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentName>runtime_sales_activities:todayTaskContainer</componentName>
-                <identifier>runtime_sales_activities_todayTaskContainer</identifier>
-            </componentInstance>
-        </itemInstances>
         <mode>Replace</mode>
         <name>bottomRight</name>
         <type>Region</type>
@@ -64,6 +52,19 @@
             <componentInstance>
                 <componentName>home:topDealsContainer</componentName>
                 <identifier>home_topDealsContainer</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Administrador GEX</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!$User.Profile.Name}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Administrador del sistema</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

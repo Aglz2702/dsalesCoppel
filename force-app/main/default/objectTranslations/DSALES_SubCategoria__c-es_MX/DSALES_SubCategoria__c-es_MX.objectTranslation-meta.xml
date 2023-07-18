@@ -9,4 +9,37 @@
         <value>SubCategorias</value>
     </caseValues>
     <gender>Feminine</gender>
+    <layouts>
+        <layout>DSALES_Formato Producto Tangible</layout>
+        <sections>
+            <label></label>
+            <section>Vínculos personalizados</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>DSALES_SM</layout>
+        <sections>
+            <label></label>
+            <section>Vínculos personalizados</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>dsalesServicios</layout>
+        <sections>
+            <label></label>
+            <section>Vínculos personalizados</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label></label>
+        <name>DSALES_SM</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>DSales_Producto_Tangible</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>dsalesServicios</name>
+    </recordTypes>
 </CustomObjectTranslation>

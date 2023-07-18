@@ -9,8 +9,12 @@ public without sharing class DSALES_InsurancePolicyHandler extends fflib_SObject
             return new DSALES_InsurancePolicyHandler(sObjectList);
         }
     }
+    /*
 
     public override void onAfterUpdate(Map<Id,SObject> existingRecords){
-        DSALES_UpdateInfoPago.cancelarPoliza(existingRecords, records);   
+        System.debug('After update');
+        DSALES_UpdateInfoPago.cancelarPoliza(existingRecords, records);
+        
     }
+*/
 }

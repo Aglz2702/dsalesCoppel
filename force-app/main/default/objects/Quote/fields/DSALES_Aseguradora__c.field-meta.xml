@@ -13,7 +13,7 @@
             <value>
                 <fullName>Qualitas</fullName>
                 <default>true</default>
-                <label>Qualitas</label>
+                <label>qualitas</label>
             </value>
         </valueSetDefinition>
     </valueSet>

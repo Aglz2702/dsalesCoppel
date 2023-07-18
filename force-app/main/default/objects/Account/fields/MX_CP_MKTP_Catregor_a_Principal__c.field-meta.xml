@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MX_CP_MKTP_Catregor_a_Principal__c</fullName>
+    <externalId>false</externalId>
+    <label>Categoría Principal</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Animales y Mascotas</fullName>
+                <default>false</default>
+                <label>Animales y Mascotas</label>
+            </value>
+            <value>
+                <fullName>Automotriz</fullName>
+                <default>false</default>
+                <label>Automotriz</label>
+            </value>
+            <value>
+                <fullName>Calzado, Ropa y Accesorios</fullName>
+                <default>false</default>
+                <label>Calzado, Ropa y Accesorios</label>
+            </value>
+            <value>
+                <fullName>Celulares y Telefonía</fullName>
+                <default>false</default>
+                <label>Celulares y Telefonía</label>
+            </value>
+            <value>
+                <fullName>Consolas y videojuegos</fullName>
+                <default>false</default>
+                <label>Consolas y videojuegos</label>
+            </value>
+            <value>
+                <fullName>Deportes y Aire Libre</fullName>
+                <default>false</default>
+                <label>Deportes y Aire Libre</label>
+            </value>
+            <value>
+                <fullName>Electrónica</fullName>
+                <default>false</default>
+                <label>Electrónica</label>
+            </value>
+            <value>
+                <fullName>Herramientas y Mejoras para el Hogar</fullName>
+                <default>false</default>
+                <label>Herramientas y Mejoras para el Hogar</label>
+            </value>
+            <value>
+                <fullName>Hogar y Jardín</fullName>
+                <default>false</default>
+                <label>Hogar y Jardín</label>
+            </value>
+            <value>
+                <fullName>Industrias y Oficinas</fullName>
+                <default>false</default>
+                <label>Industrias y Oficinas</label>
+            </value>
+            <value>
+                <fullName>Instrumentos Musicales</fullName>
+                <default>false</default>
+                <label>Instrumentos Musicales</label>
+            </value>
+            <value>
+                <fullName>Juguetes</fullName>
+                <default>false</default>
+                <label>Juguetes</label>
+            </value>
+            <value>
+                <fullName>Lentes y Joyería</fullName>
+                <default>false</default>
+                <label>Lentes y Joyería</label>
+            </value>
+            <value>
+                <fullName>Libros, Revistas y Comics</fullName>
+                <default>false</default>
+                <label>Libros, Revistas y Comics</label>
+            </value>
+            <value>
+                <fullName>Productos Para Bebés y Niños Pequeños</fullName>
+                <default>false</default>
+                <label>Productos Para Bebés y Niños Pequeños</label>
+            </value>
+            <value>
+                <fullName>Relojes</fullName>
+                <default>false</default>
+                <label>Relojes</label>
+            </value>
+            <value>
+                <fullName>Salud, Belleza y Cuidado Personal</fullName>
+                <default>false</default>
+                <label>Salud, Belleza y Cuidado Personal</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

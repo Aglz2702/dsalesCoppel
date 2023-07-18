@@ -24,10 +24,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_ActualizarSiniestroTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_AssetWrapper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -124,14 +120,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_CreateDocument</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_CreateDocumentTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_CreateInsurancePolicy</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -141,22 +129,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_DocumentsToTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_EndorsementCalls</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_EndorsementCallsTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_EndorsementController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_EndorsementController_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -177,11 +149,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_EndosoWrapperRequest_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-   
-    <classAccesses>
-        <apexClass>DSALES_GetPolicyPDF</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -316,10 +283,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_QuotePagoSM</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_QuotePagoSMHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

@@ -4,7 +4,6 @@
     <description>Informa al cliente el rechazo de su endoso</description>
     <encodingKey>UTF-8</encodingKey>
     <name>Plantilla para envió de estatus en rechazo</name>
-    <pageDevName>Plantilla_para_envi_de_estatus_en_tramite</pageDevName>
     <relatedEntityType>DSALES_Endoso__c</relatedEntityType>
     <style>none</style>
     <subject>Endoso rechazado</subject>

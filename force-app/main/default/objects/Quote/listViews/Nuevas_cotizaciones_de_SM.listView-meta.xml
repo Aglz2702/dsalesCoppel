@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nuevas_cotizaciones_de_SM</fullName>
+    <columns>QUOTE.NAME</columns>
+    <columns>dsalesOpcionDePago__c</columns>
+    <columns>DSALES_TipoUso__c</columns>
+    <columns>dsalesTipoDeVehiculo__c</columns>
+    <columns>dsalesIdDeVehiculo__c</columns>
+    <columns>QUOTE.ISSYNCING</columns>
+    <columns>QUOTE.SUBTOTAL</columns>
+    <columns>QUOTE.TOTALPRICE</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>DSALES_fechadecreacion__c</columns>
+    <columns>dsalesValorFactura__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>DSALES_Tipodevehculo__c</field>
+        <operation>contains</operation>
+        <value>Moto,Carro,Pick up</value>
+    </filters>
+    <filters>
+        <field>dsalesTipoDeVehiculo__c</field>
+        <operation>contains</operation>
+        <value>MOTO</value>
+    </filters>
+    <label>Nuevas cotizaciones de SM</label>
+</ListView>

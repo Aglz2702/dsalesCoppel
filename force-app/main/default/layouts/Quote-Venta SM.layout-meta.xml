@@ -134,7 +134,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>DSALES_Tipodevehculo__c</field>
+                <field>dsalesTipoDeVehiculo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -320,7 +320,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h6w000000FP0R</masterLabel>
+        <masterLabel>00h75000000NAey</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

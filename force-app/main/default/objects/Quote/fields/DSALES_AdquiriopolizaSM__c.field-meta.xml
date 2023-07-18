@@ -5,5 +5,6 @@
     <description>Campo que se seleccionara si es que el cliente adquirió una póliza.</description>
     <externalId>false</externalId>
     <label>Adquirió póliza SM</label>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>
