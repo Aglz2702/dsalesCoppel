@@ -133,7 +133,6 @@
         </value>
     </constants>
     <description>Notificación de nuevos productos con redireccion a administrador de servicios y productos</description>
-    <environments>Default</environments>
     <interviewLabel>Notificación de nuevo SKU {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Notificación de nuevo producto</label>
     <loops>

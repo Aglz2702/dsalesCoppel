@@ -10,5 +10,6 @@
     </summaryFilterItems>
     <summaryForeignKey>QuoteLineItem.QuoteId</summaryForeignKey>
     <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
     <type>Summary</type>
 </CustomField>

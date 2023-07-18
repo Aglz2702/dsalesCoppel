@@ -168,8 +168,8 @@
     <pluralLabel>Tipos de vehículos</pluralLabel>
     <searchLayouts>
         <excludedStandardButtons>Import</excludedStandardButtons>
-        <excludedStandardButtons>PrintableListView</excludedStandardButtons>
         <excludedStandardButtons>MassChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>PrintableListView</excludedStandardButtons>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

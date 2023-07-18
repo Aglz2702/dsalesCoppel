@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_PhoneDigitsCheck</fullName>
+    <active>true</active>
+    <description>Validar que la captura del teléfono celular, fijo, oficina, otros tengan 10 dígitos para los ejecutivos de atención.</description>
+    <errorConditionFormula>$Profile.Name = &apos;Usuario Atencion Clientes&apos; &amp;&amp; 
+(
+  ( !ISBLANK( PersonAssistantPhone ) &amp;&amp;  
+    (
+     LEN(PersonAssistantPhone ) &lt;&gt; 10 || 
+     !ISNUMBER(PersonAssistantPhone) 
+    ) 
+  ) ||
+  ( !ISBLANK( PersonHomePhone ) &amp;&amp;  
+    (
+     LEN(PersonHomePhone ) &lt;&gt; 10 || 
+     !ISNUMBER(PersonHomePhone) 
+    ) 
+  ) ||
+  ( !ISBLANK( PersonOtherPhone ) &amp;&amp;  
+    (
+     LEN(PersonOtherPhone ) &lt;&gt; 10 || 
+     !ISNUMBER(PersonOtherPhone) 
+    ) 
+  ) ||
+  ( !ISBLANK( Phone ) &amp;&amp;  
+    (
+     LEN(Phone ) &lt;&gt; 10 || 
+     !ISNUMBER(Phone) 
+    ) 
+  ) ||
+  ( !ISBLANK( PersonMobilePhone ) &amp;&amp;  
+    (
+     LEN(PersonMobilePhone ) &lt;&gt; 10 || 
+     !ISNUMBER(PersonMobilePhone) 
+    ) 
+  )
+)</errorConditionFormula>
+    <errorMessage>Los teléfonos o celulares de contacto deben tener 10 dígitos.</errorMessage>
+</ValidationRule>

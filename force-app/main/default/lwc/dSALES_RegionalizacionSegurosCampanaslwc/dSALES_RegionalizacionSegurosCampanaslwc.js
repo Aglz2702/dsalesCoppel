@@ -4,7 +4,9 @@ import getPicklistOptionsDependent from '@salesforce/apex/DSALES_Regionalizacion
 import getPickListRegiones from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.getPickListRegiones';
 import vinculacionTiendaCampana from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.vinculacionTiendaCampana';
 import getPickListTiendas from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.getPickListTiendas';
-
+import seleccionCampanaMatriz from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.seleccionCampanaMatriz';
+import vinculacionTiendaMatriz from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.vinculacionTiendaMatriz';
+import getPickListTiendasMatriz from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.getPickListTiendasMatriz';
 
 export default class DSALES_RegionalizacionSegurosCampanaslwc extends LightningElement {
   @api recordId
@@ -16,12 +18,26 @@ export default class DSALES_RegionalizacionSegurosCampanaslwc extends LightningE
   vincular= true;
   desvincular=false;
   listTiendasActivas=[];
+  seleccionCampMat='';
 
   connectedCallback() {
     this.init();
   }
 
   init() {
+    seleccionCampanaMatriz({ idSelected: this.recordId})
+    .then(result => {
+      console.log(result);
+        this.seleccionCampMat = result;
+        if(this.seleccionCampMat=='campana'){
+          this.getListTiendas();
+        }else if(this.seleccionCampMat=='matriz'){  
+          this.getListTiendasMatriz();
+        }      
+    })
+    .catch(error => {
+        console.log(error);
+    });  
     getPickListRegiones()
     .then(result => {
       console.log(this.recordId);
@@ -32,9 +48,8 @@ export default class DSALES_RegionalizacionSegurosCampanaslwc extends LightningE
     .catch(error => {
         this.showSpinner = false;
         console.log(error);
-    });      
-    this.getListTiendas();
-           
+    });
+ 
     this.checkRegion = false;
     this.checkCiudad = false;
     this.checkTienda = false;
@@ -154,18 +169,48 @@ getListTiendas(){
   });
 }
 
+getListTiendasMatriz(){
+  getPickListTiendasMatriz({idMatriz: this.recordId})
+  .then(result => {
+      this.listTiendasActivas = result;
+      this.showSpinner = false;
+  })
+  .catch(error => {
+      this.showSpinner = false;
+      console.log(error);
+  });
+}
 
 guardarAsignacion(){
-  vinculacionTiendaCampana({ dataJsonTienda: JSON.stringify(this.data.listTiendas), idCampana: this.recordId, vincular: this.vincular})
-            .then(result => {
-                console.log(result);
-                this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
-                this.getListTiendas();
-            }).catch(error => {
-                console.log(error);
-                this.showSpinner = false;
-                this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
-            });
+  console.log( this.seleccionCampMat);
+  if(this.seleccionCampMat== 'campana'){
+    vinculacionTiendaCampana({ dataJsonTienda: JSON.stringify(this.data.listTiendas), idCampana: this.recordId, vincular: this.vincular})
+    .then(result => {
+        console.log(result);
+        this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
+        this.getListTiendas();
+    }).catch(error => {
+        console.log(error);
+        this.showSpinner = false;
+        this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
+    });
+  }
+  else if(this.seleccionCampMat== 'matriz'){
+    vinculacionTiendaMatriz({ dataJsonTienda: JSON.stringify(this.data.listTiendas), idMatriz: this.recordId, vincular: this.vincular})
+    .then(result => {
+        console.log(result);
+        this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
+        this.getListTiendasMatriz();
+    }).catch(error => {
+        console.log(error);
+        this.showSpinner = false;
+        this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
+    });
+  }
+  else{
+    this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
+  }
+ 
     }
   
 opcionVincular(event){

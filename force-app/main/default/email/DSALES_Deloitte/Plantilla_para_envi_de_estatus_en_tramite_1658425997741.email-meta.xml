@@ -4,7 +4,6 @@
     <description>Informa al cliente que el endoso esta en tramite</description>
     <encodingKey>UTF-8</encodingKey>
     <name>Plantilla para envió de estatus en tramite</name>
-    <pageDevName>Plantilla_para_envi_de_estatus_en_tramite1</pageDevName>
     <relatedEntityType>DSALES_Endoso__c</relatedEntityType>
     <style>none</style>
     <subject>Endoso en tramite</subject>

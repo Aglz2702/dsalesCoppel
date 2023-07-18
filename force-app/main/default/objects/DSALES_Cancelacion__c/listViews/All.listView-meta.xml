@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>DSALES_Canal__c</columns>
+    <columns>DSALES_Estatus__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>DSALES_FolioCancelacion__c</columns>
+    <columns>DSALES_Informaciondepago__c</columns>
+    <columns>DSALES_MotivoCancelacion__c</columns>
     <filterScope>Everything</filterScope>
     <label>Todos</label>
 </ListView>

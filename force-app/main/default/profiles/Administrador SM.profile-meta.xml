@@ -29,10 +29,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_ActualizarSiniestroTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_AssetWrapper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -141,14 +137,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_CreateDocument</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_CreateDocumentTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_CreateInsurancePolicy</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -158,10 +146,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_DocumentsToTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_EndorsementController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -178,11 +162,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_EndosoWrapperRequest_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    
-    <classAccesses>
-        <apexClass>DSALES_GetPolicyPDF</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -328,10 +307,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_QuotePagoSMHelper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_QuotePagoSmTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -380,10 +355,6 @@
     <classAccesses>
         <apexClass>DSALES_Siniestro</apexClass>
         <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_SiniestroCalls</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_SiniestroController</apexClass>

@@ -6,6 +6,7 @@
     <label>Forma de Pago</label>
     <length>40</length>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

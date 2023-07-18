@@ -8,5 +8,6 @@
     <relationshipLabel>Partidas de presupuesto (Familia)</relationshipLabel>
     <relationshipName>Partidas_de_presupuesto4</relationshipName>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Lookup</type>
 </CustomField>

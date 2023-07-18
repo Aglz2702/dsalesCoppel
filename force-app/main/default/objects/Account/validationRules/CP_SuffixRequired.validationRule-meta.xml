@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_SuffixRequired</fullName>
+    <active>false</active>
+    <description>El campo Apellido Materno debe ser requerido.</description>
+    <errorConditionFormula>AND( ISBLANK( Suffix )
+    ,$Permission.CP_CatchAccountVR = TRUE
+   )</errorConditionFormula>
+    <errorDisplayField>Suffix</errorDisplayField>
+    <errorMessage>El Apellido Materno es requerido.</errorMessage>
+</ValidationRule>

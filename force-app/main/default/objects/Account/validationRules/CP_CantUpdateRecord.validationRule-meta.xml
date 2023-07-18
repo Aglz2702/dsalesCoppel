@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_CantUpdateRecord</fullName>
+    <active>true</active>
+    <description>No se debe permitir la actualización de los datos del Cliente.</description>
+    <errorConditionFormula>AND( 
+    NOT( ISNEW() ),
+				Desde_Integracion__c = FALSE,
+    $Permission.CP_CatchAccountVR = TRUE,
+    NOT(ISCHANGED(CP_FlagYalo__pc)) 
+)</errorConditionFormula>
+    <errorMessage>Por el momento no es posible actualizar los datos del Cliente.</errorMessage>
+</ValidationRule>

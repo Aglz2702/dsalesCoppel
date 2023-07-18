@@ -1154,11 +1154,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>A_o_anterior__c</field>
-            <table>Account.Opportunities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Muebles__c</field>
             <table>Account.Opportunities</table>
         </columns>
@@ -1195,6 +1190,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DSales_Ingresos_GEX__c</field>
+            <table>Account.Opportunities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DSales_Compra__c</field>
+            <table>Account.Opportunities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DSales_Colaborador__c</field>
+            <table>Account.Opportunities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dsalesIduVenta__c</field>
             <table>Account.Opportunities</table>
         </columns>
         <masterLabel>Oportunidades</masterLabel>
@@ -1360,22 +1370,27 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_Vendido__c</field>
-            <table>Account.Opportunities.OpportunityLineItems</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_Producto__c</field>
-            <table>Account.Opportunities.OpportunityLineItems</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>DSALES_Servicio__c</field>
             <table>Account.Opportunities.OpportunityLineItems</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DSALES_PrecioServ__c</field>
+            <table>Account.Opportunities.OpportunityLineItems</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DSALES_Estatus__c</field>
+            <table>Account.Opportunities.OpportunityLineItems</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DSALES_Duracion__c</field>
+            <table>Account.Opportunities.OpportunityLineItems</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DSALES_FolioCertificado__c</field>
             <table>Account.Opportunities.OpportunityLineItems</table>
         </columns>
         <masterLabel>Producto de oportunidad</masterLabel>

@@ -100,9 +100,28 @@ public class DSALES_PolizaWrapperTest {
         RestResponse response = new RestResponse();
         DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Oportunidad__c,DSALES_Poliza__c,DSALES_IDUniversal1__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:'0000000000000001' WITH SECURITY_ENFORCED];
         InsurancePolicy pol = [SELECT Id,dsalesQuoteId__c FROM Insurancepolicy LIMIT 1];
-        System.debug('idUnivesal test:'+pago.DSALES_IDUniversal1__c);
-        String body='{"quote":"98765432","quote_id":"'+pol.dsalesQuoteId__c+'","idEmision":"87654321","trackingId":"098765432187654","numeroPoliza":"9999999999","fechaVigencia":"2023-05-02","fechaVencimiento":"2023-05-30","fechaEmision":"2023-05-02","sumaAsegurada":"234.5","primaNeta":"123.5","primaTotal":"324.1","gastosExpedicion":"234.5","iva":12.4,"urlPdf":"www.pruebaurlpoliza.com"}';
-        request.requestURI='/apexrest/obternerPoliza'; 
+        String body='{"quote":"'+pol.dsalesQuoteId__c+'","quoteId":"0684131655","idEmision":"87654321","trackingId":"098765432187654","numeroPoliza":"0000011111111","fechaVigencia":"2023-05-09","fechaVencimiento":"2023-05-30","fechaEmision":"2023-05-09","sumaAsegurada":"234.5","primaNeta":"123.5","primaTotal":"324.1","gastosExpedicion":"234.5","iva":12.4,"urlPdf":"www.pruebaurlpoliza.com","mensaje":""}';
+       	request.requestURI='/apexrest/obternerPoliza'; 
+        request.httpMethod='PUT'; 
+        RestContext.request=request;
+        request.requestBody=Blob.valueOf(body);
+        RestContext.response=response;
+        DSALES_PolizaWrapper.Request poliza=(DSALES_PolizaWrapper.Request)JSON.deserialize (body,DSALES_PolizaWrapper.Request.class);
+        Test.startTest();
+        DSALES_NuevaPoliza.actualizarPoliza();
+        Test.stopTest();
+        RestContext.request = request;
+        RestContext.response= response;
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
+    }
+    @isTest
+    public static void actualizarSinIndentificador(){
+        RestRequest request=new RestRequest();
+        RestResponse response = new RestResponse();
+        DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_Oportunidad__c,DSALES_Poliza__c,DSALES_IDUniversal1__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c=:'0000000000000001' WITH SECURITY_ENFORCED];
+        InsurancePolicy pol = [SELECT Id,dsalesQuoteId__c FROM Insurancepolicy LIMIT 1];
+        String body='{"quote":"","quoteId":"0684131655","idEmision":"87654321","trackingId":"098765432187654","numeroPoliza":"0000011111111","fechaVigencia":"2023-05-09","fechaVencimiento":"2023-05-30","fechaEmision":"2023-05-09","sumaAsegurada":"234.5","primaNeta":"123.5","primaTotal":"324.1","gastosExpedicion":"234.5","iva":12.4,"urlPdf":"www.pruebaurlpoliza.com","mensaje":""}';
+       	request.requestURI='/apexrest/obternerPoliza'; 
         request.httpMethod='PUT'; 
         RestContext.request=request;
         request.requestBody=Blob.valueOf(body);

@@ -64,6 +64,24 @@
                 <label>Actualización de color</label>
             </value>
             <value>
+                <fullName>Cambio No. motor</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cambio No. motor</label>
+            </value>
+            <value>
+                <fullName>Cambio No. serie</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cambio No. serie</label>
+            </value>
+            <value>
+                <fullName>Cambio de dirección</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cambio de dirección</label>
+            </value>
+            <value>
                 <fullName>Cambio de titular</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

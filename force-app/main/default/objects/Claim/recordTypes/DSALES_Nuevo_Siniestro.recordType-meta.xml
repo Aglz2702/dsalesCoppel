@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DSALES_Nuevo_Siniestro</fullName>
     <active>true</active>
+    <compactLayoutAssignment>DSALES_Formato_compacto_siniestro</compactLayoutAssignment>
     <label>Nuevo Siniestro</label>
     <picklistValues>
         <picklist>ClaimReasonType</picklist>
@@ -57,10 +58,6 @@
         </values>
         <values>
             <fullName>Pagado</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pendiente de información</fullName>
             <default>false</default>
         </values>
         <values>

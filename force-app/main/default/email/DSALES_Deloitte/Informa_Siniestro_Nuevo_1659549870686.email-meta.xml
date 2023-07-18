@@ -4,7 +4,6 @@
     <description>Informa al Cliente estatus Nuevo de Siniestro</description>
     <encodingKey>UTF-8</encodingKey>
     <name>Informa Siniestro Nuevo</name>
-    <pageDevName>Informa_Siniestro_Nuevo</pageDevName>
     <relatedEntityType>Claim</relatedEntityType>
     <style>none</style>
     <subject>Informa nuevo siniestro</subject>

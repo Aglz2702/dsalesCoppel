@@ -1,8 +1,8 @@
 public class DSALES_Utility {
     
     public static final String NUMERO_CLIENTE_GENERICO = '90001';
-    public static final String BAD_REQUEST_MSJ = 'Malformed JSON: Expected';
-    public static final String INTERNAL_ERROR_MSJ = 'Internal Error';
+    public static final String BAD_REQUEST_MSJ = 'JSON Malformado Esperado';
+    public static final String INTERNAL_ERROR_MSJ = 'Error Interno';
     public static final Integer BAD_REQUEST_CODE = 400;
     public static final Integer INTERNAL_ERROR_CODE = 500;
     public static final String SEGURO_PREDETERMINADO = 'PÓLIZA UNIVERSAL';

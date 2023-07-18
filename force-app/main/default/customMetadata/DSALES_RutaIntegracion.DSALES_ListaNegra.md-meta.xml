@@ -4,6 +4,6 @@
     <protected>false</protected>
     <values>
         <field>DSALES_Endpoint__c</field>
-        <value xsi:type="xsd:string">https://1398fd0d-13e8-4a08-8b26-f4ea413b8093.mock.pstmn.io/ListaNegra</value>
+        <value xsi:type="xsd:string">https://inter-pisys-sys-api.us-e2.cloudhub.io/api/black-list</value>
     </values>
 </CustomMetadata>

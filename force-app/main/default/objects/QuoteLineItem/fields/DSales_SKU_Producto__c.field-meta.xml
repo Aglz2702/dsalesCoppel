@@ -8,5 +8,6 @@
     <relationshipLabel>Partidas de presupuesto</relationshipLabel>
     <relationshipName>Partidas_de_presupuesto</relationshipName>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <type>Lookup</type>
 </CustomField>

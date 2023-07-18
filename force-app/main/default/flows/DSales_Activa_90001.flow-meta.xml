@@ -24,7 +24,6 @@
         </rules>
     </decisions>
     <description>Activa check que verificar si un cliente es de contado o crédito</description>
-    <environments>Default</environments>
     <interviewLabel>Activa 90001 {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activa 90001</label>
     <processMetadataValues>

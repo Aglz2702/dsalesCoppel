@@ -19,12 +19,15 @@ public class DSALES_QuoteSmWrapperTest {
         requestnpv.telefonoCelular = 'dato';
         requestnpv.correoElectronico = 'dato';
         requestnpv.generoContacto = 'dato';
-        requestnpv.fechaNacimiento = date.newInstance(1991, 2, 15);
+        //requestnpv.fechaNacimiento = date.newInstance(1991, 2, 15);
+        requestnpv.fechaNacimiento ='20-02-03';
         requestnpv.codigoPostal = 'dato';
         requestnpv.idVehiculo = 'dato';
         requestnpv.opcionPago = 'dato';
-        requestnpv.fechaInicio = date.newInstance(1991, 2, 15);
-        requestnpv.precioProducto = 'dato';
+        //requestnpv.fechaInicio = date.newInstance(1991, 2, 15);
+        requestnpv.fechaInicio ='23-02-03';
+        //requestnpv.precioProducto = 'dato';
+        requestnpv.precioProducto = 1234;
         requestnpv.sku = 'dato';
         
         DSALES_QuoteSmWrapper.QuotePostProvedor requesAInter = new DSALES_QuoteSmWrapper.QuotePostProvedor();
@@ -71,15 +74,15 @@ public class DSALES_QuoteSmWrapperTest {
         DSALES_QuoteSmWrapper.Receipt recep = new DSALES_QuoteSmWrapper.Receipt();
         recep.numero=1;
         recep.comision='12';
-        recep.fechaTermino='10-12';
+        //recep.fechaTermino='10-12';
         //recep.netPremium='12';
         recep.recargo='12';
-        recep.derechosPoliza='12';
+        //recep.derechosPoliza='12';
         recep.fechaInicio='12-12';
         recep.impuestos='12';
         //recep.totalPremium='12';
-        recep.pagoTotalEfectivo = 'dato prueba';
-        recep.pagoMensual = 'dato prueba';
+        //recep.pagoTotalEfectivo = 'dato prueba';
+        //recep.pagoMensual = 'dato prueba';
        	
         DSALES_QuoteSmWrapper.RespuestaPlazos plazos = new DSALES_QuoteSmWrapper.RespuestaPlazos();
         plazos.trackingId = 'dato prueba';

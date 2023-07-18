@@ -11,8 +11,6 @@
 
 @isTest
 public class DSALES_PaymentInfoWrapperGexTest {
-    /*
-
     @testSetup
     static void setUp(){  
         Account acc = new Account();
@@ -46,5 +44,4 @@ public class DSALES_PaymentInfoWrapperGexTest {
         RestContext.request = req;
         RestContext.response= res;
     }
-    */
 }

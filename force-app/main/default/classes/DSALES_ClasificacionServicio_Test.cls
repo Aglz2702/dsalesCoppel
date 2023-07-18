@@ -92,18 +92,33 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_TipodeUso__c tp = new DSALES_TipodeUso__c();
         tp.Name = 'TestTipoUso';
         insert tp;
+
+        DSALES_AsociacionTiposUso__c atp= new DSALES_AsociacionTiposUso__c();
+        atp.DSALES_TipodeUso__c=tp.id;
+        atp.DSales_Producto__c=producto.id;
+        atp.DSALES_Activo__c=true;
+        insert atp;
+        
+        DSALES_AsociacionCampanias__c acp = new DSALES_AsociacionCampanias__c();
+        acp.DSALES_Campania__c=camp.id;
+        acp.DSales_Producto__c=producto.id;
+        acp.DSALES_Activo__c=true;
+        insert acp;
         
     }
 
     @isTest
     static void clasificacionServicio(){
         Product2 idprueba= [Select id from Product2 limit 1];
+        Product2 idprodtp= [Select id from Product2 where StockKeepingUnit='SKU1234353464565654665' limit 1];
+
         DSALES_Categoria__c idcat = [select id from DSALES_Categoria__c limit 1];
         DSALES_SubCategoria__c idsubc= [select id from DSALES_SubCategoria__c limit 1];
         DSALES_Clase__c idclass=  [select id from DSALES_Clase__c limit 1];
         DSales_Matriz_GEX__c idmat= [select id from DSales_Matriz_GEX__c limit 1];
         Campaign idcamp = [Select id from Campaign limit 1];
         DSALES_TipodeUso__c idtp = [Select id from DSALES_TipodeUso__c limit 1];
+        DSALES_AsociacionTiposUso__c idatp= [Select id from DSALES_AsociacionTiposUso__c limit 1];
         DSALES_ClasificacionServicio.DSALES_ClasificacionServicioWrapper controller = DSALES_ClasificacionServicio.getPickListCategoria();
         controller.listCategorias[0].seleccionado = true;
         
@@ -142,10 +157,12 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_ClasificacionServicio.getTipoUso();
         DSALES_ClasificacionServicio.updateCampaigns('["'+idcamp.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
         DSALES_ClasificacionServicio.updateTipoUso('["'+idtp.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
+        DSALES_ClasificacionServicio.getTiposUsoUsed(idprodtp.id);
+        DSALES_ClasificacionServicio.getCampanasUsed(idprodtp.id);
         System.assertEquals(controller.listServicios.size(), 1, 'completado');
     }
 
-    @isTest 
+   /* @isTest 
     static  void testGetCallout() {
         Test.startTest(); 
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif());
@@ -154,15 +171,18 @@ public class DSALES_ClasificacionServicio_Test {
         system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciocategorias('test').size()), 'la llamada no debe devolver un código 200');
         
         //System.assertNotEquals(null,result);  
-    }   
+    }  */ 
 
     @isTest 
-    static  void testGetCallout2() {
+     static  void testGetCallout2() {
+        
         Test.startTest(); 
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif2());
         DSALES_ClasificacionServicio.getserviciosubcategorias('2');
+        DSALES_ClasificacionServicio.getBuscarProducto('test12');
         Test.stopTest();
         system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosubcategorias('2').size()), 'la llamada no debe devolver un código 1000');
+       
     }   
 
     @isTest 

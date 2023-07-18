@@ -4,7 +4,6 @@
     <description>Informa al Cliente estatus Completado de Siniestro</description>
     <encodingKey>UTF-8</encodingKey>
     <name>Informa Siniestro Completado</name>
-    <pageDevName>Informa_Siniestro_Completado</pageDevName>
     <relatedEntityType>Claim</relatedEntityType>
     <style>none</style>
     <subject>Informa siniestro completado</subject>
