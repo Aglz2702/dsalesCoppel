@@ -3,10 +3,10 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>DSALES_TipoProducto__c</columns>
-    <columns>DSALES_TipoSeguro__c</columns>
     <columns>DSALES_TipoServicio__c</columns>
-    <columns>DSales_IDexterior__c</columns>
     <columns>CREATED_DATE</columns>
+    <columns>RECORDTYPE</columns>
+    <columns>OWNER.FIRST_NAME</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

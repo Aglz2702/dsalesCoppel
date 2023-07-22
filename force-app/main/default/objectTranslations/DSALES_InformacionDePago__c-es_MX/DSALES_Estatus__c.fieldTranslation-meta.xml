@@ -10,4 +10,8 @@
         <masterLabel>No Acreditado</masterLabel>
         <translation></translation>
     </picklistValues>
+    <picklistValues>
+        <masterLabel>Reembolso</masterLabel>
+        <translation></translation>
+    </picklistValues>
 </CustomFieldTranslation>

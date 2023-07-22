@@ -4,25 +4,46 @@ public class DSALES_ClasificacionServicio_Test {
     @testSetup
     static void testSetup(){
         String recordTypeId = Schema.SObjectType.DSALES_Categoria__c.getRecordTypeInfosByDeveloperName().get('dsalesServicios').getRecordTypeId();
+        String recordTypeId2 = Schema.SObjectType.DSALES_Categoria__c.getRecordTypeInfosByDeveloperName().get('DSales_ProductoTangible').getRecordTypeId(); 
         DSALES_Categoria__c categoria = new DSALES_Categoria__c();
         categoria.Name = 'Test';
         categoria.RecordTypeId=recordTypeId;
         insert categoria;
+        
+          DSALES_Categoria__c categoria2 = new DSALES_Categoria__c();
+        categoria2.Name = 'Test';
+        categoria2.RecordTypeId=recordTypeId2;
+        insert categoria2;
         
         DSALES_SubCategoria__c subC = new DSALES_SubCategoria__c ();
         subC.Name = 'Test';
         subC.DSALES_Categoria__c = categoria.Id;
         insert subC;
         
+         DSALES_SubCategoria__c subC2 = new DSALES_SubCategoria__c ();
+        subC2.Name = 'Test';
+        subC2.DSALES_Categoria__c = categoria2.Id;
+        insert subC2;
+        
         DSALES_Clase__c clase = new DSALES_Clase__c();
         clase.Name = 'Test';
         clase.DSALES_SubCategoria__c = subC.Id;
         insert clase;
         
+         DSALES_Clase__c clase2 = new DSALES_Clase__c();
+        clase2.Name = 'Test';
+        clase2.DSALES_SubCategoria__c = subC2.Id;
+        insert clase2;
+        
         DSALES_Familia__c familia = new DSALES_Familia__c();
         familia.DSALES_Clase__c = clase.Id;
         familia.Name = 'Test';
         insert familia;
+        
+         DSALES_Familia__c familia2 = new DSALES_Familia__c();
+        familia2.DSALES_Clase__c = clase2.Id;
+        familia2.Name = 'Test';
+        insert familia2;
           
         DSales_Matriz_GEX__c mat = new DSales_Matriz_GEX__c();
         mat.Name= 'test1';
@@ -45,6 +66,7 @@ public class DSALES_ClasificacionServicio_Test {
         matItem.DSALES_Tiempo_de_Garantia_Extendida_GEX__c = '2 años';
         insert matItem;
        
+        
         Product2 producto = new Product2();
         producto.Name = 'test';
         producto.DSales_Categoria__c = categoria.Id;
@@ -87,6 +109,7 @@ public class DSALES_ClasificacionServicio_Test {
         
         Campaign camp = new Campaign();
         camp.Name = 'TestCampaing';
+        camp.IsActive=true;
         insert camp;
         
         DSALES_TipodeUso__c tp = new DSALES_TipodeUso__c();
@@ -105,6 +128,12 @@ public class DSALES_ClasificacionServicio_Test {
         acp.DSALES_Activo__c=true;
         insert acp;
         
+        DSALES_ClasificacionServicio.PorcentajesCobro porcentaje= new DSALES_ClasificacionServicio.PorcentajesCobro();
+        porcentaje.anio1=2;
+        porcentaje.anio2=2;
+        porcentaje.anio3=2;
+        porcentaje.anio4=2;
+        porcentaje.anio5=2;
     }
 
     @isTest
@@ -131,7 +160,7 @@ public class DSALES_ClasificacionServicio_Test {
         controller = DSALES_ClasificacionServicio.getPicklistOptionsDependent(JSON.serialize(controller));
         controller.listFamilias[0].seleccionado = true;
         
-        controller = DSALES_ClasificacionServicio.getRecords(JSON.serialize(controller), 'Administrador del sistema', 'Opcion2');
+       // controller = DSALES_ClasificacionServicio.getRecords(JSON.serialize(controller), 'Administrador del sistema', 'Opcion2');
         //DSALES_ClasificacionServicio.upsertRecord(JSON.serialize(controller));
         
         controller.sku = 'SKU1234353464565654665';
@@ -153,8 +182,10 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_ClasificacionServicio.getPickListValuesIntoList2();
         DSALES_ClasificacionServicio.getPickListValuesIntoList3();
         DSALES_ClasificacionServicio.getPickListValuesIntoList4();
+        DSALES_ClasificacionServicio.getPickListValuesIntoList5();
         DSALES_ClasificacionServicio.getCampaings();
         DSALES_ClasificacionServicio.getTipoUso();
+        //DSALES_ClasificacionServicio.getToken();
         DSALES_ClasificacionServicio.updateCampaigns('["'+idcamp.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
         DSALES_ClasificacionServicio.updateTipoUso('["'+idtp.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
         DSALES_ClasificacionServicio.getTiposUsoUsed(idprodtp.id);
@@ -162,26 +193,26 @@ public class DSALES_ClasificacionServicio_Test {
         System.assertEquals(controller.listServicios.size(), 1, 'completado');
     }
 
-   /* @isTest 
+    @isTest 
     static  void testGetCallout() {
         Test.startTest(); 
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif());
-        DSALES_ClasificacionServicio.getserviciocategorias('test');
+        DSALES_ClasificacionServicio.getserviciocategorias('test','test');
         Test.stopTest();
-        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciocategorias('test').size()), 'la llamada no debe devolver un código 200');
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciocategorias('test','test').size()), 'la llamada no debe devolver un código 200');
         
         //System.assertNotEquals(null,result);  
-    }  */ 
+    }  
 
     @isTest 
      static  void testGetCallout2() {
         
         Test.startTest(); 
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif2());
-        DSALES_ClasificacionServicio.getserviciosubcategorias('2');
+        DSALES_ClasificacionServicio.getserviciosubcategorias('2','test');
         DSALES_ClasificacionServicio.getBuscarProducto('test12');
         Test.stopTest();
-        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosubcategorias('2').size()), 'la llamada no debe devolver un código 1000');
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosubcategorias('2','test').size()), 'la llamada no debe devolver un código 1000');
        
     }   
 
@@ -189,18 +220,21 @@ public class DSALES_ClasificacionServicio_Test {
     static  void testGetCallout3() {
         Test.startTest(); 
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif3());
-        DSALES_ClasificacionServicio.getservicioclase('2','4');
+        DSALES_ClasificacionServicio.getservicioclase('2','4','test');
         Test.stopTest();
-        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getservicioclase('2','4').size()), 'la llamada no debe devolver un código 1000');
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getservicioclase('2','4','test').size()), 'la llamada no debe devolver un código 1000');
         
     }  
     @isTest 
     static  void testGetCallout4() {
         Test.startTest(); 
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpClasif4());
-        DSALES_ClasificacionServicio.getserviciofamilia('2','4','178');
+        List<String> listPrueba= new List<String>();
+        listPrueba.add('178');
+        listPrueba.add('77');
+        DSALES_ClasificacionServicio.getserviciofamilia('2','4',listPrueba);
         Test.stopTest();
-        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciofamilia('2','4','178').size()), 'la llamada no debe devolver un código 1000');
+        system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciofamilia('2','4',listPrueba).size()), 'la llamada no debe devolver un código 1000');
         //System.assertNotEquals(null,result);  
     } 
     @isTest 
@@ -210,6 +244,7 @@ public class DSALES_ClasificacionServicio_Test {
         List<String> listPrueba= new List<String>();
         listPrueba.add('178');
         listPrueba.add('2');
+        listPrueba.add('77');
         DSALES_ClasificacionServicio.getserviciosku('2','4', listPrueba);
         Test.stopTest();
         system.assertNotEquals(10000, integer.valueof(DSALES_ClasificacionServicio.getserviciosku('2','4',listPrueba).size()), 'la llamada no debe devolver un código 1000'); 

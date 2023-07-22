@@ -89,9 +89,11 @@ public static void clonarMatrizItem(Id originalId, Id recordId){
         matrizItem.DSALES_MatrizItemClone__c=matrizItem.Id;
         matrizItem.Id=null;
         matrizItem.DSales_Matriz_GEX__c=originalId;
+        matrizItem.Name='';
     }
     if(Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isCreateable() || Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isUpdateable()){
-    Database.upsert(listMatrizItem,DSALES_Matriz_de_Cotizacion__c.DSALES_MatrizItemClone__c);  
+    system.debug('NAME: '+ listMatrizItem);
+        Database.upsert(listMatrizItem,DSALES_Matriz_de_Cotizacion__c.DSALES_MatrizItemClone__c);  
     compararEliminados(originalId,recordId);
         } 
         else {

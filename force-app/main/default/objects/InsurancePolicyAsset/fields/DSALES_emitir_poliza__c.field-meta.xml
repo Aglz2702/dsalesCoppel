@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DSALES_emitir_poliza__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>determina si se manda a emitir la póliza o no.</description>
+    <externalId>false</externalId>
+    <label>Emitir póliza</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

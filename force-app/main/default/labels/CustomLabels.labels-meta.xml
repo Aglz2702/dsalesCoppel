@@ -42,11 +42,4 @@
         <shortDescription>client_secret</shortDescription>
         <value>salesforce123</value>
     </labels>
-    <labels>
-        <fullName>dsalesSeguro_RC</fullName>
-        <language>es_MX</language>
-        <protected>false</protected>
-        <shortDescription>Seguro RC</shortDescription>
-        <value>RC</value>
-    </labels>
 </CustomLabels>

@@ -29,9 +29,9 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
-                        <valueListItems>
+                        <!--<valueListItems>
                             <value>DSales_Matriz_GEX__c.Dsales_Asignaciondetiendas</value>
-                        </valueListItems>
+                        </valueListItems>-->
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

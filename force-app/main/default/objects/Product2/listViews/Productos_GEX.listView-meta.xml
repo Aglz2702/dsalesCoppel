@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Productos_GEX</fullName>
+    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8</booleanFilter>
+    <columns>PRODUCT2.NAME</columns>
+    <columns>PRODUCT2.SKU</columns>
+    <columns>PRODUCT2.DESCRIPTION</columns>
+    <columns>DSales_Articulo__c</columns>
+    <columns>DSALES_IsClasified__c</columns>
+    <columns>DSALES_Categoria__c</columns>
+    <columns>DSALES_Matriz__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PRODUCT2.SKU</field>
+        <operation>equals</operation>
+        <value>617271</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.SKU</field>
+        <operation>equals</operation>
+        <value>216223</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.SKU</field>
+        <operation>equals</operation>
+        <value>635588</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.SKU</field>
+        <operation>equals</operation>
+        <value>615455</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.SKU</field>
+        <operation>equals</operation>
+        <value>148891</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.SKU</field>
+        <operation>equals</operation>
+        <value>266199</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.SKU</field>
+        <operation>equals</operation>
+        <value>183946</value>
+    </filters>
+    <filters>
+        <field>PRODUCT2.SKU</field>
+        <operation>equals</operation>
+        <value>627127</value>
+    </filters>
+    <label>Productos GEX</label>
+</ListView>

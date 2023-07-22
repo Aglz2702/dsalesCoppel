@@ -1,6 +1,6 @@
 @isTest
 public class DSALES_ConsultaListaNegraTest {
-    /*
+    
     @testSetup
     static void testSetup(){
         String accountRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
@@ -30,10 +30,10 @@ public class DSALES_ConsultaListaNegraTest {
         Quote cotizacion = [Select Id, Name FROM Quote WHERE Name = 'Nueva' LIMIT 1];
         RestResponse res3 = new RestResponse();
         Test.startTest();
-        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(4)); 
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponseSiniestro(6)); 
         DSALES_ConsultaListaNegra.callWebService('rfc','alberto');
 		Test.stopTest();
         System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
     }
-*/
+
 }

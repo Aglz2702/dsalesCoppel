@@ -2,7 +2,7 @@ public with sharing class DSALES_CertificadosHelper {
   
     
     private static final String TEMPLETE_NAME = 'DSALES_CertificadoGEX';  
-    private static final String DIRECCION_CORREO = 'atencion@coppel.com';  
+    private static final String DIRECCION_CORREO = 'coppelsoluciones@int.coppel.com';  
     
     @Future(callout=true)
     public static void envioCertificado(String jsonString){

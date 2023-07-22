@@ -4,55 +4,66 @@ public without sharing class  DSALES_ValidarClienteHelper {
         Quote originalQuote = [SELECT Id, Name,OpportunityId, DSALES_EmailNew__c, Pricebook2Id, RecordTypeId, Status, DSALES_Enviarcotizacion__c, DSales_Tienda__c, DSales_Vendedor__c,
                                DSALES_Fechadecreacionpresupuesto__c, ExpirationDate, DSALES_esClon__c FROM Quote WHERE Id = :quoteId WITH SECURITY_ENFORCED]; 
         
-        List<QuoteLineItem> unpurchasedItems= new List<QuoteLineItem>();        
-        List<String> productSKUs = new List<String>();
-        for(DSALES_AssetWrapper.AssetRequest a:listAssets){
-            productSKUs.add(a.skuDeTangible);
-        }
-        If(listAssets!= null){
-            List<QuoteLineItem>quoteLineMap= [SELECT Id,Quantity,PricebookEntryId,UnitPrice,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Producto'AND DSALES_SKU__c NOT IN:productSKUs WITH SECURITY_ENFORCED]; 
-            unpurchasedItems.addAll(quoteLineMap);
-            
-        }
-        If(listAssets== null){
-            List<QuoteLineItem>quoteLineMap= [SELECT Id,Quantity,PricebookEntryId,UnitPrice,Product2Id, DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Producto' WITH SECURITY_ENFORCED]; 
-            unpurchasedItems.addAll(quoteLineMap);
-            
-        }
         
+       List<String>idPartidasAsset= new List<String>();
+        List<Decimal>idSecuencias= new List<Decimal>();
+        for(DSALES_AssetWrapper.AssetRequest a:listAssets){
+            idPartidasAsset.add(a.idPartidaPresupuesto);
+        }
         List<String> quoteLineItemId = new List<String>();
         List<String> lstSku = new List<String>();
-        //List<id> lstwotId= new List<id>();
         List<String> lstwotId = new List<String>();
         
         for(DSALES_CertificadoWrapper.CertificadoRequest cer:certificado){
             quoteLineItemId.add(cer.idPartidaPresupuesto);
             lstSku.add(cer.sku);
+            idSecuencias.add(cer.idSecuencia);
         }
-        List<QuoteLineItem>warrantyMap= [SELECT Id,Quantity,PricebookEntryId,UnitPrice,Product2.StockKeepingUnit,Product2Id, DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Servicio'AND Id NOT IN:quoteLineItemId AND DSALES_SKU__c  IN:lstSku WITH SECURITY_ENFORCED ];
+         List<QuoteLineItem>qtLineOriginalCertificado=[SELECT  Id,Quantity,dsalesIdSecuencia__c,PricebookEntryId,UnitPrice,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Servicio'AND Id  IN:quoteLineItemId WITH SECURITY_ENFORCED LIMIT:quoteLineItemId.size() ];
+        List<QuoteLineItem>qtLineOriginal=[SELECT  Id,Quantity,dsalesIdSecuencia__c,PricebookEntryId,UnitPrice,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Producto'AND Id  IN:idPartidasAsset WITH SECURITY_ENFORCED LIMIT:idPartidasAsset.size() ];
+        system.debug('qtLineOriginal: '+qtLineOriginal);
+         system.debug('idPartidasAsset + limit: '+idPartidasAsset+' '+idPartidasAsset.size());
+        List<String>qtOriginalIds= new List<String>();
+        List<Decimal>qtSecuencias=new List<Decimal>();
+        List<String>qtOriginalIdsCertificados = new List<String>();
+        List<Id>totalIds = new List<String>();
+
+        for(QuoteLineItem qt:qtLineOriginal)
+            {
+                qtOriginalIds.add(qt.id);
+                totalIds.add(qt.Id);
+                qtSecuencias.add(qt.dsalesIdSecuencia__c);
+            }
+        for(QuoteLineItem qtC:qtLineOriginalCertificado)
+            {
+                qtOriginalIdsCertificados.add(qtc.id);
+                totalIds.add(qtC.Id);
+            }
+                
+        system.debug('TotalIds: '+totalIds);
+        List<QuoteLineitem>qtBorrarTotal =[SELECT  Id,Quantity,dsalesIdSecuencia__c,PricebookEntryId,UnitPrice,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and  Id NOT IN:totalIds WITH SECURITY_ENFORCED];
         
-        if(Schema.sObjectType.QuoteLineItem.isDeletable()) {
+		system.debug('qTBorrarTotal: '+qtBorrarTotal);      
+        system.debug('qTBorrarTotal Size: '+qtBorrarTotal.size());    
+        
+   
+        
+        
+        
+       // List<QuoteLineItem>warrantyMap= [SELECT Id,Quantity,PricebookEntryId,UnitPrice,Product2.StockKeepingUnit,Product2Id, DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Servicio'AND Id NOT IN:quoteLineItemId AND DSALES_SKU__c  IN:lstSku  WITH SECURITY_ENFORCED  ];
+        
+       /* if(Schema.sObjectType.QuoteLineItem.isDeletable()) {
 
             delete warrantyMap;
             }else{
             
             System.debug('Permisos insuficientes para eliminar');
-            }
-            
-        
-        List<QuoteLineItem>quoteLineMap=[SELECT Id,Quantity,PricebookEntryId,UnitPrice,Product2.StockKeepingUnit,Product2Id, DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Servicio'AND Id NOT IN:quoteLineItemId WITH SECURITY_ENFORCED];
-           unpurchasedItems.addAll(quoteLineMap);
-
-        
-        If(certificado== null){
-            List<QuoteLineItem>quoteLine= [SELECT Id,Quantity,PricebookEntryId,UnitPrice,Product2Id, DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Servicio' WITH SECURITY_ENFORCED]; 
-            unpurchasedItems.addAll(quoteLine);
-            
-        }
-        If(unpurchasedItems.size()>0){
+            }*/
+       
+        If(qtBorrarTotal.size()>0){
             Quote unpurchasedQuote = originalQuote.clone(false, true);
             //unpurchasedQuote.RecordTypeId=originalQuote.RecordTypeId;
-            unpurchasedQuote.Name = originalQuote.Name;
+            unpurchasedQuote.Name = originalQuote.Name + ' -DUP';
             unpurchasedQuote.OpportunityId=originalQuote.OpportunityId;            
             unpurchasedQuote.DSALES_Enviarcotizacion__c = false;
             try{   
@@ -65,7 +76,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
                     }
                 
                 List<QuoteLineItem> item= new List<QuoteLineItem>();
-                for (QuoteLineItem items : unpurchasedItems) {              
+                for (QuoteLineItem items : qtBorrarTotal) {              
                     QuoteLineItem newItem = new QuoteLineItem();
                     newItem.QuoteId = unpurchasedQuote.Id;
                     newItem.Quantity= items.Quantity;
@@ -82,8 +93,10 @@ public without sharing class  DSALES_ValidarClienteHelper {
                     }else{
                     System.debug('Permisos insuficientes para crear');
                 }
-                DELETE unpurchasedItems;
-                
+                try{
+                    DELETE qtBorrarTotal;
+
+                update originalQuote;
                 unpurchasedQuote.Status = 'Enviada';
                 unpurchasedQuote.DSALES_Enviarcotizacion__c=true;
                 unpurchasedQuote.DSALES_esClon__c=true;
@@ -91,9 +104,15 @@ public without sharing class  DSALES_ValidarClienteHelper {
 
                 if(Schema.sObjectType.Quote.isUpdateable()) {
                     update unpurchasedQuote;
+                    
                     }else{
                     System.debug('Permisos insuficientes para Actualizar datos');
                     }
+                } 
+                catch(Exception e)
+                {
+                    System.debug('ERRORRRR: '+e.getMessage() +e.getLineNumber());
+                }
                 //actualizarCotizacion(quoteId);
                 //DELETE unpurchasedQuote;
             }  catch (DmlException e) {

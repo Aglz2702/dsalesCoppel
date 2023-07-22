@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pruebas_Integrador_Tangibles</fullName>
+    <columns>PRODUCT2.SKU</columns>
+    <columns>PRODUCT2.NAME</columns>
+    <columns>DSales_Marca__c</columns>
+    <columns>DSales_Modelo__c</columns>
+    <columns>dsalesVehiculo__c</columns>
+    <columns>PRODUCT2.DESCRIPTION</columns>
+    <columns>PRODUCT2.ACTIVE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>PRODUCT2.RECORD_TYPE</field>
+        <operation>equals</operation>
+        <value>Product2.DSALES_ProdTangible</value>
+    </filters>
+    <filters>
+        <field>DSales_Tipo_de_Producto__c</field>
+        <operation>equals</operation>
+        <value>Producto</value>
+    </filters>
+    <filters>
+        <field>DSALES_TipoServicio__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Pruebas Integrador Tangibles</label>
+</ListView>

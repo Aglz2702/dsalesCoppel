@@ -6,6 +6,7 @@
     <columns>PRODUCT2.ACTIVE</columns>
     <columns>PRODUCT2.SKU</columns>
     <columns>DSales_SKU_anterior__c</columns>
+    <columns>PRODUCT2.CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>PRODUCT2.CREATED_DATE</field>

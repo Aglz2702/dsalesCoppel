@@ -13,6 +13,7 @@
     <members>DSALES_AssetWrapperTest</members>
     <members>DSALES_CancelacionController</members>
     <members>DSALES_CancelacionProductosRequest</members>
+	<members>DSALES_CancelacionProductosRequest_Test</members>
     <members>DSALES_CancelacionProductosWrapper</members>
     <members>DSALES_Certificados</members>
     <members>DSALES_CertificadosHelper</members>
@@ -22,74 +23,37 @@
     <members>DSALES_ClasificacionServicio</members>
     <members>DSALES_ClasificacionServicio_Test</members>
     <members>DSALES_ClonarMatriz</members>
-    <members>DSALES_ConsultaListaNegra</members>
-    <members>DSALES_ConsultaListaNegraTest</members>
+	<members>DSALES_ClonarMatriz_Test</members>
     <members>DSALES_ControladorCertificadoPDF</members>
     <members>DSALES_ControladorCertificadoPDFTest</members>
     <members>DSALES_ControladorCotizacionGex</members>
     <members>DSALES_ControladorCotizacionGexTest</members>
     <members>DSALES_ControladorMatrizTiempo</members>
     <members>DSALES_ControladorMatrizTiempo_Test</members>
-    <members>DSALES_CrearParticipantesPoliza</members>
-    <members>DSALES_CrearParticipanteTest</members>
-    <members>DSALES_CreateInsurancePolicy</members>
-    <members>DSALES_CreateInsurancePolicyTest</members>
-    <members>DSALES_EndorsementWrapper</members>
-    <members>DSALES_EndosoWrapperRequest</members>
-    <members>DSALES_EndosoWrapperRequest_Test</members>
-    <members>DSALES_EndosoWrapperRequestHelper</members>
-    <members>DSALES_EndosoWrapperRequestTest</members>
     <members>DSALES_GexCotizaciones</members>
     <members>DSALES_GexCotizacionesHelper</members>
-    <members>DSALES_InformacionDePago</members>
-    <members>DSALES_InformacionPagoHandler</members>
-    <members>DSALES_IPAssetWrapper</members>
-    <members>DSALES_IPAssetWrapperRequest</members>
-    <members>DSALES_IPAssetWrapperRequestActivo</members>
-    <members>DSALES_IPAssetWrapperRequestActivoTest</members>
-    <members>DSALES_IPAssetWrapperTest</members>
-    <members>DSALES_ListaNegra2</members>
-    <members>DSALES_ListaNegra2Test</members>
-    <members>DSALES_ListaNegraWrapper</members>
-    <members>DSALES_ListaNegraWrapperTest</members>
     <members>DSALES_Matriz</members>
     <members>DSALES_MatrizHelper</members>
-    <members>DSALES_NuevaPoliza</members>
+	<members>DSALES_MatrizHelperTest</members>
     <members>DSALES_obtenerToken</members>
     <members>DSALES_obtenerToken_Test</members>
-    <members>DSALES_PaymentInfoWrapper</members>
     <members>DSALES_PaymentInfoWrapperGEX</members>
     <members>DSALES_PaymentInfoWrapperGexRequest</members>
     <members>DSALES_PaymentInfoWrapperGexTest</members>
-    <members>DSALES_PaymentInfoWrapperRequest</members>
-    <members>DSALES_PaymentInfoWrapperTest</members>
-    <members>DSALES_PolizaWrapper</members>
-    <members>DSALES_PolizaWrapperTest</members>
     <members>DSALES_Product2Handler</members>
     <members>DSALES_Product2Handler_Test</members>
     <members>DSales_Product2Helper</members>
     <members>DSALES_QuoteGexWrapper</members>
     <members>DSALES_QuoteGexWrapperRequest</members>
     <members>DSALES_QuoteGexWrapperRequestTest</members>
-    <members>DSALES_QuotePagoSM</members>
-    <members>DSALES_QuotePagoSmTest</members>
-    <members>DSALES_QuotePdfController</members>
-    <members>DSALES_QuotePdfController_Test</members>
-    <members>DSALES_QuoteSmWrapper</members>
-    <members>DSALES_QuoteSmWrapperTest</members>
+	<members>DSALES_QuotePdfController</members>
+	<members>DSALES_QuotePdfController_Test</members>
     <members>DSALES_ReembolsoWrapper</members>
     <members>DSALES_ReembolsoWrapperRequest</members>
     <members>DSALES_ReembolsoWrapperTest</members>
     <members>DSALES_RegionalizacionSegurosCamp_Test</members>
     <members>DSALES_RegionalizacionSegurosCampanas</members>
-    <members>DSALES_ResumenPagos</members>
-    <members>DSALES_Siniestro</members>
-    <members>DSALES_SiniestroRPWrapper</members>
-    <members>DSALES_siniestroTest</members>
-    <members>DSALES_SiniestroWrapper</members>
-    <members>DSALES_SiniestroWrapperTest</members>
     <members>DSALES_UpdateClienteTest</members>
-    <members>DSALES_UpdateInfoPago</members>
     <members>DSALES_Utility</members>
     <members>DSALES_UtilityTest</members>
     <members>DSALES_ValidarClienteHelper</members>
@@ -97,24 +61,18 @@
     <members>DSALES_VentaGEX</members>
     <members>DSALES_VentaGEXRest</members>
     <members>DSALES_VentaGEXRestTest</members>
-    <members>DSALES_VentaSM</members>
-    <members>DSALES_VentaSMRest</members>
-    <members>DSALES_VentaSMRestAux</members>
-    <members>DSALES_VentaSMRestAuxTest</members>
-    <members>DSALES_VentaSMRestTest</members>
 	<name>ApexClass</name>
 </types>
 <types>
 	<members>DSALES_CertificadoPDF</members>
 	<members>Cotizacion</members>
-	<members>DSALES_NuevaPlantilla</members>
 	<members>DSALES_CotizationSm</members>
+	<members>DSALES_NuevaPlantilla</members>
 	<name>ApexPage</name>
 </types>
 <types>
 	<members>DSALES_CertificadoTrigger</members>
 	<members>DSALES_GexCotizacion</members>
-	<members>DSALES_InformacionPago</members>
 	<members>DSALES_Product2</members>
 	<name>ApexTrigger</name>
 </types>
@@ -139,46 +97,61 @@
 	<members>CDP_MOTOS_LOGO01</members>
 	<members>LOGO_COPPEL012</members>
 	<members>logo_club_de_proteccion</members>
-	<name>ContentAsset</name><!--ok/cual usaron en los pdfs/email-->
+	<name>ContentAsset</name>
 </types>
 <types>
 	<members>Asset.DSALES_PysisCompactLayout</members>
 	<members>Campaign.DSALES_FormatoCompactoCampanasSM</members>
 	<members>Claim.DSALES_Formato_compacto_siniestro</members>
 	<members>Opportunity.DSales_Formato_GEX</members>
-	<members>Opportunity.DSALES_FormatoCompactoSM</members>
+	<members>dsalesAsignacionDeTienda__c-Asignación de Matríz</members>
+	<members>DSALES_Cancelacion__c-Formato de Cancelación SM</members>
 	<members>DSALES_Certificado__c.DSALES_Certificado</members>
-	<members>DSALES_Endoso__c.DSALES_Formato_compacto_endoso</members>
 	<members>DSALES_InformacionDePago__c.DSales_Informacion_GEX</members>
+	<members>DSALES_InformacionDePago__c-Formato Información de Pago</members>
 	<members>DSALES_InformacionDePago__c.InfoPagoVenta</members>	
-	<members>InsurancePolicy.DSALES_Formato_compacto_p_liza</members>
+	<members>Opportunity.DSALES_FormatoCompactoSM</members>
 	<members>Plazo__c.DSALES_FormatoompactoSM</members>
-	<members>Quote.DSALES_FormatocompactoSM</members>
+	<members>Quote.DSales_Formato_GEX</members>
 	<members>QuoteLineItem.DSALES_FormatocompactoSM</members>
 	<members>Product2.DSALES_FormatoCompactoSMIntang</members>
 	<members>Product2.DSALES_FormatocompactoSM</members>
 	<members>dsalesCiudad__c.Ciudad_Compact_Layout</members>
 	<members>dsalesRegion__c.Region_Compact_Layout</members>
-	<members>InsurancePolicyParticipant.dsalesFormatoCompactoSm</members>
+	<members>Quote.DSALES_FormatocompactoSM</members>
 	<name>CompactLayout</name>
 </types>
-<!--<types>
+<types>
 	<members>DSALES_Pisys</members>
 	<name>ConnectedApp</name>
-</types>-->
+</types>
 <types>
 	<members>DSALES_GarantiaExtendida</members>
 	<members>DSALES_Seguro_de_Motos</members>
 	<name>CustomApplication</name>
 </types>
 <types>
+	<members>Account.dsalesCodigoEstado__c</members>
+	<members>Account.dsalesNacionalidadSociedad__c</members>
+	<members>Account.dsalesGiroComercial__c</members>
+	<members>Account.dsalesSegundoCorreo__c</members>
+	<members>Account.dsalesNombreApoderadoLegal__c</members>
+	<members>Account.dsalesFechaConstitucion__c</members>
+	<members>Account.dsalesActividad__c</members>
 	<members>Account.DSALES_ClienteCoppel__c</members>
 	<members>Account.DSALES_Fecha_alta__c</members>
 	<members>Account.DSALES_Ingreso_mensual__c</members>
 	<members>Account.DSALES_Puesto_trabajo__c</members>
 	<members>Account.Tipo_de_Cliente__c</members>
 	<members>Account.sumar__c</members>
+	<members>Account.dsalesTipoPersona__c</members>
+	<members>Account.dsalesNumeroInterior__c</members>
+	<members>Account.dsalesRfc__c</members>
+	<members>Account.dsalesNumeroExterior__c</members>
+	<members>Account.dsalesCodigoColonia__c</members>
 	<members>Account.DSALES_DeseaserContactado__c</members>
+	<members>Asset.DSALES_Clase__c</members>
+	<members>Asset.dsalesIdSecuencia__c</members>
 	<members>Asset.DSales_Informacion_pago__c</members>
 	<members>Asset.DSALES_CategoriaBuscar__c</members>
 	<members>Asset.DSALES_Certificado__c</members>
@@ -186,6 +159,7 @@
 	<members>Asset.DSALES_Division__c</members>
 	<members>Asset.DSALES_DuracionGEX__c</members>
 	<members>Asset.DSALES_FamiliaBuscar__c</members>
+	<members>Asset.DSALES_Categoria__c</members>
 	<members>Asset.DSALES_Oportunidad__c</members>
 	<members>Asset.DSALES_PrecioSINIVA__c</members>
 	<members>Asset.DSALES_Precio_con_descuento_con_IVA__c</members>
@@ -201,7 +175,10 @@
 	<members>Asset.DSALES_TipoSeguro__c</members>
 	<members>Asset.DSALES_TipoServicio__c</members>
 	<members>Asset.DSales_Fecha_compra__c</members>
+	<members>Asset.DSALES_VigenciaMeses__c</members>
+	<members>Asset.DSALES_DuracionDeGEX__c</members>
 	<members>Campaign.dsalesTipoCampana__c</members>
+	<members>Campaign.dsalesPlazosAplicables__c</members>
 	<members>Claim.Cliente__c</members>
 	<members>Claim.DSALES_MotivodeDevolucion__c</members>
 	<members>Claim.DSALES_Monto__c</members>
@@ -225,9 +202,11 @@
 	<members>Claim.DSALES_SiniestroUid__c</members>
 	<members>Claim.DSALES_SolucionDevolver__c</members>
 	<members>Claim.dsalesSolucionaDevolucion__c</members>
+	<members>Claim.DSALES_SolucionaDevoluci_n__c</members>
 	<members>Claim.N_mero_de_Siniestro__c</members>
 	<members>ClaimPaymentSummary.DSALES_Tipopago__c</members>
 	<members>Contact.DSALES_Metodocontacto__c</members>
+	<!--<members>dsalesAsignacionDeTienda__c.dsalesTienda__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Activo__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Clase__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Departamento__c</members>
@@ -235,12 +214,12 @@
 	<members>DSales_Asignacion_de_Productos__c.DSALES_SKU__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Subcategoria__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSales_NombreProducto__c</members>
-	<members>DSales_Asignacion_de_Productos__c.DSALES_Producto__c</members>
+	<members>DSales_Asignacion_de_Productos__c.DSales_Producto__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSales_Servicio_Seguro__c</members>
 	<members>DSALES_AsociacionCampanias__c.DSALES_Campania__c</members> 
 	<members>DSALES_AsociacionCampanias__c.DSALES_Producto__c</members>
 	<members>DSALES_AsociacionTiposUso__c.DSALES_Producto__c</members>
-	<members>DSALES_AsociacionTiposUso__c.DSALES_TipoUso__c</members>
+	<members>DSALES_AsociacionTiposUso__c.DSALES_TipodeUso__c</members>
 	<members>DSALES_Categoria__c.DSALES_TipoProducto__c</members>
 	<members>DSALES_Categoria__c.DSALES_TipoSeguro__c</members>
 	<members>DSALES_Categoria__c.DSALES_TipoServicio__c</members>
@@ -278,7 +257,7 @@
 	<members>DSALES_Certificado__c.DSALES_ProductoAdquirido__c</members>
 	<members>DSALES_Certificado__c.DSALES_SKU__c</members>
 	<members>DSALES_Certificado__c.DSALES_Ticket__c</members>
-	<members>DSALES_Certificado__c.DSales_TiendaID__c</members>
+	<members>DSALES_Certificado__c.DSALES_TiendaId__c</members>
 	<members>DSALES_Certificado__c.DSALES_Tienda__c</members>
 	<members>DSALES_Certificado__c.DSALES_Vigenciacumplida__c</members>
 	<members>DSALES_Certificado__c.DSALES_enviado__c</members>
@@ -289,23 +268,6 @@
 	<members>DSALES_Clase__c.DSALES_TipoServicio__c</members>
 	<members>DSALES_Clase__c.DSALES_Tipodeproducto__c</members>
 	<members>DSALES_Clase__c.DSales_IDexterior__c</members>
-	<members>DSALES_Endoso__c.DSALES_Dosdiassinupdate__c</members>
-	<members>DSALES_Endoso__c.DSALES_Cliente__c</members>
-	<members>DSALES_Endoso__c.DSALES_CorreoElectronico__c</members>
-	<members>DSALES_Endoso__c.DSALES_Estatus__c</members>
-	<members>DSALES_Endoso__c.DSALES_Enviadoaproveedor__c</members>
-	<members>DSALES_Endoso__c.DSALES_Folio__c</members>
-	<members>DSALES_Endoso__c.DSALES_MotivoDevolucion__c</members>
-	<members>DSALES_Endoso__c.DSALES_MotivoRechazo__c</members>
-	<members>DSALES_Endoso__c.DSALES_NuevaPoliza__c</members>
-	<members>DSALES_Endoso__c.DSALES_NumeroClienteCoppel__c</members>
-	<members>DSALES_Endoso__c.DSALES_Poliza__c</members>
-	<members>DSALES_Endoso__c.DSALES_SolucionDevolucion__c</members>
-	<members>DSALES_Endoso__c.DSALES_Tipodedato__c</members>
-	<members>DSALES_Endoso__c.DSALES_Tipodedocumento__c</members>
-	<members>DSALES_Endoso__c.DSALES_Tipodeendoso__c</members>
-	<members>DSALES_Endoso__c.DSALES_Valor__c</members>
-	<members>DSALES_Endoso__c.DSALES_uid__c</members>
 	<members>DSALES_Familia__c.DSALES_Clase__c</members>
 	<members>DSALES_Familia__c.DSALES_TipoSeguro__c</members>
 	<members>DSALES_Familia__c.DSALES_TipoServicio__c</members>
@@ -357,7 +319,7 @@
 	<members>DSALES_InformacionDePago__c.DSALES_Precio__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_ProductoAdquirido__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_SKU__c</members>
-	<members>DSALES_InformacionDePago__c.dsales_Seguro__c</members>
+	<members>DSALES_InformacionDePago__c.DSALES_Seguro__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_TipoFolio__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Saldodineroelec__c</members>
 	<members>DSALES_InformacionDePago__c.DSALES_TelefonoCliente__c</members>
@@ -398,49 +360,14 @@
 	<members>DASALES_Porcentajedecobro__c.DSALES_Anios__c</members>
 	<members>DASALES_Porcentajedecobro__c.DSALES_Porcentaje__c</members>
 	<members>DASALES_Porcentajedecobro__c.DSALES_Product__c</members>
-	<members>InsurancePolicy.DSALES_Aseguradora__c</members>
-	<!--<members>InsurancePolicy.dsalesActivoPolizaSeguro__c</members>-->
-	<members>InsurancePolicy.DSALES_Armadora__c</members>
-	<members>InsurancePolicy.DSALES_Asegurado__c</members>
-	<members>InsurancePolicy.DSALES_Clavevehicular__c</members>
-	<members>InsurancePolicy.DSALES_ClaveAMIS__c</members>
-	<members>InsurancePolicy.DSALES_CorreoElectronico__c</members>
-	<members>InsurancePolicy.DSALES_Cobertura__c</members>
-	<members>InsurancePolicy.DSALES_Codigocolonia__c</members>
-	<members>InsurancePolicy.DSALES_Codigoestado__c</members>
-	<members>InsurancePolicy.DSALES_Codigomunicipio__c</members>
-	<members>InsurancePolicy.DSALES_Codigopostal__c</members>
-	<members>InsurancePolicy.DSALES_Descripcion__c</members>
-	<members>InsurancePolicy.dsalesEstatusPoliza__c</members>
-	<members>InsurancePolicy.DSALES_Fechanacimiento__c</members>
-	<members>InsurancePolicy.DSALES_Genero__c</members>
-	<members>InsurancePolicy.DSALES_Gastos_expedicion__c</members>
-	<members>InsurancePolicy.DSALES_IVA__c</members>
-	<members>InsurancePolicy.DSALES_IDemision__c</members>
-	<members>InsurancePolicy.DSALES_Modelo__c</members>
-	<members>InsurancePolicy.DSALES_Marca__c</members>
-	<members>InsurancePolicy.dsalesNumeroDeMotor__c</members>
-	<members>InsurancePolicy.DSALES_Negocio__c</members>
-	<members>InsurancePolicy.DSALES_Numeroseguimiento__c</members>
-	<members>InsurancePolicy.DSALES_Numeroserie__c</members>
-	<members>InsurancePolicy.DSALES_Oportunidad__c</members>
-	<members>InsurancePolicy.DSALES_Opcionpago__c</members>
-	<members>InsurancePolicy.DSALES_PDFpoliza__c</members>
-	<members>InsurancePolicy.DSALES_PDF_poliza__c</members>
-	<members>InsurancePolicy.DSALES_Placas__c</members>
-	<members>InsurancePolicy.DSALES_Polizaenviada__c</members>
-	<members>InsurancePolicy.DSALES_Prima_Neta__c</members>
-	<members>InsurancePolicy.DSALES_Prima_total__c</members>
-	<members>InsurancePolicy.DSALES_Productoadquirido__c</members>
-	<members>InsurancePolicy.DSALES_RFC__c</members>
-	<members>InsurancePolicy.DSALES_Servicio__c</members>
-	<members>InsurancePolicy.DSALES_Telefono__c</members>
-	<members>InsurancePolicy.DSALES_Tipovehiculo__c</members>
-	<members>InsurancePolicy.DSALES_Tipodepersona__c</members>
-	<members>InsurancePolicy.DSALES_Uso__c</members>
-	<members>InsurancePolicy.DSALES_VigenciacumplidaSM__c</members>
-	<!--<members>InsurancePolicy.dsalesFechaDeEmision__c</members>-->
-	<members>InsurancePolicyAsset.dsalesCliente__c</members>
+	<members>DSALES_TipodeUso__c.dsalesDescripcion__c</members>-->
+	<!--<members>DSALES_Reembolso__c.DSALES_CantidadReembolsada__c</members>
+	<members>DSALES_Reembolso__c.DSALES_FechaReembolso__c</members>
+	<members>DSALES_Reembolso__c.DSALES_NumeroCancelacion__c</members>
+	<members>DSALES_Reembolso__c.NombredelProducto__c</members>
+	<members>DSALES_Certificado__c.DSales_Garantia_Coppel__c</members>
+	<members>DSALES_InformacionDePago__c.DSALES_IDUniversal__c</members>-->
+	<members>InsurancePolicyAsset.DSALES_emitir_poliza__c</members>
 	<members>InsurancePolicyAsset.DSALES_ClaveAMIS__c</members>
 	<members>InsurancePolicyAsset.DSALES_Clavevehicular__c</members>
 	<members>InsurancePolicyAsset.DSALES_Colaborador__c</members>
@@ -458,6 +385,7 @@
 	<members>InsurancePolicyAsset.DSALES_Valorfactura__c</members>
 	<members>InsurancePolicyAsset.dsalesEstatus__c</members>
 	<members>InsurancePolicyAsset.DSALES_Factura__c</members>
+	<members>InsurancePolicyAsset.dsalesCliente__c</members>
 	<members>Opportunity.DSALES_Certificado__c</members>
 	<members>Opportunity.A_o_anterior__c</members>
 	<members>Opportunity.DSales_Colaborador__c</members>
@@ -473,7 +401,7 @@
 	<members>Opportunity.DSALES_No_Presupuesto__c</members>
 	<members>Opportunity.DSALES_Nombredelsolicitante__c</members>
 	<members>Opportunity.DSALES_Periodo__c</members>
-	<members>Opportunity.dsalesTienda__c</members>
+	<members>Opportunity.DSALES_Tiend__c</members>
 	<members>Opportunity.DSALES_Tienda__c</members>
 	<members>Opportunity.DSales_Cotizacion_Entregada__c</members>
 	<members>Opportunity.DSales_Duracion_de_Garantia__c</members>
@@ -489,16 +417,23 @@
 	<members>Opportunity.DSALES_OppPrin__c</members>
 	<members>Opportunity.DSales_IDTienda__c</members>
 	<members>Opportunity.DSales_NombreVendedor__c</members>
-	<members>OpportunityLineItem.DSALES_PrecioServ__c</members>
 	<members>Opportunity.Folio_de_oportunidad__c</members>
 	<members>Opportunity.Posici_n__c</members>
+	<members>Opportunity.DSales_Compra__c</members>
+	<members>Opportunity.DSales_IDVendedor__c</members>
+	<members>Opportunity.DB_Competitor__c</members>
+	<members>Opportunity.DSALES_Division__c</members>
+	<members>Opportunity.dsalesIduVenta__c</members>
+	<members>Opportunity.DSALES_Region__c</members>
+	<members>Opportunity.DSALES_RegionList__c</members>
+	<members>OpportunityLineItem.DSALES_TipoServ__c</members>
 	<members>OpportunityLineItem.DSALES_Producto__c</members>
 	<members>OpportunityLineItem.DSALES_Servicio__c</members>
-	<members>Opportunity.DSales_Compra__c</members>
-	<members>OpportunityLineItem.DSALES_TipoServ__c</members>
-	<members>Opportunity.DSales_IDVendedor__c</members>
 	<members>OpportunityLineItem.DSALES_Vendido__c</members>
+	<members>OpportunityLineItem.DSALES_PrecioServ__c</members>
 	<members>OpportunityLineItem.DSALES_FolioCertificado__c</members>
+	<members>OpportunityLineItem.DSALES_Estatus__c </members>
+	<members>OpportunityLineItem.DSALES_Duracion__c</members>
 	<members>OrderItem.DSales_Cantidad_de_Servicio__c</members>
 	<members>OrderItem.DSales_Descuento_de_Servicio__c</members>
 	<members>OrderItem.DSales_Fecha_de_entrega_estimada__c</members>
@@ -507,9 +442,7 @@
 	<members>OrderItem.DSales_Servicio__c</members>
 	<members>OrderItem.DSales_Tipo__c</members>
 	<members>OrderItem.DSales_Vigencia__c</members>
-	<!--<members>Plazo__c.dsalesDescripcion__c</members
-	<members>Plazo__c.dsalesSeguro__c</members>>-->
-	<members>Plazo__c.DSALES_Plazo__c</members>
+	<members>Product2.DSALES_Aplicaparamotoexterna__c</members>
 	<members>Product2.DSALES_VigenciaMeses__c</members>
 	<members>Product2.DSALES_Vinculado__c</members>
 	<members>Product2.DSales_Marca__c</members>
@@ -522,7 +455,8 @@
 	<members>Product2.DSales_Nombre_del_Producto__c</members>
 	<members>Product2.DSALES_Regiones__c</members>
 	<members>Product2.dsalesRecordTypeName__c</members>
-	<!--<members>Product2.dsalesSeguro__c</members> no existe-->
+	<members>Product2.dsalesOpcionPago__c</members>
+	<members>Product2.dsalesSubtipo__c</members>
 	<members>Product2.DSALES_Servicio__c</members>
 	<members>Product2.DSALES_ServEspecifico__c</members>
 	<members>Product2.DSALES_SubCategoria__c</members>
@@ -544,6 +478,19 @@
 	<members>Product2.DSALES_NoaplicaServ__c</members>
 	<members>Product2.DSALES_SubCategorias__c</members>
 	<members>Product2.dsalesVehiculo__c</members>
+	<members>Product2.DSALES_Seguro__c</members>
+	<members>Quote.dsalesMotivoDeListaNegra__c</members>
+	<members>Quote.dsalesFechaDeComienzoDePoliza__c</members>
+	<members>Quote.DSales_DivisionG__c</members>
+	<members>Quote.dsalesCodigoDePromocion__c</members>
+	<members>Quote.DSALES_CorreoSeleccionado__c</members>
+	<members>Quote.dsalesTipoDeServicioDelVehiculo__c</members>
+	<members>Quote.dsalesMetodoDeContacto__c</members>
+	<members>Quote.dsalesVencida__c</members>
+	<members>Quote.DSALES_Regioon__c</members>
+	<members>Quote.dsalesCodigoPostal__c</members>
+	<members>Quote.dsalesGenero__c</members>
+	<members>Quote.dsalesTipoDeVehiculo__c</members>
 	<members>Quote.DSALES_AdquiriopolizaSM__c</members>
 	<members>Quote.DSALES_Cdigodeestado__c</members>
 	<members>Quote.DSALES_Cdigodemunicipio__c</members>
@@ -564,6 +511,7 @@
 	<members>Quote.DSALES_Nombredelsolicitante__c</members>
 	<members>Quote.dsalesOpcionDePago__c</members>
 	<members>Quote.DSALES_Plazoacotizar__c</members>
+	<members>Quote.DSALES_PlazoacotizarRC__c</members>
 	<members>Quote.DSALES_Region__c</members>
 	<members>Quote.DSALES_Suburbcode__c</members>
 	<members>Quote.DSales_Direccion_de_la_tienda__c</members>
@@ -574,6 +522,7 @@
 	<members>Quote.DSales_Tienda__c</members>
 	<members>Quote.DSALES_Tipodevehculo__c</members>
 	<members>Quote.DSALES_TrakingID__c</members>
+	<members>Quote.DSALES_Tipodeuso__c</members>
 	<members>Quote.DSALES_Usodelvehculo__c</members>
 	<members>Quote.DSales_Vendedor__c</members>
 	<members>Quote.ID_Vendedor__c</members>
@@ -587,8 +536,12 @@
 	<members>Quote.DSales_Productos__c</members>
 	<members>Quote.Tiempo_transcurrido__c</members>
 	<members>Quote.DSALES_esClon__c</members>
+	<members>Quote.DSALES_Aseguradora__c</members>
+	<members>Quote.DSALES_Negocio__c</members>
+	<members>QuoteLineItem.dsalesSkuTangible__c</members>
+	<members>QuoteLineItem.dsalesQuoteId__c</members>
+	<members>QuoteLineItem.dsalesIdSecuencia__c</members>
 	<members>QuoteLineItem.DSALES_Comision__c</members>
-	<!--<members>QuoteLineItem.dsalesDerechosDePoliza__c</members>-->
 	<members>QuoteLineItem.DSALES_Descripcion__c</members>
 	<members>QuoteLineItem.DSALES_Fechadecompra__c</members>
 	<members>QuoteLineItem.DSALES_Fechadeinicio__c</members>
@@ -596,7 +549,6 @@
 	<members>QuoteLineItem.DSALES_Nombre__c</members>
 	<members>QuoteLineItem.DSALES_PagoContado__c</members>
 	<members>QuoteLineItem.DSALES_Pagomensual__c</members>
-	<!--<members>QuoteLineItem.dsalesGastosDeOperacionDelRecibo__c</members>-->
 	<members>QuoteLineItem.DSALES_Impuestos__c</members>
 	<members>QuoteLineItem.DSALES_ListaArticulo__c</members>
 	<members>QuoteLineItem.DSALES_NombreProducto__c</members>
@@ -619,45 +571,129 @@
 	<members>QuoteLineItem.DSALES_TrackingID__c</members>
 	<members>QuoteLineItem.DSALES_Recargos__c</members>
 	<members>QuoteLineItem.DSALES_Segurogratis__c</members>
-	<!--<members>Tienda__c.dsalesCodigoPostal__c</members>
-	<members>Tienda__c.dsalesTelefono__c</members>-->
-	<members>Quote.DSALES_Aseguradora__c</members>
-	<members>Quote.DSALES_Negocio__c</members>
-	<members>DSALES_Reembolso__c.DSALES_CantidadReembolsada__c</members>
-	<members>DSALES_Reembolso__c.DSALES_FechaReembolso__c</members>
-	<members>DSALES_Reembolso__c.DSALES_NumeroCancelacion__c</members>
-	<members>DSALES_Reembolso__c.NombredelProducto__c</members>
+	<members>QuoteLineItem.SKUTangible__c</members>
+	<members>QuoteLineItem.dsalesDerechosDePoliza__c</members>
+	<members>QuoteLineItem.dsalesGastosDeOperacionDelRecibo__c</members>
+	<members>QuoteLineItem.dsalesOpcionPago__c</members>
+	<members>QuoteLineItem.dsalesPagoInicial__c</members>
+	<members>QuoteLineItem.DSales_Tipo_de_Producto__c</members>
+	<members>QuoteLineItem.DSales_Tipo_de_Servicio__c</members>
+	<!--<members>Tienda__c.Activa__c</members>
+	<members>Tienda__c.dsalesAnoDeUltimaRemodelacion__c</members>
+	<members>Tienda__c.DSALES_Ciudad__c</members>
+	<members>Tienda__c.dsalesCodigoPostal__c</members>
+	<members>Tienda__c.dsalesDireccion__c</members>
+	<members>Tienda__c.dsalesDivision__c</members>
+	<members>Tienda__c.dsalesEmailGerenteDeTiendaDeZona__c</members>
+	<members>Tienda__c.DSALES_Estado__c</members>
+	<members>Tienda__c.DSALES_Fechadeapertura__c</members>
+	<members>Tienda__c.DSales_TiendaID__c</members>
+	<members>Tienda__c.dsalesModuloAfore__c</members>
+	<members>Tienda__c.dsalesNombreGerenteDeTiendaDeZona__c</members>
+	<members>Tienda__c.dsalesNumeroCelular__c</members>
+	<members>Tienda__c.dsalesTelefono__c</members>
+	<members>Tienda__c.dsalesTelefonoTiendaBase__c</members>
 	<members>Tienda__c.DSALES_Region__c</members>
-	<!--<members>Tienda__c.dsalesAnoDeUltimaRemodelacion__c</members>-->
 	<members>Tienda__c.DSALES_Banco__c</members>
-	<!--<members>Tienda__c.dsalesEmailGerenteDeTiendaDeZona__c</members>-->
 	<members>Tienda__c.DSALES_Formato__c</members>
-	<!--<members>Tienda__c.dsalesModuloAfore__c</members>
-	<members>Tienda__c.dsalesNombreGerenteDeTiendaDeZona__c</members>-->
-	<!--<members>Tienda__c.dsalesNumeroCelular__c</members>-->
-	<!--<members>Tienda__c.dsalesTelefonoTiendaBase__c</members>-->
 	<members>Tienda__c.DSALES_Tienda_Base__c</members>
+	<members>Tienda__c.dsalesCiudad__c</members>
 	<members>Tienda__c.Tipo_de_Tienda_Inmueble_Renta__c</members>
-	<members>Tienda__c.DSALES_Optica__c</members>
-	<members>DSALES_Certificado__c.DSales_Garantia_Coppel__c</members>
-	<members>DSALES_InformacionDePago__c.DSALES_IDUniversal__c</members>
-	<members>OpportunityLineItem.DSALES_Duracion__c</members>
+	<members>Tienda__c.DSALES_Optica__c</members>-->
 	<members>Campaign.dsalesTipoCampana__c</members>
-	<members>DSALES_TipodeUso__c.dsalesDescripcion__c</members>
+	<members>Asset.DSALES_Region__c</members>
+	<members>Quote.dsalesListaNegra__c</members>
+	<members>Asset.DSALES_Vigencia__c</members>
+	<members>Quote.dsalesIdDeVehiculo__c</members>
+	<members>Campaign.dsalesProductoCampanas__c</members>
+	<members>Claim.Correo_electr_nico__c</members>
+	<members>Campaign.dsalesProductoCampanas__c</members>
+	<members>Claim.dsalesFechaAltaSiniestro__c</members>
+	<members>InsurancePolicy.Cobertura__c</members>
+	<members>InsurancePolicy.DSALES_Armadora__c</members>
+	<members>InsurancePolicy.DSALES_Asegurado__c</members>
+	<members>InsurancePolicy.DSALES_Aseguradora__c</members>
+	<members>InsurancePolicy.DSALES_ClaveAMIS__c</members>
+	<members>InsurancePolicy.DSALES_Clavevehicular__c</members>
+	<members>InsurancePolicy.DSALES_Cobertura__c</members>
+	<members>InsurancePolicy.DSALES_Codigocolonia__c</members>
+	<members>InsurancePolicy.DSALES_Codigoestado__c</members>
+	<members>InsurancePolicy.DSALES_Codigomunicipio__c</members>
+	<members>InsurancePolicy.DSALES_Codigopostal__c</members>
+	<members>InsurancePolicy.DSALES_CorreoElectronico__c</members>
+	<members>InsurancePolicy.DSALES_Descripcion__c</members>
+	<members>InsurancePolicy.DSALES_Estatusdepliza__c</members>
+	<members>InsurancePolicy.DSALES_Fechanacimiento__c</members>
+	<members>InsurancePolicy.DSALES_Gastos_expedicion__c</members>
+	<members>InsurancePolicy.DSALES_Genero__c</members>
+	<members>InsurancePolicy.DSALES_IDemision__c</members>
+	<members>InsurancePolicy.DSALES_IVA__c</members>
+	<members>InsurancePolicy.DSALES_Marca__c</members>
+	<members>InsurancePolicy.DSALES_Modelo__c</members>
+	<members>InsurancePolicy.DSALES_Negocio__c</members>
+	<members>InsurancePolicy.DSALES_NombredelAsegurado__c</members>
+	<members>InsurancePolicy.DSALES_NumeroEndosoAutorizados__c</members>
+	<members>InsurancePolicy.DSALES_NumeroEndosoCancelacion__c</members>
+	<members>InsurancePolicy.DSALES_Numeroseguimiento__c</members>
+	<members>InsurancePolicy.DSALES_Numeroserie__c</members>
+	<members>InsurancePolicy.DSALES_Opcionpago__c</members>
+	<members>InsurancePolicy.DSALES_Oportunidad__c</members>
+	<members>InsurancePolicy.DSALES_PDF_poliza__c</members>
+	<members>InsurancePolicy.DSALES_PDFpoliza__c</members>
+	<members>InsurancePolicy.DSALES_Placas__c</members>
+	<members>InsurancePolicy.DSALES_Polizaenviada__c</members>
+	<members>InsurancePolicy.DSALES_Prima_Neta__c</members>
+	<members>InsurancePolicy.DSALES_Prima_total__c</members>
+	<members>InsurancePolicy.DSALES_Productoadquirido__c</members>
+	<members>InsurancePolicy.DSALES_RFC__c</members>
+	<members>InsurancePolicy.DSALES_Servicio__c</members>
+	<members>InsurancePolicy.DSALES_TelefonoContacto__c</members>
+	<members>InsurancePolicy.DSALES_Telefono__c</members>
+	<members>InsurancePolicy.DSALES_Tipodepersona__c</members>
+	<members>InsurancePolicy.DSALES_Tipovehiculo__c</members>
+	<members>InsurancePolicy.DSALES_Uso__c</members>
+	<members>InsurancePolicy.DSALES_VigenciacumplidaSM__c</members>
 	<members>InsurancePolicy.dsalesActivoPolizaSeguro__c</members>
+	<members>InsurancePolicy.dsalesBeneficiarioPreferente__c</members>
+	<members>InsurancePolicy.dsalesCalleConductor__c</members>
+	<members>InsurancePolicy.dsalesClaveEstadoConductor__c</members>
+	<members>InsurancePolicy.dsalesCodigoPostalConductor__c</members>
+	<members>InsurancePolicy.dsalesCorreoElectronicoConductor__c</members>
 	<members>InsurancePolicy.dsalesEstatusPoliza__c</members>
 	<members>InsurancePolicy.dsalesFechaDeEmision__c</members>
-	<!--<members>InsurancePolicy.dsalesNumeroDeMotor__c</members>-->
-	<members>Tienda__c.dsalesCiudad__c</members>
-	<name>CustomField</name><!--no se a validado-->
+	<members>InsurancePolicy.dsalesFechaNacimientoConductor__c</members>
+	<members>InsurancePolicy.dsalesGeneroConductor__c</members>
+	<members>InsurancePolicy.dsalesNombreConductor__c</members>
+	<members>InsurancePolicy.dsalesNumeroDeMotor__c</members>
+	<members>InsurancePolicy.dsalesNumeroExteriorConductor__c</members>
+	<members>InsurancePolicy.dsalesNumeroTelefonoConductor__c</members>
+	<members>InsurancePolicy.dsalesPrimerApellidoConductor__c</members>
+	<members>InsurancePolicy.dsalesQuoteId__c</members>
+	<members>InsurancePolicy.dsalesQuote__c</members>
+	<members>InsurancePolicy.dsalesRfcConductor__c</members>
+	<members>InsurancePolicy.dsalesSegundoApellidoConductor__c</members>
+	<members>InsurancePolicy.dsalesTipoServicio__c</members>
+	<members>InsurancePolicy.dsalesTipoUso__c</members>
+	<members>InsurancePolicyParticipant.dsalesCalle__c</members>
+	<members>InsurancePolicyParticipant.dsalesClaveEstado__c</members>
+	<members>InsurancePolicyParticipant.dsalesCodigoPostal__c</members>
+	<members>InsurancePolicyParticipant.dsalesCorreoElectronico__c</members>
+	<members>InsurancePolicyParticipant.dsalesFechaNacimiento__c</members>
+	<members>InsurancePolicyParticipant.dsalesGenero__c</members>
+	<members>InsurancePolicyParticipant.dsalesNombre__c</members>
+	<members>InsurancePolicyParticipant.dsalesNumeroExterior__c</members>
+	<members>InsurancePolicyParticipant.dsalesNumeroTelefono__c</members>
+	<members>InsurancePolicyParticipant.dsalesPrimerApellido__c</members>
+	<members>InsurancePolicyParticipant.dsalesRfc__c</members>
+	<members>InsurancePolicyParticipant.dsalesSegundoApellido__c</members>
+	<name>CustomField</name>
 </types>
 <types>
 		<members>Opportunity.Garantia Extendida</members>
-		<name>BusinessProcess</name><!--?-->
+		<name>BusinessProcess</name>
 </types>
 <types>
 	<members>DSALES_ContactMethod</members>
-	<members>dsalesSeguro_RC</members>
 	<members>DSALES_NombreAseguradora</members>
 	<members>DSALES_business</members>
 	<members>TOKEN</members>
@@ -666,89 +702,82 @@
 	<name>CustomLabel</name>
 </types>
 <types>
-	<members>DSALES_RutaIntegracion.DSALES_ListaNegra</members>
-	<members>DSALES_RutaIntegracion.DSALES_QuoteSM</members>
 	<members>DSALES_RutaIntegracion.DSALES_TOKEN</members>
-	<members>dsalesDatosContratante.dsalesNombre</members>
 	<name>CustomMetadata</name>
 </types>
-<!--<types>
-	<members>COPPELPISyS</members>
-	<members>COPPELPISyS/Garantaextendida</members>
-	<members>COPPELPISyS/Segurosdemotos</members>
-	<members>COPPELPISyS/Garantaextendida/qlMoAFAafYUpLidIIquKMuGnVMWNiU1</members>
-	<members>COPPELPISyS/Segurosdemotos/qlMoAFAafYUpLidIIquKMuGnVMWNiU</members>
-	<members>COPPELPISyS/Segurosdemotos/hEloTdLxCFXYrohtXkHFluFrIzBbQF</members>
-	<members>COPPELPISyS/Segurosdemotos/iRwyPzDoEOAkagKsTpvddsdZgnEsdP</members>
-	<members>COPPELPISyS/Segurosdemotos/GTlTBYAPdOjzISvFslZpRafnShxOuq</members>
-	<members>Tableros_Venta_GEX</members>
-	<members>Tableros_Venta_GEX/WKEgdHadQdsLxqKdOxltMNwbiGcBqw</members>
-	<members>Tableros_Venta_GEX/EoaqAuKoDhWaYfWvwnNWuKjmrTQhPo</members>
-	<name>Dashboard</name>Juan documemnto funcional sm tablero
-</types>-->
+<types>
+		<members>DSALES_PISYS</members>
+		<members>DSALES_PISYS/DSALES_LogoInicial.png</members>
+		<name>Document</name>
+	</types>
 <types>
 	<members>AccountType</members>
 	<members>QuoteStatus</members>
 	<members>OpportunityStage</members>
 	<members>Product2Family</members>
-	<members>ClaimType</members>
 	<members>LeadSource</members>
 	<name>StandardValueSet</name>
 </types>
 <types>
+	<members>DASALES_Porcentajedecobro__c</members>
 	<members>DSales_Asignacion_de_Productos__c</members>
 	<members>DSALES_AsociacionCampanias__c</members>
 	<members>DSALES_AsociacionTiposUso__c</members>
+	<members>DSALES_Cancelacion__c</members>
 	<members>DSALES_Categoria__c</members>
 	<members>DSALES_Certificado__c</members>
 	<members>DSALES_Clase__c</members>
+	<members>dsalesDatosContratante__mdt</members>
 	<members>DSALES_Endoso__c</members>
 	<members>DSALES_Familia__c</members>
 	<members>DSALES_Generador__c</members>
 	<members>DSALES_InformacionDePago__c</members>
 	<members>DSALES_Matriz_de_Cotizacion__c</members>
-	<members>DSALES_SubCategoria__c</members>
 	<members>DSales_Matriz_GEX__c</members>
-	<members>DSALES_RutaIntegracion__mdt</members>
-	<members>DSALES_TipoUso__c</members>
-	<!--<members>DSALES_Tipodevehculo__c</members>-->
-	<members>DASALES_Porcentajedecobro__c</members>
 	<members>DSALES_Partidadepago__c</members>
-	<members>Account</members>
-	<members>Account</members>
-	<members>Asset</members>
-	<members>Claim</members>
-	<!--<members>InsurancePolicy</members>-->
-	<members>Opportunity</members>
-	<!--<members>Plazo__c</members>-->
-	<!--<members>Quote</members>-->
-	<!--<members>QuoteLineItem</members>-->
-	<members>Tipo_de_endoso__mdt</members>
-	<!--<members>Tienda__c</members>-->
 	<members>DSALES_Reembolso__c</members>
-	<members>DSALES_Cancelacion__c</members>
+	<members>DSALES_RutaIntegracion__mdt</members>
+	<members>DSALES_SubCategoria__c</members>
+	<members>DSALES_TipodeUso__c</members>
+	<members>DSALES_Tipodevehculo__c</members>
 	<members>dsalesAsignacionDeTienda__c</members>
 	<members>dsalesCiudad__c</members>
 	<members>dsalesRegion__c</members>
-	<members>dsalesDatosContratante__mdt</members>
-	<members>dsalesEquivalencias__mdt</members>
-	<name>CustomObject</name><!--?-->
+	<members>Plazo__c</members>
+	<members>Tienda__c</members>
+	<name>CustomObject</name>
 </types>
 <types>
-	<members>DSALES_Categoria__c-es_MX</members>
-	<members>DSALES_Certificado__c-es_MX</members>
-	<members>DSALES_Clase__c-es_MX</members>
-	<!--<members>DSALES_Endoso__c-es_MX</members>-->
-	<members>DSALES_Familia__c-es_MX</members>
-	<members>DSALES_Generador__c-es_MX</members>
-	<members>DSALES_Matriz_de_Cotizacion__c-es_MX</members>
-	<members>DSALES_SubCategoria__c-es_MX</members>
-	<members>DSales_Matriz_GEX__c-es_MX</members>
-	<name>CustomObjectTranslation</name><!--?no sabemos-->
+		<members>DSALES_AsociacionCampanias__c-es_MX</members>
+		<members>DSALES_AsociacionTiposUso__c-es_MX</members>
+		<members>DSALES_Cancelacion__c-es_MX</members>
+		<members>DSALES_Categoria__c-es_MX</members>
+		<members>DSALES_Certificado__c-es_MX</members>
+		<members>DSALES_Clase__c-es_MX</members>
+		<!--<members>DSALES_Endoso__c-es_MX</members>-->
+		<members>DSALES_Familia__c-es_MX</members>
+		<members>DSALES_Generador__c-es_MX</members>
+		<members>DSALES_InformacionDePago__c-es_MX</members>
+		<members>DSALES_Matriz_de_Cotizacion__c-es_MX</members>
+		<members>DSALES_Partidadepago__c-es_MX</members>
+		<members>DSALES_Reembolso__c-es_MX</members>
+		<members>DSALES_RutaIntegracion__mdt-es_MX</members>
+		<members>DSALES_SubCategoria__c-es_MX</members>
+		<members>DSALES_TipodeUso__c-es_MX</members>
+		<members>DSALES_Tipodevehculo__c-es_MX</members>
+		<members>DSales_Asignacion_de_Productos__c-es_MX</members>
+		<members>DSales_Matriz_GEX__c-es_MX</members>
+		<members>Plazo__c-es_MX</members>
+		<members>dsalesAsignacionDeTienda__c-es_MX</members>
+		<members>dsalesCiudad__c-es_MX</members>
+		<members>dsalesDatosContratante__mdt-es_MX</members>
+		<members>dsalesRegion__c-es_MX</members>
+	<name>CustomObjectTranslation</name>
 </types>
 <types>
 	<members>DSALES_AsociacionCampanias__c</members>
 	<members>DSALES_AsociacionTiposUso__c</members>
+	<members>DSALES_Cancelacion__c</members>
 	<members>DSALES_Categoria__c</members>
 	<members>DSALES_Certificado__c</members>
 	<members>DSALES_Clase__c</members>
@@ -767,9 +796,13 @@
 	<members>dsalesAsignacionDeTienda__c</members>
 	<members>dsalesCiudad__c</members>
 	<members>dsalesRegion__c</members>
-	<name>CustomTab</name><!--yo validar en sfmotos-->
+	<members>DSALES_TipodeUso__c</members>
+	<members>DSALES_Reembolso__c</members>
+	<members>DSALES_Tipodevehculo__c</members>
+	<members>Plazo__c</members>
+	<name>CustomTab</name>
 </types>
-<types>
+<!--<types>
     <members>DSALES_PISYS</members>
     <members>DSALES_PISYS/DSALES_hr.png</members>
     <members>DSALES_PISYS/DSALES_hrAmarillo.png</members>
@@ -778,31 +811,21 @@
     <members>DSALES_PISYS/DSALES_logoFinal.png</members>
     <members>DSALES_PISYS/DSALES_LogoInicial.png</members>
     <name>Document</name>
-</types>
-<types>
-	<members>DSALES_Deloitte/Env_a_P_liza_1659559547166</members>
-	<members>DSALES_Deloitte/Envi_de_correo_de_cancelaci_n_de_p_liza_1676935961633</members>
+</types>-->
+<!--<types>
+	<members>DSALES_Deloitte</members>
 	<members>DSALES_Deloitte/Envi_de_cotizaci_n_1660589806562</members>
-	<members>DSALES_Deloitte/Informa_Endoso_Nuevo_1659545752578</members>
-	<members>DSALES_Deloitte/Informa_Siniestro_Completado_1659548817745</members>
-	<members>DSALES_Deloitte/Informa_Siniestro_Nuevo_1659549870686</members>
-	<members>DSALES_Deloitte/Informa_Siniestro_Rechazado_1659550884711</members>
-	<members>DSALES_Deloitte/Plantilla_para_envi_de_estatus_Autorizado_1658358976235</members>
-	<members>DSALES_Deloitte/Plantilla_para_envi_de_estatus_autorizado_1658419964554</members>
-	<members>DSALES_Deloitte/Plantilla_para_envi_de_estatus_en_tramite_1658418823421</members>
-	<members>DSALES_Deloitte/Plantilla_para_envi_de_estatus_en_tramite_1658425997741</members>
-	<members>DSALES_Deloitte/Siniestro_En_Tr_mite_1660834028554</members>
 	<members>DSALES_PlantillasCorreos</members>
 	<members>DSALES_PlantillasCorreos/DSALES_CertificadoGEX</members>
 	<members>DSALES_PlantillasCorreos/DSALES_CertificadoPDF</members>
 	<members>DSALES_PlantillasCorreos/DSALES_Cotizacion</members>
 	<members>DSALES_PlantillasCorreos/DSALES_CotizacionGEX</members>
 	<members>DSALES_PlantillasCorreos/DSALES_GarantiaExtendida</members>
-	<members>unfiled$public/DSALES_Plantilla_para_endoso_en_estatus_requerimiento_de_informaci_n</members>
 	<members>unfiled$public/DSALES_Plantilla_para_envi_de_estatus_en_tramite</members>
-	<name>EmailTemplate</name><!--ok-->
-</types>
+	<name>EmailTemplate</name>
+</types>-->
 <types>
+	<members>Asignaci_n_de_Productos_P_gina_de_registro</members>
     <members>Asignaci_n_de_Tienda_Record_Page</members>
     <members>Asociaci_n_de_campa_as_Record_Page</members>
     <members>Categor_a_P_gina_de_registro</members>
@@ -810,11 +833,13 @@
     <members>Clase_P_gina_de_registro</members>
     <members>DSALES_AsociacionTiposUsoRecordPageSM</members>
     <members>DSALES_CancelacionPaginaRegistroSM</members>
+	<members>Endoso_Pagina_registro</members>
     <members>DSALES_MatrizPaginaRegistro</members>
     <members>DSALES_PlazoPginaderegistro</members>
     <members>DSALES_PysisAccountRecordPage</members>
     <members>DSALES_TipodeUsoPginaderegistro</members>
     <members>DSALES_TipodevehculoPginaderegistro</members>
+	<members>Generador_Plantillas_P_gina_de_registro1</members>
     <members>Familia_P_gina_de_registro</members>
     <members>Insurance_Policy_Asset_Record_PageSM</members>
     <members>Partida_de_pago_Record_Page</members>
@@ -824,7 +849,6 @@
     <members>Producto_Adquirido_Record_Page</members>
     <members>Quote_Line_Item_Record_Page</members>
     <members>Quote_Record_Page</members>
-    <members>Quote_Record_Page_Seguros</members>
     <members>Quote_Record_Page_Servicios</members>
     <members>Region_Record_Page</members>
     <members>Sub_Categor_a_P_gina_de_registro</members>
@@ -833,59 +857,53 @@
     <members>Tipo_de_veh_culo_Record_Page</members>
     <members>Certificado_de_Garant_a_Extendida</members>
     <members>DSALES_Pagina_de_Inicio_GEX</members>
-    <members>Endoso_Pagina_registro</members>
     <members>Informaci_n_de_Venta_de_Pago</members>
     <members>Matriz_Item_P_gina_de_registro</members>
     <members>Oportunidad_PISYS_GEX</members>
-    <members>Poliza_pagina_registroSM</members>
     <members>Partida_presupuesto_Pagina_registro</members>
     <members>P_gina_de_inicio_predeterminada1</members>
-    <members>Siniestro_Pagina_de_registro</members>
     <members>Resumen_de_pago_de_reclamaci_n_P_gina_de_registro</members>
     <members>ActivoPolizaPaginaRegistro</members>
     <members>AsociacionCampanasPaginaRegistro</members>
     <members>Asociaci_n_de_tipos_de_uso_Record_Page</members>
     <members>Producto_Pagina_registro</members>
-    <members>Campaign_Record_PageSM</members>
+	<members>Garant_a_Extendida_UtilityBar</members>
+	<members>Seguro_de_Motos_UtilityBar</members>
+	<members>Quote_Record_Page_Seguros</members>
+	<members>Asignaci_n_de_Productos_P_gina_de_registro1</members>
+	<members>Producto_de_oportunidad_P_gina_de_registro</members>
+	<members>ReembolsoPaginaRegistroSM</members>
+	<members>Campaign_Record_PageSM</members>
+	<members>Porcentaje_de_cobro_P_gina_de_registro1</members>
+	<members>Poliza_pagina_registroSM</members>
+	<members>ParticipantePolizaPaginaRegistro</members>
+	<members>Siniestro_Pagina_de_registro</members>
+	<members>P_gina_de_inicio_predeterminada</members>
+	<members>P_gina_de_inicio_predeterminada1</members>
 	<name>FlexiPage</name>
 </types>
 <types>
-    <members>Actualiza_N_mero_de_Siniestro</members>
     <members>Actualizaci_n_de_correo_en_cotizaci_n</members>
     <members>DSALES_Activacindecasilladeenviarcotizacin</members>
-    <members>DSALES_Actualiza_correo_en_siniestro</members>
     <members>DSALES_Alerta_certificado_caduco</members>
-    <members>DSALES_Alerta_p_liza_caduca</members>
-    <members>DSALES_Cambio_Tipo_Registro_Siniestro</members>
     <members>DSALES_Certificado_Cancelado</members>
-    <!--<members>DSALES_Correo_nueva_p_liza</members>-->
-    <members>DSALES_Desactivarcampaa</members>
+    <!--<members>DSALES_Desactivarcampaa</members>-->
     <members>DSALES_Presupuesto_Vencido</members>
     <members>DSales_Etapa_Cerrada_Perdida_GEX</members>
     <members>DSales_Etapa_de_Oportunidad_en_GEX</members>
     <members>DSALES_NotificacionNuevoProducto</members>
     <members>DSales_actualizacionEstatus</members>
-    <members>Dsales_Agregarelcorreoelectrnicodelclienteenelcampocorreodelendoso</members>
     <members>Actualiza_GEX_Vendidas</members>
     <members>DSales_Activa_90001</members>
     <members>Estatus_Cerrada_Ganada</members>
-    <members>Carga_Cliente_en_Endoso</members>
-    <members>Carga_Cliente_en_Siniestro</members>
-    <members>Envi_de_correo_en_las_etapas_de_siniestro</members>
-    <members>DSALES_Actualizar_el_estatus_siniestro_pagado</members>
-    <members>DSALES_Actualizar_poliza_cancelada_siniestrada</members>
-    <members>DSALES_EnvioCorreoEstatusPoliza</members>
 	<name>Flow</name>
 </types>
 <types>
     <members>DSALES_Alerta_certificado_caduco</members>
-    <members>DSALES_Alerta_p_liza_caduca</members>
     <members>DSALES_Certificado_Cancelado</members>
-    <!--<members>DSALES_Correo_nueva_p_liza</members>-->
     <members>DSALES_Presupuesto_Vencido</members>
     <members>DSales_Etapa_Cerrada_Perdida_GEX</members>
     <members>DSales_Etapa_de_Oportunidad_en_GEX</members>
-    <members>Dsales_Agregarelcorreoelectrnicodelclienteenelcampocorreodelendoso</members>
 	<name>FlowDefinition</name>
 </types>
 <types>
@@ -898,14 +916,13 @@
 </types>
 <types>
 	<members>DSALES_PISYS</members>
+	<members>Deloitte</members>
 	<name>Group</name>
 </types>
 <types>
 	<members>Asset-Asset Layout</members>
     <members>Asset-dsalesServicios</members>
     <members>Asset-Pisys Asset Layout</members>
-    <members>Claim-Ingreso de Siniestro</members>
-    <members>Claim-Visualización de Siniestro</members>
     <members>ClaimPaymentSummary-Formato de Resumen de pago de reclamación</members>
     <members>DASALES_Porcentajedecobro__c-Formato Porcentaje de cobro</members>
     <members>DASALES_Porcentajedecobro__c-Porcentage de cobro Layout</members>
@@ -914,54 +931,49 @@
     <members>DSALES_AsociacionCampanias__c-Formato Asociación de campañas</members>
     <members>DSALES_AsociacionTiposUso__c-Formato Asociación de tipos de uso</members>
     <members>DSALES_Cancelacion__c-Formato Cancelación</members>
-    <members>DSALES_Cancelacion__c-Formato de Cancelación SM</members>
     <members>DSALES_Categoria__c-DSALES_Formato Producto Tangible</members>
-    <members>DSALES_Categoria__c-DSALES_SM</members>
     <members>DSALES_Categoria__c-dsalesServicios</members>
     <members>DSALES_Categoria__c-Formato Categoría</members>
     <members>DSALES_Certificado__c-DSALES_Certificado_GEX</members>
+	<members>DSALES_Categoria__c-DSALES_SM</members>
     <members>DSALES_Clase__c-DSALES_Formato Producto Tangible</members>
-    <members>DSALES_Clase__c-DSALES_SM</members>
     <members>DSALES_Clase__c-dsalesServicios</members>
     <members>DSALES_Clase__c-Formato Clase</members>
-    <members>DSALES_Endoso__c-Visualización de Endoso</members>
+	<members>DSALES_Clase__c-DSALES_SM</members>
+	<members>DSALES_Familia__c-DSALES_SM</members>
     <members>DSALES_Familia__c-DSALES_Formato Producto Tangible</members>
-    <members>DSALES_Familia__c-DSALES_SM</members>
     <members>DSALES_Familia__c-dsalesServicios</members>
     <members>DSALES_Familia__c-Formato Familia</members>
     <members>DSALES_Generador__c-Formato Generador Plantillas</members>
     <members>DSALES_InformacionDePago__c-DSALES_Info_pago_Venta_NPV</members>
-    <members>DSALES_InformacionDePago__c-DSALES_InformaciondepagosSM_c</members>
-    <members>DSALES_InformacionDePago__c-DSALESInformaciondepagosSM</members>
-    <members>DSALES_InformacionDePago__c-Formato Información de pago</members>
     <members>DSALES_Matriz_de_Cotizacion__c-Formato Matriz de Cotización</members>
     <members>DSales_Matriz_GEX__c-Formato Matriz</members>
     <members>DSALES_Partidadepago__c-Formato Partida de pago</members>
     <members>DSALES_Partidadepago__c-Partida de pago Layout</members>
-    <members>DSALES_Partidadepago__c-Partidas de pago SM</members>
     <members>DSALES_Reembolso__c-Formato Reembolso</members>
-    <members>DSALES_Reembolso__c-Formato Reembolso SM</members>
     <members>DSALES_SubCategoria__c-DSALES_Formato Producto Tangible</members>
-    <members>DSALES_SubCategoria__c-DSALES_SM</members>
     <members>DSALES_SubCategoria__c-dsalesServicios</members>
+	<members>DSALES_SubCategoria__c-DSALES_SM</members>
     <members>DSALES_SubCategoria__c-Formato Subcategoría</members>
     <members>DSALES_TipodeUso__c-Formato Tipo de Uso</members>
     <members>DSALES_Tipodevehculo__c-Formato Tipo de vehículo</members>
     <members>dsalesAsignacionDeTienda__c-Asignación Campaña</members>
     <members>dsalesAsignacionDeTienda__c-Asignación de Tienda Layout</members>
     <members>dsalesAsignacionDeTienda__c-Formato Asignación de Tienda</members>
+	<members>DSALES_RutaIntegracion__mdt-Formato Ruta de Integración</members>
+	<members>dsalesDatosContratante__mdt-Formato Nombre del contratante</members>
+	<members>DSALES_Cancelacion__c-Formato Cancelación</members>
+	<members>DSALES_InformacionDePago__c-DSALESInformaciondepagosSM</members>
+	<members>DSALES_InformacionDePago__c-Formato Información de Pago</members>
+	<members>DSALES_Partidadepago__c-Partidas de pago SM</members>
+	<members>DSALES_Reembolso__c-Formato Reembolso SM</members>
+	<members>DSALES_Cancelacion__c-Formato de Cancelación SM</members>
     <members>dsalesCiudad__c-Ciudad Layout</members>
     <members>dsalesCiudad__c-Formato Ciudad</members>
-    <members>dsalesDatosContratante__mdt-Formato Nombre del contratante</members>
     <members>dsalesRegion__c-Formato Región</members>
     <members>dsalesRegion__c-Región Layout</members>
-    <members>InsurancePolicy-Formato de póliza de seguro</members>
-    <members>InsurancePolicyAsset-Formato de Activo de póliza de seguro</members>
-    <members>InsurancePolicyParticipant-Formato de pagina SM</members>
     <members>Opportunity-DSALES_OpportunityPISYSGEX</members>
-    <members>Opportunity-DSALES_OpportunitySM</members>
     <members>Opportunity-Opportunity Layout</members>
-    <members>OpportunityLineItem-DSALES_FormatodePaginaPOSM</members>
     <members>OpportunityLineItem-dsalesformatopaginagex</members>
     <members>OpportunityLineItem-Opportunity Product Layout</members>
     <members>PersonAccount-DSALES_Clientes</members>
@@ -969,15 +981,16 @@
     <members>Plazo__c-Formato Plazo</members>
     <members>Quote-Quote Layout</members>
     <members>Quote-Venta GEX</members>
-    <members>Quote-Venta SM</members>
     <members>QuoteLineItem-DSALES_GEXQuote</members>
-    <members>QuoteLineItem-DSALES_Partida_SM</members>
     <members>QuoteLineItem-Quote Line Item Layout</members>
     <members>Tienda__c-Formato Tienda</members>
+	<members>DSALES_InformacionDePago__c-DSALES_InformaciondepagosSM_c</members>
+	<members>dsalesAsignacionDeTienda__c-Asignación de Matríz</members>
 	<name>Layout</name>
 </types>
 <types>
 	<members>DSALES_Certificados</members>
+	<members>DSALES_MembreteParaEndoso</members>
 	<name>Letterhead</name>
 </types>
 <types>
@@ -1003,9 +1016,6 @@
 	<members>DSALES_Certificado__c.DSALES_Mis_Certificados</members>
 	<members>DSALES_Certificado__c.DSALES_Nuevos_de_esta_semana</members>
 	<members>DSALES_Clase__c.All</members>
-	<members>DSALES_Endoso__c.All</members>
-	<members>DSALES_Endoso__c.DSALES_Mis_endosos</members>
-	<members>DSALES_Endoso__c.DSALES_Nuevos_de_esta_semana</members>
 	<members>DSALES_Familia__c.All</members>
 	<members>DSALES_Generador__c.All</members>
 	<members>DSALES_InformacionDePago__c.All</members>
@@ -1024,27 +1034,21 @@
 </types>
 <types>
 	<members>Certificado</members>
-	<members>DSALES_RutadepresupuestoSM</members>
-	<members>DSALES_RutaparaoportunidadesdeSM</members>
 	<members>DSales_Oportunidad_en_GEX</members>
 	<members>DSales_Producto_Adquirido</members>
-	<members>DSALES_Ruta_de_estatus_de_Endosos</members>
-	<members>DSALES_Ruta_siniestros</members>
-	<members>DSALES_Rutaparapliza</members>
 	<name>PathAssistant</name>
 </types>
 <types>
 	<members>Administrador_de_sistema_Fun_SM</members>
-	<members>DSALES_PermisosAdminPisys</members>
 	<members>DSALES_Plantillas_de_construcci_n</members>
+	<members>DSALES_PermisosAdminPisys</members>
 	<members>DSales_AdministradorSistemaPisys</members>
 	<name>PermissionSet</name>
 </types>
 <types>
+	<members>Admin</members>
 	<members>Administrador GEX</members>
 	<members>Control de Informes GEX</members>
-	<members>Administrador SM</members>
-	<members>Control de Informes SM</members>
 	<name>Profile</name>
 </types>
 <types>
@@ -1063,122 +1067,50 @@
 <types>
 	<members>Asset.DSALES_Garantia_Extendida</members>
 	<members>Campaign.DSALES_TipoderegistrocampaNasSM</members>
-	<members>Claim.DSALES_Siniestro</members>
+	<members>Claim.DSALES_Nuevo_Siniestro</members>
 	<members>DSALES_Cancelacion__c.DSALES_RegistroCancelacionSM</members>
-	<members>DSALES_Categoria__c.DSALES_SM</members>
 	<members>DSALES_Categoria__c.DSales_ProductoTangible</members>
 	<members>DSALES_Categoria__c.dsalesServicios</members>
-	<members>DSALES_Clase__c.DSALES_SM</members>
 	<members>DSALES_Clase__c.DSales_ProductoTangible</members>
 	<members>DSALES_Clase__c.dsalesServicios</members>
-	<members>DSALES_Endoso__c.Registro_de_endoso_completo</members>
-	<members>DSALES_Familia__c.DSALES_SM</members>
+	<members>DSALES_Endoso__c.Registro_de_endoso</members>
 	<members>DSALES_Familia__c.DSales_ProductoTangible</members>
 	<members>DSALES_Familia__c.dsalesServicios</members>
 	<members>DSALES_InformacionDePago__c.DSALES_Pagos_en_NPV</members>
 	<members>DSALES_InformacionDePago__c.DSALES_PagosdeVentaenNPVSM_c</members>
 	<members>DSALES_Partidadepago__c.DSales_Garantia_Extendida</members>
-	<members>DSALES_Reembolso__c.DSALES_RegistroReembolsoSM</members>
-	<members>DSALES_SubCategoria__c.DSALES_SM</members>
 	<members>DSALES_SubCategoria__c.DSales_Producto_Tangible</members>
 	<members>DSALES_SubCategoria__c.dsalesServicios</members>
 	<members>Opportunity.DSales_Garantia_Extendida</members>
 	<members>Opportunity.Seguro_de_Moto</members>
+	<members>Opportunity.DSALES_Oportunidad</members>
 	<members>Product2.DSALES_ProdTangible</members>
 	<members>Product2.DSales_Garantia_Extendida</members>
-	<members>Product2.DSales_Seguro_de_Motos</members>
 	<members>Quote.DSALES_VentaGEX</members>
+	<members>Product2.DSALES_ProdIntangible</members>
+	<members>Product2.DSales_Seguro_de_Motos</members>
+	<members>Claim.DSALES_Siniestro</members>
 	<members>Quote.DSALES_VentaSM</members>
 	<name>RecordType</name>
-</types>
-<!--<types>
-		<members>CarpetaDanny</members>
-		<members>CarpetaDanny/DSALES_Indicadores_RAR</members>
-		<members>CarpetaDanny/DSALES_Venta</members>
-		<members>CarpetaDanny/DSales_Resultado_GEX_Division_Region_rhF</members>
-		<members>CarpetaDanny/DSales_Resultado_GEX_por_Mes_por_Tiendas_bWe</members>
-		<members>CarpetaDanny/DSales_Resultados_GEX_Tiendas_Bay</members>
-		<members>DSALES_ReportedeCotizacionesGEX</members>
-		<members>DSALES_ReportedeCotizacionesGEX/DSALES_Reporte_de_Cotizaciones_QP1</members>
-		<members>DSALES_ReportedeCotizacionesGEX/DSALES_TasaConversionGEX</members>
-		<members>DSALES_ReportedeCotizacionesGEX/DSALES_Tasa_de_conversin_de_Cotizaciones_GEX</members>
-		<members>DSALES_ReportedeCotizacionesSM</members>
-		<members>DSALES_ReportedeCotizacionesSM/DSALES_estatus_cotizaciones_POE</members>
-		<members>DSALES_ReportesdeCertificadosGEX</members>
-		<members>DSALES_ReportesdeCertificadosGEX/DSALES_reporte_de_CertificadosPrueba_ibX</members>
-		<members>DSALES_ReportesdeClientesGEX</members>
-		<members>DSALES_ReportesdeClientesGEX/DSALES_Reporte_de_Clientes_Buc</members>
-		<members>DSALES_ReportesdeClientesGEX/DSALES_Reporte_de_Clientes_Candidatos_8R9</members>
-		<members>DSALES_ReportesdeVentasGEX</members>
-		<members>DSALES_ReportesdeVentasGEX/DSALES_ResultadoDivision_9XK</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Indicadores_GEX_Region_yPR</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Indicadores_GEX_Resultado_Nacional_4TL</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Indicadores_GEX_por_Trimestre_7oC</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Resultado_GEX_DivisionRegion_I6Q</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Resultado_GEX_Region_qfw</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Resultado_GEX_Zonas_g9H</members>
-		<members>CoppelPISyS</members>
-		<members>CoppelPISyS/SegurosdeMotos/DSALES_Venta_Total_por_Mes_59p</members>
-		<members>CoppelPISyS/SegurosdeMotos</members>
-		<members>CoppelPISyS/SegurosdeMotos/Clientes_interesados_en_compra_de_SM_6hT</members>
-		<members>CoppelPISyS/SegurosdeMotos/Plizas_por_Producto_nYk</members>
-		<members>CoppelPISyS/SegurosdeMotos/Siniestros_Bfs</members>
-		<members>CoppelPISyS/SegurosdeMotos/Plizas_de_Clientes_Sk7</members>
-		<members>CoppelPISyS/SegurosdeMotos/Top_de_Oportunidades_abiertas_kKq</members>
-		<members>CoppelPISyS/SegurosdeMotos/Oportunidades_sin_actividad_en_60_das_3Tw</members>
-		<members>CoppelPISyS/SegurosdeMotos/Clientes_con_cotizaciones_jaC</members>
-		<members>CoppelPISyS/SegurosdeMotos/Tasa_de_conversin_de_cotizaciones_71B</members>
-		<members>unfiled$public/SampleReportClosedSales</members>
-		<members>DSALES_ReportesdeVentasGEX/DSALES_Ranking_por_unidades_GEX</members>
-		<members>DSALES_ReportesdeVentasGEX/DSALES_Resultado_Division</members>
-		<members>DSALES_ReportesdeVentasGEX/DSALES_Resultado_Tiendas</members>
-		<members>DSALES_ReportesdeVentasGEX/DSALES_Resultado_Zonas</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_GEX_Resultado_Tiendas_ozC</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_GEX_Resultado_Zonas_w4C</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Ranking_Region_wen</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Ranking_por_colaboradores_del_mes_6HG</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Resultado_Division_Primer_Tr_Ymt</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Resultado_Region_Primer_Trimestre_Gf3</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Top_10_Tiendas_lrA</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Ventas_por_division_por_mes_0fb</members>
-		<members>DSALES_ReportesdeVentasGEX/DSales_Ventas_por_region_por_trimestre_3xy</members>
-		<members>DSALES_ReportesdeVentasGEX/Garanta_Extendida_Resultados_Nacional_t0U</members>
-		<members>DSALES_ReportesdeVentasGEX/GEXTiendas_Potenciales_VLLH_25X</members>
-		<members>DSALES_ReportesdeVentasGEX/Indicadores_Regin_VLLH_9j7</members>
-		<members>DSALES_ReportesdeVentasGEX/New_Report_bGJ</members>
-		<members>DSALES_ReportesdeVentasGEX/Ranking_Incentivos_a0S</members>
-		<members>DSALES_ReportesdeVentasGEX/Ranking_Tiendas_CuC</members>
-		<members>DSALES_ReportesdeVentasGEX/Resultado_Divisin_Primer_Trimestre_2_4Zj</members>
-		<members>DSALES_ReportesdeVentasGEX/Resultado_Divisin_Regin_iVL</members>
-	<name>Report</name>?Omar* archivo documento funcional
-</types>-->
-<types>
-	<members>Clientes_con_p_lizas</members>
-	<members>Cuentas_Personales</members>
-	<members>DSALESCuentas_Oportunidades_Productos</members>
-	<members>DSALES_Oportunidades_Productos</members>
-	<members>Oportunidades_con_cotizaciones</members>
-	<name>ReportType</name>><!--? preguntar a lalo v-->
 </types>
 <types>
 	<members>DSALES_Admin_GEX</members>
 	<members>DSALES_Admin_SM</members>
 	<members>DSALES_Agente_de_servicio_SM</members>
-	<members>DSALES_Atenci_n_a_servicio</members>
 	<members>DSALES_Control_de_informes_GEX</members>
-	<members>DSALES_Control_de_informes_SM</members>
 	<members>DSALES_DireccionSegurosGarantias</members>
 	<members>DSALES_Gerente_Venta_Garant_a</members>
 	<members>DSALES_Gerente_Venta_seguros</members>
-	<name>Role</name><!--Nam/ validará lalo con Luis-->
+	<members> DSALES_Atenci_n_a_servicio</members>
+	<members>DSALES_Control_de_informes_SM</members>
+	<name>Role</name>
 </types>
 <types>
 	<members>DSALES_Categoria__c</members>
 	<members>DSALES_Certificado__c</members>
 	<members>DSALES_Familia__c</members>
 	<members>DSALES_Generador__c</members>
-	<members>InsurancePolicy</members>
-	<name>SharingRules</name><!--Nam no hay para motos/ se validará con Luis-->
+	<name>SharingRules</name>
 </types>
 <types>
 	<members>DSALESLogoFinGEX</members>
@@ -1205,22 +1137,8 @@
 <types>
 	<members>DSALES_Certificado__c.DSALES_VerCertificado</members>
 	<members>Quote.DSALES_VerCotizacion</members>
-	<members>Quote.Ver_Cotizaci_n_PDF</members>
+	<members><members>Quote.Ver_Cotizaci_n_PDF</members></members>
 	<name>WebLink</name>
-</types>
-<types>
-		<members>Claim.DSALES_Informa_Siniestro_En_Tramite</members>
-		<members>Claim.Informa_Nuevo_Siniestro</members>
-		<members>Claim.Informa_Siniestro_Completado</members>
-		<members>Claim.Informa_Siniestro_Rechazado</members>
-		<members>DSALES_Endoso__c.DSALES_Alerta_de_correo_de_cambio_de_estatus_a_completado</members>
-		<members>DSALES_Endoso__c.DSALES_Alerta_de_correo_de_cambio_de_estatus_a_rechazado</members>
-		<members>DSALES_Endoso__c.DSALES_Alerta_de_correo_de_cambio_de_estatus_a_requerimiento_de_informaci_n</members>
-		<members>DSALES_Endoso__c.DSALES_Alerta_de_correo_de_cambio_de_estatus_de_el_Endoso_a_tramite</members>
-		<members>DSALES_Endoso__c.DSALES_Endoso_Nuevo</members>
-		<members>InsurancePolicy.DSALES_AlertadeCorreocambiodeEstatusdePolizaaCancelado</members>
-		<members>InsurancePolicy.DSALES_Poliza_Nueva</members>
-		<name>WorkflowAlert</name>
 </types>
 <types>
 	<members>PersonAccount.DSALES_Regladeduplicidad</members>
@@ -1230,7 +1148,6 @@
 		<members>DSALES_CotizacionMule</members>
 		<members>DSALES_Mulesoft</members>
 		<members>DSALES_catalogoServicio</members>
-		<members>dsales_MuleBlackList</members>
 		<members>token</members>
 		<name>RemoteSiteSetting</name>
 </types>

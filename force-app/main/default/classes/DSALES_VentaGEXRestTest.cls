@@ -5,6 +5,7 @@ public with sharing class DSALES_VentaGEXRestTest {
     static void crearRegistro(){
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         String recordTypeQuoteId = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Garantía Extendida').getRecordTypeId();
+        String recordTypeQuoteIdSg = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Seguro de Motos').getRecordTypeId();
         Tienda__c t = new Tienda__c();
         t.dsales_TiendaID__c =  'CPPL-UGARTE';
         insert t;
@@ -51,10 +52,21 @@ public with sharing class DSALES_VentaGEXRestTest {
         cotiza.RecordTypeId =recordTypeQuoteId;
         cotiza.DSales_Tienda__c = t.Id;
         cotiza.PriceBook2Id=pb2Id;
+        cotiza.DSALES_Enviarcotizacion__c=false;
        // cotiza.DSALES_Regioon__c = 'HERMOSILLO';
         cotiza.DSales_Division__c= '4';
         cotiza.ExpirationDate = date.today()+14;
         insert cotiza;
+        Quote cotizaSG = new Quote();
+         cotizaSG.Name = 'SG';
+        cotizaSG.OpportunityId = oppor.Id;
+        cotizaSG.RecordTypeId =recordTypeQuoteIdSG;
+        cotizaSG.DSales_Tienda__c = t.Id;
+        cotizaSG.PriceBook2Id=pb2Id;
+        cotizaSG.DSALES_Enviarcotizacion__c=false;
+        cotizaSG.DSales_Division__c= '4';
+        cotizaSG.ExpirationDate = date.today()+14;
+        insert cotizaSG;
           QuoteLineItem quote= new QuoteLineItem(QuoteId=cotiza.Id,UnitPrice=2,Quantity=2,PricebookEntryId=pb.Id,Product2Id=prod2.id,Vigencia_meses__c='12');
         insert quote;
         
@@ -68,7 +80,8 @@ public with sharing class DSALES_VentaGEXRestTest {
     
     @isTest 
     static void crearVentaTest(){
-        Quote cotiza=[SELECT id FROM Quote LIMIT 1];
+        Quote cotiza=[SELECT id,DSALES_Enviarcotizacion__c FROM Quote WHERE NAME='GEX' LIMIT 1];
+         Quote cotizaSG=[SELECT id,DSALES_Enviarcotizacion__c FROM Quote WHERE NAME='SG' LIMIT 1];
         QuoteLineItem qt=[SELECT Id FROM QuoteLineItem LIMIT 1]; 
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
@@ -80,6 +93,10 @@ public with sharing class DSALES_VentaGEXRestTest {
         RestContext.response = res;
         DSALES_VentaGEX.VentaGexRequest venta = (DSALES_VentaGEX.VentaGexRequest)JSON.deserialize(body, DSALES_VentaGEX.VentaGexRequest.class);
         Test.startTest();
+        cotiza.DSALES_Enviarcotizacion__c=true;
+        cotizaSG.DSALES_Enviarcotizacion__c=true;
+        update cotiza;
+        update cotizaSG;
         DSALES_VentaGEX.VentaGexResponse ventaGex= new DSALES_VentaGEX.VentaGexResponse();
        DSALES_VentaGEX.OpporLineItem oporLine = new DSALES_VentaGEX.OpporLineItem();
         oporLine.idPartidaDeOportunidad='test';

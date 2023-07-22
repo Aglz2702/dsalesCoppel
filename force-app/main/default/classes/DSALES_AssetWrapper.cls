@@ -3,6 +3,7 @@ global class DSALES_AssetWrapper {
     
     global class AssetRequest{
         global String idPago{get;set;} 
+        global String idPartidaPresupuesto{get;set;}
         global Decimal idSecuencia{get;set;}
         global String idProducto{get;set;}
         global String primerNombre {get; set;}

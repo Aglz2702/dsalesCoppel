@@ -181,7 +181,6 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
-    <!--<isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>-->
     <label>Garantía Extendida</label>
     <navType>Standard</navType>
     <profileActionOverrides>
@@ -687,60 +686,6 @@
         <content>Producto_Pagina_registro</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
         <recordType>Product2.DSales_Seguro_de_Motos</recordType>
         <type>Flexipage</type>
         <profile>Administrador GEX</profile>
@@ -831,60 +776,6 @@
         <content>Producto_Pagina_registro</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
         <recordType>Product2.DSALES_ProdTangible</recordType>
         <type>Flexipage</type>
         <profile>Administrador GEX</profile>
@@ -969,60 +860,6 @@
         <recordType>Product2.DSALES_ProdTangible</recordType>
         <type>Flexipage</type>
         <profile>Control de Informes SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1301,22 +1138,6 @@
         <pageOrSobjectType>DSales_Asignacion_de_Productos__c</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asignaci_n_de_Productos_P_gina_de_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>DSales_Asignacion_de_Productos__c</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asignaci_n_de_Productos_P_gina_de_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>DSales_Asignacion_de_Productos__c</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>

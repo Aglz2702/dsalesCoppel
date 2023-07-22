@@ -193,7 +193,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         String message = '';
         String code='';
         try{
-            if(certificado.numeroCliente!='' || !String.isEmpty(certificado.numeroCliente))
+            if((certificado.numeroCliente!='' || !String.isEmpty(certificado.numeroCliente))&&  (!certificado.numeroCliente.Contains('90001') || certificado.numeroCliente!='90001'))
             {
                 List<Account> cliente =[SELECT Id FROM ACCOUNT WHERE CP_WalletCustomerNumber__c=:Double.valueOf(certificado.numeroCliente) WITH SECURITY_ENFORCED LIMIT 1 ]; 
                 if (cliente.size()>0)

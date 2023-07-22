@@ -10,6 +10,12 @@
     <columns>OPPORTUNITY.TYPE</columns>
     <columns>OPPORTUNITY.LEAD_SOURCE</columns>
     <columns>CORE.USERS.FULL_NAME</columns>
+    <columns>OPPORTUNITY.RECORDTYPE</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Seguro_de_Moto</value>
+    </filters>
     <label>Todas las oportunidades</label>
 </ListView>

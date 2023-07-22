@@ -3,6 +3,7 @@ public without sharing class DSALES_ClasificacionServicio {
     private static final String NOMBRE_OBJETO_CS = 'DSales_ClasificacionDeServicio__c';
     private static final String NOMBRE_SERVICIO_CAT= 'DSALES_accesoCategorias';
     private static final String NOMBRE_SERVICIO_COD= 'DSALES_AccesoCodigos';
+    public static String tokenAccess;
     @AuraEnabled
     public static DSALES_ClasificacionServicioWrapper getPickListCategoria(){
         DSALES_ClasificacionServicioWrapper respuesta = new DSALES_ClasificacionServicioWrapper();
@@ -11,8 +12,9 @@ public without sharing class DSALES_ClasificacionServicio {
         respuesta.listClases = new List <PickListOption>();
         respuesta.listFamilias = new List <PickListOption>();
         respuesta.listServicios = new List <Servicio>();
+        String tipoRegistroId = Schema.SObjectType.DSALES_Categoria__c.getRecordTypeInfosByDeveloperName().get('DSales_ProductoTangible').getRecordTypeId();
         if (Schema.sObjectType.DSALES_Categoria__c.isQueryable()) {
-            for(DSALES_Categoria__c item: [Select Id, Name From DSALES_Categoria__c order by Name Asc]){
+            for(DSALES_Categoria__c item: [Select Id, Name From DSALES_Categoria__c where RecordTypeId=:tipoRegistroId order by Name Asc]){
                 PicklistOption option = new PicklistOption();
                 option.etiqueta = item.Name;
                 option.valor = item.Id;
@@ -38,7 +40,7 @@ public without sharing class DSALES_ClasificacionServicio {
                objeto.listServicios = new List<Servicio>();
                return objeto;
            }
-        tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Producto Tangible').getRecordTypeId();
+        tipoRegistroId = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSALES_ProdTangible').getRecordTypeId();
         String producto= 'Producto';
         String query = 'Select Id, Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name, ';
         query += ' DSALES_Familia__r.Name, DSales_Servicio__c, DSales_Seguro__c, DSALES_TipoServicio__c, dsalesVehiculo__c, DSALES_Noaplica__c, DSALES_NoaplicaServ__c, DSALES_NoaplicaSeg__c, RecordTypeId ';
@@ -211,24 +213,33 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
-    public static void insertVinculacion(String dataJSON,  String idservicio){
+    public static Boolean insertVinculacion(String dataJSON,  String idservicio){
         List<AsignarProductos> listIdProductos= (List<AsignarProductos>) JSON.deserialize(dataJSON, List<AsignarProductos>.class);
         List<DSales_Asignacion_de_Productos__c> listInsertVinculacion = new List<DSales_Asignacion_de_Productos__c>();      
-        
-        
+        List<String> productSelected=new List<String> ();
+        List<DSales_Asignacion_de_Productos__c> listavinculaciones= new List<DSales_Asignacion_de_Productos__c>();
         for(AsignarProductos item: listIdProductos)
         {
            
             if(item.seleccionadoSku)
             {
                 listInsertVinculacion.add(new DSales_Asignacion_de_Productos__c(Id=Item.id, DSales_Producto__c=item.productoid, DSALES_Activo__c=true, DSales_Servicio_Seguro__c= idservicio));
+                productSelected.add(item.productoid);
             }
             
             
         }
+        listavinculaciones= [Select id from DSales_Asignacion_de_Productos__c Where DSALES_Activo__c=true and DSales_Producto__c= :productSelected];
+
         if(Schema.sObjectType.DSales_Asignacion_de_Productos__c.isCreateable() && Schema.sObjectType.DSales_Asignacion_de_Productos__c.isUpdateable()){
            system.debug(listInsertVinculacion);
             upsert listInsertVinculacion;
+        }
+        if(listavinculaciones.isEmpty()){
+            return false;
+        }
+        else{
+            return true;
         }
     }
     
@@ -467,7 +478,7 @@ public without sharing class DSALES_ClasificacionServicio {
         Id id1 = UserInfo.getProfileId(); 
         if (Schema.sObjectType.Profile.isQueryable()) {
             Profile perfilSM = [SELECT id From Profile WHERE Name =: profile LIMIT 1];
-            Profile perfilAdmi = [SELECT id From Profile WHERE Name = 'Administrador del sistema' LIMIT 1];
+            Profile perfilAdmi = [SELECT id From Profile WHERE Name = 'Administrador del sistema' or Name = 'System Administrator'  LIMIT 1];
             if(perfilAdmi.Id== id1)
             {
                 return 'Administrador del sistema';
@@ -504,13 +515,19 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
-    public static List<PicklistOp> getserviciocategorias(String recordName){   
+    public static String getToken(String recordName){ 
+        tokenAccess=DSALES_obtenerToken.getToken();
+        return tokenAccess;
+    }
+
+    @AuraEnabled
+    public static List<PicklistOp> getserviciocategorias(String recordName, String token){   
         List<String> categoriasNombres = new List<String>();
         List<String> categoriasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        String authorizationHeader = 'Bearer ' + DSALES_obtenerToken.getToken();
-
+        String authorizationHeader = 'Bearer ' + token;
+        system.debug(token);
         request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT));
         request.setHeader('Authorization', authorizationHeader);
         //request.setEndpoint('callout:AutorizacionToken2/some_path');
@@ -547,13 +564,13 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
-    public static List<PicklistOp> getserviciosubcategorias(String valueCategoria){   
+    public static List<PicklistOp> getserviciosubcategorias(String valueCategoria, String token){   
         List<String> subcategoriasNombres = new List<String>();
         List<String> subcategoriasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
         request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias');
-        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setHeader('Authorization','Bearer '+token);
         request.setMethod('GET');
         HttpResponse response = https.send(request);
         if (response.getStatusCode() == 200) {
@@ -583,13 +600,13 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
-    public static List<PicklistOp> getservicioclase(String valueCategoria, String valueSubcategoria){   
+    public static List<PicklistOp> getservicioclase(String valueCategoria, String valueSubcategoria, String token){   
         List<String> clasesNombres = new List<String>();
         List<String> clasesIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
         request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase');
-        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setHeader('Authorization','Bearer '+token);
         request.setMethod('GET');
         HttpResponse response = https.send(request);
         if (response.getStatusCode() == 200) {
@@ -619,13 +636,13 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
-    public static List<PicklistOp> getserviciofamilia(String valueCategoria, String valueSubcategoria, String valueClases){   
+    public static List<PicklistOp> getserviciofamilia(String valueCategoria, String valueSubcategoria,  List<String> valueClases){   
         List<String> familiasNombres = new List<String>();
         List<String> familiasIds = new List<String>();
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClases+'/familias');
-        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClases[0]+'/familias');
+        request.setHeader('Authorization','Bearer '+ valueClases[1]);
         request.setMethod('GET');
         HttpResponse response = https.send(request);
         if (response.getStatusCode() == 200) {
@@ -655,8 +672,8 @@ public without sharing class DSALES_ClasificacionServicio {
     }
 
     @AuraEnabled
-    public static List<AsignarProductos> getserviciosku(String valueCategoria, String valueSubcategoria, List<String> valueClasesFamilias){   
-        system.debug('hi'+valueClasesFamilias[1]+ ' '+valueClasesFamilias[0]);
+    public static List<AsignarProductos> getserviciosku(String valueCategoria, String valueSubcategoria, List<String> valueClasesFamiliasToken){   
+        system.debug('hi'+valueClasesFamiliasToken[1]+ ' '+valueClasesFamiliasToken[0]);
         List<String> skus = new List<String>();
         List<String> skusNombres = new List<String>();
         List<String> tiposervicio= new  List<String>();
@@ -664,10 +681,10 @@ public without sharing class DSALES_ClasificacionServicio {
         String nombreTipoServicio;
         Http https = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClasesFamilias[0]+'/familias/'+valueClasesFamilias[1]+'/codigos');
-        request.setHeader('Authorization','Bearer '+DSALES_obtenerToken.getToken());
+        request.setEndpoint(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClasesFamiliasToken[0]+'/familias/'+valueClasesFamiliasToken[1]+'/codigos');
+        request.setHeader('Authorization','Bearer '+valueClasesFamiliasToken[2]);
         request.setMethod('GET');
-        system.debug(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClasesFamilias[0]+'/familias/'+valueClasesFamilias[1]+'/codigos');
+        system.debug(DSALES_Utility.getEndpoint(NOMBRE_SERVICIO_CAT)+'/'+valueCategoria+'/subcategorias/'+valueSubcategoria+'/clase/'+valueClasesFamiliasToken[0]+'/familias/'+valueClasesFamiliasToken[1]+'/codigos');
         HttpResponse response = https.send(request);
         if (response.getStatusCode() == 200) {
             Map<String, Object> respuesta = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());

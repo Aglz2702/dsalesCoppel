@@ -595,14 +595,6 @@
         <profile>Admin</profile>
     </profileActionOverrides>
     <profileActionOverrides>
-        <actionName>Tab</actionName>
-        <content>P_gina_de_inicio_predeterminada</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>standard-home</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
         <actionName>View</actionName>
         <content>Oportunidad_PISYS_GEX</content>
         <formFactor>Small</formFactor>
@@ -637,24 +629,6 @@
         <recordType>Quote.DSALES_VentaSM</recordType>
         <type>Flexipage</type>
         <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Quote_Record_Page_Seguros</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Quote</pageOrSobjectType>
-        <recordType>Quote.DSALES_VentaSM</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Quote_Record_Page_Seguros</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Quote</pageOrSobjectType>
-        <recordType>Quote.DSALES_VentaSM</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -769,60 +743,6 @@
         <content>Producto_Pagina_registro</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
         <recordType>Product2.DSales_Seguro_de_Motos</recordType>
         <type>Flexipage</type>
         <profile>Administrador GEX</profile>
@@ -907,60 +827,6 @@
         <recordType>Product2.DSales_Seguro_de_Motos</recordType>
         <type>Flexipage</type>
         <profile>Control de Informes SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1054,60 +920,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Configurador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Oportunidad_PISYS_GEX</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Opportunity</pageOrSobjectType>
@@ -1123,60 +935,6 @@
         <recordType>Opportunity.FinServ__General</recordType>
         <type>Flexipage</type>
         <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.FinServ__General</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1217,60 +975,10 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Agente de servicios SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Opportunity</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Oportunidad_PISYS_GEX</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Opportunity</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Atención de servicio SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>

@@ -9,7 +9,8 @@
    </head>
    <body>
       <div style="text-align: center;" >
-         <img style="width: 200px;" height="100px;" src="https://coppelmx--devpysis--c.visualforce.com/resource/1658326410000/DSALES_LogoGarantiaExtendida">
+         <img style="width: 200px;" height="100px;" src="https://coppelmx--pisysdev2.sandbox.file.force.com/servlet/servlet.ImageServer?id=0156w000000DrU9&oid=00D6w0000004dr0&lastMod=1670428332000">
+<img src="https://coppelmx--pisysdev2.sandbox.file.force.com/servlet/servlet.ImageServer?id=0156w000000DrUC&oid=00D6w0000004dr0&lastMod=1670428332000" />
       </div>
       <p style="font-size: 18px;font-family:'sans-serif';color:rgb(0, 101, 173);" >{nombreCliente}
          <br/><br/>
@@ -20,7 +21,13 @@
       </p>
       <br/><br/>
       <div style="text-align: center;" >
-         <img style="width: 350px;height: 135px;" src="https://coppelmx--devpysis--c.visualforce.com/resource/1658326396000/DSALES_LogoCoppelGEX">
+
+<img src="https://coppelmx--pisysdev2.sandbox.file.force.com/servlet/servlet.ImageServer?id=0156w000000DrUC&oid=00D6w0000004dr0&lastMod=1670428332000"  /> <br/>
+
+<img style="width: 350px;height: 135px;" src="https://coppelmx--pisysdev2.sandbox.file.force.com/servlet/servlet.ImageServer?id=0156w000000DrUD&oid=00D6w0000004dr0&lastMod=1670428332000" style="height:100px;">
+
+<img src="https://coppelmx--pisysdev2.sandbox.file.force.com/servlet/servlet.ImageServer?id=0156w000000DrUB&oid=00D6w0000004dr0&lastMod=1670428332000" /><br/><br/>
+</center>
       </div>
    </body>
 </html>
