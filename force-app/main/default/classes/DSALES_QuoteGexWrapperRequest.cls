@@ -196,8 +196,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                 Product2 tipoProducto = productMap.get(quoteLineItem.Product2Id);
                 if (tipoProducto.DSales_Tipo_de_Producto__c == 'Servicio') {
                     DSALES_QuoteGexWrapper.QuoteGexResponse responsePayload = new DSALES_QuoteGexWrapper.QuoteGexResponse();
-                    dsalesAsignacionDeTienda__c asigTienda = asignacionTiendaMap.get(tipoProducto.Id);
-                    system.debug('asignacion:'+asigTienda);
+                    dsalesAsignacionDeTienda__c asignacionMatriz = obtenerIdMatrizPrecio(tienda.Id,tipoProducto.Id);
                     String nombreIntangible = quoteLineItem.DSALES_NombreProductoServicio__c;
                     String[] partesCadena = nombreIntangible.split(' ');
                     String numeroExtraido = partesCadena[4];
@@ -213,7 +212,7 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     if(tipoProducto.DSales_Aplicaporcentajecobro__c==true){
                              responsePayload.skuDePrecio = null;
                         }else{
-                            DSALES_Matriz_de_Cotizacion__c skuPrecio = skuPrecios.get(asigTienda.dsalesMatriz__c);
+                            DSALES_Matriz_de_Cotizacion__c skuPrecio = obtenerSkuPrecio(quoteLineItem.UnitPrice, precioTangible, asignacionMatriz.dsalesMatriz__c);
                             responsePayload.skuDePrecio = skuPrecio.Name;
                             //responsePayload.skuDePrecio = '00';
 
@@ -362,6 +361,9 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                     intangibleId = asigProduc.DSales_Servicio_Seguro__c;
                 }
             }
+                system.debug('tiendaId:'+tienda.Id);
+                system.debug('intangibleId:'+intangibleId);
+            dsalesAsignacionDeTienda__c asignacionMatriz = obtenerIdMatrizPrecio(tienda.Id,intangibleId);
                 
             for(PricebookEntry item2 : precioEnGEX){
                 if(item2.Product2Id == intangibleId){
@@ -384,10 +386,8 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                             }
                         }
                     }else{
-                        
-                        List<dsalesAsignacionDeTienda__c> asigTienda = [SELECT id,Name, dsalesTienda__r.Name, dsalesMatriz__r.Name, dsalesMatriz__r.DSALES_Servicio__r.Name, dsalesMatriz__r.DSALES_Servicio__c,dsalesActivo__c,dsalesMatriz__c FROM dsalesAsignacionDeTienda__c WHERE dsalesTienda__c=:tienda.Id AND dsalesActivo__c=true AND dsalesMatriz__c<>null AND dsalesMatriz__r.DSALES_Servicio__c=:intangibleId WITH SECURITY_ENFORCED LIMIT 1];
-                        if(asigTienda.size()>0){    
-                        List<DSALES_Matriz_de_Cotizacion__c> matrizPrecio = obtenerMatricesPrecio(asigTienda[0].dsalesMatriz__c);
+                        if(asignacionMatriz!=null&&asignacionMatriz.dsalesActivo__c==true){
+                            List<DSALES_Matriz_de_Cotizacion__c> matrizPrecio = obtenerMatricesPrecio(asignacionMatriz.dsalesMatriz__c);
                             for(DSALES_Matriz_de_Cotizacion__c mPrice : matrizPrecio){
                                 switch on mPrice.DSALES_Tiempo_de_Garantia_Extendida_GEX__c{
                                     when '1 año'{
@@ -515,14 +515,14 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
                                     if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
                                         price1 = mPrice.SALES_Precio_GEX__c;
                                     }
-                                    }
-                                    when '2 años'{
-                                        if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
-                                            price2 = mPrice.SALES_Precio_GEX__c;
-                                        }
+                                }
+                                when '2 años'{
+                                    if(mPrice.DSALES_Rango_interior_GEX__c<= p.precioTangible && mPrice.DSALES_Rango_Superior_GEX__c>= p.precioTangible){
+                                        price2 = mPrice.SALES_Precio_GEX__c;
                                     }
                                 }
                             }
+                        }
                         }
                         
                     }
@@ -633,5 +633,30 @@ global with sharing class DSALES_QuoteGexWrapperRequest {
         List<DSALES_Matriz_de_Cotizacion__c> matrizPrecio = [SELECT id, Name, SALES_Precio_GEX__c, DSales_Matriz_GEX__c, DSALES_Rango_interior_GEX__c, DSALES_Rango_Superior_GEX__c, DSALES_Tiempo_de_Garantia_Extendida_GEX__c FROM DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c = :matrizId WITH SECURITY_ENFORCED ORDER BY SALES_Precio_GEX__c DESC];
         return matrizPrecio;
     }
+    
+    public static DSales_Matriz_GEX__c obtenerIdMatriz(Id intangibleId, String regions, String originalMat) {
+        return [SELECT id 
+                FROM DSales_Matriz_GEX__c 
+                WHERE DSALES_Servicio__c = :intangibleId 
+                AND DSALES_Activo__c = true AND DSALES_Tipo__c = :originalMat 
+                AND DSALES_Region__c INCLUDES (:regions) 
+                WITH SECURITY_ENFORCED LIMIT 1];
+    }
+    
+    public static dsalesAsignacionDeTienda__c obtenerIdMatrizPrecio(Id tiendaId, id IntangibleId) {
+        dsalesAsignacionDeTienda__c asignacion= [SELECT id,Name, dsalesTienda__r.Name, dsalesMatriz__r.Name, dsalesMatriz__r.DSALES_Servicio__r.Name, dsalesMatriz__r.DSALES_Servicio__c,dsalesActivo__c 
+                FROM dsalesAsignacionDeTienda__c 
+                WHERE dsalesTienda__c=:tiendaId 
+                AND dsalesMatriz__c<>null
+                AND dsalesMatriz__r.DSALES_Servicio__c=:IntangibleId 
+                WITH SECURITY_ENFORCED limit 1];
+        
+        if(asignacion!=null){
+            return asignacion;
+        }else{
+            return null;
+        }
+    }
+    
     
 }
