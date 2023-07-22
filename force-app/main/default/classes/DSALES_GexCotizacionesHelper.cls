@@ -2,7 +2,7 @@ public with sharing class DSALES_GexCotizacionesHelper {
 
 private static final String TEMPLETE_NAME = 'Envi_de_cotizaci_n_1660589806562';
 private static final String GEX_TEMPLETE = 'DSALES_Cotizacion';            
-private static final String DIRECCION_CORREO = 'atencion@coppel.com';  
+private static final String DIRECCION_CORREO = 'coppelsoluciones@int.coppel.com';  
 
 @Future(callout=true)
 public static void envioCotizacionGex(String jsonString, String quoteOld){
@@ -29,7 +29,7 @@ public static void envioCotizacionGex(String jsonString, String quoteOld){
         List<Messaging.SingleEmailMessage> messageList = new List<Messaging.SingleEmailMessage>();
         
         for(Quote item: sObjectList){
-            // if(item.DSALES_Enviarcotizacion__c==true && mapQuote.get(item.Id).DSALES_Enviarcotizacion__c==false){
+             if(item.DSALES_Enviarcotizacion__c==true && mapQuote.get(item.Id).DSALES_Enviarcotizacion__c==false){
                 String correo = item.DSALES_Contado__c ? item.DSALES_EmailNew__c : item.Email ;
                 Account acc = mapAccount.get(item.AccountId); 
                 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
@@ -64,7 +64,7 @@ public static void envioCotizacionGex(String jsonString, String quoteOld){
                     
                 }
              }
-            
+             }
         }
         if(messageList.Size()!=0){
             Messaging.sendEmail(messageList, false);
@@ -83,7 +83,7 @@ public static Blob generarPFD(Id quoteId){
     if (Schema.sObjectType.Quote.isQueryable()&&Schema.sObjectType.Quote.isDeletable()) {
         List<Quote> dupQuote = [SELECT Id, Name,OpportunityId, DSALES_EmailNew__c, Pricebook2Id, RecordTypeId, Status, DSALES_Enviarcotizacion__c, DSales_Tienda__c, DSales_Vendedor__c,
                                 DSALES_Fechadecreacionpresupuesto__c, ExpirationDate, DSALES_esClon__c FROM Quote where DSALES_esClon__c= true WITH SECURITY_ENFORCED LIMIT 1]; 
-        delete dupQuote;
+        //delete dupQuote;
     }
     Blob b; 
     if(!test.isRunningTest()){

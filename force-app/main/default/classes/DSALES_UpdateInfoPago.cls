@@ -1,9 +1,9 @@
 public without sharing class DSALES_UpdateInfoPago {
-    public static void updateInfoPagoPoliza(List<InsurancePolicy> poliza){
+    /*public static void updateInfoPagoPoliza(List<InsurancePolicy> poliza){
         for(InsurancePolicy p:poliza){
                 //DSALES_CreateInsurancePolicy.updateInfoPago(p);
         }
-    }
+    }*/
     
     public static void cancelarPoliza(Map<Id,SObject> existingRecords,List<InsurancePolicy> records){
         List<InsurancePolicy> listRecord = (LIst<InsurancePolicy>)records;

@@ -27,7 +27,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         
         Product2 pr= new Product2(Name='Lavadora',StockKeepingUnit='123451',DSales_Tipo_de_Producto__c='Producto',RecordTypeId=recordTypeIdProd,IsActive=true);
 		insert pr;
-       	Product2 gex= new Product2(Name='GEX',StockKeepingUnit='123456',DSales_Tipo_de_Producto__c='Servicio',RecordTypeId=recordTypeIdProd,IsActive=true);
+       	Product2 gex= new Product2(Name='GEX',StockKeepingUnit='123406',DSales_Tipo_de_Producto__c='Servicio',RecordTypeId=recordTypeIdProd,IsActive=true);
 		insert gex;
         Id pricebookId = Test.getStandardPricebookId();
         PricebookEntry standardPrice = new PricebookEntry();
@@ -164,7 +164,8 @@ public class DSALES_CancelacionProductosRequest_Test {
         		NameInsuredId=acc.Id,
                 DSALES_Tipodepersona__c='Física',
             	DSALES_CorreoElectronico__c='saymartinez@deloittemx.com',
-            	Name='1234567890'
+            	Name='1234567890',
+            	SourceQuoteId=cotizacion.Id
                 
         );
         insert poliza;

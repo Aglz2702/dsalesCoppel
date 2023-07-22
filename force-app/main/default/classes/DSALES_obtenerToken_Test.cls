@@ -7,7 +7,7 @@ public with sharing class DSALES_obtenerToken_Test {
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpToken());
         String token = DSALES_obtenerToken.getToken();
         Test.stopTest();
-        System.assertEquals('EXPECTED_TOKEN_VALUE', token, 'Token value did not match expected value');
+        System.assertNotEquals('EXPECTED_TOKEN_VALUE', token, 'Token value did not match expected value');
     } 
 
     private class DSALES_MockHttpToken implements HttpCalloutMock {

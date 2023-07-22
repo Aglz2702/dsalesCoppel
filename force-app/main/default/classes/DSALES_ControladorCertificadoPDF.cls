@@ -78,7 +78,7 @@ public without sharing class DSALES_ControladorCertificadoPDF {
         return mapCampos;
     }
 
-    public static String haha(DSALES_Certificado__c certificado, String item, Map<String, String> mapCampos){
+   /* public static String haha(DSALES_Certificado__c certificado, String item, Map<String, String> mapCampos){
         String replace='';
         if(certificado.get(item)!= null){
             if(mapCampos.get(item) == NOMBRE_DATE){
@@ -91,6 +91,6 @@ public without sharing class DSALES_ControladorCertificadoPDF {
         }
         return replace;
     }
-
+*/
 
 }

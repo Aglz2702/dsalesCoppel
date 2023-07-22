@@ -592,7 +592,7 @@ public without sharing class DSALES_ControladorCotizacionGex {
                 System.debug(e.getLineNumber() + e.getMessage());
             }
         }
-        for(QuoteLineItem quote: [Select Id,Product2.Id, Product2.DSales_Tipo_de_Producto__c,DSALES_SKU__c,DSALES_Fechadecompra__c,Vigencia_meses__c,totalPrice,DSALES_NombreProducto__c,quantity,UnitPrice from QuoteLineItem WHERE QuoteId=: cotizacion.Id WITH SECURITY_ENFORCED]){
+        for(QuoteLineItem quote: [Select Id,Product2.Id, Product2.DSales_Tipo_de_Producto__c,DSALES_SKU__c,DSALES_Fechadecompra__c,Vigencia_meses__c,totalPrice,DSALES_NombreProducto__c,dsalesSkuTangible__c,quantity,UnitPrice from QuoteLineItem WHERE QuoteId=: cotizacion.Id WITH SECURITY_ENFORCED]){
             //Product2 producto = [SELECT DSales_Tipo_de_Producto__c FROM Product2 WHERE ID=:quote.Product2Id WITH SECURITY_ENFORCED];
             String sku='';
             String skuArray='';
@@ -644,7 +644,7 @@ public without sharing class DSALES_ControladorCotizacionGex {
             tabla2+='<tr>';
             tabla2+='<td colspan="1" rowspan="1" style="font-size:15px;font-family: Arial, Helvetica, sans-serif;text-align:center;">'+  '<br/>' +quote.DSALES_NombreProducto__c+  '<br/>' +'</td>';
             
-            tabla2+='<td colspan="1" rowspan="1" style="font-size:15px;font-family: Arial, Helvetica, sans-serif;text-align:center;">'+  '<br/>'+sku+ '<br/>'+'</td>';
+            tabla2+='<td colspan="1" rowspan="1" style="font-size:15px;font-family: Arial, Helvetica, sans-serif;text-align:center;">'+  '<br/>'+sku+'<br/>'+'<span style="color:#838383">'+'SKU Tangible: '+ quote.dsalesSkuTangible__c+ '<br/>'+'</td>';
             sku=sku.replace('-GEX', '');
             if(skuArray==sku)
             {
@@ -1016,8 +1016,8 @@ public without sharing class DSALES_ControladorCotizacionGex {
             rempFecha+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:30%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha creaci&oacute;n:</strong></td>';
             rempFecha+='<td colspan="1" rowspan="1" height="35px"style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .2rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;width:30%;text-align:center; font-size:12px">'+fechaFormato +'</td>';
             rempFecha+='</tr>';
-            fechaFormato=cotizacion.ExpirationDate.format();
-            System.debug('fechaFormato2:'+fechaFormato);
+            //fechaFormato=cotizacion.ExpirationDate.format();
+            //System.debug('fechaFormato2:'+fechaFormato);
             String rempSucSG1='<tr>';
             rempSucSG1+='<td colspan="1" rowspan="1" height="39px" style="font-size:15px;"><strong>Preparado por:</strong><br/>'+cotizacion.DSales_Vendedor__c+'</td>';
             // rempSucSG1+='<td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209 );border-bottom: .2rem solid white;width:20%;border:solid; border-color:white; font-size:12px;padding-left:15px;"><strong>Fecha caducidad:</strong></td>';
@@ -1083,7 +1083,7 @@ public without sharing class DSALES_ControladorCotizacionGex {
                 html=html.replace(tablaImagen2,rempImagen2);
                 html=html.replace(espacio, rempEspacio);
                 if(cotiLine!=null && cotiLine.size()==2){
-                    for(QuoteLineItem quote: [Select Id,Product2.Id, DSALES_SKU__c,Product2.DSales_Tipo_de_Producto__c from QuoteLineItem WHERE QuoteId=: cotizacion.Id WITH SECURITY_ENFORCED]){
+                    for(QuoteLineItem quote: [Select Id,Quantity,Product2.Id, DSALES_SKU__c,UnitPrice,TotalPrice,Product2.DSales_Tipo_de_Producto__c,DSALES_NombreProducto__c from QuoteLineItem WHERE QuoteId=: cotizacion.Id WITH SECURITY_ENFORCED]){
                         System.debug('partidas:'+quote);
                         //Product2 producto = [SELECT DSales_Tipo_de_Producto__c FROM Product2 WHERE ID=:quote.Product2Id WITH SECURITY_ENFORCED];
                         String rempServ='<tr>';
@@ -1154,7 +1154,7 @@ public without sharing class DSALES_ControladorCotizacionGex {
                             //html=html.replace(leyendaSG3,rempleyendaSG3);
                         }
                         
-                        if(quote.Product2.DSales_Tipo_de_Producto__c=='Seguro'){
+                     
                             if(quote.DSALES_NombreProducto__c==SEGURO_AMP) {
                                 System.debug('amp:'+quote);
                                 String plazoSeg='';
@@ -1188,7 +1188,7 @@ public without sharing class DSALES_ControladorCotizacionGex {
                         }
                     }
                 }    
-            }
+            
             html=html.replace('null', '________');
         }catch(Exception e){
             System.debug('********2plant*******'+e.getLineNumber() + e.getMessage());

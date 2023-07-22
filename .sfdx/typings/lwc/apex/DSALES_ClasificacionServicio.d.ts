@@ -34,20 +34,23 @@ declare module "@salesforce/apex/DSALES_ClasificacionServicio.checkProfileType" 
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.getcategories" {
   export default function getcategories(param: {recordName: any}): Promise<any>;
 }
+declare module "@salesforce/apex/DSALES_ClasificacionServicio.getToken" {
+  export default function getToken(param: {recordName: any}): Promise<any>;
+}
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.getserviciocategorias" {
-  export default function getserviciocategorias(param: {recordName: any}): Promise<any>;
+  export default function getserviciocategorias(param: {recordName: any, token: any}): Promise<any>;
 }
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.getserviciosubcategorias" {
-  export default function getserviciosubcategorias(param: {valueCategoria: any}): Promise<any>;
+  export default function getserviciosubcategorias(param: {valueCategoria: any, token: any}): Promise<any>;
 }
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.getservicioclase" {
-  export default function getservicioclase(param: {valueCategoria: any, valueSubcategoria: any}): Promise<any>;
+  export default function getservicioclase(param: {valueCategoria: any, valueSubcategoria: any, token: any}): Promise<any>;
 }
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.getserviciofamilia" {
   export default function getserviciofamilia(param: {valueCategoria: any, valueSubcategoria: any, valueClases: any}): Promise<any>;
 }
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.getserviciosku" {
-  export default function getserviciosku(param: {valueCategoria: any, valueSubcategoria: any, valueClasesFamilias: any}): Promise<any>;
+  export default function getserviciosku(param: {valueCategoria: any, valueSubcategoria: any, valueClasesFamiliasToken: any}): Promise<any>;
 }
 declare module "@salesforce/apex/DSALES_ClasificacionServicio.getSubCategories" {
   export default function getSubCategories(param: {valueCategoria: any}): Promise<any>;

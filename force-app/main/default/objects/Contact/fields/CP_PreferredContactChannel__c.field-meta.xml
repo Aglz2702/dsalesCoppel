@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_PreferredContactChannel__c</fullName>
+    <description>Medio de contacto preferido del cliente.</description>
+    <externalId>false</externalId>
+    <label>Medio de contacto Preferido</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Teléfono Casa</fullName>
+                <default>false</default>
+                <label>Teléfono Casa</label>
+            </value>
+            <value>
+                <fullName>Teléfono Celular</fullName>
+                <default>false</default>
+                <label>Teléfono Celular</label>
+            </value>
+            <value>
+                <fullName>Teléfono Oficina</fullName>
+                <default>false</default>
+                <label>Teléfono Oficina</label>
+            </value>
+            <value>
+                <fullName>Correo Electrónico</fullName>
+                <default>false</default>
+                <label>Correo Electrónico</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

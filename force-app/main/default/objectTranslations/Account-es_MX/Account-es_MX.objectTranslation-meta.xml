@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Cliente</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Clientes</value>
+    </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>FSC_Banker_Profile_Fin_Acct_Summary</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Profile_Fin_Acct_Summary</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Profile_Relations_HH_Summary</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Relationship_Group_Members</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Relationship_Groups</name>
+    </fieldSets>
+    <gender>Masculine</gender>
+    <layouts>
+        <layout>Account (Business Referral) Layout</layout>
+        <sections>
+            <label>Vínculos personalizados</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label>Resumen financiero</label>
+            <section>Financial Summary</section>
+        </sections>
+        <sections>
+            <label>Información de referencia</label>
+            <section>Referral Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account (Business) Layout</layout>
+        <sections>
+            <label>Vínculos personalizados</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label>Resumen financiero</label>
+            <section>Financial Summary</section>
+        </sections>
+        <sections>
+            <label>Información de referencia</label>
+            <section>Referral Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account (Household) Layout</layout>
+        <sections>
+            <label>Vínculos personalizados</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label>Resumen financiero</label>
+            <section>Financial Summary</section>
+        </sections>
+        <sections>
+            <label>Información de referencia</label>
+            <section>Referral Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account (Individual) Layout</layout>
+        <sections>
+            <label>Dirección 1</label>
+            <section>Address 1</section>
+        </sections>
+        <sections>
+            <label>Servicios de cliente</label>
+            <section>Client Services</section>
+        </sections>
+        <sections>
+            <label>Conozca su cliente</label>
+            <section>Know Your Client</section>
+        </sections>
+        <sections>
+            <label>Información de referencia</label>
+            <section>Referral Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account (Institution) Layout</layout>
+        <sections>
+            <label>Resumen financiero</label>
+            <section>Financial Summary</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account (Policyholder) Layout</layout>
+        <sections>
+            <label>Dirección</label>
+            <section>Address</section>
+        </sections>
+        <sections>
+            <label>Vínculos personalizados</label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label>Interés financiero</label>
+            <section>Financial Interest</section>
+        </sections>
+        <sections>
+            <label>Información de asegurado</label>
+            <section>Policyholder Information</section>
+        </sections>
+        <sections>
+            <label>Servicios para asegurado</label>
+            <section>Policyholder Services</section>
+        </sections>
+        <sections>
+            <label>Información del sistema</label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account (Retail Client - Individual) Layout</layout>
+        <sections>
+            <label>Dirección de facturación/envío</label>
+            <section>Billing/Shipping Address</section>
+        </sections>
+        <sections>
+            <label>Servicios de cliente</label>
+            <section>Client Services</section>
+        </sections>
+        <sections>
+            <label>Perfil financiero</label>
+            <section>Finance Profile</section>
+        </sections>
+        <sections>
+            <label>Información de referencia</label>
+            <section>Referral Information</section>
+        </sections>
+        <sections>
+            <label>Información de relación</label>
+            <section>Relationship Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account Layout</layout>
+        <sections>
+            <label></label>
+            <section>Account Summary</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CP_PersonAccountLayout</layout>
+        <layoutType>PersonAccount</layoutType>
+        <sections>
+            <label></label>
+            <section>Cliente</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Contacto</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Crédito</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Direcciones del Cliente</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CP_PersonAccount_CollectSupervisor</layout>
+        <layoutType>PersonAccount</layoutType>
+        <sections>
+            <label></label>
+            <section>Cliente</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Contacto</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Crédito</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Direcciones del Cliente</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>DSALES_Clientes</layout>
+        <layoutType>PersonAccount</layoutType>
+        <sections>
+            <label></label>
+            <section>Información de pago</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Información del cliente</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Información principal del cliente</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Formato MarketPlace</layout>
+        <sections>
+            <label></label>
+            <section>Información Shop</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Formato de cuenta personal</layout>
+        <layoutType>PersonAccount</layoutType>
+        <sections>
+            <label></label>
+            <section>Información principal de la cuenta</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label></label>
+        <name>FinServ__EditGroup</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Suspender_Tienda_Mirakl</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Update_Account</name>
+    </quickActions>
+    <recordTypes>
+        <label></label>
+        <name>Account</name>
+    </recordTypes>
+    <recordTypes>
+        <description></description>
+        <label></label>
+        <name>FinServ__IndustriesBusiness</name>
+    </recordTypes>
+    <recordTypes>
+        <description></description>
+        <label></label>
+        <name>FinServ__IndustriesHousehold</name>
+    </recordTypes>
+    <recordTypes>
+        <description></description>
+        <label></label>
+        <name>FinServ__IndustriesIndividual</name>
+    </recordTypes>
+    <recordTypes>
+        <description></description>
+        <label></label>
+        <name>FinServ__IndustriesInstitution</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>MX_CP_MKTP_MarketPlace</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>CP_CantUpdateGender</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>CP_CantUpdateRecord</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>CP_FirstNameRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>CP_HomePhone_RequiredWhenNoMobile</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>CP_PhoneDigitsCheck</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>CP_SuffixRequired</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Correo_electronico_obligatorio</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Fecha_de_nacimiento_obligatorio</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>FinServ__NonPortalUserReferrer</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>FinServ__NotAllowingConversionFromIndividual</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>FinServ__NotAllowingConversionToIndividual</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>FinServ__SingleReferredByEntryByRecord</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Medio_de_contacto_obligatorio</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Nombres_Obligatorio</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>Rango_de_horario_obligatorio</name>
+    </validationRules>
+    <webLinks>
+        <label></label>
+        <name>FinServ__AddMember</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>FinServ__AddRelation</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>GoogleMaps</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>GoogleNews</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>GoogleSearch</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>dupcheck__dc3Check</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>dupcheck__dc3Merge</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>et4ae5__ExactTarget_Resubscribe</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>et4ae5__ExactTarget_Unsubscribe</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>et4ae5__Send_ExactTarget_Email</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>et4ae5__View_ExactTarget_Analytics</name>
+    </webLinks>
+</CustomObjectTranslation>

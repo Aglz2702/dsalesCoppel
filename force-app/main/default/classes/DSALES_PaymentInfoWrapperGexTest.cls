@@ -15,22 +15,30 @@ public class DSALES_PaymentInfoWrapperGexTest {
     static void setUp(){  
         Account acc = new Account();
         acc.Name='testL';
-        insert acc;   
-        String recordTypeId = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByName().get('Pagos de Venta en NPV de SM').getRecordTypeId();   
+        acc.CP_WalletCustomerNumber__c=45654;
+        acc.DSALES_ClienteCoppel__c='90001';
+        insert acc;
+        
+        String recordTypeId = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByName().get('Pagos de venta de servicios').getRecordTypeId();  
         Opportunity opp = new Opportunity();
         opp.Name = 'testL';
         opp.AccountId = acc.Id;
         opp.CloseDate = Date.Today();
         opp.StageName = 'Nuevo';
         insert opp;
+        
+        Tienda__c t = new Tienda__c();
+        t.DSales_TiendaID__c =  '21';
+        insert t;
     }
     
     @isTest 
     //static void createPaymentRecordTest(){
-    static void crearRegistroPagoTest(){      
+    static void crearRegistroPagoTest(){
+        Opportunity oppor =[SELECT id FROM Opportunity];
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{"opportunity_name": "testL","payment_method": "Efectivo","bill": "factura 01","customer_adress": "av independencia 12345","sku": "661235","total": "35000","article_description": "Motocicleta honda 200","telephone": "444 789 1999","salesman_name": "Antonio Pedro","cashier_box": "1"}';
+        String body = '{"opportunity_name": "testL","opportunityId": "'+oppor.Id+'","payment_method": "Efectivo","bill": "factura 01","customer_adress": "av independencia 12345","sku": "661235","total": "35000","article_description": "Motocicleta honda 200","telephone": "444 789 1999","salesman_name": "Antonio Pedro","cashier_box": "1","claveTienda":"21","PartidasDePago": [ { "numeroPago": 1, "metodoPago": "Efectivo", "pago": 1750 }, { "numeroPago": 6, "metodoPago": "Dolar", "pago": 20000 } ]}';
         req.requestURI = '/apexrest/insertPaymentInformationGEX';
         req.httpMethod = 'POST';
         RestContext.request = req;

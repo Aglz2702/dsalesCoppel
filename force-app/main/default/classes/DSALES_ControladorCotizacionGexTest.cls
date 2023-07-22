@@ -42,9 +42,9 @@ public class DSALES_ControladorCotizacionGexTest {
        	insert pb;
         DSALES_InformacionDePago__c pago = new DSALES_InformacionDePago__c(DSALES_Oportunidad__c=op.Id,DSALES_Fechadeentregaestimada__c=Date.today());
 		insert pago;
-        Quote qtGex = new Quote(name='DannyGex',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtGex,DSales_Tienda__c=tienda.Id);
+        Quote qtGex = new Quote(name='DannyGex',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtGex,DSales_Tienda__c=tienda.Id,DSALES_Enviarcotizacion__c=false);
         insert qtGex;
-         Quote qtSg = new Quote(name='DannySG',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg,DSales_Tienda__c=tienda.Id);
+         Quote qtSg = new Quote(name='DannySG',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg,DSales_Tienda__c=tienda.Id,DSALES_Enviarcotizacion__c=false);
         insert qtSg;
 
         Quote qtSg2 = new Quote(name='DannySG2',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg,DSales_Tienda__c=tienda.Id);
@@ -94,10 +94,13 @@ public class DSALES_ControladorCotizacionGexTest {
         {
             Test.startTest();
             List<Product2> pd=[SELECT Name,Family, DSales_Tipo_de_Producto__c FROM Product2 WHERE DSales_Tipo_de_Producto__c='Producto' LIMIT 1];
-            Quote qt= [SELECT Id, DSALES_EmailCliente__c FROM QUOTE WHERE NAME='DannyGex' LIMIT 1	];
+            Quote qt= [SELECT Id, DSALES_EmailCliente__c,DSALES_Enviarcotizacion__c FROM QUOTE WHERE NAME='DannyGex' LIMIT 1	];
+             Quote qt2= [SELECT Id, DSALES_EmailCliente__c,DSALES_Enviarcotizacion__c FROM QUOTE WHERE NAME='DannyGex' LIMIT 1	];
             System.debug('quote: '+qt.Id);
             List<QuoteLineItem> qline =[SELECT Id, QuoteId,UnitPrice,Quantity,PricebookEntryId,Product2Id FROM QuoteLineItem];
-           
+           qt.DSALES_Enviarcotizacion__c=true;
+            qt2.DSALES_Enviarcotizacion__c=true;
+            
             DSALES_Generador__c gene=[SELECT Id,Name,DSALES_Plantilla__c FROM DSALES_Generador__c   WHERE Name='Cotizacion Gex' LIMIT 1];
              System.debug('generador: '+gene.Id);
             PageReference pageRef = Page.Cotizacion;

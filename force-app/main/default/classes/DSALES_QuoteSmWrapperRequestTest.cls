@@ -75,11 +75,9 @@ public class DSALES_QuoteSmWrapperRequestTest {
         customPriceMoto.UnitPrice = 2000;
         customPriceMoto.IsActive = true;
         insert customPriceMoto;
-		
-        
-        
+		     
         Account acc = new Account();
-        acc.Name='test';
+        acc.Name = 'test';
         acc.CP_WalletCustomerNumber__c=45654;
         acc.DSALES_ClienteCoppel__c='90001';
         insert acc;
@@ -134,9 +132,7 @@ public class DSALES_QuoteSmWrapperRequestTest {
         insert tipoUso;
         DSALES_Tipodevehculo__c tipovehiculo = new DSALES_Tipodevehculo__c(Name='Moto');
         insert tipovehiculo;
-        
-        
-        
+         
         Campaign camapna = new Campaign();
         camapna.Name='RC';
         camapna.dsalesTipoCampana__c = 'Seguro gratis';
@@ -305,8 +301,58 @@ public class DSALES_QuoteSmWrapperRequestTest {
         List<DSALES_QuoteSmWrapper.ArmadoMuleSoft> plazos = new List<DSALES_QuoteSmWrapper.ArmadoMuleSoft>();
         Test.startTest();
         List<DSALES_QuoteSmWrapper.RespuestaPlazos>createPlazo= DSALES_QuoteSmWrapperRequest.creaPlazos( qt, plazos, data.sku, listaNegra, tienda.Id);
-        Test.stopTest();
-        
+        Test.stopTest();  
     }
-    
+
+
+    /*@IsTest
+    static void creaPartidaTest2() {
+        Quote qt =[SELECT Id, OpportunityId, dsalesValorFactura__c FROM Quote WHERE Name = 'Test'];
+        Tienda__c tienda =[SELECT Id FROM Tienda__c ];
+        String body = '{"numeroCliente":"323535324","tipoUso":"Comercial","tipoVehiculo":"Moto","plazoCotizar":"18","rfc":"abcd","sku":"456000","precioProducto":"2340","nombre":"DanielaD","apellidoPaterno":"Galle535gos","apellidoMaterno":"35","idTienda":"CPPL-UGARTE","nombreVendedor":"pedro","telefonoCelular":"123456098","correoElectronico":"ssfas@fgmaoc.com","generoContacto":"Masculino","fechaNacimiento":"1990-10-02","codigoPostal":"12","idVehiculo":"slknvsaeclskvlams","opcionPago":"Mensual","fechaInicio":"2020-10-10"}';
+        RestRequest req = new RestRequest();
+        req.requestURI = '/apexrest/insertQuoteSM';
+        req.httpMethod = 'POST';
+        RestContext.request = req;
+        req.requestBody = Blob.valueof(body);
+        RestContext.request = req;
+        Boolean listaNegra = false;
+        DSALES_QuoteSmWrapper.QuoteSmRequest data = (DSALES_QuoteSmWrapper.QuoteSmRequest)JSON.deserialize(body, DSALES_QuoteSmWrapper.QuoteSmRequest.class);
+        List<DSALES_QuoteSmWrapper.ArmadoMuleSoft> plazos = new List<DSALES_QuoteSmWrapper.ArmadoMuleSoft>();
+        Test.startTest();
+        List<DSALES_QuoteSmWrapper.RespuestaPlazos>createPlazo= DSALES_QuoteSmWrapperRequest.creaPlazos(qt, plazos, data.sku, listaNegra, tienda.Id);
+        Test.stopTest();  
+    }*/
+
+
+    /*@IsTest
+    static void creaPartidaMTest2() {
+        Quote qt =[SELECT Id, OpportunityId, dsalesValorFactura__c FROM Quote WHERE Name = 'Test'];
+        Tienda__c tienda =[SELECT Id FROM Tienda__c ];
+        String body = '{"numeroCliente":"323535324","tipoUso":"Comercial","tipoVehiculo":"Moto","plazoCotizar":"18","rfc":"abcd","sku":"456000","precioProducto":"2340","nombre":"DanielaD","apellidoPaterno":"Galle535gos","apellidoMaterno":"35","idTienda":"CPPL-UGARTE","nombreVendedor":"pedro","telefonoCelular":"123456098","correoElectronico":"ssfas@fgmaoc.com","generoContacto":"Masculino","fechaNacimiento":"1990-10-02","codigoPostal":"12","idVehiculo":"slknvsaeclskvlams","opcionPago":"Mensual","fechaInicio":"2020-10-10"}';
+        Boolean listaNegra = false;
+        DSALES_QuoteSmWrapper.QuoteSmRequest data = (DSALES_QuoteSmWrapper.QuoteSmRequest)JSON.deserialize(body, DSALES_QuoteSmWrapper.QuoteSmRequest.class);
+        Decimal precio1=decimal.valueOf(data.precioProducto);
+        DSALES_QuoteSmWrapper.RespuestaPlazos moto = new DSALES_QuoteSmWrapper.RespuestaPlazos();
+        Test.startTest();
+        moto=DSALES_QuoteSmWrapperRequest.creaPartidaM(qt, data.sku, listaNegra, precio1);
+        //System.assert(!createdAccounts.isEmpty(),'List should not be empty');
+        Test.stopTest();  
+    }*/
+
+    /*@IsTest
+    static void creaPartidaTest2() {
+        Quote qt =[SELECT Id, OpportunityId, dsalesValorFactura__c FROM Quote WHERE Name = 'Test'];
+        Tienda__c tienda =[SELECT Id FROM Tienda__c ];
+        String body = '{"numeroCliente":"323535324","tipoUso":"Comercial","tipoVehiculo":"Moto","plazoCotizar":"18","rfc":"abcd","sku":"456000","precioProducto":"2340","nombre":"DanielaD","apellidoPaterno":"Galle535gos","apellidoMaterno":"35","idTienda":"CPPL-UGARTE","nombreVendedor":"pedro","telefonoCelular":"123456098","correoElectronico":"ssfas@fgmaoc.com","generoContacto":"Masculino","fechaNacimiento":"1990-10-02","codigoPostal":"12","idVehiculo":"slknvsaeclskvlams","opcionPago":"Mensual","fechaInicio":"2020-10-10"}';
+        Boolean listaNegra = false;
+        DSALES_QuoteSmWrapper.QuoteSmRequest data = (DSALES_QuoteSmWrapper.QuoteSmRequest)JSON.deserialize(body, DSALES_QuoteSmWrapper.QuoteSmRequest.class);
+        Decimal precio1=decimal.valueOf(data.precioProducto);
+        String seguro = 'RC Seguro de Moto';
+        DSALES_QuoteSmWrapper.ArmadoMuleSoft plazo = new DSALES_QuoteSmWrapper.ArmadoMuleSoft();
+        Test.startTest();
+        QuoteLineItem cpartida=DSALES_QuoteSmWrapperRequest.creaPartida(seguro,qt,plazo,data.sku);
+        //System.assert(!createdAccounts.isEmpty(),'List should not be empty');
+        Test.stopTest();  
+    }*/
 }

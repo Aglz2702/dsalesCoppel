@@ -12,6 +12,9 @@ public class DSALES_ListaNegraWrapperTest {
         op.rfc='ASFAA';
         op2.nombre='ok';
         op2.rfc='GFASfas';
+        op2.business='test';
+        op2.company='test';
+        op2.transaccion='2';
         Boolean expectedValue = false; // valor esperado
         Boolean actualValue = op.estatus; // valor actual
         System.assertNotEquals(expectedValue, actualValue, 'Los valores no deben ser iguales');

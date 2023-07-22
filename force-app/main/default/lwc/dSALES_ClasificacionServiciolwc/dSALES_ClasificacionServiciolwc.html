@@ -344,99 +344,102 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
-                                aria-label="linea de ordenes">
-                                <thead>
-                                    <tr class="slds-line-height_reset">
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="Departamento">Nombre Producto</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="Departamento">SKU</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="Clase">Categoría</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="Clase">Subcategoría</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="Familia">Clase</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="SKU">Familia</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="FechaVinculacion">Fecha de Vinculación
-                                            </div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="VinculadoPor">Vinculado por</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate" title="Departamento">Estado</div>
-                                        </th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <template for:each={data.listasignacion} for:item="record">
-                                        <tr class="slds-hint-parent" key={record.Id}>
-                                            <td data-label={record.nombre}>
-                                                <div class="slds-truncate" title={record.nombre}>{record.nombre}
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
+                                    aria-label="linea de ordenes">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Departamento">Nombre Producto</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Departamento">SKU</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Clase">Categoría</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Clase">Subcategoría</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Familia">Clase</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="SKU">Familia</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="FechaVinculacion">Fecha de Vinculación
                                                 </div>
-                                            </td>
-                                            <td data-label={record.sku}>
-                                                <lightning-input checked={record.seleccionadoSku} type="checkbox"
-                                                    label={record.sku} onchange={selectAllSkuSelected}
-                                                    name={record.id}>
-                                                </lightning-input>
-                                            </td>
-                                            <td data-label={record.departamento}>
-                                                <lightning-input type="checkbox" label={record.departamento}
-                                                    checked={record.seleccionadoDept}
-                                                    onchange={selectAllDepartamentos}>
-                                                </lightning-input>
-                                            </td>
-                                            <td data-label={record.subcategoria}>
-                                                <lightning-input type="checkbox" label={record.subcategoria}
-                                                    checked={record.seleccionadoSubcategoria}
-                                                    onchange={selectAllSubcategoria}>
-                                                </lightning-input>
-                                            </td>
-                                            <td data-label={record.clase}>
-                                                <lightning-input type="checkbox" label={record.clase}
-                                                    onchange={selectAllClases} checked={record.seleccionadoClase}>
-                                                </lightning-input>
-                                            </td>
-                                            <td data-label={record.familia}>
-                                                <lightning-input type="checkbox" label={record.familia}
-                                                    onchange={selectAllFamilias}
-                                                    checked={record.seleccionadoFamilia} name={}>
-                                                </lightning-input>
-                                            </td>
-                                            <td data-label={record.createdDate}>
-                                                <div class="slds-truncate" title="Creación">{record.createdDate}
-                                                </div>
-                                            </td>
-                                            <td data-label={record.creadoPor}>
-                                                <div class="slds-truncate" title="Creado por">{record.creadoPor}
-                                                </div>
-                                            </td>
-                                            <td data-label={record.estado}>
-                                                <div class="slds-m-right_medium" style="text-align: center;">
-                                                    <div class="slds-modal__check" title="Activo">
-                                                        <lightning-icon icon-name="utility:check"
-                                                            alternative-text="Activo" variant="brand"
-                                                            color="success" size="xx-small">
-                                                        </lightning-icon>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="VinculadoPor">Vinculado por</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Departamento">Estado</div>
+                                            </th>
+    
                                         </tr>
-                                    </template>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={data.listasignacion} for:item="record">
+                                            <tr class="slds-hint-parent" key={record.Id}>
+                                                <td data-label={record.nombre}>
+                                                    <div class="slds-truncate" title={record.nombre}>{record.nombre}
+                                                    </div>
+                                                </td>
+                                                <td data-label={record.sku}>
+                                                    <lightning-input checked={record.seleccionadoSku} type="checkbox"
+                                                        label={record.sku} onchange={selectAllSkuSelected}
+                                                        name={record.id}>
+                                                    </lightning-input>
+                                                </td>
+                                                <td data-label={record.departamento}>
+                                                    <lightning-input type="checkbox" label={record.departamento}
+                                                        checked={record.seleccionadoDept}
+                                                        onchange={selectAllDepartamentos}>
+                                                    </lightning-input>
+                                                </td>
+                                                <td data-label={record.subcategoria}>
+                                                    <lightning-input type="checkbox" label={record.subcategoria}
+                                                        checked={record.seleccionadoSubcategoria}
+                                                        onchange={selectAllSubcategoria}>
+                                                    </lightning-input>
+                                                </td>
+                                                <td data-label={record.clase}>
+                                                    <lightning-input type="checkbox" label={record.clase}
+                                                        onchange={selectAllClases} checked={record.seleccionadoClase}>
+                                                    </lightning-input>
+                                                </td>
+                                                <td data-label={record.familia}>
+                                                    <lightning-input type="checkbox" label={record.familia}
+                                                        onchange={selectAllFamilias}
+                                                        checked={record.seleccionadoFamilia} name={}>
+                                                    </lightning-input>
+                                                </td>
+                                                <td data-label={record.createdDate}>
+                                                    <div class="slds-truncate" title="Creación">{record.createdDate}
+                                                    </div>
+                                                </td>
+                                                <td data-label={record.creadoPor}>
+                                                    <div class="slds-truncate" title="Creado por">{record.creadoPor}
+                                                    </div>
+                                                </td>
+                                                <td data-label={record.estado}>
+                                                    <div class="slds-m-right_medium" style="text-align: center;">
+                                                        <div class="slds-modal__check" title="Activo">
+                                                            <lightning-icon icon-name="utility:check"
+                                                                alternative-text="Activo" variant="brand"
+                                                                color="success" size="xx-small">
+                                                            </lightning-icon>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            
+                            
                         </div>
                         <template if:true={showConfirmarDesvincular}>
                             <section role="dialog" tabindex="-1" aria-modal="true"
@@ -515,7 +518,8 @@
                                             </div>
                                         </div>
                                         <lightning-card>
-                                            <table
+                                            <div class="slds-p-around_large" style="max-height: 300px; overflow-y: auto;">
+                                                <table
                                                 class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
                                                 aria-label="linea de ordenes">
                                                 <thead>
@@ -592,6 +596,8 @@
                                                     </template>
                                                 </tbody>
                                             </table>
+                                            </div>
+                                           
                                         </lightning-card>
                                         <template if:true={showConfirmarVincular}>
                                             <section role="dialog" tabindex="-1" aria-modal="true"
@@ -830,8 +836,10 @@
                                     onclick={getservicesku} class="slds-m-bottom_x-small slds-size_1-of-5" size="medium">
                                 </lightning-button>
                             </div>
+                            
                             <lightning-card>
-                                <table
+                                <div class="slds-p-around_large" style="max-height: 300px; overflow-y: auto;">
+                                    <table
                                     class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"
                                     aria-label="linea de ordenes">
                                     <thead>
@@ -870,6 +878,8 @@
                                         </template>
                                     </tbody>
                                 </table>
+                                </div>   
+                               
                             </lightning-card>
                         </div>
                     </div>

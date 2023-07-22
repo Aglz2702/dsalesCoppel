@@ -905,6 +905,11 @@
             <field>dsalesIdSecuencia__c</field>
             <table>Opportunity.Quotes.QuoteLineItems</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>SKUTangible__c</field>
+            <table>Opportunity.Quotes.QuoteLineItems</table>
+        </columns>
         <masterLabel>Partidas de presupuesto</masterLabel>
     </sections>
     <sections>

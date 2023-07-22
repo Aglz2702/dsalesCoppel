@@ -532,6 +532,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         }  
         return condicion;
     }
+    
     public static DSALES_QuoteSmWrapper.RespuestaPlazos creaPartidaM(Quote cotiza, String sku, Boolean listaNegra, Double precio){      
         DSALES_QuoteSmWrapper.RespuestaPlazos motoVacia = new DSALES_QuoteSmWrapper.RespuestaPlazos();
         if(sku!=null && sku!='' && listaNegra!=true){
@@ -574,6 +575,7 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         }
         return partidasYPlazos;
     }
+
     public static List<DSALES_QuoteSmWrapper.RespuestaPlazos> creaPlazos(Quote cotiza, List<DSALES_QuoteSmWrapper.ArmadoMuleSoft> plazos, String sku,Boolean listaNegra,String idTienda){
         List<QuoteLineItem> listaPartidas = new List<QuoteLineItem>();
         List<DSALES_QuoteSmWrapper.RespuestaPlazos> listaSeguros = new List<DSALES_QuoteSmWrapper.RespuestaPlazos>();

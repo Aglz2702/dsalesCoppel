@@ -22,6 +22,13 @@ global with sharing class DSALES_VentaGEXRest {
                 try{
                     System.debug('_______Request venta GEX:_________ '+cuerpo);
                     DSALES_VentaGEX.VentaGexRequest venta = (DSALES_VentaGEX.VentaGexRequest)JSON.deserialize(cuerpo, DSALES_VentaGEX.VentaGexRequest.class);
+                     String idUnico=venta.pago.idUniversal;
+                    List<DSALES_InformacionDePago__c> verificaIdUniversal =[SELECT Id,DSALES_IDUniversal1__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c =: idUnico WITH SECURITY_ENFORCED LIMIT 1];
+                    if(verificaIdUniversal!=null && verificaIdUniversal.size()>0){
+                        success = false;
+                        message = 'El id universal: '+idUnico+ ' ya existe' ;
+                        code = '401';
+                    }else{
                     assignFields(venta,ventaGEX);
                     
                     DSALES_AccountWrapper.AccountResponse cliente = DSALES_AccountWrapperRequest.upsertAccount(venta.cliente);
@@ -59,7 +66,7 @@ global with sharing class DSALES_VentaGEXRest {
 
                     success=true;
                     message='';
-                    
+                    } 
                 }catch(JSONException e){
                     success = false;
                     message = DSALES_Utility.BAD_REQUEST_MSJ + e.getLineNumber()+ e.getMessage();
@@ -71,7 +78,7 @@ global with sharing class DSALES_VentaGEXRest {
                 }
             }
         }
-        ventaGex.mensaje='';
+        ventaGex.mensaje=message;
         ventaGEX.exito = success;
         if(ventaGex.exito)
         {
@@ -86,9 +93,9 @@ global with sharing class DSALES_VentaGEXRest {
         
         List<Asset> product= [SELECT id,Product2.StockKeepingUnit,DSALES_SKU__c,dsalesIdSecuencia__c FROM ASSET WHERE id IN: assetsId WITH SECURITY_ENFORCED];
      
-        List<DSALES_InformacionDePago__c> pago=[Select id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE id IN:paymentIds WITH SECURITY_ENFORCED];
+        List<DSALES_InformacionDePago__c> pago=[Select id,DSALES_SKU__c,DSALES_DireccionCliente__c,DSALES_Cliente__c FROM DSALES_InformacionDePago__c WHERE id IN:paymentIds WITH SECURITY_ENFORCED];
       
-        List<DSALES_Certificado__c> certi=[Select id,DSALES_SKU__c,DSALES_SKUTangible__c,DSALES_Precio_del_Articulo__c,dsalesIdSecuencia__c FROM DSALES_Certificado__c WHERE id IN:certifiedIds WITH SECURITY_ENFORCED];
+        List<DSALES_Certificado__c> certi=[Select id,DSALES_SKU__c,DSALES_SKUTangible__c,DSALES_Precio_del_Articulo__c,dsalesIdSecuencia__c,DSALES_Domicilio_del_Client_e__c,DSALES_Cliente__c FROM DSALES_Certificado__c WHERE id IN:certifiedIds WITH SECURITY_ENFORCED];
      
         try{
         for(Asset a: product)
@@ -110,6 +117,9 @@ global with sharing class DSALES_VentaGEXRest {
                     pago[0].DSALES_Certificado__c=c.id;
                     //aqui
                     c.DSALES_InformacionDePago__c=pago[0].id;
+                    c.DSALES_Cliente__c=pago[0].DSALES_Cliente__c;
+                    c.DSALES_Domicilio_del_Client_e__c=pago[0].DSALES_DireccionCliente__c;
+                    system.debug('DOMICILIO DEL CLIENTE: '+ c.DSALES_Domicilio_del_Client_e__c);
                 }
              
                 if(c.DSALES_SKUTangible__c+String.valueOf(c.dsalesIdSecuencia__c)==a.DSALES_SKU__c+String.valueOf(a.dsalesIdSecuencia__c))
@@ -170,14 +180,17 @@ global with sharing class DSALES_VentaGEXRest {
     }
     
     public static Map<String, String> insertAssets(DSALES_VentaGEX.VentaGexRequest venta, String accountId){
+      //idPartidaPresupuesto
+         //Map<String,QuoteLineItem>qtLineOriginal= new map <String,QuoteLineItem>([SELECT  Id,DSALES_ListaArticulo__c, Dsales_Sku__c,Product2.DSales_Tipo_de_Producto__c FROM QuoteLineItem WHERE QuoteId=:venta.quoteId and Product2.DSales_Tipo_de_Producto__c='Producto' WITH SECURITY_ENFORCED  ]);
         Map<String, String> mapAssets = new Map<String, String>();
         List<String> listSKU = new List<String>();
         List<String> idsAssets = new List<String>();
         
         for(DSALES_AssetWrapper.AssetRequest sku: venta.listaDeProductos){
             listSKU.add(sku.skuDeTangible);
+            
         }
-       Map<ID,QuoteLineitem> mapaPartidas= new Map<ID,QuoteLineitem>([SELECT DSALES_SKU__c,UnitPrice FROM QUOTELINEITEM WHERE DSALES_SKU__c IN:listSKU WITH SECURITY_ENFORCED]);
+       Map<String,QuoteLineitem> mapaPartidas= new Map<String,QuoteLineitem>([SELECT DSALES_SKU__c,UnitPrice FROM QUOTELINEITEM WHERE DSALES_SKU__c IN:listSKU AND QuoteId=:venta.quoteId WITH SECURITY_ENFORCED]);
         List <String> skuNuevos= new List<String>(); 
         String nuevoSku='';
         Integer assetsSinGarant=500;
@@ -186,7 +199,15 @@ global with sharing class DSALES_VentaGEXRest {
         for(Product2 t: [Select StockKeepingUnit,Id from Product2 where StockKeepingUnit in :listSKU and DSales_Tipo_de_Producto__c='Producto' WITH SECURITY_ENFORCED] ){
             
             for(DSALES_AssetWrapper.AssetRequest producto: venta.listaDeProductos){
-                
+                for(String idMapa:mapaPartidas.Keyset())
+                    {
+                        if(producto.skuDeTangible==mapaPartidas.get(idMapa).DSALES_SKU__c)
+                        {
+                            producto.idPartidaPresupuesto=idMapa;
+                            mapaPartidas.remove(idMapa);
+                            break;
+                        }
+                    }
                 if(t.StockKeepingUnit == producto.skuDeTangible){
                     producto.idCuenta=accountId;
                     producto.idProducto=t.Id;
@@ -201,7 +222,7 @@ global with sharing class DSALES_VentaGEXRest {
                     {
                       
                          nuevoSku=t.stockKeepingUnit+String.valueOf(garantia.idSecuencia);
-                        producto.idSecuencia=garantia.idSecuencia;
+                       producto.idSecuencia=garantia.idSecuencia;
                        
                         
                         skuNuevos.add(nuevoSku);
@@ -218,6 +239,7 @@ global with sharing class DSALES_VentaGEXRest {
                                
                                 nuevoSku=t.StockKeepingUnit+assetsSinGarant;
                                 skuAComparar=nuevoSku;
+                                producto.idSecuencia=null;
                                 assetsSinGarant= assetsSinGarant+100;
                                 break;
                                 
@@ -225,13 +247,17 @@ global with sharing class DSALES_VentaGEXRest {
                                 
                                 else{
                                     nuevoSku=t.stockKeepingUnit;
+                                    producto.idSecuencia=null;
                                     
                                 }
                          
                             }
                     		
                         }
-                   
+                   if(producto.idSecuencia==null)
+                   {
+                       producto.idSecuencia=-1;
+                   }
                     
                      DSALES_AssetWrapper.AssetResponse responsePayloadAsset = DSALES_AssetWrapperRequest.insertaAssets(producto);
                   
@@ -295,6 +321,7 @@ global with sharing class DSALES_VentaGEXRest {
         
         
         DSALES_PaymentInfoWrapperGEX.PaymentGEXResponse responsePaymInfo = DSALES_PaymentInfoWrapperGexRequest.insertPaymentGex(paymentInformation);
+        system.debug('PAGOS ERROR: '+responsePaymInfo.mensajeError);
         ids.add(responsePaymInfo.idInformacionPago);
         return ids;
     }
@@ -319,12 +346,14 @@ global with sharing class DSALES_VentaGEXRest {
         
         List<DSALES_CertificadoWrapper.CertificadoRequest> certificadoList= new List<DSALES_CertificadoWrapper.CertificadoRequest>();
         Map<Id,QuoteLineItem>mapPartida= new map<Id,QuoteLineitem>([SELECT Vigencia_meses__c,DSALES_SKU__c,TotalPrice,dsalesIdSecuencia__c FROM QuoteLineItem WHERE quoteId=:venta.quoteId ]);
-        
+        Quote qt = [SELECT Id,DSALES_EmailNew__c FROM QUOTE WHERE ID=:venta.quoteId ];
+        qt.DSALES_EmailNew__c=cliente.correoElectronico;
+        Update qt;
         for(DSALES_CertificadoWrapper.CertificadoRequest certi: venta.listaDeCertificados)
         {
             certi.emailCliente=cliente.correoElectronico;
             certi.telefonoCliente=cliente.telefono;
-            certi.direccionCliente=cliente.codigoPostal;
+            //certi.direccionCliente=cliente.codigoPostal;
             certi.claveTienda=venta.idTienda;
             certi.nombreVendedor=venta.nombreVendedor;    
             certi.numeroCajaCoppel=venta.numeroCaja;
