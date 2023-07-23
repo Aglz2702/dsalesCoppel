@@ -5,7 +5,6 @@
     <fields>DSales_TiendaID__c</fields>
     <fields>Activa__c</fields>
     <fields>dsalesDivision__c</fields>
-    <fields>DSALES_Region__c</fields>
     <fields>dsalesCiudad__c</fields>
     <fields>DSALES_Ciudad__c</fields>
     <fields>DSALES_Fechadeapertura__c</fields>

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <applicationVisibilities>
-        <application>DSALES_Seguro_de_Motos</application>
-        <visible>true</visible>
-    </applicationVisibilities>
     <description>Conjunto de permisos para el equipo funcional SM</description>
     <fieldPermissions>
         <editable>true</editable>

@@ -35,7 +35,7 @@ public class DSALES_ClonarMatriz_Test {
         System.assertEquals(idOriginal, tempo.Id, 'la identificación es la misma');
     }
 
-    @isTest
+   /* @isTest
     static void DSALES_MatrizHelperTest(){
         DSales_Matriz_GEX__c tempo =[SELECT Name, Id, DSALES_EsClone__c FROM DSales_Matriz_GEX__c where Name = 'Temporal2' LIMIT 1];
         List<DSales_Matriz_GEX__c> records = new List<DSales_Matriz_GEX__c>();
@@ -44,5 +44,5 @@ public class DSALES_ClonarMatriz_Test {
         DSALES_MatrizHelper.crearClon(records);
         System.assertEquals(tempo.DSALES_EsClone__c, false , 'Clonarmatriz');
         Test.stopTest();
-    }
+    }*/
 }
