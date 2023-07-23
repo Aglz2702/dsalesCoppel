@@ -4,10 +4,6 @@
         <application>DSALES_GarantiaExtendida</application>
         <visible>true</visible>
     </applicationVisibilities>
-    <applicationVisibilities>
-        <application>DSALES_Seguro_de_Motos</application>
-        <visible>true</visible>
-    </applicationVisibilities>
     <description>Conjunto de permisos del Administrador del Sistema para los usuarios de Pisys</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -2702,7 +2698,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>InsurancePolicyAsset.DSALES_Motoexterna__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2745,9 +2741,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>InsurancePolicyAsset.dsalesEstatus__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

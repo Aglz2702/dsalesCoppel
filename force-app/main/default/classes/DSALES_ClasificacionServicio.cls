@@ -141,7 +141,10 @@ public without sharing class DSALES_ClasificacionServicio {
         List<AsignarProductos> listproductos = new List<AsignarProductos>();
         List<String> idproducto= new List<String>();
         List<DSales_Asignacion_de_Productos__c> producto= new List<DSales_Asignacion_de_Productos__c>(); 
-        String checkProfile = checkProfileType('Administrador SM');
+        //ajuste temporal
+        String adminSM='Administrador SM';
+        adminSM='Administrador del sistema';
+        String checkProfile = checkProfileType(adminSM);
         Boolean boolserv = false;
         Boolean boolseg = false;
         producto= [Select DSales_Producto__c from DSales_Asignacion_de_Productos__c Where DSALES_Activo__c=true and DSales_Servicio_Seguro__c= :servicio];

@@ -44,7 +44,7 @@ public class DSALES_QuoteGexWrapperRequestTest{
         porcentajeCobroGex.DSALES_Categoria__c = category.Id;
         porcentajeCobroGex.DSALES_Clase__c = classs.Id;
         porcentajeCobroGex.DSales_Tipo_de_Producto__c = 'Servicio';
-        porcentajeCobroGex.Description = 'Reparaciones ilimitadas';
+        porcentajeCobroGex.Description = 'Reparaciones';
         porcentajeCobroGex.DSales_Aplicaporcentajecobro__c=true;
 		insert porcentajeCobroGex;
         
@@ -164,30 +164,6 @@ public class DSALES_QuoteGexWrapperRequestTest{
         percent2.DSALES_Product__c = porcentajeCobroGex.Id;
         insert percent2;
         
-        DASALES_Porcentajedecobro__c percent3 = new DASALES_Porcentajedecobro__c();
-        percent3.DSALES_Anios__c = 3;
-        percent3.DSALES_Porcentaje__c = 20;
-        percent3.DSALES_Product__c = porcentajeCobroGex.Id;
-        insert percent3;
-        
-        DASALES_Porcentajedecobro__c percent4 = new DASALES_Porcentajedecobro__c();
-        percent4.DSALES_Anios__c = 4;
-        percent4.DSALES_Porcentaje__c = 15;
-        percent4.DSALES_Product__c = porcentajeCobroGex.Id;
-        insert percent4;
-        
-        DASALES_Porcentajedecobro__c percent5 = new DASALES_Porcentajedecobro__c();
-        percent5.DSALES_Anios__c = 5;
-        percent5.DSALES_Porcentaje__c = 15;
-        percent5.DSALES_Product__c = porcentajeCobroGex.Id;
-        insert percent5;
-        
-        DASALES_Porcentajedecobro__c percent6 = new DASALES_Porcentajedecobro__c();
-        percent6.DSALES_Anios__c = 6;
-        percent6.DSALES_Porcentaje__c = 15;
-        percent6.DSALES_Product__c = porcentajeCobroGex.Id;
-        insert percent6;
-        
         Account acc = new Account();
         acc.Name='test';
         acc.CP_WalletCustomerNumber__c=45654;
@@ -220,6 +196,7 @@ public class DSALES_QuoteGexWrapperRequestTest{
         presupuesto.Product2Id = prod.Id;
         presupuesto.Quantity = 1.0;
         presupuesto.UnitPrice = customPrice.UnitPrice;
+        presupuesto.Description = 'Reparaciones';
         presupuesto.DSALES_ListaArticulo__c = 'Producto';
         insert presupuesto;
         
@@ -238,6 +215,12 @@ public class DSALES_QuoteGexWrapperRequestTest{
         info.DSALES_IDUniversal1__c='1234567890';
         info.DSALES_ProductoAdquirido__c = proAdquirido.Id;
         insert info;
+        
+        dsalesAsignacionDeTienda__c asignacionTiendaMatriz = new dsalesAsignacionDeTienda__c();
+        asignacionTiendaMatriz.dsalesMatriz__c = mat.Id;
+        asignacionTiendaMatriz.dsalesTienda__c = t.Id;
+        asignacionTiendaMatriz.dsalesActivo__c = true;
+        Insert asignacionTiendaMatriz;
     }
     
     @isTest 
@@ -353,23 +336,24 @@ public class DSALES_QuoteGexWrapperRequestTest{
         RestContext.response= res6;
         System.assertNotEquals(200, res6.statusCode, 'La llamada no debe devolver un código 200');
     }
-    
     @isTest 
-    static void createQuoteRecordTestPorcentajeCobro(){
-        RestRequest reqPc = new RestRequest();
-        RestResponse resPc = new RestResponse();
-        String bodyPc = '{ "idTienda": "21", "productos": [ { "skuDeTangible": "565767", "cantidadProductosTangibles": 1, "articulo": "refrigerador", "marca": "Mabe", "modelo": "RFG123", "precioTangible": "5000" } ], "apellidoMaterno": "Test", "apellidoPaterno": "Tes", "nombre": "Test", "correoElectronico": "danigallegos@deloittemx.com", "numeroCliente": "676767", "idUniversal": "1234567890", "idOportunidad":null }';
-        reqPc.requestURI = '/apexrest/insertQuoteGex';
-        reqPc.httpMethod = 'POST';
-        RestContext.request = reqPc;
-        reqPc.requestBody = Blob.valueof(bodyPc);
-        RestContext.response = resPc;
-        DSALES_QuoteGexWrapper.QuoteGexRequest dataPc = (DSALES_QuoteGexWrapper.QuoteGexRequest)JSON.deserialize(bodyPc, DSALES_QuoteGexWrapper.QuoteGexRequest.class);
+    static void createQuoteRecordTest7(){
+        RestRequest req7 = new RestRequest();
+        RestResponse res7 = new RestResponse();
+        String body7 = '{  "idTienda": "21", "productos": [{"skuDeTangible": "0000", "cantidadProductosTangibles": 1, "articulo": "Estufa", "marca": "Whirlpool", "modelo": "WFR5000D", "precioTangible": "4650" } ], "apellidoMaterno": "Lopez", "apellidoPaterno": "Gonzalez", "nombre": "Emmanuel", "correoElectronico": "egl@deloittemx.com", "numeroCliente": null, "idUniversal": "1234567890", "idOportunidad": null }';
+        req7.requestURI = '/apexrest/insertQuoteGex';
+        req7.httpMethod = 'POST';
+        RestContext.request = req7;
+        req7.requestBody = Blob.valueof(body7);
+        RestContext.response = res7;
+        DSALES_QuoteGexWrapper.QuoteGexRequest data = (DSALES_QuoteGexWrapper.QuoteGexRequest)JSON.deserialize(body7, DSALES_QuoteGexWrapper.QuoteGexRequest.class);
         Test.startTest();
         DSALES_QuoteGexWrapperRequest.createQuote();
         Test.stopTest();
-        RestContext.request = reqPc;
-        RestContext.response= resPc;
-        System.assertNotEquals(200, resPc.statusCode, 'La llamada no debe devolver un código 200');
+        RestContext.request = req7;
+        RestContext.response= res7;
+        System.assertNotEquals(200, res7.statusCode, 'La llamada no debe devolver un código 200');
     }
+    
+    
 }

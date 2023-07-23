@@ -1,6 +1,6 @@
 public with sharing class DSALES_GexCotizacionesHelper {
 
-private static final String TEMPLETE_NAME = 'Envi_de_cotizaci_n_1660589806562';
+private static final String TEMPLETE_NAME = 'DSALES_Cotizacion'; //'Envi_de_cotizaci_n_1660589806562'; ajuste temporal
 private static final String GEX_TEMPLETE = 'DSALES_Cotizacion';            
 private static final String DIRECCION_CORREO = 'coppelsoluciones@int.coppel.com';  
 
