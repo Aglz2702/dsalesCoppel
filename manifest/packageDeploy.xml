@@ -11,6 +11,9 @@
     <members>DSALES_AssetWrapper</members>
     <members>DSALES_AssetWrapperRequest</members>
     <members>DSALES_AssetWrapperTest</members>
+	<members>DSALES_RegionalizacionSegurosCampanas</members>
+	<members>DSALES_ConsultaListaNegra</members>
+	<members>DSALES_ConsultaListaNegraTest</members>
     <members>DSALES_CancelacionController</members>
     <members>DSALES_CancelacionProductosRequest</members>
 	<members>DSALES_CancelacionProductosRequest_Test</members>
@@ -30,16 +33,42 @@
     <members>DSALES_ControladorCotizacionGexTest</members>
     <members>DSALES_ControladorMatrizTiempo</members>
     <members>DSALES_ControladorMatrizTiempo_Test</members>
+	<members>DSALES_CrearParticipanteTest</members>
+	<members>DSALES_CrearParticipantesPoliza</members>
+	<members>DSALES_CreateInsurancePolicy</members>
+	<members>DSALES_CreateInsurancePolicyTest</members>
+	<members>DSALES_EndorsementWrapper</members>
+	<members>DSALES_EndosoWrapperRequest</members>
+	<members>DSALES_EndosoWrapperRequestHelper</members>
+	<members>DSALES_EndosoWrapperRequest_Test</members>
+	<members>DSALES_EndosoWrapperRequestTest</members>
     <members>DSALES_GexCotizaciones</members>
     <members>DSALES_GexCotizacionesHelper</members>
+	<members>DSALES_IPAssetWrapper</members>
+	<members>DSALES_IPAssetWrapperRequest</members>
+	<members>DSALES_IPAssetWrapperRequestActivo</members>
+	<members>DSALES_IPAssetWrapperRequestActivoTest</members>
+	<members>DSALES_IPAssetWrapperTest</members>
+	<members>DSALES_InformacionDePago</members>
+	<members>DSALES_InformacionPagoHandler</members>
+	<members>DSALES_InsurancePolicyAssetsHandler</members>
+	<members>DSALES_InsurancePolicyHandler</members>
+	<members>DSALES_ListaNegraWrapper</members>
+	<members>DSALES_ListaNegraWrapperTest</members>
     <members>DSALES_Matriz</members>
     <members>DSALES_MatrizHelper</members>
 	<members>DSALES_MatrizHelperTest</members>
+	<members>DSALES_NuevaPoliza</members>
     <members>DSALES_obtenerToken</members>
     <members>DSALES_obtenerToken_Test</members>
+	<members>DSALES_PaymentInfoWrapper</members>
+	<members>DSALES_PaymentInfoWrapperRequest</members>
+	<members>DSALES_PaymentInfoWrapperTest</members>
     <members>DSALES_PaymentInfoWrapperGEX</members>
     <members>DSALES_PaymentInfoWrapperGexRequest</members>
     <members>DSALES_PaymentInfoWrapperGexTest</members>
+	<members>DSALES_PolizaWrapper</members>
+	<members>DSALES_PolizaWrapperTest</members>
     <members>DSALES_Product2Handler</members>
     <members>DSALES_Product2Handler_Test</members>
     <members>DSales_Product2Helper</members>
@@ -47,12 +76,23 @@
     <members>DSALES_QuoteGexWrapperRequest</members>
     <members>DSALES_QuoteGexWrapperRequestTest</members>
 	<members>DSALES_QuotePdfController</members>
+	<members>DSALES_QuotePagoSM</members>
+	<members>DSALES_QuotePagoSmTest</members>
+	<members>DSALES_QuotePdfController</members>
 	<members>DSALES_QuotePdfController_Test</members>
     <members>DSALES_ReembolsoWrapper</members>
     <members>DSALES_ReembolsoWrapperRequest</members>
     <members>DSALES_ReembolsoWrapperTest</members>
     <members>DSALES_RegionalizacionSegurosCamp_Test</members>
     <members>DSALES_RegionalizacionSegurosCampanas</members>
+	<members>DSALES_ResumenPagos</members>
+	<members>DSALES_Siniestro</members>
+	<members>DSALES_SiniestroRPWrapper</members>
+	<members>DSALES_SiniestroResumenPagos</members>
+	<members>DSALES_SiniestroResumenPagosTest</members>
+	<members>DSALES_SiniestroWrapper</members>
+	<members>DSALES_SiniestroWrapperTest</members>
+	<members>DSALES_UpdateInfoPago</members>
     <members>DSALES_UpdateClienteTest</members>
     <members>DSALES_Utility</members>
     <members>DSALES_UtilityTest</members>
@@ -61,6 +101,12 @@
     <members>DSALES_VentaGEX</members>
     <members>DSALES_VentaGEXRest</members>
     <members>DSALES_VentaGEXRestTest</members>
+	<members>DSALES_VentaSM</members>
+	<members>DSALES_VentaSMRest</members>
+	<members>DSALES_VentaSMRestAux</members>
+	<members>DSALES_VentaSMRestAuxTest</members>
+	<members>DSALES_VentaSMRestTest</members>
+	<members>DSALES_siniestroTest</members>
 	<name>ApexClass</name>
 </types>
 <types>
@@ -104,11 +150,8 @@
 	<members>Campaign.DSALES_FormatoCompactoCampanasSM</members>
 	<members>Claim.DSALES_Formato_compacto_siniestro</members>
 	<members>Opportunity.DSales_Formato_GEX</members>
-	<members>dsalesAsignacionDeTienda__c-Asignación de Matríz</members>
-	<members>DSALES_Cancelacion__c-Formato de Cancelación SM</members>
 	<members>DSALES_Certificado__c.DSALES_Certificado</members>
 	<members>DSALES_InformacionDePago__c.DSales_Informacion_GEX</members>
-	<members>DSALES_InformacionDePago__c-Formato Información de Pago</members>
 	<members>DSALES_InformacionDePago__c.InfoPagoVenta</members>	
 	<members>Opportunity.DSALES_FormatoCompactoSM</members>
 	<members>Plazo__c.DSALES_FormatoompactoSM</members>
@@ -119,11 +162,10 @@
 	<members>dsalesCiudad__c.Ciudad_Compact_Layout</members>
 	<members>dsalesRegion__c.Region_Compact_Layout</members>
 	<members>Quote.DSALES_FormatocompactoSM</members>
+	<members>DSALES_Cancelacion__c.DSALES_FormatoCompactoSM</members>
+	<members>DSALES_InformacionDePago__c.DSales_Informacion_GEX</members>
+	<members>DSALES_InformacionDePago__c.InfoPagoVenta</members>
 	<name>CompactLayout</name>
-</types>
-<types>
-	<members>DSALES_Pisys</members>
-	<name>ConnectedApp</name>
 </types>
 <types>
 	<members>DSALES_GarantiaExtendida</members>
@@ -206,7 +248,7 @@
 	<members>Claim.N_mero_de_Siniestro__c</members>
 	<members>ClaimPaymentSummary.DSALES_Tipopago__c</members>
 	<members>Contact.DSALES_Metodocontacto__c</members>
-	<!--<members>dsalesAsignacionDeTienda__c.dsalesTienda__c</members>
+	<members>dsalesAsignacionDeTienda__c.dsalesTienda__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Activo__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Clase__c</members>
 	<members>DSales_Asignacion_de_Productos__c.DSALES_Departamento__c</members>
@@ -360,13 +402,13 @@
 	<members>DASALES_Porcentajedecobro__c.DSALES_Anios__c</members>
 	<members>DASALES_Porcentajedecobro__c.DSALES_Porcentaje__c</members>
 	<members>DASALES_Porcentajedecobro__c.DSALES_Product__c</members>
-	<members>DSALES_TipodeUso__c.dsalesDescripcion__c</members>-->
-	<!--<members>DSALES_Reembolso__c.DSALES_CantidadReembolsada__c</members>
+	<members>DSALES_TipodeUso__c.dsalesDescripcion__c</members>
+	<members>DSALES_Reembolso__c.DSALES_CantidadReembolsada__c</members>
 	<members>DSALES_Reembolso__c.DSALES_FechaReembolso__c</members>
 	<members>DSALES_Reembolso__c.DSALES_NumeroCancelacion__c</members>
 	<members>DSALES_Reembolso__c.NombredelProducto__c</members>
 	<members>DSALES_Certificado__c.DSales_Garantia_Coppel__c</members>
-	<members>DSALES_InformacionDePago__c.DSALES_IDUniversal__c</members>-->
+	<members>DSALES_InformacionDePago__c.DSALES_IDUniversal__c</members>
 	<members>InsurancePolicyAsset.DSALES_emitir_poliza__c</members>
 	<members>InsurancePolicyAsset.DSALES_ClaveAMIS__c</members>
 	<members>InsurancePolicyAsset.DSALES_Clavevehicular__c</members>
@@ -578,7 +620,7 @@
 	<members>QuoteLineItem.dsalesPagoInicial__c</members>
 	<members>QuoteLineItem.DSales_Tipo_de_Producto__c</members>
 	<members>QuoteLineItem.DSales_Tipo_de_Servicio__c</members>
-	<!--<members>Tienda__c.Activa__c</members>
+	<members>Tienda__c.Activa__c</members>
 	<members>Tienda__c.dsalesAnoDeUltimaRemodelacion__c</members>
 	<members>Tienda__c.DSALES_Ciudad__c</members>
 	<members>Tienda__c.dsalesCodigoPostal__c</members>
@@ -599,7 +641,7 @@
 	<members>Tienda__c.DSALES_Tienda_Base__c</members>
 	<members>Tienda__c.dsalesCiudad__c</members>
 	<members>Tienda__c.Tipo_de_Tienda_Inmueble_Renta__c</members>
-	<members>Tienda__c.DSALES_Optica__c</members>-->
+	<members>Tienda__c.DSALES_Optica__c</members>
 	<members>Campaign.dsalesTipoCampana__c</members>
 	<members>Asset.DSALES_Region__c</members>
 	<members>Quote.dsalesListaNegra__c</members>
@@ -706,11 +748,6 @@
 	<name>CustomMetadata</name>
 </types>
 <types>
-		<members>DSALES_PISYS</members>
-		<members>DSALES_PISYS/DSALES_LogoInicial.png</members>
-		<name>Document</name>
-	</types>
-<types>
 	<members>AccountType</members>
 	<members>QuoteStatus</members>
 	<members>OpportunityStage</members>
@@ -754,7 +791,7 @@
 		<members>DSALES_Categoria__c-es_MX</members>
 		<members>DSALES_Certificado__c-es_MX</members>
 		<members>DSALES_Clase__c-es_MX</members>
-		<!--<members>DSALES_Endoso__c-es_MX</members>-->
+		<members>DSALES_Endoso__c-es_MX</members>
 		<members>DSALES_Familia__c-es_MX</members>
 		<members>DSALES_Generador__c-es_MX</members>
 		<members>DSALES_InformacionDePago__c-es_MX</members>
@@ -802,19 +839,8 @@
 	<members>Plazo__c</members>
 	<name>CustomTab</name>
 </types>
-<!--<types>
-    <members>DSALES_PISYS</members>
-    <members>DSALES_PISYS/DSALES_hr.png</members>
-    <members>DSALES_PISYS/DSALES_hrAmarillo.png</members>
-    <members>DSALES_PISYS/DSALES_hrAzul.png</members>
-    <members>DSALES_PISYS/DSALES_LogoFGEX.png</members>
-    <members>DSALES_PISYS/DSALES_logoFinal.png</members>
-    <members>DSALES_PISYS/DSALES_LogoInicial.png</members>
-    <name>Document</name>
-</types>-->
-<!--<types>
+<types>
 	<members>DSALES_Deloitte</members>
-	<members>DSALES_Deloitte/Envi_de_cotizaci_n_1660589806562</members>
 	<members>DSALES_PlantillasCorreos</members>
 	<members>DSALES_PlantillasCorreos/DSALES_CertificadoGEX</members>
 	<members>DSALES_PlantillasCorreos/DSALES_CertificadoPDF</members>
@@ -823,7 +849,7 @@
 	<members>DSALES_PlantillasCorreos/DSALES_GarantiaExtendida</members>
 	<members>unfiled$public/DSALES_Plantilla_para_envi_de_estatus_en_tramite</members>
 	<name>EmailTemplate</name>
-</types>-->
+</types>
 <types>
 	<members>Asignaci_n_de_Productos_P_gina_de_registro</members>
     <members>Asignaci_n_de_Tienda_Record_Page</members>
@@ -887,7 +913,7 @@
     <members>DSALES_Activacindecasilladeenviarcotizacin</members>
     <members>DSALES_Alerta_certificado_caduco</members>
     <members>DSALES_Certificado_Cancelado</members>
-    <!--<members>DSALES_Desactivarcampaa</members>-->
+    <members>DSALES_Desactivarcampaa</members>
     <members>DSALES_Presupuesto_Vencido</members>
     <members>DSales_Etapa_Cerrada_Perdida_GEX</members>
     <members>DSales_Etapa_de_Oportunidad_en_GEX</members>
@@ -986,6 +1012,7 @@
     <members>Tienda__c-Formato Tienda</members>
 	<members>DSALES_InformacionDePago__c-DSALES_InformaciondepagosSM_c</members>
 	<members>dsalesAsignacionDeTienda__c-Asignación de Matríz</members>
+	<members>DSALES_Endoso__c-Formato Endoso</members>
 	<name>Layout</name>
 </types>
 <types>
@@ -1048,7 +1075,10 @@
 <types>
 	<members>Admin</members>
 	<members>Administrador GEX</members>
+	<members>Administrador SM</members>
+	<members>Configurador SM</members>
 	<members>Control de Informes GEX</members>
+	<members>Control de Informes SM</members>
 	<name>Profile</name>
 </types>
 <types>
@@ -1137,7 +1167,7 @@
 <types>
 	<members>DSALES_Certificado__c.DSALES_VerCertificado</members>
 	<members>Quote.DSALES_VerCotizacion</members>
-	<members><members>Quote.Ver_Cotizaci_n_PDF</members></members>
+	<members>Quote.Ver_Cotizaci_n_PDF</members>
 	<name>WebLink</name>
 </types>
 <types>

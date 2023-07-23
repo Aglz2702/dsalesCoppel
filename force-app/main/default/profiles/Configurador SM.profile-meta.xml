@@ -24,10 +24,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_ActualizarSiniestroTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_AssetWrapper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -124,39 +120,11 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_CreateDocument</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_CreateDocumentTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_CreateInsurancePolicy</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_CreateInsurancePolicyTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_DocumentsToTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_EndorsementCalls</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_EndorsementCallsTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_EndorsementController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_EndorsementController_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -177,11 +145,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_EndosoWrapperRequest_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-   
-    <classAccesses>
-        <apexClass>DSALES_GetPolicyPDF</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -255,18 +218,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_MockHttpResponseEndoso</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_MockHttpResponsePolizaTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_MockHttpResponseSiniestro</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_NuevaPoliza</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -319,10 +270,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_QuotePagoSMHelper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_QuotePagoSmTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -364,10 +311,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_SiniestroCalls</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_SiniestroRPWrapper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -391,32 +334,6 @@
         <apexClass>DSALES_SiniestrosHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_TipoSeguroRequest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_TipoSeguroRequestTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_TipoVehiculoRequest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_TipoVehiculoTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_TiposDeUsoRequest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_TiposDeUsoTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-   
-   
    
     <classAccesses>
         <apexClass>DSALES_UpdateClienteTest</apexClass>
@@ -479,21 +396,6 @@
         <apexClass>DSALES_siniestroTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-   
-    <classAccesses>
-        <apexClass>Product2_Handler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-   
-    <classAccesses>
-        <apexClass>endososControllerClass</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>endososControllerClassTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-   
     <custom>true</custom>
     <fieldPermissions>
         <editable>false</editable>
@@ -5055,6 +4957,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>ClaimPaymentSummary</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Claim</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
