@@ -5,12 +5,6 @@
         <default>true</default>
         <visible>true</visible>
     </applicationVisibilities>
-    <applicationVisibilities>
-        <application>DSALES_Seguro_de_Motos</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-   
     <classAccesses>
         <apexClass>DSALES_AccountWrapper</apexClass>
         <enabled>false</enabled>
@@ -65,15 +59,15 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_Certificados</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_CertificadosHelper</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_ClasificacionServicio</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_ClasificacionServicio_Test</apexClass>
@@ -81,15 +75,16 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_ClonarMatriz</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_ClonarMatriz_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
+
     <classAccesses>
         <apexClass>DSALES_ControladorCertificadoPDF</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_ControladorCertificadoPDFTest</apexClass>
@@ -105,26 +100,19 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_ControladorMatrizTiempo</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_ControladorMatrizTiempo_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
+    
     <classAccesses>
         <apexClass>DSALES_GexCotizaciones</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_GexCotizacionesHelper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_Matriz</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_MatrizHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1850,101 +1838,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_Cliente__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_CorreoElectronico__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_Dosdiassinupdate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_Enviadoaproveedor__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_Estatus__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_Folio__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_MontoaDevolver__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_MotivoDevolucion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_MotivoRechazo__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_NuevaPoliza__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_NumeroClienteCoppel__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_SolucionDevolucion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_Tipodedato__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_Tipodedocumento__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_Tipodeendoso__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_Valor__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_uid__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.dsalesFechaCreacion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.dsalesFechaDeCreacion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>DSALES_Familia__c.DSALES_Clase__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2166,7 +2059,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>DSALES_InformacionDePago__c.DSALES_Poliza__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -3026,12 +2919,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>InsurancePolicy.dsalesActivoPolizaSeguro__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>InsurancePolicy.dsalesEstatusPoliza__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3101,7 +2994,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>InsurancePolicyAsset.DSALES_Motoexterna__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3211,12 +3104,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>InsurancePolicyAsset.dsalesCliente__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>InsurancePolicyAsset.dsalesEstatus__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -4523,31 +4416,8 @@
         <field>Tienda__c.dsalesTelefono__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Tipo_de_endoso__mdt.ClaimType__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
     <layoutAssignments>
         <layout>Asset-Pisys Asset Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Campaign-Campaign Layout</layout>
-        <recordType>Campaign.DSALES_TipoderegistrocampaNasSM</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Claim-Ingreso de Siniestro</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Claim-Ingreso de Siniestro</layout>
-        <recordType>Claim.DSALES_Nuevo_Siniestro</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Claim-Visualización de Siniestro</layout>
-        <recordType>Claim.DSALES_Siniestro</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ClaimPaymentSummary-Formato de Resumen de pago de reclamación</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DASALES_Porcentajedecobro__c-Porcentaje de cobro Layout</layout>
@@ -4590,17 +4460,6 @@
     <layoutAssignments>
         <layout>DSALES_Clase__c-dsalesServicios</layout>
         <recordType>DSALES_Clase__c.dsalesServicios</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>DSALES_Endoso__c-Ingreso de Endoso</layout>
-        <recordType>DSALES_Endoso__c.Registro_de_endoso</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>DSALES_Endoso__c-Visualización de Endoso</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>DSALES_Endoso__c-Visualización de Endoso</layout>
-        <recordType>DSALES_Endoso__c.Registro_de_endoso_completo</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DSALES_Familia__c-DSALES_Formato Producto Tangible</layout>
@@ -4709,10 +4568,6 @@
         <recordType>Opportunity.FinServ__WalletShareOpportunity</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-DSALES_OpportunitySM</layout>
-        <recordType>Opportunity.Seguro_de_Moto</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>OpportunityLineItem-dsalesformatopaginagex</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -4739,9 +4594,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Tienda__c-Formato Tienda</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Tipo_de_endoso__mdt-Formato Tipo de endoso</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -4893,6 +4745,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>DSALES_NuevaPlantilla</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>DSALES_CotizationSm</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

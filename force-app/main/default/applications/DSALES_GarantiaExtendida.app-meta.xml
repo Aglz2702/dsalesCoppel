@@ -309,22 +309,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Tienda_P_gina_de_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Tienda__c</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Tienda_P_gina_de_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Tienda__c</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Producto_de_oportunidad_P_gina_de_registro</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>OpportunityLineItem</pageOrSobjectType>
@@ -381,24 +365,6 @@
         <recordType>DSALES_InformacionDePago__c.DSALES_Pagos_en_NPV</recordType>
         <type>Flexipage</type>
         <profile>Administrador GEX</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Informaci_n_de_Venta_de_Pago</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>DSALES_InformacionDePago__c</pageOrSobjectType>
-        <recordType>DSALES_InformacionDePago__c.DSALES_Pagos_en_NPV</recordType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Informaci_n_de_Venta_de_Pago</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>DSALES_InformacionDePago__c</pageOrSobjectType>
-        <recordType>DSALES_InformacionDePago__c.DSALES_Pagos_en_NPV</recordType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -616,24 +582,6 @@
         <pageOrSobjectType>Product2</pageOrSobjectType>
         <recordType>Product2.DSales_Garantia_Extendida</recordType>
         <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
     <profileActionOverrides>
@@ -662,24 +610,6 @@
         <recordType>Product2.DSales_Garantia_Extendida</recordType>
         <type>Flexipage</type>
         <profile>Control de Informes GEX</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Control de Informes SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Garantia_Extendida</recordType>
-        <type>Flexipage</type>
-        <profile>Control de Informes SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -706,24 +636,6 @@
         <pageOrSobjectType>Product2</pageOrSobjectType>
         <recordType>Product2.DSales_Seguro_de_Motos</recordType>
         <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
     <profileActionOverrides>
@@ -752,24 +664,6 @@
         <recordType>Product2.DSales_Seguro_de_Motos</recordType>
         <type>Flexipage</type>
         <profile>Control de Informes GEX</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Control de Informes SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSales_Seguro_de_Motos</recordType>
-        <type>Flexipage</type>
-        <profile>Control de Informes SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -796,24 +690,6 @@
         <pageOrSobjectType>Product2</pageOrSobjectType>
         <recordType>Product2.DSALES_ProdTangible</recordType>
         <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
     <profileActionOverrides>
@@ -842,24 +718,6 @@
         <recordType>Product2.DSALES_ProdTangible</recordType>
         <type>Flexipage</type>
         <profile>Control de Informes GEX</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Control de Informes SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Producto_Pagina_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Product2</pageOrSobjectType>
-        <recordType>Product2.DSALES_ProdTangible</recordType>
-        <type>Flexipage</type>
-        <profile>Control de Informes SM</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -1122,22 +980,6 @@
         <pageOrSobjectType>DSales_Asignacion_de_Productos__c</pageOrSobjectType>
         <type>Flexipage</type>
         <profile>Administrador GEX</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asignaci_n_de_Productos_P_gina_de_registro</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>DSales_Asignacion_de_Productos__c</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Asignaci_n_de_Productos_P_gina_de_registro</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>DSales_Asignacion_de_Productos__c</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>Administrador SM</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>

@@ -1,7 +1,7 @@
 public without sharing class  DSALES_ValidarClienteHelper {
 
     public static void deleteUnpurchasedItem(List<DSALES_AssetWrapper.AssetRequest> listAssets, List<DSALES_CertificadoWrapper.CertificadoRequest> certificado, String quoteId) {
-        Quote originalQuote = [SELECT Id, Name,OpportunityId, DSALES_EmailNew__c, Pricebook2Id, RecordTypeId, Status, DSALES_Enviarcotizacion__c, DSales_Tienda__c, DSales_Vendedor__c,
+        Quote originalQuote = [SELECT Id, Name,OpportunityId,DSales_ID_Tienda__c, DSALES_EmailNew__c, Pricebook2Id, RecordTypeId, Status, DSALES_Enviarcotizacion__c, DSales_Tienda__c, DSales_Vendedor__c,
                                DSALES_Fechadecreacionpresupuesto__c, ExpirationDate, DSALES_esClon__c FROM Quote WHERE Id = :quoteId WITH SECURITY_ENFORCED]; 
         
         
@@ -41,7 +41,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
             }
                 
         system.debug('TotalIds: '+totalIds);
-        List<QuoteLineitem>qtBorrarTotal =[SELECT  Id,Quantity,dsalesIdSecuencia__c,PricebookEntryId,UnitPrice,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and  Id NOT IN:totalIds WITH SECURITY_ENFORCED];
+        List<QuoteLineitem>qtBorrarTotal =[SELECT  Id,Quantity,dsalesIdSecuencia__c,dsalesSkuTangible__c,PricebookEntryId,UnitPrice,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and  Id NOT IN:totalIds WITH SECURITY_ENFORCED];
         
 		system.debug('qTBorrarTotal: '+qtBorrarTotal);      
         system.debug('qTBorrarTotal Size: '+qtBorrarTotal.size());    
@@ -64,7 +64,9 @@ public without sharing class  DSALES_ValidarClienteHelper {
             Quote unpurchasedQuote = originalQuote.clone(false, true);
             //unpurchasedQuote.RecordTypeId=originalQuote.RecordTypeId;
             unpurchasedQuote.Name = originalQuote.Name + ' -DUP';
-            unpurchasedQuote.OpportunityId=originalQuote.OpportunityId;            
+            unpurchasedQuote.OpportunityId=originalQuote.OpportunityId;  
+             unpurchasedQuote.DSales_ID_Tienda__c = originalQuote.DSales_ID_Tienda__c;
+            
             unpurchasedQuote.DSALES_Enviarcotizacion__c = false;
             try{   
                 if(Schema.sObjectType.Quote.isCreateable()) {
@@ -80,6 +82,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
                     QuoteLineItem newItem = new QuoteLineItem();
                     newItem.QuoteId = unpurchasedQuote.Id;
                     newItem.Quantity= items.Quantity;
+                    newItem.dsalesSkuTangible__c=items.dsalesSkuTangible__c;
                     newItem.PricebookEntryId= items.PricebookEntryId;
                     newItem.UnitPrice= items.UnitPrice;
                     newItem.Product2Id= items.Product2Id;
@@ -96,7 +99,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
                 try{
                     DELETE qtBorrarTotal;
 
-                update originalQuote;
+               
                 unpurchasedQuote.Status = 'Enviada';
                 unpurchasedQuote.DSALES_Enviarcotizacion__c=true;
                 unpurchasedQuote.DSALES_esClon__c=true;

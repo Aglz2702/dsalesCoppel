@@ -6,11 +6,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>DSALES_Seguro_de_Motos</application>
-        <default>true</default>
-        <visible>true</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__LightningSales</application>
         <default>false</default>
         <visible>false</visible>
@@ -116,10 +111,10 @@
         <apexClass>DSALES_ControladorMatrizTiempo_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    <classAccesses>
+    <!--<classAccesses>
         <apexClass>DSALES_GexCotizaciones</apexClass>
         <enabled>false</enabled>
-    </classAccesses>
+    </classAccesses>-->
     <classAccesses>
         <apexClass>DSALES_GexCotizacionesHelper</apexClass>
         <enabled>false</enabled>
@@ -156,14 +151,14 @@
         <apexClass>DSALES_QuoteGexWrapperRequestTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    <classAccesses>
+    <!--<classAccesses>
         <apexClass>DSALES_QuotePdfController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_QuotePdfController_Test</apexClass>
         <enabled>false</enabled>
-    </classAccesses>
+    </classAccesses>-->
     <classAccesses>
         <apexClass>DSALES_ReembolsoWrapper</apexClass>
         <enabled>false</enabled>
@@ -188,14 +183,14 @@
         <apexClass>DSALES_UtilityTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    <classAccesses>
+    <!--<classAccesses>
         <apexClass>DSALES_ValidarClienteHelper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_ValidarClienteHelperTest</apexClass>
         <enabled>false</enabled>
-    </classAccesses>
+    </classAccesses>-->
     <classAccesses>
         <apexClass>DSALES_VentaGEX</apexClass>
         <enabled>false</enabled>
@@ -2173,101 +2168,6 @@
         <editable>false</editable>
         <field>DSALES_Clase__c.DSales_IDexterior__c</field>
         <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_Cliente__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_CorreoElectronico__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_Dosdiassinupdate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_Enviadoaproveedor__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_Estatus__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_Folio__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_MontoaDevolver__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_MotivoDevolucion__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_MotivoRechazo__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_NuevaPoliza__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_NumeroClienteCoppel__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_SolucionDevolucion__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_Tipodedato__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_Tipodedocumento__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_Tipodeendoso__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.DSALES_Valor__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.DSALES_uid__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>DSALES_Endoso__c.dsalesFechaCreacion__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DSALES_Endoso__c.dsalesFechaDeCreacion__c</field>
-        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5051,11 +4951,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>TEST_met__mdt.Nombre__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Tienda__c.Activa__c</field>
         <readable>true</readable>
@@ -5171,11 +5066,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Tipo_de_endoso__mdt.ClaimType__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>dsalesAsignacionDeTienda__c.Producto__c</field>
         <readable>true</readable>
@@ -5226,16 +5116,6 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>dsalesEquivalencias__mdt.dsalesContado__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>dsalesEquivalencias__mdt.dsalesMensual__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>dsalesRegion__c.dsalesActivo__c</field>
         <readable>true</readable>
@@ -5255,7 +5135,7 @@
         <field>dsalesRegion__c.dsalesNumero__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <layoutAssignments>
+   <!-- <layoutAssignments>
         <layout>Asset-Pisys Asset Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -5264,20 +5144,6 @@
     <layoutAssignments>
         <layout>Campaign-DSALES_CAMPAÑAS SM</layout>
         <recordType>Campaign.DSALES_TipoderegistrocampaNasSM</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Claim-Visualización de Siniestro</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Claim-Visualización de Siniestro</layout>
-        <recordType>Claim.DSALES_Nuevo_Siniestro</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Claim-Visualización de Siniestro</layout>
-        <recordType>Claim.DSALES_Siniestro</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ClaimPaymentSummary-Formato de Resumen de pago de reclamación</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DASALES_Porcentajedecobro__c-Porcentaje de cobro Layout</layout>
@@ -5320,17 +5186,6 @@
     <layoutAssignments>
         <layout>DSALES_Clase__c-DSALES_SM</layout>
         <recordType>DSALES_Clase__c.DSALES_SM</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>DSALES_Endoso__c-Ingreso de Endoso</layout>
-        <recordType>DSALES_Endoso__c.Registro_de_endoso</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>DSALES_Endoso__c-Visualización de Endoso</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>DSALES_Endoso__c-Visualización de Endoso</layout>
-        <recordType>DSALES_Endoso__c.Registro_de_endoso_completo</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DSALES_Familia__c-DSALES_Formato Producto Tangible</layout>
@@ -5423,25 +5278,6 @@
         <recordType>Opportunity.DSales_Garantia_Extendida</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-DSALES_OpportunitySM</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Opportunity-DSALES_OpportunitySM</layout>
-        <recordType>Opportunity.DSALES_Oportunidad</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Opportunity-DSALES_OpportunitySM</layout>
-        <recordType>Opportunity.FinServ__General</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Opportunity-DSALES_OpportunitySM</layout>
-        <recordType>Opportunity.FinServ__RetirementPlanning</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Opportunity-DSALES_OpportunitySM</layout>
-        <recordType>Opportunity.Seguro_de_Moto</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>OpportunityLineItem-DSALES_FormatodePaginaPOSM</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -5478,13 +5314,7 @@
         <layout>QuoteLineItem-DSALES_Partida_SM</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>TEST_met__mdt-TEST met Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Tienda__c-Formato Tienda</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Tipo_de_endoso__mdt-Formato Tipo de endoso</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>dsalesAsignacionDeTienda__c-Asignación Campaña</layout>
@@ -5502,7 +5332,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>dsalesDatosContratante__mdt-Formato Nombre del contratante</layout>
-    </layoutAssignments>
+    </layoutAssignments>-->
     <layoutAssignments>
         <layout>dsalesRegion__c-Formato Región</layout>
     </layoutAssignments>

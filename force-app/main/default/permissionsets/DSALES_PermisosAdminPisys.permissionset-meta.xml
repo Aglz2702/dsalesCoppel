@@ -4,10 +4,6 @@
         <application>DSALES_GarantiaExtendida</application>
         <visible>true</visible>
     </applicationVisibilities>
-    <applicationVisibilities>
-        <application>DSALES_Seguro_de_Motos</application>
-        <visible>true</visible>
-    </applicationVisibilities>
     <classAccesses>
         <apexClass>DSALES_AccountWrapper</apexClass>
         <enabled>true</enabled>
@@ -98,14 +94,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_GexCotizacionesHelper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_Matriz</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_MatrizHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1078,7 +1066,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.DSALES_SKU__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -1248,7 +1236,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset.dsalesIdSecuencia__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2143,7 +2131,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>DSALES_InformacionDePago__c.DSALES_Fechadeentregaestimada__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2848,7 +2836,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>InsurancePolicyAsset.DSALES_Motoexterna__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2888,12 +2876,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>InsurancePolicyAsset.dsalesCliente__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>InsurancePolicyAsset.dsalesEstatus__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3272,6 +3260,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Product2.StockKeepingUnit</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Product2.DSALES_Clase__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3418,7 +3411,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.DSales_Tipo_de_Producto__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3488,7 +3481,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote.DSALES_EmailNew__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3498,7 +3491,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote.DSALES_Fechadecreacionpresupuesto__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3538,7 +3531,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote.DSALES_Plazoacotizar__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3583,7 +3576,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote.DSALES_fechadecreacion__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3623,12 +3616,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote.DSales_Tienda__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Quote.DSales_Vendedor__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3657,6 +3650,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>QuoteLineItem.dsalesIdSecuencia__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>QuoteLineItem.DSALES_Comision__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3668,7 +3666,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>QuoteLineItem.DSALES_Fechadecompra__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3688,7 +3686,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>QuoteLineItem.DSALES_ListaArticulo__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3698,7 +3696,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>QuoteLineItem.DSALES_NombreProducto__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3733,7 +3731,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>QuoteLineItem.DSALES_SKU__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3802,8 +3800,13 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>QuoteLineItem.dsalesSkuTangible__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>QuoteLineItem.Vigencia_meses__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3843,27 +3846,27 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>dsalesAsignacionDeTienda__c.Producto__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>dsalesAsignacionDeTienda__c.dsalesActivo__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>dsalesAsignacionDeTienda__c.dsalesCampana__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>dsalesAsignacionDeTienda__c.dsalesMatriz__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>dsalesAsignacionDeTienda__c.dsalesTienda__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
