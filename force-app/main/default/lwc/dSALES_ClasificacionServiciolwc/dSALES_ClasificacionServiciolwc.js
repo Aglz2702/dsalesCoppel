@@ -45,8 +45,6 @@ import getPickListTiendasSeguro from '@salesforce/apex/DSALES_RegionalizacionSeg
 import SystemModstamp from '@salesforce/schema/Account.SystemModstamp';
 
 
-
-
 const columns = [
     { label: 'Nombre', fieldName: 'etiqueta' }
 
@@ -107,7 +105,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.ProfileChecker();
     }
 
-    init() {
+
+    init(){
         getCategoria()
             .then(result => {
                 this.data = result;
@@ -416,52 +415,19 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     guardar() {
         this.showSpinner = true;
         this.popServicios = false;
-        upsertRecord({ allData: JSON.stringify(this.data.listServicios) })
-            .then(result => {
-                if(result[1]=='200'){
-                    this.cancelar();
-                    if(result[0]=='sin errores'){
-                        this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
-                    }
-                    else{
-                        this.pushMessage('Advertencia', 'Warning', 'Operacion exitosa con los siguientes errores: '+result[0]);
-                    }
-                    insertListaPrecios({ idproductoservicio: 'opcion2', opcion: '2', json2: JSON.stringify(this.data.listServicios) })
-                        .then(result2 => {
-                            console.log(result2);
-                        }).catch(error => {
-                            console.log(error);
-                        });
-                }
-                else if (result[1]=='400'){
-                    this.pushMessage('Advertencia', 'warning', 'Error: '+result+' Recurso no encontrado');
-                    this.showSpinner = false;
-                }
-                else if (result[1]=='404'){
-                    this.pushMessage('Advertencia', 'warning', 'Error: '+result+'No se encontró el recurso solicitado');
-                    this.showSpinner = false;
-                }
-                else if (result[1]=='416'){
-                    this.pushMessage('Advertencia', 'warning','Error: '+result+ 'Rango no satisfactorio');
-                    this.showSpinner = false;
-                }
-                else if (result[1]=='422'){
-                    this.pushMessage('Advertencia', 'warning','Error: '+result+ 'Entidad no procesable');
-                    this.showSpinner = false;
-                }
-                else if (result[1]=='429'){
-                    this.pushMessage('Advertencia', 'warning', 'Error: '+result+'Demasiadas peticiones');
-                    this.showSpinner = false;
-                }
-                else if (result[1]=='500'){
-                    this.pushMessage('Advertencia', 'warning', 'Error: '+result+ 'Problemas en la comunicación');
-                    this.showSpinner = false;
-                }
-                this.showSpinner = false;
-            }).catch(error => {
-                this.showSpinner = false;
-                this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
-            });
+        console.log(JSON.stringify(this.data.listServicios));
+        upsertRecord({allData: JSON.stringify(this.data.listServicios)})
+        .then(result => {
+            this.cancelar();
+            this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
+            insertListaPrecios({ idproductoservicio: 'opcion2', opcion: '2', JSON2: JSON.stringify(this.data.listServicios) })
+                .then(result => {
+                }).catch(error => {
+                });
+        }).catch(error => {
+            this.showSpinner = false;
+            this.pushMessage('Error', 'error', 'Ha ocurrido un error al actualizar los registros.');
+        });
     }
 
     cancelar() {
@@ -731,51 +697,48 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
             });
     }
 
-    SelectSeguroServicio() {
+    SelectSeguroServicio(){
         this.ProfileChecker();
 
     }
-
-    SelectSeguroServicioAdmi(event) {
+    SelectSeguroServicioAdmi(event){
         this.pickList.valueSelectedtipoProducto = event.target.value;
-        this.pickList.DSales_Tipo_de_Producto__c = event.target.value;
-        if (event.target.value == 'Servicio') {
-            this.data.showServicio = true;
+        this.pickList.DSales_Tipo_de_Producto__c= event.target.value;
+        if(event.target.value== 'Servicio')
+        {
+            this.data.showServicio=true;
             this.getPickList2();
         }
-        else if (event.target.value == 'Seguro') {
-            this.data.showServicio = false;
+        else if(event.target.value== 'Seguro'){
+            this.data.showServicio=false;
             this.getPickList4();
         }
     }
-    asignarCategoria(event) {
-        this.showSpinner = true;
-        this.pickList.valueSelectedtipoSeguroServicio = event.target.value;
-        console.log(this.pickList.DSALES_ServEspecifico__c+this.pickList.DSALES_SegEspecifico__c+'hola');
-        recordTypeId({ tipoRegistro: this.pickList.valueSelectedtipoSeguroServicio })
-            .then(result => {
-                this.pickList.RecordTypeId = result;
-                if (this.pickList.valueSelectedtipoSeguroServicio == 'Garantía Extendida') {
-                    this.pickList.DSALES_ServEspecifico__c = event.target.value;
-                    this.pickList.recordTypeSeguroServicio= 'Servicios';
-                }
-                else if (this.pickList.valueSelectedtipoSeguroServicio == 'Seguro de Motos') {
-                    this.pickList.DSALES_SegEspecifico__c = event.target.value;
-                    this.pickList.recordTypeSeguroServicio= 'Seguro de Motos';
-                    getPickListPago()
-                    .then(result7 => {
-                        this.pickList.listOpcionesPago = result7;
-                    });
-                }
-                getCategories({ recordName: this.pickList.recordTypeSeguroServicio })
-                .then(result2 => {
-                    this.pickList.listCategorias = result2;
-                    this.showSpinner = false;
-                });
-            });
-            console.log(this.pickList.recordTypeSeguroServicio);
-            console.log(this.pickList.DSALES_ServEspecifico__c+this.pickList.DSALES_SegEspecifico__c);
-       
+    asignarCategoria(event){
+        this.showSpinner=true;
+        this.pickList.valueSelectedtipoSeguroServicio= event.target.value; 
+        console.log(this.pickList.valueSelectedtipoSeguroServicio);
+        RecordTypeId({tipoRegistro: this.pickList.valueSelectedtipoSeguroServicio})
+        .then(result => {
+            this.pickList.RecordTypeId = result;
+            if(this.pickList.valueSelectedtipoSeguroServicio== 'Garantía Extendida')
+            {
+                 this.pickList.DSALES_ServEspecifico__c = event.target.value;
+                  
+            }
+            else if( this.pickList.valueSelectedtipoSeguroServicio== 'Seguro de Motos')
+            {
+                this.pickList.DSALES_SegEspecifico__c = event.target.value;
+            }
+        });
+
+        getCategories({recordName: this.pickList.valueSelectedtipoSeguroServicio})
+        .then(result => {
+            this.pickList.listCategorias = result;
+            console.log(result);
+            console.log(this.data.recordid);
+            this.showSpinner=false;
+        });
     }
     asignarSubCategorias(event) {
         this.ValueCategoriaSelected = event.target.value;
@@ -819,49 +782,53 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
             });
     }
 
-
-
-
-
-    
-    ProfileChecker(event) {
-        this.resultPerfil = false;
-        this.data.showAdmiSM = false;
-        this.data.showAdmiGex = false;
-        getProfileType({ profile: 'Administrador SM' })
-            .then(result => {
-                this.data.confirmarProfileType = result;
-                if (this.data.confirmarProfileType == 'Administrador SM') {
-                    this.resultPerfil = false;
-                    this.data.showAdmiSM = true;
-                    this.data.showAdmiGex = false;
-                    this.data.showServicio = false;
-                    this.pickList.valueSelectedtipoProducto = 'Seguro';
-                    this.pickList.DSales_Tipo_de_Producto__c = 'Seguro';
-                    this.getPickList4();
-                }
-                else if (this.data.confirmarProfileType == 'No corresponde') {
-                    this.resultPerfil = false;
-                    this.data.showAdmiSM = false;
-                    this.data.showAdmiGex = true;
-                    this.data.showServicio = true;
-                    this.pickList.valueSelectedtipoProducto = 'Servicio';
-                    this.pickList.DSales_Tipo_de_Producto__c = 'Servicio';
-                    this.getPickList2();
-                }
-                else if (this.data.confirmarProfileType == 'Administrador del sistema') {
-                    this.resultPerfil = true;
-                    this.data.showAdmiSM = false;
-                    this.data.showAdmiGex = false;
-                    this.data.showServicio = true;
-                    this.pickList.valueSelectedtipoProducto = 'Servicio';
-                    this.pickList.DSales_Tipo_de_Producto__c = 'Servicio';
-                    this.getPickList2();
-                }
-            })
-            .catch(error => {
-                this.showSpinner = false;
-            });
+    ProfileChecker(event){
+        this.resultPerfil=false;
+        this.data.showAdmiSM=false;
+        this.data.showAdmiGex=false;
+        getProfileType({profile: 'Administrador SM'})
+        .then(result => {
+            this.data.confirmarProfileType= result;
+            console.log(result+'jaja');
+            if(this.data.confirmarProfileType=='Administrador SM')
+            {
+                this.resultPerfil=false;
+                this.data.showAdmiSM=true;
+                this.data.showAdmiGex=false;
+                this.data.showServicio=false;
+                this.pickList.valueSelectedtipoProducto = 'Seguro';
+                this.pickList.DSales_Tipo_de_Producto__c= 'Seguro';
+                this.getPickList4();
+                console.log('entro sm')   
+            }
+            else if(this.data.confirmarProfileType=='No corresponde')
+            {
+                this.resultPerfil=false; 
+                this.data.showAdmiSM=false;
+                this.data.showAdmiGex=true;
+                this.data.showServicio=true;
+                this.pickList.valueSelectedtipoProducto = 'Servicio';
+                this.pickList.DSales_Tipo_de_Producto__c= 'Servicio';
+                this.getPickList2(); 
+                console.log('entro gex') 
+            }
+            else if(this.data.confirmarProfileType=='Administrador del sistema')
+            {
+                this.resultPerfil=true; 
+                this.data.showAdmiSM=false;
+                this.data.showAdmiGex=false;
+                this.data.showServicio=true;
+                this.pickList.valueSelectedtipoProducto = 'Servicio';
+                this.pickList.DSales_Tipo_de_Producto__c= 'Servicio';
+                this.getPickList2(); 
+                console.log('entro admi') 
+            }
+            
+        })
+        
+        .catch(error => {
+            this.showSpinner = false;
+        });  
     }
 
     buscarAsignacionVinculacion(event) {
@@ -920,8 +887,9 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
 
     onChangePorcentajeCobro2(event) {
-        this.data.DSALES_Anios__c = 2;
-        this.matrizPorcentaje.anio2 = event.target.value;
+        this.data.DSALES_Anios__c=2;
+        this.matrizPorcentaje.anio2=event.target.value;
+        console.log(this.matrizPorcentaje.anio2);
     }
 
     onChangePorcentajeCobro3(event) {
@@ -955,55 +923,33 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.data.tiposUsoSelected = event.detail.value;
     }
 
-    onchangeTypesChecked(event) {
-        const name = event.target.name;
-        const check = event.target.checked;
-        for (const element of this.data.listServicios) {
-            if (element.id == name) {
-                element.tipoUso = check;
-            }
+    camposVacios(){
+        if(this.data.aniosporcentaje==0 &&  this.matrizPorcentaje.anio1!=0 ){
+          this.data.camposCompletos=true;
         }
-    }
-
-    onchangeCampaignsChecked(event) {
-        const name = event.target.name;
-        const check = event.target.checked;
-        for (const element of this.data.listServicios) {
-            if (element.id == name) {
-                element.campanas = check;
-            }
+        else if(this.data.aniosporcentaje==1 &&  this.matrizPorcentaje.anio1!=0 &&  this.matrizPorcentaje.anio2!=0){
+            this.data.camposCompletos=true;
         }
-    }
-
-    camposVacios() {
-        if (this.data.aniosporcentaje == 0 && this.matrizPorcentaje.anio1 != 0) {
-            this.data.camposCompletos = true;
+        else if(this.data.aniosporcentaje==2 &&  this.matrizPorcentaje.anio1!=0 &&  this.matrizPorcentaje.anio2!=0 &&  this.matrizPorcentaje.anio3!=0){
+            this.data.camposCompletos=true;
         }
-        else if (this.data.aniosporcentaje == 1 && this.matrizPorcentaje.anio1 != 0 && this.matrizPorcentaje.anio2 != 0) {
-            this.data.camposCompletos = true;
+        else if(this.data.aniosporcentaje==3 &&  this.matrizPorcentaje.anio1!=0 &&  this.matrizPorcentaje.anio2!=0 &&  this.matrizPorcentaje.anio3!=0 &&
+            this.matrizPorcentaje.anio4!=0){
+            this.data.camposCompletos=true;
         }
-        else if (this.data.aniosporcentaje == 2 && this.matrizPorcentaje.anio1 != 0 && this.matrizPorcentaje.anio2 != 0 && this.matrizPorcentaje.anio3 != 0) {
-            this.data.camposCompletos = true;
+        else if(this.data.aniosporcentaje==4 &&  this.matrizPorcentaje.anio1!=0 &&  this.matrizPorcentaje.anio2!=0 &&  this.matrizPorcentaje.anio3!=0 &&
+            this.matrizPorcentaje.anio4!=0 &&  this.matrizPorcentaje.anio5!=0){
+            this.data.camposCompletos=true;
         }
-        else if (this.data.aniosporcentaje == 3 && this.matrizPorcentaje.anio1 != 0 && this.matrizPorcentaje.anio2 != 0 && this.matrizPorcentaje.anio3 != 0 &&
-            this.matrizPorcentaje.anio4 != 0) {
-            this.data.camposCompletos = true;
+        else if(this.data.aniosporcentaje==5 &&  this.matrizPorcentaje.anio1!=0 &&  this.matrizPorcentaje.anio2!=0 &&  this.matrizPorcentaje.anio3!=0 &&
+            this.matrizPorcentaje.anio4!=0 &&  this.matrizPorcentaje.anio5!=0 && this.matrizPorcentaje.anio6!=0){
+            this.data.camposCompletos=true;
         }
-        else if (this.data.aniosporcentaje == 4 && this.matrizPorcentaje.anio1 != 0 && this.matrizPorcentaje.anio2 != 0 && this.matrizPorcentaje.anio3 != 0 &&
-            this.matrizPorcentaje.anio4 != 0 && this.matrizPorcentaje.anio5 != 0) {
-            this.data.camposCompletos = true;
-        }
-        else if (this.data.aniosporcentaje == 5 && this.matrizPorcentaje.anio1 != 0 && this.matrizPorcentaje.anio2 != 0 && this.matrizPorcentaje.anio3 != 0 &&
-            this.matrizPorcentaje.anio4 != 0 && this.matrizPorcentaje.anio5 != 0 && this.matrizPorcentaje.anio6 != 0) {
-            this.data.camposCompletos = true;
-        }
-        else this.data.camposCompletos = false;
+        else this.data.camposCompletos=false;
     }
 
 
-    confirmarGuardar() {
-        console.log('hola');
-        console.log(this.pickList.valueSelectedtipoSeguroServicio);
+ confirmarGuardar() {
         if (this.pickList.valueSelectedtipoProducto == 'Servicio') {
             this.camposVacios();
             this.data.confirmarGuardar = false;
@@ -1013,7 +959,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                     this.pickList.Description == '' ||
                     this.pickList.Name == '' ||
                     this.pickList.StockKeepingUnit == '' ||
-                    this.data.camposCompletos === false
+                    this.data.camposCompletos==false
                 ) {
                     this.pushMessage('Advertencia', 'warning', 'Existen campos vacios o no seleccionados');
                 }
@@ -1055,16 +1001,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
 
     guardarProductIntan() {
-        console.log('hola');
-        if(this.pickList.valueSelectedtipoProducto=='Servicio')
-        {
-            this.pickList.DSALES_ServEspecifico__c=this.pickList.valueSelectedtipoSeguroServicio;
-        }
-        else{
-            this.pickList.DSALES_SegEspecifico__c=this.pickList.valueSelectedtipoSeguroServicio;
-        }
-        console.log( this.pickList.dsalesOpcionPago__c);
-        console.log(this.pickList.DSALES_ServEspecifico__c);   
+        console.log('aquii esta');
+        console.log(JSON.parse(JSON.stringify(this.pickList)));
         createProductIntan({ productIntan: this.pickList, sku: this.pickList.StockKeepingUnit }
         ).then(result => {
             this.message = result.message;
@@ -1091,13 +1029,16 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                                     console.log(error);
                                 });
                         }
-                        else {
-                            insertPocentajeCobro({ idservicio: result2, jsonp: JSON.stringify(this.matrizPorcentaje) })
-                                .then(result4 => {
-                                    console.log(result4);
+                        else {          
+                            console.log('idservicio' +result);
+                            console.log(JSON.stringify(this.matrizPorcentaje));
+                            insertPocentajeCobro({ idservicio: result, JSONP: JSON.stringify(this.matrizPorcentaje) })
+                                .then(result => {
                                 }).catch(error => {
                                     console.log(error);
                                     this.showSpinner = false;
+                                    
+                                    console.log('fallo insercion');
                                 });
                         }
                     }).catch(error => {
@@ -1105,18 +1046,18 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                         this.showSpinner = false;
                     });
 
-                
-            }
-            getidservicio({ sku: this.pickList.StockKeepingUnit })
-            .then(result11 => {
-                this.data.idservicio = result11;
-                this.showSpinner = false;
-                insertListaPrecios({ idproductoservicio: result11, opcion: '1', json2: JSON.stringify(this.data.listServicios) })
-                    .then(result22 => {
-                        console.log(result22);
-                    }).catch(error => {
-                        console.log(error);
-                    });
+                getidservicio({ sku: this.pickList.StockKeepingUnit })
+                    .then(result => {
+                        this.data.idservicio = result;
+                        this.showSpinner = false;
+                        console.log(result);
+
+                        console.log('aqui' +result);
+                        console.log(JSON.stringify(this.data.listServicios));
+                        insertListaPrecios({ idproductoservicio: result, opcion: '1', JSON2: JSON.stringify(this.data.listServicios) })
+                            .then(result => {
+                            }).catch(error => {
+                            });
 
             }).catch(error => {
                 console.log(error);
@@ -1410,20 +1351,23 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.openTablaResultado = true;
 
     }
-    buscarProductsNoVinc() {
-        getBuscarProducto({ servicio: this.data.idservicio })
-            .then(result => {
-                this.data.listaproductos = result;
-                this.showSpinner = false;
-                if (this.data.listaproductos.length > 0) {
-                    this.openTableVincProduct = true;
-                } else {
-                    this.pushMessage('Advertencia', 'warning', 'No se han encontrado productos.');
-                    this.onClickBuscarIntanProduct();
-                }
-            }).catch(error => {
-                this.showSpinner = false;
-            });
+    buscarProductsNoVinc(){
+        console.log('prueba1: '+this.data.idservicio);
+        getBuscarProducto({servicio: this.data.idservicio})
+        .then(result => {
+            this.data.listaproductos = result;
+            this.showSpinner = false;
+            console.log(result)
+            if(this.data.listaproductos.length > 0){
+                this.openTableVincProduct= true;
+            }else{
+                this.pushMessage('Advertencia', 'warning', 'No se han encontrado productos.');
+                this.onClickBuscarIntanProduct();
+            }
+        }).catch(error => {
+            console.log(error);
+            this.showSpinner = false;
+        }); 
 
 
     }
@@ -1472,58 +1416,48 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     quitarAnioPorcentaje() {
         if (this.data.aniosporcentaje > 0) {
             this.data.aniosporcentaje = this.data.aniosporcentaje - 1;
-            if (this.data.aniosporcentaje == 0) {
-                this.data.dos = false;
-                this.data.tres = false;
-                this.data.cuatro = false;
-                this.data.cinco = false;
-                this.data.seis = false;
-                this.matrizPorcentaje.anio2 = 0;
+            console.log( this.data.aniosporcentaje);
+            if(this.data.aniosporcentaje==0){
+                this.data.dos=false;
+                this.data.tres=false;
+                this.data.cuatro=false;
+                this.data.cinco=false;
+                this.data.seis=false;
+                this.matrizPorcentaje.anio2=0;
             }
-            else if (this.data.aniosporcentaje == 1) {
-                this.data.dos = true;
-                this.data.tres = false;
-                this.data.cuatro = false;
-                this.data.cinco = false;
-                this.data.seis = false;
-                this.matrizPorcentaje.anio3 = 0;
+            else if(this.data.aniosporcentaje==1){
+                this.data.dos=true;
+                this.data.tres=false;
+                this.data.cuatro=false;
+                this.data.cinco=false;
+                this.data.seis=false;
+                this.matrizPorcentaje.anio3=0;
             }
-            else if (this.data.aniosporcentaje == 2) {
-                this.data.dos = true;
-                this.data.tres = true;
-                this.data.cuatro = false;
-                this.data.cinco = false;
-                this.data.seis = false;
-                this.matrizPorcentaje.anio4 = 0;
+            else if(this.data.aniosporcentaje==2){
+                this.data.dos=true;
+                this.data.tres=true;
+                this.data.cuatro=false;
+                this.data.cinco=false;
+                this.data.seis=false;
+                this.matrizPorcentaje.anio4=0;
             }
-            else if (this.data.aniosporcentaje == 3) {
-                this.data.dos = true;
-                this.data.tres = true;
-                this.data.cuatro = true;
-                this.data.cinco = false;
-                this.data.seis = false;
-                this.matrizPorcentaje.anio5 = 0;
+            else if(this.data.aniosporcentaje==3){
+                this.data.dos=true;
+                this.data.tres=true;
+                this.data.cuatro=true;
+                this.data.cinco=false;
+                this.data.seis=false;
+                this.matrizPorcentaje.anio5=0;
             }
-            else if (this.data.aniosporcentaje == 4) {
-                this.data.dos = true;
-                this.data.tres = true;
-                this.data.cuatro = true;
-                this.data.cinco = true;
-                this.data.seis = false;
-                this.matrizPorcentaje.anio6 = 0;
+            else if(this.data.aniosporcentaje==4){
+                this.data.dos=true;
+                this.data.tres=true;
+                this.data.cuatro=true;
+                this.data.cinco=true;
+                this.data.seis=false;
+                this.matrizPorcentaje.anio6=0;
             }
         }
-    }
-
-    openFormCampaigns(event) {
-        this.data.sku = event.currentTarget.dataset.id;
-        getidservicio({ sku: this.data.sku })
-            .then(result => {
-                this.data.idProducto = result;
-                this.getCampanas();
-            }).catch(error => {
-                console.log(error);
-            });
     }
 
     openFormTypes(event) {
@@ -1694,61 +1628,19 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         });
 
         
-    }
-
-    getservicesubcategories(event){
-        this.data.valueCategoryService=event.target.value;
-        getserviciosubcategorias({valueCategoria: this.data.valueCategoryService, token: this.data.tokenAccess})
-        .then(result => {
-            this.data.servicioSubcategoria= result;
-        }).catch(error => {
-            console.log(error);
-        });
-    }
-
-    getserviceclass(event){
-        this.data.valueSubcategoryService=event.target.value;
-        getservicioclase({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, token: this.data.tokenAccess})
-        .then(result => {
-            this.data.servicioClases= result;
-        }).catch(error => {
-            console.log(error);
-        });
-    }
-
-    getservicefamily(event){
-        this.data.valueClassService=event.target.value;
-        this.listaClaseToken.push(this.data.valueClassService);
-        this.listaClaseToken.push(this.data.tokenAccess);
-        getserviciofamilia({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, valueClases: this.listaClaseToken})
-        .then(result => {
-            this.data.servicioFamilias= result;
-        }).catch(error => {
-            console.log(error);
-        });
-    }
-
-    getValueFamily(event){
-        this.data.valueFamilyService=event.target.value;
-    }
-
-    getservicesku(){
-        if( this.data.valueCategoryService=='' || this.data.valueSubcategoryService== '' || this.data.valueClassService== '' || this.data.valueFamilyService== ''){
-            this.pushMessage('Advertencia', 'warning', 'Existen campos vacios o no seleccionados');
         }
-        else{
-            this.listaClaseFamiliaToken.push(this.data.valueClassService);
-            this.listaClaseFamiliaToken.push(this.data.valueFamilyService);
-            this.listaClaseFamiliaToken.push(this.data.tokenAccess);
-            getserviciosku({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, valueClasesFamiliasToken: this.listaClaseFamiliaToken})
-            .then(result => {
-                this.data.servicioSku= result;
-            }).catch(error => {
-                console.log(error);
-            });
-        }
+ 
 
-    }
+    
+
+    //guardo correctamente 10:22 pm"
+
+    
+
+    
+
+
+    
 
     handleKeyDownSearch(event) {
         if (event.key === 'Enter') {
