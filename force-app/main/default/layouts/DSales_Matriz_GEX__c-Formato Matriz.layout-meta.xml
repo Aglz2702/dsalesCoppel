@@ -71,7 +71,7 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <platformActionList>
+    <!--<platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
             <actionName>Edit</actionName>
@@ -88,7 +88,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
         </platformActionListItems>
-    </platformActionList>
+    </platformActionList>-->
     <quickActionList/>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>

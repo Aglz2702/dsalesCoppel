@@ -57,24 +57,6 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Generador_Plantillas_P_gina_de_registro1</content>
-        <formFactor>Small</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>DSALES_Generador__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Generador_Plantillas_P_gina_de_registro1</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
-        <pageOrSobjectType>DSALES_Generador__c</pageOrSobjectType>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>Certificado_de_Garant_a_Extendida</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -90,7 +72,7 @@
         <type>Flexipage</type>
         <pageOrSobjectType>DSALES_Certificado__c</pageOrSobjectType>
     </actionOverrides>
-    <actionOverrides>
+    <!--<actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>DSALES_PysisAccountRecordPage</content>
@@ -107,7 +89,7 @@
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
         <pageOrSobjectType>Account</pageOrSobjectType>
-    </actionOverrides>
+    </actionOverrides>-->
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
@@ -991,7 +973,6 @@
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
     <tabs>DSales_Matriz_GEX__c</tabs>
-    <tabs>DSALES_ClasificacionServicio</tabs>
     <tabs>dsalesRegion__c</tabs>
     <tabs>dsalesCiudad__c</tabs>
     <uiType>Lightning</uiType>

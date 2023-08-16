@@ -9,7 +9,7 @@
                         <valueListItems>
                             <value>Edit</value>
                         </valueListItems>
-                        <valueListItems>
+                        <!--<valueListItems>
                             <value>DSales_Matriz_GEX__c.DSALES_ClonarMatriz</value>
                             <visibilityRule>
                                 <criteria>
@@ -31,7 +31,7 @@
                         </valueListItems>
                         <valueListItems>
                             <value>DSales_Matriz_GEX__c.Dsales_Asignaciondetiendas</value>
-                        </valueListItems>
+                        </valueListItems>-->
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -71,7 +71,7 @@
         <name>detailTabContent</name>
         <type>Facet</type>
     </flexiPageRegions>
-    <flexiPageRegions>
+    <!--<flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentName>DSALES_MatrizTiempoGEX</componentName>
@@ -80,7 +80,7 @@
         </itemInstances>
         <name>Facet-c733301d-8479-4921-ad83-65055ea1ebba</name>
         <type>Facet</type>
-    </flexiPageRegions>
+    </flexiPageRegions>-->
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -122,7 +122,7 @@
                 <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
+        <!--<itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
@@ -135,7 +135,7 @@
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
             </componentInstance>
-        </itemInstances>
+        </itemInstances>-->
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
