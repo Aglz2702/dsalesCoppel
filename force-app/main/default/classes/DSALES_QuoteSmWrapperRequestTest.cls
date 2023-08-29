@@ -28,7 +28,7 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Product2 prodRcExc = new Product2(Name ='RCEXC',dsalesVehiculo__c='23d23d33', StockKeepingUnit='123433',DSALES_Familia__c=family.Id,DSALES_Categoria__c=category.Id,DSALES_Clase__c=classs.Id,DSales_Tipo_de_Producto__c='Seguro',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=50,DSales_Articulo__c= 'Tst1',IsActive=true,	dsalesOpcionpago__c='C');
         insert prodRcExc;
         
-        Product2 prodM = new Product2(Name ='Moto',dsalesVehiculo__c='lasicndsldicsid',StockKeepingUnit='123121',DSales_Tipo_de_Producto__c='Producto',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40, DSales_Articulo__c='test2',IsActive=true);
+        Product2 prodM = new Product2(Name ='Moto',dsalesVehiculo__c='lasicndsldicsid',StockKeepingUnit='123122',DSales_Tipo_de_Producto__c='Producto',DSales_Aplicaporcentajecobro__c=true, DSales_PorcentajeCobro__c=40, DSales_Articulo__c='test2',IsActive=true);
         insert prodM;
         
         Id pricebookId = Test.getStandardPricebookId();
@@ -224,7 +224,7 @@ public class DSALES_QuoteSmWrapperRequestTest {
         Product2 temporal = [SELECT Id,dsalesVehiculo__c, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c, dsalesOpcionpago__c FROM Product2 WHERE Name = 'RC' LIMIT 1];
         Tienda__c tienda = [Select Id from Tienda__c WHERE DSales_TiendaID__c ='21' LIMIT 1];
         Quote quote= [SELECT Id, Name, DSALES_Plazoacotizar__c FROM Quote WHERE Name = 'test' LIMIT 1];
-        QuoteLineItem item =[SELECT Id, QuoteId, UnitPrice FROM QuoteLineItem WHERE QuoteId =:quote.Id];
+        QuoteLineItem item =[SELECT Id, QuoteId, UnitPrice, DSALES_Impuestos__c FROM QuoteLineItem WHERE QuoteId =:quote.Id];
         Plazo__c plazo = [SELECT Id, Name, DSALES_Activo__c, dsalesSeguro__r.Name FROM Plazo__c WHERE Name='12'AND DSALES_Activo__c = true LIMIT 1];  
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
