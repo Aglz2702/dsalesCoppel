@@ -17,6 +17,15 @@ global class DSALES_IPAssetWrapper {
         global String descripcion { get; set; }
         global String marca { get; set; }
         global String nombreActivo { get; set; }
+        global String imei {get;set;}
+        global String almacenamiento {get;set;}
+        global String cpu {get;set;}
+        global String tamanoPantalla {get;set;}
+        global Integer precio {get;set;}
+        global Integer Ram {get;set;}
+        global Decimal annio {get;set;}
+        global String color {get;set;}
+        global String operadorTelefonico {get;set;}
     }
     global class IPAssetResponse{
         global List<DSALES_VentaSMRest.WrapperDatosProductos> listaPartidasOportunidad {get; set;}

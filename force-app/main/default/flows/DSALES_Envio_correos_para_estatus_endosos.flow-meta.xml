@@ -14,6 +14,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>DSALES_Endoso__c.DSALES_Alerta_de_correo_de_cambio_de_estatus_a_completado</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Envi_de_correo_en_etapa_nuevo</name>
@@ -29,6 +31,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>DSALES_Endoso__c.DSALES_Endoso_Nuevo</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Envi_de_correo_en_etapa_rechazado</name>
@@ -44,6 +48,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>DSALES_Endoso__c.DSALES_Alerta_de_correo_de_cambio_de_estatus_a_rechazado</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Envi_de_correo_en_etapa_requerimiento_de_informaci_n</name>
@@ -59,6 +65,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>DSALES_Endoso__c.DSALES_Alerta_de_correo_de_cambio_de_estatus_a_requerimiento_de_informaci_n</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Envi_de_correo_en_etapa_tramite</name>
@@ -74,6 +82,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>DSALES_Endoso__c.DSALES_Alerta_de_correo_de_cambio_de_estatus_de_el_Endoso_a_tramite</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <decisions>
@@ -192,4 +202,5 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <triggerOrder>600</triggerOrder>
 </Flow>

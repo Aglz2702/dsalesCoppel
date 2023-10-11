@@ -297,7 +297,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
                 
             }
         }
-        Account conductor =[SELECT Id,FirstName,LastName,Suffix,PersonMobilePhone,PersonEmail,CP_Gender__pc,PersonBirthdate,BillingStreet,BillingCity,BillingState,BillingPostalCode,dsalesNumeroInterior__c,dsalesNumeroExterior__c,CP_BillingStateCode__c,dsalesCodigoColonia__c FROM Account WHERE Id=:idConductor WITH SECURITY_ENFORCED LIMIT 1];
+        Account conductor =[SELECT Id,FirstName,LastName,Suffix,PersonMobilePhone,PersonEmail,CP_Gender__pc,PersonBirthdate,BillingStreet,BillingCity,BillingState,BillingPostalCode,dsalesNumeroInterior__c,dsalesNumeroExterior__c,CP_BillingStateCode__c,dsalesCodigoColonia__c,dsalesCodigoMunicipio__c FROM Account WHERE Id=:idConductor WITH SECURITY_ENFORCED LIMIT 1];
         Insurancepolicy poliza=[SELECT Id,SourceQuoteId FROM InsurancePolicy WHERE Id=:idPolizaConductor WITH SECURITY_ENFORCED LIMIT 1];
         Quote cotConductor =[SELECT Id,DSALES_RFC__c FROM Quote WHERE Id=:poliza.SourceQuoteId WITH SECURITY_ENFORCED LIMIT 1];
 		datosConductor.rfc=cotConductor.DSALES_RFC__c;
@@ -315,6 +315,7 @@ global with sharing class DSALES_IPAssetWrapperRequestActivo {
         datosConductor.numeroExterior =String.valueOf(conductor.dsalesNumeroExterior__c);
         datosConductor.codigoEstado =String.valueOf(conductor.CP_BillingStateCode__c); 
         datosConductor.codigoColonia  =String.valueOf(conductor.dsalesCodigoColonia__c); 
+        datosConductor.codigoMunicipio=conductor.dsalesCodigoMunicipio__c;
        
         return datosConductor;
     }

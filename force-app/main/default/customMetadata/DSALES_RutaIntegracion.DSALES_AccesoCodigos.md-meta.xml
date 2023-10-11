@@ -4,6 +4,6 @@
     <protected>false</protected>
     <values>
         <field>DSALES_Endpoint__c</field>
-        <value xsi:type="xsd:string">http://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/codigos</value>
+        <value xsi:type="xsd:string">https://coppel-tipos-servicios-api-impl.us-e2.cloudhub.io/api/codigos</value>
     </values>
 </CustomMetadata>

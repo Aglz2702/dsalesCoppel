@@ -23,9 +23,9 @@
                 <label>Actualización de teléfono</label>
             </value>
             <value>
-                <fullName>Cancelación de póliza</fullName>
+                <fullName>Cancelación de la póliza</fullName>
                 <default>false</default>
-                <label>Cancelación de póliza</label>
+                <label>Cancelación de la póliza</label>
             </value>
             <value>
                 <fullName>Corrección de nombre</fullName>
@@ -33,9 +33,9 @@
                 <label>Corrección de nombre</label>
             </value>
             <value>
-                <fullName>Cambio de dirección sin modificar el codigo postal</fullName>
+                <fullName>Cambio de dirección</fullName>
                 <default>false</default>
-                <label>Cambio de dirección (sin modificar el Código Postal)</label>
+                <label>Cambio de dirección</label>
             </value>
             <value>
                 <fullName>Cambio de placas</fullName>
@@ -58,46 +58,9 @@
                 <label>Beneficiario preferente</label>
             </value>
             <value>
-                <fullName>Actualización de color</fullName>
+                <fullName>Modificación de color</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Actualización de color</label>
-            </value>
-            <value>
-                <fullName>Cambio No. motor</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Cambio No. motor</label>
-            </value>
-            <value>
-                <fullName>Cambio No. serie</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Cambio No. serie</label>
-            </value>
-            <value>
-                <fullName>Cambio de dirección</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Cambio de dirección</label>
-            </value>
-            <value>
-                <fullName>Cambio de titular</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Cambio de titular</label>
-            </value>
-            <value>
-                <fullName>Corrección de RFC</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Corrección de RFC</label>
-            </value>
-            <value>
-                <fullName>Corrección de datos fiscales</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Corrección de datos fiscales</label>
+                <label>Modificación de color</label>
             </value>
         </valueSetDefinition>
     </valueSet>

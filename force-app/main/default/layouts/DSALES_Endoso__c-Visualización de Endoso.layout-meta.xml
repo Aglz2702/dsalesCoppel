@@ -41,7 +41,7 @@
                 <field>DSALES_Tipodeendoso__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>DSALES_Tipodedocumento__c</field>
             </layoutItems>
             <layoutItems>
@@ -203,7 +203,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h6w000000FP0I</masterLabel>
+        <masterLabel>00h75000000NBAl</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

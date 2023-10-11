@@ -1,6 +1,6 @@
 public with sharing class DSALES_QuotePagoSM {
     private static String rcGratis='RCEXC';
-    public static void cotizacionesNuevas(String idPago,List<String> partidasSeleccionadas,String skuMoto){
+    public static void cotizacionesNuevas(String idPago,List<String> partidasSeleccionadas,String skuMoto,Integer precioRedondeado){
         try {
             String idCotizacion='';
             List<String> listIdCotiza = new List<String>();
@@ -19,7 +19,8 @@ public with sharing class DSALES_QuotePagoSM {
                     listIdCotiza.add(idCotizacion);
                 }  
                 String idCotSin=crear2CotPartidas(beforeCot.Id,listIdCotiza,Integer.valueOf(pago.DSALES_Plazodecomprademoto__c), partidasSeleccionadas,skuMoto);
-                createCot(idCotSin );
+                //createCot(idCotSin );
+                createQuote(idCotSin,precioRedondeado);
                 
             }
             else{
@@ -32,19 +33,14 @@ public with sharing class DSALES_QuotePagoSM {
                             listIdCotiza.add(idCotizacion);
                         } 
                         String idCotSin=crear2CotPartidas(beforeCot.Id,listIdCotiza,Integer.valueOf(pago.DSALES_Plazodecomprademoto__c), partidasSeleccionadas,skuMoto);
-                        createCot( idCotSin );
+                        //createCot( idCotSin );
+                        createQuote(idCotSin,precioRedondeado );
                     }
-                    /*else if(producto.DSALES_Segurogratis__c==true && partidasSeleccionadas!=null && partidasSeleccionadas.size()==2){
-                        idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
-                        System.debug('se UNA cotizaciones creadas--------> '+ idCotizacion);
-                        crearPartidas(beforeCot.Id,idCotizacion,partidasSeleccionadas,skuMoto);
-                        createQuote(idCotizacion );
-                    }*/
                     else{
                         idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
                         System.debug('se UNA cotizaciones creadas-------> '+ idCotizacion);
                         crearPartidas(beforeCot.Id,idCotizacion,partidasSeleccionadas,skuMoto);
-                        createQuote(idCotizacion );
+                        createQuote(idCotizacion,precioRedondeado );
                     }
                 }
                 else{
@@ -52,7 +48,7 @@ public with sharing class DSALES_QuotePagoSM {
                     idCotizacion=crearCotizacion(beforeCot.Id,pago.Id);
                     System.debug('cotizaciones creadas-------> '+ idCotizacion);
                     crearPartidas(beforeCot.Id,idCotizacion,partidasSeleccionadas,skuMoto);
-                    createQuote(idCotizacion );
+                    createQuote(idCotizacion,precioRedondeado );
                     
                 } 
             }
@@ -89,16 +85,16 @@ public with sharing class DSALES_QuotePagoSM {
     }
     
     /******************************************   2   ***************************************/
-    public static void createCot(String idCotSin ){ 
+   /* public static void createCot(String idCotSin ){ 
         if(idCotSin!=null|| idCotSin!=''){
             sincronizarOportunidad(idCotSin);
         }
         
-    }
+    }*/
     /***********************************   3   ***************************************/
-    public static void createQuote(String idCotizacion ){
+    public static void createQuote(String idCotizacion,Integer precioRedondeado){
         if(idCotizacion!=null || idCotizacion!=''){
-            sincronizarOportunidad(idCotizacion);
+            sincronizarOportunidad(idCotizacion,precioRedondeado);
         } 
     }
     /****************************************************************************** */
@@ -263,7 +259,7 @@ public with sharing class DSALES_QuotePagoSM {
     
     public static list<QuoteLineItem> updateQuLnItm(List<QuoteLineItem> partidas, List<QuoteLineItem> listPartidas){
         List<QuoteLineItem> idNuevos = new List<QuoteLineItem>();
-        List<QuoteLineItem> partidasNuevas =[SELECT Id, UnitPrice,DSALES_Tipodeproducto__c,ListPrice,DSALES_Pagomensual__c,TotalPrice,DSALES_Impuestos__c,DSALES_Recargos__c,dsalesDerechosDePoliza__c,DSALES_Primaneta__c,dsalesGastosDeOperacionDelRecibo__c,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_NombreProducto__c FROM QuoteLineItem WHERE Id IN:listPartidas WITH SECURITY_ENFORCED];
+        List<QuoteLineItem> partidasNuevas =[SELECT Id, UnitPrice,DSALES_Tipodeproducto__c,ListPrice,DSALES_Pagomensual__c,TotalPrice,DSALES_Impuestos__c,DSALES_Recargos__c,dsalesDerechosDePoliza__c,DSALES_Primaneta__c,dsalesGastosDeOperacionDelRecibo__c,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_NombreProducto__c FROM QuoteLineItem WHERE Id IN:listPartidas];
         for(QuoteLineItem ql:partidasNuevas){
             for(QuoteLineItem q:partidas){
                 if(ql.DSALES_NombreProducto__c == q.DSALES_NombreProducto__c && ql.DSALES_Plazo__c == q.DSALES_Plazo__c){
@@ -304,47 +300,6 @@ public with sharing class DSALES_QuotePagoSM {
         String idCotSincronizar='';
         try{
             QuoteLineItem producto =lstQlItm(idCot, skuMoto);
-           /* if(producto!=null && producto.DSALES_Segurogratis__c==true){
-                seguroGratis= lstQlItms(partidasSeleccionadas);
-                seguro=[SELECT Id,dsalesOpcionPago__c,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Pagomensual__c,DSALES_Recargos__c,DSALES_SKU__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,DSALES_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
-                        dsalesGastosDeOperacionDelRecibo__c,DSALES_Impuestos__c,dsalesQuoteId__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE 
-                        QuoteId=:idCot AND DSALES_Segurogratis__c!=true AND DSALES_Plazo__r.Dsales_Plazo__c =:String.valueOf(plazo) AND Id!=:seguroGratis.Id WITH SECURITY_ENFORCED LIMIT 1];
-                
-                listPartidas.add(producto);
-                listPartidas.add(seguro); 
-                listPartidas.add(seguroGratis);
-                
-                listMotoRc.add(producto);
-                listMotoRc.add(seguroGratis);
-                
-                listaMotoSeguro.add(seguro);
-                listaMotoSeguro.add(producto);						
-                
-                List<QuoteLineItem> listaMotoSeguroToInsert = new List<QuoteLineItem>();
-                listaMotoSeguroToInsert= createQlItm (listCotNew, listPartidas, listaMotoSeguro);
-                
-                Quote cotizacionEnviar= updateEnviarCot(listaMotoSeguroToInsert);
-                listPartInsert= createQlItms(listCotNew,listPartidas,listMotoRc);
-                
-                try{
-                    if(Schema.sObjectType.QuoteLineItem.isCreateable()) {
-                        insert listaMotoSeguroToInsert;
-                        insert listPartInsert;
-                    }else{
-                        System.debug('Permisos insuficientes para insertar');
-                    }
-                    
-                    Quote cotizacion =updateCot(listCotNew);
-                }catch(Exception e ){
-            System.debug('Error al crear dos partidas de presupuesto--------->'+e.getLineNumber() + e.getMessage());
-        }
-                
-                List<QuoteLineItem> idNuevos = new List<QuoteLineItem>();
-                idNuevos= createCotItm(listMotoRc, listPartInsert);
-                update idNuevos;
-                System.debug('idCotizacion actu:'+listPartInsert[0].QuoteId);
-                idCotSincronizar= listPartInsert[0].QuoteId;
-            }  else*/ 
             if(producto!= null){ 
                 listSeguros=[SELECT Id,dsalesOpcionPago__c,dsalesPagoInicial__c,QuoteId,DSALES_TrackingID__c,DSALES_Descripcion__c,DSALES_Recargos__c,DSALES_NombreProducto__c,DSALES_Comision__c,DSALES_Segurogratis__c,Dsales_Plazo__c,PricebookEntryId,Product2Id,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,DSALES_Primaneta__c,dsalesDerechosDePoliza__c,
                              dsalesGastosDeOperacionDelRecibo__c,dsalesQuoteId__c,DSALES_Pagomensual__c,DSALES_Impuestos__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
@@ -553,7 +508,7 @@ public with sharing class DSALES_QuotePagoSM {
         List<QuoteLineItem> idNuevos = new List<QuoteLineItem>();
         List<QuoteLineItem> partidasNuevas =[SELECT Id,DSALES_Tipodeproducto__c,dsalesPagoInicial__c,DSALES_Impuestos__c,DSALES_Pagomensual__c,DSALES_Recargos__c,DSALES_Comision__c,
                                              dsalesDerechosDePoliza__c, UnitPrice,dsalesGastosDeOperacionDelRecibo__c,DSALES_Primaneta__c,DSALES_Plazo__c,DSALES_NombreProducto__c,DSALES_Segurogratis__c 
-                                             FROM QuoteLineItem WHERE Id IN:listPartInsert WITH SECURITY_ENFORCED];
+                                             FROM QuoteLineItem WHERE Id IN:listPartInsert];
         System.debug('nuevas:'+partidasNuevas.size());
         for(QuoteLineItem ql:partidasNuevas){
             for(QuoteLineItem q:listMotoRc){
@@ -688,16 +643,25 @@ public with sharing class DSALES_QuotePagoSM {
     }
     
     
-    public static void sincronizarOportunidad(String quoteId){
+    public static void sincronizarOportunidad(String quoteId,Integer precioRedondeado){
         try{
             System.debug('sincronza la cotización con oportunidad');
             Quote cotizacion = [SELECT Id,OpportunityId,DSALES_Enviarcotizacion__c FROM Quote WHERE Id= :quoteId WITH SECURITY_ENFORCED LIMIT 1];
-            System.debug('cotización sin:'+cotizacion);
             Opportunity opp = [SELECT Id, StageName,SyncedQuoteId FROM opportunity WHERE Id=:cotizacion.OpportunityId WITH SECURITY_ENFORCED LIMIT 1];
-            System.debug('oportunidad sin:'+opp);
+            List<QuoteLineItem> partidas =[SELECT LineNumber,UnitPrice,dsalesPrecionoredondeado__c FROM QuoteLineItem WHERE QuoteId =:cotizacion.Id AND DSALES_Tipodeproducto__c='Seguro' WITH SECURITY_ENFORCED]; 
+            if(partidas!=null && partidas.size()>0){
+                for(QuoteLineItem ql:partidas){
+                    ql.dsalesPrecionoredondeado__c=ql.UnitPrice;
+                    ql.UnitPrice=precioRedondeado;
+                }
+                if(QuoteLineItem.SObjectType.getDescribe().isUpdateable()) {
+                    update partidas;   
+                }else{
+                    System.debug('Permisos insuficientes para actualizar');   
+                } 
+            }
             opp.StageName='Cerrada ganada';
             opp.SyncedQuoteId=cotizacion.Id;
-            System.debug('Cotización a sincronizar: '+ cotizacion.Id);
             if(Opportunity.SObjectType.getDescribe().isUpdateable()) {
                 update opp;   
             }else{

@@ -5,7 +5,7 @@
         <name>Tipo_de_endoso</name>
         <label>Tipo de endoso</label>
         <locationX>314</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <defaultConnectorLabel>Resultado predeterminado</defaultConnectorLabel>
         <rules>
             <name>Endoso_cancelacion</name>
@@ -65,7 +65,7 @@
         <name>Actualizar_poliza_cancelada</name>
         <label>Actualizar póliza a cancelada</label>
         <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <inputAssignments>
             <field>ChangeSubtype</field>
             <value>
@@ -84,7 +84,7 @@
         <name>Actualizar_poliza_endosada</name>
         <label>Actualizar póliza a endosada</label>
         <locationX>314</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <inputAssignments>
             <field>ChangeSubtype</field>
             <value>

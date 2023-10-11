@@ -293,7 +293,7 @@ public with sharing class DSALES_QuotePagoSmTest {
         pago2.DSALES_Nombre_del_Vendedor__c='Cristian';
         //pago2.DSales_Tienda__c=t.Id;
         insert pago2;
-        DSALES_QuotePagoSM.cotizacionesNuevas(pago2.Id, idsPartidas, moto.DSALES_SKU__c);
+        DSALES_QuotePagoSM.cotizacionesNuevas(pago2.Id, idsPartidas, moto.DSALES_SKU__c,123);
         Test.stopTest();
         System.assertEquals(true, pago2.DSALES_Seguro__c, 'El valor del seguro es cierto');
         
@@ -323,7 +323,7 @@ public with sharing class DSALES_QuotePagoSmTest {
         //pago.DSales_Tienda__c=t.Id;
         insert pago;
         System.debug('*********SEGURO GRATIS*****************');
-        DSALES_QuotePagoSM.cotizacionesNuevas(pago.Id, idsPartidas,moto.DSALES_SKU__c);
+        DSALES_QuotePagoSM.cotizacionesNuevas(pago.Id, idsPartidas,moto.DSALES_SKU__c, 123);
         Test.stopTest();
         System.assertEquals(true, pago.DSALES_Seguro__c, 'El valor del seguro es cierto');
         
@@ -346,7 +346,7 @@ public with sharing class DSALES_QuotePagoSmTest {
         //pago3.DSales_Tienda__c=t.Id;
         insert pago3;
         System.debug('********* SOLO MOTO*****************');
-        DSALES_QuotePagoSM.cotizacionesNuevas(pago3.Id, null,moto.DSALES_SKU__c);
+        DSALES_QuotePagoSM.cotizacionesNuevas(pago3.Id, null,moto.DSALES_SKU__c, 123);
         Test.stopTest();
         System.assertEquals(false, pago3.DSALES_Seguro__c, 'El valor del seguro no es cierto');
         
@@ -376,7 +376,7 @@ public with sharing class DSALES_QuotePagoSmTest {
     static void testCreateQlItms() {
         Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test1'  LIMIT 1];
         List<QuoteLineItem> listMotoRc =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c,PricebookEntryId, UnitPrice,Quantity FROM QuoteLineItem WHERE quoteId=:cotizacion.Id LIMIT 1];
-        List<QuoteLineItem> listPartidas =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c FROM QuoteLineItem WHERE DSALES_Segurogratis__c!=true AND QuoteId=:cotizacion.Id AND DSALES_Plazo__r.Dsales_Plazo__c='18' WITH SECURITY_ENFORCED LIMIT 1];
+        List<QuoteLineItem> listPartidas =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c FROM QuoteLineItem WHERE DSALES_Segurogratis__c!=true AND QuoteId=:cotizacion.Id AND DSALES_Plazo__r.Dsales_Plazo__c='18' LIMIT 1];
         List<Plazo__c> plazos =[SELECT Id,Dsales_Plazo__c FROM Plazo__c  WHERE Dsales_Plazo__c='18' WITH SECURITY_ENFORCED LIMIT 1];
         List<PricebookEntry> pricebookEntries=[SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Name='PLUS' LIMIT 1]; 
         List<String> idsPartidas = new List<String>();
@@ -401,5 +401,17 @@ public with sharing class DSALES_QuotePagoSmTest {
         List<QuoteLineItem> result1= DSALES_QuotePagoSM.updateQuLnItm(listMotoRc, listPartInsert);
         Test.stopTest();
         System.assertEquals(1, result.size(), 'El tamaño del resultado es 1.');
-    } 
+    }
+    
+    @isTest
+	static void testCreateQlItmssss() {
+        Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test1'  LIMIT 1];
+        List<String> listCotNew = new List<String>{cotizacion.Id};
+        List<QuoteLineItem> listPartidas = new List<QuoteLineItem>();
+        List<QuoteLineItem> listaMotoSeguro = new List<QuoteLineItem>();
+
+        List<QuoteLineItem> result = DSALES_QuotePagoSM.createQlItm(listCotNew, listPartidas, listaMotoSeguro);
+        System.assertEquals(0, result.size()); 
+        System.assert(true, 'Test completed successfully.');
+    }
 }

@@ -1,6 +1,7 @@
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global class DSALES_VentaSM {
 	global class VentaSMRequest{
+		global String servico{get;set;}
 		global String idCotizacion{get;set;}
 		global List<String> idPartidaPresupuesto{get;set;}
 		global DSALES_PaymentInfoWrapper.PaymentRequest pagos {get;set;}
@@ -26,11 +27,14 @@ global class DSALES_VentaSM {
 		global String rfc { get; set; }
 		global Integer codigoPostal { get; set; }
 		global String codigoEstado { get; set; }
+        global String codigoMunicipio{get;set;}
 		global String codigoCiudad { get; set; }
 		global String codigoColonia { get; set; }
 		global String calle { get; set; }
 		global String numeroExterior { get; set; }
-		global String numeroInterior { get; set; } 
+		global String numeroInterior { get; set; }
+		global Integer regimenFiscal{get;set;}
+		global String nacionalidad {get;set;}
 	}
 	global class ListaPartidasOportunidad{
 		global String idPartidaOportunidad { get; set; }
@@ -46,16 +50,12 @@ global class DSALES_VentaSM {
 		global String idClienteSalesforce {get;set;}
 		global List<ListaPartidasOportunidad> listaPartidasOportunidad { get; set; }
 		global DatosParaEmitir datosParaEmitir { get; set; } 
-		
 	}
-
 	global class IdsARetornar{
 		global List<DSALES_VentaSM.ListaPartidasOportunidad> listaPartidas {get;set;}
 		global String idActivo {get;set;}
 	}
-
-
-	/////////////////////////////////////////////////
+	/******************************************/
 	global class DatosParaEmitir {
 		global DatosSeguro datosSeguro { get; set; } 
 		global DatosVehiculo datosVehiculo { get; set; } 
@@ -63,8 +63,14 @@ global class DSALES_VentaSM {
 		global String contratante {get;set;}
 		global DatosContratante datosContratante {get;set;}
 		global DatosConductor datosConductor {get;set;}
+		global DatosCelular datosCelular {get;set;}
+		global Decimal sucursal{get;set;}
+		global String identificadorVendedor{get;set;}
 	}
 	global class DatosContratante {
+		global String nombre{get;set;}
+		global String apellidoPaterno{get;set;}
+		global String apellidoMaterno{get;set;}
 		global String telefono { get; set; }
 		global String correoElectronico { get; set; }
 		global String segundoCorreoContratante {get;set;}
@@ -81,10 +87,13 @@ global class DSALES_VentaSM {
 		global Integer codigoPostal { get; set; }
 		global String codigoEstado { get; set; }
 		global String codigoCiudad { get; set; }
+		global String codigoMunicipio{get;set;}
 		global String codigoColonia { get; set; }
 		global String calle { get; set; }
 		global String numeroExterior { get; set; }
 		global String numeroInterior { get; set; } 
+		global Integer regimenFiscal{get;set;}
+		global String nacionalidad {get;set;}
 	}
 	global class DatosConductor {
 		global String nombre { get; set; }
@@ -97,6 +106,7 @@ global class DSALES_VentaSM {
 		global String rfc { get; set; }
 		global Integer codigoPostal { get; set; }
 		global String codigoEstado { get; set; }
+		global String codigoMunicipio{get;set;}
 		global String codigoCiudad { get; set; }
 		global String codigoColonia { get; set; }
 		global String calle { get; set; }
@@ -118,9 +128,9 @@ global class DSALES_VentaSM {
 		global Date fechaInicio { get; set; }
 		global Integer sumaAsegurada {get;set;}
 		global String valorfactura{get;set;}
-	   
+		//celular datos extras
+		global Double montoSeguro{get;set;}
 	   }
-	  
 	global class DatosVehiculo {
 		global string idVehiculo { get; set; }
 		global string sevicio { get; set; }
@@ -130,5 +140,12 @@ global class DSALES_VentaSM {
 		global string tipo { get; set; }
 		global string modelo { get; set; }  
 	}
-	  
+	global class DatosCelular{
+		global String imei{get;set;}
+		global String numeroSerie{get;set;}
+		global String marcacelular{get;set;}
+		global String modeloCelular {get;set;}
+		global Integer numeroCredito{get;set;}
+		global Integer plazoCredito{get;set;}
+	}
 }

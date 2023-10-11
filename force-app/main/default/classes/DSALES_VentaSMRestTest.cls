@@ -84,7 +84,7 @@ public with sharing class DSALES_VentaSMRestTest {
         acc.PersonEmail='saymartinez@deloittemx.com';
         acc.CP_WalletCustomerNumber__c=45654;
         acc.BillingPostalCode='123';
-        acc.BillingPostalCode='123';
+        acc.CP_BillingStateCode__c='123';
         insert acc;
         Account coppel = new Account();
         coppel.RecordTypeId=recordTypeAccountId;
@@ -92,18 +92,49 @@ public with sharing class DSALES_VentaSMRestTest {
         coppel.LastName='SA';
         coppel.Suffix='DE CV';
         coppel.BillingPostalCode='123';
-        coppel.dsalesNumeroExterior__c=12;
+        coppel.dsalesNumeroExterior__c='12';
         coppel.CP_BillingStateCode__c='12';
         insert coppel;
         Opportunity opp = new Opportunity(Name='TestOpportunity', AccountId=acc.Id, CloseDate=Date.Today(), StageName='Nuevo', Pricebook2Id=customPB.Id,RecordTypeId=recordTypeId);
         insert opp;
         
+        OpportunityLineItem oppItem = new OpportunityLineItem();
+        oppItem.Product2Id = prodRc.Id;
+        oppItem.OpportunityId = opp.Id;
+        oppItem.Quantity =1;
+        oppItem.TotalPrice = 12000;
+        insert oppItem;
+        
+        OpportunityLineItem oppItem1 = new OpportunityLineItem();
+        oppItem1.Product2Id = prodAmp.Id;
+        oppItem1.OpportunityId = opp.Id;
+        oppItem1.Quantity = 1;
+        oppItem1.TotalPrice = 1000;
+        insert oppItem1;
+
+        InsurancePolicy ip = new InsurancePolicy(Name='Nelson',NameInsuredId=acc.id,DSALES_CorreoElectronico__c='xnelsonvsx@hotmail.com', SourceOpportunityId=opp.Id);
+        insert ip;
+        
         Tienda__c t = new Tienda__c();
         t.DSales_TiendaID__c =  '1';
         insert t;
+        DSALES_InformacionDePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=opp.id,DSALES_Cliente__c=acc.Id,DSALES_Clave_Tienda__c='1',DSALES_Seguro__c=true,DSALES_IDUniversal1__c='2023031400015666634', DSALES_Poliza__c= ip.Id);
+        insert pago;
+        
+        DSALES_InformacionDePago__c pago1 = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=opp.id,DSALES_Cliente__c=acc.Id,DSALES_Clave_Tienda__c='1',DSALES_Seguro__c=true,DSALES_IDUniversal1__c='000000222222211115', DSALES_Poliza__c= ip.Id);
+        insert pago1;
         
         Quote cotizacion = new Quote(RecordTypeId=quoteRecordType,OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
         insert cotizacion;
+        
+        InsurancePolicy pol = new InsurancePolicy(
+           Name='Sayra test',
+           NameInsuredId=acc.id,
+           DSALES_CorreoElectronico__c='xnelsonvsx@hotmail.com',
+           SourceOpportunityId=opp.Id,
+           SourceQuoteId=cotizacion.Id
+        );
+        insert pol;
         
         DSALES_TipodeUso__c tipoUso = new DSALES_TipodeUso__c(Name='Comercial');
         insert tipoUso;
@@ -151,24 +182,78 @@ public with sharing class DSALES_VentaSMRestTest {
     }
     
     
-     @isTest
+    @isTest
     public static void ventaExternaTest(){
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
         Product2 producto =[SELECT Id FROM Product2 WHERE Name='PLUS' LIMIT 1];
+        Insurancepolicy poliza =[SELECT Id,dsalesEstatusPoliza__c, SourceQuoteId FROM Insurancepolicy WHERE Name='Sayra test' LIMIT 1];
         Plazo__c plazo=[SELECT Id FROM Plazo__c WHERE Name='12' LIMIT 1];
-        Quote cot =[SELECT Id,OpportunityId,Opportunity.Name FROM Quote WHERE Name ='test' LIMIT 1];
-        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  DSALES_Plazo__c=:plazo.Id LIMIT 1];
+        Quote cot =[SELECT Id,OpportunityId,Opportunity.Name FROM Quote WHERE Id=: poliza.SourceQuoteId LIMIT 1];
+        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  QuoteId=: cot.Id AND DSALES_Tipodeproducto__c='Seguro' LIMIT 1];
 		String idPartida=partida.Id;
         System.debug('TEST COTIZACION:'+cot);
         System.debug('TEST SEGURO:'+partida);
-        String body='{"idCotizacion":"'+cot.Id+'","idPartidaPresupuesto":["'+partida.Id+'"],"pagos":{"idUniversal":"000000222222211116","tipoFolio":"01","folioTransaccion":"014564","totalFactura":20000,"Seguro":true,"nombreVendedor":"Nelson Varela","numeroCaja":"1","claveTienda":"1","sku":"","fechaEntrega":null,"fechaVenta":"2023-05-22","plazos":null,"ListaDePagos":[{"metodoPago":"Efectivo","pago":18000}]},"beneficiarioPreferente":true,"contratante":"false","envioContratante":false,"datosParticipantes":[{"figura":"Conductor","numeroCliente":"45654","nombre":"Sayra","apellidoPaterno":"Martinez","apellidoMaterno":"Quiroz","telefono":"123456789","relacionConParticipante":"","porcentaje":"0","correoElectronico":"saymartinez@deloittemx.com","genero":"Femenino","fechaNacimiento":"1997-09-30","rfc":"SASF870922","codigoPostal":56644,"codigoEstado":"15","codigoCiudad":"025","codigoColonia":"4468","calle":"EJEMPLO DIG-2028","numeroExterior":"2028","numeroInterior":"124"},{"figura":"Beneficiario","numeroCliente":"","nombre":"Maria","apellidoPaterno":"Gonzalez","apellidoMaterno":"Rojas","telefono":"123456789","relacionConParticipante":"Hijo","porcentaje":"50","correoElectronico":"saymartinez@deloittemx.com","genero":"Femenino","fechaNacimiento":"1997-09-30","rfc":"SASF870922","codigoPostal":56644,"codigoEstado":"15","codigoCiudad":"025","codigoColonia":"4468","calle":"EJEMPLO DIG-2028","numeroExterior":"2028","numeroInterior":"124"},{"figura":"Beneficiario","numeroCliente":"","nombre":"Maria","apellidoPaterno":"Gonzalez","apellidoMaterno":"Rojas","telefono":"123456789","relacionConParticipante":"Madre","porcentaje":"10","correoElectronico":"saymartinez@deloittemx.com","genero":"Femenino","fechaNacimiento":"1997-09-30","rfc":"SASF870922","codigoPostal":56644,"codigoEstado":"15","codigoCiudad":"025","codigoColonia":"4468","calle":"EJEMPLO DIG-2028","numeroExterior":"2028","numeroInterior":"124"}],"activo":{"emitirPoliza":true,"uso":"Personal","claveTienda":"1","servicio":"Particular","numeroSerie":"8765432","numeroMotor":"865432","modelo":"4","placas":"37687","claveVehicular":"765432","valorFactura":1000,"bajoDemanda":true,"descripcion":"moto","marca":"vento","nombreActivo":"moto vento"}}';
+        String body='{"idCotizacion":"'+cot.Id+'","idPartidaPresupuesto":["'+partida.Id+'"],"pagos":{"idUniversal":"000000222222211116","tipoFolio":"01","folioTransaccion":"014564","totalFactura":20000,"Seguro":true,"nombreVendedor":"Nelson Varela","numeroCaja":"1","claveTienda":"1","sku":"","fechaEntrega":null,"fechaVenta":"2023-05-22","plazos":"12","ListaDePagos":[{"metodoPago":"Efectivo","pago":18000}]},"beneficiarioPreferente":true,"contratante":"true","envioContratante":true,"datosParticipantes":[{"figura":"Conductor","numeroCliente":"45654","nombre":"Sayra","apellidoPaterno":"Martinez","apellidoMaterno":"Quiroz","telefono":"123456789","relacionConParticipante":"","porcentaje":"0","correoElectronico":"saymartinez@deloittemx.com","genero":"Femenino","fechaNacimiento":"1997-09-30","rfc":"SASF870922","codigoPostal":56644,"codigoEstado":"15","codigoCiudad":"025","codigoColonia":"4468","calle":"EJEMPLO DIG-2028","numeroExterior":"2028","numeroInterior":"124"},{"figura":"Beneficiario","numeroCliente":"","nombre":"Maria","apellidoPaterno":"Gonzalez","apellidoMaterno":"Rojas","telefono":"123456789","relacionConParticipante":"Hijo","porcentaje":"50","correoElectronico":"saymartinez@deloittemx.com","genero":"Femenino","fechaNacimiento":"1997-09-30","rfc":"SASF870922","codigoPostal":56644,"codigoEstado":"15","codigoCiudad":"025","codigoColonia":"4468","calle":"EJEMPLO DIG-2028","numeroExterior":"2028","numeroInterior":"124"},{"figura":"Beneficiario","numeroCliente":"","nombre":"Maria","apellidoPaterno":"Gonzalez","apellidoMaterno":"Rojas","telefono":"123456789","relacionConParticipante":"Madre","porcentaje":"10","correoElectronico":"saymartinez@deloittemx.com","genero":"Femenino","fechaNacimiento":"1997-09-30","rfc":"SASF870922","codigoPostal":56644,"codigoEstado":"15","codigoCiudad":"025","codigoColonia":"4468","calle":"EJEMPLO DIG-2028","numeroExterior":"2028","numeroInterior":"124"}],"activo":{"emitirPoliza":true,"uso":"Personal","claveTienda":"1","servicio":"Particular","numeroSerie":"8765432","numeroMotor":"865432","modelo":"4","placas":"37687","claveVehicular":"765432","valorFactura":1000,"bajoDemanda":true,"descripcion":"moto","marca":"vento","nombreActivo":"moto vento"}}';
+        request.requestURI='/apexrest/ventaSM'; 
+        request.httpMethod='POST'; 
+        RestContext.request=request;
+        request.requestBody=Blob.valueOf(body);
+        RestContext.response=response;
+        Boolean envioContratante =false;
+        DSALES_VentaSM.DatosContratante participante = new DSALES_VentaSM.DatosContratante();
+        DSALES_VentaSM.VentaSMRequest venta =(DSALES_VentaSM.VentaSMRequest)JSON.deserialize (body,DSALES_VentaSM.VentaSMRequest.class);
+        Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
+        DSALES_VentaSMRest.crearVenta();
+        DSALES_VentaSM.DatosContratante datoContr = DSALES_VentaSMRest.validarContratante(envioContratante, participante);
+        DSALES_VentaSM.DatosParaEmitir datoEmitir = DSALES_VentaSMRest.datosParaEmitir( venta,poliza.Id);
+        Test.stopTest();
+        RestContext.request = request;
+        RestContext.response= response;
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
+    }
+    
+     @isTest
+    public static void ventaExtTest(){
+        RestRequest request=new RestRequest();
+        RestResponse response = new RestResponse();
+        Product2 producto =[SELECT Id FROM Product2 WHERE Name='PLUS' LIMIT 1];
+        Insurancepolicy poliza =[SELECT Id,dsalesEstatusPoliza__c, SourceQuoteId FROM Insurancepolicy WHERE Name='Nelson' LIMIT 1];
+        Plazo__c plazo=[SELECT Id FROM Plazo__c WHERE Name='12' LIMIT 1];
+        Quote cot =[SELECT Id,OpportunityId,Opportunity.Name FROM Quote WHERE Name ='test' LIMIT 1];
+        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  QuoteId=: cot.Id AND DSALES_Tipodeproducto__c='Seguro'LIMIT 1];
+
+		String idPartida=partida.Id;
+        System.debug('TEST COTIZACION:'+cot);
+        System.debug('TEST SEGURO:'+partida);
+        String body='{"idCotizacion":"'+cot.Id+'","idPartidaPresupuesto":["'+partida.Id+'"],"pagos":{"idUniversal":"000000222222211115","tipoFolio":"01","folioTransaccion":"014564","totalFactura":20000,"Seguro":true,"nombreVendedor":"Nelson Varela","numeroCaja":"1","claveTienda":"1","sku":"","fechaEntrega":null,"fechaVenta":"2023-05-22","plazos":null,"ListaDePagos":[{"metodoPago":"Efectivo","pago":18000}]},"beneficiarioPreferente":true,"contratante":"true","envioContratante":true,"datosParticipantes":[{"figura":"Conductor","numeroCliente":"45654","nombre":"Sayra","apellidoPaterno":"Martinez","apellidoMaterno":"Quiroz","telefono":"123456789","relacionConParticipante":"","porcentaje":"0","correoElectronico":"saymartinez@deloittemx.com","genero":"Femenino","fechaNacimiento":"1997-09-30","rfc":"SASF870922","codigoPostal":56644,"codigoEstado":"15","codigoCiudad":"025","codigoColonia":"4468","calle":"EJEMPLO DIG-2028","numeroExterior":"2028","numeroInterior":"124"},{"figura":"Beneficiario","numeroCliente":"","nombre":"Maria","apellidoPaterno":"Gonzalez","apellidoMaterno":"Rojas","telefono":"123456789","relacionConParticipante":"Hijo","porcentaje":"50","correoElectronico":"saymartinez@deloittemx.com","genero":"Femenino","fechaNacimiento":"1997-09-30","rfc":"SASF870922","codigoPostal":56644,"codigoEstado":"15","codigoCiudad":"025","codigoColonia":"4468","calle":"EJEMPLO DIG-2028","numeroExterior":"2028","numeroInterior":"124"},{"figura":"Beneficiario","numeroCliente":"","nombre":"Maria","apellidoPaterno":"Gonzalez","apellidoMaterno":"Rojas","telefono":"123456789","relacionConParticipante":"Madre","porcentaje":"10","correoElectronico":"saymartinez@deloittemx.com","genero":"Femenino","fechaNacimiento":"1997-09-30","rfc":"SASF870922","codigoPostal":56644,"codigoEstado":"15","codigoCiudad":"025","codigoColonia":"4468","calle":"EJEMPLO DIG-2028","numeroExterior":"2028","numeroInterior":"124"}],"activo":{"emitirPoliza":true,"uso":"Personal","claveTienda":"1","servicio":"Particular","numeroSerie":"8765432","numeroMotor":"865432","modelo":"4","placas":"37687","claveVehicular":"765432","valorFactura":1000,"bajoDemanda":true,"descripcion":"moto","marca":"vento","nombreActivo":"moto vento"}}';
         request.requestURI='/apexrest/ventaSM'; 
         request.httpMethod='POST'; 
         RestContext.request=request;
         request.requestBody=Blob.valueOf(body);
         RestContext.response=response;
         DSALES_VentaSM.VentaSMRequest venta =(DSALES_VentaSM.VentaSMRequest)JSON.deserialize (body,DSALES_VentaSM.VentaSMRequest.class);
+        Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
+        DSALES_VentaSMRest.crearVenta();
+        Test.stopTest();
+        RestContext.request = request;
+        RestContext.response= response;
+        System.assertNotEquals(200, response.statusCode, 'La llamada no debe devolver un código 200');
+    }
+    
+    @isTest
+    static void ventaErrorTest(){
+        RestRequest request=new RestRequest();
+        RestResponse response = new RestResponse();
+        String body='invalid body';
+        request.requestURI='/apexrest/ventaSM'; 
+        request.httpMethod='POST'; 
+        RestContext.request=request;
+        request.requestBody=Blob.valueOf(body);
+        RestContext.response=response;
+       // DSALES_VentaSM.VentaSMRequest venta =(DSALES_VentaSM.VentaSMRequest)JSON.deserialize (body,DSALES_VentaSM.VentaSMRequest.class);
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new DSALES_MockHttpResponsePolizaTest());
         DSALES_VentaSMRest.crearVenta();

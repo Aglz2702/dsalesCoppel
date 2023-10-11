@@ -13,22 +13,23 @@ global class DSALES_PaymentInfoWrapper {
     global class PaymentRequest{
         global String idUniversal { get; set; }
         global String tipoFolio { get; set; }
-        global String folioTransaccion { get; set; }
+        global String folioTransaccion { get; set; } //noTicket
         global Integer totalFactura { get; set; }
+        global Integer precioRedondeado { get; set; }
         global Boolean seguro { get; set; }
         global String nombreVendedor { get; set; }
         global String numeroCaja { get; set; }
         global String idOportunidad { get; set; }
         global String claveTienda { get; set; }
         global Date fechaEntrega { get; set; }
-        global Date fechaVenta { get; set; }
+        global Date fechaVenta { get; set; } //fechaPago
         global String sku { get; set; }
-        global Integer plazos { get; set; }
+        global Integer plazos { get; set; } //plazoCredito
         global List<ListaDePago> listaDePagos { get; set; }
     }
     global class ListaDePago{
-        global String metodoPago { get; set; }
-        global Integer pago { get; set; }
+        global String metodoPago { get; set; } //medioCobro
+        global Integer pago { get; set; } //montoSeguro
     }
     global class PaymentResponse{
         global String mensajeError {get;set;}
