@@ -1,4 +1,4 @@
-//@RestResource(urlMapping='/ventaSC/*')
+
 @SuppressWarnings('PMD.AvoidGlobalModifier')
 global with sharing class DSALES_VentaSCRest {
     global static DSALES_VentaSM.VentaSMResponse crearVenta(DSALES_VentaSM.VentaSMRequest venta) {
@@ -45,28 +45,15 @@ global with sharing class DSALES_VentaSCRest {
             sincronizarOportunidad(cotizacionASincronizar.Id, oportunidad);
             polizaId=DSALES_VentaSMRestAux.crearPrePoliza(pago,venta.datosParticipantes,datosPrepoliza);
             idActivo= DSALES_VentaSMRestAux.crearActivo(pago,venta.activo,polizaId);
-            //listaPartidas=DSALES_VentaSMRestAux.obtenerPartidas(oportunidad.Id);   
             if(String.isNotEmpty(idActivo)){
                 recived=DSALES_VentaSMRest.datosParaEmitir(venta, polizaId);
-                System.debug('Datos para emitir recived_____:'+recived);
-                //datosSeguro=recived.datosSeguro;
-                //vehiculo=recived.datosVehiculo;
                 datosEmitir=recived;
             }  
         }
-        System.debug('Datos para emitir datosPara Emitir:'+datosEmitir);
         ventaSC.idClienteSalesforce=idCliente;
         ventaSC.datosParaEmitir=datosEmitir;
         return ventaSC;
     }
-    /*public static Boolean validarIdUniversal(String idUniversal){
-        Boolean existe=false;
-        List<DSALES_InformacionDePago__c> verificaIdUniversal =[SELECT Id,DSALES_IDUniversal1__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c =: idUniversal WITH SECURITY_ENFORCED LIMIT 1];
-        if(verificaIdUniversal!=null && verificaIdUniversal.size()>0){
-            existe=true;
-        }
-        return existe;
-    }*/
     public static Boolean relacionarClienteAOportunidad(Quote cotizacion, String accountId){
         Opportunity oportunidad = new Opportunity();
         oportunidad.AccountId = accountId;
@@ -177,59 +164,5 @@ global with sharing class DSALES_VentaSCRest {
             System.debug('Permisos insuficientes para actualizar');   
         } 
         return  oliLista;
-    }
-    public static Insurancepolicy consultarPoliza(String idOportunidad, String idCot){
-
-        Insurancepolicy poliza =[SELECT Id, Name,SourceQuoteId FROM Insurancepolicy WHERE SourceOpportunityId=:idOportunidad AND SourceQuoteId=:idCot  WITH SECURITY_ENFORCED LIMIT 1];
-        if(poliza.Name!=DSALES_Utility.SEGURO_PREDETERMINADO){
-               return poliza;
-        }
-        else{
-            return null;
-        }
-    }
-    public static List<InsurancePolicyAsset> consultarActivo(String idPoliza){
-        List<InsurancePolicyAsset> activo =[SELECT Id, Name FROM InsurancePolicyAsset WHERE InsurancePolicyId=:idPoliza  WITH SECURITY_ENFORCED];
-        if(activo!=null){
-            return activo;
-        }
-        else{
-            return null;
-        }
-    }
-    public static Boolean eliminarRegistros(Opportunity oportunidad,IdsBorrar datos){
-        Boolean borrar=false;
-        List<OpportunityLineItem> oliLista = obtenerPartidasSincronizadas(oportunidad);
-        DSALES_InformacionDePago__c pagoAEliminar= consultaPago('',oportunidad.Id);
-        if(pagoAEliminar.DSALES_Poliza__c!=null && pagoAEliminar.DSALES_Poliza__r.Name!=DSALES_Utility.SEGURO_PREDETERMINADO){
-            Insurancepolicy poliza =consultarPoliza(oportunidad.Id,datos.idCotSincro);
-            if(poliza.dsalesActivoPolizaSeguro__c!=null){
-                List<InsurancePolicyAsset> activo = consultarActivo(poliza.Id);
-                if(activo!=null){
-                    delete activo;
-                }
-            }
-            if(poliza!=null){
-                delete poliza;
-            }
-        }
-        List<Quote> cotizaciones=consultarCotizacionAEliminar( oportunidad.Id,datos.idCotPrincipal);
-        if(oliLista!=null){
-          delete oliLista;
-          borrar=true;
-        }
-        if(pagoAEliminar!=null){
-            delete pagoAEliminar;
-        }
-        if(cotizaciones!=null){
-          delete cotizaciones;
-          borrar=true;
-        }
-        return borrar;
-    }
-
-    public class IdsBorrar{
-        public String idCotPrincipal{get;set;}
-        public String idCotSincro{get;set;}
     }
 }

@@ -49,5 +49,6 @@ global  with sharing class DSALES_VentaSC {
 		global String idClienteSalesforce {get;set;}
 		global List<DSALES_VentaSM.ListaPartidasOportunidad> listaPartidasOportunidad { get; set; }
 		global DSALES_VentaSM.DatosParaEmitir datosParaEmitir { get; set; } 
+		
 	}
 }
