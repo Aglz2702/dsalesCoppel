@@ -21,20 +21,26 @@ global with sharing class DSALES_QuoteSmWrapperRequest {
         DSALES_ListaNegraWrapper.responseListaNegra respuestaListaNegra = new DSALES_ListaNegraWrapper.responseListaNegra();
         Boolean listaNegra = false;
         Product2 temporal = new Product2();
+        Product2 temporal = new Product2();
         Integer errorCode;
         Boolean succes = true;
         String idTienda;
+        List<DSALES_QuoteSmWrapper.Campanias> listaCampanas= new List<DSALES_QuoteSmWrapper.Campanias> ();
         List<DSALES_QuoteSmWrapper.Campanias> listaCampanas= new List<DSALES_QuoteSmWrapper.Campanias> ();
         if(RestContext.request != null){
             String body = System.RestContext.request.requestBody.toString();
             if(String.isNotBlank(body)){
                 try{
                     
+                    
                     data = (DSALES_QuoteSmWrapper.QuoteSmRequest)JSON.deserialize(body, DSALES_QuoteSmWrapper.QuoteSmRequest.class);
+                    System.debug('Datos Recibidos:___'+body);
                     System.debug('Datos Recibidos:___'+body);
                     String nombreCompleto=data.nombre;
                     if(data.apellidoMaterno!=null){
                         nombreCompleto += ' ' +data.apellidoMaterno;  
+                    }
+                    nombreCompleto += ' ' +data.apellidoPaterno; 
                     }
                     nombreCompleto += ' ' +data.apellidoPaterno; 
                     String rfc = data.rfc;
@@ -43,9 +49,15 @@ if(respuestaListaNegra.estatus !=true){
 listaNegra = true;
 message = 'Esta en la Lista negra';
 } */          
+if(respuestaListaNegra.estatus !=true){
+listaNegra = true;
+message = 'Esta en la Lista negra';
+} */          
                     DSALES_QuoteSmWrapper.QuotePostProvedor datosEnviar = new DSALES_QuoteSmWrapper.QuotePostProvedor();
                     String idProducto;
                     if(data.sku!=''){
+                        temporal = consultaProductoMoto(data.sku);
+                        //[SELECT Id,dsalesVehiculo__c, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c,DSales_Tipo_de_Producto__c FROM Product2 WHERE StockKeepingUnit=:data.sku WITH SECURITY_ENFORCED LIMIT 1];
                         temporal = consultaProductoMoto(data.sku);
                         //[SELECT Id,dsalesVehiculo__c, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c,DSales_Tipo_de_Producto__c FROM Product2 WHERE StockKeepingUnit=:data.sku WITH SECURITY_ENFORCED LIMIT 1];
                         data.idVehiculo=temporal.dsalesVehiculo__c;
@@ -75,6 +87,7 @@ message = 'Esta en la Lista negra';
                     datosEnviar.opcionPago=data.opcionPago;  //opcion de pago enviado a inter?
                     datosEnviar.precioProducto=data.precioProducto;
                     
+                    
                     Date aux = Date.today();
                     Datetime auxDatetime = DateTime.newInstance(aux.year(), aux.month(), aux.day());
                     String formattedDate = auxDatetime.format('yyyy-MM-dd');
@@ -85,6 +98,10 @@ message = 'Esta en la Lista negra';
                         datosEnviar.listaPlazos = plazosActivosExterna(data.plazoCotizar,idTienda, data.opcionPago); //moficar op pago
                     }
                     else{
+                        System.debug('temporal para campaña: '+temporal);
+                        listaCampanas = buscaCampanias(data.sku,idTienda, temporal);
+                        System.debug('lista campañas: '+listaCampanas);
+                        datosEnviar.listaPlazos = plazosActivos(data.plazoCotizar,data.opcionPago,temporal,idTienda,listaCampanas); // modificar op pago
                         System.debug('temporal para campaña: '+temporal);
                         listaCampanas = buscaCampanias(data.sku,idTienda, temporal);
                         System.debug('lista campañas: '+listaCampanas);
@@ -103,9 +120,24 @@ message = 'Esta en la Lista negra';
                             List<Account> resul = [Select Id, firstName, suffix, lastName, Fecha_de_Nacimiento__c, Phone, PersonEmail from Account WHERE firstName=:data.nombre AND suffix=:data.apellidoMaterno AND lastName=:data.apellidoPaterno WITH SECURITY_ENFORCED];
                             if(resul.size() == 1){
                                 try{
+                                try{
                                 clienteId = resul[0].Id;
                                 oppor = creaOportunidad(data, clienteId, resul[0].firstName, resul[0].suffix, resul[0].lastName,tienda);
                                 cotiza = crearCotizacion(data, oppor.Id, resul[0].firstName,  resul[0].suffix, resul[0].lastName, tienda,listaNegra);
+                               		if(respuestaDeProveedor!=null)
+                                        {
+                                             plazos = creaPlazos(cotiza, respuestaDeProveedor.plazos, data.sku,listaNegra,idTienda,temporal,listaCampanas);
+                                        }
+                                         
+                                        
+                                   
+                                moto = creaPartidaM(cotiza,data.sku,listaNegra,data.precioProducto,listaCampanas,temporal);
+                                }
+                                catch(Exception e)
+                                    {
+                                        system.debug('Error Métodos 1: '+e.getMessage() + e.getLineNumber());
+                                    }
+                                System.debug('moto partida 1'+moto);
                                		if(respuestaDeProveedor!=null)
                                         {
                                              plazos = creaPlazos(cotiza, respuestaDeProveedor.plazos, data.sku,listaNegra,idTienda,temporal,listaCampanas);
@@ -133,6 +165,9 @@ message = 'Esta en la Lista negra';
                                             plazos = creaPlazos(cotiza, respuestaDeProveedor.plazos,data.sku,listaNegra,idTienda,temporal,listaCampanas);                                       
                                             moto = creaPartidaM(cotiza,data.sku,listaNegra,data.precioProducto,listaCampanas,temporal);
                                             System.debug('moto partida 2'+moto);
+                                            plazos = creaPlazos(cotiza, respuestaDeProveedor.plazos,data.sku,listaNegra,idTienda,temporal,listaCampanas);                                       
+                                            moto = creaPartidaM(cotiza,data.sku,listaNegra,data.precioProducto,listaCampanas,temporal);
+                                            System.debug('moto partida 2'+moto);
                                             break;
                                         }
                                     }                         
@@ -141,6 +176,16 @@ message = 'Esta en la Lista negra';
                                     clienteId = universalAccount.Id; 
                                     oppor = creaOportunidad(data, clienteId, data.nombre, data.apellidoMaterno, data.apellidoPaterno, tienda);
                                     cotiza = crearCotizacion(data, oppor.Id, data.nombre, data.apellidoMaterno, data.apellidoPaterno, tienda,listaNegra);
+                                    try{
+                                        plazos = creaPlazos(cotiza, respuestaDeProveedor.plazos,data.sku,listaNegra,idTienda,temporal,listaCampanas);
+                                    moto = creaPartidaM(cotiza,data.sku,listaNegra,data.precioProducto,listaCampanas,temporal);
+                                       }
+                                    catch(Exception e)
+                                        {
+                                            system.debug('Error Métodos: '+e.getMessage() + e.getLineNumber());
+                                        }
+                                    
+                                    System.debug('moto partida 3'+moto);
                                     try{
                                         plazos = creaPlazos(cotiza, respuestaDeProveedor.plazos,data.sku,listaNegra,idTienda,temporal,listaCampanas);
                                     moto = creaPartidaM(cotiza,data.sku,listaNegra,data.precioProducto,listaCampanas,temporal);
@@ -172,7 +217,26 @@ message = 'Esta en la Lista negra';
                                 moto = creaPartidaM(cotiza,data.sku,listaNegra,data.precioProducto,listaCampanas,temporal);
                                 System.debug('moto partida 5'+moto);
                             }
+                            List<Account> result = [Select Id,firstName,suffix,lastName from Account WHERE CP_WalletCustomerNumber__c =:Decimal.valueOf(data.numeroCliente) WITH SECURITY_ENFORCED];
+                            if(result.size() == 0){
+                                client = creaCliente(data);
+                                clienteId = client.Id;
+                                oppor = creaOportunidad(data, clienteId, data.nombre, data.apellidoMaterno, data.apellidoPaterno,tienda);
+                                cotiza = crearCotizacion(data, oppor.Id, client.firstName,  client.suffix, client.lastName, tienda,listaNegra);
+                                plazos = creaPlazos(cotiza, respuestaDeProveedor.plazos,data.sku,listaNegra,idTienda,temporal,listaCampanas);
+                                moto = creaPartidaM(cotiza,data.sku,listaNegra,data.precioProducto,listaCampanas,temporal);//
+                                System.debug('moto partida 4'+moto);
+                            }else{
+                                
+                                clienteId = result[0].Id;
+                                oppor = creaOportunidad(data, clienteId, result[0].firstName, result[0].suffix, result[0].lastName,tienda);
+                                cotiza = crearCotizacion(data, oppor.Id, result[0].firstName,  result[0].suffix, result[0].lastName, tienda,listaNegra);
+                                plazos = creaPlazos(cotiza, respuestaDeProveedor.plazos,data.sku,listaNegra,idTienda,temporal,listaCampanas);
+                                moto = creaPartidaM(cotiza,data.sku,listaNegra,data.precioProducto,listaCampanas,temporal);
+                                System.debug('moto partida 5'+moto);
+                            }
                         }
+                        plazos = coppel(plazos,data.sku,temporal,listaCampanas);
                         plazos = coppel(plazos,data.sku,temporal,listaCampanas);
                     }
                     else{
@@ -204,17 +268,34 @@ message = 'Esta en la Lista negra';
         if(data.sku!=null && data.sku!='' && plazos!= null){
             response.listaproducto = moto;
             response.campanias =  listaCampanas;//buscaCampanias(data.sku,idTienda,temporal);       
+            response.campanias =  listaCampanas;//buscaCampanias(data.sku,idTienda,temporal);       
         }
+        System.debug('Respuesta hacia NPV'+response);
         System.debug('Respuesta hacia NPV'+response);
         return response;
     }
+    public static List<DSALES_QuoteSmWrapper.RespuestaPlazos> coppel(List<DSALES_QuoteSmWrapper.RespuestaPlazos> plazos, String sku,Product2 temporal,List<DSALES_QuoteSmWrapper.Campanias> listaCampanas){
     public static List<DSALES_QuoteSmWrapper.RespuestaPlazos> coppel(List<DSALES_QuoteSmWrapper.RespuestaPlazos> plazos, String sku,Product2 temporal,List<DSALES_QuoteSmWrapper.Campanias> listaCampanas){
         List<DSALES_QuoteSmWrapper.RespuestaPlazos> filtroSoloCoppel = new List<DSALES_QuoteSmWrapper.RespuestaPlazos>();
         String userCop ='coopel';
         String cambioSeguroA= Label.npvSeguro;
         String cambioSeguroB= Label.npvEquivalente;
         Boolean segGra =false;
+        Boolean segGra =false;
         if(plazos!=null){
+            if(listaCampanas!=null && listaCampanas.size()>0){
+                for(DSALES_QuoteSmWrapper.Campanias camp:listaCampanas){
+                    System.debug('nombre campaña:'+camp.tipoCampana);
+                    if(camp.tipoCampana==TIPO && camp.productoDeCampana==RC){
+                        segGra =true;
+                    }
+                }
+            }
+            //Boolean segGra = campana(rc,temporal);
+            Boolean rcTrue=false;
+            if(!String.isEmpty(sku)){
+                 rcTrue = rcExceso(rc, sku,temporal.Id);
+            }
             if(listaCampanas!=null && listaCampanas.size()>0){
                 for(DSALES_QuoteSmWrapper.Campanias camp:listaCampanas){
                     System.debug('nombre campaña:'+camp.tipoCampana);
@@ -242,11 +323,54 @@ message = 'Esta en la Lista negra';
                 //filtroSoloCoppel.add(item);
             }
             
+            
         }
+        
         
         return filtroSoloCoppel;
         
+        
     }
+    
+    public static List<DSALES_QuoteSmWrapper.Campanias> buscaCampanias(String sku, String idTienda, Product2 productoMoto) {
+    List<DSALES_QuoteSmWrapper.Campanias> listaCampanias = new List<DSALES_QuoteSmWrapper.Campanias>();
+    try {
+        Map<Id, DSALES_AsociacionCampanias__c> campaniasMap = new Map<Id, DSALES_AsociacionCampanias__c>(
+            [SELECT Id, DSALES_Campania__c FROM DSALES_AsociacionCampanias__c WHERE DSALES_Producto__c = :productoMoto.Id AND DSALES_Activo__c=:true WITH SECURITY_ENFORCED LIMIT 5]
+        );
+        Map<Id, dsalesAsignacionDeTienda__c> asignacionMap = new Map<Id, dsalesAsignacionDeTienda__c>(
+            [SELECT dsalesCampana__c FROM dsalesAsignacionDeTienda__c WHERE dsalesTienda__c = :idTienda AND dsalesActivo__c = true WITH SECURITY_ENFORCED]
+        );
+
+        Set<Id> campaignIds = new Set<Id>();
+        for (DSALES_AsociacionCampanias__c aCampania : campaniasMap.values()) {
+            campaignIds.add(aCampania.DSALES_Campania__c);
+        }
+
+        Set<Id> productIds = new Set<Id>();
+        for (dsalesAsignacionDeTienda__c asignaciont : asignacionMap.values()) {
+            productIds.add(asignaciont.dsalesCampana__c);
+        }
+        Map<Id, Campaign> campaignMap = new Map<Id, Campaign>(
+            [SELECT Id, Name, dsalesTipoCampana__c, dsalesProductoCampanas__r.Name, Description, dsalesPlazosAplicables__c,dsalesOpcionPago__c 
+            FROM Campaign WHERE Id IN :campaignIds AND Id IN :productIds AND IsActive=:true WITH SECURITY_ENFORCED]
+        );
+        /*List<Campaign> aux = [SELECT Name, dsalesTipoCampana__c, dsalesProductoCampanas__r.Name, Description, dsalesPlazosAplicables__c 
+                              FROM Campaign WHERE Id IN :campaignIds AND Id IN :productIds WITH SECURITY_ENFORCED];
+        */
+        List<Campaign> aux = new List<Campaign>(campaignMap.values());
+        System.debug('campañas values:'+aux);
+        for (Campaign item : aux) {        
+            DSALES_QuoteSmWrapper.Campanias aux2 = new DSALES_QuoteSmWrapper.Campanias();
+            List<String> opcionesdePago = new List<String>(); 
+            aux2.nombreCampana = item.Name;
+            aux2.tipoCampana = item.dsalesTipoCampana__c;
+            aux2.descripcion = item.Description;
+            aux2.productoDeCampana = item.dsalesProductoCampanas__r.Name;
+            aux2.nombreProducto = productoMoto.Name;
+            aux2.sku = productoMoto.StockKeepingUnit;
+            List<String> plazosAplicables = new List<String>();
+            if( item.dsalesPlazosAplicables__c !=null){
     
     public static List<DSALES_QuoteSmWrapper.Campanias> buscaCampanias(String sku, String idTienda, Product2 productoMoto) {
     List<DSALES_QuoteSmWrapper.Campanias> listaCampanias = new List<DSALES_QuoteSmWrapper.Campanias>();
@@ -309,9 +433,31 @@ message = 'Esta en la Lista negra';
 }
 
     public static List<DSALES_QuoteSmWrapper.Plazo> plazosActivos(String plazoMaximo,String opPagoRecibido,Product2 temporal,String idTienda,List<DSALES_QuoteSmWrapper.Campanias>  campanias ){
+            
+            aux2.plazosAplicables = plazosAplicables;
+            //aux2.productoDeCampana = item.dsalesProductoCampanas__r.Name;
+            //aux2.nombreProducto = productoMoto.Name;
+            //aux2.sku = productoMoto.StockKeepingUnit;
+            if(item.dsalesOpcionPago__c!=null)
+                {
+                    opcionesdePago.addAll(item.dsalesOpcionPago__c.split(';'));
+                }
+            
+            aux2.opcionPago=opcionesdePago;
+            listaCampanias.add(aux2);
+        }
+    } catch (Exception e) {
+        System.debug('No Se encontraron Campanias para el SKU---->' + e.getLineNumber() + ',' + e.getMessage());        
+    }    
+    return listaCampanias;
+}
+
+    public static List<DSALES_QuoteSmWrapper.Plazo> plazosActivos(String plazoMaximo,String opPagoRecibido,Product2 temporal,String idTienda,List<DSALES_QuoteSmWrapper.Campanias>  campanias ){
         List<DSALES_QuoteSmWrapper.Plazo> plazosSeguros = new List<DSALES_QuoteSmWrapper.Plazo>();
         List<Plazo__c> lista;
         try{
+            List<DSales_Asignacion_de_Productos__c> asig=consultaAsignProductos(temporal.Id); 
+            //List<DSales_Asignacion_de_Productos__c> asig = [SELECT DSales_Servicio_Seguro__c FROM DSales_Asignacion_de_Productos__c where DSales_Producto__c=:temporal.Id AND DSALES_Activo__c=true WITH SECURITY_ENFORCED];
             List<DSales_Asignacion_de_Productos__c> asig=consultaAsignProductos(temporal.Id); 
             //List<DSales_Asignacion_de_Productos__c> asig = [SELECT DSales_Servicio_Seguro__c FROM DSales_Asignacion_de_Productos__c where DSales_Producto__c=:temporal.Id AND DSALES_Activo__c=true WITH SECURITY_ENFORCED];
             List<Id> productoIds = new List<Id>();
@@ -327,10 +473,20 @@ message = 'Esta en la Lista negra';
                     System.debug('Error Query pt2: '+e.getMessage() + ' '+e.getLineNumber());
                 }
             
+            List<dsalesAsignacionDeTienda__c> asigt = new List<dsalesAsignacionDeTienda__c>(); 
+            try{
+             asigt = [SELECT Producto__c FROM dsalesAsignacionDeTienda__c where dsalesTienda__c=:idTienda AND dsalesActivo__c=true WITH SECURITY_ENFORCED];
+            }
+            catch(Exception e)
+                {
+                    System.debug('Error Query pt2: '+e.getMessage() + ' '+e.getLineNumber());
+                }
+            
             List<Id> productoIdts = new List<Id>();
             for(dsalesAsignacionDeTienda__c asignaciont : asigt) {
                 productoIdts.add(asignaciont.Producto__c);
             }
+            //List<DSALES_QuoteSmWrapper.Campanias>  campanias =buscaCampanias(temporal.StockKeepingUnit,idTienda, temporal);
             //List<DSALES_QuoteSmWrapper.Campanias>  campanias =buscaCampanias(temporal.StockKeepingUnit,idTienda, temporal);
             List<Product2> seguros = [SELECT Id, Name, (SELECT Name, Dsales_Plazo__c, dsalesSeguro__c FROM Plazos__r  WHERE Dsales_Plazo__c<=:plazoMaximo AND DSALES_Activo__c = true) FROM Product2 WHERE Id IN :productoIds AND IsActive = true AND Id IN :productoIdts WITH SECURITY_ENFORCED];
             Map<String, List<DSALES_QuoteSmWrapper.opcionPago>>  paquetesOpcionesPago=opcionDePago(seguros,opPagoRecibido);
@@ -342,7 +498,19 @@ message = 'Esta en la Lista negra';
                             DSALES_QuoteSmWrapper.opcionPago opcion = new DSALES_QuoteSmWrapper.opcionPago();
                             opcion.opcionPago = pl+ opPago;
                             paquetesOpcionesPago.get(camp.productoDeCampana).add(opcion);
+            Map<String, List<DSALES_QuoteSmWrapper.opcionPago>>  paquetesOpcionesPago=opcionDePago(seguros,opPagoRecibido);
+            for(DSALES_QuoteSmWrapper.Campanias camp:campanias){
+                if (paquetesOpcionesPago.containsKey(camp.productoDeCampana)) {
+                    paquetesOpcionesPago.put(camp.productoDeCampana, new List<DSALES_QuoteSmWrapper.opcionPago>());
+                    for(String pl:camp.plazosAplicables){
+                        for(String opPago:camp.opcionPago){
+                            DSALES_QuoteSmWrapper.opcionPago opcion = new DSALES_QuoteSmWrapper.opcionPago();
+                            opcion.opcionPago = pl+ opPago;
+                            paquetesOpcionesPago.get(camp.productoDeCampana).add(opcion);
                         }
+                    }
+                }
+            }
                     }
                 }
             }
@@ -359,7 +527,13 @@ message = 'Esta en la Lista negra';
         if(Test.isRunningTest()){
             DSALES_QuoteSmWrapper.opcionPago opPago= new DSALES_QuoteSmWrapper.opcionPago();
             opPago.opcionPago='12C';
+            DSALES_QuoteSmWrapper.opcionPago opPago= new DSALES_QuoteSmWrapper.opcionPago();
+            opPago.opcionPago='12C';
             DSALES_QuoteSmWrapper.Plazo aux = new DSALES_QuoteSmWrapper.Plazo();
+            aux.paquete = 'RC';
+            List<DSALES_QuoteSmWrapper.opcionPago> plazoOp = new List<DSALES_QuoteSmWrapper.opcionPago>();
+            plazoOp.add(opPago);
+            aux.opcionesPago=plazoOp;
             aux.paquete = 'RC';
             List<DSALES_QuoteSmWrapper.opcionPago> plazoOp = new List<DSALES_QuoteSmWrapper.opcionPago>();
             plazoOp.add(opPago);
@@ -406,9 +580,47 @@ message = 'Esta en la Lista negra';
         }
         return paquetesOpcionesPago;
     }
+
+    public static Map<String, List<DSALES_QuoteSmWrapper.opcionPago>> opcionDePago(List<Product2> seguros,String opPagoRecibido){
+        Map<String, List<DSALES_QuoteSmWrapper.opcionPago>> paquetesOpcionesPago = new Map<String, List<DSALES_QuoteSmWrapper.opcionPago>>();
+        Set<Id> productIds = new Set<Id>();
+        for (Product2 item : seguros) {
+            productIds.add(item.Id);
+        }
+        // Realizar una única consulta para obtener los productos y sus opciones de pago
+        Map<Id, Product2> productMap = new Map<Id, Product2>(
+            [SELECT Id, Name, dsalesOpcionpago__c FROM Product2 WHERE Id IN :productIds]
+        );
+        for (Product2 item : seguros) {
+            List<Plazo__c> plazos = item.Plazos__r;
+            for (Plazo__c plazo : plazos) {
+                if (!paquetesOpcionesPago.containsKey(item.Name)) {
+                    paquetesOpcionesPago.put(item.Name, new List<DSALES_QuoteSmWrapper.opcionPago>());
+                }
+                
+                Product2 producto = productMap.get(item.Id);
+                if (producto != null && producto.dsalesOpcionpago__c != null) {
+                    List<String> opcionPago = producto.dsalesOpcionpago__c.split(';');
+                    if (opPagoRecibido == 'Mensual') {
+                        for (String opPago : opcionPago) {
+                            DSALES_QuoteSmWrapper.opcionPago opcion = new DSALES_QuoteSmWrapper.opcionPago();
+                            opcion.opcionPago = plazo.Dsales_Plazo__c + opPago;
+                            paquetesOpcionesPago.get(item.Name).add(opcion);
+                        }
+                    } else if (opPagoRecibido == 'Contado') {
+                        DSALES_QuoteSmWrapper.opcionPago opcion = new DSALES_QuoteSmWrapper.opcionPago();
+                        opcion.opcionPago = plazo.Dsales_Plazo__c + 'C';
+                        paquetesOpcionesPago.get(item.Name).add(opcion);
+                    }
+                }
+            }
+        }
+        return paquetesOpcionesPago;
+    }
     public static List<DSALES_QuoteSmWrapper.Plazo> plazosActivosExterna(String plazoMaximo,String idTienda, String opPagoRecibido){
         List<DSALES_QuoteSmWrapper.Plazo> plazosSeguros = new List<DSALES_QuoteSmWrapper.Plazo>();
         List<Plazo__c> lista;
+        
         
         try{
             List<dsalesAsignacionDeTienda__c> asigt = [SELECT Producto__c FROM dsalesAsignacionDeTienda__c where dsalesTienda__c=:idTienda AND dsalesActivo__c=true WITH SECURITY_ENFORCED];
@@ -417,6 +629,7 @@ message = 'Esta en la Lista negra';
                 productoIdts.add(asignaciont.Producto__c);
             }
             List<Product2> seguros = [SELECT Id, Name,dsalesOpcionpago__c, (SELECT Name, Dsales_Plazo__c, dsalesSeguro__c FROM Plazos__r  WHERE Dsales_Plazo__c<=:plazoMaximo AND DSALES_Activo__c = true) FROM Product2 WHERE DSALES_Aplicaparamotoexterna__c=true AND IsActive=true AND Id IN :productoIdts WITH SECURITY_ENFORCED];
+            List<Product2> seguros = [SELECT Id, Name,dsalesOpcionpago__c, (SELECT Name, Dsales_Plazo__c, dsalesSeguro__c FROM Plazos__r  WHERE Dsales_Plazo__c<=:plazoMaximo AND DSALES_Activo__c = true) FROM Product2 WHERE DSALES_Aplicaparamotoexterna__c=true AND IsActive=true AND Id IN :productoIdts WITH SECURITY_ENFORCED];
             Map<String, List<DSALES_QuoteSmWrapper.opcionPago>> paquetesOpcionesPago = new Map<String, List<DSALES_QuoteSmWrapper.opcionPago>>();
             for(Product2 item:seguros){
                 List<Plazo__c> plazos = item.Plazos__r;
@@ -424,6 +637,24 @@ message = 'Esta en la Lista negra';
                     if (!paquetesOpcionesPago.containsKey(item.Name)) {
                         paquetesOpcionesPago.put(item.Name, new List<DSALES_QuoteSmWrapper.opcionPago>());
                     }
+                    if (item.dsalesOpcionpago__c != null) {
+                            List<String> opcionPago = item.dsalesOpcionpago__c.split(';');
+                            if(opPagoRecibido=='Mensual'){
+                                for(String opPago:opcionPago){
+                                    DSALES_QuoteSmWrapper.opcionPago opcion = new DSALES_QuoteSmWrapper.opcionPago();
+                                    opcion.opcionPago = plazo.Dsales_Plazo__c + opPago;
+                                    paquetesOpcionesPago.get(item.Name).add(opcion);
+                                }
+                            }else if(opPagoRecibido=='Contado'){
+                                DSALES_QuoteSmWrapper.opcionPago opcion = new DSALES_QuoteSmWrapper.opcionPago();
+                                opcion.opcionPago = plazo.Dsales_Plazo__c +'C';
+                                paquetesOpcionesPago.get(item.Name).add(opcion);
+                            }
+                        }
+                   // }
+                }
+                
+            }
                     if (item.dsalesOpcionpago__c != null) {
                             List<String> opcionPago = item.dsalesOpcionpago__c.split(';');
                             if(opPagoRecibido=='Mensual'){
@@ -490,6 +721,7 @@ message = 'Esta en la Lista negra';
         }     
     }
     
+    
     public static Account creaCliente (DSALES_QuoteSmWrapper.QuoteSmRequest data){
         Account cliente = new Account();
         cliente.CP_WalletCustomerNumber__c = Decimal.valueOf(data.numeroCliente);
@@ -505,8 +737,10 @@ message = 'Esta en la Lista negra';
             insert cliente;
         }
         
+        
         return cliente;
     }
+    
     
     public static Opportunity creaOportunidad (DSALES_QuoteSmWrapper.QuoteSmRequest data, Id clienteId, String firstName,String suffix, String lastName,Tienda__c tienda){
         Opportunity oppor = new Opportunity();
@@ -570,6 +804,7 @@ message = 'Esta en la Lista negra';
         cotiza.DSALES_RFC__c = data.rfc;
         cotiza.DSALES_Plazoacotizar__c= decimal.valueOf(data.plazoCotizar);  
         //cotiza.dsalesValorFactura__c=data.valorFactura;      
+        //cotiza.dsalesValorFactura__c=data.valorFactura;      
         if(Schema.sObjectType.Quote.isCreateable())
         {
             insert cotiza;        
@@ -632,8 +867,12 @@ message = 'Esta en la Lista negra';
     }
     
     public static DSALES_QuoteSmWrapper.RespuestaPlazos creaPartidaM(Quote cotiza, String sku, Boolean listaNegra, Double precio, List<DSALES_QuoteSmWrapper.Campanias> listaCampanas,Product2 productoMoto){      
+    public static DSALES_QuoteSmWrapper.RespuestaPlazos creaPartidaM(Quote cotiza, String sku, Boolean listaNegra, Double precio, List<DSALES_QuoteSmWrapper.Campanias> listaCampanas,Product2 productoMoto){      
         DSALES_QuoteSmWrapper.RespuestaPlazos motoVacia = new DSALES_QuoteSmWrapper.RespuestaPlazos();
         if(sku!=null && sku!='' && listaNegra!=true){
+            PricebookEntry precioM = [SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Product2Id =:productoMoto.Id WITH SECURITY_ENFORCED LIMIT 1];
+            Boolean tieneCampana=false;
+            QuoteLineItem partidaM = new QuoteLineItem();
             PricebookEntry precioM = [SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Product2Id =:productoMoto.Id WITH SECURITY_ENFORCED LIMIT 1];
             Boolean tieneCampana=false;
             QuoteLineItem partidaM = new QuoteLineItem();
@@ -654,6 +893,18 @@ message = 'Esta en la Lista negra';
             }
             partidaM.DSALES_Segurogratis__c =tieneCampana;
             //partidaM.DSALES_Segurogratis__c = campana(rc, productoMoto);
+
+            System.debug('campaña en coppel camp'+listaCampanas);
+            if(listaCampanas!=null && listaCampanas.size()>0){
+                for(DSALES_QuoteSmWrapper.Campanias camp:listaCampanas){
+                    System.debug('campaña en coppel:'+ camp.nombreCampana +': ' + camp.productoDeCampana);
+                    if(camp.tipoCampana==TIPO && camp.productoDeCampana==RC){
+                        tieneCampana=true;
+                    }
+                }
+            }
+            partidaM.DSALES_Segurogratis__c =tieneCampana;
+            //partidaM.DSALES_Segurogratis__c = campana(rc, productoMoto);
             DSALES_QuoteSmWrapper.RespuestaPlazos aux = new DSALES_QuoteSmWrapper.RespuestaPlazos(); 
             aux.paquete = productoMoto.Name;
             if(Schema.sObjectType.QuoteLineItem.isCreateable())
@@ -661,12 +912,16 @@ message = 'Esta en la Lista negra';
                 insert partidaM;
             }
             System.debug('partida moto gratis:'+partidaM);
+            System.debug('partida moto gratis:'+partidaM);
             DSALES_QuoteSmWrapper.RespuestaPlazos moto = new DSALES_QuoteSmWrapper.RespuestaPlazos();
             moto.paquete = productoMoto.Name;
             moto.idpartida = partidaM.Id;
             moto.seguroGratis=partidaM.DSALES_Segurogratis__c;
             System.debug('paquete partida moto:'+moto);
+            moto.seguroGratis=partidaM.DSALES_Segurogratis__c;
+            System.debug('paquete partida moto:'+moto);
             return moto;
+            
             
         }
         else {
@@ -690,6 +945,8 @@ message = 'Esta en la Lista negra';
     }
     
     public static List<DSALES_QuoteSmWrapper.RespuestaPlazos> creaPlazos(Quote cotiza, List<DSALES_QuoteSmWrapper.ArmadoMuleSoft> plazos, String sku,Boolean listaNegra,String idTienda, Product2 productoTemp,List<DSALES_QuoteSmWrapper.Campanias>  campanas ){
+    
+    public static List<DSALES_QuoteSmWrapper.RespuestaPlazos> creaPlazos(Quote cotiza, List<DSALES_QuoteSmWrapper.ArmadoMuleSoft> plazos, String sku,Boolean listaNegra,String idTienda, Product2 productoTemp,List<DSALES_QuoteSmWrapper.Campanias>  campanas ){
         List<QuoteLineItem> listaPartidas = new List<QuoteLineItem>();
         List<DSALES_QuoteSmWrapper.RespuestaPlazos> listaSeguros = new List<DSALES_QuoteSmWrapper.RespuestaPlazos>();
         for(Integer i=0; i<plazos.size(); i++){
@@ -700,6 +957,7 @@ message = 'Esta en la Lista negra';
             aux.vigencia = plazos[i].opcionPago;
             aux.data = plazos[i].data;
             aux.paqueteAlias=plazos[i].paqueteAlias;
+            aux.paqueteAlias=plazos[i].paqueteAlias;
             listaSeguros.add(aux);
         }
         List<String> idPartidaPlazo= new List<String>();
@@ -708,6 +966,7 @@ message = 'Esta en la Lista negra';
         }
         List<nuevasPartidasPlazos> partidasYPlazos=buscarPlazoAplicable(idPartidaPlazo);
         try{
+           // List<DSALES_QuoteSmWrapper.Campanias> campanas = buscaCampanias(sku,idTienda, productoTemp); //Product2 producto
            // List<DSALES_QuoteSmWrapper.Campanias> campanas = buscaCampanias(sku,idTienda, productoTemp); //Product2 producto
             List<nuevasPartidasPlazos>idPlazosGratis = new List<nuevasPartidasPlazos>();
             for(DSALES_QuoteSmWrapper.Campanias item2:campanas){
@@ -730,11 +989,16 @@ message = 'Esta en la Lista negra';
                         for(nuevasPartidasPlazos pl : idPlazosGratis){
                             
                             if(listaPartidas[i].DSALES_Plazo__c==pl.idPlazo ){
+                    if(item.nombreCampana==RC && item.tipoCampana==TIPO&& listaSeguros[i].paquete==RC){
+                        for(nuevasPartidasPlazos pl : idPlazosGratis){
+                            
+                            if(listaPartidas[i].DSALES_Plazo__c==pl.idPlazo ){
                                 listaPartidas[i].DSALES_Segurogratis__c=true;
                             }
                         }
                         //sacar los valores de la lista multiple
                         // comparar con el plazo de las partidas
+                        
                         
                     }
                 }   
@@ -747,13 +1011,18 @@ message = 'Esta en la Lista negra';
             listaSeguros[i].descripcion = listaPartidas[i].DSALES_Descripcion__c;
             listaSeguros[i].seguroGratis = listaPartidas[i].DSALES_Segurogratis__c;
             
+            
         }
         return listaSeguros;     
     }
     
     public static Boolean rcExceso(String seguro,String sku,String idProd){
+    public static Boolean rcExceso(String seguro,String sku,String idProd){
         Boolean condicion = false;  
         if(sku!=null && sku!=''){
+            //Product2 producto = [SELECT Id, Name, StockKeepingUnit,DSales_Tipo_de_Producto__c, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku OR Id=:id WITH SECURITY_ENFORCED LIMIT 1];        
+            //List<DSales_Asignacion_de_Productos__c> asig = [SELECT DSales_Servicio_Seguro__c, DSales_Servicio_Seguro__r.Name, DSales_Servicio_Seguro__r.isActive FROM DSales_Asignacion_de_Productos__c where DSales_Producto__c=:Producto.id AND DSALES_Activo__c=true WITH SECURITY_ENFORCED];
+            List<DSales_Asignacion_de_Productos__c> asig=consultaAsignProductos(idProd);
             //Product2 producto = [SELECT Id, Name, StockKeepingUnit,DSales_Tipo_de_Producto__c, DSALES_Seguro__c, DSales_Articulo__c FROM Product2 WHERE StockKeepingUnit=:sku OR Id=:id WITH SECURITY_ENFORCED LIMIT 1];        
             //List<DSales_Asignacion_de_Productos__c> asig = [SELECT DSales_Servicio_Seguro__c, DSales_Servicio_Seguro__r.Name, DSales_Servicio_Seguro__r.isActive FROM DSales_Asignacion_de_Productos__c where DSales_Producto__c=:Producto.id AND DSALES_Activo__c=true WITH SECURITY_ENFORCED];
             List<DSales_Asignacion_de_Productos__c> asig=consultaAsignProductos(idProd);
@@ -764,7 +1033,35 @@ message = 'Esta en la Lista negra';
             }
             
         } 
+            
+        } 
         return condicion;
+    }
+
+    public static List<DSales_Asignacion_de_Productos__c> consultaAsignProductos(String idProd){
+        List<DSales_Asignacion_de_Productos__c> asig = new List<DSales_Asignacion_de_Productos__c>();
+        if(!String.isEmpty(idProd)){
+            Map<Id, DSales_Asignacion_de_Productos__c> mapAsignacion = new Map<Id, DSales_Asignacion_de_Productos__c>(
+            [SELECT DSales_Servicio_Seguro__c, DSales_Servicio_Seguro__r.Name, DSales_Servicio_Seguro__r.isActive FROM DSales_Asignacion_de_Productos__c where DSales_Producto__c=:idProd AND DSALES_Activo__c=true WITH SECURITY_ENFORCED]
+            );
+            asig =new List<DSales_Asignacion_de_Productos__c>(mapAsignacion.values());
+            
+        }
+        return asig;    
+    }
+    public static Product2 consultaProductoMoto(String sku){
+        Product2 moto=new Product2();
+        if(!String.isEmpty(sku)){
+            try{
+                moto =[SELECT Id,dsalesVehiculo__c, Name, StockKeepingUnit, DSALES_Seguro__c, DSales_Articulo__c,DSales_Tipo_de_Producto__c FROM Product2 WHERE StockKeepingUnit=:sku WITH SECURITY_ENFORCED LIMIT 1];
+            }
+            catch (Exception e)
+                {
+                    system.debug('Error de Query: '+e.getMessage() + e.getLineNumber());
+                }
+            
+        }
+        return moto;
     }
 
     public static List<DSales_Asignacion_de_Productos__c> consultaAsignProductos(String idProd){

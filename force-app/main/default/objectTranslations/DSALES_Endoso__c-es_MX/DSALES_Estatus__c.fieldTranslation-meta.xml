@@ -19,6 +19,10 @@
         <translation></translation>
     </picklistValues>
     <picklistValues>
+        <masterLabel>Recibido</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
         <masterLabel>Requerimiento de Información</masterLabel>
         <translation></translation>
     </picklistValues>

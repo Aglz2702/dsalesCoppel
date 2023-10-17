@@ -60,7 +60,26 @@
             <value>
                 <fullName>Modificación de color</fullName>
                 <default>false</default>
-                <label>Modificación de color</label>
+                <isActive>false</isActive>
+                <label>Actualización de color</label>
+            </value>
+            <value>
+                <fullName>Cambio de titular</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Cambio de titular</label>
+            </value>
+            <value>
+                <fullName>Corrección de RFC</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Corrección de RFC</label>
+            </value>
+            <value>
+                <fullName>Corrección de datos fiscales</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Corrección de datos fiscales</label>
             </value>
         </valueSetDefinition>
     </valueSet>

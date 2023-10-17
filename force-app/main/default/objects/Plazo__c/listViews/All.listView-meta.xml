@@ -9,5 +9,10 @@
     <columns>UPDATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>dsalesSeguro__c</field>
+        <operation>contains</operation>
+        <value>RC</value>
+    </filters>
     <label>Todos</label>
 </ListView>

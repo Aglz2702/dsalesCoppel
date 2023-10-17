@@ -37,12 +37,12 @@ public class DSALES_QuotePdfController_Test {
     }
     @isTest
     static void createRecordTest(){
-        Quote quotes = [SELECT Id, Name, Opportunity.Name,OpportunityId, DSales_Tienda__c,DSales_Tienda__r.Name FROM Quote WHERE Name='Test Quote' LIMIT 1];
+        Quote quotes = [SELECT Id, Name, Opportunity.Name,OpportunityId, DSales_Tienda__c,DSales_Tienda__r.Name FROM Quote WHERE Name='Test Quote' WITH SECURITY_ENFORCED LIMIT 1];
         QuoteLineItem quoteLineItems = [SELECT Id,QuoteId,Product2.Name,DSALES_NombreProducto__c,Dsales_Plazo__c, Dsales_Plazo__r.Dsales_Plazo__c,PricebookEntryId,Product2Id,DSALES_SKU__c,Quantity,UnitPrice,DSALES_Fechadeinicio__c,DSALES_Fechadetermino__c,TotalPrice,ListPrice,DSales_SKU_Producto__c,DSALES_Tipodeproducto__c
-                                        FROM QuoteLineItem LIMIT 1];
+                                        FROM QuoteLineItem  WITH SECURITY_ENFORCED LIMIT 1];
         id oppId =quotes.OpportunityId;
         Tienda__c tienda = [SELECT Id,Name, dsalesDireccion__c, dsalesCodigoPostal__c, DSALES_Ciudad__c, DSALES_Estado__c FROM Tienda__c WHERE Id=:quotes.DSales_Tienda__c AND Name='Urgarte' LIMIT 1];
-        List<DSALES_InformacionDePago__c> paym =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:oppId LIMIT 1];
+        List<DSALES_InformacionDePago__c> paym =[SELECT Id,DSALES_Fechadeentregaestimada__c FROM DSALES_InformacionDePago__c WHERE DSALES_Oportunidad__c=:oppId  WITH SECURITY_ENFORCED LIMIT 1];
         
         
         Test.startTest();

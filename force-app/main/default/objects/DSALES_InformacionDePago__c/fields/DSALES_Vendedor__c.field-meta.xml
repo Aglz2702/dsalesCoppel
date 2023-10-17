@@ -4,7 +4,7 @@
     <description>Número de vendedor</description>
     <externalId>false</externalId>
     <label>ID Vendedor</label>
-    <length>10</length>
+    <length>7</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

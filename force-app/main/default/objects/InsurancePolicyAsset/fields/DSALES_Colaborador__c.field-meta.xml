@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <inlineHelpText>Número de colaborador que realizó la venta.</inlineHelpText>
     <label>Colaborador</label>
-    <length>40</length>
+    <length>25</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Text</type>

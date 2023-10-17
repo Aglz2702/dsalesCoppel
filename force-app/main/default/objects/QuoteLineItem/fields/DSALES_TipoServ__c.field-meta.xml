@@ -5,6 +5,5 @@
     <description>Indica si es GEX o SM</description>
     <externalId>false</externalId>
     <label>Tipo de servicio</label>
-    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

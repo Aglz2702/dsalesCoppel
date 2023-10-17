@@ -4,6 +4,7 @@
     <description>Comunicarle al cliente que la póliza fue cancelada</description>
     <encodingKey>UTF-8</encodingKey>
     <name>Envió de correo de cancelación de póliza</name>
+    <pageDevName>Envi_de_correo_de_cancelaci_n_de_p_liza</pageDevName>
     <relatedEntityType>InsurancePolicy</relatedEntityType>
     <style>none</style>
     <subject>Cancelación de póliza</subject>

@@ -27,6 +27,7 @@
         </rules>
     </decisions>
     <description>Actualiza check de tipo servicio en OportunityLineItems</description>
+    <environments>Default</environments>
     <interviewLabel>Actualiza GEX Vendidas {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Actualiza GEX Vendidas</label>
     <processMetadataValues>

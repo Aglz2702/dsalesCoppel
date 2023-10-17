@@ -4,6 +4,7 @@
     <description>Informa al cliente que se requiere mas información para seguir con el procesos de su endoso</description>
     <encodingKey>UTF-8</encodingKey>
     <name>Plantilla para envió de estatus requerimiento de info</name>
+    <pageDevName>Plantilla_para_envi_de_estatus_Autorizado</pageDevName>
     <relatedEntityType>DSALES_Endoso__c</relatedEntityType>
     <style>none</style>
     <subject>Tramite en requerimiento de información</subject>

@@ -4,6 +4,7 @@
     <description>Plantilla de correo para el siniestro en etapa &quot;En Trámite&quot;</description>
     <encodingKey>UTF-8</encodingKey>
     <name>Siniestro En Trámite</name>
+    <pageDevName>Siniestro_En_Tr_mite</pageDevName>
     <relatedEntityType>Claim</relatedEntityType>
     <style>none</style>
     <subject>Siniestro En Trámite</subject>

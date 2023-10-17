@@ -4,6 +4,7 @@
     <description>Envía la cotización por correo electrónico cuando no se adquiere una póliza</description>
     <encodingKey>UTF-8</encodingKey>
     <name>Envió de cotización</name>
+    <pageDevName>Envi_de_cotizaci_n</pageDevName>
     <relatedEntityType>Quote</relatedEntityType>
     <style>none</style>
     <subject>Cotización seguro de motos</subject>

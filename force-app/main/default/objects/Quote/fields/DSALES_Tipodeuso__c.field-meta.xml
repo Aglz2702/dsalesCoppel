@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSALES_Tipodeuso__c</fullName>
+    <fullName>DSALES_TipoUso__c</fullName>
     <description>Campo para identificar cual es el tipo de uso del vehículo para la cotización.</description>
     <externalId>false</externalId>
     <label>Tipo de uso</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

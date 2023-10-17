@@ -5,8 +5,6 @@
     <columns>DSALES_Cliente__c</columns>
     <columns>DSALES_Poliza__c</columns>
     <columns>RECORDTYPE</columns>
-    <columns>DSALES_IDUniversal__c</columns>
-    <columns>DSALES_IDUniversal1__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>DSALES_Motoexterna__c</field>

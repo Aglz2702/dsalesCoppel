@@ -118,29 +118,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>dsalesPlazosAplicables__c</picklist>
-        <values>
-            <fullName>12</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>18</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>24</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>30</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>36</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>dsalesTipoCampana__c</picklist>
         <values>
             <fullName>Informativo</fullName>

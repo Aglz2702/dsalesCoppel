@@ -2,7 +2,7 @@
 <BrandingSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <brandingSetProperty>
         <propertyName>BRAND_COLOR</propertyName>
-        <propertyValue>#176FA6</propertyValue>
+        <propertyValue>#1261A6</propertyValue>
     </brandingSetProperty>
     <brandingSetProperty>
         <propertyName>PAGE_BACKGROUND_COLOR</propertyName>
@@ -42,7 +42,7 @@
     </brandingSetProperty>
     <brandingSetProperty>
         <propertyName>OVERRIDE_LOADING_PAGE</propertyName>
-        <propertyValue>false</propertyValue>
+        <propertyValue>true</propertyValue>
     </brandingSetProperty>
     <masterLabel>Pisys</masterLabel>
 </BrandingSet>

@@ -1,6 +1,5 @@
 @isTest
 public with sharing class DSALES_CertificadoWrapperTest {
-    
     @testSetup
     static void crearRegistros(){
         String recordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('Garantia Extendida').getRecordTypeId();
@@ -66,7 +65,7 @@ public with sharing class DSALES_CertificadoWrapperTest {
         
         RestRequest peticion=new RestRequest();
         RestResponse respuesta = new RestResponse();
-        String cuerpo = '{"idProductoAdquirido":"'+ast.id+'","idCuenta":"'+acc.id+'","idTienda":"'+tienda.id+'","numeroCajaCoppel": "1234","numeroCliente":"123456","idVendedor": "1234","direccionCliente": "Montreal 169 Paseo Montejo","correoCliente": "dsanmiguel@deloittemx.com","telefonoCliente": "8130912906","celularCliente": "812091342","sku": "ABCDS12","modeloTangible": "Italika","marcaTangible": "Samsung","numeroSerie": "90001","descripcionTangible": "Muy bueno","precioTangible": "900","fechaCompraTangible": "2022-09-06","garantiaCoppelTangible": "12","costo_garantia": "900","fechaCompraGarantia": "2022-09-06","fechaFinGarantiaExtendida": "2022-09-06","fechaInicioGarantiaExtendida": "2022-09-06"}';
+        String cuerpo = '{"id_producto_adquirido":"'+ast.id+'","id_cuenta":"'+acc.id+'","id_tienda":"'+tienda.id+'","numero_caja_coppel": "1234","id_vendedor": "1234","direccion_cliente": "Montreal 169 Paseo Montejo","correo_cliente": "dsanmiguel@deloittemx.com","telefono_cliente": "8130912906","celular_cliente": "812091342","sku": "ABCDS12","modelo_tangible": "Italika","marca_tangible": "Samsung","numero_serie": "90001","descripcion_tangible": "Muy bueno","precio_tangible": "900","fecha_compra_tangible": "2022-09-06","garantia_coppel_tangible": "12","costo_garantia": "900","fecha_compra_garantia": "2022-09-06","fecha_fin_garantia_extendida": "2022-09-06","fecha_inicio_garantia_extendida": "2022-09-06"}';
         peticion.requestURI='/apexrest/insertCertificado'; 
         peticion.httpMethod='POST';
         RestContext.request=peticion;
@@ -143,5 +142,4 @@ public with sharing class DSALES_CertificadoWrapperTest {
         System.assertNotEquals(200, respuesta.statusCode,'La llamada no debe devolver el código 200');
         
     }
-
 }

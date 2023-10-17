@@ -1312,41 +1312,6 @@
             <field>DSALES_VigenciacumplidaSM__c</field>
             <table>Account.InsurancePolicy</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_Cobertura__c</field>
-            <table>Account.InsurancePolicy</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_NombredelAsegurado__c</field>
-            <table>Account.InsurancePolicy</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_TelefonoContacto__c</field>
-            <table>Account.InsurancePolicy</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_NumeroEndosoCancelacion__c</field>
-            <table>Account.InsurancePolicy</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_NumeroEndosoAutorizados__c</field>
-            <table>Account.InsurancePolicy</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>dsalesTipoServicio__c</field>
-            <table>Account.InsurancePolicy</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>dsalesTipoUso__c</field>
-            <table>Account.InsurancePolicy</table>
-        </columns>
         <masterLabel>Pólizas de seguros</masterLabel>
     </sections>
     <sections>
@@ -1474,31 +1439,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DSALES_Motivo_rechazo__c</field>
-            <table>Account.InsurancePolicy.Siniestros__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>dsalesSolucionaDevolucion__c</field>
-            <table>Account.InsurancePolicy.Siniestros__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_MotivodeDevolucion__c</field>
-            <table>Account.InsurancePolicy.Siniestros__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_SaldoInsoluto__c</field>
-            <table>Account.InsurancePolicy.Siniestros__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_SolucionDevolver__c</field>
-            <table>Account.InsurancePolicy.Siniestros__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_NumeroPagos__c</field>
             <table>Account.InsurancePolicy.Siniestros__r</table>
         </columns>
         <masterLabel>Siniestros</masterLabel>
