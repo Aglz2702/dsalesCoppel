@@ -109,10 +109,10 @@ public with sharing class DSALES_VentaSC_Test {
         System.debug('oportunidad en test:  '+oportunidad);
         
         //DSALES_VentaSCRest.consultarCotizacionAEliminar(cot.OpportunityId,cot.Id);
-        DSALES_VentaSCRest.IdsBorrar datos= new DSALES_VentaSCRest.IdsBorrar();
+        DSALES_EliminarRegistrosDeVenta.IdsBorrar datos= new DSALES_EliminarRegistrosDeVenta.IdsBorrar();
         datos.idCotPrincipal=cot.Id;
         datos.idCotSincro=oportunidad.SyncedQuoteId;
-        DSALES_VentaSCRest.eliminarRegistros(oportunidad, datos);
+        DSALES_EliminarRegistrosDeVenta.eliminarRegistros(oportunidad, datos);
         Test.stopTest();
         System.assertNotEquals(true, respuesta.exito, 'OK');
     }
