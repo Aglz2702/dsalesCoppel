@@ -4,6 +4,7 @@
     <description>Informa al Cliente estatus Nuevo de Endoso</description>
     <encodingKey>UTF-8</encodingKey>
     <name>Informa Endoso Nuevo</name>
+    <pageDevName>Informa_Endoso_Nuevo</pageDevName>
     <relatedEntityType>DSALES_Endoso__c</relatedEntityType>
     <style>none</style>
     <subject>Registro de endoso</subject>

@@ -12,9 +12,6 @@ public class DSALES_ControladorCotizacionGexTest {
        // PriceBook2 pb2 = new PriceBook2(Name='Danny');
         //Insert pb2;
         //Product
-        Tienda__c tienda = new Tienda__c(DSales_TiendaID__c='20');
-		insert tienda;
-        
         Product2 prod = new Product2(Name = 'Laptop X26', 
             Family = 'Hardware', DSales_Tipo_de_Producto__c='Producto');
         
@@ -42,12 +39,12 @@ public class DSALES_ControladorCotizacionGexTest {
        	insert pb;
         DSALES_InformacionDePago__c pago = new DSALES_InformacionDePago__c(DSALES_Oportunidad__c=op.Id,DSALES_Fechadeentregaestimada__c=Date.today());
 		insert pago;
-        Quote qtGex = new Quote(name='DannyGex',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtGex,DSales_Tienda__c=tienda.Id,DSALES_Enviarcotizacion__c=false);
+        Quote qtGex = new Quote(name='DannyGex',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtGex);
         insert qtGex;
-         Quote qtSg = new Quote(name='DannySG',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg,DSales_Tienda__c=tienda.Id,DSALES_Enviarcotizacion__c=false);
+         Quote qtSg = new Quote(name='DannySG',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg);
         insert qtSg;
 
-        Quote qtSg2 = new Quote(name='DannySG2',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg,DSales_Tienda__c=tienda.Id);
+        Quote qtSg2 = new Quote(name='DannySG2',OpportunityId=op.Id,PriceBook2Id=pb2Id,RecordTypeId=rtSg);
         insert qtSg2;
         
         QuoteLineItem quote= new QuoteLineItem(QuoteId=qtGex.Id,UnitPrice=2,Quantity=2,PricebookEntryId=pb.Id,Product2Id=prod.id,Vigencia_meses__c='12');
@@ -94,13 +91,10 @@ public class DSALES_ControladorCotizacionGexTest {
         {
             Test.startTest();
             List<Product2> pd=[SELECT Name,Family, DSales_Tipo_de_Producto__c FROM Product2 WHERE DSales_Tipo_de_Producto__c='Producto' LIMIT 1];
-            Quote qt= [SELECT Id, DSALES_EmailCliente__c,DSALES_Enviarcotizacion__c FROM QUOTE WHERE NAME='DannyGex' LIMIT 1	];
-             Quote qt2= [SELECT Id, DSALES_EmailCliente__c,DSALES_Enviarcotizacion__c FROM QUOTE WHERE NAME='DannyGex' LIMIT 1	];
+            Quote qt= [SELECT Id, DSALES_EmailCliente__c FROM QUOTE WHERE NAME='DannyGex' LIMIT 1	];
             System.debug('quote: '+qt.Id);
             List<QuoteLineItem> qline =[SELECT Id, QuoteId,UnitPrice,Quantity,PricebookEntryId,Product2Id FROM QuoteLineItem];
-           qt.DSALES_Enviarcotizacion__c=true;
-            qt2.DSALES_Enviarcotizacion__c=true;
-            
+           
             DSALES_Generador__c gene=[SELECT Id,Name,DSALES_Plantilla__c FROM DSALES_Generador__c   WHERE Name='Cotizacion Gex' LIMIT 1];
              System.debug('generador: '+gene.Id);
             PageReference pageRef = Page.Cotizacion;
@@ -113,7 +107,7 @@ public class DSALES_ControladorCotizacionGexTest {
             
            
             Test.stopTest();
-            System.assertEquals(qt.id, qt.Id, '');
+            System.assertEquals('quoteId', qt.Id, '');
         }
      @istest public  static void controladorCotizacionSG()
         {
@@ -139,7 +133,7 @@ public class DSALES_ControladorCotizacionGexTest {
             
            
             Test.stopTest();
-            System.assertEquals(qt.Id, qt.Id, '');
+            System.assertEquals('quoteId', qt.Id, '');
         }
     @istest public  static void controladorCotizacionSG2()
         {
@@ -164,7 +158,7 @@ public class DSALES_ControladorCotizacionGexTest {
             
            
             Test.stopTest();
-            System.assertEquals(qt2.Id, qt2.Id, '');
+            System.assertEquals('quoteId', qt2.Id, '');
 
         }
         

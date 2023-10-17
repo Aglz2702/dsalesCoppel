@@ -4,6 +4,7 @@
     <description>Envía enlace para descarga de Póliza suscrita</description>
     <encodingKey>UTF-8</encodingKey>
     <name>Envía Póliza</name>
+    <pageDevName>Env_a_P_liza</pageDevName>
     <relatedEntityType>InsurancePolicy</relatedEntityType>
     <style>none</style>
     <subject>Póliza de Moto</subject>

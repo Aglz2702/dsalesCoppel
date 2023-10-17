@@ -3,8 +3,9 @@
     <fullName>Mis_p_lizas</fullName>
     <columns>Name</columns>
     <columns>NameInsured</columns>
-    <columns>SourceOpportunity</columns>
-    <columns>dsalesEstatusPoliza__c</columns>
+    <columns>ExpirationDate</columns>
+    <columns>PremiumAmount</columns>
+    <columns>Status</columns>
     <filterScope>Mine</filterScope>
     <label>Mis pólizas</label>
 </ListView>

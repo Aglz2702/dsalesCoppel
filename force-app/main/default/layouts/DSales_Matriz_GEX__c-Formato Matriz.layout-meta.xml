@@ -18,8 +18,16 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_Region__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>DSALES_Tipo__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_Activo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -34,10 +42,6 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>DSALES_Tiempogex__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DSALES_Activo__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -71,7 +75,7 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <!--<platformActionList>
+    <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
             <actionName>Edit</actionName>
@@ -88,7 +92,7 @@
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
         </platformActionListItems>
-    </platformActionList>-->
+    </platformActionList>
     <quickActionList/>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
@@ -99,17 +103,13 @@
         <fields>PRODUCT2.DESCRIPTION</fields>
         <relatedList>Product2.DSALES_Matriz__c</relatedList>
     </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>dsalesAsignacionDeTienda__c.dsalesMatriz__c</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h75000000N9hX</masterLabel>
+        <masterLabel>00h8J000000IlEd</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

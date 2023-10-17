@@ -1,31 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
-    <sharingCriteriaRules>
-        <fullName>Familias_GEX</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Familias GEX</label>
-        <sharedTo>
-            <role>DSALES_Admin_GEX</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Producto Tangible,Servicios</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Familias_SM</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Familias SM</label>
-        <sharedTo>
-            <role>DSALES_Admin_SM</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Seguro de Motos</value>
-        </criteriaItems>
-        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
-    </sharingCriteriaRules>
-</SharingRules>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata"/>
+

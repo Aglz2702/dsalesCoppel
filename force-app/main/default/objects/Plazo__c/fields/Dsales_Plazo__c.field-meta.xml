@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Dsales_Plazo__c</fullName>
+    <fullName>DSALES_Plazo__c</fullName>
     <description>Campo para indicar el plazo en que se vende el seguro</description>
     <externalId>false</externalId>
     <label>Plazo</label>

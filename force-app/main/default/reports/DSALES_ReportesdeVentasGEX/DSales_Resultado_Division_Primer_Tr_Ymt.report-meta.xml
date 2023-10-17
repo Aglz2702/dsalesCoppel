@@ -648,7 +648,7 @@
     <name>Ventas por división por trimestre</name>
     <params>
         <name>lsk</name>
-        <value>1</value>
+        <value>45</value>
     </params>
     <reportType>QuoteProduct</reportType>
     <showDetails>false</showDetails>

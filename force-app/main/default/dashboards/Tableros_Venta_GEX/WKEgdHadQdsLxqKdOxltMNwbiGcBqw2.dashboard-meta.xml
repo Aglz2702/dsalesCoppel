@@ -152,6 +152,7 @@
                 <enableHover>false</enableHover>
                 <expandOthers>false</expandOthers>
                 <groupingColumn>Quote.DSALES_Regioon__c</groupingColumn>
+                <groupingColumn>FK_$Tienda__c.dsalesNombreGerenteDeTiendaDeZona__c</groupingColumn>
                 <groupingSortProperties>
                     <groupingSorts>
                         <groupingLevel>g1</groupingLevel>
@@ -388,7 +389,7 @@
     </dashboardGridLayout>
     <dashboardType>MyTeamUser</dashboardType>
     <isGridLayout>true</isGridLayout>
-    <runningUser>dmorquecho@deloittemx.com</runningUser>
+    <runningUser>lcastanedad@deloitte.com</runningUser>
     <textColor>#000000</textColor>
     <title>Tablero Ventas GEX</title>
     <titleColor>#000000</titleColor>

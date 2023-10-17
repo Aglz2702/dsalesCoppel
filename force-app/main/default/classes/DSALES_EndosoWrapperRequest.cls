@@ -10,7 +10,7 @@
 
 @RestResource(urlMapping='/insertEndoso/*')
 global with sharing class DSALES_EndosoWrapperRequest {
-     
+    
     /*********************************************************************************************************************************************************************
 @ Method Name :  createEndoso (HttpPost Method)
 @ Author : Namrata Katore
@@ -39,13 +39,6 @@ global with sharing class DSALES_EndosoWrapperRequest {
                 }
             }
         }
-        
-        DSALES_EndorsementWrapper.EndorsementResponse responsePayload1 = new DSALES_EndorsementWrapper.EndorsementResponse();
-        responsePayload1.mensaje = responsePayload.mensaje;
-        responsePayload1.success = responsePayload.success;
-        responsePayload1.mensajeError = responsePayload.mensajeError;
-        responsePayload1.codigoError = responsePayload.codigoError;
-        responsePayload1.idEndoso = responsePayload.idEndoso;
-        return responsePayload1; 
+        return responsePayload;  
     }
 }

@@ -21,14 +21,6 @@
                 <behavior>Edit</behavior>
                 <field>Description</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DSALES_Aplicaparamotoexterna__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesOpcionPago__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -88,7 +80,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Dsales_Plazo__c</fields>
+        <fields>DSALES_Plazo__c</fields>
         <fields>DSALES_Activo__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Plazo__c.dsalesSeguro__c</relatedList>

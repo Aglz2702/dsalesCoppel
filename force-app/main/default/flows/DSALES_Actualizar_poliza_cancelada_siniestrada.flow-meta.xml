@@ -2,6 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
     <description>Actualiza la póliza a cancelada y siniestrada cuando un siniestro es pagado de tipo robo total y perdida total</description>
+    <environments>Default</environments>
     <interviewLabel>Actualizar póliza a cancelada y siniestrada {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Actualizar póliza a cancelada y siniestrada</label>
     <processMetadataValues>

@@ -5,7 +5,6 @@
     <label>Artículo</label>
     <length>30</length>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

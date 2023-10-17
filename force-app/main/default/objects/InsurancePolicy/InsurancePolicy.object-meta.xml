@@ -142,7 +142,6 @@
         <lookupPhoneDialogsAdditionalFields>ExpirationDate</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PremiumAmount</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>Status</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>DSALES_TelefonoContacto__c</lookupPhoneDialogsAdditionalFields>
         <searchResultsAdditionalFields>NameInsured</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ExpirationDate</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>PremiumAmount</searchResultsAdditionalFields>

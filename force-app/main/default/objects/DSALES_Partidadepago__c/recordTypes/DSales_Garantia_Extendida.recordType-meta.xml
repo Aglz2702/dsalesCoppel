@@ -10,15 +10,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Codi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Documentos por Cobrar %28Convención y Sedesol%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Dolar</fullName>
+            <fullName>Dinero Electrónico</fullName>
             <default>false</default>
         </values>
         <values>

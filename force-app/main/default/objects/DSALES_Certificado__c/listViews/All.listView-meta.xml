@@ -5,8 +5,6 @@
     <columns>DSALES_Cliente__c</columns>
     <columns>DSALES_ProductoAdquirido__c</columns>
     <columns>DSALES_Estatus__c</columns>
-    <columns>CREATED_DATE</columns>
-    <columns>LAST_ACTIVITY</columns>
     <filterScope>Everything</filterScope>
     <label>Todos</label>
 </ListView>

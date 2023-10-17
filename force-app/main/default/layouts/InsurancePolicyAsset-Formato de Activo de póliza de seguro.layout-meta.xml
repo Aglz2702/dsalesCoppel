@@ -66,12 +66,16 @@
                 <field>DSALES_Clavevehicular__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>DSALES_Numeroserie__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DSALES_Valorfactura__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_Servicio__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -90,6 +94,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DSALES_Placas__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_Uso__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

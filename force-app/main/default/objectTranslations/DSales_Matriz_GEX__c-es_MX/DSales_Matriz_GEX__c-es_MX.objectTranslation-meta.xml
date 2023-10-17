@@ -24,10 +24,6 @@
         <label></label>
         <name>DSALES_ClonarMatriz</name>
     </quickActions>
-    <quickActions>
-        <label></label>
-        <name>Dsales_Asignaciondetiendas</name>
-    </quickActions>
     <validationRules>
         <errorMessage></errorMessage>
         <name>ValidacionActivo</name>

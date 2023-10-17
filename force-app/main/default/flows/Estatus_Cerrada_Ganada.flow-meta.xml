@@ -38,6 +38,7 @@
         </rules>
     </decisions>
     <description>Cierra la oportunidad como Cerrada Ganada si se registra un pago de Garantía Extendida</description>
+    <environments>Default</environments>
     <interviewLabel>Estatus Cerrada Ganada {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Estatus Cerrada Ganada</label>
     <processMetadataValues>

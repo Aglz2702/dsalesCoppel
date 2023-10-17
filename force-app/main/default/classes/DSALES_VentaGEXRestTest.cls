@@ -5,7 +5,6 @@ public with sharing class DSALES_VentaGEXRestTest {
     static void crearRegistro(){
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
         String recordTypeQuoteId = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Garantía Extendida').getRecordTypeId();
-        String recordTypeQuoteIdSg = Schema.SObjectType.Quote.getRecordTypeInfosByName().get('Venta de Seguro de Motos').getRecordTypeId();
         Tienda__c t = new Tienda__c();
         t.dsales_TiendaID__c =  'CPPL-UGARTE';
         insert t;
@@ -52,21 +51,10 @@ public with sharing class DSALES_VentaGEXRestTest {
         cotiza.RecordTypeId =recordTypeQuoteId;
         cotiza.DSales_Tienda__c = t.Id;
         cotiza.PriceBook2Id=pb2Id;
-        cotiza.DSALES_Enviarcotizacion__c=false;
        // cotiza.DSALES_Regioon__c = 'HERMOSILLO';
         cotiza.DSales_Division__c= '4';
         cotiza.ExpirationDate = date.today()+14;
         insert cotiza;
-        Quote cotizaSG = new Quote();
-         cotizaSG.Name = 'SG';
-        cotizaSG.OpportunityId = oppor.Id;
-        cotizaSG.RecordTypeId =recordTypeQuoteIdSG;
-        cotizaSG.DSales_Tienda__c = t.Id;
-        cotizaSG.PriceBook2Id=pb2Id;
-        cotizaSG.DSALES_Enviarcotizacion__c=false;
-        cotizaSG.DSales_Division__c= '4';
-        cotizaSG.ExpirationDate = date.today()+14;
-        insert cotizaSG;
           QuoteLineItem quote= new QuoteLineItem(QuoteId=cotiza.Id,UnitPrice=2,Quantity=2,PricebookEntryId=pb.Id,Product2Id=prod2.id,Vigencia_meses__c='12');
         insert quote;
         
@@ -80,12 +68,11 @@ public with sharing class DSALES_VentaGEXRestTest {
     
     @isTest 
     static void crearVentaTest(){
-        Quote cotiza=[SELECT id,DSALES_Enviarcotizacion__c FROM Quote WHERE NAME='GEX' LIMIT 1];
-         Quote cotizaSG=[SELECT id,DSALES_Enviarcotizacion__c FROM Quote WHERE NAME='SG' LIMIT 1];
+        Quote cotiza=[SELECT id FROM Quote LIMIT 1];
         QuoteLineItem qt=[SELECT Id FROM QuoteLineItem LIMIT 1]; 
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        String body = '{ "cliente":{ "numeroCliente":"","nombre": "Daniel","apellidoPaterno": "San Miguel","apellidoMaterno":"Cardona","telefono": "89017829","correoElectronico": "dsanmiguel@deloittemx.com","genero": "F","fechaNacimiento": "1992-08-02","nombreCiudad": "Monterrey","nombreEstado": "Nuevo Leon","domicilio": "Montreal","numeroExterior": "169","numeroInterior": "","colonia":"Valle de las Lomas","codigoPostal":"66758"},"quoteId":"'+cotiza.Id+'","fechaCompra":"1992-08-02","idTienda":"21","numeroCaja":"23","idVendedor":"27","nombreVendedor":"Daniel San Miguel Cárdenas","idFactura":"1233456","listaDeProductos":[{"skuDeTangible" :"123468911", "articulo":"Computadora"}],"listaDeCertificados":[ {  "skuDeTangible" :"123468911",  "idPartidaPresupuesto":"'+qt.id+'","modeloTangible": "Horno","marcaTangible": "Samsung","numeroSerie": "", "precioTangible": "13000","garantiaCoppelProducto" : "12","fechaInicioGarantiaExtendida":"1992-08-02"}   ],"pago":{"precioTotal":5000,"pagoConDineroElectronico":0,"pagoTarjeta":1500,"cheque":0,"reembolso":1500,"porcentajeIva":5,"PartidasDePago": [{"numPago": 1,"tipoDePago": "Efectivo","pago": 10000}]}} ';
+        String body = '{ "cliente":{ "numero_cliente":"","nombre": "Daniel","apellido_paterno": "San Miguel","apellido_materno":"Cardona","telefono": "89017829","correo_electronico": "dsanmiguel@deloittemx.com","genero": "F","fecha_nacimiento": "1992-08-02","nombre_ciudad": "Monterrey","nombre_estado": "Nuevo Leon","domicilio": "Montreal","numero_exterior": "169","numero_interior": "","colonia":"Valle de las Lomas","codigo_postal":"66758"},"quoteId":"'+cotiza.Id+'","fecha_compra":"1992-08-02","id_tienda":"21","numero_caja":"23","id_vendedor":"27","nombre_vendedor":"Daniel San Miguel Cárdenas","id_factura":"1233456","lista_de_productos":[{"sku_de_tangible" :"123468911", "articulo":"Computadora"}],"lista_de_certificados":[ {  "sku_de_tangible" :"123468911",  "id_partida_presupuesto":"'+qt.id+'","modelo_tangible": "Horno","marca_tangible": "Samsung","numero_serie": "", "precio_tangible": "13000","garantia_coppel_producto" : "12","fecha_inicio_garantia_extendida":"1992-08-02"}   ],"pago":{"precio_total":5000,"pago_con_dinero_electronico":0,"pago_tarjeta":1500,"cheque":0,"reembolso":1500,"porcentaje_iva":5,"PartidasDePago": [{"num_pago": 1,"tipo_de_pago": "Efectivo","pago": 10000}]}} ';
         req.requestURI = '/apexrest/ventaGex';
         req.httpMethod = 'POST';
         RestContext.request = req;
@@ -93,10 +80,6 @@ public with sharing class DSALES_VentaGEXRestTest {
         RestContext.response = res;
         DSALES_VentaGEX.VentaGexRequest venta = (DSALES_VentaGEX.VentaGexRequest)JSON.deserialize(body, DSALES_VentaGEX.VentaGexRequest.class);
         Test.startTest();
-        cotiza.DSALES_Enviarcotizacion__c=true;
-        cotizaSG.DSALES_Enviarcotizacion__c=true;
-        update cotiza;
-        update cotizaSG;
         DSALES_VentaGEX.VentaGexResponse ventaGex= new DSALES_VentaGEX.VentaGexResponse();
        DSALES_VentaGEX.OpporLineItem oporLine = new DSALES_VentaGEX.OpporLineItem();
         oporLine.idPartidaDeOportunidad='test';

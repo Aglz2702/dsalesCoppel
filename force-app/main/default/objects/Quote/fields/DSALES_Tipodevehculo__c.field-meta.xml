@@ -4,7 +4,6 @@
     <externalId>false</externalId>
     <label>Tipo de vehículo</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
@@ -12,18 +11,8 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Moto</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Moto</label>
-            </value>
-            <value>
-                <fullName>Carro</fullName>
-                <default>false</default>
-                <label>Carro</label>
-            </value>
-            <value>
-                <fullName>Pick up</fullName>
-                <default>false</default>
-                <label>Pick up</label>
             </value>
         </valueSetDefinition>
     </valueSet>

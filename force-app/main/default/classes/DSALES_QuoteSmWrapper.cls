@@ -71,6 +71,7 @@ global class DSALES_QuoteSmWrapper {
     global class ArmadoMuleSoft{
         global String trackingId {get;set;}
         global String paquete {get;set;}
+        global String paqueteAlias {get;set;}
         global String opcionPago {get;set;}
         global Data data {get;set;}
 	}
@@ -82,10 +83,12 @@ global class DSALES_QuoteSmWrapper {
         global String sku {get;set;}
         global String nombreProducto {get;set;}
         global List<String> plazosAplicables {get;set;}
+        global List<String> opcionPago {get;set;}
 	}
     global class RespuestaPlazos{
         global String trackingId {get;set;}
         global String paquete {get;set;}
+        global String paqueteAlias {get;set;}
         global String vigencia {get;set;}  
         global String idpartida {get;set;}
         global String descripcion {get;set;}
@@ -128,6 +131,7 @@ global class DSALES_QuoteSmWrapper {
         global Double derechos {get;set;}
         global Double primaTotal {get;set;}
     }   
+    
     global class PaymentOptionsJson{
         global String value {get;set;}
         global String label {get;set;}

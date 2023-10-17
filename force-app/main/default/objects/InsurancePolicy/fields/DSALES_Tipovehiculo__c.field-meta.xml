@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DSALES_Tipovehiculo__c</fullName>
     <externalId>false</externalId>
-    <formula>SourceQuote.dsalesTipoDeVehiculo__r.Name</formula>
+    <formula>TEXT(SourceQuote.DSALES_Tipodevehculo__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Tipo de vehículo</label>
     <required>false</required>

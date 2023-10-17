@@ -113,6 +113,7 @@
                 <operator>equals</operator>
                 <value>Opportunity.DSales_Garantia_Extendida</value>
             </criteriaItems>
+            
         </filter>
         <format>Summary</format>
         <name>Resultado -Región</name>

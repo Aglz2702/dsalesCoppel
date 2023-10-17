@@ -272,9 +272,9 @@ public with sharing class DSALES_QuotePagoSmTest {
         Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test2' WITH SECURITY_ENFORCED LIMIT 1 ];
         Plazo__c pl =[SELECT Id,Dsales_Plazo__c FROM Plazo__c  WHERE Dsales_Plazo__c='18' AND dsalesSeguro__r.Name='AMP' WITH SECURITY_ENFORCED LIMIT 1];
         System.debug('plazo de partida:'+ pl);
-        List<QuoteLineItem> partidas =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro'  AND DSALES_Plazo__c=:pl.Id AND quoteId=:cotizacion.Id LIMIT 1];
+        List<QuoteLineItem> partidas =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro'  AND DSALES_Plazo__c=:pl.Id AND quoteId=:cotizacion.Id WITH SECURITY_ENFORCED LIMIT 1];
         System.debug('PARTIDA CON PLAZO:'+partidas);
-        QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=false AND quoteId=:cotizacion.Id LIMIT 1];
+        QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=false AND quoteId=:cotizacion.Id WITH SECURITY_ENFORCED LIMIT 1];
         // DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE DSALES_Seguro__c=false  AND DSALES_Oportunidad__c=:cotizacion.OpportunityId LIMIT 1];
         Account acc=[SELECT Id FROM Account WHERE FirstName = 'Daniela' WITH SECURITY_ENFORCED LIMIT 1];
         List<String> idsPartidas = new List<String>();
@@ -302,8 +302,8 @@ public with sharing class DSALES_QuotePagoSmTest {
     public static void ventaMotoRcGratisTest(){
         Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test1'  WITH SECURITY_ENFORCED LIMIT 1];
         //Plazo__c pl =[SELECT Id,Dsales_Plazo__c FROM Plazo__c  WHERE Dsales_Plazo__c='18' LIMIT 1];
-        List<QuoteLineItem> partidas =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro' AND DSALES_Segurogratis__c=true AND quoteId=:cotizacion.Id LIMIT 1];
-        QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=true AND quoteId=:cotizacion.Id LIMIT 1];
+        List<QuoteLineItem> partidas =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Seguro' AND DSALES_Segurogratis__c=true AND quoteId=:cotizacion.Id WITH SECURITY_ENFORCED LIMIT 1];
+        QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=true AND quoteId=:cotizacion.Id WITH SECURITY_ENFORCED LIMIT 1];
         Account acc=[SELECT Id FROM Account WHERE FirstName = 'Daniela' LIMIT 1];
         
         List<String> idsPartidas = new List<String>();
@@ -332,7 +332,7 @@ public with sharing class DSALES_QuotePagoSmTest {
     @isTest 
     public static void ventaSoloMotoTest(){
         Quote cot=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test3'  WITH SECURITY_ENFORCED LIMIT 1];
-        QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=false  AND quoteId=:cot.Id LIMIT 1];
+        QuoteLineItem moto =[SELECT Id,DSALES_SKU__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c FROM QuoteLineItem WHERE DSALES_Tipodeproducto__c='Producto' AND DSALES_Segurogratis__c=false  AND quoteId=:cot.Id WITH SECURITY_ENFORCED LIMIT 1];
         //DSALES_InformacionDePago__c pago=[SELECT Id,DSALES_SKU__c FROM DSALES_InformacionDePago__c WHERE DSALES_Seguro__c=false AND DSALES_Oportunidad__c=:cot.OpportunityId LIMIT 1];
         Account acc=[SELECT Id FROM Account WHERE FirstName = 'Daniela' WITH SECURITY_ENFORCED LIMIT 1];
         Test.startTest();
@@ -364,7 +364,7 @@ public with sharing class DSALES_QuotePagoSmTest {
     @isTest
     static void testUpdateQot() {
         Quote testQuote=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test3'  WITH SECURITY_ENFORCED LIMIT 1];
-        QuoteLineItem testLineItem =[SELECT Id,QuoteId,DSALES_Segurogratis__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c,PricebookEntryId, Quantity, UnitPrice, Product2Id FROM QuoteLineItem WHERE QuoteId=:testQuote.Id LIMIT 1];
+        QuoteLineItem testLineItem =[SELECT Id,QuoteId,DSALES_Segurogratis__c,DSALES_Plazo__c,DSALES_Tipodeproducto__c,PricebookEntryId, Quantity, UnitPrice, Product2Id FROM QuoteLineItem WHERE QuoteId=:testQuote.Id WITH SECURITY_ENFORCED LIMIT 1];
         List<QuoteLineItem> listaMotoSeguroToInsert = new List<QuoteLineItem>{ testLineItem };
             Test.startTest();
         Quote updatedQuote =DSALES_QuotePagoSM.updateEnviarCot(listaMotoSeguroToInsert);
@@ -375,10 +375,10 @@ public with sharing class DSALES_QuotePagoSmTest {
     @isTest
     static void testCreateQlItms() {
         Quote cotizacion=[SELECT Id,DSales_Vendedor__c,OpportunityId FROM Quote WHERE Name='test1'  LIMIT 1];
-        List<QuoteLineItem> listMotoRc =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c,PricebookEntryId, UnitPrice,Quantity FROM QuoteLineItem WHERE quoteId=:cotizacion.Id LIMIT 1];
+        List<QuoteLineItem> listMotoRc =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c,PricebookEntryId, UnitPrice,Quantity FROM QuoteLineItem WHERE quoteId=:cotizacion.Id WITH SECURITY_ENFORCED LIMIT 1];
         List<QuoteLineItem> listPartidas =[SELECT Id,DSALES_Plazo__c,DSALES_Segurogratis__c,DSALES_Tipodeproducto__c,Product2Id,DSALES_NombreProducto__c FROM QuoteLineItem WHERE DSALES_Segurogratis__c!=true AND QuoteId=:cotizacion.Id AND DSALES_Plazo__r.Dsales_Plazo__c='18' WITH SECURITY_ENFORCED LIMIT 1];
         List<Plazo__c> plazos =[SELECT Id,Dsales_Plazo__c FROM Plazo__c  WHERE Dsales_Plazo__c='18' WITH SECURITY_ENFORCED LIMIT 1];
-        List<PricebookEntry> pricebookEntries=[SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Name='PLUS' LIMIT 1]; 
+        List<PricebookEntry> pricebookEntries=[SELECT Id, Name, UnitPrice, Product2Id FROM PricebookEntry WHERE Name='PLUS' WITH SECURITY_ENFORCED LIMIT 1]; 
         List<String> idsPartidas = new List<String>();
         for(QuoteLineItem ql:listPartidas){
             idsPartidas.add(ql.Id);

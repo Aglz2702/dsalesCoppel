@@ -91,7 +91,7 @@
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>Account$DSALES_Fecha_alta__c</dateColumn>
+        <dateColumn>Account$FinServ__InsuranceCustomerSince__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
     </timeFrameFilter>
 </Report>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>CreateAccountChannel</excludeButtons>
@@ -39,53 +40,21 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>dsalesRfc__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>DSALES_Metodocontacto__pc</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesTipoPersona__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesNombreApoderadoLegal__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesFechaConstitucion__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PersonEmail</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>PersonBirthdate</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PersonEmail</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesSegundoCorreo__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>DSALES_DeseaserContactado__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesActividad__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesGiroComercial__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesNacionalidadSociedad__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -138,18 +107,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillingAddress</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesCodigoColonia__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesNumeroExterior__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>dsalesNumeroInterior__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -232,18 +189,17 @@
     </quickActionList>
     <relatedLists>
         <fields>Name</fields>
-        <fields>DSALES_Cobertura__c</fields>
-        <fields>EffectiveDate</fields>
-        <fields>ExpirationDate</fields>
-        <relatedList>InsurancePolicies</relatedList>
+        <fields>ClaimType</fields>
+        <fields>Status</fields>
+        <fields>ApprovedAmount</fields>
+        <relatedList>RelatedClaimList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Name</fields>
-        <fields>PolicyNumber</fields>
-        <fields>ClaimType</fields>
-        <fields>DSALES_Estatus__c</fields>
-        <fields>CreatedDate</fields>
-        <relatedList>RelatedClaimList</relatedList>
+        <fields>PolicyType</fields>
+        <fields>EffectiveDate</fields>
+        <fields>ExpirationDate</fields>
+        <relatedList>InsurancePolicies</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -272,17 +228,14 @@
         <fields>DSALES_Factura__c</fields>
         <fields>DSALES_Certificado__c</fields>
         <fields>DSALES_ProductoAdquirido__c</fields>
-        <fields>DSales_Tienda__c</fields>
-        <fields>DSALES_Montototal__c</fields>
-        <fields>DSALES_Fecha__c</fields>
         <fields>DSALES_SKU__c</fields>
         <relatedList>DSALES_InformacionDePago__c.DSALES_Cliente__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>DSALES_Poliza__c</fields>
-        <fields>DSALES_Tipodeendoso__c</fields>
         <fields>DSALES_Estatus__c</fields>
+        <fields>DSALES_Tipodeendoso__c</fields>
         <relatedList>DSALES_Endoso__c.DSALES_Cliente__c</relatedList>
     </relatedLists>
     <relatedLists>
