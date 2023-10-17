@@ -123,7 +123,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         part.genero='Femenino';
         part.fechaNacimiento=Date.today();
         part.rfc='123678';
-        part.codigoPostal=22945;
+        part.codigoPostal=22860;
         part.codigoEstado='12';
         part.codigoCiudad='12';
         part.codigoColonia='12';
@@ -148,7 +148,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         part.genero='Femenino';
         part.fechaNacimiento=Date.today();
         part.rfc='123678';
-        part.codigoPostal=1224324;
+        part.codigoPostal=22860;
         part.codigoEstado='12';
         part.codigoCiudad='12';
         part.codigoColonia='12';
@@ -167,7 +167,7 @@ public with sharing class DSALES_CreateInsurancePolicyTest {
         part2.genero='Femenino';
         part2.fechaNacimiento=Date.today();
         part2.rfc='123678';
-        part2.codigoPostal=1224324;
+        part2.codigoPostal=24324;
         part2.codigoEstado='12';
         part2.codigoCiudad='12';
         part2.codigoColonia='12';

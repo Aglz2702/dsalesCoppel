@@ -25,9 +25,9 @@ global without sharing class DSALES_VentaSMRest {
                     System.debug('venta request: '+body);
                     String idUnico=venta.pagos.idUniversal;
                     List<DSALES_InformacionDePago__c> verificaIdUniversal =[SELECT Id,DSALES_IDUniversal1__c FROM DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c =: idUnico WITH SECURITY_ENFORCED LIMIT 1];
-                    System.debug('in universal recibido: '+ idUnico);
                     if(verificaIdUniversal!=null && verificaIdUniversal.size()>0){
                         mensajeError='El id universal: '+idUnico+ ' ya existe' ;
+                        System.debug('El id universal: ' +idUnico+ ' ya existe');
                         exito=false;
                         codigoError=401;
                     }
@@ -53,10 +53,10 @@ global without sharing class DSALES_VentaSMRest {
                     codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;
                     idUniversal='';
                     Quote cotSincro = [SELECT Id FROM Quote WHERE OpportunityId=:oppor.Id AND IsSyncing=true WITH SECURITY_ENFORCED ];
-                    DSALES_VentaSCRest.IdsBorrar datosE = new DSALES_VentaSCRest.IdsBorrar();
+                    DSALES_EliminarRegistrosDeVenta.IdsBorrar datosE = new DSALES_EliminarRegistrosDeVenta.IdsBorrar();
                     datosE.idCotPrincipal=cotizacion.Id;
                     datosE.idCotSincro=cotSincro.Id;
-                    DSALES_VentaSCRest.eliminarRegistros(oppor,datosE);
+                    DSALES_EliminarRegistrosDeVenta.eliminarRegistros(oppor,datosE);
                 }
             }
         }
@@ -113,12 +113,10 @@ global without sharing class DSALES_VentaSMRest {
     }
 
     public static String crearCliente(List<DSALES_VentaSM.DatosParticipante> participantes, String recortypeName){
-        system.debug('data de participantes______'+participantes);
         DSALES_VentaSM.DatosParticipante participante = new DSALES_VentaSM.DatosParticipante();
         DSALES_AccountWrapper.AccountRequest cliente= new DSALES_AccountWrapper.AccountRequest();
         for(DSALES_VentaSM.DatosParticipante item: participantes){
             if((item.figura==CONDUCTOR && recortypeName=='Seguro_de_Moto') || (item.figura==DSALES_Utility.FIGURA_CONTRATANTE && recortypeName=='dsalesSeguroCelulares')){
-                System.debug('propietario:'+item);
                 participante.numeroCliente=item.numeroCliente;
                 participante.nombre = item.nombre;
                 participante.apellidoPaterno = item.apellidoPaterno;
@@ -126,8 +124,6 @@ global without sharing class DSALES_VentaSMRest {
                 participante.telefono = item.telefono;
                 participante.correoElectronico = item.correoElectronico;
                 participante.genero = item.genero;
-                System.debug('Genero asignado:'+item.genero);
-                System.debug('Genero en data:'+participante.genero);
                 participante.fechaNacimiento = item.fechaNacimiento;
                 participante.calle = item.calle;
                 participante.codigoCiudad =  item.codigoCiudad;
@@ -135,7 +131,6 @@ global without sharing class DSALES_VentaSMRest {
                 participante.numeroInterior=item.numeroInterior;
                 participante.numeroExterior=item.numeroExterior;
                 participante.codigoEstado=item.codigoEstado; //clave de estado en SM
-                System.debug('codigo Estado:'+participante.codigoEstado);
                 participante.codigoColonia=item.codigoColonia; //clave colonia SM
                 participante.rfc=item.rfc;
                 participante.codigoMunicipio=item.codigoMunicipio;
@@ -166,13 +161,14 @@ global without sharing class DSALES_VentaSMRest {
     public static DSALES_VentaSM.DatosParaEmitir datosParaEmitir(DSALES_VentaSM.VentaSMRequest venta,String idPoliza){ 
         DSALES_VentaSM.DatosParaEmitir response = new DSALES_VentaSM.DatosParaEmitir();
         DSALES_VentaSM.DatosSeguro datosSeguro= new DSALES_VentaSM.DatosSeguro();
-        DSALES_VentaSM.DatosVehiculo vehiculo = new DSALES_VentaSM.DatosVehiculo();
-        DSALES_VentaSM.DatosCelular celular = new DSALES_VentaSM.DatosCelular();
+        //DSALES_VentaSM.DatosVehiculo vehiculo = new DSALES_VentaSM.DatosVehiculo();
+        //DSALES_VentaSM.DatosCelular celular = new DSALES_VentaSM.DatosCelular();
         List<DSALES_VentaSM.DatosParticipante> datos = new List<DSALES_VentaSM.DatosParticipante>();
         DSALES_VentaSM.DatosParticipante contratante = new DSALES_VentaSM.DatosParticipante();
         DSALES_VentaSM.DatosParaEmitir pruenas = new DSALES_VentaSM.DatosParaEmitir();
         DSALES_VentaSM.DatosConductor datosConductor = new DSALES_VentaSM.DatosConductor();
         DSALES_VentaSM.DatosContratante datosContratante = new DSALES_VentaSM.DatosContratante();
+        ValoresParaAsignar valores = new ValoresParaAsignar();
         if(venta.activo.emitirPoliza==true){
             Insurancepolicy poliza =[SELECT Id,dsalesIMEI__c,DSALES_Modelo__c,RecordType.DeveloperName, dsalesEstatusPoliza__c,DSALES_Uso__c,PlanType,DSALES_Tipovehiculo__c,DSALES_Servicio__c,DSALES_Placas__c,DSALES_Numeroserie__c,SourceQuoteId,DSALES_Aseguradora__c,DSALES_Cobertura__c,dsalesFechaDeEmision__c,EffectiveDate,DSALES_Negocio__c,DSALES_Opcionpago__c,dsalesTipoServicio__c,dsalesTipoUso__c FROM Insurancepolicy WHERE Id=:idPoliza WITH SECURITY_ENFORCED];
             Quote cotizacion =[SELECT Id,dsalesIdDeVehiculo__c,dsalesNumeroSucursal__c,	dsalesCodigoDePromocion__c,DSALES_IDdelasociado__c,DSALES_RFC__c,dsalesFechaDeComienzoDePoliza__c,dsalesValorFactura__c FROM Quote WHERE Id=:poliza.SourceQuoteId WITH SECURITY_ENFORCED];
@@ -183,53 +179,12 @@ global without sharing class DSALES_VentaSMRest {
             }else{
                 System.debug('Permisos insuficientes para actualizar');   
             }
-            System.debug('datos para emitir poliza recortype_________________________:'+poliza.RecordType.DeveloperName);
-            System.debug('Datos del participante:______________'+venta.datosParticipantes);
-            for(DSALES_VentaSM.DatosParticipante p:venta.datosParticipantes){
-                if(p.figura==DSALES_Utility.FIGURA_CONDUCTOR ){
-                    System.debug('toma los datos del conductor que llegan de la venta_________________________');
-                    datosConductor.nombre=p.nombre;
-                    datosConductor.apellidoPaterno=p.apellidoPaterno;
-                    datosConductor.apellidoMaterno=p.apellidoMaterno;
-                    datosConductor.telefono=p.telefono;
-                    datosConductor.correoElectronico=p.correoElectronico;
-                    datosConductor.genero=p.genero;
-                    datosConductor.fechaNacimiento=p.fechaNacimiento;
-                    datosConductor.rfc=p.rfc;
-                    datosConductor.codigoPostal=p.codigoPostal;
-                    datosConductor.calle=p.calle;
-                    datosConductor.codigoEstado=p.codigoEstado;
-                    datosConductor.codigoCiudad=p.codigoCiudad;
-                    datosConductor.codigoColonia=p.codigoColonia;
-                    datosConductor.numeroInterior=p.numeroInterior;
-                    datosConductor.numeroExterior=p.numeroExterior;
-                    datosConductor.codigoMunicipio=p.codigoMunicipio;
-                }
-                if(venta.envioContratante==true && p.figura==DSALES_Utility.FIGURA_CONTRATANTE ){
-                    System.debug('toma los datos del contratante desde la venta________________________');
-                    if(poliza.RecordType.DeveloperName=='dsalesSeguroCelulares'){
-                        datosContratante.nombre=p.nombre;
-                        datosContratante.apellidoPaterno=p.apellidoPaterno;
-                        datosContratante.apellidoMaterno=p.apellidoMaterno;
-                        datosContratante.regimenFiscal=p.regimenFiscal;
-                        datosContratante.nacionalidad=p.nacionalidad;
-                        datosContratante.codigoMunicipio=p.codigoMunicipio;
-                    }
-                    datosContratante.telefono=p.telefono;
-                    datosContratante.correoElectronico=p.correoElectronico;
-                    datosContratante.genero=p.genero;
-                    datosContratante.fechaNacimiento=p.fechaNacimiento;
-                    datosContratante.rfc=p.rfc;
-                    datosContratante.codigoPostal=p.codigoPostal;
-                    datosContratante.calle=p.calle;
-                    datosContratante.codigoEstado=p.codigoEstado;
-                    datosContratante.codigoCiudad=p.codigoCiudad;
-                    datosContratante.codigoColonia=p.codigoColonia;
-                    datosContratante.numeroInterior=p.numeroInterior;
-                    datosContratante.numeroExterior=p.numeroExterior;
-                }
-            }
-            System.debug('datos del contratante_________-'+datosContratante);
+            
+            FiguraAEnviar figuras=asignarParticipante(venta.datosParticipantes,poliza,venta.envioContratante);
+            datosConductor=figuras.datosConductor;
+            datosContratante=figuras.datosContratante;
+            System.debug('datosContratante_______________________'+datosContratante);
+            System.debug('datosConductor_________________________'+datosConductor);
             datosContratante=validarContratante(venta.envioContratante,datosContratante);
             datosSeguro.quote_id=seguro.dsalesQuoteId__c;
             datosSeguro.fechaEmision=poliza.dsalesFechaDeEmision__c;
@@ -237,43 +192,106 @@ global without sharing class DSALES_VentaSMRest {
             datosSeguro.negocio=poliza.DSALES_Negocio__c;
             datosSeguro.opcionPago=seguro.dsalesOpcionPago__c;
             datosSeguro.paquete=poliza.DSALES_Cobertura__c;
-            if(poliza.RecordType.DeveloperName=='dsalesSeguroMotos'){
-                datosSeguro.valorfactura=String.valueOf(cotizacion.dsalesValorFactura__c);
-                datosSeguro.trackingId=seguro.DSALES_TrackingID__c;
-                datosSeguro.codigoPromocion=cotizacion.dsalesCodigoDePromocion__c;
-                datosSeguro.fechaInicio=cotizacion.dsalesFechaDeComienzoDePoliza__c;
-                datosSeguro.idAsociado=cotizacion.DSALES_IDdelasociado__c;
-                datosSeguro.planPago='';
-                datosSeguro.tarjetaPago='';
-                datosSeguro.sumaAsegurada=0;
-                vehiculo.idVehiculo=cotizacion.dsalesIdDeVehiculo__c;
-                vehiculo.modelo=poliza.DSALES_Modelo__c;
-                vehiculo.numeroSerie=poliza.DSALES_Numeroserie__c;
-                vehiculo.placas=poliza.DSALES_Placas__c;
-                vehiculo.sevicio=poliza.dsalesTipoServicio__c;
-                vehiculo.tipo=poliza.DSALES_Tipovehiculo__c;
-                vehiculo.uso=poliza.dsalesTipoUso__c;
-                response.datosVehiculo=vehiculo;
-                response.beneficiarioPreferente=String.valueOf(venta.beneficiarioPreferente);
-                response.contratante=venta.contratante;
-                response.datosConductor=datosConductor;
-            }
-            else if(poliza.RecordType.DeveloperName=='dsalesSeguroCelulares'){
-                datosSeguro.montoSeguro=seguro.UnitPrice;
-                response.sucursal=cotizacion.dsalesNumeroSucursal__c;
-                celular.imei=poliza.dsalesIMEI__c;
-                celular.marcacelular=venta.activo.marca;
-                celular.modeloCelular=venta.activo.modelo;
-                //celular.numeroCredito=venta.activo.
-                celular.numeroSerie=venta.activo.numeroSerie;
-                celular.plazoCredito=venta.pagos.plazos;
-                response.datosCelular=celular;
-            }
+            valores.poliza=poliza;
+            valores.cotizacion=cotizacion;
+            valores.seguro=seguro;
+            response=asignarDatos(valores,venta,datosConductor);
             response.datosContratante=datosContratante; 
             response.datosSeguro=datosSeguro;       
         }
         System.debug('response: '+response);
         return response;
+    }
+    public static FiguraAEnviar asignarParticipante(List<DSALES_VentaSM.DatosParticipante> datosParticipantes,Insurancepolicy poliza, Boolean envioContratante){
+        DSALES_VentaSM.DatosConductor datosConductor = new DSALES_VentaSM.DatosConductor ();
+        DSALES_VentaSM.DatosContratante datosContratante = new DSALES_VentaSM.DatosContratante();
+        FiguraAEnviar figuras= new FiguraAEnviar();
+        for(DSALES_VentaSM.DatosParticipante p:datosParticipantes){
+            if(p.figura==DSALES_Utility.FIGURA_CONDUCTOR ){
+                datosConductor.nombre=p.nombre;
+                datosConductor.apellidoPaterno=p.apellidoPaterno;
+                datosConductor.apellidoMaterno=p.apellidoMaterno;
+                datosConductor.telefono=p.telefono;
+                datosConductor.correoElectronico=p.correoElectronico;
+                datosConductor.genero=p.genero;
+                datosConductor.fechaNacimiento=p.fechaNacimiento;
+                datosConductor.rfc=p.rfc;
+                datosConductor.codigoPostal=p.codigoPostal;
+                datosConductor.calle=p.calle;
+                datosConductor.codigoEstado=p.codigoEstado;
+                datosConductor.codigoCiudad=p.codigoCiudad;
+                datosConductor.codigoColonia=p.codigoColonia;
+                datosConductor.numeroInterior=p.numeroInterior;
+                datosConductor.numeroExterior=p.numeroExterior;
+                datosConductor.codigoMunicipio=p.codigoMunicipio;
+                figuras.datosConductor=datosConductor;
+            }
+            if(envioContratante==true && p.figura==DSALES_Utility.FIGURA_CONTRATANTE ){
+                if(poliza.RecordType.DeveloperName=='dsalesSeguroCelulares'){
+                    datosContratante.nombre=p.nombre;
+                    datosContratante.apellidoPaterno=p.apellidoPaterno;
+                    datosContratante.apellidoMaterno=p.apellidoMaterno;
+                    datosContratante.regimenFiscal=p.regimenFiscal;
+                    datosContratante.nacionalidad=p.nacionalidad;
+                    datosContratante.codigoMunicipio=p.codigoMunicipio;
+                }
+                datosContratante.telefono=p.telefono;
+                datosContratante.correoElectronico=p.correoElectronico;
+                datosContratante.genero=p.genero;
+                datosContratante.fechaNacimiento=p.fechaNacimiento;
+                datosContratante.rfc=p.rfc;
+                datosContratante.codigoPostal=p.codigoPostal;
+                datosContratante.calle=p.calle;
+                datosContratante.codigoEstado=p.codigoEstado;
+                datosContratante.codigoCiudad=p.codigoCiudad;
+                datosContratante.codigoColonia=p.codigoColonia;
+                datosContratante.numeroInterior=p.numeroInterior;
+                datosContratante.numeroExterior=p.numeroExterior;
+                figuras.datosContratante=datosContratante;
+            }
+        }
+        return figuras;
+
+    }
+    public static DSALES_VentaSM.DatosParaEmitir asignarDatos(ValoresParaAsignar valores,DSALES_VentaSM.VentaSMRequest venta,DSALES_VentaSM.DatosConductor datosConductor ){
+        DSALES_VentaSM.DatosSeguro datosSeguro = new DSALES_VentaSM.DatosSeguro();
+        DSALES_VentaSM.DatosVehiculo vehiculo = new DSALES_VentaSM.DatosVehiculo();
+        DSALES_VentaSM.DatosCelular celular = new  DSALES_VentaSM.DatosCelular ();
+        DSALES_VentaSM.DatosParaEmitir response = new DSALES_VentaSM.DatosParaEmitir();
+        if(valores.poliza.RecordType.DeveloperName=='dsalesSeguroMotos'){
+            datosSeguro.valorfactura=String.valueOf(valores.cotizacion.dsalesValorFactura__c);
+            datosSeguro.trackingId=valores.seguro.DSALES_TrackingID__c;
+            datosSeguro.codigoPromocion=valores.cotizacion.dsalesCodigoDePromocion__c;
+            datosSeguro.fechaInicio=valores.cotizacion.dsalesFechaDeComienzoDePoliza__c;
+            datosSeguro.idAsociado=valores.cotizacion.DSALES_IDdelasociado__c;
+            datosSeguro.planPago='';
+            datosSeguro.tarjetaPago='';
+            datosSeguro.sumaAsegurada=0;
+            vehiculo.idVehiculo=valores.cotizacion.dsalesIdDeVehiculo__c;
+            vehiculo.modelo=valores.poliza.DSALES_Modelo__c;
+            vehiculo.numeroSerie=valores.poliza.DSALES_Numeroserie__c;
+            vehiculo.placas=valores.poliza.DSALES_Placas__c;
+            vehiculo.sevicio=valores.poliza.dsalesTipoServicio__c;
+            vehiculo.tipo=valores.poliza.DSALES_Tipovehiculo__c;
+            vehiculo.uso=valores.poliza.dsalesTipoUso__c;
+            response.datosVehiculo=vehiculo;
+            response.beneficiarioPreferente=String.valueOf(venta.beneficiarioPreferente);
+            response.contratante=venta.contratante;
+            response.datosConductor=datosConductor;
+        }
+        else if(valores.poliza.RecordType.DeveloperName=='dsalesSeguroCelulares'){
+            datosSeguro.montoSeguro=valores.seguro.UnitPrice;
+            response.sucursal=valores.cotizacion.dsalesNumeroSucursal__c;
+            celular.imei=valores.poliza.dsalesIMEI__c;
+            celular.marcacelular=venta.activo.marca;
+            celular.modeloCelular=venta.activo.modelo;
+            //celular.numeroCredito=venta.activo.
+            celular.numeroSerie=venta.activo.numeroSerie;
+            celular.plazoCredito=venta.pagos.plazos;
+            response.datosCelular=celular;
+        }
+        return response;
+
     }
     public static DSALES_VentaSM.DatosContratante validarContratante(Boolean envioContratante, DSALES_VentaSM.DatosContratante participante){
         DSALES_VentaSM.DatosContratante contratante = new DSALES_VentaSM.DatosContratante();
@@ -362,13 +380,11 @@ global without sharing class DSALES_VentaSMRest {
         DSALES_VentaSM.DatosParaEmitir datosEmitir = new DSALES_VentaSM.DatosParaEmitir();
         DatosRetornoVenta  retorno = new DatosRetornoVenta ();
         if(!String.isEmpty(venta.servico) && venta.servico=='CELULAR'){ //venta celulares
-            System.debug('venta de celulares___________');
             DSALES_VentaSM.VentaSMResponse responseCelular= DSALES_VentaSCRest.crearVenta(venta);
             retorno.idCliente=responseCelular.idClienteSalesforce;
             retorno.datosEmitir=responseCelular.datosParaEmitir;
         }
         else{ //venta motos
-            System.debug('venta motos_________');
             retorno= ventaMotos(venta,oppor);
         }
         return retorno;
@@ -377,5 +393,14 @@ global without sharing class DSALES_VentaSMRest {
     public class DatosRetornoVenta{
         public DSALES_VentaSM.DatosParaEmitir datosEmitir {get;set;}
         public String idCliente{get;set;}
+    }
+    private class ValoresParaAsignar{
+        Insurancepolicy poliza{get;set;}
+        Quote cotizacion{get;set;}
+        QuoteLineItem seguro{get;set;}
+    }
+    private class FiguraAEnviar{
+        DSALES_VentaSM.DatosConductor datosConductor {get;set;}
+        DSALES_VentaSM.DatosContratante datosContratante {get;set;}
     }
 }

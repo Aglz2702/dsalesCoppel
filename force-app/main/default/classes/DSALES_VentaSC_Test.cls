@@ -49,26 +49,6 @@ public with sharing class DSALES_VentaSC_Test {
         Tienda__c t = new Tienda__c();
         t.DSales_TiendaID__c =  '2';
         insert t;
-        
-        /*OpportunityLineItem oppItem = new OpportunityLineItem();
-        oppItem.Product2Id = prodRc.Id;
-        oppItem.OpportunityId = opp.Id;
-        oppItem.Quantity =1;
-        oppItem.TotalPrice = 12000;
-        insert oppItem;
-        
-        OpportunityLineItem oppItem1 = new OpportunityLineItem();
-        oppItem1.Product2Id = prodAmp.Id;
-        oppItem1.OpportunityId = opp.Id;
-        oppItem1.Quantity = 1;
-        oppItem1.TotalPrice = 1000;
-        insert oppItem1;*/
-
-        /*InsurancePolicy ip = new InsurancePolicy(Name='prepoliza',NameInsuredId=acc.id,DSALES_CorreoElectronico__c='saymartinez@deloittemx.com', SourceOpportunityId=opp.Id);
-        insert ip;
-        
-        DSALES_InformacionDePago__c pago = new DSALES_InformaciondePago__c(DSALES_Oportunidad__c=opp.id,DSALES_Cliente__c=acc.Id,DSALES_Clave_Tienda__c='1',DSALES_Seguro__c=true,DSALES_IDUniversal1__c='2023031400015666634', DSALES_Poliza__c= ip.Id);
-        insert pago;*/
         Quote cotizacion = new Quote(RecordTypeId=quoteRecordType,OpportunityId=opp.Id,Name='test',DSales_Tienda__c=t.Id);
         insert cotizacion;
         Plazo__c plazo12 = new Plazo__c();
@@ -109,33 +89,33 @@ public with sharing class DSALES_VentaSC_Test {
         celSeguro.Quantity = 1.0;
         celSeguro.UnitPrice = customPrice.UnitPrice;
         insert celSeguro;
-
     }
-
     @isTest
     public static void ventaSeguroyCelTest(){
         RestRequest request=new RestRequest();
         RestResponse response = new RestResponse();
-        Product2 producto =[SELECT Id FROM Product2 WHERE Name='Seguro de celulares' LIMIT 1];
         Plazo__c plazo=[SELECT Id FROM Plazo__c WHERE Name='12' LIMIT 1];
         Quote cot =[SELECT Id,OpportunityId,Opportunity.Name FROM Quote WHERE Name='test' LIMIT 1];
-        QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  QuoteId=:cot.Id AND DSALES_Tipodeproducto__c='Seguro' LIMIT 1];
-        String body='{"servico":"CELULAR","idCotizacion":"'+cot.Id+'","idPartidaPresupuesto":["'+partida.Id+'"],"pagos":{"idUniversal":"206009199675811316521524","tipoFolio":"01","folioTransaccion":"614100","totalFactura":null,"precioRedondeado":803,"seguro":true,"nombreVendedor":"ELIBERT FERNANDO PARRA BAEZ","numeroCaja":"33","claveTienda":"2","sku":"121212","fechaVenta":"2022-09-26","plazos":12,"ListaDePagos":[{"metodoPago":"Efectivo","pago":32707}]},"beneficiarioPreferente":true,"contratante":"false","envioContratante":true,"datosParticipantes":[{"figura":"contratante","numeroCliente":"","nombre":"RICARDO","apellidoPaterno":"NORIEGA","apellidoMaterno":"GUERRERO","telefono":"1234567890","relacionConParticipante":"","porcentaje":"0","correoElectronico":"saymartinez@deloittemx.com","genero":"M","fechaNacimiento":"1987-09-23","rfc":"NOGR001011","codigoPostal":99010,"codigoEstado":"32","codigoCiudad":"10","codigoColonia":"2","calle":"TAYAHUA","numeroExterior":"218","numeroInterior":"0","curp":"MAQS9834582DURN","regimenFiscal":1345,"nacionalidad":"Mexicana"}],"activo":{"emitirPoliza":false,"imei":99,"almacenamiento":32,"cpu":12.3,"tamanoPantalla":6,"precio":1230,"ram":4,"operadorTelefonico":"AT&T","annio":2023,"color":"azul","nombreActivo":"Iphone 14"}}';
+       	QuoteLineItem partida =[SELECT Id FROM QuoteLineItem WHERE  QuoteId=:cot.Id AND DSALES_Tipodeproducto__c='Seguro' LIMIT 1];
+        String body='{"servico":"CELULAR","idCotizacion":"'+cot.Id+'","idPartidaPresupuesto":["'+partida.Id+'"],"pagos":{"idUniversal":"206009199675811316521524","tipoFolio":"01","folioTransaccion":"614100","totalFactura":null,"precioRedondeado":803,"seguro":true,"nombreVendedor":"ELIBERT FERNANDO PARRA BAEZ","numeroCaja":"33","claveTienda":"2","sku":"121212","fechaVenta":"2022-09-26","plazos":12,"ListaDePagos":[{"metodoPago":"Efectivo","pago":32707}]},"beneficiarioPreferente":true,"contratante":"false","envioContratante":true,"datosParticipantes":[{"figura":"contratante","numeroCliente":"","nombre":"RICARDO","apellidoPaterno":"NORIEGA","apellidoMaterno":"GUERRERO","telefono":"1234567890","relacionConParticipante":"","porcentaje":"0","correoElectronico":"saymartinez@deloittemx.com","genero":"M","fechaNacimiento":"1987-09-23","rfc":"NOGR001011","codigoPostal":99010,"codigoEstado":"32","codigoCiudad":"10","codigoColonia":"2","calle":"TAYAHUA","numeroExterior":"218","numeroInterior":"0","curp":"MAQS9834582DURN","regimenFiscal":1345,"nacionalidad":"Mexicana"}],"activo":{"emitirPoliza":true,"imei":99,"almacenamiento":32,"cpu":12.3,"tamanoPantalla":6,"precio":1230,"ram":4,"operadorTelefonico":"AT&T","annio":2023,"color":"azul","nombreActivo":"Iphone 14"}}';
         DSALES_VentaSM.VentaSMRequest venta =(DSALES_VentaSM.VentaSMRequest)JSON.deserialize (body,DSALES_VentaSM.VentaSMRequest.class);
         Test.startTest();
+        //Opportunity oportunidad =[SELECT Id,StageName,SyncedQuoteId FROM Opportunity WHERE Id=:cot.OpportunityId];
+        DSALES_VentaSM.VentaSMResponse respuesta =DSALES_VentaSCRest.crearVenta(venta);
+        /*System.debug('datos de retorno en test_____'+respuesta);
+        List<OpportunityLineItem> listaPartidas=DSALES_VentaSCRest.obtenerPartidasSincronizadas(oportunidad);
+        System.debug('test:: lista partidas sincronizadas_______-'+listaPartidas);*/
         Opportunity oportunidad =[SELECT Id,StageName,SyncedQuoteId FROM Opportunity WHERE Id=:cot.OpportunityId];
         System.debug('oportunidad en test:  '+oportunidad);
-        //Quote cot2 =[SELECT Id,OpportunityId,Opportunity.Name FROM Quote WHERE OpportunityId=:oportunidad.Id AND IsSyncing=true LIMIT 1];
-        DSALES_VentaSM.VentaSMResponse respuesta =DSALES_VentaSCRest.crearVenta(venta);
-        DSALES_VentaSCRest.consultarCotizacionAEliminar(cot.OpportunityId,cot.Id);
-        DSALES_VentaSCRest.obtenerPartidasSincronizadas(oportunidad);
-       // InsurancePolicy poliza=DSALES_VentaSCRest.consultarPoliza(cot.OpportunityId,cot2.Id);
+        
+        //DSALES_VentaSCRest.consultarCotizacionAEliminar(cot.OpportunityId,cot.Id);
         DSALES_VentaSCRest.IdsBorrar datos= new DSALES_VentaSCRest.IdsBorrar();
         datos.idCotPrincipal=cot.Id;
-        //datos.idCotSincro=poliza.SourceQuoteId;
-        //DSALES_VentaSCRest.eliminarRegistros(oportunidad, datos);
+        datos.idCotSincro=oportunidad.SyncedQuoteId;
+        DSALES_VentaSCRest.eliminarRegistros(oportunidad, datos);
         Test.stopTest();
         System.assertNotEquals(true, respuesta.exito, 'OK');
     }
+
     
 }
