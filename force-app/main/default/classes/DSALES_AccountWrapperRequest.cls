@@ -37,11 +37,14 @@ global with sharing class DSALES_AccountWrapperRequest {
         Account accountRecord = new Account();
         System.debug('datos de cliente antes de buscar:'+cliente);
         try{
-            if(cliente.numeroCliente == null || String.isEmpty(cliente.numeroCliente)){
+           
+            if(cliente.numeroCliente == null || String.isEmpty(cliente.numeroCliente) || (cliente.numeroCliente.Equals('90001') )){
+                system.debug('ES CLIENTE DE CONTADO');
                 for(Account item : [Select id from Account Where FirstName=:cliente.nombre and LastName=:cliente.apellidoPaterno and PersonEmail= :cliente.correoElectronico WITH SECURITY_ENFORCED]){
                     accountRecord.Id = item.Id;
                 }
             }else{
+                system.debug('NO ES CLIENTE DE CONTADO');
                 for(Account item : [Select id from Account Where CP_WalletCustomerNumber__c =: Decimal.valueOf(cliente.numeroCliente) WITH SECURITY_ENFORCED]){
                     accountRecord.Id = item.Id;
                     accountRecord.CP_WalletCustomerNumber__c = Decimal.valueOf(cliente.numeroCliente);
@@ -58,25 +61,65 @@ global with sharing class DSALES_AccountWrapperRequest {
             System.debug('Genero despues de asignar:'+accountRecord.CP_Gender__pc);
             //accountRecord.CP_Gender__pc = cliente.genero;
             accountRecord.PersonBirthdate = cliente.fechaNacimiento;
-            accountRecord.BillingStreet = cliente.calle;
-            accountRecord.BillingCity =  cliente.nombreCiudad;
-            accountRecord.BillingState = cliente.nombreEstado;
-            accountRecord.BillingPostalCode = cliente.codigoPostal;
-            if(!String.isEmpty(cliente.numeroInterior))
-            {
-                accountRecord.dsalesNumeroInterior__c=Decimal.valueOf(cliente.numeroInterior);
+            if(cliente.domicilio==null)
+                {
+                    cliente.domicilio='';
+                }
+            else{
+                accountRecord.BillingStreet = cliente.domicilio;
+            }
+             if(cliente.colonia==null)
+                {
+                    cliente.colonia='';
+                }
+            else{
+                accountRecord.BillingStreet = accountRecord.BillingStreet +' '+cliente.colonia;
+            }
+              if(cliente.numeroInterior==null)
+                {
+                    cliente.numeroInterior='';
+                }
+            else{
+               accountRecord.dsalesNumeroInterior__c=cliente.numeroInterior;
             }
             
-            accountRecord.dsalesNumeroExterior__c=Decimal.valueOf(cliente.numeroExterior);
+          if(cliente.numeroExterior==null)
+                {
+                    cliente.numeroExterior='';
+                }
+            else{
+               accountRecord.dsalesNumeroExterior__c=cliente.numeroExterior;
+            }
+    
+           
+                accountRecord.BillingCity =cliente.NumeroInterior+' '+cliente.numeroExterior+' '+ cliente.nombreCiudad;
+            
+             if(cliente.nombreEstado==null)
+                {
+                    cliente.nombreEstado='';
+                }
+            else{
+                accountRecord.BillingState = cliente.nombreEstado;
+            }
+            if(cliente.codigoPostal==null)
+                {
+                    cliente.codigoPostal='';
+                }
+            else{
+                accountRecord.BillingPostalCode = cliente.codigoPostal;
+            }
+           
+           
+           
+           
             accountRecord.CP_BillingStateCode__c=cliente.codigoEstado; //clave de estado en SM
+            accountRecord.dsalesCodigoMunicipio__c=cliente.codigoMunicipio; //clave municipio sm
             if(!String.isEmpty(cliente.codigoColonia)){
                 accountRecord.dsalesCodigoColonia__c=Decimal.valueOf(cliente.codigoColonia); //clave colonia SM
             }
-            if(!String.isEmpty(cliente.colonia)){ // gex
-                accountRecord.BillingStreet=cliente.calle + ', ' + cliente.colonia;
-            }
+           
             
-            System.debug('Datos del cliente: '+accountRecord);
+           
             System.debug('Datos del cliente: '+accountRecord.Id + ' ' + accountRecord.FirstName + ' ' + accountRecord.LastName);
             if(Schema.sObjectType.Account.isCreateable() && Schema.sObjectType.Account.isUpdateable()){
                 upsert accountRecord;
@@ -88,7 +131,7 @@ global with sharing class DSALES_AccountWrapperRequest {
             success = true;
             message = '';
             code = '';
-            
+            System.debug('Datos del cliente mun: '+accountRecord); 
         }catch(Exception e){
             success = false;
             message = DSALES_Utility.INTERNAL_ERROR_MSJ + e.getMessage() + e.getLineNumber();

@@ -26,6 +26,7 @@ global with sharing class DSALES_EndosoWrapperRequest {
             String body = System.RestContext.request.requestBody.toString();
             if(String.isNotBlank(body)){
                 try{
+                    System.debug('Datos Recibidos: '+body);
                     DSALES_EndorsementWrapper.EndorsementRequest endoso = (DSALES_EndorsementWrapper.EndorsementRequest)JSON.deserialize(body, DSALES_EndorsementWrapper.EndorsementRequest.class);
                     responsePayload = DSALES_EndosoWrapperRequestHelper.upsertEndoso(endoso);
                 }catch(JSONException e){
@@ -39,6 +40,15 @@ global with sharing class DSALES_EndosoWrapperRequest {
                 }
             }
         }
-        return responsePayload;  
+        
+        DSALES_EndorsementWrapper.EndorsementResponse responsePayload1 = new DSALES_EndorsementWrapper.EndorsementResponse();
+        responsePayload1.mensaje = responsePayload.mensaje;
+        responsePayload1.success = responsePayload.success;
+        responsePayload1.mensajeError = responsePayload.mensajeError;
+        responsePayload1.codigoError = responsePayload.codigoError;
+        responsePayload1.idEndoso = responsePayload.idEndoso;
+        String jsonResponse = JSON.serialize(responsePayload1);
+        System.debug('Respuesta: '+jsonResponse);
+        return responsePayload1; 
     }
 }

@@ -16,7 +16,7 @@
         </values>
         <values>
             <fullName>Nuevo</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Rechazado</fullName>
@@ -104,7 +104,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio de dirección sin modificar el codigo postal</fullName>
+            <fullName>Cambio de dirección</fullName>
             <default>false</default>
         </values>
         <values>
@@ -120,11 +120,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cancelación de póliza</fullName>
+            <fullName>Cancelación de la póliza</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Corrección de nombre</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modificación de color</fullName>
             <default>false</default>
         </values>
     </picklistValues>

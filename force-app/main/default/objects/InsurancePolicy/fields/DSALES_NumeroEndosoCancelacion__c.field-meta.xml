@@ -12,7 +12,7 @@
     <summaryFilterItems>
         <field>DSALES_Endoso__c.DSALES_Tipodeendoso__c</field>
         <operation>equals</operation>
-        <value>Cancelación de póliza</value>
+        <value>Cancelación de la póliza</value>
     </summaryFilterItems>
     <summaryForeignKey>DSALES_Endoso__c.DSALES_Poliza__c</summaryForeignKey>
     <summaryOperation>count</summaryOperation>

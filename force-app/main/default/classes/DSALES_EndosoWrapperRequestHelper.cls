@@ -60,10 +60,6 @@ public static DSALES_EndorsementWrapper.EndorsementResponse insertEndoso(DSALES_
         endosoRecord.DSALES_Valor__c = endosos.datos.valor;
         endosoRecord.DSALES_Estatus__c = 'Nuevo';
         endosoRecord.dsalesFechaCreacion__c = endosos.fechaEndoso;
-        endosoRecord.DSALES_MotivoDevolucion__c = endosos.estatusComentario;
-        endosoRecord.DSALES_SolucionDevolucion__c = endosos.solucion;
-        endosoRecord.DSALES_MotivoRechazo__c = endosos.estatusComentario;
-        endosoRecord.DSALES_MontoaDevolver__c = endosos.montoDevolucion;
         if(Schema.sObjectType.DSALES_Endoso__c.isCreateable()){
             insert endosoRecord;           
             }
@@ -170,20 +166,16 @@ public static DSALES_EndorsementWrapper.EndorsementResponse updateEndoso(DSALES_
 
 public static void updatePolicy(DSALES_EndorsementWrapper.EndorsementRequest endosos){
     try{
-        DSALES_Endoso__c endosoRecord = [SELECT Id, DSALES_Poliza__c, DSALES_Poliza__r.Name, DSALES_uid__c FROM DSALES_Endoso__c WHERE DSALES_uid__c=: endosos.uid WITH SECURITY_ENFORCED LIMIT 1];
+        DSALES_Endoso__c endosoRecord = [SELECT Id, DSALES_Poliza__c, DSALES_Poliza__r.Name, DSALES_uid__c FROM DSALES_Endoso__c WHERE DSALES_uid__c=: endosos.uid LIMIT 1];
+        System.debug('Datos de endoso:____ '+endosoRecord);
         InsurancePolicy poliza = [SELECT Id, DSALES_TelefonoContacto__c, DSALES_CorreoElectronico__c,DSALES_NombredelAsegurado__c, DSALES_Placas__c, DSALES_Numeroserie__c,
-                                    dsalesNumeroDeMotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=: endosoRecord.DSALES_Poliza__c WITH SECURITY_ENFORCED LIMIT 1];
+                                    dsalesNumeroDeMotor__c, ChangeSubtype FROM InsurancePolicy WHERE Id=: endosoRecord.DSALES_Poliza__c LIMIT 1];
+        System.debug('Datos de poliza:____ '+poliza);
         switch on endosos.tipoEndoso{
             when 'Actualización de correo electrónico'{
                 poliza.DSALES_CorreoElectronico__c = endosos.datos.valor;
                 poliza.ChangeSubtype = 'Endosada';
-            if (InsurancePolicy.SObjectType.getDescribe().isUpdateable()) {
                 update poliza;
-                } 
-            else {
-                System.debug('Permisos insuficientes para actualizar');
-                }
-            //update poliza; 
             }
             when'Actualización de teléfono'{
                 poliza.DSALES_TelefonoContacto__c = endosos.datos.valor;

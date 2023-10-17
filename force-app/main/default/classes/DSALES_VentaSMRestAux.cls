@@ -11,24 +11,23 @@ public with sharing class DSALES_VentaSMRestAux {
         }
         return listaPartidas;
     }
-    public static void cotizacionesNuevas(DSALES_InformacionDePago__c pago,List<String> partidasSeleccionadas){
+    public static void cotizacionesNuevas(DSALES_InformacionDePago__c pago,List<String> partidasSeleccionadas,Integer precioRedondeado){
         DSALES_VentaSM.ListaPartidasOportunidad listaIds= new DSALES_VentaSM.ListaPartidasOportunidad();
         DSALES_VentaSM.ListaPartidasOportunidad listaPartidaOportunidad= new DSALES_VentaSM.ListaPartidasOportunidad();
         List<DSALES_VentaSM.ListaPartidasOportunidad> listaPartidas= new List<DSALES_VentaSM.ListaPartidasOportunidad>();
         if(pago!=null){
-            DSALES_QuotePagoSM.cotizacionesNuevas(pago.Id,partidasSeleccionadas,pago.DSALES_SKU__c);
+            DSALES_QuotePagoSM.cotizacionesNuevas(pago.Id,partidasSeleccionadas,pago.DSALES_SKU__c,precioRedondeado);
         }
     }
 
     public static String crearActivo(DSALES_InformacionDePago__c pago, DSALES_IPAssetWrapper.IPAssetRequest datosActivo, String polizaId){
         String idActivo ='';
         InsurancePolicyAsset activo = new InsurancePolicyAsset();
-        if(!String.isEmpty(datosActivo.numeroSerie)){
+        if(datosActivo!=null && (datosActivo.numeroSerie!=null || datosActivo.imei!=null || !String.isEmpty(datosActivo.numeroSerie) || !String.isEmpty(datosActivo.imei))){
             datosActivo.idUniversal=pago.DSALES_IDUniversal1__c;
-            activo= DSALES_IPAssetWrapperRequest.insertIPAsset(datosActivo);
+           activo= DSALES_IPAssetWrapperRequest.creacionActivos(datosActivo);
             idActivo=activo.Id;
-            System.debug('id de activo: '+idActivo);
-            DSALES_CreateInsurancePolicy.agregarDatosDeActivo(activo,polizaId);            
+            DSALES_CreateInsurancePolicy.agregarDatosDeActivo(activo,polizaId);        
         }
         return idActivo;
     }

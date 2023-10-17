@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <description>Cargar el correo y el cliente desde la póliza</description>
+    <environments>Default</environments>
+    <interviewLabel>Cargar cliente y correo de la póliza {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Cargar cliente y correo de la póliza</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Al crear un endoso se genera con el correo que esta en la póliza</description>
+        <name>Actualizar_correo_poliza_en_endoso</name>
+        <label>Actualizar correo de la póliza en el endoso</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>DSALES_Cliente__c</field>
+            <value>
+                <elementReference>$Record.DSALES_Poliza__r.NameInsuredId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DSALES_CorreoElectronico__c</field>
+            <value>
+                <elementReference>$Record.DSALES_Poliza__r.DSALES_CorreoElectronico__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Actualizar_correo_poliza_en_endoso</targetReference>
+        </connector>
+        <object>DSALES_Endoso__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <triggerOrder>300</triggerOrder>
+</Flow>
