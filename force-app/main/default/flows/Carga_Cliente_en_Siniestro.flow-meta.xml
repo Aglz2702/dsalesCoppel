@@ -2,6 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
     <description>Consigna el Cliente de la Póliza en el Siniestro de la Póliza</description>
+    <environments>Default</environments>
     <interviewLabel>Carga Cliente en Siniestro {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Carga Cliente en Siniestro</label>
     <processMetadataValues>

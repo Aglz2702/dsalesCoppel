@@ -176,26 +176,4 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
-        <picklist>dsalesOpcionPago__c</picklist>
-        <values>
-            <fullName>A</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>C</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>M</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>dsalesSubtipo__c</picklist>
-        <values>
-            <fullName>Garantía Extendida</fullName>
-            <default>true</default>
-        </values>
-    </picklistValues>
 </RecordType>

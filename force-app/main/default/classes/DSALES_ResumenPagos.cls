@@ -20,7 +20,7 @@ public class DSALES_ResumenPagos extends fflib_SObjectDomain {
             return new DSALES_ResumenPagos(sObjectList);
         }
     }
-    /*      
+        
     public override void onAfterInsert() {
         List<ClaimPaymentSummary> listRecord = (List<ClaimPaymentSummary>)records;
         List<ClaimPaymentSummary> listPagos = new List<ClaimPaymentSummary>();
@@ -34,5 +34,4 @@ public class DSALES_ResumenPagos extends fflib_SObjectDomain {
         	DSALES_SiniestrosHelper.actualizarDatos(JSON.serialize(listPagos));
         }
    }
-   */
 }

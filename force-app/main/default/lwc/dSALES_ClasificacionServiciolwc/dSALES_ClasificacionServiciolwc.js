@@ -1,7 +1,6 @@
 import { LightningElement, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCategoria from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListCategoria';
-import getToken from '@salesforce/apex/DSALES_ClasificacionServicio.getToken';
 import SendCat from '@salesforce/apex/DSALES_ClasificacionServicio.getPicklistOptionsDependent';
 import getRecords from '@salesforce/apex/DSALES_ClasificacionServicio.getRecords';
 import upsertRecord from '@salesforce/apex/DSALES_ClasificacionServicio.upsertRecord';
@@ -100,8 +99,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     desvincular=false;
     campanasSelected = [];
     tiposUsoSelected = [];
-    listaClaseFamiliaToken= [];
-    listaClaseToken= [];
+    listaClaseFamilia= [];
     connectedCallback() {
         this.init();
         this.ProfileChecker();
@@ -220,23 +218,22 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
     mostrarSubcategoria() {
         this.show = true;
-        this.cargarPickList2();
+        this.cargarPickList();
     }
 
     mostrarClase() {
         this.show2 = true;
-        this.cargarPickList2();
+        this.cargarPickList();
     }
 
     mostrarFamilia() {
         this.show3 = true;
-        this.cargarPickList2();
+        this.cargarPickList();
     }
 
-    cargarPickList2() {
+    cargarPickList() {
         SendCat({ allData: JSON.stringify(this.data) })
             .then(result => {
-                console.log(JSON.parse(JSON.stringify(result)));
                 this.data = result;
             }).catch(error => {
                console.log(error);
@@ -244,7 +241,6 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
 
     onclickCategoria(event) {
-        console.log(event.target.name+'hola');
         let x = false;
         const valor = event.target.name;
         const check = event.target.checked;
@@ -751,7 +747,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     asignarCategoria(event) {
         this.showSpinner = true;
         this.pickList.valueSelectedtipoSeguroServicio = event.target.value;
-        console.log(this.pickList.DSALES_ServEspecifico__c+this.pickList.DSALES_SegEspecifico__c+'hola');
+        console.log(this.pickList.DSALES_ServEspecifico__c+this.pickList.DSALES_SegEspecifico__c);
         recordTypeId({ tipoRegistro: this.pickList.valueSelectedtipoSeguroServicio })
             .then(result => {
                 this.pickList.RecordTypeId = result;
@@ -1139,13 +1135,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         console.log('id: ' +this.data.idservicio )
         insertVinculacion({ dataJSON: JSON.stringify(this.data.listaproductos), idservicio: this.data.idservicio })
             .then(result => {
-                this.data.messageWarning=result;
-                if(result){
-                    this.pushMessage('Advertencia', 'warning', '¡Cuidado¡, Alguno(s) de los producto(s) vinculados,  ya tienen un servicio dado de alta.'); 
-                }
-                else{
-                    this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
-                }
+                console.log(result);
+                this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
                 this.onClickBuscarIntanProduct();
             }).catch(error => {
                 console.log(error);
@@ -1679,26 +1670,17 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.data.valueSubcategoryService= '';
         this.data.valueClassService= '';
         this.data.valueFamilyService= '';
-        getToken()
+        getserviciocategorias()
         .then(result => {
-            this.data.tokenAccess= result;
-            console.log(result);
-            getserviciocategorias({recordName: 'empty', token: this.data.tokenAccess})
-            .then(result2 => {
-                this.data.servicioCategoria= result2;
-            }).catch(error2 => {
-                console.log(error2);
-            });
+            this.data.servicioCategoria= result;
         }).catch(error => {
             console.log(error);
         });
-
-        
     }
 
     getservicesubcategories(event){
         this.data.valueCategoryService=event.target.value;
-        getserviciosubcategorias({valueCategoria: this.data.valueCategoryService, token: this.data.tokenAccess})
+        getserviciosubcategorias({valueCategoria: this.data.valueCategoryService})
         .then(result => {
             this.data.servicioSubcategoria= result;
         }).catch(error => {
@@ -1708,7 +1690,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
 
     getserviceclass(event){
         this.data.valueSubcategoryService=event.target.value;
-        getservicioclase({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, token: this.data.tokenAccess})
+        getservicioclase({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService})
         .then(result => {
             this.data.servicioClases= result;
         }).catch(error => {
@@ -1718,9 +1700,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
 
     getservicefamily(event){
         this.data.valueClassService=event.target.value;
-        this.listaClaseToken.push(this.data.valueClassService);
-        this.listaClaseToken.push(this.data.tokenAccess);
-        getserviciofamilia({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, valueClases: this.listaClaseToken})
+        getserviciofamilia({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, valueClases: this.data.valueClassService})
         .then(result => {
             this.data.servicioFamilias= result;
         }).catch(error => {
@@ -1737,10 +1717,9 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
             this.pushMessage('Advertencia', 'warning', 'Existen campos vacios o no seleccionados');
         }
         else{
-            this.listaClaseFamiliaToken.push(this.data.valueClassService);
-            this.listaClaseFamiliaToken.push(this.data.valueFamilyService);
-            this.listaClaseFamiliaToken.push(this.data.tokenAccess);
-            getserviciosku({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, valueClasesFamiliasToken: this.listaClaseFamiliaToken})
+            this.listaClaseFamilia.push(this.data.valueClassService);
+            this.listaClaseFamilia.push(this.data.valueFamilyService);
+            getserviciosku({valueCategoria: this.data.valueCategoryService, valueSubcategoria:this.data.valueSubcategoryService, valueClasesFamilias: this.listaClaseFamilia})
             .then(result => {
                 this.data.servicioSku= result;
             }).catch(error => {

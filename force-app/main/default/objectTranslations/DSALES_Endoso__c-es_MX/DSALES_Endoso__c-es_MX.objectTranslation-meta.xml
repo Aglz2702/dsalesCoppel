@@ -28,60 +28,8 @@
             <section>Vínculos personalizados</section>
         </sections>
     </layouts>
-    <layouts>
-        <layout>Ingreso de Endoso</layout>
-        <sections>
-            <label></label>
-            <section>Información del endoso</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Información del sistema</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Proceso del endoso</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Vínculos personalizados</section>
-        </sections>
-    </layouts>
-    <layouts>
-        <layout>Visualización de Endoso</layout>
-        <sections>
-            <label></label>
-            <section>Información del endoso</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Información del sistema</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Proceso del endoso</section>
-        </sections>
-        <sections>
-            <label></label>
-            <section>Vínculos personalizados</section>
-        </sections>
-    </layouts>
-    <quickActions>
-        <label></label>
-        <name>DSALES_Enviar_Endoso</name>
-    </quickActions>
     <quickActions>
         <label></label>
         <name>DSALES_Enviaraproveedor</name>
     </quickActions>
-    <recordTypes>
-        <description></description>
-        <label></label>
-        <name>Registro_de_endoso</name>
-    </recordTypes>
-    <recordTypes>
-        <description></description>
-        <label></label>
-        <name>Registro_de_endoso_completo</name>
-    </recordTypes>
 </CustomObjectTranslation>

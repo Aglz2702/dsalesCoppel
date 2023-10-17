@@ -19,18 +19,13 @@ public class DSALES_QuoteSmWrapperTest {
         requestnpv.telefonoCelular = 'dato';
         requestnpv.correoElectronico = 'dato';
         requestnpv.generoContacto = 'dato';
-        //requestnpv.fechaNacimiento = date.newInstance(1991, 2, 15);
-        requestnpv.fechaNacimiento ='20-02-03';
+        requestnpv.fechaNacimiento = date.newInstance(1991, 2, 15);
         requestnpv.codigoPostal = 'dato';
         requestnpv.idVehiculo = 'dato';
         requestnpv.opcionPago = 'dato';
-        //requestnpv.fechaInicio = date.newInstance(1991, 2, 15);
-        requestnpv.fechaInicio ='23-02-03';
-        //requestnpv.precioProducto = 'dato';
-        requestnpv.precioProducto = 1234;
+        requestnpv.fechaInicio = date.newInstance(1991, 2, 15);
+        requestnpv.precioProducto = 'dato';
         requestnpv.sku = 'dato';
-        requestnpv.valorFactura = true;
-        requestnpv.iduVenta = 'dato';
         
         DSALES_QuoteSmWrapper.QuotePostProvedor requesAInter = new DSALES_QuoteSmWrapper.QuotePostProvedor();
         requesAInter.negocio = 'dato';
@@ -54,11 +49,9 @@ public class DSALES_QuoteSmWrapperTest {
         requesAInter.fechaCotizacion = '12-12-12';
         requesAInter.fechaInicio = '12-12-12';     
         requesAInter.plazo = '12';
-        requesAInter.precioProducto = 12;
-        requesAInter.valorFactura = true;
         
         DSALES_QuoteSmWrapper.respuestaDelProveedor response = new DSALES_QuoteSmWrapper.respuestaDelProveedor();
-        response.codigo = 12;
+        //response.code = 12;
         response.plazos = new List<DSALES_QuoteSmWrapper.ArmadoMuleSoft>();
         response.success = true;
         
@@ -73,21 +66,20 @@ public class DSALES_QuoteSmWrapperTest {
         responseNpv.listaSeguros =new List<DSALES_QuoteSmWrapper.RespuestaPlazos>();
         responseNpv.listaproducto = new DSALES_QuoteSmWrapper.RespuestaPlazos();
         responseNpv.campanias = new List<DSALES_QuoteSmWrapper.Campanias>();
-        responseNpv.iduVenta ='dads';
         
         DSALES_QuoteSmWrapper.Data dat = new DSALES_QuoteSmWrapper.Data();       
         DSALES_QuoteSmWrapper.Receipt recep = new DSALES_QuoteSmWrapper.Receipt();
         recep.numero=1;
         recep.comision='12';
-        //recep.fechaTermino='10-12';
+        recep.fechaTermino='10-12';
         //recep.netPremium='12';
         recep.recargo='12';
-        //recep.derechosPoliza='12';
+        recep.derechosPoliza='12';
         recep.fechaInicio='12-12';
         recep.impuestos='12';
         //recep.totalPremium='12';
-        //recep.pagoTotalEfectivo = 'dato prueba';
-        //recep.pagoMensual = 'dato prueba';
+        recep.pagoTotalEfectivo = 'dato prueba';
+        recep.pagoMensual = 'dato prueba';
        	
         DSALES_QuoteSmWrapper.RespuestaPlazos plazos = new DSALES_QuoteSmWrapper.RespuestaPlazos();
         plazos.trackingId = 'dato prueba';
@@ -98,33 +90,6 @@ public class DSALES_QuoteSmWrapperTest {
         plazos.seguroGratis = true; 
         RestResponse res3 = new RestResponse();
         System.assertNotEquals(200, res3.statusCode, 'La llamada no debe devolver un código 200');
-        
-        DSALES_QuoteSmWrapper.Campanias Campanias = new DSALES_QuoteSmWrapper.Campanias();
-        Campanias.nombreCampana='testcamp';
-        Campanias.tipoCampana='test';
-        Campanias.descripcion= 'test';
-        Campanias.productoDeCampana='test';
-        Campanias.sku='test';
-        Campanias.nombreProducto='productotest';
-        
-        DSALES_QuoteSmWrapper.ArmadoMuleSoft armado = new DSALES_QuoteSmWrapper.ArmadoMuleSoft();
-        armado.trackingId='testcamp';
-        armado.paquete='test';
-        armado.opcionPago= 'test';
-        
-        DSALES_QuoteSmWrapper.CoveragesArray coverage = new DSALES_QuoteSmWrapper.CoveragesArray();
-        coverage.codigo='testcamp';
-        coverage.nombre='test';
-        coverage.deducible= 70;
-        coverage.sumaAsegurada='testcamp';
-        
-        DSALES_QuoteSmWrapper.InsurancePremium insurance = new DSALES_QuoteSmWrapper.InsurancePremium();
-        insurance.primaNeta=70;
-        insurance.comision=70;
-        insurance.recargo= 70;
-        insurance.impuestos=70;
-        insurance.derechos=70;
-        insurance.primaTotal=70;
     }
 
 }

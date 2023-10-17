@@ -7,6 +7,7 @@
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -23,6 +24,12 @@
                 <fullName>Servicio</fullName>
                 <default>false</default>
                 <label>Servicio</label>
+            </value>
+            <value>
+                <fullName>Servicio/Seguro</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Servicio/Seguro</label>
             </value>
         </valueSetDefinition>
     </valueSet>

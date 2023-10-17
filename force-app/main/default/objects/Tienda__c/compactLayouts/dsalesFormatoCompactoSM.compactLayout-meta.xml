@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>dsalesFormatoCompactoSM</fullName>
-    <fields>Activa__c</fields>
-    <fields>dsalesCiudad__c</fields>
-    <fields>DSales_TiendaID__c</fields>
-    <fields>Name</fields>
-    <label>Formato compacto SM</label>
-</CompactLayout>

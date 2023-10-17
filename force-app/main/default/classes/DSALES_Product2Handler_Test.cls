@@ -4,7 +4,7 @@ public with sharing class DSALES_Product2Handler_Test {
     static void configuracionRegistro(){
         Product2 producto = new Product2();
         producto.Name = 'test';
-        producto.StockKeepingUnit = '123456';
+        producto.StockKeepingUnit = '12345';
         producto.DSales_Tipo_de_Producto__c= 'Producto';
         producto.IsActive=true;
         insert producto;
@@ -16,7 +16,7 @@ public with sharing class DSALES_Product2Handler_Test {
 
         Product2 producto = new Product2();
         producto.Name = 'testNuevo';
-        producto.StockKeepingUnit = '123457';
+        producto.StockKeepingUnit = '12345';
         producto.DSales_Tipo_de_Producto__c= 'Producto';
         producto.IsActive=true;
         insert producto;

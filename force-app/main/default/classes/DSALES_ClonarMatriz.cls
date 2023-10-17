@@ -1,5 +1,6 @@
 public without sharing class DSALES_ClonarMatriz {
     
+    
 private static final String OBJETO_PADRE = 'DSales_Matriz_GEX__c';
 private static final String OBJETO_HIJO = 'DSALES_Matriz_de_Cotizacion__c';
     private static final String TEXT_CLON = ' - Clon';
@@ -62,7 +63,7 @@ public static String actualizarMatrizOriginal(Id recordId){
     
     query = query.substring(0, query.length()-1);
     query += ' From DSales_Matriz_GEX__c WHERE Id =: recordId'; 
-    DSales_Matriz_GEX__c matrizClone = Database.query(query);
+    DSales_Matriz_GEX__c matrizClone = Database.query(' From DSales_Matriz_GEX__c WHERE Id =: recordId');
     matrizClone.Id = matrizClone.DSALES_CloneMatriz__c;
     matrizClone.DSALES_EsClone__c = false;
     matrizClone.DSALES_CloneMatriz__c = recordId;
@@ -84,16 +85,14 @@ public static void clonarMatrizItem(Id originalId, Id recordId){
     query = query.substring(0, query.length()-1);
     DSales_Matriz_GEX__c ds = new DSales_Matriz_GEX__c();
     query += ' From DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c =: recordId'; 
-    List <DSALES_Matriz_de_Cotizacion__c> listMatrizItem = Database.query(query);
+    List <DSALES_Matriz_de_Cotizacion__c> listMatrizItem = Database.query(' From DSALES_Matriz_de_Cotizacion__c WHERE DSales_Matriz_GEX__c =: recordId');
     for(DSALES_Matriz_de_Cotizacion__c matrizItem:listMatrizItem )	{
         matrizItem.DSALES_MatrizItemClone__c=matrizItem.Id;
         matrizItem.Id=null;
         matrizItem.DSales_Matriz_GEX__c=originalId;
-        matrizItem.Name='';
     }
     if(Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isCreateable() || Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isUpdateable()){
-    system.debug('NAME: '+ listMatrizItem);
-        Database.upsert(listMatrizItem,DSALES_Matriz_de_Cotizacion__c.DSALES_MatrizItemClone__c);  
+    Database.upsert(listMatrizItem,DSALES_Matriz_de_Cotizacion__c.DSALES_MatrizItemClone__c);  
     compararEliminados(originalId,recordId);
         } 
         else {

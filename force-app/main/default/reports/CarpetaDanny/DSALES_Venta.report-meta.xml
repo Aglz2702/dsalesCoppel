@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Report xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <aggregates>
         <calculatedFormula>(B0#QUANTITY:SUM*100)/B1#QUANTITY:SUM</calculatedFormula>
         <datatype>percent</datatype>
@@ -44,6 +44,13 @@
                 <isUnlocked>true</isUnlocked>
                 <operator>equals</operator>
                 <value>En espera de aceptación de Cliente,Cerrada ganada</value>
+            </criteriaItems>
+            <criteriaItems>
+                <column>OpportunityLineItem.DSALES_Vendido__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>equals</operator>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <column>OpportunityLineItem.DSALES_TipoServ__c</column>
@@ -103,6 +110,13 @@
                 <value>Opportunity.DSales_Garantia_Extendida</value>
             </criteriaItems>
             <criteriaItems>
+                <column>OpportunityLineItem.DSALES_Vendido__c</column>
+                <columnToColumn>false</columnToColumn>
+                <isUnlocked>true</isUnlocked>
+                <operator>equals</operator>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
                 <column>STAGE_NAME</column>
                 <columnToColumn>false</columnToColumn>
                 <isUnlocked>true</isUnlocked>
@@ -132,7 +146,7 @@
         </timeFrameFilter>
     </block>
     <blockInfo>
-        <blockId xsi:nil="true"/>
+        <blockId>B1</blockId>
         <joinTable>u</joinTable>
     </blockInfo>
     <chart>
@@ -173,7 +187,7 @@
     <name>Reporte nuevo</name>
     <params>
         <name>lsk</name>
-        <value>1</value>
+        <value>45</value>
     </params>
     <reportType>OpportunityProduct@Opportunity.DSALES_InformaciondePago__c</reportType>
     <showDetails>true</showDetails>

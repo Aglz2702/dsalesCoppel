@@ -74,10 +74,8 @@ global with sharing class DSALES_Siniestro {
     public static String actualizaSiniestro(DSALES_SiniestroWrapper.SiniestroGet data){
         List<ClaimPaymentSummary> listaPagos = new List<ClaimPaymentSummary>();
         ClaimPaymentSummary SiniestroRPRecord = new ClaimPaymentSummary();
-       
         Claim siniestro = [SELECT Id,ClaimType,PolicyNumberId,DSALES_Estatus__c,dsalesSolucionaDevolucion__c,DSALES_MotivodeDevolucion__c 
                            FROM Claim WHERE DSALES_SiniestroUid__c =:data.uid WITH SECURITY_ENFORCED LIMIT 1];
-        try{
         if(data.estatus =='En revisión'){
             siniestro.DSALES_Estatus__c = 'En trámite';
         }
@@ -125,9 +123,7 @@ global with sharing class DSALES_Siniestro {
         }else{
             System.debug('Permisos insuficientes para actualizar');   
         } 
-        }catch(DmlException e) {
-        System.debug('Ocurrió un error: ' + e);
-    }
+        
         return siniestro.Id;
     }
 }

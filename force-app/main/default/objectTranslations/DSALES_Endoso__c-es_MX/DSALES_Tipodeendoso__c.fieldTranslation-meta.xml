@@ -3,27 +3,15 @@
     <label></label>
     <name>DSALES_Tipodeendoso__c</name>
     <picklistValues>
-        <masterLabel>Actualización de correo electrónico</masterLabel>
+        <masterLabel>Cambio No. motor</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Actualización de teléfono</masterLabel>
+        <masterLabel>Cambio No. serie</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Beneficiario preferente</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Cambio de dirección (sin modificar el Código Postal)</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Cambio de número de motor</masterLabel>
-        <translation></translation>
-    </picklistValues>
-    <picklistValues>
-        <masterLabel>Cambio de número de serie</masterLabel>
+        <masterLabel>Cambio de dirección</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>
@@ -31,7 +19,15 @@
         <translation></translation>
     </picklistValues>
     <picklistValues>
-        <masterLabel>Cancelación de póliza</masterLabel>
+        <masterLabel>Cambio de titular</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Corrección de RFC</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Corrección de datos fiscales</masterLabel>
         <translation></translation>
     </picklistValues>
     <picklistValues>

@@ -13,7 +13,6 @@ public with sharing class DSALES_obtenerToken {
         request.setMethod('POST');
         httpResponse response = https.send(request);
         if (response.getStatusCode() == 200) {
-            System.debug('token'+response.getBody());
             Map<String, Object> tokenResponse = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
             accessToken = (String) tokenResponse.get('access_token');
         } else {

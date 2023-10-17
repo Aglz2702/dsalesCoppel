@@ -113,9 +113,9 @@ public class DSALES_EndosoWrapperRequestTest {
         DSALES_EndorsementWrapper.endorsementResponse response2 = DSALES_EndosoWrapperRequestHelper.updateEndoso(request2);
         System.assertEquals(true, response2.success, 'El registro se ha creado correctamente');      
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MotivoDevolucion__c, DSALES_SolucionDevolucion__c FROM DSALES_Endoso__c WHERE Id = :endoso.Id];
-        System.assertEquals('Nuevo', endoso.DSALES_Estatus__c,'El estado de endoso es Requerimiento de Información' );
-        System.assertEquals('test', endoso.DSALES_MotivoDevolucion__c, 'El MotivoDevolucion de endoso es Test Motivo Devolucion');
-        System.assertEquals('test', endoso.DSALES_SolucionDevolucion__c, 'El SolucionDevolucion de endoso es Test Solucion Devolucion');
+        System.assertEquals('Requerimiento de Información', endoso.DSALES_Estatus__c,'El estado de endoso es Requerimiento de Información' );
+        System.assertEquals('Test Motivo Devolucion', endoso.DSALES_MotivoDevolucion__c, 'El MotivoDevolucion de endoso es Test Motivo Devolucion');
+        System.assertEquals('Test Solucion Devolucion', endoso.DSALES_SolucionDevolucion__c, 'El SolucionDevolucion de endoso es Test Solucion Devolucion');
         
         // Test update with 'Rechazado' status
         DSALES_EndorsementWrapper.endorsementRequest request3 = new DSALES_EndorsementWrapper.endorsementRequest();
@@ -125,8 +125,8 @@ public class DSALES_EndosoWrapperRequestTest {
         DSALES_EndorsementWrapper.endorsementResponse response3 = DSALES_EndosoWrapperRequestHelper.updateEndoso(request3);
         System.assertEquals(true, response3.success, 'El registro se ha creado correctamente');
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MotivoRechazo__c FROM DSALES_Endoso__c WHERE Id = :endoso.Id];
-        System.assertEquals('Nuevo', endoso.DSALES_Estatus__c, 'El estado de endoso es Rechazado');
-        System.assertEquals('Test', endoso.DSALES_MotivoRechazo__c, 'El MotivoRechazo de endoso es Test Motivo Rechazo');
+        System.assertEquals('Rechazado', endoso.DSALES_Estatus__c, 'El estado de endoso es Rechazado');
+        System.assertEquals('Test Motivo Rechazo', endoso.DSALES_MotivoRechazo__c, 'El MotivoRechazo de endoso es Test Motivo Rechazo');
         
         // Test update with 'Autorizado' status
         DSALES_EndorsementWrapper.endorsementRequest request4 = new DSALES_EndorsementWrapper.endorsementRequest();
@@ -135,7 +135,7 @@ public class DSALES_EndosoWrapperRequestTest {
         request4.montoDevolucion = 4.55;
         DSALES_EndosoWrapperRequestHelper.updateEndoso(request4);
         endoso = [SELECT Id, DSALES_Estatus__c, DSALES_MontoaDevolver__c FROM DSALES_Endoso__c WHERE Id = :endoso.Id];
-        System.assertEquals('Nuevo', endoso.DSALES_Estatus__c, 'El estado de endoso es Autorizado');
+        System.assertEquals('Autorizado', endoso.DSALES_Estatus__c, 'El estado de endoso es Autorizado');
         System.assertEquals(4.55, endoso.DSALES_MontoaDevolver__c, 'El MontoaDevolver de endoso es 4.55');
         
         DSALES_EndorsementWrapper.endorsementRequest endosos = new DSALES_EndorsementWrapper.endorsementRequest();

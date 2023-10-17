@@ -23,7 +23,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Dsales_Plazo__c</field>
+                <field>DSALES_Plazo__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

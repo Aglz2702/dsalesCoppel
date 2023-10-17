@@ -43,7 +43,7 @@ global with sharing class DSALES_AssetWrapperRequest {
         Asset assetRegistro = new Asset();
         DSALES_Categoria__c categoria= new DSALES_Categoria__c(); 
         DSALES_Clase__c clase=new  DSALES_Clase__c();
-        DSALES_Familia__c familia = new 	DSALES_Familia__c();
+        DSALES_familia__c familia = new DSALES_familia__c();
         
         try{
             system.debug('Product: '+product);   

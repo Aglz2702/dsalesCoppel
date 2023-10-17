@@ -147,7 +147,15 @@
     <picklistValues>
         <picklist>DSales_Tipo_de_Producto__c</picklist>
         <values>
+            <fullName>Producto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Seguro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servicio</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -183,28 +191,6 @@
         <values>
             <fullName>Each</fullName>
             <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>dsalesOpcionPago__c</picklist>
-        <values>
-            <fullName>A</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>C</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>M</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>dsalesSubtipo__c</picklist>
-        <values>
-            <fullName>Garantía Extendida</fullName>
-            <default>true</default>
         </values>
     </picklistValues>
 </RecordType>

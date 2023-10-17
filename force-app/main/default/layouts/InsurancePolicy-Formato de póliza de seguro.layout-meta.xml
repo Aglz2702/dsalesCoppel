@@ -174,12 +174,8 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>dsalesTipoServicio__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>dsalesTipoUso__c</field>
+                <behavior>Edit</behavior>
+                <field>DSALES_Servicio__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -188,6 +184,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DSALES_Marca__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSALES_Uso__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

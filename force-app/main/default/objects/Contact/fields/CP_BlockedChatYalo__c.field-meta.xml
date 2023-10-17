@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CP_BlockedChatYalo__c</fullName>
-    <externalId>false</externalId>
-    <formula>TEXT( CP_ReasonBlocking__c) != null</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Bloqueado Chat Yalo?</label>
-    <type>Checkbox</type>
-</CustomField>

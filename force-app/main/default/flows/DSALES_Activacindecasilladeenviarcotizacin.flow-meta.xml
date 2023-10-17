@@ -2,6 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
     <description>Activa la casilla enviar cotización después de que pasaron 2 horas de que fue creada la cotización</description>
+    <environments>Default</environments>
     <interviewLabel>Activación de casilla de enviar cotización {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activación de casilla de enviar cotización</label>
     <processMetadataValues>
