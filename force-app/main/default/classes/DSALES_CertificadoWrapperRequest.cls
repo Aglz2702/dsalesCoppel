@@ -3,7 +3,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
 
     @HttpPost
     global static DSALES_CertificadoWrapper.CertificadoResponse createCertificado(){
-        
+       
         DSALES_CertificadoWrapper.CertificadoResponse responsePayload = new DSALES_CertificadoWrapper.CertificadoResponse();
         if(RestContext.request != null){
             String cuerpo = System.RestContext.request.requestBody.toString();
@@ -122,7 +122,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             
             List<OpportunityLineItem> sku =[SELECT Id,Product2.StockKeepingUnit,DSALES_FolioCertificado__c FROM OpportunityLineItem
                                            WHERE Id IN:idOportunidades WITH SECURITY_ENFORCED];
-           
+           system.debug('MARCA LA TOTALIZACIÓN');
            for(OpportunityLineItem s:sku)
            {
                if(mapaCancela.containsKey(s.Id))
@@ -193,7 +193,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         String message = '';
         String code='';
         try{
-            if(certificado.numeroCliente!='' || !String.isEmpty(certificado.numeroCliente))
+            if((certificado.numeroCliente!='' || !String.isEmpty(certificado.numeroCliente))&&  (!certificado.numeroCliente.Equals('90001') || certificado.numeroCliente!='90001'))
             {
                 List<Account> cliente =[SELECT Id FROM ACCOUNT WHERE CP_WalletCustomerNumber__c=:Double.valueOf(certificado.numeroCliente) WITH SECURITY_ENFORCED LIMIT 1 ]; 
                 if (cliente.size()>0)
@@ -217,8 +217,8 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             certificadoRecord.DSALES_Nombre_Vendedor__c=certificado.nombreVendedor; 
             certificadoRecord.DSALES_Domicilio_del_Client_e__c=certificado.direccionCliente;
             certificadoRecord.DSALES_Email__c=certificado.emailCliente;
-            certificadoRecord.DSALES_No_de_Telefono__c=certificado.telefonoCliente;
-            certificadoRecord.DSALES_Numero_celular__c=certificado.celularCliente;
+            //certificadoRecord.DSALES_No_de_Telefono__c=certificado.telefonoCliente;
+            certificadoRecord.DSALES_Numero_celular__c=certificado.telefonoCliente;
             certificadoRecord.DSALES_SKU__c=certificado.sku;    
             certificadoRecord.DSALES_Modelo__c=certificado.modeloTangible;  
             certificadoRecord.DSALES_Marca__c=certificado.marcaTangible;    
@@ -235,7 +235,21 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             certificadoRecord.DSALES_InformacionDePago__c=certificado.idPago;
             certificadoRecord.DSALES_ProductoAdquirido__c=certificado.idProductoAdquirido;
             certificadoRecord.DSALES_SKUTangible__c=certificado.skuDeTangible;
-            
+            certificadoRecord.DSALES_Costo_de_Garantia_Extendida__c=certificado.precio;
+            certificadoRecord.dsalesPrecioSinIVA__c=certificado.precioSinIva;
+            certificadoRecord.DSalesNombreServicio__c=certificado.nombreServicio;
+             String recordTypeId ='';
+            if(certificado.ar!=null)
+                {
+                    recordTypeId = Schema.SObjectType.Dsales_Certificado__c.getRecordTypeInfosByDeveloperName().get('dsalesArmadoMuebles').getRecordTypeId();
+                  certificadoRecord.RecordTypeId=recordTypeId;
+                 certificadoRecord.dsalesFechaPromesa__c=certificado.fechaPromesa; 
+                    system.debug('RECORD TYPE: ARM');
+                }
+            else{
+                certificadoRecord.RecordTypeId=Schema.SObjectType.Dsales_Certificado__c.getRecordTypeInfosByDeveloperName().get('dsalesGarantiaExtendida').getRecordTypeId();
+                system.debug('RECORD TYPE: GEX');
+            }
             if(Schema.sObjectType.DSALES_Certificado__c.isCreateable())
             {
                 insert certificadoRecord;
@@ -250,6 +264,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             success = false;
             message = DSALES_Utility.INTERNAL_ERROR_MSJ+ e.getMessage() + e.getLineNumber();
             code=String.valueOf(DSALES_Utility.INTERNAL_ERROR_CODE);
+            system.debug(message);
             
             
         }

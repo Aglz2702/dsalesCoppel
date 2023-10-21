@@ -4,6 +4,8 @@ global with sharing class DSALES_CertificadoWrapper {
     
     global class CertificadoRequest{
         global String idCuenta {get;set;}
+        global  Date fechaPromesa {get;set;}
+        global  Decimal ar {get;set;}
         global Decimal idSecuencia {get;set;}
         global String idProductoAdquirido{get;set;}
         global String idPago {get;set;}
@@ -13,6 +15,8 @@ global with sharing class DSALES_CertificadoWrapper {
         global  String  idTienda {get;set;}//remaining
         global	String	numeroCajaCoppel	{get;set;}
         global	String	idVendedor	{get;set;}
+        global Integer precio {get;set;}
+        global Integer precioSinIva{get;set;}
         global	String	nombreVendedor	{get;set;}
         global String  garantiaCoppelProducto{get;set;}
         global	String	nombreCompletoCliente	{get;set;}
@@ -21,6 +25,7 @@ global with sharing class DSALES_CertificadoWrapper {
         global	String	telefonoCliente	{get;set;}
         global	String	celularCliente	{get;set;}
         global	String	sku	{get;set;}
+        global String nombreServicio{get;set;}
        
          global String skuDeTangible {get;set;}
         global String idPartidaPresupuesto {get;set;}
@@ -37,6 +42,7 @@ global with sharing class DSALES_CertificadoWrapper {
         global  Date 	fechaVenta {get;set;}
         global	Double	costoGarantia	{get;set;}
         global	Date	fechaFinGarantiaExtendida	{get;set;}
+       
         
     }
 
