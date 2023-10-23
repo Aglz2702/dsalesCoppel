@@ -657,6 +657,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.dsalesCodigoMunicipio__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.dsalesFechaConstitucion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -867,6 +872,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Campaign.dsalesOpcionPago__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Campaign.dsalesPlazosAplicables__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -881,7 +891,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Claim.ActualAmount</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -902,22 +912,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Claim.ClaimReason</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Claim.ClaimReasonType</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Claim.ClaimType</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Claim.Cliente__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -936,7 +931,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Claim.DSALES_Estatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -976,7 +971,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Claim.DSALES_Numero_cliente_credito__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -986,7 +981,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Claim.DSALES_SaldoInsoluto__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1001,7 +996,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Claim.DSALES_SolucionDevolver__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1026,7 +1021,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Claim.FinancialAuthorityStatus</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1038,11 +1033,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Claim.IncidentSite</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Claim.InitiationDate</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1082,11 +1072,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Claim.P_liza__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Claim.RenewalChannel</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1097,16 +1082,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Claim.RepairShopLocation</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Claim.ReportDate</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Claim.ReportNumber</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1136,17 +1116,17 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Claim.Status</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Claim.Summary</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Claim.UsageType</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1167,11 +1147,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Claim.dsalesFechaAltaSiniestro__c</field>
+        <field>Claim.dsalesCuenta__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Claim.dsalesFechaAprobacionSiniestro__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Claim.dsalesFechaPagoSiniestro__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Claim.dsalesNumeroPoliza__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Claim.dsalesSolucionaDevolucion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1458,6 +1453,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DSALES_Endoso__c.DSALES_uid__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>DSALES_Endoso__c.dsalesFechaAutorizacion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2352,11 +2352,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InsurancePolicy.Status</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>InsurancePolicy.Substatus</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2498,6 +2493,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>InsurancePolicy.dsalesSegundoApellidoConductor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>InsurancePolicy.dsalesTipoServicio__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>InsurancePolicy.dsalesTipoUso__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3017,6 +3022,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Product2.DSALES_Aplicaparamotoexterna__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Product2.DSALES_Categoria__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3166,7 +3176,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Product2.dsalesOpcionPago__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3413,11 +3423,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Quote.ID_Vendedor__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Quote.NOMigrar__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3712,6 +3717,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>QuoteLineItem.dsalesAliasSeguro__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>QuoteLineItem.dsalesDerechosDePoliza__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3767,11 +3777,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Tienda__c.DSALES_Regin__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Tienda__c.DSALES_Tienda_Base__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3788,6 +3793,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Tienda__c.dsalesAnoDeUltimaRemodelacion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Tienda__c.dsalesCiudad__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3833,6 +3843,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Tienda__c.dsalesTelefono__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>dsalesAsignacionDeTienda__c.Producto__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>dsalesAsignacionDeTienda__c.dsalesActivo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>dsalesAsignacionDeTienda__c.dsalesCampana__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>dsalesAsignacionDeTienda__c.dsalesTienda__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
