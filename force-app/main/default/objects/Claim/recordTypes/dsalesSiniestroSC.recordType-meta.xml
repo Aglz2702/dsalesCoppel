@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesSiniestroSC</fullName>
+    <active>true</active>
+    <description>Registros de siniestros de seguro de celulares</description>
+    <label>Siniestro SC</label>
+    <picklistValues>
+        <picklist>ClaimReasonType</picklist>
+        <values>
+            <fullName>Accidente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Desastre natural</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ClaimType</picklist>
+        <values>
+            <fullName>Reparación</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reposición</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Robo Total</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Estatus__c</picklist>
+        <values>
+            <fullName>Autorizado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>En requerimiento de información</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>En trámite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuevo</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Realizado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rechazado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reposición%2FReparación</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Motivo_rechazo__c</picklist>
+        <values>
+            <fullName>Cobertura no contratada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Es una exclusión del producto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Moto distinta al uso registrado en la póliza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Póliza cancelada</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Tipo_pago__c</picklist>
+        <values>
+            <fullName>Pago a Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pago a cuenta Coppel</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FnolChannel</picklist>
+        <values>
+            <fullName>Chatbot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Móvil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teléfono</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LossType</picklist>
+        <values>
+            <fullName>Discapacidad parcial permanente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discapacidad parcial temporal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discapacidad total permanente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Discapacidad total temporal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pérdida parcial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reparaciones</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sustitución</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RenewalChannel</picklist>
+        <values>
+            <fullName>Chatbot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Móvil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teléfono</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Severity</picklist>
+        <values>
+            <fullName>Alto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bajo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Abandonado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Abierto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Activo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Anulado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bajo evaluación</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bajo negociación</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cerrado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cobertura confirmada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cobertura no proporcionada rechazada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comprometido%2FInstalado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Concedido</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Denegado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deshabilitado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>En conflicto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Evaluación de la cobertura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inicial</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Instalado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interrumpido</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Los pagos de primas en la cubertura están suspendidos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notificado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Otros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagado en su totalidad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pendiente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reabierto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rechazado</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
