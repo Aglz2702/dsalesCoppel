@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesElementosSC</fullName>
+    <active>true</active>
+    <description>Elementos del siniestro de seguro de celulares</description>
+    <label>Elementos SC</label>
+    <picklistValues>
+        <picklist>Category</picklist>
+        <values>
+            <fullName>Lesión aparejada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Propiedad dañada</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>dsalesEstatus__c</picklist>
+        <values>
+            <fullName>En Proceso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Entregado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuevo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>dsalesTipoSiniestro__c</picklist>
+        <values>
+            <fullName>Perdida Total</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reparación</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Robo total</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

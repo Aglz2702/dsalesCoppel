@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesRegistroEndosoSC</fullName>
+    <active>true</active>
+    <description>Registro de endoso de seguro celurar</description>
+    <label>Registro de Endoso SC</label>
+    <picklistValues>
+        <picklist>DSALES_Estatus__c</picklist>
+        <values>
+            <fullName>Autorizado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>En tramite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuevo</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Rechazado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Requerimiento de Información</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Tipodedato__c</picklist>
+        <values>
+            <fullName>Color</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correo electrónico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dirección</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nombre%2C RFC y Domicilio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Número de serie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Número telefónico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Otros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RFC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Tipodedocumento__c</picklist>
+        <values>
+            <fullName>Comprobante de domicilio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Identificación oficial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Otro</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Tipodeendoso__c</picklist>
+        <values>
+            <fullName>Actualización de correo electrónico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Actualización de teléfono</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelación de póliza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Corrección de nombre</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

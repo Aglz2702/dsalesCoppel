@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSALES_SegEspecifico__c</fullName>
+    <fullName>dsalesEstatus__c</fullName>
+    <description>Estatus del elemento de siniestro para identificación de la etapa en la que se encuentra el proceso</description>
     <externalId>false</externalId>
-    <inlineHelpText>Indique el tipo de seguro (Ej. Motos, Vida)</inlineHelpText>
-    <label>Seguro específico</label>
+    <label>Estatus</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
@@ -12,14 +12,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Seguro de Motos</fullName>
+                <fullName>Nuevo</fullName>
                 <default>false</default>
-                <label>Seguro de Motos</label>
+                <label>Nuevo</label>
             </value>
             <value>
-                <fullName>Seguro de Celulares</fullName>
+                <fullName>En Proceso</fullName>
                 <default>false</default>
-                <label>Seguro de Celulares</label>
+                <label>En Proceso</label>
+            </value>
+            <value>
+                <fullName>Entregado</fullName>
+                <default>false</default>
+                <label>Entregado</label>
             </value>
         </valueSetDefinition>
     </valueSet>

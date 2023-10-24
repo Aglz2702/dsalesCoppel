@@ -45,6 +45,30 @@
                 <field>DSALES_TipoServicio__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>dsalesImei__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>dsalesColor__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>dsalesAlmacenamiento__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>dsalesAnio__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>dsalesOperadorTelefonico__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>dsalesAR__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
@@ -84,6 +108,22 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>dsalesNumeroSerie__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>dsalesTamanoPantalla__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>dsalesRAM__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>dsalesCPU__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Description</field>
             </layoutItems>
             <layoutItems>
@@ -104,13 +144,19 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DSales_Asignacion_de_Productos__c.DSales_Servicio_Seguro__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedPricebookEntryList</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
         <fields>DSales_Servicio_Seguro__c</fields>
-        <relatedList>DSales_Asignacion_de_Productos__c.DSALES_Producto__c</relatedList>
+        <fields>DSALES_Activo__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>DSales_Asignacion_de_Productos__c.DSales_Producto__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
@@ -122,7 +168,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>DSALES_TipoUso__c</fields>
+        <fields>DSALES_TipodeUso__c</fields>
         <fields>DSALES_Activo__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>DSALES_AsociacionTiposUso__c.DSALES_Producto__c</relatedList>

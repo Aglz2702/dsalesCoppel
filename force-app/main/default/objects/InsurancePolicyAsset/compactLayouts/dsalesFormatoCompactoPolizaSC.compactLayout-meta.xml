@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesFormatoCompactoPolizaSC</fullName>
+    <fields>DSALES_Marca__c</fields>
+    <fields>DSALES_Modelo__c</fields>
+    <fields>dsalesIMEI__c</fields>
+    <fields>DSALES_Valorfactura__c</fields>
+    <fields>dsalesEstatus__c</fields>
+    <label>Formato compacto póliza SC</label>
+</CompactLayout>

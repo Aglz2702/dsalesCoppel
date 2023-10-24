@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesRegistroCancelacionSC</fullName>
+    <active>true</active>
+    <description>tipo de registro de cancelación de seguro de celulares</description>
+    <label>Registro de cancelación SC</label>
+    <picklistValues>
+        <picklist>DSALES_Canal__c</picklist>
+        <values>
+            <fullName>%2EEXE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PSF</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_Estatus__c</picklist>
+        <values>
+            <fullName>Cancelado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Devuelto</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DSALES_MotivoCancelacion__c</picklist>
+        <values>
+            <fullName>A petición del cliente</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Demora de entrega</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Precio mas económico en otro establecimiento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Producto dañado</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
