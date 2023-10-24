@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Plantilla para la confirmación de póliza</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Confirmación de compra de póliza SC</name>
+    <relatedEntityType>InsurancePolicy</relatedEntityType>
+    <style>none</style>
+    <subject>Confirmación de póliza</subject>
+    <textOnly>Póliza:{{{InsurancePolicy.Name}}}
+
+Confirmación deCOMPRA
+
+Club de Protección te informa: Hola, {{{InsurancePolicy.DSALES_NombredelAsegurado__c}}}
+
+Nos complace informarte que la contratación de tu Plan (RC / Plus) ha sido exitosa.
+
+Comienza a disfrutar de los increíbles beneficios que tenemos para ti a partir del {{{InsurancePolicy.ExpirationDate}}}.
+
+{{{InsurancePolicy.DSALES_PDF_poliza__c}}} 
+
+Agradecemos tu preferencia,
+
+Equipo Club de Protección</textOnly>
+    <type>custom</type>
+    <uiType>SFX</uiType>
+</EmailTemplate>

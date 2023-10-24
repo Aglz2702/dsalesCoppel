@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>DSALES_Informa_Siniestro_En_Tramite</fullName>
+        <description>Informa Siniestro En Tramite</description>
+        <protected>false</protected>
+        <recipients>
+            <field>dsalesCorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>atencion@coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Siniestro_En_Tr_mite_1660834028554</template>
+    </alerts>
+    <alerts>
         <fullName>Informa_Nuevo_Siniestro</fullName>
         <description>Informa Nuevo Siniestro</description>
         <protected>false</protected>
@@ -10,7 +22,7 @@
         </recipients>
         <senderAddress>atencion@coppel.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>DSALES_Deloitte/Informa_Siniestro_Nuevo_1659549870686</template>
+        <template>SM/Registro_de_siniestro_1696982114302</template>
     </alerts>
     <alerts>
         <fullName>Informa_Siniestro_Completado</fullName>
@@ -22,7 +34,7 @@
         </recipients>
         <senderAddress>atencion@coppel.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>DSALES_Deloitte/Informa_Siniestro_Completado_1659548817745</template>
+        <template>SM/Siniestro_Autorizado_SM_1696982841921</template>
     </alerts>
     <alerts>
         <fullName>Informa_Siniestro_Rechazado</fullName>
@@ -34,6 +46,90 @@
         </recipients>
         <senderAddress>atencion@coppel.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>DSALES_Deloitte/Informa_Siniestro_Rechazado_1659550884711</template>
+        <template>SM/Siniestro_rechazado_SM_1696984071201</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesAlertaCorreoRequerimientoInformacionSiniestroSM</fullName>
+        <description>Alerta de correo de requerimiento de información de siniestro SM</description>
+        <protected>false</protected>
+        <recipients>
+            <field>dsalesCorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>SM/Siniestro_en_requerimiento_de_informaci_n_SM_1696983481682</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesAlertaPagadoSiniestrosSM</fullName>
+        <description>Alerta de pagado de siniestros SM</description>
+        <protected>false</protected>
+        <recipients>
+            <field>dsalesCorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>SM/Siniestro_pagado_SM_1696984892851</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoNuevoSiniestroSeguroCelulares</fullName>
+        <description>Correo de nuevo siniestro de seguro de celulares</description>
+        <protected>false</protected>
+        <recipients>
+            <field>dsalesCorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Informa_Siniestro_Nuevo_SC_1696631326520</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoSiniestroAutorizadoSC</fullName>
+        <description>Correo de Siniestro AutorizadoSC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>dsalesCorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Informa_Siniestro_Completado_SC_1696621840711</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoSiniestroEnTramiteSC</fullName>
+        <description>Correo de Siniestro en tramite SC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>dsalesCorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Siniestro_En_Tr_mite_SC_1696621755262</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoSiniestroRechazadoSC</fullName>
+        <description>Correo de Siniestro Rechazado SC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>dsalesCorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Informa_Siniestro_Rechazado_SC_1696622214688</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoSiniestroRequerimientoInfo</fullName>
+        <description>Correo de Siniestro Requerimiento de información SC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>dsalesCorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Requerimiento_de_informaci_n_de_Siniestro_SC_1697675787841</template>
     </alerts>
 </Workflow>

@@ -8,8 +8,9 @@
             <field>DSALES_CorreoElectronico__c</field>
             <type>email</type>
         </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>DSALES_Deloitte/Envi_de_correo_de_cancelaci_n_de_p_liza_1676935961633</template>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>SM/Confirmaci_n_de_cancelaci_n_de_p_liza_1693949063749</template>
     </alerts>
     <alerts>
         <fullName>DSALES_Poliza_Nueva</fullName>
@@ -19,8 +20,32 @@
             <field>DSALES_CorreoElectronico__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>atencion@coppel.com</senderAddress>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>DSALES_Deloitte/Env_a_P_liza_1659559547166</template>
+        <template>SM/Confirmaci_n_de_compra_de_p_liza_1697037393604</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCancelacionPolizaSC</fullName>
+        <description>Cancelacion de poliza SC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>DSALES_CorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Confirmaci_n_de_cancelaci_n_de_p_liza_SC_1697730496208</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoContratacionPolizaSC</fullName>
+        <description>Correo de contratación de póliza SC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>DSALES_CorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Confirmaci_n_de_compra_de_p_liza_SC_1697730391600</template>
     </alerts>
 </Workflow>

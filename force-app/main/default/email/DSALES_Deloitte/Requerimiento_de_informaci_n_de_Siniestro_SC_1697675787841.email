@@ -1,0 +1,19 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body style="height: auto; min-height: auto;"><br />
+Club de protección le informa<br />
+<br />
+Estimado (a)&nbsp;{{{Claim.Cliente__c}}}<br />
+<br />
+<br />
+<strong>Debido a que la documentación presentada en su trámite de Siniestro de su póliza de Club de Protección Celular está incompleta, no ha sido posible concluir el proceso de validación de manera satisfactoria.</strong><br />
+<br />
+Sin embargo, le invitamos al área de cajas muebles de la tienda Coppel donde inició el trámite para que el gerente le dé mayores informes sobre la documentación requerida.<br />
+Le reiteramos nuestro compromiso de seguir brindándole el servicio y la atención que usted se merece.<br />
+<br />
+Respetuosamente,<br />
+<br />
+El equipo de Club de Protección</body>
+</html>

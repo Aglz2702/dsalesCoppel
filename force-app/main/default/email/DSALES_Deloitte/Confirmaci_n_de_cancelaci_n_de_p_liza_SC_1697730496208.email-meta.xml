@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Plantilla para la confirmación de póliza</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Confirmación de cancelación de póliza SC</name>
+    <relatedEntityType>InsurancePolicy</relatedEntityType>
+    <style>none</style>
+    <subject>Confirmación cancelación de póliza</subject>
+    <textOnly>Póliza:{{{InsurancePolicy.Name}}}
+
+Confirmación de CANCELACIÓN
+
+Club de Protección te informa:
+
+Hola, {{{InsurancePolicy.DSALES_NombredelAsegurado__c}}}
+
+De acuerdo con tu solicitud, tu plan (RC / Plus) de Club de Protección Motos ha sido cancelado el {{{InsurancePolicy.CancellationDate}}}.
+
+Si quisieras respaldarte nuevamente, visita tu Tienda Coppel más cercana para reactivar tu plan y así continuar disfrutando de los increíbles beneficios que tenemos para ti. 
+
+Nos encantaría tenerte de regreso, 
+
+Equipo Club de Protección.</textOnly>
+    <type>custom</type>
+    <uiType>SFX</uiType>
+</EmailTemplate>
