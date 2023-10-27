@@ -8,9 +8,9 @@
             <field>DSALES_CorreoElectronico__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>atencion@coppel.com</senderAddress>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>DSALES_Deloitte/Plantilla_para_envi_de_estatus_autorizado_1658419964554</template>
+        <template>SM/Endoso_autorizado_SM_1696958279758</template>
     </alerts>
     <alerts>
         <fullName>DSALES_Alerta_de_correo_de_cambio_de_estatus_a_rechazado</fullName>
@@ -20,9 +20,9 @@
             <field>DSALES_CorreoElectronico__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>atencion@coppel.com</senderAddress>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>DSALES_Deloitte/Plantilla_para_envi_de_estatus_en_tramite_1658418823421</template>
+        <template>SM/Endoso_Rechazado_SM_1696973460803</template>
     </alerts>
     <alerts>
         <fullName>DSALES_Alerta_de_correo_de_cambio_de_estatus_a_requerimiento_de_informaci_n</fullName>
@@ -32,9 +32,9 @@
             <field>DSALES_CorreoElectronico__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>atencion@coppel.com</senderAddress>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>DSALES_Deloitte/Plantilla_para_envi_de_estatus_Autorizado_1658358976235</template>
+        <template>SM/Endoso_requerimiento_de_informaci_n_1696960392855</template>
     </alerts>
     <alerts>
         <fullName>DSALES_Alerta_de_correo_de_cambio_de_estatus_de_el_Endoso_a_tramite</fullName>
@@ -44,7 +44,7 @@
             <field>DSALES_CorreoElectronico__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>atencion@coppel.com</senderAddress>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>DSALES_Deloitte/Plantilla_para_envi_de_estatus_en_tramite_1658425997741</template>
     </alerts>
@@ -56,8 +56,68 @@
             <field>DSALES_CorreoElectronico__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>atencion@coppel.com</senderAddress>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>DSALES_Deloitte/Informa_Endoso_Nuevo_1659545752578</template>
+        <template>SM/Registro_de_endoso_SM_1696957346661</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoEndosoAutorizadoSC</fullName>
+        <description>Correo de Endoso Autorizado SC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>DSALES_CorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Envi_de_estatus_autorizado_Endosos_SC_1696869665995</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoEndosoEnTramiteSC</fullName>
+        <description>Correo de Endoso En Tramite SC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>DSALES_CorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Envi_de_estatus_en_tramite_Endosos_SC_1696869515872</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoEndosoNuevoSC</fullName>
+        <description>Correo de Endoso Nuevo SC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>DSALES_CorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Informa_Endoso_Nuevo_SC_1696869289636</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoEndosoRechazadoSC</fullName>
+        <description>Correo de Endoso Rechazado SC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>DSALES_CorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Envi_de_estatus_en_rechazo_Endosos_SC_1696869718043</template>
+    </alerts>
+    <alerts>
+        <fullName>dsalesCorreoEndosoRequerimientoInformacionSC</fullName>
+        <description>Correo de Endoso en Requerimiento de Información SC</description>
+        <protected>false</protected>
+        <recipients>
+            <field>DSALES_CorreoElectronico__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>coppelsoluciones@int.coppel.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>DSALES_Deloitte/Envi_de_estatus_requerimiento_de_informaci_n_de_endosos_SC_1696869603872</template>
     </alerts>
 </Workflow>
