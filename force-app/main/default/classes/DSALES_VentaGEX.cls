@@ -13,7 +13,7 @@ global class DSALES_VentaGEX {
         global String idVendedor {get;set;}
         global String nombreVendedor{get;set;}
         global String idFactura {get;set;}
-        //fecha_compra
+               
     }
 
     global class ServicioCorrespondiente{

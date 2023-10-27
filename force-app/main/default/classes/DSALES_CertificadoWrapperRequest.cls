@@ -241,6 +241,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
              String recordTypeId ='';
             if(certificado.ar!=null)
                 {
+                    
                     recordTypeId = Schema.SObjectType.Dsales_Certificado__c.getRecordTypeInfosByDeveloperName().get('dsalesArmadoMuebles').getRecordTypeId();
                   certificadoRecord.RecordTypeId=recordTypeId;
                  certificadoRecord.dsalesFechaPromesa__c=certificado.fechaPromesa; 
