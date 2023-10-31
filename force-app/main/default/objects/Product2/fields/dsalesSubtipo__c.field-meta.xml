@@ -16,6 +16,11 @@
                 <default>true</default>
                 <label>Garantía Extendida</label>
             </value>
+            <value>
+                <fullName>Armado de muebles</fullName>
+                <default>false</default>
+                <label>Armado de muebles</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

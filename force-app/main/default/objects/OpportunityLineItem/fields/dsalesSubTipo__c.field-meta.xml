@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSALES_ServEspecifico__c</fullName>
+    <fullName>dsalesSubTipo__c</fullName>
     <externalId>false</externalId>
-    <inlineHelpText>Indique que tipo de servicio se requiere (Ej: GEX, Instalación, Armando)</inlineHelpText>
-    <label>Servicio específico</label>
+    <label>SubTipo</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
@@ -13,13 +11,13 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Garantía Extendida</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Garantía Extendida</label>
             </value>
             <value>
-                <fullName>Armado de muebles</fullName>
+                <fullName>Armado</fullName>
                 <default>false</default>
-                <label>Armado de muebles</label>
+                <label>Armado</label>
             </value>
         </valueSetDefinition>
     </valueSet>

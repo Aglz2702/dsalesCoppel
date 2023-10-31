@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DSALES_ServEspecifico__c</fullName>
+    <fullName>dsalesSubTipo__c</fullName>
+    <description>Identifica el subtipo de la Partida de Presupuesto</description>
     <externalId>false</externalId>
-    <inlineHelpText>Indique que tipo de servicio se requiere (Ej: GEX, Instalación, Armando)</inlineHelpText>
-    <label>Servicio específico</label>
+    <label>SubTipo</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
@@ -12,14 +12,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Garantía Extendida</fullName>
+                <fullName>dsalesGarantíaExtendida</fullName>
                 <default>false</default>
                 <label>Garantía Extendida</label>
             </value>
             <value>
-                <fullName>Armado de muebles</fullName>
+                <fullName>dsalesArmadoMuebles</fullName>
                 <default>false</default>
-                <label>Armado de muebles</label>
+                <label>Armado de Muebles</label>
             </value>
         </valueSetDefinition>
     </valueSet>

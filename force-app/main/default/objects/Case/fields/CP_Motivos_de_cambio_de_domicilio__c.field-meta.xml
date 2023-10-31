@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_Motivos_de_cambio_de_domicilio__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivos de cambio de domicilio</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Por solicitud de cliente</fullName>
+                <default>false</default>
+                <label>Por solicitud de cliente</label>
+            </value>
+            <value>
+                <fullName>CP no se encuentra registrado</fullName>
+                <default>false</default>
+                <label>CP no se encuentra registrado</label>
+            </value>
+            <value>
+                <fullName>La colonia no existe</fullName>
+                <default>false</default>
+                <label>La colonia no existe</label>
+            </value>
+            <value>
+                <fullName>Error visual</fullName>
+                <default>false</default>
+                <label>Error visual</label>
+            </value>
+            <value>
+                <fullName>El sistema cambió el domicilio</fullName>
+                <default>false</default>
+                <label>El sistema cambió el domicilio</label>
+            </value>
+            <value>
+                <fullName>Ya no vive en el domicilio facturado</fullName>
+                <default>false</default>
+                <label>Ya no vive en el domicilio facturado</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
