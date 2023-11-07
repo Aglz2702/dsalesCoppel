@@ -1,0 +1,339 @@
+<!---*********************************************************************************************************************************************************************
+@ Page Name :Cotizacion_Coppel  
+@ Author : Namrata Katore
+@ Purpose :A pdf is showing all products & their insurance policies from the QuoteLineItem
+@ Date : 2/5/2023
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+@ Change History :
+**********************************************************************************************************************************************************************--->
+
+<apex:page controller="DSALES_QuotePdfController" renderAs="PDF" showHeader="false" applyHtmlTag="false" applyBodyTag="false"  >
+    <head>
+        <style type="text/css" >
+            @media print {
+            table {
+            page-break-inside: avoid;
+            page-break-after: avoid;
+            
+            }
+            }
+            @page {
+            margin-top: 300px;
+            margin-bottom: 1cm;
+            
+            
+            @top-left {
+            content: element(header);
+            }
+            
+            
+            @bottom-left {
+            content: element(footer);
+            }
+            }
+            
+            div.header {
+            padding: 10px;
+            height: 150px;
+            position: running(header);
+            
+            }
+            
+            div.footer {
+            display: block;
+            padding: 5px;
+            height: 50px;
+            position: running(footer);
+            }
+            
+            .content {
+            width: 100%; 
+            }            
+            .pagenumber:before {
+            content: counter(page);
+            }
+            
+            .pagecount:before {
+            content: counter(pages);
+            }
+            .tagline {
+            color: #238DC1;
+            font-size: 15px;
+            font-weight: bold;
+            margin-left: 5px;
+            }
+            
+            .firsttable {
+            float:left; 
+            height:auto; 
+            width:40%
+            }
+            .datetable{
+            float:right;
+            height:auto;
+            width:50%
+            }
+            .date{
+            height:35px;
+            background-color:rgb(209, 209, 209);
+            border-bottom: .2rem solid white;
+            width:50%;
+            border:solid; 
+            border-color:white;
+            font-size:12px;
+            padding-left:15px;
+            }
+            .dateformat{
+            height:35px; 
+            border:solid; 
+            border-color:rgb(242, 242, 242);
+            border-bottom: .1rem solid #cecbc9;
+            border-top: .2rem solid #cecbc9;
+            border-left: .2rem solid #cecbc9;
+            border-right: .2rem solid #cecbc9;
+            width:50%;
+            text-align:center; 
+            font-size:12px
+            }
+            .firstinfo{
+            height="39px";
+            style="font-size:15px;
+            }
+            .image1{
+            height:auto; 
+            width:40px;
+            text-align:right;
+            background-color:rgb(238, 238, 238 ); 
+            border-bottom:2pt solid white;
+            }
+            .image2{
+            height:auto; 
+            width:50px;
+            text-align:center;
+            background-color:rgb(238, 238, 238 );
+            font-family:italic; 
+            font-size:10px;
+            }
+            .imagetable{
+            float:right; 
+            height:auto; 
+            margin-top:-95px; 
+            width:10%; 
+            }
+            .roundtop{
+            border-top-left-radius: 1cm;
+            border-top-right-radius: 1cm;
+            
+            }
+            .roundbottom{
+            border-bottom-left-radius: 1cm;
+            border-bottom-right-radius: 1cm;
+            
+            }
+            
+            
+        </style>
+    </head>
+    
+    <div class="header">
+        <apex:image url="https://coppelmx--pisysdev2--c.sandbox.vf.force.com/resource/1658351938000/DSALES_LogoCoppelSM" style="width:200px" />
+        <div class="tagline">Mejora tu vida</div>
+        <hr style="color:#238DC1; border-color:#238DC1;size:4;width:100%;" />
+        <table class="firsttable">
+            <tr><td colspan="1" rowspan="1" class="firstinfo" ><strong>Sucursal:</strong><br/><apex:outputText value="{!tienda.dsalesDireccion__c+' '+tienda.dsalesCodigoPostal__c+' '+tienda.dsalesCiudad__r.Name+' '+tienda.DSALES_Estado__c}"/></td></tr>
+            <br/><br/>
+            <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Motos'}">
+                <table  class="datetable">
+                    <tr><td colspan="1" rowspan="1"  class="date"><strong>Fecha creaci&oacute;n:</strong></td>
+                        <td colspan="1" rowspan="1" class="dateformat"><apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!quote.DSALES_Fechadecreacionpresupuesto__c}" /></apex:outputText></td> </tr>
+                    <tr><td colspan="1" rowspan="1" class="date"><strong>Fecha caducidad:</strong></td>
+                        <td colspan="1" rowspan="1" class="dateformat"><apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!quote.ExpirationDate}" /></apex:outputText></td></tr>
+                </table> 
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Celulares'}">
+                <table  class="datetable">
+                   <tr><td colspan="1" rowspan="1"  class="date"><strong>Nro. Factura</strong></td>
+                        <td colspan="1" rowspan="1" class="dateformat"><apex:outputText value="{!pago.DSALES_FolioTransaccion__c}" /></td> </tr>
+                    <tr><td colspan="1" rowspan="1"  class="date"><strong>Fecha creaci&oacute;n</strong></td>
+                        <td colspan="1" rowspan="1" class="dateformat"><apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!quote.DSALES_Fechadecreacionpresupuesto__c}" /></apex:outputText></td> </tr>
+                    <tr><td colspan="1" rowspan="1" class="date"><strong>Fecha caducidad</strong></td>
+                        <td colspan="1" rowspan="1" class="dateformat"><apex:outputText value="{0,date,dd'/'MM'/'yyyy}"><apex:param value="{!quote.ExpirationDate}" /></apex:outputText></td></tr>
+                </table> 
+            </apex:outputPanel>
+            
+            <tr><td>&nbsp;</td></tr>  <tr><td>&nbsp;</td></tr>  <tr><td>&nbsp;</td></tr>
+            <tr><td colspan="1" rowspan="1" class="firstinfo"><strong>Preparado por:</strong><br/><apex:outputText value="{!quote.DSales_Vendedor__c}"/></td></tr>
+            <tr><td colspan="1" rowspan="1" class="firstinfo"><strong>Correo:</strong><br/><apex:outputText value="{!quote.Email}"/></td></tr>
+            <tr><td colspan="1" rowspan="1" class="firstinfo"><strong>Nombre:</strong> <br/><apex:outputText value="{!quote.Name}"/></td></tr>
+        </table>
+        <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Motos'}">
+            <table border="0" cellpadding="0" cellspacing="0" style="float:right; height:auto; margin-top:450px; width:10%; page-break-inside: avoid;">
+                <tr >
+                    <td class="roundtop" colspan="1" rowspan="1" style="height:auto; width:40px;text-align:right;background-color:rgb(238, 238, 238 ); border-bottom:2pt solid white;"><img src="https://coppelmx--pisysdev2--c.sandbox.vf.force.com/resource/1674077199000/DSALES_ClubProteccionMotos?" style="height:60px;" /></td></tr>
+                <tr class="roundbottom"><td colspan="1" rowspan="1" style="height:auto; width:50px;text-align:center;background-color:rgb(238, 238, 238 );font-family:italic; font-size:10px"><div><p style="color:#238DC1"><strong>VIAJA TRANQUILO Y <br/>PROTEGIDO </strong></p><p style="text-align: center;">Un seguro creado para <br/>acompañarte y asistirte<br/> ante los imprevistos que <br/> se presentan en tu camino.</p><img src="https://coppelmx--pisysdev2--c.sandbox.vf.force.com/resource/1673912662000/DSALES_MotoSG?" style="height:60px; " /></div></td></tr>
+            </table>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Celulares'}">
+            <table border="0" cellpadding="0" cellspacing="0" style="float:right; height:auto; margin-top:380px; width:10%; page-break-inside: avoid;">
+                <tr >   
+                    <td class="roundtop" colspan="1" rowspan="1" style="height:auto; width:20px;text-align:right;background-color:rgb(238, 238, 238 ); "><img src="https://coppelmx--pisysdev2.sandbox.file.force.com/servlet/servlet.ImageServer?id=0156w000000E14K&oid=00D6w0000004dr0&lastMod=1695059365000" style="height:300px;" /></td></tr>
+            </table>
+        </apex:outputPanel>
+        
+    </div>
+    <br/><br/>
+    <div class="footer">
+        <div>Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+    </div>
+    
+    <apex:pageBlock > 
+        
+        <html>
+            <body>
+                <div class="content" > 
+                    <apex:repeat value="{!quoteLineItems}" var="quoteLineItem">
+                        <apex:outputPanel rendered="{!quoteLineItem.DSALES_Tipodeproducto__c == 'Producto'}">
+                            <table border="0" cellpadding="0" cellspacing="0" style="height:auto; page-break-inside: avoid; width:20%">
+                                <thead><tr><td colspan="1" rowspan="1" height="35px" style="background:rgb(0,72,118 );border:solid; border-color:white;color:white;padding-left:15px;"><strong>Concepto</strong></td></tr>
+                                </thead> 
+                            </table>
+                            <table border="0" cellpadding="0" cellspacing="0" style="height:auto; page-break-inside: avoid; width:70%">
+                                <thead>
+                                    <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(242, 242, 242 );border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Producto</strong></td>
+                                        <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;width:20%;text-align:left;font-size:12px;padding-left:15px;">
+                                            <apex:outputText value="{!quoteLineItem.Product2.Name}"/></td>  </tr>
+                                    <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(242, 242, 242 );border-bottom: .2rem solid white;width:20%; border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Cantidad</strong></td>
+                                        <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;"><apex:outputText value="{!quoteLineItem.Quantity}"/></td>  </tr>
+                                    <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(242, 242, 242 );border-bottom: .2rem solid white;width:20%; border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Precio por producto</strong></td>
+                                        <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left;font-size:12px;padding-left:15px;"><apex:outputText value="{!quoteLineItem.UnitPrice}"/></td></tr>
+                                    <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(242, 242, 242 );border-bottom: .2rem solid white;width:20%; border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Total</strong></td>
+                                        <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;text-align:left; font-size:12px;padding-left:15px;"><apex:outputText value="{!quoteLineItem.TotalPrice}"/></td></tr>
+                                    <tr><td>&nbsp;</td></tr>
+                                    <apex:variable var="pago" value="{!pago}"/>
+                                    
+                                    <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Motos'}">
+                                        <table border="0" cellpadding="0" cellspacing="0" style="height:auto; page-break-inside: avoid; width:70%">
+                                            <thead>
+                                                <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209 );border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Fecha de entrega estimada</strong></td>
+                                                    <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;width:20%;"><strong><apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                                        <apex:param value="{!pago.DSALES_Fechadeentregaestimada__c}" /></apex:outputText></strong></td></tr>
+                                                <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white; font-size:12px;padding-left:15px;"><strong>Nro de cotización</strong></td>
+                                                    <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;width:20%"><apex:outputText value="{!quote.QuoteNumber}"/></td></tr>
+                                            </thead>
+                                        </table>
+                                    </apex:outputPanel>
+                                    
+                                    <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Celulares'}">
+                                        
+                                        <table border="0" cellpadding="0" cellspacing="0" style="height:auto; page-break-inside: avoid; width:70%">
+                                            <thead>
+                                                <!---   <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white; font-size:12px;padding-left:15px;"><strong>Nro de presupuesto</strong></td>
+<td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:15px;"><apex:outputText value="{!quote.QuoteNumber}"/></td></tr>--->
+                                                <tr> <td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Nro de presupuesto</strong></td>
+                                                    <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;width:20%;text-align:left;font-size:12px;padding-left:15px;"><apex:outputText value="{!quote.QuoteNumber}"/></td></tr>
+                                            </thead>
+                                        </table>
+                                    </apex:outputPanel>
+                                    <tr><td colspan="1" rowspan="1" height="35px" style="width:20%;font-size:12px;padding-left:15px;"><b>Vendido y entregado por Coppel</b></td></tr>
+                                    <tr><td colspan="1" rowspan="1" style="text-align:left; width:50%; color:rgb(189,189,189);font-size:12px;padding-left:15px;"><b>SKU:<apex:outputText value="{!quoteLineItem.DSALES_SKU__c}"/></b></td></tr>
+                                    <tr><td>&nbsp;</td></tr>
+                                    
+                                </thead>
+                            </table>
+                        </apex:outputPanel>
+                    </apex:repeat>
+                </div>
+                <br/><br/>
+                <div>
+                    <div class="content" >
+                        <apex:repeat value="{!quoteLineItems}" var="quoteLineItem">
+                            <apex:outputPanel rendered="{!quoteLineItem.DSALES_Tipodeproducto__c == 'Seguro'}">
+                                <table border="0" cellpadding="0" cellspacing="0" style="height:auto; page-break-inside: avoid; ">
+                                    <br/><br/> 
+                                    <thead>
+                                        <table border="0" cellpadding="0" cellspacing="0" style="width:46%; page-break-inside: avoid;" >
+                                            <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Motos'}">
+                                                <thead><tr><td style="background-color:#238DC1; width:2%;">&nbsp;</td>
+                                                    <td colspan="1" rowspan="1" style="background-color:rgb(242, 242, 242 );text-align:left;font-size:12px;padding-left:15px;border-bottom:2pt solid white;">Seguro de motos a <apex:outputText value="{!quoteLineItem.DSALES_Plazo__r.Dsales_Plazo__c}"/> meses <strong>Club de Protecci&oacute;n de Motos</strong></td></tr>
+                                                </thead>
+                                            </apex:outputPanel>
+                                        </table>
+                                        
+                                        
+                                        
+                                        <table border="0" cellpadding="0" cellspacing="0" style="width:46%; page-break-inside: avoid;" >
+                                            <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Celulares'}">
+                                                <thead><tr><td style="background-color:#238DC1; width:2%;">&nbsp;</td>
+                                                    <td colspan="1" rowspan="1" style="background-color:rgb(242, 242, 242 );text-align:left;font-size:12px;padding-left:15px;border-bottom:2pt solid white;">Seguro de celular por <apex:outputText value="{!quoteLineItem.DSALES_Plazo__r.Dsales_Plazo__c}"/> meses <strong>Club de Protecci&oacute;n Celular</strong></td></tr>
+                                                </thead>
+                                            </apex:outputPanel>
+                                        </table>
+                                        
+                                        
+                                        
+                                        <table border="0" cellpadding="0" cellspacing="0" style="height:auto; width:20%; page-break-inside: avoid;">
+                                            <thead><tr><td colspan="1" rowspan="1" height="35px" style="background:rgb(0,72,118 );border:solid; border-color:white;color:white;padding-left:15px;"><strong>Concepto</strong></td></tr>
+                                            </thead>
+                                        </table>
+                                        <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Motos'}">
+                                            <table border="0" cellpadding="0" cellspacing="0" style="height:auto; page-break-inside: avoid; width:70%">
+                                                <thead>
+                                                    <tr> <td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Servicio</strong></td>
+                                                        <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;width:20%;text-align:left;font-size:12px;padding-left:15px;"><apex:outputText value="{!quoteLineItem.Product2.Name}"/></td></tr>
+                                                    <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Cantidad</strong></td>
+                                                        <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left; font-size:12px;padding-left:12px;"><apex:outputText value="{!quoteLineItem.Quantity}"/></td>  </tr>
+                                                    <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Precio por producto</strong></td>
+                                                        <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left;font-size:12px;padding-left:15px;"><apex:outputText value="{!quoteLineItem.UnitPrice}"/></td></tr>
+                                                    <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Total</strong></td>
+                                                        <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;text-align:left; font-size:12px;padding-left:15px;"><apex:outputText value="{!quoteLineItem.TotalPrice}"/></td></tr>
+                                                    <tr><td>&nbsp;</td></tr>
+                                                    
+                                                </thead>
+                                            </table>
+                                        </apex:outputPanel>
+                                        
+                                        
+                                        <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Celulares'}">
+                                            <table border="0" cellpadding="0" cellspacing="0" style="height:auto; page-break-inside: avoid; width:70%">
+                                                <thead>
+                                                    <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:50%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Precio por producto</strong></td>
+                                                        <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;text-align:left;font-size:12px;padding-left:15px;"><apex:outputText value="{!quoteLineItem.UnitPrice}"/></td></tr>
+                                                    <tr><td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:50%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Total</strong></td>
+                                                        <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;text-align:left; font-size:12px;padding-left:15px;"><apex:outputText value="{!quoteLineItem.TotalPrice}"/></td></tr>
+                                                </thead>
+                                                
+                                            </table>
+                                            <!----  </apex:outputPanel>--->
+                                            <br/><br/> 
+                                            <!---  <apex:outputPanel rendered="{!quote.RecordType.Name =='Venta de Seguro de Celulares'}">--->
+                                            <div>
+                                            <table border="0" cellpadding="0" cellspacing="0" style="height:auto; width:25%; page-break-inside: avoid;">
+                                                <thead><tr><td colspan="1" rowspan="1" height="35px" style="background:rgb(0,72,118 );border:solid; border-color:white;color:white;padding-left:15px;"><strong>Resumen Cotizaci&oacute;n</strong></td></tr>
+                                                </thead>
+                                            </table>
+                                            
+                                            
+                                                <table border="0" cellpadding="0" cellspacing="0" style="height:auto; page-break-inside: avoid; width:70%">
+                                                    <thead>
+                                                        <tr> <td colspan="1" rowspan="1" height="35px" style="background-color:rgb(209, 209, 209);border-bottom: .2rem solid white;width:20%;border:solid; border-color:white;font-size:12px;padding-left:15px;"><strong>Forma de Pago</strong></td>
+                                                            <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;width:20%;text-align:left;font-size:12px;padding-left:15px;"><apex:outputText value="{!quote.dsalesOpcionDePago__c}"/></td></tr>
+                                                        <tr> <td colspan="1" rowspan="1" height="35px" style="background-color:rgb(0,72,118 );border-bottom: .2rem solid white;border-color:white;width:20%;font-size:12px;color:white;padding-left:15px;"><strong>Total a Pagar</strong></td>
+                                                            <td colspan="1" rowspan="1" style="border:solid; border-color:rgb(242, 242, 242);border-bottom: .1rem solid #cecbc9;border-top: .1rem solid #cecbc9;border-left: .2rem solid #cecbc9;border-right: .2rem solid #cecbc9;white;width:20%;text-align:left;font-size:12px;padding-left:15px;"><apex:outputText value="{!quoteLineItem.TotalPrice}"/></td></tr>
+                                                    </thead>
+                                                    
+                                                </table>
+                                            </div>
+                                        </apex:outputPanel>
+                                        
+                                    </thead>
+                                </table>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                    </div>
+                </div>
+            </body>
+        </html>
+    </apex:pageBlock>
+</apex:page>
