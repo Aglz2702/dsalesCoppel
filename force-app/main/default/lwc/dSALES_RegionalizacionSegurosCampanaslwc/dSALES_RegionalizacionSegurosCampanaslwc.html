@@ -16,7 +16,7 @@
        </div>
        <div class="slds-p-around_large" style="max-height: 200px; overflow-y: auto;">
          <div class="slds-grid slds-wrap slds-box_x-large">
-           <div class="slds-col slds-grow-none slds-size_4-of-12 slds-truncate">
+           <div if:true={gerenteActivado} class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" >
                  <thead>
                      <tr class="slds-line-height_reset">
@@ -40,7 +40,7 @@
              </table>
              
            </div>
-           <div class="slds-col slds-grow-none slds-size_4-of-12 slds-truncate">
+           <div if:true={gerenteActivado} class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
                    <thead>
                        <tr class="slds-line-height_reset">
@@ -64,13 +64,39 @@
                    </tbody>
                </table>
            </div>
-           <div class="slds-col slds-grow-none slds-size_4-of-12 slds-truncate">
+
+           <div if:true={gerenteActivado} class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <lightning-input type="checkbox" checked={checkGerente}
+                                onchange={selectAllGerente} label="Gerente por zona" name="Gerente por zona">
+                            </lightning-input>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={data.listGerentes} for:item="record">
+                        <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
+                            <td>
+                                <lightning-input checked={record.seleccionado} onchange={onclickGerente}
+                                    type="checkbox" label={record.etiqueta} name={record.valor}>
+                                </lightning-input>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+           <div if:true={gerenteActivado} class="slds-col slds-grow-none slds-size_3-of-12 slds-truncate">
                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
                    <thead>
                        <tr class="slds-line-height_reset">
                            <th class="" scope="col">
                                <lightning-input type="checkbox" checked={checkTienda} onchange={selectAllTienda}
-                                   label="Tienda" name="input4"></lightning-input>
+                                   label="ID Tienda" name="input4"></lightning-input>
                            </th>
                        </tr>
                    </thead>
@@ -87,6 +113,79 @@
                    </tbody>
                </table>
            </div>
+
+
+           <div if:false={gerenteActivado} class="slds-col slds-grow-none slds-size_4-of-12 slds-truncate">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" >
+              <thead>
+                  <tr class="slds-line-height_reset">
+                      <th class="" scope="col">
+                          <lightning-input type="checkbox" checked={checkRegion} onchange={selectAllRegion}
+                              label="Región" name="input"></lightning-input>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <template for:each={data.listRegiones} for:item="record">
+                      <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
+                          <td>
+                              <lightning-input checked={record.seleccionado} onchange={onclickRegion}
+                                  type="checkbox" label={record.etiqueta} name={record.valor}>
+                              </lightning-input>
+                          </td>
+                      </tr>
+                  </template>
+              </tbody>
+          </table>
+          
+        </div>
+        <div if:false={gerenteActivado} class="slds-col slds-grow-none slds-size_4-of-12 slds-truncate">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <lightning-input type="checkbox" checked={checkCiudad}
+                                onchange={selectAllCiudad} label="Ciudad" name="input2">
+                            </lightning-input>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={data.listCiudades} for:item="record">
+                        <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
+                            <td>
+                                <lightning-input checked={record.seleccionado} onchange={onclickCiudad}
+                                    type="checkbox" label={record.etiqueta} name={record.valor}>
+                                </lightning-input>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <div if:false={gerenteActivado} class="slds-col slds-grow-none slds-size_4-of-12 slds-truncate">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <lightning-input type="checkbox" checked={checkTienda} onchange={selectAllTienda}
+                                label="ID Tienda" name="input4"></lightning-input>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={data.listTiendas} for:item="record">
+                        <tr class="slds-hint-parent" key={record.valor} if:true={record.mostrar}>
+                            <td>
+                                <lightning-input checked={record.seleccionado} onchange={onclicklistTiendas}
+                                    type="checkbox" label={record.etiqueta} name={record.valor}>
+                                </lightning-input>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
        </div>
        </div>
     </div>
@@ -106,7 +205,7 @@
               <thead>
                 <tr class="slds-line-height_reset">
                   <th class="" scope="col">
-                    <div class="slds-truncate" title="Tienda">Tienda</div>
+                    <div class="slds-truncate" title="ID Tienda">ID Tienda</div>
                   </th>
                   <th class="" scope="col">
                     <div class="slds-truncate" title="Ultima modificación">Ultima modificación</div>

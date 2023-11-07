@@ -1,3 +1,12 @@
 <aura:component implements="force:appHostable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+	<aura:html tag="style">
+        .slds-modal__container {
+			<head>
+				<title></title>
+			</head>
+            width: 95%;
+            max-width: 95% !important;
+        }
+    </aura:html>
 	<c:dSALES_RegionalizacionSegurosCampanaslwc recordId ="{!v.recordId}" onclose="{!c.closeQA}"/>
 </aura:component>
