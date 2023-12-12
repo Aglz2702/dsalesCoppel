@@ -160,10 +160,10 @@
         <apexClass>DSALES_DocumentsToTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <classAccesses>
+   <!-- <classAccesses>
         <apexClass>DSALES_EndorsementController</apexClass>
         <enabled>true</enabled>
-    </classAccesses>
+    </classAccesses>-->
     <classAccesses>
         <apexClass>DSALES_EndorsementWrapper</apexClass>
         <enabled>true</enabled>
@@ -178,11 +178,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_EndosoWrapperRequest_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    
-    <classAccesses>
-        <apexClass>DSALES_GetPolicyPDF</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -328,10 +323,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DSALES_QuotePagoSMHelper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DSALES_QuotePagoSmTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -372,25 +363,8 @@
         <apexClass>DSALES_ReembolsoWrapperTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    
-    <classAccesses>
-        <apexClass>DSALES_ResumenPagos</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
     <classAccesses>
         <apexClass>DSALES_Siniestro</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_SiniestroCalls</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_SiniestroController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_SiniestroControllerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -412,10 +386,6 @@
     <classAccesses>
         <apexClass>DSALES_SiniestroWrapperTest</apexClass>
         <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>DSALES_SiniestrosHelper</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DSALES_TipoSeguroRequest</apexClass>
@@ -521,17 +491,6 @@
         <apexClass>Product2_Handler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    
-    
-    <classAccesses>
-        <apexClass>endososControllerClass</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>endososControllerClassTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    
     <custom>true</custom>
     <description>Perfil para administradores de la app Seguro de motos.</description>
     <fieldPermissions>
@@ -5364,7 +5323,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>QuoteLineItem.dsalesPagoInicial__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>QuoteLineItem.dsalesPrecionoredondeado__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
