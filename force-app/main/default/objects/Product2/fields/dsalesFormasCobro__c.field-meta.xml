@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesFormasCobro__c</fullName>
+    <description>Se ellije la forma de cobro para el servicio. Es aplicable para servicios y seguros</description>
+    <externalId>false</externalId>
+    <label>Forma de Cobro</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>DSales_Tipo_de_Producto__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Porcentaje de Cobro</fullName>
+                <default>false</default>
+                <label>Porcentaje de Cobro</label>
+            </value>
+            <value>
+                <fullName>Matriz de Precios</fullName>
+                <default>false</default>
+                <label>Matriz de Precios</label>
+            </value>
+            <value>
+                <fullName>Costo Fijo</fullName>
+                <default>false</default>
+                <label>Costo Fijo</label>
+            </value>
+            <value>
+                <fullName>Proveedor</fullName>
+                <default>false</default>
+                <label>Proveedor</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Servicio</controllingFieldValue>
+            <valueName>Porcentaje de Cobro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servicio</controllingFieldValue>
+            <valueName>Matriz de Precios</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servicio</controllingFieldValue>
+            <valueName>Costo Fijo</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

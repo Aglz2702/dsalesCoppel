@@ -49,7 +49,7 @@ global with sharing class DSALES_ServicioArmadoWrapperRequest {
             mapArs.put(x.skuTangible,x.AR);
         }
         for (String clave : mapArs.keySet()) {
-            List<Product2> registros = [SELECT Id, Name, dsalesAR__c, StockKeepingUnit FROM Product2 WHERE StockKeepingUnit = :clave LIMIT 1];
+            List<Product2> registros = [SELECT Id, Name, dsalesAR__c, StockKeepingUnit FROM Product2 WHERE StockKeepingUnit = :clave WITH SECURITY_ENFORCED LIMIT 1];
             if (registros.isEmpty()){
                 arNoActualizados.add(clave);
             }else{
@@ -57,8 +57,11 @@ global with sharing class DSALES_ServicioArmadoWrapperRequest {
                     Product2 actualizarAR = registros[0];
                     actualizarAR.dsalesAR__c = mapArs.get(clave);
                     
-                    update actualizarAR;
-                    
+                    if(Schema.sObjectType.Product2.isUpdateable()){
+                        update actualizarAR;
+                    }else{
+                        System.debug('Permisos insuficientes para actualizar');
+                    }
                     arActualizados.add(clave);
                 }catch(Exception e){
                     message = 'ocurrio un problema '+e.getMessage();
@@ -79,7 +82,7 @@ global with sharing class DSALES_ServicioArmadoWrapperRequest {
             mapCertificados.put(x.numeroCertificado,x);
         }
         for (String clave : mapCertificados.keySet()) {
-            List<DSALES_Certificado__c> registros = [SELECT Id, dsalesEstatusServicioArmado__c FROM DSALES_Certificado__c WHERE Name = :clave LIMIT 1];
+            List<DSALES_Certificado__c> registros = [SELECT Id, dsalesEstatusServicioArmado__c FROM DSALES_Certificado__c WHERE Name = :clave WITH SECURITY_ENFORCED LIMIT 1];
             if (registros.isEmpty()){
                 certificadosNoActualizados.add(clave);
             }else{
@@ -88,12 +91,20 @@ global with sharing class DSALES_ServicioArmadoWrapperRequest {
                     DSALES_ServicioArmadoWrapper.estatus estatus = mapCertificados.get(clave); 
                     
                     actualizarEstatus.dsalesEstatusServicioArmado__c = estatus.estatus;
-                    actualizarEstatus.dsalesFechaHoraServicioArmado__c = Datetime.valueOf(estatus.fechaArmado);
+                    if(estatus.fechaArmado!=null){
+                        actualizarEstatus.dsalesFechaHoraServicioArmado__c = Datetime.valueOf(estatus.fechaArmado);
+                    }
                     
-                    update actualizarEstatus;
+
+                    if(Schema.sObjectType.DSALES_Certificado__c.isUpdateable() && Schema.sObjectType.DSALES_Certificado__c.isCreateable()){
+                        update actualizarEstatus;
+                    }else{
+                        System.debug('Permisos insuficientes para actualizar');
+                    }
                     
                     certificadosActualizados.add(clave);
                 }catch(Exception e){
+                    System.debug('Excepcion:::: '+e.getMessage() +''+ e.getLineNumber());
                     message = 'ocurrio un problema '+e.getMessage();
                 }
             }
