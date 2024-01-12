@@ -10,6 +10,7 @@ global class DSALES_QuoteGexWrapper {
         global String idUniversal {get;set;}
         global String idOportunidad	{get;set;}
         global String iduVenta {get;set;}
+        global String codigoPostal {get;set;}
         global List<Product> productos {get;set;}
  }
 	global class Product {
@@ -27,9 +28,12 @@ global class DSALES_QuoteGexWrapper {
         global String	nombreIntangible	{get;set;}
         global double	precio	{get;set;}
         global double	costoTotal	{get;set;}
+        global double	tiempoArmado	{get;set;}
         global String 	mesesCobertura {get;set;}
         global String	idPartidaDePresupuesto	{get;set;}
-        global Integer	idSecuencia	{get;set;} 
+        global Integer	idSecuencia	{get;set;}
+        global List<Encuestas> encuesta {get;set;}
+        global String	proveedorAsignado	{get;set;}
     }
 
     global class RespuestaNPV{        
@@ -39,8 +43,10 @@ global class DSALES_QuoteGexWrapper {
         global String	iduVenta	{get;set;}
         global String 	codigoError {get;set;}
         global String 	mensaje {get;set;}
+        global Boolean 	coberturaInstalacion {get;set;}
         global List<QuoteGexResponse> respuesta {get;set;}
         global List<Nodos> descripciones {get;set;}
+        //global List<Encuestas> encuesta {get;set;}
     }
     
     global class Nodos{
@@ -50,4 +56,8 @@ global class DSALES_QuoteGexWrapper {
         global List<String>	sku	{get;set;}
     }
     
+    global class Encuestas{
+        global String	preguntas	{get;set;}
+        global String	nombreEncuesta	{get;set;}
+    }
 }
