@@ -13,5 +13,8 @@ public class DSALES_Certificados extends fflib_SObjectDomain{
     public override void onAfterInsert() {
         DSALES_CertificadosHelper.envioCertificado(JSON.serialize(records));
     }
+    public override void onAfterUpdate(Map<Id,SObject> existingRecords){
+        DSALES_CertificadosHelper.enviarCorreoActualizado(existingRecords,records);
+    }
     
 }

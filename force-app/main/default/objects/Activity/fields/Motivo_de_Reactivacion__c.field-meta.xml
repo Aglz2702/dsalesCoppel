@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Motivo_de_Reactivacion__c</fullName>
+    <description>Guarda el Motivo de Reactivación en el caso primario.</description>
+    <externalId>false</externalId>
+    <label>Motivo de Reactivación</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>Motivos_de_Reactivacion</valueSetName>
+    </valueSet>
+</CustomField>

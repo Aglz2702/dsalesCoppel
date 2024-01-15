@@ -15,11 +15,12 @@ public without sharing class DSALES_ControladorCertificadoPDF {
         String def='';
         for(DSALES_Generador__c htmlWeb:[SELECT Id,DSALES_Plantilla__c,Name  from DSALES_Generador__c ])
            {
-               if(htmlWeb.name.ContainsIgnoreCase('Garantía Extendida'))
+              
+               if(htmlWeb.name.ContainsIgnoreCase('Default'))
                {
                    def=htmlWeb.DSALES_Plantilla__c;
                }
-               if(certi.DSalesNombreServicio__c!=null && certi.DSalesNombreServicio__c.EqualsIgnoreCase(htmlWeb.Name))
+               if(certi.DSalesNombreServicio__c!=null && certi.DSalesNombreServicio__c.ContainsIgnoreCase(htmlWeb.Name))
                {
                    html=htmlWeb.Dsales_Plantilla__c;
                    system.debug('Existe Plantilla: '+htmlWeb.Name);

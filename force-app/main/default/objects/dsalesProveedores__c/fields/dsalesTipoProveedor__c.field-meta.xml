@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesTipoProveedor__c</fullName>
+    <description>tipo de proveedor a registrar</description>
+    <externalId>false</externalId>
+    <label>Tipo de proveedor</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Servicio</fullName>
+                <default>false</default>
+                <label>Servicio</label>
+            </value>
+            <value>
+                <fullName>Seguro</fullName>
+                <default>false</default>
+                <label>Seguro</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
