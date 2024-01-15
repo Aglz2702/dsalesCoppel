@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dSalesEstatusCita__c</fullName>
+    <externalId>false</externalId>
+    <label>Estatus de la cita</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Programada</fullName>
+                <default>false</default>
+                <label>Programada</label>
+            </value>
+            <value>
+                <fullName>Cancelada</fullName>
+                <default>false</default>
+                <label>Cancelada</label>
+            </value>
+            <value>
+                <fullName>Instalada</fullName>
+                <default>false</default>
+                <label>Instalada</label>
+            </value>
+            <value>
+                <fullName>Incidencia (Algún problema con la instalación)</fullName>
+                <default>false</default>
+                <label>Incidencia (Algún problema con la instalación)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

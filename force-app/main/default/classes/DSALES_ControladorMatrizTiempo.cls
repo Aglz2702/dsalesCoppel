@@ -8,9 +8,9 @@ public without sharing class DSALES_ControladorMatrizTiempo {
         List<String> listMatrizItem = new List<String>();
         DSales_Matriz_GEX__c matriz = new DSales_Matriz_GEX__c();
         if (Schema.sObjectType.DSales_Matriz_GEX__c.isQueryable()) {
-            matriz = [Select DSALES_Tiempogex__c, DSALES_EsClone__c  from DSales_Matriz_GEX__c Where Id =:recordId];
+            matriz = [Select DSALES_Tiempogex__c, DSALES_EsClone__c, DSales_EsMatrizArmado__c,dsalesInstalacion__c from DSales_Matriz_GEX__c Where Id =:recordId];
         }
-        Map<String, ResultWrapper> mapMatriz = getPicklistOptions('DSALES_Matriz_de_Cotizacion__c', 'DSALES_Tiempo_de_Garantia_Extendida_GEX__c', matriz.DSALES_Tiempogex__c);
+        Map<String, ResultWrapper> mapMatriz = getPicklistOptions('DSALES_Matriz_de_Cotizacion__c', 'DSALES_Tiempo_de_Garantia_Extendida_GEX__c', matriz.DSALES_Tiempogex__c, matriz.DSales_EsMatrizArmado__c, matriz.dsalesInstalacion__c);
         if (Schema.sObjectType.DSALES_Matriz_de_Cotizacion__c.isQueryable()) {
             for(DSALES_Matriz_de_Cotizacion__c item : 
             [Select DSALES_MatrizItemClone__c  from DSALES_Matriz_de_Cotizacion__c
@@ -106,7 +106,7 @@ public without sharing class DSALES_ControladorMatrizTiempo {
         return getRecords(recordId);
     }
     
-    private static Map<String, ResultWrapper> getPicklistOptions(String objApiName, String fieldApiName, String tiempo){
+    private static Map<String, ResultWrapper> getPicklistOptions(String objApiName, String fieldApiName, String tiempo, Boolean armado, Boolean instalacion){
         Map<String, ResultWrapper> mapMatriz = new Map<String, ResultWrapper>();
         SObjectType objectType = Schema.getGlobalDescribe().get(objApiName);
         List<Schema.PicklistEntry> ple = objectType.getDescribe()
@@ -115,7 +115,20 @@ public without sharing class DSALES_ControladorMatrizTiempo {
             .getDescribe().getPickListValues();
         for(Schema.PicklistEntry entry : ple)  {
             ResultWrapper m = new ResultWrapper();
-            m.tiempo = entry.getValue();
+            if(armado==true){
+                m.tiempo = '1 año';
+                m.tipoMatriz='AR(minutos)';
+            }
+            else if(instalacion==true){
+                m.tiempo='1 año';
+                m.tipoMatriz='Precio de instalación';
+            }
+            else{
+                m.tiempo = entry.getValue();
+                m.tipoMatriz=entry.getValue();
+            } 
+            //m.tiempo = entry.getValue();
+            //m.esArmado=armado;
             m.listMatriz = new List<MatrizTiempo>();
             mapMatriz.put(entry.getValue(), m);
             if(tiempo == entry.getValue()){
@@ -128,6 +141,7 @@ public without sharing class DSALES_ControladorMatrizTiempo {
     
     public class ResultWrapper{
         @AuraEnabled public String tiempo {get;set;}
+        @AuraEnabled public String tipoMatriz {get;set;}
         @AuraEnabled public List<MatrizTiempo> listMatriz {get;set;}
     }
     

@@ -1,25 +1,36 @@
 public without sharing class  DSALES_ValidarClienteHelper {
     
     public static void deleteUnpurchasedItem(List<DSALES_AssetWrapper.AssetRequest> listAssets, List<DSALES_CertificadoWrapper.CertificadoRequest> certificado, String quoteId) {
+       
         Quote originalQuote = [SELECT Id, Name,OpportunityId,DSales_ID_Tienda__c, DSALES_EmailNew__c, Pricebook2Id, RecordTypeId, Status, DSALES_Enviarcotizacion__c, DSales_Tienda__c, DSales_Vendedor__c,
                                DSALES_Fechadecreacionpresupuesto__c, ExpirationDate, DSALES_esClon__c FROM Quote WHERE Id = :quoteId WITH SECURITY_ENFORCED]; 
         
         
         List<String>idPartidasAsset= new List<String>();
         List<Decimal>idSecuencias= new List<Decimal>();
+        try{
+            
+        
         for(DSALES_AssetWrapper.AssetRequest a:listAssets){
             idPartidasAsset.add(a.idPartidaPresupuesto);
         }
+            }
+        catch(Exception e)
+            {
+                system.debug(e.getMessage());
+            }
         List<String> quoteLineItemId = new List<String>();
         List<String> lstSku = new List<String>();
         List<String> lstwotId = new List<String>();
+        List<String> lstSkuDeTangible = new List<String>();
         
         for(DSALES_CertificadoWrapper.CertificadoRequest cer:certificado){
             quoteLineItemId.add(cer.idPartidaPresupuesto);
             lstSku.add(cer.sku);
             idSecuencias.add(cer.idSecuencia);
+            lstSkuDeTangible.add(cer.skuDeTangible);
         }
-        List<QuoteLineItem>qtLineOriginalCertificado=[SELECT  Id,Quantity,dsalesIdSecuencia__c,dsalesSkuTangible__c ,DSALES_NombreProductoServicio__c,PricebookEntryId,UnitPrice,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Servicio'AND Id  IN:quoteLineItemId WITH SECURITY_ENFORCED LIMIT:quoteLineItemId.size() ];
+        List<QuoteLineItem>qtLineOriginalCertificado=[SELECT  Id,Quantity,dsalesIdSecuencia__c,dsalesSkuTangible__c ,dsalesSubTipo__c,DSALES_NombreProductoServicio__c,PricebookEntryId,UnitPrice,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Servicio'AND Id  IN:quoteLineItemId WITH SECURITY_ENFORCED LIMIT:quoteLineItemId.size() ];
         List<QuoteLineItem>qtLineOriginal=[SELECT  Id,Quantity,dsalesIdSecuencia__c,PricebookEntryId,DSALES_NombreProductoServicio__c,UnitPrice,Product2Id,DSALES_ListaArticulo__c,dsalesSkuTangible__c,DSALES_SKU__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and Product2.DSales_Tipo_de_Producto__c='Producto'AND Id  IN:idPartidasAsset WITH SECURITY_ENFORCED LIMIT:idPartidasAsset.size() ];
         
         system.debug('qtLineOriginal: '+qtLineOriginal);
@@ -29,6 +40,9 @@ public without sharing class  DSALES_ValidarClienteHelper {
         List<String>qtSecuencias=new List<String>();
         List<String>qtOriginalIdsCertificados = new List<String>();
         List<Id>totalIds = new List<String>();
+        system.debug('lstSkuDeTangible'+lstSkuDeTangible);
+       
+          
         
         for(QuoteLineItem qt:qtLineOriginal)
         {
@@ -37,7 +51,12 @@ public without sharing class  DSALES_ValidarClienteHelper {
         }
         for(QuoteLineItem qtC:qtLineOriginalCertificado)
         {
-            qtSecuencias.add(qtC.dsalesSkuTangible__c+String.valueOf(qtC.dsalesIdSecuencia__c));
+            
+            if(qtC.dsalesSubTipo__c=='dsalesGarantíaExtendida')
+                {
+                     qtSecuencias.add(qtC.dsalesSkuTangible__c+String.valueOf(qtC.dsalesIdSecuencia__c));
+                }
+           
             
             qtOriginalIdsCertificados.add(qtc.id);
             totalIds.add(qtC.Id);
@@ -45,7 +64,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
         
         system.debug('TotalIds: '+totalIds);
         
-        List<QuoteLineitem>qtBorrarTotal =[SELECT  Id,DSALES_SKU__c,Quantity,dsalesIdSecuencia__c,DSALES_NombreProductoServicio__c,dsalesSkuTangible__c,PricebookEntryId,UnitPrice,Product2.DSales_Tipo_de_Producto__c,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and  Id NOT IN:totalIds  WITH SECURITY_ENFORCED];
+        List<QuoteLineitem>qtBorrarTotal =[SELECT  Id,DSALES_SKU__c,Quantity,dsalesIdSecuencia__c,DSALES_NombreProductoServicio__c,dsalesSkuTangible__c,dsalesSubtipo__c,PricebookEntryId,UnitPrice,Product2.DSales_Tipo_de_Producto__c,Product2Id,DSALES_ListaArticulo__c, Vigencia_meses__c FROM QuoteLineItem WHERE QuoteId=:quoteId and  Id NOT IN:totalIds  WITH SECURITY_ENFORCED];
         system.debug('SECUENCIAS: '+qtSecuencias);  
         system.debug('qTBorrarTotal Size: '+qtBorrarTotal.size());   
         
@@ -73,7 +92,7 @@ public without sharing class  DSALES_ValidarClienteHelper {
                 for (QuoteLineItem items : qtBorrarTotal) {  
                     system.debug('items.dsalesIdSecuencia__c '+items.dsalesIdSecuencia__c);
                     system.debug('Producto o Servicio: '+items.Product2.DSales_Tipo_de_Producto__c);
-                    if(qtSecuencias.contains(items.dsalesSkuTangible__c+String.valueOf(items.dsalesIdSecuencia__c))&& items.Product2.DSales_Tipo_de_Producto__c=='Servicio')
+                    if(qtSecuencias.contains(items.dsalesSkuTangible__c+String.valueOf(items.dsalesIdSecuencia__c))&& items.dsalesSubTipo__c=='dsalesGarantíaExtendida')
                     {system.debug('Pasó');
                      
                     }
@@ -97,8 +116,9 @@ public without sharing class  DSALES_ValidarClienteHelper {
                    
                     }
                 } 
-                 system.debug('Id del quote a borrar: '+unpurchasedQuote.Id);
-                    
+              
+               if( listAssets.size()>0)
+        {      
                     if(Schema.sObjectType.Quote.isUpdateable()) {
                         update unpurchasedQuote;
                         
@@ -112,6 +132,12 @@ public without sharing class  DSALES_ValidarClienteHelper {
                    
                 }else{
                     System.debug('Permisos insuficientes para crear');
+                }
+        }
+                else
+                {
+                    system.debug('OPERACIÓN Producto Externo');
+                    
                 }
                 try{
                     DELETE qtBorrarTotal;
@@ -129,9 +155,11 @@ public without sharing class  DSALES_ValidarClienteHelper {
                 System.debug('Error occured: ' + e.getMessage() + e.getLineNumber());
             }
             
-        }  
+        }
+          
         
         
+          
     }
     public static void actualizaCotizacion(QuoteLineItem items, List<QuoteLineItem> qtLineOriginal, Quote unpurchasedQuote,List<QuoteLineItem> item)
     { 
@@ -414,6 +442,8 @@ public without sharing class  DSALES_ValidarClienteHelper {
                         
                         else
                         {
+                            List<DSALES_VentaGEX.ServicioCorrespondiente> servicioCoList = new List <DSALES_VentaGEX.ServicioCorrespondiente>();
+                            system.debug('Acá debió de pasar aunque no tenga Asset');
                             DSALES_VentaGEX.ServicioCorrespondiente servicioGex= new DSALES_VentaGEX.ServicioCorrespondiente();
                             servicioGex.idPartidaDeOportunidad=op.Id;
                             if(!OportunidadLineMap.isEmpty())
@@ -432,6 +462,47 @@ public without sharing class  DSALES_ValidarClienteHelper {
                                     
                                 }
                                 
+                            }
+                           
+                            else if (mapAssets.size()<0 || mapAssets.isEmpty())
+                            {
+                                system.debug('Pasó a nulo');
+                                 system.debug('Antes de entrar a mapAssets. '+mapAssets);
+                                DSALES_VentaGEX.OpporLineItem opporLine = new  DSALES_VentaGEX.OpporLineItem();
+                                for(QuoteLineItem producto:partida)
+                                    {
+                                        if(op.Product2.StockKeepingUnit==producto.DSALES_SKU__c )
+                                            {
+                                                servicioGex.nombreProducto=producto.DSALES_NombreProductoServicio__c;
+                                                Integer n = partida.indexOf(producto);
+                                                partida.remove(n);
+                                                break;
+                                                
+                                            }
+                                    }
+                                for(DSALES_Certificado__c certificado:mapaNombreCertificado.values())
+                                {
+                                    servicioGex.folioCertificado=certificado.name;
+                                    servicioGEx.sku=certificado.Dsales_sku__c;
+                                    servicioGEx.tipoProducto='Servicio';
+                                    mapaNombreCertificado.remove(certificado.id);
+                                    
+									break;                                    
+                                    
+                                }
+                                opporline.idPartidaDeOportunidad=null;
+                                opporline.idProductoAdquirido=null;
+                                opporline.sku=null;
+                                opporline.tipoProducto=null;
+                                opporLine.nombreProducto=null;
+                               servicioCoList.add(servicioGex);
+                                
+                                opporline.entregaServicioCorrespondiente=servicioCoList;
+                                listaDeOportunidades.add(opporline);
+                                //mapaNombreCertificado
+                                system.debug('Sí entró a mapAssetsNull');
+                                //servicioGex.folioCertificado=
+                                // listaDeOportunidades.add(opportunityLine); Hacer un for con los valores del mapaNombreCertificado
                             }
                             
                             

@@ -26,6 +26,16 @@
                 <default>false</default>
                 <label>Reembolso</label>
             </value>
+            <value>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+                <label>Cancelado</label>
+            </value>
+            <value>
+                <fullName>Devuelto</fullName>
+                <default>false</default>
+                <label>Devuelto</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

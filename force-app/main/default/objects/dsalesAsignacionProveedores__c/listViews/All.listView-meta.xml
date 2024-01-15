@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>dsalesProducto__c</columns>
+    <columns>dsalesActivo__c</columns>
+    <columns>dsalesProveedor__c</columns>
+    <columns>RECORDTYPE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>dsalesProveedor__c</field>
+        <operation>equals</operation>
+        <value>MABE</value>
+    </filters>
+    <label>Todos</label>
+</ListView>

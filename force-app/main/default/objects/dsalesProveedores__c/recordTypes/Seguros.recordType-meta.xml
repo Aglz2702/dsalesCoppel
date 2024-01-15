@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Seguros</fullName>
+    <active>true</active>
+    <description>Registros pertenecientes a un seguro (Motos o Celulares)</description>
+    <label>Seguros</label>
+    <picklistValues>
+        <picklist>dsalesSubtipo__c</picklist>
+        <values>
+            <fullName>Seguro de Celulares</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seguro de Motos</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>dsalesTipoProveedor__c</picklist>
+        <values>
+            <fullName>Seguro</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+</RecordType>

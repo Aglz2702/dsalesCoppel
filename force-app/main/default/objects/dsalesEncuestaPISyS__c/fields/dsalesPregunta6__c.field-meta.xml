@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesPregunta6__c</fullName>
+    <description>Campo que corresponde a la pregunta ¿Cuenta con superficie rígida (Pared o techo)
+para montaje del equipo?*</description>
+    <externalId>false</externalId>
+    <label>Pregunta 6</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

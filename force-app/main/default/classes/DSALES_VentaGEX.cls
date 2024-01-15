@@ -3,6 +3,7 @@ global class DSALES_VentaGEX {
     
     global class VentaGexRequest{
         global String quoteId{get;set;}
+        global List<Boolean> respuestasDeEncuesta {get;set;}
         global List<DSALES_AssetWrapper.AssetRequest> listaDeProductos {get;set;}
         global DSALES_PaymentInfoWrapperGEX.PaymentGEXRequest pago {get;set;}
         global List<DSALES_CertificadoWrapper.CertificadoRequest> listaDeCertificados{get;set;}
@@ -13,6 +14,7 @@ global class DSALES_VentaGEX {
         global String idVendedor {get;set;}
         global String nombreVendedor{get;set;}
         global String idFactura {get;set;}
+        global String idUniversalPrevio {get;set;}
                
     }
 
@@ -31,7 +33,6 @@ global class DSALES_VentaGEX {
         global String idProductoAdquirido {get;set;}
         global List<ServicioCorrespondiente> entregaServicioCorrespondiente{get;set;}
     }
-   
     
     global class VentaGexResponse{
         global Boolean exito {get;set;}
@@ -40,6 +41,7 @@ global class DSALES_VentaGEX {
         global String idClienteSalesforce {get;set;}
         global List<String> idDePago {get;set;}
         global List<OpporLineItem> listaPartidasOportunidad {get;set;}
+        global String idEncuesta {get;set;}
     }
 
 }

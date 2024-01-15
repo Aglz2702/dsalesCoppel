@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_WhoAnswered__c</fullName>
+    <externalId>false</externalId>
+    <label>¿Quien Contestó?</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>C</fullName>
+                <default>false</default>
+                <label>Cliente</label>
+            </value>
+            <value>
+                <fullName>X</fullName>
+                <default>false</default>
+                <label>Cónyuge</label>
+            </value>
+            <value>
+                <fullName>M</fullName>
+                <default>false</default>
+                <label>Mamá</label>
+            </value>
+            <value>
+                <fullName>P</fullName>
+                <default>false</default>
+                <label>Papá</label>
+            </value>
+            <value>
+                <fullName>N</fullName>
+                <default>false</default>
+                <label>No es familiar</label>
+            </value>
+            <value>
+                <fullName>O</fullName>
+                <default>false</default>
+                <label>Otro familiar</label>
+            </value>
+            <value>
+                <fullName>NLC</fullName>
+                <default>false</default>
+                <label>No lo conoce</label>
+            </value>
+            <value>
+                <fullName>LCNF</fullName>
+                <default>false</default>
+                <label>Lo conoce y no es familiar</label>
+            </value>
+            <value>
+                <fullName>NLI</fullName>
+                <default>false</default>
+                <label>No logré identificar</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

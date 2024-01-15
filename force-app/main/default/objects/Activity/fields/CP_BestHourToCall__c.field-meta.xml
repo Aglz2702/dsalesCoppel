@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP_BestHourToCall__c</fullName>
+    <externalId>false</externalId>
+    <label>Mejor Hora Para Marcar</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>CP_ValuesBestHourToCall</valueSetName>
+    </valueSet>
+</CustomField>

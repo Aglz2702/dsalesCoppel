@@ -12,6 +12,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cancelado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Devuelto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>No Acreditado</fullName>
             <default>false</default>
         </values>

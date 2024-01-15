@@ -41,11 +41,14 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             List<Asset> listaAssetsModificar = new List<Asset>();
         List<DSALES_Certificado__c> listaCertificados = new List<DSALES_Certificado__c>();
         List<DSALES_Certificado__c> listaCertificadosModificar= new List<DSALES_Certificado__c>();
-      List<DSALES_InformacionDePago__c> pago =[SELECT Id,DSALES_Oportunidad__c
+      //List<DSALES_InformacionDePago__c> pago =[SELECT Id,DSALES_Oportunidad__c
+        //                                            FROM DSALES_InformacionDePago__c WHERE   DSALES_IDUniversal1__c=:idUniversal WITH SECURITY_ENFORCED];
+        List<DSALES_InformacionDePago__c> pago =[SELECT Id,DSALES_Oportunidad__c,DSALES_Estatus__c
                                                     FROM DSALES_InformacionDePago__c WHERE   DSALES_IDUniversal1__c=:idUniversal WITH SECURITY_ENFORCED];
+	  	List<DSALES_InformacionDePago__c> listaPagoAct= new  List<DSALES_InformacionDePago__c> ();
         if(listaProductos.size()==0 || listaProductos==null)
         {
-            if(!String.isEmpty(idUniversal))
+            if(!String.isEmpty(estatusGlobal) && (!String.isEmpty(motivoGlobal)))
             {
                 switch on pago.size() {
                     when 0  {
@@ -57,8 +60,11 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                         List<OpportunityLineItem> productoOpor= [SELECT DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c  WITH SECURITY_ENFORCED]; 
                         List<DSALES_Certificado__c> certificados= [SELECT DSALES_Estatus__c FROM DSALES_Certificado__c WHERE
                                                                   DSALES_InformacionDePago__c=:pago[0].Id WITH SECURITY_ENFORCED];
-                        List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
-                        system.debug('');
+                        //List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
+                        //system.debug('');
+                        List<Asset> productos=[Select Status,DSales_Informacion_pago__c FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
+                        system.debug('asset_________'+productos);
+                        system.debug('pago'+pago);
                         for(OpportunityLineItem oportunidad:productoOpor)
                         {
                             oportunidad.DSALES_Estatus__c=estatusGlobal;
@@ -76,6 +82,10 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                                      productos[contador].DSALES_Motivo__c=motivoGlobal;
                                     listaAssetsModificar.add(productos[contador]);
                                 }
+                            if(pago.size()>contador){
+                                pago[contador].DSALES_Estatus__c=estatusGlobal;
+                                listaPagoAct.add(pago[contador]);
+                            }
                             contador++;
                         }
                         
@@ -93,8 +103,8 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             Map<String,DSALES_CertificadoWrapper.cancelacionGex> mapaCancela = new Map<String,DSALES_CertificadoWrapper.cancelacionGex>();
             if(pago.size()>0)
             {
-                     listaAssets=[SELECT Id,DSALES_SKU__c FROM Asset WHERE  DSales_Informacion_pago__c=:pago[0].id WITH SECURITY_ENFORCED];
-            listaCertificados= [SELECT Name, DSALES_Estatus__c, DSales_Motivo__c FROM
+                     listaAssets=[SELECT Id,DSALES_SKU__c,DSales_Informacion_pago__c  FROM Asset WHERE  DSales_Informacion_pago__c=:pago[0].id WITH SECURITY_ENFORCED];
+            listaCertificados= [SELECT Name, DSALES_Estatus__c,DSALES_SKU__c, DSales_Motivo__c FROM
                                                            DSALES_Certificado__c WHERE DSALES_InformacionDePago__c =:pago[0].id WITH SECURITY_ENFORCED];
             }
        
@@ -139,9 +149,13 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                            listaAssetsModificar.add(asset);
                        }
                    }
+                   for(DSALES_InformacionDePago__c p:pago){
+						p.DSALES_Estatus__c='No Acreditado';//mapaCancela.get(s.Id).estatus;
+                       	listaPagoAct.add(p);
+                   }
                    for(DSALES_Certificado__c c:listaCertificados)
                        {
-                           if(s.DSALES_FolioCertificado__c==c.Name)
+                           if(s.Product2.StockKeepingUnit==c.DSALES_SKU__c)
                                {
                                    mapaCancela.get(s.Id).idProducto=c.Id;
                            DSALES_Certificado__c certificado = new DSALES_Certificado__c();
@@ -158,8 +172,13 @@ global with sharing class DSALES_CertificadoWrapperRequest {
           
         }
 
-          actualizaListas(listaAssetsModificar,listaOportunidades,listaCertificadosModificar);
-        
+          //actualizaListas(listaAssetsModificar,listaOportunidades,listaCertificadosModificar);
+        System.debug('opp________'+listaOportunidades);
+        System.debug('asset_________'+listaAssetsModificar);
+         System.debug('listaCertificadosModificar'+listaCertificadosModificar);
+         System.debug('listaPagoAct'+listaPagoAct);
+	    actualizaListas(listaAssetsModificar,listaOportunidades,listaCertificadosModificar,listaPagoAct);
+         
         
         
 
@@ -167,8 +186,9 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         
     }
     
-   public static void actualizaListas(List<Asset> listaAssetsModificar, List<OpportunityLineItem> listaOportunidades, List<DSALES_Certificado__c> listaCertificadosModificar)
-   {
+   //public static void actualizaListas(List<Asset> listaAssetsModificar, List<OpportunityLineItem> listaOportunidades, List<DSALES_Certificado__c> listaCertificadosModificar)
+   public static void actualizaListas(List<Asset> listaAssetsModificar, List<OpportunityLineItem> listaOportunidades, List<DSALES_Certificado__c> listaCertificadosModificar,List<DSALES_InformacionDePago__c> listaPagosModificar)
+    {
             if(Schema.sObjectType.Asset.isUpdateable())
             {
                 update listaAssetsModificar;
@@ -183,6 +203,9 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             {
                 update listaCertificadosModificar;
             }
+        	if(Schema.sObjectType.DSALES_InformacionDePago__c.isUpdateable()){
+           update listaPagosModificar;
+       		}
    }
    
     
@@ -192,6 +215,8 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         Boolean success = false;
         String message = '';
         String code='';
+        String idInstalacion='';
+        Map<String,String> eventoDelCertificado= new Map<String,String>();
         try{
             if((certificado.numeroCliente!='' || !String.isEmpty(certificado.numeroCliente))&&  (!certificado.numeroCliente.Equals('90001') || certificado.numeroCliente!='90001'))
             {
@@ -241,22 +266,29 @@ global with sharing class DSALES_CertificadoWrapperRequest {
              String recordTypeId ='';
             if(certificado.ar!=null)
                 {
-                    
                     recordTypeId = Schema.SObjectType.Dsales_Certificado__c.getRecordTypeInfosByDeveloperName().get('dsalesArmadoMuebles').getRecordTypeId();
                   certificadoRecord.RecordTypeId=recordTypeId;
                  certificadoRecord.dsalesFechaPromesa__c=certificado.fechaPromesa; 
                     system.debug('RECORD TYPE: ARM');
                 }
-            else{
+            else if(!String.isBlank(certificado.garantiaCoppelProducto)) {
                 certificadoRecord.RecordTypeId=Schema.SObjectType.Dsales_Certificado__c.getRecordTypeInfosByDeveloperName().get('dsalesGarantiaExtendida').getRecordTypeId();
+                idInstalacion=certificadoRecord.RecordTypeId;
                 system.debug('RECORD TYPE: GEX');
+                system.debug(certificado.garantiaCoppelProducto);
+            }
+            
+            else {
+                certificadoRecord.RecordTypeId=Schema.SObjectType.Dsales_Certificado__c.getRecordTypeInfosByDeveloperName().get('dsalesInstalacion').getRecordTypeId();
+                system.debug('RECORD TYPE: Instalación');
             }
             if(Schema.sObjectType.DSALES_Certificado__c.isCreateable())
             {
                 insert certificadoRecord;
             }
           system.debug('Exito');
-            
+          
+             
             success = true;
             message = '';
             system.debug('message' +message);
