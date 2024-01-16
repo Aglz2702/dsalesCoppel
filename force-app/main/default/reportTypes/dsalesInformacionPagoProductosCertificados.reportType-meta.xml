@@ -76,11 +76,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>DSALES_Celular_del_Cliente__c</field>
-            <table>DSALES_InformacionDePago__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>DSALES_Certificado__c</field>
             <table>DSALES_InformacionDePago__c</table>
         </columns>
@@ -350,7 +345,7 @@
             <table>DSALES_InformacionDePago__c</table>
         </columns>
         <columns>
-            <checkedByDefault>false</checkedByDefault>
+            <checkedByDefault>true</checkedByDefault>
             <field>dsalesRegion__c</field>
             <table>DSALES_InformacionDePago__c</table>
         </columns>
@@ -377,6 +372,21 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>dsalesGerenteZona__c</field>
+            <table>DSALES_InformacionDePago__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dsalesHoraReg__c</field>
+            <table>DSALES_InformacionDePago__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dsalesNoCelularCliente__c</field>
+            <table>DSALES_InformacionDePago__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dsalesRegionGEX__c</field>
             <table>DSALES_InformacionDePago__c</table>
         </columns>
         <masterLabel>Información de Pagos</masterLabel>
@@ -1033,6 +1043,16 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>dsalesNumCertificado__c</field>
+            <table>DSALES_InformacionDePago__c.Productos_Adquiridos__r.Certificados__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dsalesVigenciaInst__c</field>
+            <table>DSALES_InformacionDePago__c.Productos_Adquiridos__r.Certificados__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dSalesCausa__c</field>
             <table>DSALES_InformacionDePago__c.Productos_Adquiridos__r.Certificados__r</table>
         </columns>
         <masterLabel>Certificados</masterLabel>

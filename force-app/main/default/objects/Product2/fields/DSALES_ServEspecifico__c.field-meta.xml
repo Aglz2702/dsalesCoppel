@@ -21,6 +21,11 @@
                 <default>false</default>
                 <label>Armado de muebles</label>
             </value>
+            <value>
+                <fullName>Instalaciones</fullName>
+                <default>false</default>
+                <label>Instalaciones</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
