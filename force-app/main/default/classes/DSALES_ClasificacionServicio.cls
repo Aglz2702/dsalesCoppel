@@ -52,6 +52,9 @@ public without sharing class DSALES_ClasificacionServicio {
                     when 'Administrador del sistema' {
                         query += 'and DSales_Servicio__c != true and DSALES_Seguro__c!= true ';
                     }
+                    when 'System Administrator' {
+                        query += 'and DSales_Servicio__c != true and DSALES_Seguro__c!= true ';
+                    }
                     when 'Administrador SM' {
                         query += ' And DSALES_NoaplicaSeg__c = false and DSALES_Seguro__c= false ';
                     }
@@ -134,12 +137,12 @@ public without sharing class DSALES_ClasificacionServicio {
             listaProductos=[Select Id from Product2 Where DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and DSALES_Servicio__c = :boolserv and DSALES_Seguro__c= :boolseg WITH SECURITY_ENFORCED order by Name asc];
 
         }
-        else if (checkProfile== 'Administrador del sistema') {
+        else if (checkProfile== 'Administrador del sistema'|| checkProfile== 'System Administrator') {
             boolserv = true;
             boolseg = true;
             listaProductos=[Select Id from Product2 Where DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and (DSALES_Servicio__c = :boolserv OR DSALES_Seguro__c = :boolseg)  WITH SECURITY_ENFORCED order by Name asc];
         }
-        else if(checkProfile== 'Administrador GEX'||checkProfile== 'Administrador Armado') {
+        else if(checkProfile== 'Administrador GEX'||checkProfile== 'Administrador Armado' ||checkProfile== 'Administrador de Instalación') {
             boolserv = true;
             boolseg = false;
             listaProductos=[Select Id from Product2 Where DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and DSALES_Servicio__c = :boolserv and DSALES_Seguro__c= :boolseg WITH SECURITY_ENFORCED order by Name asc];
@@ -1017,7 +1020,7 @@ public without sharing class DSALES_ClasificacionServicio {
         @AuraEnabled
         public static List<PicklistOp> getPickListValuesIntoList6(){
             List<PicklistOp> pickListValuesList4= new List<PicklistOp>();
-            Schema.DescribeFieldResult fieldResult = Product2.Forma_de_Cobro__c.getDescribe();
+            Schema.DescribeFieldResult fieldResult = Product2.dsalesFormasCobro__c.getDescribe();
             List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
             for( Schema.PicklistEntry pickListVal : ple){
                 PicklistOp option = new PicklistOp();
@@ -1027,6 +1030,45 @@ public without sharing class DSALES_ClasificacionServicio {
             }
             return pickListValuesList4;
         }
+
+        @AuraEnabled
+        public static List<PicklistOp> getPickListProveedores(){
+            List<PicklistOp> pickListValuesList4= new List<PicklistOp>();
+            for(dsalesProveedores__c item: [select id, name from dsalesProveedores__c where dsalesActivo__c=true WITH SECURITY_ENFORCED])
+            {
+                PicklistOp option = new PicklistOp();
+                option.label= item.name;
+                option.value = item.id;
+                pickListValuesList4.add(option);
+            }  
+            return pickListValuesList4;
+        }
+
+        @AuraEnabled
+        public static List<PicklistOp> getPickListEncuesta(){
+            List<PicklistOp> pickListValuesList4= new List<PicklistOp>();
+            for(dsalesEncuestaPISyS__c item: [select id, name from dsalesEncuestaPISyS__c where dsalesIsActive__c=true WITH SECURITY_ENFORCED])
+            {
+                PicklistOp option = new PicklistOp();
+                option.label= item.name;
+                option.value = item.id;
+                pickListValuesList4.add(option);
+            }  
+            return pickListValuesList4;
+        }
+       /* @AuraEnabled
+        public static List<PicklistOp> getPickListValuesIntoList7(){
+            List<PicklistOp> pickListValuesList4= new List<PicklistOp>();
+            Schema.DescribeFieldResult fieldResult = dsalesProveedores__c.Forma_de_Cobro__c.getDescribe();
+            List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+            for( Schema.PicklistEntry pickListVal : ple){
+                PicklistOp option = new PicklistOp();
+                option.label= pickListVal.getLabel();
+                option.value = pickListVal.getValue();
+                pickListValuesList4.add(option);
+            }
+            return pickListValuesList4;
+        }*/
                     
     @AuraEnabled
     public static Product2 createProductIntan(Product2 productIntan, String sku){
@@ -1088,6 +1130,25 @@ public without sharing class DSALES_ClasificacionServicio {
             insert listInsertPorcentajes;
         }                   
     }     
+
+    @AuraEnabled
+    public static void asignacionProveedores(String idProveedor, String idServicio){
+        system.debug(idProveedor);
+        List<dsalesAsignacionProveedores__c> listInsertProveedores= new List<dsalesAsignacionProveedores__c>();
+        listInsertProveedores.add(new dsalesAsignacionProveedores__c(dsalesProducto__c= idServicio, dsalesProveedor__c=idProveedor,  dsalesActivo__c=true));
+        if(Schema.sObjectType.dsalesAsignacionProveedores__c.isCreateable()) {
+            insert listInsertProveedores;
+        }       
+    }
+
+    @AuraEnabled
+    public static void asignacionEncuesta(String idEncuesta, String idServicio){
+        List<dsalesAsignacionEncuesta__c> listInsertEncuesta= new List<dsalesAsignacionEncuesta__c>();
+        listInsertEncuesta.add(new dsalesAsignacionEncuesta__c(dsalesServicio__c= idServicio, dsalesEncuestaPISyS__c=idEncuesta,  dsalesActivo__c=true));
+        if(Schema.sObjectType.dsalesAsignacionEncuesta__c.isCreateable()) {
+            insert listInsertEncuesta;
+        }       
+    }
 
     @AuraEnabled
     public static DSales_Asignacion_de_Productos__c createVinculacion(DSales_Asignacion_de_Productos__c asignacion){  
@@ -1153,13 +1214,13 @@ public without sharing class DSALES_ClasificacionServicio {
             DSALES_Familia__r.Name from Product2 Where (StockKeepingUnit LIKE :busquedaPers+'%' or name LIKE :busquedaPers+'%') and DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and DSALES_Servicio__c = :boolserv and DSALES_Seguro__c= :boolseg WITH SECURITY_ENFORCED order by Name asc limit 100];
 
         }
-        else if (checkProfile== 'Administrador del sistema') {
+        else if (checkProfile== 'Administrador del sistema' || checkProfile== 'System Administrator') {
             boolserv = true;
             boolseg = true;
             listaProductos=[Select Id, (Select Id from Asignaciones_de_Productos__r Where DSales_Servicio_Seguro__c = :servicio and DSALES_Activo__c=false), Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name,
             DSALES_Familia__r.Name from Product2 Where  (StockKeepingUnit LIKE :busquedaPers+'%' or name LIKE :busquedaPers+'%') and DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and (DSALES_Servicio__c = :boolserv OR DSALES_Seguro__c = :boolseg)  WITH SECURITY_ENFORCED order by Name asc limit 100];
         }
-        else if(checkProfile== 'Administrador GEX'||checkProfile== 'Administrador Armado') {
+        else if(checkProfile== 'Administrador GEX'||checkProfile== 'Administrador Armado' ||checkProfile== 'Administrador de Instalación' ) {
             boolserv = true;
             boolseg = false;
             listaProductos=[Select Id, (Select Id from Asignaciones_de_Productos__r Where DSales_Servicio_Seguro__c = :servicio and DSALES_Activo__c=false), Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name,
@@ -1209,13 +1270,13 @@ public without sharing class DSALES_ClasificacionServicio {
             DSALES_Familia__r.Name from Product2 Where DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and DSALES_Servicio__c = :boolserv and DSALES_Seguro__c= :boolseg WITH SECURITY_ENFORCED order by Name asc];
 
         }
-        else if (checkProfile== 'Administrador del sistema') {
+        else if (checkProfile== 'Administrador del sistema' || checkProfile== 'System Administrator') {
             boolserv = true;
             boolseg = true;
             listaProductos=[Select Id, (Select Id from Asignaciones_de_Productos__r Where DSales_Servicio_Seguro__c = :servicio and DSALES_Activo__c=false), Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name,
             DSALES_Familia__r.Name from Product2 Where DSales_Tipo_de_Producto__c= 'Producto' and Id not in :idproducto and isActive = true  and (DSALES_Servicio__c = :boolserv OR DSALES_Seguro__c = :boolseg)  WITH SECURITY_ENFORCED order by Name asc];
         }
-        else if(checkProfile== 'Administrador GEX'||checkProfile== 'Administrador Armado') {
+        else if(checkProfile== 'Administrador GEX'||checkProfile== 'Administrador Armado' || checkProfile== 'Administrador de Instalación') {
             boolserv = true;
             boolseg = false;
             listaProductos=[Select Id, (Select Id from Asignaciones_de_Productos__r Where DSales_Servicio_Seguro__c = :servicio and DSALES_Activo__c=false), Name, StockKeepingUnit, DSALES_Categoria__r.Name, DSALES_SubCategoria__r.Name, DSALES_Clase__r.Name,

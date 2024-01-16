@@ -17,6 +17,8 @@ import getPickListTipoSeguro from '@salesforce/apex/DSALES_ClasificacionServicio
 import getPickListMatriz from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList3';
 import getPickListPago from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList5';
 import getPickListFormaPago from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListValuesIntoList6';
+import getPickListProveedores from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListProveedores';
+import getPickListEncuesta from '@salesforce/apex/DSALES_ClasificacionServicio.getPickListEncuesta';
 import getMatrices from '@salesforce/apex/DSALES_ClasificacionServicio.getMatriz';
 import getBuscarVinculacion from '@salesforce/apex/DSALES_ClasificacionServicio.getBuscarVinculacion';
 import createProductIntan from '@salesforce/apex/DSALES_ClasificacionServicio.createProductIntan';
@@ -27,6 +29,8 @@ import insertVinculacion from '@salesforce/apex/DSALES_ClasificacionServicio.ins
 import updateMatriz from '@salesforce/apex/DSALES_ClasificacionServicio.updateMatriz';
 import insertListaPrecios from '@salesforce/apex/DSALES_ClasificacionServicio.insertListaPrecios';
 import insertProveedores from '@salesforce/apex/DSALES_ClasificacionServicio.insertProveedores';
+import asignacionProveedores from '@salesforce/apex/DSALES_ClasificacionServicio.asignacionProveedores';
+import asignacionEncuesta from '@salesforce/apex/DSALES_ClasificacionServicio.asignacionEncuesta';
 import insertPocentajeCobro from '@salesforce/apex/DSALES_ClasificacionServicio.insertPocentajeCobro';
 import recordTypeId from '@salesforce/apex/DSALES_ClasificacionServicio.recordTypeId';
 import getCampaings from '@salesforce/apex/DSALES_ClasificacionServicio.getCampaings';
@@ -46,6 +50,7 @@ import getRecordsFromServer21 from '@salesforce/apex/DSALES_ClasificacionServici
 import getRecordsFromServer3 from '@salesforce/apex/DSALES_ClasificacionServicio.getRecordsFromServer3';
 import getRecordsFromServer31 from '@salesforce/apex/DSALES_ClasificacionServicio.getRecordsFromServer31';
 import getPicklistOptionsDependent from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.getPicklistOptionsDependent';
+import seleccionSegurosServicios from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.seleccionSegurosServicios';
 import getPicklistOptionsDependentSM from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.getPicklistOptionsDependentSM';
 import getPickListRegiones from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.getPickListRegiones';
 import vinculacionTiendaSeguro from '@salesforce/apex/DSALES_RegionalizacionSegurosCampanas.vinculacionTiendaSeguro';
@@ -84,6 +89,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     checkFamilia = false;
     checkRegion = false;
     checkCiudad = false;
+    checkGerente = false;
+    gerenteActivado=false;
     checkTienda = false;
     listTiendasActivas = [];
     showSpinner = true;
@@ -146,7 +153,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                     this.pickList.DSales_Tipo_de_Producto__c = 'Seguro';
                     this.getPickList4();
                 }
-                else if (this.data.confirmarProfileType == 'Administrador GEX' || this.data.confirmarProfileType == 'Administrador Armado') {
+                else if (this.data.confirmarProfileType == 'Administrador GEX' || this.data.confirmarProfileType == 'Administrador Armado'|| this.data.confirmarProfileType == 'Administrador de Instalación') {
                     this.resultPerfil = false;
                     this.showAdmiSM = false;
                     this.showAdmiGex = true;
@@ -595,6 +602,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.pickList.matrizSelected = '';
         this.data.listasignacion = '';
         this.data.showcompras = false;
+        this.data.showcomprascat = false;
     }
 
     limpiarCampos() {
@@ -611,7 +619,12 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.pickList.matrizSelected = '';
         this.pickList.dsalesOpcionPago__c = '';
         this.pickList.DSales_Aplicaporcentajecobro__c = false;
+        this.pickList.dsalesProveedor__c='';
+        this.pickList.dsalesEncuestaPISyS__c='';
+        this.pickList.formaCobro='';
+        this.pickList.proveedores='';
         this.showPorcentajeCobro = false;
+        this.data.showPrecioUnico = false;
         this.aplicaMotoEx = false;
         this.pickList.DSALES_Aplicaparamotoexterna__c = false;
         this.checkSku = false;
@@ -857,7 +870,9 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
             });
     }
 
-    SelectSeguroServicio() {
+    SelectSeguroServicio(event) {
+        this.data.showEncuesta=false;
+        this.data.showProveedores=false;
         this.ProfileChecker();
         getPickListFormaPago()
             .then(result => {
@@ -881,6 +896,8 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
     asignarCategoria(event) {
         this.showSpinner = true;
+        this.data.showEncuesta=false;
+        this.data.showProveedores=false;
         this.pickList.valueSelectedtipoSeguroServicio = event.target.value;
         if( this.pickList.valueSelectedtipoSeguroServicio=='Seguro de Motos'){
             this.showAdmiSC=false;
@@ -889,6 +906,27 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         else if ( this.pickList.valueSelectedtipoSeguroServicio=='Seguro de Celulares'){
             this.showAdmiSC=true;
             this.showAdmiSM=false;
+            this.data.showProveedores=true;
+            getPickListProveedores()
+            .then(result => {
+                this.pickList.listProveedores = result;
+            });
+        }
+        else if ( this.pickList.valueSelectedtipoSeguroServicio=='Instalaciones'){
+            this.data.showProveedores=true;
+            this.data.showEncuesta=true;
+            getPickListProveedores()
+            .then(result => {
+                this.pickList.listProveedores = result;
+            });
+            getPickListEncuesta()
+            .then(result => {
+                this.pickList.listEncuestas = result;
+            });
+        }
+        else{
+            this.data.showProveedores=false;
+            this.data.showEncuesta=false;
         }
         console.log(this.pickList.valueSelectedtipoProducto + 'holaa');
         recordTypeId({ tipoRegistro: this.pickList.valueSelectedtipoSeguroServicio })
@@ -979,7 +1017,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                     this.pickList.DSales_Tipo_de_Producto__c = 'Seguro';
                     this.getPickList4();
                 }
-                else if (this.data.confirmarProfileType == 'Administrador GEX' || this.data.confirmarProfileType == 'Administrador Armado') {
+                else if (this.data.confirmarProfileType == 'Administrador GEX' || this.data.confirmarProfileType == 'Administrador Armado' || this.data.confirmarProfileType == 'Administrador de Instalación') {
                     this.resultPerfil = false;
                     this.showAdmiSM = false;
                     this.showAdmiSC = false;
@@ -1043,7 +1081,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                             this.pickList.DSales_Tipo_de_Producto__c = 'Seguro';
                             this.getPickList4();
                         }
-                        else if (this.data.confirmarProfileType == 'Administrador GEX' || this.data.confirmarProfileType == 'Administrador Armado') {
+                        else if (this.data.confirmarProfileType == 'Administrador GEX' || this.data.confirmarProfileType == 'Administrador Armado' || this.data.confirmarProfileType == 'Administrador de Instalación') {
                             this.resultPerfil = false;
                             this.showAdmiSM = false;
                             this.showAdmiGex = true;
@@ -1292,11 +1330,15 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                 console.log('en proceso...')
             }
         }
+        if(this.pickList.valueSelectedtipoSeguroServicio=='Instalaciones'){
+            if(this.pickList.dsalesProveedor__c==''){
+                this.data.confirmarCampos=false;
+            }
+        }
     }
 
 
     guardarProductIntan() {
-        console.log('hola');
         if (this.pickList.valueSelectedtipoProducto == 'Servicio') {
             this.pickList.DSALES_ServEspecifico__c = this.pickList.valueSelectedtipoSeguroServicio;
         }
@@ -1335,6 +1377,23 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
                                     console.log(error);
                                     this.showSpinner = false;
                                 });
+                        }
+                        if(this.pickList.valueSelectedtipoSeguroServicio=='Instalaciones'){
+                                asignacionProveedores({ idProveedor: this.pickList.dsalesProveedor__c, idServicio: result2 })
+                                .then(result5 => {
+                                    console.log(result5);
+                                }).catch(error => {
+                                    console.log(error);
+                                    this.showSpinner = false;
+                                });
+
+                                asignacionEncuesta({ idEncuesta: this.pickList.dsalesEncuestaPISyS__c, idServicio: result2 })
+                                .then(result6 => {
+                                    console.log(result6);
+                                }).catch(error => {
+                                    console.log(error);
+                                    this.showSpinner = false;
+                                });   
                         }
                     }).catch(error => {
                         console.log(error);
@@ -1969,7 +2028,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     }
 
     getNameRecordTypeId() {
-        if (this.data.confirmarProfileType == 'No corresponde') {
+        if (this.data.confirmarProfileType == 'Administrador SM') {
             this.data.nameRecordType = 'Administrador SM';
         }
         else if (this.data.confirmarProfileType == 'Administrador del sistema' || this.data.confirmarProfileType == 'System Administrator') {
@@ -1977,6 +2036,15 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         }
         else if (this.data.confirmarProfileType == 'Administrador GEX') {
             this.data.nameRecordType = 'Administrador GEX';
+        }
+        else if (this.data.confirmarProfileType == 'Administrador Armado') {
+            this.data.nameRecordType = 'Administrador Armado';
+        }
+        else if (this.data.confirmarProfileType == 'Administrador SC') {
+            this.data.nameRecordType = 'Administrador SC';
+        }
+        else if (this.data.confirmarProfileType == 'Administrador Instalaciones') {
+            this.data.nameRecordType = 'Administrador Instalaciones';
         }
     }
 
@@ -2024,8 +2092,27 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
             }).catch(error => {
                 console.log(error);
             });
+    }
 
-
+    getcategoriespage() {
+        this.data.showcomprascat = true;
+        this.data.valueCategoryService = '';
+        this.data.valueSubcategoryService = '';
+        this.data.valueClassService = '';
+        this.data.valueFamilyService = '';
+        getToken()
+            .then(result => {
+                this.data.tokenAccess = result;
+                console.log(result);
+                getserviciocategorias({ recordName: 'empty', token: this.data.tokenAccess })
+                    .then(result2 => {
+                        this.data.servicioCategoria = result2;
+                    }).catch(error2 => {
+                        console.log(error2);
+                    });
+            }).catch(error => {
+                console.log(error);
+            });
     }
 
     getservicesubcategories(event) {
@@ -2105,12 +2192,24 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
 
     openAsignarTiendas() {
         this.openFormAsignarTiendas = true;
+        this.showSpinner = true;
         getPickListRegiones()
             .then(result => {
                 console.log(this.recordId);
                 this.dataSeguros = result;
-                this.showSpinner = false;
-
+                seleccionSegurosServicios({idSeguros: this.buscarServicio })
+                    .then(result => {
+                        this.data.seleccion = result;
+                        if(result=='Seguros'){
+                            this.gerenteActivado=false;
+                        }
+                        else if(result=='Servicios'){
+                            this.gerenteActivado=true;
+                        }
+                        this.showSpinner = false;
+        }).catch(error => {
+            this.showSpinner = false;
+        });
             })
             .catch(error => {
                 this.showSpinner = false;
@@ -2119,6 +2218,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.getListTiendas();
         this.checkRegion = false;
         this.checkCiudad = false;
+        this.checkGerente = false;
         this.checkTienda = false;
     }
 
@@ -2126,18 +2226,42 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         const check = event.target.checked;
         for (const element of this.dataSeguros.listRegiones) {
             element.seleccionado = check;
+            for (const element2 of this.dataSeguros.listCiudades) {
+              if (element.valor == element2.depende) {
+                  element2.seleccionado = check;
+              } 
+              for (const element3 of this.dataSeguros.listGerentes) {
+                  if (element2.valor == element3.depende) {
+                      element3.seleccionado = check;
+                  } 
+              }
+          }
         }
         this.checkRegion = check;
-        this.mostrarCiudades();
+        this.mostrarGerentes();
     }
 
     selectAllCiudad(event) {
         const check = event.target.checked;
         for (const element of this.dataSeguros.listCiudades) {
             element.seleccionado = check;
+            for (const element2 of this.dataSeguros.listGerentes) {
+              if (element.valor == element2.depende) {
+                  element2.seleccionado = check;
+              } 
+          }
         }
         this.checkCiudad = check;
-        this.mostrarTienda();
+        this.mostrarGerentes();
+    }
+
+    selectAllGerente(event) {
+        const check = event.target.checked;
+        for (const element of this.dataSeguros.listGerentes) {
+            element.seleccionado = check;
+        }
+        this.checkGerente = check;
+        this.mostrarGerentes();
     }
 
     selectAllTienda(event) {
@@ -2154,6 +2278,15 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.cargarPickList();
     }
 
+    mostrarGerentes() {
+        if(this.data.seleccion=='Seguros'){
+            this.cargarPickList();
+        }
+        else if(this.data.seleccion=='Servicios'){
+           this.cargarPickListServ();
+        }
+    }
+
     mostrarTienda() {
         this.cargarPickList();
     }
@@ -2161,49 +2294,81 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
     cargarPickList() {
         this.showSpinner = true;
         getPicklistOptionsDependentSM({ allData: JSON.stringify(this.dataSeguros) })
-            .then(result => {
-                this.dataSeguros = result;
-                this.showSpinner = false;
-            }).catch(error => {
-                this.showSpinner = false;
-            });
+        .then(result => {
+            this.dataSeguros = result;
+            this.showSpinner = false;
+        }).catch(error => {
+            this.showSpinner = false;
+        });
+       
+    }
+
+    cargarPickListServ() {
+        this.showSpinner = true;
+        getPicklistOptionsDependent({ allData: JSON.stringify(this.dataSeguros) })
+        .then(result => {
+            this.dataSeguros = result;
+            this.showSpinner = false;
+        }).catch(error => {
+            this.showSpinner = false;
+        });
+       
     }
 
     onclickRegion(event) {
         let x = false;
         const valor = event.target.name;
         const check = event.target.checked;
+        const depende = valor;
+        let depende2='';
         for (const element of this.dataSeguros.listRegiones) {
             if (valor == element.valor) {
                 element.seleccionado = check;
             }
-            if (element.seleccionado) {
-                x = true;
+        }
+        for (const element of this.dataSeguros.listCiudades) {
+            if (depende == element.depende) {
+                element.seleccionado = check;
+                depende2=element.valor;
             }
-        }
-        if (x === false) {
-            this.checkRegion = false;
-        }
-        this.mostrarCiudades();
+          }
+          for (const element of this.dataSeguros.listGerentes) {
+              if (depende2 == element.depende) {
+                  element.seleccionado = check;
+              }
+          }
+        this.mostrarGerentes();
     }
 
     onclickCiudad(event) {
         let x = false;
         const valor = event.target.name;
         const check = event.target.checked;
+        const depende = valor;
         for (const element of this.dataSeguros.listCiudades) {
             if (valor == element.valor) {
                 element.seleccionado = check;
-            }
-            if (element.seleccionado) {
-                x = true;
+            }     
+        }
+        for (const element of this.dataSeguros.listGerentes) {
+            if (depende == element.depende) {
+                element.seleccionado = check;
             }
         }
-        if (x === false) {
-            this.checkCiudad = false;
-        }
-        this.mostrarTienda();
+        this.mostrarGerentes();
     }
+
+    onclickGerente(event) {
+        let x = false;
+        const valor = event.target.name;
+        const check = event.target.checked;
+        for (const element of this.dataSeguros.listGerentes) {
+            if (valor == element.valor) {
+                element.seleccionado = check;
+            }
+        }
+        this.mostrarGerentes();
+      }
 
     onclicklistTiendas(event) {
         let x = false;
@@ -2213,12 +2378,6 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
             if (valor == element.valor) {
                 element.seleccionado = check;
             }
-            if (element.seleccionado) {
-                x = true;
-            }
-        }
-        if (x === false) {
-            this.checkTienda = false;
         }
     }
 
@@ -2275,6 +2434,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         this.dataSeguros.listTiendas = [];
         this.dataSeguros.listCiudades = [];
         this.dataSeguros.listRegiones = [];
+        this.dataSeguros.listGerentes = [];
 
     }
 
@@ -2411,6 +2571,7 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         console.log('holaa');
         console.log(event.target.value);
         this.pickList.formaCobro = event.target.value;
+        this.pickList.dsalesFormasCobro__c=event.target.value;
         console.log(this.pickList.formaCobro);
         if (this.pickList.formaCobro == 'Porcentaje de Cobro') {
             this.openPorcentajeCobro();
@@ -2441,6 +2602,15 @@ export default class DSALES_ClasificacionServiciolwc extends LightningElement {
         }
     }
 
+    opcionProveedor(event) {
+        this.pickList.proveedores=event.target.etiqueta;
+        this.pickList.dsalesProveedor__c=event.target.value;
+    }
+
+    opcionEncuesta(event) {
+        this.pickList.encuesta=event.target.etiqueta;
+        this.pickList.dsalesEncuestaPISyS__c=event.target.value;
+    }
     busquedaPersonalizada(event){
         const busqueda= event.target.checked;
         if(busqueda)
