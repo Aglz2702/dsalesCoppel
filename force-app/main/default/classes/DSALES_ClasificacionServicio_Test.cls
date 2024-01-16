@@ -5,6 +5,7 @@ public class DSALES_ClasificacionServicio_Test {
     static void testSetup(){
         String recordTypeId = Schema.SObjectType.DSALES_Categoria__c.getRecordTypeInfosByDeveloperName().get('dsalesServicios').getRecordTypeId();
         String recordTypeId2 = Schema.SObjectType.DSALES_Categoria__c.getRecordTypeInfosByDeveloperName().get('DSales_ProductoTangible').getRecordTypeId(); 
+         String recordTypeId3 = Schema.SObjectType.dsalesProveedores__c.getRecordTypeInfosByDeveloperName().get('dsalesServicios').getRecordTypeId();
         DSALES_Categoria__c categoria = new DSALES_Categoria__c();
         categoria.Name = 'Test';
         categoria.RecordTypeId=recordTypeId;
@@ -86,6 +87,7 @@ public class DSALES_ClasificacionServicio_Test {
         producto2.DSALES_Familia__c = familia.Id;
         producto2.StockKeepingUnit = 'SKU1234353464565654';
         producto2.DSales_Tipo_de_Producto__c= 'Producto';
+        producto2.DSALES_Servicio__c=true;
         producto2.IsActive=true;
         insert producto2;
         
@@ -97,6 +99,7 @@ public class DSALES_ClasificacionServicio_Test {
         objetoserv.DSALES_Familia__c = familia.Id;
         objetoserv.StockKeepingUnit = 'SKU12346VG';
         objetoserv.DSales_Tipo_de_Producto__c= 'Servicio';
+        objetoserv.DSALES_Matriz__c=mat.id;
         objetoserv.isActive=true;
         insert objetoserv;
         
@@ -106,6 +109,13 @@ public class DSALES_ClasificacionServicio_Test {
         asignacionprod.DSales_Producto__c=objetoserv.Id;
         asignacionprod.DSALES_Activo__c=true;
         insert asignacionprod;
+        
+        DSales_Asignacion_de_Productos__c asignacionprod2 = new DSales_Asignacion_de_Productos__c();
+        asignacionprod2.Name='Test';
+        asignacionprod2.DSales_Servicio_Seguro__c= objetoserv.Id;
+        asignacionprod2.DSales_Producto__c=producto.Id;
+        asignacionprod2.DSALES_Activo__c=true;
+        insert asignacionprod2;
         
         Campaign camp = new Campaign();
         camp.Name = 'TestCampaing';
@@ -135,14 +145,28 @@ public class DSALES_ClasificacionServicio_Test {
         porcentaje.anio3=2;
         porcentaje.anio4=2;
         porcentaje.anio5=2;
+        
+        dsalesProveedores__c proveedor =new dsalesProveedores__c();
+        proveedor.name='test';
+        proveedor.dsalesActivo__c=true;
+        proveedor.RecordTypeId=recordTypeId3;
+        insert proveedor;
+        
+        dsalesEncuestaPISyS__c encuesta= new dsalesEncuestaPISyS__c();
+        encuesta.name='test';
+        encuesta.dsalesIsActive__c=true;
+        insert encuesta;
     }
 
     @isTest
     static void clasificacionServicio(){
-        Product2 idprueba= [Select id from Product2 limit 1];
+         String recordTypeId2 = Schema.SObjectType.DSALES_Categoria__c.getRecordTypeInfosByDeveloperName().get('DSales_ProductoTangible').getRecordTypeId(); 
+        Product2 idprueba= [Select id from Product2 where StockKeepingUnit= 'SKU12346VG' limit 1];
         Product2 idprodtp= [Select id from Product2 where StockKeepingUnit='SKU1234353464565654665' limit 1];
-
-        DSALES_Categoria__c idcat = [select id from DSALES_Categoria__c limit 1];
+        dsalesProveedores__c idproveedores= [Select id, name from dsalesProveedores__c limit 1];
+        dsalesEncuestaPISyS__c encuesta= [Select id from dsalesEncuestaPISyS__c limit 1];
+		system.debug('hoho'+idproveedores);
+        DSALES_Categoria__c idcat = [select id, recordtype.name from DSALES_Categoria__c where recordtypeid=: recordTypeId2 limit 1];
         DSALES_SubCategoria__c idsubc= [select id from DSALES_SubCategoria__c limit 1];
         DSALES_Clase__c idclass=  [select id from DSALES_Clase__c limit 1];
         DSales_Matriz_GEX__c idmat= [select id from DSales_Matriz_GEX__c limit 1];
@@ -170,11 +194,13 @@ public class DSALES_ClasificacionServicio_Test {
         controller.listServicios = DSALES_ClasificacionServicio.getBuscarSKU(controller.sku);
         DSALES_ClasificacionServicio.getBuscarVinculacion(DSALES_ClasificacionServicio.getidservicio('SKU12346VG'));
         DSALES_ClasificacionServicio.getBuscarProducto(DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'));
-        DSALES_ClasificacionServicio.upsertVinculacion(JSON.serialize( DSALES_ClasificacionServicio.getRecordsFromServer3(DSALES_ClasificacionServicio.getidservicio('SKU12346VG'),1,1)));
-        DSALES_ClasificacionServicio.getRecordsFromServer2(DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'),1,1);
+        DSALES_ClasificacionServicio.upsertVinculacion(JSON.serialize( DSALES_ClasificacionServicio.getRecordsFromServer3(idprueba.id,1,1)));
+        DSALES_ClasificacionServicio.getRecordsFromServer2(idprueba.id,1,1);
+        DSALES_ClasificacionServicio.getRecordsFromServer21(idprueba.id, 'SKU1234353464565654');
+        DSALES_ClasificacionServicio.getRecordsFromServer31(idprueba.id, 'SKU1234353464565654');
         DSALES_ClasificacionServicio.insertVinculacion(JSON.serialize( DSALES_ClasificacionServicio.getRecordsFromServer2(DSALES_ClasificacionServicio.getidservicio('SKU1234353464565654665'),1,1)), DSALES_ClasificacionServicio.getidservicio('SKU12346VG'));
         DSALES_ClasificacionServicio.checkProfileType();
-        DSALES_ClasificacionServicio.getcategories('Garantía Extendida');
+        DSALES_ClasificacionServicio.getcategories(idcat.recordtype.name);
         DSALES_ClasificacionServicio.getSubCategories(idcat.id);
         DSALES_ClasificacionServicio.getClases(idsubc.id);
         DSALES_ClasificacionServicio.getFamilias(idclass.id);
@@ -182,12 +208,17 @@ public class DSALES_ClasificacionServicio_Test {
         DSALES_ClasificacionServicio.RecordTypeId('Garantía Extendida');
         DSALES_ClasificacionServicio.updateMatriz( '["'+idmat.id+'"]', DSALES_ClasificacionServicio.getidservicio('SKU12346VG'));
         DSALES_ClasificacionServicio.insertPocentajeCobro(DSALES_ClasificacionServicio.getidservicio('SKU12346VG'),'{"anio1":"6","anio2":"5","anio3":"9","anio4":3,"anio5":2,"anio6":1}');
+        //DSALES_ClasificacionServicio.insertProveedores( idprueba.id, idproveedores.name);
         DSALES_ClasificacionServicio.getPickListValuesIntoList1();
         DSALES_ClasificacionServicio.getPickListValuesIntoList2();
         DSALES_ClasificacionServicio.getPickListValuesIntoList3();
         DSALES_ClasificacionServicio.getPickListValuesIntoList4();
         DSALES_ClasificacionServicio.getPickListValuesIntoList5();
         DSALES_ClasificacionServicio.getPickListValuesIntoList6();
+        DSALES_ClasificacionServicio.getPickListProveedores();
+        DSALES_ClasificacionServicio.getPickListEncuesta();
+        //DSALES_ClasificacionServicio.asignacionProveedores(idproveedores.id, idservicio.id);
+        //DSALES_ClasificacionServicio.asignacionEncuesta(encuesta.id, idprueba.id);
         DSALES_ClasificacionServicio.getCampaings();
         DSALES_ClasificacionServicio.getTipoUso();
         //DSALES_ClasificacionServicio.getToken('prueba');
