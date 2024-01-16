@@ -75,7 +75,7 @@ export default class DSALES_RegionalizacionSegurosCampanaslwc extends LightningE
       }
     }
     this.checkRegion = check;
-    this.mostrarCiudades();
+    this.mostrarGerentes();
   }
 
   selectAllCiudad(event) {
@@ -99,7 +99,7 @@ selectAllGerente(event) {
       element.seleccionado = check;
   }
   this.checkGerente = check;
-  this.mostrarTienda();
+  this.mostrarGerentes();
 }
 
 selectAllTienda(event) {
@@ -143,6 +143,7 @@ selectAllTienda(event) {
 
   cargarPickListSM() {
     this.showSpinner = true;
+    console.log('entro');
     console.log(JSON.parse(JSON.stringify(this.data)));
     getPicklistOptionsDependentSM({ allData: JSON.stringify(this.data) })
         .then(result => {
@@ -152,6 +153,7 @@ selectAllTienda(event) {
             this.showSpinner = false;
         });
   }
+
   onclickRegion(event) {
     let x = false;
     const valor = event.target.name;
@@ -174,7 +176,7 @@ selectAllTienda(event) {
             element.seleccionado = check;
         }
     }
-    this.mostrarCiudades();
+    this.mostrarGerentes();
 }
 
 onclickCiudad(event) {
@@ -204,7 +206,7 @@ onclickGerente(event) {
           element.seleccionado = check;
       }
   }
-  this.mostrarTienda();
+  this.mostrarGerentes();
 }
 
 onclicklistTiendas(event) {
