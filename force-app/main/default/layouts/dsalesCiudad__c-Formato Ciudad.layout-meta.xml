@@ -90,7 +90,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>dSalesGerente__c.dsalesCiudad__c</relatedList>
+        <relatedList>dSalesGerente__c.DSalesCiudad__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>

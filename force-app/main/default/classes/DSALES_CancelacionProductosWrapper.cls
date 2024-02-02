@@ -11,6 +11,7 @@ global with sharing class DSALES_CancelacionProductosWrapper {
         global String numeroVendedor { get; set; }
         global String estatus { get; set; }
         global String motivoCancelacion { get; set; }
+        global String causa {get;set;}
         global List<ListaProducto> listaProductos { get; set; }
         global List<DSALES_ReembolsoWrapper.ReembolsoRequest> listaReembolso {get;set;}
     }
@@ -20,6 +21,7 @@ global with sharing class DSALES_CancelacionProductosWrapper {
         global String estatus { get; set; }
         global String motivoCancelacion { get; set; }
         global String idCertificado { get; set; }
+        global String causa{get;set;}
     }
 
     global class Response{

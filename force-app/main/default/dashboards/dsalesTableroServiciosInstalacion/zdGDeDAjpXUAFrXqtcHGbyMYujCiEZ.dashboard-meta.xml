@@ -286,7 +286,7 @@
     <dashboardType>SpecifiedUser</dashboardType>
     <description>Tablero que muestra los indicadores (reportes) de los servicios realizados de Instalaciones de Coppel PISyS</description>
     <isGridLayout>true</isGridLayout>
-    <runningUser>dsanmiguel@coppel.com</runningUser>
+    <runningUser>saymartinez@coppel.com.integrator</runningUser>
     <textColor>#000000</textColor>
     <title>Indicadores Servicio de Instalaciones</title>
     <titleColor>#000000</titleColor>

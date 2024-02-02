@@ -18,5 +18,9 @@
             <controllingFieldValue>Servicio</controllingFieldValue>
             <valueName>Garantía Extendida</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servicio</controllingFieldValue>
+            <valueName>Instalación</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

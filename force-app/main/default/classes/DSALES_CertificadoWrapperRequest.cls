@@ -35,7 +35,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
         
     }
   
-    global static void  putCertificado(String idUniversal,List<DSALES_CancelacionProductosWrapper.ListaProducto> listaProductos,String estatusGlobal,String motivoGlobal)
+    global static void  putCertificado(String idUniversal,List<DSALES_CancelacionProductosWrapper.ListaProducto> listaProductos,String estatusGlobal,String motivoGlobal, String causaGlobal)
     {
          List<OpportunityLineItem> listaOportunidades = new List<OpportunityLineItem>();
             List<Asset> listaAssetsModificar = new List<Asset>();
@@ -48,7 +48,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
 	  	List<DSALES_InformacionDePago__c> listaPagoAct= new  List<DSALES_InformacionDePago__c> ();
         if(listaProductos.size()==0 || listaProductos==null)
         {
-            if(!String.isEmpty(estatusGlobal) && (!String.isEmpty(motivoGlobal)))
+            if(!String.isEmpty(idUniversal))
             {
                 switch on pago.size() {
                     when 0  {
@@ -58,13 +58,10 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                     system.debug('El size es diferente');
                         Integer contador =0;
                         List<OpportunityLineItem> productoOpor= [SELECT DSALES_Estatus__c FROM OpportunityLineItem WHERE OpportunityId=:pago[0].DSALES_Oportunidad__c  WITH SECURITY_ENFORCED]; 
-                        List<DSALES_Certificado__c> certificados= [SELECT DSALES_Estatus__c FROM DSALES_Certificado__c WHERE
+                        List<DSALES_Certificado__c> certificados= [SELECT DSALES_Estatus__c,DSales_Motivo__c,dSalesCausa__c FROM DSALES_Certificado__c WHERE
                                                                   DSALES_InformacionDePago__c=:pago[0].Id WITH SECURITY_ENFORCED];
-                        //List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
-                        //system.debug('');
-                        List<Asset> productos=[Select Status,DSales_Informacion_pago__c FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
-                        system.debug('asset_________'+productos);
-                        system.debug('pago'+pago);
+                        List<Asset> productos=[Select Status FROM Asset WHERE DSales_Informacion_pago__c=:pago[0].Id WITH SECURITY_ENFORCED];
+                        system.debug('');
                         for(OpportunityLineItem oportunidad:productoOpor)
                         {
                             oportunidad.DSALES_Estatus__c=estatusGlobal;
@@ -73,6 +70,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                                 {
                                     certificados[contador].DSALES_Estatus__c =estatusGlobal;
                                     certificados[contador].DSales_Motivo__c=motivoGlobal;
+                                    certificados[contador].dSalesCausa__c=causaGlobal;
                                     listaCertificadosModificar.add(certificados[contador]);
                                 }
                            
@@ -103,8 +101,8 @@ global with sharing class DSALES_CertificadoWrapperRequest {
             Map<String,DSALES_CertificadoWrapper.cancelacionGex> mapaCancela = new Map<String,DSALES_CertificadoWrapper.cancelacionGex>();
             if(pago.size()>0)
             {
-                     listaAssets=[SELECT Id,DSALES_SKU__c,DSales_Informacion_pago__c  FROM Asset WHERE  DSales_Informacion_pago__c=:pago[0].id WITH SECURITY_ENFORCED];
-            listaCertificados= [SELECT Name, DSALES_Estatus__c,DSALES_SKU__c, DSales_Motivo__c FROM
+                     listaAssets=[SELECT Id,DSALES_SKU__c FROM Asset WHERE  DSales_Informacion_pago__c=:pago[0].id WITH SECURITY_ENFORCED];
+            listaCertificados= [SELECT Name, DSALES_Estatus__c, DSales_Motivo__c FROM
                                                            DSALES_Certificado__c WHERE DSALES_InformacionDePago__c =:pago[0].id WITH SECURITY_ENFORCED];
             }
        
@@ -162,6 +160,7 @@ global with sharing class DSALES_CertificadoWrapperRequest {
                            certificado.id=c.Id;
                            certificado.DSALES_Estatus__c=mapaCancela.get(s.Id).estatus;
                            certificado.DSales_Motivo__c=mapaCancela.get(s.id).motivoCancelacion;
+                           certificado.dsalesCausa__c=mapaCancela.get(s.id).causa;
                            listaCertificadosModificar.add(certificado);
                                }
                        }
