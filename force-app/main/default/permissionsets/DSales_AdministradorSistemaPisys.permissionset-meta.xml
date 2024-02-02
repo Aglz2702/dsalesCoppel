@@ -866,6 +866,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DSALES_Certificado__c.dSalesCausa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DSALES_Clase__c.DSALES_Departamento__c</field>
         <readable>true</readable>
     </fieldPermissions>

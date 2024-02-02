@@ -107,9 +107,11 @@ global with sharing class DSALES_CancelacionProductosRequest {
         String idCancelacion='';
         List<DSALES_CancelacionProductosWrapper.listaProducto> listaCancelar = new List<DSALES_CancelacionProductosWrapper.listaProducto>();
         if(pago.RecordTypeId==recordTypeIdGex){
-            DSALES_CertificadoWrapperRequest.putCertificado(datos.idUniversal,listaProductos,datos.estatus,datos.motivoCancelacion,'parasolucionar');
+            System.debug('cancelación gex');
+            DSALES_CertificadoWrapperRequest.putCertificado(datos.idUniversal,listaProductos,datos.estatus,datos.motivoCancelacion,datos.causa);
             idCancelacion =crearCancelacion(datos);
         }else if(pago!=null && pago.RecordTypeId==recordTypeIdMoto){
+            System.debug('cancelación motos');
             if(listaProductos.size()>0){
                 actualizarOportunidades(listaProductos);
                 idCancelacion =crearCancelacion(datos);
