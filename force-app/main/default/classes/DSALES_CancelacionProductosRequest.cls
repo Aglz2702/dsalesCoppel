@@ -22,7 +22,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
                 DSALES_InformacionDePago__c pago =[SELECT Id, RecordTypeId FROM DSALES_InformacionDePago__c WHERE 	DSALES_IDUniversal1__c=:datos.idUniversal WITH SECURITY_ENFORCED LIMIT 1];
                 idCancelacion=escenariosCancelacion(pago, datos, listaProductos);
                 if(idCancelacion!=''){
-                    response.mensaje='Cancelacion Exitosa!';
+                    response.mensaje='Transacción Exitosa!';
                     response.idCancelacion=idCancelacion;
                     response.exito=true;
                 }
@@ -107,7 +107,7 @@ global with sharing class DSALES_CancelacionProductosRequest {
         String idCancelacion='';
         List<DSALES_CancelacionProductosWrapper.listaProducto> listaCancelar = new List<DSALES_CancelacionProductosWrapper.listaProducto>();
         if(pago.RecordTypeId==recordTypeIdGex){
-            DSALES_CertificadoWrapperRequest.putCertificado(datos.idUniversal,listaProductos,datos.estatus,datos.motivoCancelacion);
+            DSALES_CertificadoWrapperRequest.putCertificado(datos.idUniversal,listaProductos,datos.estatus,datos.motivoCancelacion,'parasolucionar');
             idCancelacion =crearCancelacion(datos);
         }else if(pago!=null && pago.RecordTypeId==recordTypeIdMoto){
             if(listaProductos.size()>0){
@@ -202,6 +202,82 @@ global with sharing class DSALES_CancelacionProductosRequest {
             }
             DSALES_CancelacionController.escenarioPolizaActRegistros(partidasActualizadas,poliza);
         }
+    }
+    
+    @HttpPut
+    global static DSALES_CancelacionProductosWrapper.Response cancelarCelular(Id oportunidadId, DSALES_CancelacionProductosWrapper.Request cancelacion)
+    {
+        DSALES_Cancelacion__c cancelaObj=new DSALES_Cancelacion__c();
+        DSALES_CancelacionProductosWrapper.Response responsePayload = new DSALES_CancelacionProductosWrapper.Response();
+       //caso 1 recibo idOportunidad
+       if(oportunidadId!=null || !String.isEmpty(oportunidadId))
+           {
+               try{
+                   OpportunityLineItem oportunidad = [SELECT Id,DSALES_Estatus__c, OpportunityId FROM 
+                                                     OpportunityLineItem WHERE ID=:oportunidadId];
+                   if(oportunidad.DSALES_Estatus__c=='Cancelado')
+                       {
+                           responsePayload.codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;
+                   			responsePayload.mensaje='Este producto ya está cancelado ';
+                   			responsePayload.exito=false;
+                           
+                       }
+                   else{
+                       DSALES_InformacionDePago__c pago= [select Id FROM DSALES_InformaciondePago__c 
+                                                      WHERE DSALES_Oportunidad__c=:oportunidad.OpportunityId];
+                   InsurancePolicyAsset activo = [SELECT Id,dsalesEstatus__c FROM InsurancePolicyAsset WHERE
+                                                 DSALES_InformacionPago__c=:pago.Id];
+                   oportunidad.DSALES_Estatus__c='Cancelado';
+                  activo.dsalesEstatus__c='Cancelado';
+                cancelaObj.DSALES_FolioCancelacion__c=cancelacion.folioCancelacion;
+                  cancelaObj.RecordTypeId=Schema.SObjectType.DSALES_Cancelacion__c.getRecordTypeInfosByDeveloperName().get('dsalesRegistroCancelacionSC').getRecordTypeId();
+                cancelaObj.DSALES_FechaCancelacion__c=cancelacion.fechaCancelacion;
+                 if(!String.isempty(cancelacion.idTienda))
+                     {
+                         Tienda__c tienda= [SELECT Id, DSales_TiendaID__c FROM Tienda__c WHERE DSales_TiendaID__c=:cancelacion.idTienda];
+                         cancelaObj.DSALES_Tienda__c=tienda.id;
+                     }
+                   
+                 cancelaObj.DSALES_NombreVendedor__c=cancelacion.nombreVendedor;
+                 cancelaObj.DSALES_NumeroVendedor__c=cancelacion.numeroVendedor;
+                   cancelaObj.DSALES_Canal__c='PSF';
+                 cancelaObj.DSALES_MotivoCancelacion__c=cancelacion.motivoCancelacion;
+                   cancelaObj.DSALES_Estatus__c='Cancelado';
+                   cancelaObj.DSALES_Informaciondepago__c=pago.id;
+                   system.debug('Id Insurance: '+activo);
+                   If( OpportunityLineItem.SobjectType.GetDescribe().isUpdateable() && InsurancePolicy.sObjectType.GetDescribe().isUpdateable())
+                   {
+                       responsePayload.exito=true;
+                       responsePayload.mensaje='Seguro de Celular Cancelado';
+                       
+                       Update oportunidad;
+                       update activo;
+                       system.debug('Seguro de Celular Cancelado');
+                   }
+                   if(DSALES_Cancelacion__c.SobjectType.GetDescribe().isCreateable())
+                   {
+                       insert cancelaObj;
+                       responsePayload.idCancelacion=cancelaObj.Id;
+                       responsePayload.mensaje+= ' Y registro Creado';
+                       
+                   }
+                   }
+                   
+               }
+               catch(Exception e){
+                   responsePayload.codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;
+                   responsePayload.mensaje='ERROR: '+e.getMessage() + e.getLineNumber();
+                   responsePayload.exito=false;
+               }
+           }
+        else
+        {
+            responsePayload.codigoError=DSALES_Utility.INTERNAL_ERROR_CODE;
+                   responsePayload.mensaje='El campo OpportunityId viene vacío o nulo';
+                   responsePayload.exito=false;        
+        }
+       
+        return responsePayload;
     }
     
 }

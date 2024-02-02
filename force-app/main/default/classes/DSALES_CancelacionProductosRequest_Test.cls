@@ -5,13 +5,13 @@ public class DSALES_CancelacionProductosRequest_Test {
         String tipoProducto = 'Producto';
         String message = '';
         String recordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('Seguro_de_Moto').getRecordTypeId();
-        String recordTypeIdGex = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('DSales_Garantia_Extendida').getRecordTypeId();
+        String recordTypeIdGex = Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Servicios').getRecordTypeId();
 		String recordTypeIdPagoM = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_PagosdeVentaenNPVSM_c').getRecordTypeId();
         String recordTypeIdPagoG = Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByDeveloperName().get('DSALES_Pagos_en_NPV').getRecordTypeId();
 		String recordTypeIdAsset = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('Garantia Extendida').getRecordTypeId();
         String recordTypeIdProd = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSales_Garantia_Extendida').getRecordTypeId();
         String recordTypeProdMotos = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSales_Seguro_de_Motos').getRecordTypeId();
-        String recordTypeProdSeg = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSALES_ProdIntangible').getRecordTypeId();
+        String recordTypeProdSeg = Schema.SObjectType.Product2.getRecordTypeInfosByDeveloperName().get('DSales_Garantia_Extendida').getRecordTypeId();
         Account acc = new Account();
         acc.Name='Sayra Martinez Quiroz';
         acc.CP_WalletCustomerNumber__c=45654;
@@ -27,7 +27,7 @@ public class DSALES_CancelacionProductosRequest_Test {
         
         Product2 pr= new Product2(Name='Lavadora',StockKeepingUnit='123451',DSales_Tipo_de_Producto__c='Producto',RecordTypeId=recordTypeIdProd,IsActive=true);
 		insert pr;
-       	Product2 gex= new Product2(Name='GEX',StockKeepingUnit='123456',DSales_Tipo_de_Producto__c='Servicio',RecordTypeId=recordTypeIdProd,IsActive=true);
+       	Product2 gex= new Product2(Name='GEX',StockKeepingUnit='183456',DSales_Tipo_de_Producto__c='Servicio',RecordTypeId=recordTypeIdProd,IsActive=true);
 		insert gex;
         Id pricebookId = Test.getStandardPricebookId();
         PricebookEntry standardPrice = new PricebookEntry();
