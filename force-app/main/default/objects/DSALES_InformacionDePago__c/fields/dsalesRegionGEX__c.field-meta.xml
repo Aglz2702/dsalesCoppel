@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesRegionGEX__c</fullName>
+    <description>Campo de región para instalaciones</description>
+    <externalId>false</externalId>
+    <formula>DSALES_Oportunidad__r.SyncedQuote.DSALES_Regioon__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Región GEX</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

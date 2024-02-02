@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dsalesTipoInstalacion__c</fullName>
+    <description>Campo que muestra la lista de los tipos de instalación</description>
+    <externalId>false</externalId>
+    <label>Tipo de Instalación</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Calentadores de agua</fullName>
+                <default>false</default>
+                <label>Calentadores de agua</label>
+            </value>
+            <value>
+                <fullName>Estufa</fullName>
+                <default>false</default>
+                <label>Estufa</label>
+            </value>
+            <value>
+                <fullName>Minisplit</fullName>
+                <default>false</default>
+                <label>Minisplit</label>
+            </value>
+            <value>
+                <fullName>Secadoras &amp; centros de lavado</fullName>
+                <default>false</default>
+                <label>Secadoras &amp; centros de lavado</label>
+            </value>
+            <value>
+                <fullName>Soporte TV</fullName>
+                <default>false</default>
+                <label>Soporte TV</label>
+            </value>
+            <value>
+                <fullName>Ventiladores Techo/Pared</fullName>
+                <default>false</default>
+                <label>Ventiladores Techo/Pared</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,9 +1,11 @@
 @isTest
 public with sharing class DSALES_CertificadoWrapperTest {
+    
     @testSetup
     static void crearRegistros(){
         String recordTypeId = Schema.SObjectType.Asset.getRecordTypeInfosByName().get('Garantia Extendida').getRecordTypeId();
         String recordTypeId2 = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Garantía Extendida').getRecordTypeId();
+        String recordTyPePagoId=Schema.SObjectType.DSALES_InformacionDePago__c.getRecordTypeInfosByName().get('Pagos de venta de servicios').getRecordTypeId();
         Product2 pr= new Product2(Name='Lavadora',StockKeepingUnit='123452',DSales_Tipo_de_Producto__c='Producto',RecordTypeId=recordTypeId2,IsActive=true);
 		insert pr;
         Id pricebookId = Test.getStandardPricebookId();
@@ -33,7 +35,7 @@ public with sharing class DSALES_CertificadoWrapperTest {
         insert tienda;
         Opportunity opp = new Opportunity(Name='Danny',StageName='Closed',CloseDate=Date.today(),Pricebook2Id=customPB.Id);
         insert opp;
-        DSALES_InformacionDePago__c pago = new DSALES_InformacionDePago__c(DSALES_Oportunidad__c=opp.id,DSALES_Factura__c='1234',DSALES_Clave_Tienda__c='1234',DSALES_IDUniversal1__c='11111111111111111110');
+        DSALES_InformacionDePago__c pago = new DSALES_InformacionDePago__c(RecordTypeId=recordTyPePagoId,DSALES_Oportunidad__c=opp.id,DSALES_Estatus__c='Acreditado',DSALES_Factura__c='1234',DSALES_Clave_Tienda__c='1234',DSALES_IDUniversal1__c='11111111111111111110');
         insert pago;
         
         
@@ -65,7 +67,7 @@ public with sharing class DSALES_CertificadoWrapperTest {
         
         RestRequest peticion=new RestRequest();
         RestResponse respuesta = new RestResponse();
-        String cuerpo = '{"id_producto_adquirido":"'+ast.id+'","id_cuenta":"'+acc.id+'","id_tienda":"'+tienda.id+'","numero_caja_coppel": "1234","id_vendedor": "1234","direccion_cliente": "Montreal 169 Paseo Montejo","correo_cliente": "dsanmiguel@deloittemx.com","telefono_cliente": "8130912906","celular_cliente": "812091342","sku": "ABCDS12","modelo_tangible": "Italika","marca_tangible": "Samsung","numero_serie": "90001","descripcion_tangible": "Muy bueno","precio_tangible": "900","fecha_compra_tangible": "2022-09-06","garantia_coppel_tangible": "12","costo_garantia": "900","fecha_compra_garantia": "2022-09-06","fecha_fin_garantia_extendida": "2022-09-06","fecha_inicio_garantia_extendida": "2022-09-06"}';
+        String cuerpo = '{"idProductoAdquirido":"'+ast.id+'","idCuenta":"'+acc.id+'","idTienda":"'+tienda.id+'","numeroCajaCoppel": "1234","numeroCliente":"123456","idVendedor": "1234","direccionCliente": "Montreal 169 Paseo Montejo","correoCliente": "dsanmiguel@deloittemx.com","telefonoCliente": "8130912906","celularCliente": "812091342","sku": "ABCDS12","modeloTangible": "Italika","marcaTangible": "Samsung","numeroSerie": "90001","descripcionTangible": "Muy bueno","precioTangible": "900","fechaCompraTangible": "2022-09-06","garantiaCoppelTangible": "12","costo_garantia": "900","fechaCompraGarantia": "2022-09-06","fechaFinGarantiaExtendida": "2022-09-06","fechaInicioGarantiaExtendida": "2022-09-06"}';
         peticion.requestURI='/apexrest/insertCertificado'; 
         peticion.httpMethod='POST';
         RestContext.request=peticion;
@@ -109,11 +111,14 @@ public with sharing class DSALES_CertificadoWrapperTest {
     }
     @isTest static void devolucionTest()
     {
-        DSALES_InformacionDePago__c pago = [SELECT Id,DSALES_Factura__c,DSALES_Clave_Tienda__c,DSALES_IDUniversal1__c,DSALES_Oportunidad__c FROM
+        DSALES_InformacionDePago__c pago = [SELECT Id,DSALES_Factura__c,DSALES_Estatus__c,DSALES_Clave_Tienda__c,DSALES_IDUniversal1__c,DSALES_Oportunidad__c FROM
                                             DSALES_InformacionDePago__c WHERE DSALES_IDUniversal1__c='11111111111111111110' ];
         DSALES_Certificado__c certi= [SELECT Name FROM DSALES_Certificado__c WHERE DSALES_Email__c='dsanmiguel@deloittemx.com' LIMIT 1];
+        System.debug('pago en cancelacion:----------- '+pago);
+        System.debug('certificado:-------------------'+certi);
+        DSALES_CancelacionProductosWrapper.ListaProducto productos= new DSALES_CancelacionProductosWrapper.ListaProducto();
         List<DSALES_CancelacionProductosWrapper.ListaProducto> listGex2= new List<DSALES_CancelacionProductosWrapper.ListaProducto>();
-               String estatusGlobal='Cancelado';
+        String estatusGlobal='Devuelto';
         String motivoGlobal='a petición del cliente';
         Test.startTest();
         DSALES_CertificadoWrapperRequest.putCertificado(pago.DSALES_IDUniversal1__c,listGex2,estatusGlobal,motivoGlobal);
@@ -142,4 +147,5 @@ public with sharing class DSALES_CertificadoWrapperTest {
         System.assertNotEquals(200, respuesta.statusCode,'La llamada no debe devolver el código 200');
         
     }
+
 }

@@ -2,16 +2,16 @@
 global class DSALES_ServicioArmadoWrapper {
     
     global class ArmadoRequest{
-        global List<ars> ars {get;set;}
-        global List<estatus> estatus {get;set;}
+        global List<Ars> ars {get;set;}
+        global List<Estatus> estatus {get;set;}
     }
     
-    global class ars {
+    global class Ars {
         global Integer ar {get;set;}
         global String skuTangible {get;set;}
     }
     
-    global class estatus {
+    global class Estatus {
         global String numeroCertificado {get;set;}
         global String estatus {get;set;}
         global String fechaArmado {get;set;}
