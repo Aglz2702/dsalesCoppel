@@ -76,7 +76,7 @@ global with sharing class DSALES_ServicioCitasRequest {
             evento.dSalesModelo__c=data.modelo;
             evento.dSalesResultadosCuestionario__c=data.cuestionario;
             evento.dSalesTecnico__c=data.tecnico;
-            //evento.Subject=data.asunto;
+            evento.Subject=data.asunto;
             evento.dSalesCodigoPostal__c=cp.id;
             evento.dSalesDireccionCliente__c=data.direccion;
             if(Schema.sObjectType.Event.isCreateable()) {
