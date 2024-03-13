@@ -4,6 +4,7 @@ public class DSALES_QuotePdfController_Test {
     @testSetup 
     static void setUp(){
         // Create test data
+        Id quoteId = ApexPages.currentPage().getParameters().get('quoteId');
         Opportunity opp = new Opportunity(Name='Test Opportunity',StageName='Nuevo',CloseDate=Date.today());
         insert opp;
         
@@ -25,7 +26,8 @@ public class DSALES_QuotePdfController_Test {
         
         Quote quote = new Quote(Name='Test Quote', OpportunityId=opp.Id,PriceBook2Id=pb2Id,DSales_Tienda__c=tienda.Id );
         insert quote;
-        
+        Quote quote1 = new Quote(Name='Test Quote 1', OpportunityId=opp.Id,PriceBook2Id=pb2Id,DSales_Tienda__c=tienda.Id );
+        insert quote1;
         
         QuoteLineItem lineItem = new QuoteLineItem(QuoteId=quote.Id, Product2Id=prod.Id, Quantity=1, UnitPrice=10.0, PricebookEntryId=pb.Id);
         insert lineItem;
@@ -46,9 +48,9 @@ public class DSALES_QuotePdfController_Test {
         
         
         Test.startTest();
-        PageReference pageRef = Page.DSALES_CotizationSm;
+        PageReference pageRef = Page.Cotizacion_Coppel;
         Test.setCurrentPage(pageRef);
-        ApexPages.currentPage().getParameters().put('id', quotes.Id);
+        ApexPages.currentPage().getParameters().put('quoteId', quotes.Id);
         DSALES_QuotePdfController controller = new DSALES_QuotePdfController();
         Test.stopTest();
         System.assertEquals(quoteLineItems.QuoteId, quotes.Id, 'La llamada debe devolver un código 200');

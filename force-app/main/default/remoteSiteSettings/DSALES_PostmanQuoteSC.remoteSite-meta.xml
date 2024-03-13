@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <disableProtocolSecurity>false</disableProtocolSecurity>
+    <isActive>true</isActive>
+    <url>https://dc2f757c-06da-4b1a-8451-234565748544.mock.pstmn.io</url>
+</RemoteSiteSetting>
